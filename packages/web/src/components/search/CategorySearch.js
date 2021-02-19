@@ -1229,6 +1229,7 @@ CategorySearch.propTypes = {
 	defaultQuery: types.func,
 	dataField: types.dataFieldValidator,
 	aggregationField: types.string,
+	aggregationSize: types.number,
 	size: types.number,
 	debounce: types.number,
 	defaultValue: types.categorySearchValue,

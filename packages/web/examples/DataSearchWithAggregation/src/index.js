@@ -23,6 +23,7 @@ const Main = () => (
 					title="DataSearch"
 					dataField="brand"
 					aggregationField="brand.keyword"
+					aggregationSize={1}
 					componentId="BookSensor"
 					URLParams
 					size={5}
@@ -35,7 +36,10 @@ const Main = () => (
 					componentId="SearchResult"
 					dataField="brand"
 					aggregationField="brand.keyword"
-					size={10}
+					// Set hits size as zero because we're not using it
+					size={0}
+					// Set aggregationSize as 10
+					aggregationSize={10}
 					className="result-list-container"
 					react={{
 						and: 'BookSensor',

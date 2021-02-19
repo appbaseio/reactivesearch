@@ -268,6 +268,7 @@ ReactiveComponent.propTypes = {
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
 	aggregationField: types.string,
+	aggregationSize: types.number,
 	size: types.number,
 	aggregations: types.selectedValues,
 	aggregationData: types.aggregationData,

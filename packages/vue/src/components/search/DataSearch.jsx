@@ -138,6 +138,7 @@ const DataSearch = {
 		defaultQuery: types.func,
 		dataField: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)]),
 		aggregationField: types.string,
+		aggregationSize: VueTypes.number,
 		size: VueTypes.number.def(10),
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,

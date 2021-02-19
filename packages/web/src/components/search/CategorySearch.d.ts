@@ -27,6 +27,7 @@ export interface CategorySearchProps extends CommonProps {
 	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
 	aggregationField?: string;
+	aggregationSize?: number;
 	size?: number;
 	debounce?: number;
 	defaultValue?: categorySearchValue;

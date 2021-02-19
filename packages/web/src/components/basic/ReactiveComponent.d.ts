@@ -7,6 +7,7 @@ export interface ReactiveComponentProps {
 	render?: (...args: any[]) => any;
 	componentId: string;
 	aggregationField?: string;
+	aggregationSize?: number;
 	size?: number;
 	defaultQuery?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;

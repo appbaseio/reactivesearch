@@ -834,6 +834,7 @@ ReactiveList.propTypes = {
 	children: types.func,
 	dataField: types.stringRequired,
 	aggregationField: types.string,
+	aggregationSize: types.number,
 	aggregationData: types.aggregationData,
 	defaultPage: types.number,
 	defaultQuery: types.func,

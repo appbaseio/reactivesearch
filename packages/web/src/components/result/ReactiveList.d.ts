@@ -7,6 +7,7 @@ declare namespace ReactiveListTree {
 		children?: (data: any) => any;
 		dataField: string;
 		aggregationField?: string;
+		aggregationSize?: number;
 		defaultQuery?: (...args: any[]) => any;
 		defaultSortOption?: string;
 		excludeFields?: Array<string>;

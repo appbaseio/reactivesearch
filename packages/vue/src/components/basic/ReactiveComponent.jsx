@@ -17,6 +17,7 @@ const ReactiveComponent = {
 	props: {
 		componentId: types.stringRequired,
 		aggregationField: types.string,
+		aggregationSize: VueTypes.number,
 		size: VueTypes.number.def(20),
 		defaultQuery: types.func,
 		customQuery: types.func,

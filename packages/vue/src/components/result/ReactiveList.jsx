@@ -93,6 +93,7 @@ const ReactiveList = {
 		componentId: types.stringRequired,
 		dataField: types.stringRequired,
 		aggregationField: types.string,
+		aggregationSize: VueTypes.number,
 		defaultQuery: types.func,
 		defaultSortOption: types.string,
 		excludeFields: types.excludeFields.def([]),
