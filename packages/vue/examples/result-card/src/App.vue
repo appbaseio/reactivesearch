@@ -23,6 +23,7 @@
 						<ResultCardsWrapper>
 							<ResultCard
 								v-bind:key="result._id"
+								:id="result._id"
 								v-for="result in data"
 								:href="result.event.event_url"
 							>

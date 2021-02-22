@@ -17,6 +17,7 @@ import {
 import Flex from '../../styles/Flex';
 import types from '../../utils/vueTypes';
 import { resultStats, sortOptions } from '../../styles/results';
+import ImpressionTracker from './addons/ImpressionTracker.jsx';
 
 const {
 	setStreaming,
@@ -381,19 +382,9 @@ const ReactiveList = {
 	},
 
 	render() {
-		const { size } = this.$props;
 		const { hits } = this.$data;
 		const results = parseHits(hits) || [];
 		const streamResults = parseHits(this.$data.streamHits) || [];
-		let filteredResults = results;
-
-		const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
-
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
-
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
@@ -421,26 +412,7 @@ const ReactiveList = {
 							innerClass={this.$props.innerClass}
 						/>
 					) : null}
-				{this.hasCustomRender ? (
-					this.getComponent()
-				) : (
-					<div
-						class={`${this.$props.listClass} ${getClassName(
-							this.$props.innerClass,
-							'list',
-						)}`}
-					>
-						{[...streamResults, ...filteredResults].map((item, index) =>
-							renderItem({
-								item,
-								triggerClickAnalytics: () =>
-									this.triggerClickAnalytics(
-										this.currentPageState * size + index,
-									),
-							}),
-						)}
-					</div>
-				)}
+				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
 					? this.$props.loader || (
 						<div
@@ -484,6 +456,42 @@ const ReactiveList = {
 				return isFunction(renderError) ? renderError(this.error) : renderError;
 			}
 			return null;
+		},
+		renderResults() {
+			const { size } = this.$props;
+			const { hits } = this.$data;
+			const results = parseHits(hits) || [];
+			const streamResults = parseHits(this.$data.streamHits) || [];
+			let filteredResults = results;
+
+			const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
+
+			if (streamResults.length) {
+				const ids = streamResults.map(item => item._id);
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+			}
+			const element = this.hasCustomRender ? (
+				this.getComponent()
+			) : (
+				<div
+					class={`${this.$props.listClass} ${getClassName(
+						this.$props.innerClass,
+						'list',
+					)}`}
+				>
+					{[...streamResults, ...filteredResults].map((item, index) =>
+						renderItem({
+							item,
+							triggerClickAnalytics: () =>
+								this.triggerClickAnalytics(
+									this.currentPageState * size + index,
+								),
+						}),
+					)}
+				</div>
+			);
+			// If analytics is set to true then render with impression tracker
+			return this.analytics ? <ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker> : element;
 		},
 		updateQueryOptions(props) {
 			const options = getQueryOptions(props);
@@ -769,7 +777,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-	analytics: state.analytics,
+	analytics: state.config && state.config.analytics,
 	config: state.config,
 	error: state.error[props.componentId],
 	afterKey:

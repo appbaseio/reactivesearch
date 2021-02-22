@@ -20,7 +20,7 @@
 				:react="{ and: ['BookSensor'] }"
 			>
 				<div slot="renderItem" slot-scope="{ item }">
-					<div class="flex book-content" key="item._id">
+					<div :id="item._id" class="flex book-content" :key="item._id">
 						<img :src="item.image" alt="Book Cover" class="book-image" />
 						<div class="flex column justify-center ml20">
 							<div class="book-header">{{ item.original_title }}</div>
