@@ -1384,6 +1384,7 @@ CategorySearch.defaultProps = {
 	showDistinctSuggestions: true,
 	size: 10,
 	defaultPopularSuggestions: [],
+	recentSearches: [],
 	time: 0,
 	enablePredictiveSuggestions: false,
 };

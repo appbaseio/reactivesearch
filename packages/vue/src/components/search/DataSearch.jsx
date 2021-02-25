@@ -34,6 +34,7 @@ const {
 	setCustomHighlightOptions,
 	recordSuggestionClick,
 	loadPopularSuggestions,
+	getRecentSearches,
 } = Actions;
 const {
 	debounce,
@@ -67,7 +68,7 @@ const DataSearch = {
 		},
 	},
 	created() {
-		const { enableQuerySuggestions, renderQuerySuggestions } = this.$props;
+		const { enableQuerySuggestions, renderQuerySuggestions, enableRecentSearches } = this.$props;
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
 			console.warn(
@@ -80,8 +81,12 @@ const DataSearch = {
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
 		}
+
 		this.loadPopularSuggestions(this.$props.componentId)
 		this.currentValue = this.selectedValue || '';
+		if(enableRecentSearches) {
+			this.getRecentSearches();
+		}
 		this.handleTextChange = debounce(value => {
 			if (this.$props.autosuggest) {
 				this.updateDefaultQueryHandler(value, this.$props);
@@ -108,15 +113,38 @@ const DataSearch = {
 			return withClickIds(suggestionsList);
 		},
 		topSuggestions() {
-			const { enableQuerySuggestions, enablePopularSuggestions, showDistinctSuggestions } = this.$props;
-			return enableQuerySuggestions || enablePopularSuggestions
-				? getTopSuggestions(
-					// use default popular suggestions if value is empty
-					this.currentValue ? this.querySuggestions : this.defaultPopularSuggestions,
-					this.currentValue,
-					showDistinctSuggestions,
-				  )
+			if (!this.currentValue) {
+				return [];
+			}
+			return this.enableQuerySuggestions || this.enablePopularSuggestions
+				? this.normalizedPopularSuggestions
 				: [];
+		},
+		normalizedRecentSearches() {
+			return this.recentSearches || [];
+		},
+		normalizedPopularSuggestions() {
+			return getTopSuggestions(
+				// use default popular suggestions if value is empty
+				this.currentValue ? this.popularSuggestions : (this.defaultPopularSuggestions || []),
+				this.currentValue,
+				this.showDistinctSuggestions,
+			);
+		},
+		defaultSearchSuggestions() {
+			const isPopularSuggestionsEnabled = this.enableQuerySuggestions || this.enablePopularSuggestions;
+			if (this.currentValue) {
+				return [];
+			}
+			const defaultSuggestions = isPopularSuggestionsEnabled
+				? [...this.normalizedRecentSearches, ...(this.defaultPopularSuggestions || [])]
+				: this.normalizedRecentSearches;
+			return getTopSuggestions(
+				// use default popular suggestions if value is empty
+				defaultSuggestions,
+				this.currentValue,
+				this.showDistinctSuggestions,
+			);
 		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
@@ -148,6 +176,7 @@ const DataSearch = {
 		enableSynonyms: types.bool.def(true),
 		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
+		enableRecentSearches: VueTypes.bool.def(false),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -300,14 +329,14 @@ const DataSearch = {
 				value: currentValue,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				resultStats: this.stats,
-				querySuggestions: this.topSuggestions,
-				popularSuggestions: this.topSuggestions,
+				querySuggestions: this.normalizedPopularSuggestions,
+				popularSuggestions: this.normalizedPopularSuggestions,
 			};
 			if (isQuerySuggestionsRender) {
 				return getQuerySuggestionsComponent(
 					{
 						downshiftProps,
-						data: this.topSuggestions,
+						data: this.normalizedPopularSuggestions,
 						value: currentValue,
 						loading: this.isLoading,
 						error: this.error,
@@ -341,6 +370,10 @@ const DataSearch = {
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
+				// Refresh recent searches when value becomes empty
+				if (!value && this.currentValue && this.enableRecentSearches) {
+					this.getRecentSearches();
+				}
 				this.currentValue = value;
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
@@ -668,7 +701,9 @@ const DataSearch = {
 	},
 	render() {
 		const { theme, size } = this.$props;
-		const hasSuggestions = this.suggestionsList.length || this.topSuggestions.length;
+		const hasSuggestions
+		= this.currentValue
+			? this.suggestionsList.length || this.topSuggestions.length : this.defaultSearchSuggestions.length;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -720,7 +755,7 @@ const DataSearch = {
 													this.$emit('keyUp', e, this.triggerQuery);
 													this.$emit('key-up', e, this.triggerQuery);
 												},
-												onClick: e => {
+												onClick:() => {
 													setHighlightedIndex(null);
 												}
 											}),
@@ -767,14 +802,13 @@ const DataSearch = {
 																}),
 															}}
 															key={`${index
-															+ 1
-															+ this.topSuggestions.length}-${
+															+ 1}-${
 																item.value
 															}`}
 															style={{
 																backgroundColor: this.getBackgroundColor(
 																	highlightedIndex,
-																	index + this.topSuggestions.length,
+																	index,
 																),
 															}}
 														>
@@ -784,6 +818,34 @@ const DataSearch = {
 															/>
 														</li>
 													))}
+												{
+													this.defaultSearchSuggestions.map((sugg, index) => (
+														<li
+															{...{
+																domProps: getItemProps({
+																	item: sugg,
+																}),
+															}}
+															{...{
+																on: getItemEvents({
+																	item: sugg,
+																}),
+															}}
+															key={`${this.suggestionsList.length + index + 1}-${sugg.value}`}
+															style={{
+																backgroundColor: this.getBackgroundColor(
+																	highlightedIndex,
+																	this.suggestionsList.length + index,
+																),
+															}}
+														>
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={sugg}
+															/>
+														</li>
+										  ))
+												}
 												{hasQuerySuggestionsRenderer(this)
 													? this.getComponent(
 														{
@@ -806,11 +868,11 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${index + 1}-${sugg.value}`}
+															key={`${this.suggestionsList.length + index + 1}-${sugg.value}`}
 															style={{
 																backgroundColor: this.getBackgroundColor(
 																	highlightedIndex,
-																	index,
+																	this.suggestionsList.length + index,
 																),
 															}}
 														>
@@ -1052,6 +1114,7 @@ const mapStateToProps = (state, props) => ({
 	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	componentProps: state.props[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
+	recentSearches: state.recentSearches.data,
 });
 const mapDispatchToProps = {
 	setQueryOptions,
@@ -1060,7 +1123,8 @@ const mapDispatchToProps = {
 	setDefaultQuery,
 	setCustomHighlightOptions,
 	recordSuggestionClick,
-	loadPopularSuggestions
+	loadPopularSuggestions,
+	getRecentSearches
 };
 const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,

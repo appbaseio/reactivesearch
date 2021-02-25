@@ -1258,6 +1258,7 @@ DataSearch.defaultProps = {
 	searchOperators: false,
 	size: 10,
 	enablePredictiveSuggestions: false,
+	recentSearches: [],
 	defaultPopularSuggestions: [],
 	time: 0,
 };
