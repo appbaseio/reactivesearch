@@ -165,6 +165,9 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **enablePopularSuggestions** `Boolean`
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
+-   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
+> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
+
 -   **enablePredictiveSuggestions** `bool` [optional]
     Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
 
@@ -247,91 +250,97 @@ Here, we are specifying that the suggestions should update whenever one of the b
 
 -   **render** `Function` You can render suggestions in a custom layout by using the `render` prop.
     <br/>
-    It accepts an object with these properties: - **`loading`**: `boolean`
-    indicates that the query is still in progress. - **`error`**: `Object`
-    An object containing the error info. - **`suggestions`** `() => Array<Object>`
+    It accepts an object with these properties:
+    - **`loading`**: `boolean`
+    indicates that the query is still in progress.
+    - **`error`**: `Object`
+    An object containing the error info.
+    - **`suggestions`** `() => Array<Object>`
     This method can be used to get the parsed suggestions from the `results`. If `enablePopularSuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_popular_suggestion` as `true`. The `suggestion` object will have the following shape:
 
-            ```ts
-            {
-                label: string;
-                value: string;
-                source: Object;
-            }
-            ```
-        -   **`results`** `Results`
-            It is an object which contains the following details of `suggestions` query response.
+    ```ts
+    {
+        label: string;
+        value: string;
+        source: Object;
+    }
+    ```
+    -   **`results`** `Results`
+        It is an object which contains the following details of `suggestions` query response.
 
-            -   **`data`**: `Array<Object>` contains the (promoted data + parsed hits)
-            -   **`raw`**: `Object` Response returned by ES query in the raw form.
-            -   **`numberOfResults`**: `number` Total number of results found
-            -   **`time`**: `number` Total time taken by request (in ms)
-            -   **`hidden`**: `number` Total number of hidden results found
-            -   **`promoted`**: `number` Total number of promoted results found
-            -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
-            -   **`customData`**: `Object` An object of custom data obtained from the ReactiveSearch API.
-            -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
+        -   **`data`**: `Array<Object>` contains the (promoted data + parsed hits)
+        -   **`raw`**: `Object` Response returned by ES query in the raw form.
+        -   **`numberOfResults`**: `number` Total number of results found
+        -   **`time`**: `number` Total time taken by request (in ms)
+        -   **`hidden`**: `number` Total number of hidden results found
+        -   **`promoted`**: `number` Total number of promoted results found
+        -   **`promotedData`**: `Array<Object>` An array of promoted results obtained from the applied query.
+        -   **`customData`**: `Object` An object of custom data obtained from the ReactiveSearch API.
+    -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
 
-        -   **`aggregationData`** `Aggregations`
-            It is an object which contains the following details of `aggregations` query response.
+    -   **`aggregationData`** `Aggregations`
+        It is an object which contains the following details of `aggregations` query response.
 
-            -   **`data`**: `Array<Object>` contains the parsed aggregations
-            -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
-            -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
-            -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results. This property will only be present for `composite` aggregations.
+        -   **`data`**: `Array<Object>` contains the parsed aggregations
+        -   **`raw`**: `Object` Response returned by ES `composite aggs` query in the raw form.
+        -   **`rawData`**: `Object` An object of raw response as-is from elasticsearch query.
+        -   **`afterKey`**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the `afterKey` parameter to retrieve the next results. This property will only be present for `composite` aggregations.
 
-        -   **`value`**
-            current search input value i.e the search query being used to obtain suggestions.
+    -   **`value`**
+        current search input value i.e the search query being used to obtain suggestions.
 
-        -   **`query`** `Object`
-            The last query that has been executed to fetch the suggestions
+    -   **`query`** `Object`
+        The last query that has been executed to fetch the suggestions
 
-        -   **`micStatus`** `MicStatusField`
-            Returns the current status of the mic. Can be `INACTIVE`, `ACTIVE` or `DENIED`
+    -   **`recentSearches`**
+        Returns the recent searches made by user.
 
-        -   **`micActive`** `boolean`
-            Returns `true` if mic is active
+    -   **`micStatus`** `MicStatusField`
+        Returns the current status of the mic. Can be `INACTIVE`, `ACTIVE` or `DENIED`
 
-        -   **`micInactive`** `boolean`
-            Returns `true` if mic is inactive
+    -   **`micActive`** `boolean`
+        Returns `true` if mic is active
 
-        -   **`micDenied`** `boolean`
-            Returns `true` if it doesn't have access to the mic
+    -   **`micInactive`** `boolean`
+        Returns `true` if mic is inactive
 
-        -   **`micInstance`** `Object`
-            Returns the current mic instance. Can be used to set mic language and other properties of mic
-        -   **`id`** `string` as defined in props
-        -   **`react`** `Object` `react` as defined in props
-        -   **`queryFormat`** `string` as defined in props
-        -   **`dataField`** `string | Array<string | DataField>` as defined in props
-        -   **`categoryField`** `string` as defined in props
-        -   **`categoryValue`** `string` represents the current value of the selected category
-        -   **`nestedField`** `string` as defined in props
-        -   **`from`** `number` represents the current state of the `from` value. This property is useful to implement pagination.
-        -   **`size`** `number` represents the current state of the `size` of results to be returned by query
-        -   **`sortBy`** `string` current state of the `sortBy` value
-        -   **`aggregationField`** `string` as defined in props
-        -   **`includeFields`** `Array<string>` represents the current value of `includeFields` property
-        -   **`excludeFields`** represents the current value of `excludeFields` property
-        -   **`fuzziness`** `string|number` represents the current value of `fuzziness` property
-        -   **`searchOperators`** `boolean` as defined in props
-        -   **`highlight`** `boolean` as defined in props
-        -   **`highlightField`** `string|Array<string>` as defined in props
-        -   **`customHighlight`** `Object` as defined in props
-        -   **`enableSynonyms`** `boolean` as defined in props
-        -   **`queryString`** `string` as defined in props
-        -   **`enablePopularSuggestions`** `boolean` as defined in props
-        -   **`showDistinctSuggestions`** `boolean` as defined in props
-        -   **`defaultQuery`** represents the current value of `defaultQuery` property
-        -   **`customQuery`**  represents the current value of `customQuery` property
-        -   **`requestStatus`** represents the current state of the request, can have values as `INACTIVE`, `PENDING` or `ERROR`.
-        -   **`appbaseConfig`** `Object` as defined in props
-        -   **`queryId`** `string` to get the query id returned by appbase.io search to track the analytics
-        -   **`subscribeToStateChanges`** `function` can be used to subscribe to the changes for the properties. Read more at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#subscribe-to-the-properties-changes).
-        -   **`unsubscribeToStateChanges`** `function` can be used to unsubscribe to the changes for the properties. Read more at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#subscribe-to-the-properties-changes).
-        -   **`recordClick`** `function` enables recording click analytics of a search request. Please check the usage at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#record-analytics).
-        -   **`recordConversions`** `function` enables recording conversions of a search request. Please check the usage at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#record-analytics).
-        > Note:
+    -   **`micDenied`** `boolean`
+        Returns `true` if it doesn't have access to the mic
+
+    -   **`micInstance`** `Object`
+        Returns the current mic instance. Can be used to set mic language and other properties of mic
+    -   **`id`** `string` as defined in props
+    -   **`react`** `Object` `react` as defined in props
+    -   **`queryFormat`** `string` as defined in props
+    -   **`dataField`** `string | Array<string | DataField>` as defined in props
+    -   **`categoryField`** `string` as defined in props
+    -   **`categoryValue`** `string` represents the current value of the selected category
+    -   **`nestedField`** `string` as defined in props
+    -   **`from`** `number` represents the current state of the `from` value. This property is useful to implement pagination.
+    -   **`size`** `number` represents the current state of the `size` of results to be returned by query
+    -   **`sortBy`** `string` current state of the `sortBy` value
+    -   **`aggregationField`** `string` as defined in props
+    -   **`includeFields`** `Array<string>` represents the current value of `includeFields` property
+    -   **`excludeFields`** represents the current value of `excludeFields` property
+    -   **`fuzziness`** `string|number` represents the current value of `fuzziness` property
+    -   **`searchOperators`** `boolean` as defined in props
+    -   **`highlight`** `boolean` as defined in props
+    -   **`highlightField`** `string|Array<string>` as defined in props
+    -   **`customHighlight`** `Object` as defined in props
+    -   **`enableSynonyms`** `boolean` as defined in props
+    -   **`queryString`** `string` as defined in props
+    -   **`enablePopularSuggestions`** `boolean` as defined in props
+    -   **`showDistinctSuggestions`** `boolean` as defined in props
+    -   **`defaultQuery`** represents the current value of `defaultQuery` property
+    -   **`customQuery`**  represents the current value of `customQuery` property
+    -   **`requestStatus`** represents the current state of the request, can have values as `INACTIVE`, `PENDING` or `ERROR`.
+    -   **`appbaseConfig`** `Object` as defined in props
+    -   **`queryId`** `string` to get the query id returned by appbase.io search to track the analytics
+    -   **`subscribeToStateChanges`** `function` can be used to subscribe to the changes for the properties. Read more at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#subscribe-to-the-properties-changes).
+    -   **`unsubscribeToStateChanges`** `function` can be used to unsubscribe to the changes for the properties. Read more at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#subscribe-to-the-properties-changes).
+    -   **`recordClick`** `function` enables recording click analytics of a search request. Please check the usage at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#record-analytics).
+    -   **`recordConversions`** `function` enables recording conversions of a search request. Please check the usage at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#record-analytics).
+    > Note:
 
     > All of the methods accept `options` as the second parameter which has the following shape:
 
