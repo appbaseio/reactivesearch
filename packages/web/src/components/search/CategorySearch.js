@@ -14,6 +14,7 @@ import {
 	recordSuggestionClick,
 	setCustomHighlightOptions,
 	loadPopularSuggestions,
+	getRecentSearches,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	debounce,
@@ -244,6 +245,8 @@ class CategorySearch extends Component {
 			enableQuerySuggestions,
 			renderQuerySuggestions,
 			fetchPopularSuggestions,
+			enableRecentSearches,
+			fetchRecentSearches,
 			componentId,
 		} = this.props;
 		// TODO: Remove in 4.0
@@ -257,6 +260,9 @@ class CategorySearch extends Component {
 			console.warn(
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
+		}
+		if (enableRecentSearches) {
+			fetchRecentSearches();
 		}
 		fetchPopularSuggestions(componentId);
 	}
@@ -473,6 +479,11 @@ class CategorySearch extends Component {
 	) => {
 		const performUpdate = () => {
 			if (hasMounted) {
+				const { enableRecentSearches, fetchRecentSearches } = this.props;
+				// Refresh recent searches when value becomes empty
+				if (!value && this.state.currentValue && enableRecentSearches) {
+					fetchRecentSearches();
+				}
 				this.setState(
 					{
 						currentValue: value || '',
@@ -905,14 +916,15 @@ class CategorySearch extends Component {
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			resultStats: this.stats,
 			// TODO: Remove in v4
-			querySuggestions: this.topSuggestions,
-			popularSuggestions: this.topSuggestions,
+			querySuggestions: this.normalizedPopularSuggestions,
+			popularSuggestions: this.normalizedPopularSuggestions,
+			recentSearches: this.normalizedRecentSearches,
 		};
 		if (isQuerySuggestionsRender) {
 			return getPopularSuggestionsComponent(
 				{
 					downshiftProps,
-					data: this.topSuggestions,
+					data: this.normalizedPopularSuggestions,
 					value: currentValue,
 					loading: isLoading,
 					error,
@@ -991,19 +1003,59 @@ class CategorySearch extends Component {
 		const {
 			enableQuerySuggestions,
 			enablePopularSuggestions,
+		} = this.props;
+		const { currentValue } = this.state;
+		if (!currentValue) {
+			return [];
+		}
+		return enableQuerySuggestions || enablePopularSuggestions
+			? this.normalizedPopularSuggestions
+			: [];
+	}
+
+	get normalizedRecentSearches() {
+		const {
+			recentSearches,
+		} = this.props;
+		return recentSearches || [];
+	}
+
+	get normalizedPopularSuggestions() {
+		const {
 			popularSuggestions,
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
 		} = this.props;
 		const { currentValue } = this.state;
-		return enableQuerySuggestions || enablePopularSuggestions
-			? getTopSuggestions(
-				// use default popular suggestions if value is empty
-				currentValue ? popularSuggestions : defaultPopularSuggestions,
-				currentValue,
-				showDistinctSuggestions,
-			)
-			: [];
+		return getTopSuggestions(
+			// use default popular suggestions if value is empty
+			currentValue ? popularSuggestions : defaultPopularSuggestions,
+			currentValue,
+			showDistinctSuggestions,
+		);
+	}
+
+	get defaultSuggestions() {
+		const {
+			enableQuerySuggestions,
+			enablePopularSuggestions,
+			showDistinctSuggestions,
+			defaultPopularSuggestions,
+		} = this.props;
+		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
+		const { currentValue } = this.state;
+		if (currentValue) {
+			return [];
+		}
+		const defaultSuggestions = isPopularSuggestionsEnabled
+			? [...this.normalizedRecentSearches, ...defaultPopularSuggestions]
+			: this.normalizedRecentSearches;
+		return getTopSuggestions(
+			// use default popular suggestions if value is empty
+			defaultSuggestions,
+			currentValue,
+			showDistinctSuggestions,
+		);
 	}
 
 	triggerClickAnalytics = (searchPosition, documentId) => {
@@ -1028,7 +1080,8 @@ class CategorySearch extends Component {
 		const { currentValue } = this.state;
 		const { theme, themePreset, size } = this.props;
 		const finalSuggestionsList = this.parsedSuggestions;
-		const hasSuggestions = finalSuggestionsList.length || this.topSuggestions.length;
+		const hasSuggestions = currentValue
+			? finalSuggestionsList.length || this.topSuggestions.length : this.defaultSuggestions.length;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1104,13 +1157,11 @@ class CategorySearch extends Component {
 											{finalSuggestionsList.slice(0, size).map((item, index) => (
 												<li
 													{...getItemProps({ item })}
-													key={`${index + this.topSuggestions.length + 1}-${
-														item.value
-													}`}
+													key={`${index + 1}-${item.value}`} // eslint-disable-line
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
-															this.topSuggestions.length + index,
+															index,
 														),
 													}}
 												>
@@ -1122,6 +1173,25 @@ class CategorySearch extends Component {
 													</Text>
 												</li>
 											))}
+											{
+												this.defaultSuggestions.map((sugg, index) => (
+													<li
+														{...getItemProps({ item: sugg })}
+														key={`${index + 1}-${sugg.value}`}
+														style={{
+															backgroundColor: this.getBackgroundColor(
+																highlightedIndex,
+																index,
+															),
+														}}
+													>
+														<SuggestionItem
+															currentValue={currentValue}
+															suggestion={sugg}
+														/>
+													</li>
+												))
+											}
 											{hasPopularSuggestionsRenderer(this.props)
 												? this.getComponent(
 													{
@@ -1136,11 +1206,11 @@ class CategorySearch extends Component {
 												: this.topSuggestions.map((sugg, index) => (
 													<li
 														{...getItemProps({ item: sugg })}
-														key={`${index + 1}-${sugg.value}`}
+														key={`${finalSuggestionsList.length + index + 1}-${sugg.value}`}
 														style={{
 															backgroundColor: this.getBackgroundColor(
 																highlightedIndex,
-																index,
+																finalSuggestionsList.length + index,
 															),
 														}}
 													>
@@ -1210,6 +1280,8 @@ CategorySearch.propTypes = {
 	setDefaultQuery: types.funcRequired,
 	time: types.number,
 	setCustomHighlightOptions: types.funcRequired,
+	fetchRecentSearches: types.funcRequired,
+	recentSearches: types.suggestions,
 	// eslint-disable-next-line
 	error: types.any,
 	// component props
@@ -1219,6 +1291,7 @@ CategorySearch.propTypes = {
 	enableQuerySuggestions: types.bool,
 	// TODO: Remove in v4
 	enablePopularSuggestions: types.bool,
+	enableRecentSearches: types.bool,
 	queryString: types.bool,
 	beforeValueChange: types.func,
 	categoryField: types.string,
@@ -1346,6 +1419,7 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	popularSuggestions: state.querySuggestions[props.componentId],
+	recentSearches: state.recentSearches.data,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -1360,6 +1434,7 @@ const mapDispatchtoProps = dispatch => ({
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
+	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 });
 
 const ConnectedComponent = connect(

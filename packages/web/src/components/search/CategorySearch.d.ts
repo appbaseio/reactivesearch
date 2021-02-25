@@ -21,6 +21,7 @@ export interface CategorySearchProps extends CommonProps {
 	// TODO: Remove in v4
 	enableQuerySuggestions?: boolean;
 	enablePopularSuggestions?: boolean;
+	enableRecentSearches?: boolean;
 	excludeFields?: Array<string>;
 	queryString?: boolean;
 	getMicInstance?: (...args: any[]) => any;

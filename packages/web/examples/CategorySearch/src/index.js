@@ -24,6 +24,9 @@ const Main = () => (
 					dataField={['original_title', 'original_title.search']}
 					categoryField="authors.keyword"
 					componentId="BookSensor"
+					enableRecentSearches
+					enablePopularSuggestions
+					size={5}
 				/>
 			</div>
 

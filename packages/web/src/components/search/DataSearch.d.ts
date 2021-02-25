@@ -20,6 +20,7 @@ export interface DataSearchProps extends CommonProps {
 	// TODO: Remove in v4
 	enableQuerySuggestions?: boolean;
 	enablePopularSuggestions?: boolean;
+	enableRecentSearches?: boolean;
 	aggregationField?: string;
 	aggregationSize?: number;
 	size?: number;
