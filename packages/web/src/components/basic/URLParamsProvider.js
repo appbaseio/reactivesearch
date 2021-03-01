@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { setHeaders, setValue } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -107,8 +108,11 @@ class URLParamsProvider extends Component {
 				});
 
 			if (!currentComponents.length) {
+				const { searchComponents } = this.props;
 				Array.from(this.params.keys()).forEach((item) => {
-					this.params.delete(item);
+					if (searchComponents && searchComponents.includes(item)) {
+						this.params.delete(item);
+					}
 				});
 				this.pushToHistory();
 			}
@@ -216,6 +220,7 @@ URLParamsProvider.propTypes = {
 	setHeaders: types.func,
 	setValue: types.func,
 	selectedValues: types.selectedValues,
+	searchComponents: PropTypes.arrayOf(String),
 	// component props
 	children: types.children,
 	as: types.string,
@@ -234,6 +239,7 @@ URLParamsProvider.defaultProps = {
 
 const mapStateToProps = state => ({
 	selectedValues: state.selectedValues,
+	searchComponents: state.components,
 });
 
 const mapDispatchtoProps = dispatch => ({

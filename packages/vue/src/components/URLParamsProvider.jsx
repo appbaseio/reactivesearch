@@ -106,7 +106,9 @@ const URLParamsProvider = {
 
 				if (!currentComponents.length) {
 					Array.from(this.params.keys()).forEach(item => {
-						this.params.delete(item);
+						if(this.searchComponents && this.searchComponents.includes(item)) {
+							this.params.delete(item);
+						}
 					});
 					this.pushToHistory();
 				}
@@ -211,6 +213,7 @@ const URLParamsProvider = {
 
 const mapStateToProps = state => ({
 	selectedValues: state.selectedValues,
+	searchComponents: state.components,
 });
 
 const mapDispatchtoProps = {
