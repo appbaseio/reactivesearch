@@ -108,8 +108,9 @@ class URLParamsProvider extends Component {
 				});
 
 			if (!currentComponents.length) {
+				const { searchComponents } = this.props;
 				Array.from(this.params.keys()).forEach((item) => {
-					if (this.props.searchComponents.includes(item)) {
+					if (searchComponents && searchComponents.includes(item)) {
 						this.params.delete(item);
 					}
 				});

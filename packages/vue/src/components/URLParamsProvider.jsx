@@ -106,7 +106,7 @@ const URLParamsProvider = {
 
 				if (!currentComponents.length) {
 					Array.from(this.params.keys()).forEach(item => {
-						if(this.searchComponents.includes(item)) {
+						if(this.searchComponents && this.searchComponents.includes(item)) {
 							this.params.delete(item);
 						}
 					});
