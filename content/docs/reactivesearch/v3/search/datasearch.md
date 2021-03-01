@@ -108,6 +108,8 @@ Example uses:
     > Note:
     >
     > Popular Suggestions only work when `enableAppbase` prop is `true`.
+-   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
+> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 -   **enablePredictiveSuggestions** `bool` [optional]
     Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
 -   **downShiftProps** `Object` [optional]
@@ -232,6 +234,8 @@ Example uses:
         An array of popular suggestions obtained based on search value.
     -   **`querySuggestions`**: `array`
         This prop has been marked as deprecated starting `v3.12.6`. Please use the `popularSuggestions` prop instead.
+    -   **`recentSearches`**: `array`
+        An array of recent searches made by user if `enableRecentSearches` is set to `true`.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`promotedData`**: `array`
