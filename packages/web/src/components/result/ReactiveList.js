@@ -525,8 +525,19 @@ class ReactiveList extends Component {
 
 	loadMore = () => {
 		if (this.props.aggregationField && !this.props.afterKey) return;
-		if (this.props.hits && this.props.total !== this.props.hits.length) {
+		if (this.props.hits && this.props.total > this.props.hits.length) {
 			const value = this.state.from + this.props.size;
+			// If current hits length is less than the current from then it means
+			// that there are no results present.
+			// It can happen because of many reasons some of them are:
+			// 1. Using the `collapse` query to remove results
+			// 2. Shard failure
+			// In above cases infinite scroll should not load more results that can
+			// cause the resetting of the `from` value
+
+			if (this.props.hits.length < value) {
+				return;
+			}
 			const options = { ...getQueryOptions(this.props), ...this.getAggsQuery() };
 			this.setState({
 				from: value,

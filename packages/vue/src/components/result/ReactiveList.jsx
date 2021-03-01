@@ -550,8 +550,19 @@ const ReactiveList = {
 
 		loadMore() {
 			if (this.aggregationField && !this.afterKey) return;
-			if (this.hits && !this.shouldRenderPagination && this.total !== this.hits.length) {
+			if (this.hits && !this.shouldRenderPagination && this.total > this.hits.length) {
 				const value = this.$data.from + this.$props.size;
+				// If current hits length is less than the current from then it means
+				// that there are no results present.
+				// It can happen because of many reasons some of them are:
+				// 1. Using the `collapse` query to remove results
+				// 2. Shard failure
+				// In above cases infinite scroll should not load more results that can
+				// cause the resetting of the `from` value
+
+				if (this.hits.length < value) {
+					return;
+				}
 				const options = { ...getQueryOptions(this.$props), ...this.getAggsQuery() };
 				this.from = value;
 				// Update default query to support pagination for aggregationField
