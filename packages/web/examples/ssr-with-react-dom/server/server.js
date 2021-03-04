@@ -11,7 +11,7 @@ import BookCard from '../common/BookCard';
 // settings for the ReactiveBase component
 const settings = {
 	app: 'good-books-ds',
-	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@arc-cluster-appbase-demo-6pjy6z.searchbase.io',
+	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io.searchbase.io',
 	enableAppbase: true,
 };
 
