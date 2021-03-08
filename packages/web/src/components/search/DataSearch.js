@@ -196,6 +196,10 @@ class DataSearch extends Component {
 			&& this.state.currentValue !== this.props.selectedValue
 		) {
 			const { value, onChange } = this.props;
+			if (!this.props.selectedValue && this.state.currentValue) {
+				// selected value is cleared, call onValueSelected
+				this.onValueSelected('', causes.CLEAR_VALUE, null);
+			}
 			if (value === undefined) {
 				this.setValue(this.props.selectedValue || '', true, this.props);
 			} else if (onChange) {
@@ -555,7 +559,7 @@ class DataSearch extends Component {
 		if (onChange) {
 			onChange('', this.triggerQuery);
 		}
-		this.onValueSelected(null, causes.CLEAR_VALUE);
+		this.onValueSelected('', causes.CLEAR_VALUE, null);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {

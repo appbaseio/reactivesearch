@@ -209,6 +209,10 @@ class CategorySearch extends Component {
 			this.props.selectedValue !== prevProps.selectedValue
 			&& this.state.currentValue !== this.props.selectedValue
 		) {
+			if (!this.props.selectedValue && this.state.currentValue) {
+				// selected value is cleared, call onValueSelected
+				this.onValueSelected('', causes.CLEAR_VALUE, null);
+			}
 			const { value, onChange } = this.props;
 			if (value === undefined) {
 				this.setValue(
@@ -612,7 +616,7 @@ class CategorySearch extends Component {
 	clearValue = () => {
 		this.isPending = false;
 		this.setValue('', true);
-		this.onValueSelected(null, causes.CLEAR_VALUE, null);
+		this.onValueSelected('', causes.CLEAR_VALUE, null);
 	};
 
 	handleKeyDown = (event, highlightedIndex) => {

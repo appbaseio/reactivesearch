@@ -280,6 +280,10 @@ const DataSearch = {
 		},
 		selectedValue(newVal, oldVal) {
 			if (oldVal !== newVal && this.$data.currentValue !== newVal) {
+				if (!newVal && this.$data.currentValue) {
+					// selected value is cleared, call onValueSelected
+					this.onValueSelectedHandler("", causes.CLEAR_VALUE);
+				}
 				this.setValue(newVal || '', true, this.$props);
 			}
 		},
@@ -515,7 +519,7 @@ const DataSearch = {
 		clearValue() {
 			this.isPending = false;
 			this.setValue('', true);
-			this.onValueSelectedHandler(null, causes.CLEAR_VALUE);
+			this.onValueSelectedHandler("", causes.CLEAR_VALUE);
 		},
 
 		handleKeyDown(event, highlightedIndex) {
