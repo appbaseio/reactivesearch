@@ -214,11 +214,11 @@ class ReactiveList extends Component {
 			});
 		}
 
-		if (nextProps.pagination && nextProps.total !== this.props.total) {
-			this.setState({
-				totalPages: nextProps.total / nextProps.size,
-				currentPage: 0,
-			});
+		if (nextProps.pagination && (nextProps.total !== this.props.total || nextProps.size !== this.props.size)) {
+		    this.setState({
+			totalPages: nextProps.total / nextProps.size,
+			currentPage: 0
+		    });
 		}
 	}
 
