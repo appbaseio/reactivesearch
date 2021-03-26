@@ -56,6 +56,8 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import RecentSvg from '../shared/RecentSvg';
+import PopularSvg from '../shared/PopularSvg';
 
 const Text = withTheme(props => (
 	<span
@@ -1054,6 +1056,16 @@ class CategorySearch extends Component {
 		const defaultSuggestions = isPopularSuggestionsEnabled
 			? [...this.normalizedRecentSearches, ...defaultPopularSuggestions]
 			: this.normalizedRecentSearches;
+		defaultSuggestions.map((suggestion) => {
+			if (!suggestion._score) {
+				// eslint-disable-next-line no-param-reassign
+				suggestion._recent_search = true;
+			} else {
+				// eslint-disable-next-line no-param-reassign
+				suggestion._popular_suggestion = true;
+			}
+			return suggestion;
+		});
 		return getTopSuggestions(
 			// use default popular suggestions if value is empty
 			defaultSuggestions,
@@ -1082,7 +1094,9 @@ class CategorySearch extends Component {
 
 	render() {
 		const { currentValue } = this.state;
-		const { theme, themePreset, size } = this.props;
+		const {
+			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
+		} = this.props;
 		const finalSuggestionsList = this.parsedSuggestions;
 		const hasSuggestions = currentValue
 			? finalSuggestionsList.length || this.topSuggestions.length : this.defaultSuggestions.length;
@@ -1187,8 +1201,13 @@ class CategorySearch extends Component {
 																highlightedIndex,
 																index,
 															),
+															justifyContent: 'flex-start',
 														}}
 													>
+														<div style={{ padding: '0 10px 0 0' }}>
+															{sugg.source._recent_search && <RecentSvg className={getClassName(this.props.innerClass, 'recentIcon') || null} icon={recentSearchesIcon} />}
+															{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.props.innerClass, 'popularIcon') || null} icon={popularSearchesIcon} />}
+														</div>
 														<SuggestionItem
 															currentValue={currentValue}
 															suggestion={sugg}
@@ -1359,6 +1378,9 @@ CategorySearch.propTypes = {
 	URLParams: types.bool,
 	strictSelection: types.bool,
 	searchOperators: types.bool,
+	/* eslint-disable react/forbid-prop-types */
+	recentSearchesIcon: types.any,
+	popularSearchesIcon: types.any,
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,
