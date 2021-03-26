@@ -25,6 +25,8 @@ import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
+import RecentSvg from '../shared/RecentSvg';
+import PopularSvg from '../shared/PopularSvg';
 
 const {
 	updateQuery,
@@ -139,6 +141,14 @@ const DataSearch = {
 			const defaultSuggestions = isPopularSuggestionsEnabled
 				? [...this.normalizedRecentSearches, ...(this.defaultPopularSuggestions || [])]
 				: this.normalizedRecentSearches;
+			defaultSuggestions.map((suggestion) => {
+				if (!suggestion._score) {
+					suggestion._recent_search = true;
+				} else {
+					suggestion._popular_suggestion = true;
+				}
+				return suggestion;
+			});
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				defaultSuggestions,
@@ -206,6 +216,8 @@ const DataSearch = {
 		strictSelection: VueTypes.bool.def(false),
 		nestedField: types.string,
 		enablePredictiveSuggestions: VueTypes.bool.def(false),
+		recentSearchesIcon: VueTypes.any,
+		popularSearchesIcon: VueTypes.any,
 		//	mic props
 		showVoiceSearch: types.bool.def(false),
 		getMicInstance: types.func,
@@ -705,6 +717,7 @@ const DataSearch = {
 	},
 	render() {
 		const { theme, size } = this.$props;
+		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
 		const hasSuggestions
 		= this.currentValue
 			? this.suggestionsList.length || this.topSuggestions.length : this.defaultSearchSuggestions.length;
@@ -841,8 +854,13 @@ const DataSearch = {
 																	highlightedIndex,
 																	this.suggestionsList.length + index,
 																),
+																justifyContent: 'flex-start',
 															}}
 														>
+															<div style={{ padding: '0 10px 0 0' }}>
+																{sugg.source._recent_search && <RecentSvg className={getClassName(this.$props.innerClass, 'recent-icon') || null} icon={recentSearchesIcon} />}
+																{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.$props.innerClass, 'popular-icon') || null} icon={popularSearchesIcon} />}
+															</div>
 															<SuggestionItem
 																currentValue={this.currentValue}
 																suggestion={sugg}
