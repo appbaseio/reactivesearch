@@ -1205,8 +1205,8 @@ class CategorySearch extends Component {
 														}}
 													>
 														<div style={{ padding: '0 10px 0 0' }}>
-															{sugg.source._recent_search && <RecentSvg className={getClassName(this.props.innerClass, 'recentIcon') || null} icon={recentSearchesIcon} />}
-															{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.props.innerClass, 'popularIcon') || null} icon={popularSearchesIcon} />}
+															{sugg.source._recent_search && <RecentSvg className={getClassName(this.props.innerClass, 'recent-icon') || null} icon={recentSearchesIcon} />}
+															{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.props.innerClass, 'popular-icon') || null} icon={popularSearchesIcon} />}
 														</div>
 														<SuggestionItem
 															currentValue={currentValue}
