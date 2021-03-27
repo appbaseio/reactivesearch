@@ -346,7 +346,7 @@ Or you can also use render as prop.
 ```
 
 -   **renderNoSuggestion** `String|slot-scope` [optional]
-    can be used to render a message when there is no suggestions found.
+    can be used to render a message when there are no suggestions found.
 -   **renderError** `String|Function|slot-scope` [optional]
     can be used to render an error message in case of any error.
 
@@ -452,6 +452,37 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
         </template>
     ```
 
+-   **recentSearchesIcon** `slot-scope` [optional]
+You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-icon` key in the `innerClass` prop.
+
+    ```html
+        <DataSearch
+            ...
+            :enableRecentSearches="true"
+            :innerClass="{
+                'recent-icon': '...',
+            }"
+        >
+            <recent-icon slot="recentSearchesIcon" />
+        </DataSearch>
+    ```
+
+-   **popularSearchesIcon** `slot-scope` [optional]
+You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-icon` key in the `innerClass` prop.
+
+    ```html
+        <DataSearch
+            ...
+            :enablePopularSuggestions="true"
+            :innerClass="{
+                'popular-icon': '...'
+            }"
+        >
+            <popular-icon slot="popularSearchesIcon" />
+        </DataSearch>
+    ```
+
+
 ## Demo
 
 <br />
@@ -464,6 +495,8 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
 
 -   `title`
 -   `input`
+-   `recent-icon`
+-   `popular-icon`
 
 Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 

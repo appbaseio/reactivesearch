@@ -45,6 +45,8 @@ Then refer to them in your stylesheet.
 }
 ```
 
+Use the `recent-icon` and `popular-icon` keys to provide custom styles to your recent searches and popular icons.
+
 ## CSS Specificity
 
 While writing styles using `innerClass`, it's important to keep [CSS specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) in mind in order to get the desired results.
