@@ -3,7 +3,7 @@ const RecentSvg = {
     props: ['className', 'icon'],
     data() {
         return {
-         recent: this.$props.icon(),
+         recent: this.$props.icon && (typeof (this.$props.icon) === 'function') ? this.$props.icon() : null,
         }
       },
     render() {

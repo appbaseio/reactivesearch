@@ -3,14 +3,14 @@ const PopularSvg = {
     props: ['className', 'icon'],
     data() {
         return {
-            recent: this.$props.icon(),
+            popular: this.$props.icon && typeof (this.$props.icon) === 'function' ? this.$props.icon() : null,
         }
         },
     render() {
-        if (this.recent) {
+        if (this.popular) {
             return (
                 <div class={this.$props.className}>
-                    {this.recent}
+                    {this.popular}
                 </div>
                 );
         }
