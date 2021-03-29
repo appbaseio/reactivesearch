@@ -677,3 +677,34 @@ Here, we are specifying that the suggestions should update whenever one of the b
     can be used to render a message in case of no list items.
 
 -   **renderMic** `slot`can be used to render the custom mic option
+
+-   **recentSearchesIcon** `slot-scope` [optional]
+You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-search-icon` key in the `innerClass` prop.
+
+    ```jsx
+        <search-box
+            ...
+            :enableRecentSearches="true"
+            :innerClass="{
+                'recent-search-icon': '...',
+            }"
+        >
+            <recent-icon slot="recentSearchesIcon" />
+        </search-box>
+    ```
+
+-   **popularSearchesIcon** `slot-scope` [optional]
+You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
+
+    ```jsx
+        <search-box
+            ...
+            :enablePopularSuggestions="true"
+            :innerClass="{
+                'popular-search-icon': '...'
+            }"
+        >
+            <popular-icon slot="popularSearchesIcon" />
+        </search-box>
+    ```
+

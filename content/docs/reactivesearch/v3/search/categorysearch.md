@@ -463,7 +463,7 @@ Or you can also use render function as children
     You can pass a callback function that gets triggered in case of an error and provides the `error` object which can be used for debugging or giving feedback to the user if needed.
 
 -   **recentSearchesIcon** `JSX` [optional]
-You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-icon` key in the `innerClass` prop.
+You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-search-icon` key in the `innerClass` prop.
 
     ```html
         <CategorySearch
@@ -477,7 +477,7 @@ You can use a custom icon in place of the default icon for the recent search ite
     ```
 
 -   **popularSearchesIcon** `JSX` [optional]
-You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-icon` key in the `innerClass` prop.
+You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
 
     ```html
         <CategorySearch
