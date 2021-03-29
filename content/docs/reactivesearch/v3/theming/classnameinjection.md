@@ -45,7 +45,7 @@ Then refer to them in your stylesheet.
 }
 ```
 
-Use the `recent-icon` and `popular-icon` keys to provide custom styles to your recent searches and popular icons.
+Use the `recent-search-icon` and `popular-search-icon` keys to provide custom styles to your recent searches and popular icons.
 
 ## CSS Specificity
 

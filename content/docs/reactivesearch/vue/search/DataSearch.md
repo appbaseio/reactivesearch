@@ -460,7 +460,7 @@ You can use a custom icon in place of the default icon for the recent search ite
             ...
             :enableRecentSearches="true"
             :innerClass="{
-                'recent-icon': '...',
+                'recent-search-icon': '...',
             }"
         >
             <recent-icon slot="recentSearchesIcon" />
@@ -475,7 +475,7 @@ You can use a custom icon in place of the default icon for the popular searches 
             ...
             :enablePopularSuggestions="true"
             :innerClass="{
-                'popular-icon': '...'
+                'popular-search-icon': '...'
             }"
         >
             <popular-icon slot="popularSearchesIcon" />
@@ -495,8 +495,8 @@ You can use a custom icon in place of the default icon for the popular searches 
 
 -   `title`
 -   `input`
--   `recent-icon`
--   `popular-icon`
+-   `recent-search-icon`
+-   `popular-search-icon`
 
 Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
