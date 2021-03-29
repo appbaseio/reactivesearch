@@ -108,7 +108,7 @@ const Pagination = {
 					onClick={onPrevPage}
 					tabIndex="0"
 				>
-					Prev
+					<
 				</Button>
 				{
 					<Button
@@ -139,7 +139,7 @@ const Pagination = {
 					onClick={onNextPage}
 					tabIndex="0"
 				>
-					Next
+					>
 				</Button>
 			</div>
 		);
