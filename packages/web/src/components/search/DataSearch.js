@@ -1083,8 +1083,8 @@ class DataSearch extends Component {
 													}}
 												>
 													<div style={{ padding: '0 10px 0 0' }}>
-														{sugg.source._recent_search && <RecentSvg className={getClassName(this.props.innerClass, 'recent-icon') || null} icon={recentSearchesIcon} />}
-														{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.props.innerClass, 'popular-icon') || null} icon={popularSearchesIcon} />}
+														{sugg.source._recent_search && <RecentSvg className={getClassName(this.props.innerClass, 'recent-search-icon') || null} icon={recentSearchesIcon} />}
+														{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.props.innerClass, 'popular-search-icon') || null} icon={popularSearchesIcon} />}
 													</div>
 													<SuggestionItem
 														currentValue={currentValue}
