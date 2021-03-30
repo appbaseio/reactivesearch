@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.6.24":
-  version "9.6.24"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.6.24.tgz#910432b1cf339e405ca2851c4ea433d78425d696"
+"@appbaseio/reactivecore@9.10.0":
+  version "9.10.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.10.0.tgz#082b97d11f8e80b5398225e547878a0521e8b965"
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -12,11 +12,11 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.7.10":
-  version "1.7.10"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.7.10.tgz#62fb1b83b3b86b6a494b628d713963b4bb2d80b5"
+"@appbaseio/reactivesearch-vue@1.12.1":
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.12.1.tgz#8fc8607492f47a84b63a92f73c660ac7ae57a888"
   dependencies:
-    "@appbaseio/reactivecore" "9.6.24"
+    "@appbaseio/reactivecore" "9.10.0"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^4.1.0"
@@ -8147,8 +8147,8 @@ xtend@^4.0.0, xtend@~4.0.1:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 
 y18n@^3.2.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.2.tgz#85c901bd6470ce71fc4bb723ad209b70f7f28696"
 
 "y18n@^3.2.1 || ^4.0.0", y18n@^4.0.0:
   version "4.0.0"
