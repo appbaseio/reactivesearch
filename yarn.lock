@@ -60,10 +60,10 @@
     react-slick "^0.24.0"
     slick-carousel "^1.8.1"
 
-"@appbaseio/reactivecore@9.10.0":
-  version "9.10.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.10.0.tgz#082b97d11f8e80b5398225e547878a0521e8b965"
-  integrity sha512-SHtx7hIwJ/gBaVMXViszbeHqezE6T6hsj5EYY2AiWJKJLYPGxG2FZMtHqffRygoTByf7TqIj+33WL9QZsCr1+A==
+"@appbaseio/reactivecore@9.10.1":
+  version "9.10.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.10.1.tgz#ffe7bcdc627c898bcd8b79d11a81f597f3b484a5"
+  integrity sha512-JS8zIpknOantdk0BL2g4cZtO8ttPRi8UP4aKoytBG3aPojxXrDkFHlJCL4FBpf6MGPjwpAVnuhJW3BrYilQgGw==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -24025,9 +24025,9 @@ xxhashjs@^0.2.1:
     cuint "^0.2.2"
 
 y18n@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.1.tgz#6d15fba884c08679c0d77e88e7759e811e07fa41"
-  integrity sha1-bRX7qITAhnnA136I53WegR4H+kE=
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-3.2.2.tgz#85c901bd6470ce71fc4bb723ad209b70f7f28696"
+  integrity sha512-uGZHXkHnhF0XeeAPgnKfPv1bgKAYyVvmNL1xlKsPYZPaIHxGti2hHqvOCQv71XMsLxu1QjergkqogUnms5D3YQ==
 
 "y18n@^3.2.1 || ^4.0.0", y18n@^4.0.0:
   version "4.0.0"
