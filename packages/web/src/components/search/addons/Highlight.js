@@ -14,6 +14,9 @@ const highlightedStyling = css`
 		background-color: transparent;
 		color: inherit;
 	}
+	.predictive-suggestions {
+		font-style: italic;
+	}
 `;
 
 const Highlight = (props) => {
