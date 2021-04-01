@@ -6,7 +6,7 @@ const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
 	max-width: 100%;
 
-	a {
+	button {
 		margin: 2px 3px;
 		padding: 5px 8px;
 		font-size: 0.85rem;
@@ -46,7 +46,7 @@ const pagination = css`
 	max-width: 100%;
 	text-align: center;
 
-	a {
+	button {
 		margin: 0 3px;
 	}
 `;
@@ -55,14 +55,14 @@ const toggleButtons = css`
 	margin: 0 -3px;
 	max-width: 100%;
 
-	a {
+	button {
 		margin: 3px 3px;
 	}
 `;
 
 const numberBoxContainer = css`
 	margin: 0 -5px;
-	a {
+	button {
 		margin: 5px;
 	}
 	span {
@@ -100,7 +100,7 @@ const disabled = ({ theme }) => css`
 	}
 `;
 
-const Button = styled('a')`
+const Button = styled('button')`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
