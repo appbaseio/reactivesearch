@@ -18,9 +18,6 @@ const PredictiveSuggestion = styled('span')`
 		font-weight: 600;
 		padding: 0;
 	}
-	.predictive-suggestions {
-		font-style: italic;
-	}
 `
 
 const SuggestionItem = {
