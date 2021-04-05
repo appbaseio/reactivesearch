@@ -43,6 +43,7 @@ import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import Mic from './addons/Mic';
+import CustomSvg from '../shared/CustomSvg';
 import {
 	connect,
 	isFunction,
@@ -56,8 +57,6 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
-import RecentSvg from '../shared/RecentSvg';
-import PopularSvg from '../shared/PopularSvg';
 
 const Text = withTheme(props => (
 	<span
@@ -1023,7 +1022,7 @@ class CategorySearch extends Component {
 		const {
 			recentSearches,
 		} = this.props;
-		return recentSearches || [];
+		return (recentSearches || []).map(search => ({ ...search, _recent_search: true }));
 	}
 
 	get normalizedPopularSuggestions() {
@@ -1056,16 +1055,6 @@ class CategorySearch extends Component {
 		const defaultSuggestions = isPopularSuggestionsEnabled
 			? [...this.normalizedRecentSearches, ...defaultPopularSuggestions]
 			: this.normalizedRecentSearches;
-		defaultSuggestions.map((suggestion) => {
-			if (!suggestion._score) {
-				// eslint-disable-next-line no-param-reassign
-				suggestion._recent_search = true;
-			} else {
-				// eslint-disable-next-line no-param-reassign
-				suggestion._popular_suggestion = true;
-			}
-			return suggestion;
-		});
 		return getTopSuggestions(
 			// use default popular suggestions if value is empty
 			defaultSuggestions,
@@ -1205,8 +1194,22 @@ class CategorySearch extends Component {
 														}}
 													>
 														<div style={{ padding: '0 10px 0 0' }}>
-															{sugg.source._recent_search && <RecentSvg className={getClassName(this.props.innerClass, 'recent-search-icon') || null} icon={recentSearchesIcon} />}
-															{sugg.source._popular_suggestion && <PopularSvg className={getClassName(this.props.innerClass, 'popular-search-icon') || null} icon={popularSearchesIcon} />}
+															{sugg.source
+																&& sugg.source._recent_search
+																&& <CustomSvg
+																	iconId={`${sugg.id}-icon`}
+																	className={getClassName(this.props.innerClass, 'recent-search-icon') || null}
+																	icon={recentSearchesIcon}
+																	type="recent-search-icon"
+																/>}
+															{sugg.source
+																&& sugg.source._popular_suggestion
+																&& <CustomSvg
+																	iconId={`${sugg.id}-icon`}
+																	className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
+																	icon={popularSearchesIcon}
+																	type="popular-search-icon"
+																/>}
 														</div>
 														<SuggestionItem
 															currentValue={currentValue}
@@ -1444,7 +1447,10 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time),
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
+	defaultPopularSuggestions: (state.defaultPopularSuggestions[props.componentId] || [])
+		.map(suggestion => (
+			{ ...suggestion, _popular_suggestion: true }
+		)),
 	popularSuggestions: state.querySuggestions[props.componentId],
 	recentSearches: state.recentSearches.data,
 });
