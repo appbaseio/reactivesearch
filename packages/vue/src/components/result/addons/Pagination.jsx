@@ -19,6 +19,8 @@ const Pagination = {
 		setPage: types.func,
 		totalPages: types.number,
 		showEndPage: types.bool,
+		prevLabel: types.string,
+		nextLabel: types.string,
 	},
 	render(createElement, context) {
 		const { props } = context;
@@ -108,7 +110,7 @@ const Pagination = {
 					onClick={onPrevPage}
 					tabIndex="0"
 				>
-					Prev
+					{props.prevLabel || 'Prev'}
 				</Button>
 				{
 					<Button
@@ -139,7 +141,7 @@ const Pagination = {
 					onClick={onNextPage}
 					tabIndex="0"
 				>
-					Next
+					{props.nextLabel || 'Next'}
 				</Button>
 			</div>
 		);
