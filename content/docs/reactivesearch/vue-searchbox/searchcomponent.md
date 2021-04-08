@@ -602,6 +602,8 @@ The following methods can be used to set or update the properties in the search 
 -   **setValue** `( value: any, options?: Options ) => void`  can be used to set the `value` property
 -   **setSize** `( size: number, options?: Options ) => void`  can be used to set the `size` property
 -   **setFrom** `( from: number, options?: Options ) => void` can be used to set the `from` property. Useful to implement pagination.
+-   **setAfter** `(after: object, options?: Options) => void`
+    can be used to set the `after` property, which is useful while implementing pagination when the `type` of the component is `term`. The `after` key is a a property of `aggregationData`.
 -   **setFuzziness** `( fuzziness: string|number, options?: Options ) => void` can be used to set the `fuzziness` property.
 -   **setIncludeFields** `( includeFields: Array<string>, options?: Options ) => void` can be used to set the `includeFields` property.
 -   **setExcludeFields** `( excludeFields: Array<string>, options?: Options ) => void` can be used to set the `excludeFields` property.

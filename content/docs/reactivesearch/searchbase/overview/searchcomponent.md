@@ -571,7 +571,7 @@ The following methods of `SearchComponent` class can be used to set or update th
 -   **setFrom** `(from: number, options?: Options) => void`
     can be used to set the `from` property, which is useful while implementing pagination
 -   **setAfter** `(after: object, options?: Options) => void`
-    can be used to set the `after` property, which is useful while implementing pagination when the `type` of the component is `term`
+    can be used to set the `after` property, which is useful while implementing pagination when the `type` of the component is `term`. The `after` key is a a property of `aggregationData`.
 -   **setFuzziness** `(fuzziness: number | string, options?: Options) => void`
     can be used to set the `fuzziness` property
 -   **setIncludeFields** `(includeFields: Array<string>, options?: Options) => void`
