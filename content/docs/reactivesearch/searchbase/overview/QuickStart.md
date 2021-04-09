@@ -167,7 +167,8 @@ filterComponent.triggerDefaultQuery();
 // Build UI to display language options
 filterComponent.subscribeToStateChanges(
 	change => {
-		const aggregations = change.aggregations.next;
+		const aggregations = change.aggregations.
+		;
 		const container = document.getElementById('language-filter');
 		container.innerHTML = '';
 		aggregations.data.forEach(i => {
@@ -245,7 +246,7 @@ Add this in your HTML
 
 The following demo explains the `searchbase` integration to build a basic search experience with a facet.
 
-<iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/next/packages/searchbase/examples/with-facet?fontsize=14&hidenavigation=1&theme=dark&view=preview"
+<iframe src="https://codesandbox.io/embed/github/appbaseio/searchbox/tree/master/packages/searchbase/examples/with-facet?fontsize=14&hidenavigation=1&theme=dark&view=preview"
      style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
      title="appbaseio/searchbox: with-facet"
      allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
