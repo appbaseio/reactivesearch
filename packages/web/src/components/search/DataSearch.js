@@ -897,7 +897,7 @@ class DataSearch extends Component {
 		const {
 			recentSearches,
 		} = this.props;
-		return (recentSearches || []).map(search => ({ ...search, _recent_search: true }));
+		return recentSearches;
 	}
 
 	get normalizedPopularSuggestions() {
@@ -927,9 +927,14 @@ class DataSearch extends Component {
 		if (currentValue) {
 			return [];
 		}
+		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => (
+			{ ...suggestion, _popular_suggestion: true }
+		));
+		const customNormalizedRecentSearches = this.normalizedRecentSearches
+			.map(search => ({ ...search, _recent_search: true }));
 		const defaultSuggestions = isPopularSuggestionsEnabled
-			? [...this.normalizedRecentSearches, ...defaultPopularSuggestions]
-			: this.normalizedRecentSearches;
+			? [...customNormalizedRecentSearches, ...customDefaultPopularSuggestions]
+			: customNormalizedRecentSearches;
 
 		return getTopSuggestions(
 			// use default popular suggestions if value is empty
@@ -1076,7 +1081,7 @@ class DataSearch extends Component {
 														{sugg.source
 															&& sugg.source._recent_search
 															&& <CustomSvg
-																iconId={`${sugg.id}-icon`}
+																iconId={`${sugg.source && sugg.source.id ? sugg.source.id : sugg.value}-icon`}
 																className={getClassName(this.props.innerClass, 'recent-search-icon') || null}
 																icon={recentSearchesIcon}
 																type="recent-search-icon"
@@ -1084,7 +1089,7 @@ class DataSearch extends Component {
 														{sugg.source
 															&& sugg.source._popular_suggestion
 															&& <CustomSvg
-																iconId={`${sugg.id}-icon`}
+																iconId={`${sugg.source && sugg.source.id ? sugg.source.id : sugg.value}-icon`}
 																className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
 																icon={popularSearchesIcon}
 																type="popular-search-icon"
@@ -1117,14 +1122,24 @@ class DataSearch extends Component {
 															highlightedIndex,
 															suggestionsList.length + index,
 														),
+														justifyContent: 'flex-start',
 													}}
 												>
+													<div style={{ padding: '0 10px 0 0' }}>
+														<CustomSvg
+															iconId={`${sugg.source && sugg.source.id ? sugg.source.id : sugg.value}-icon`}
+															className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
+															icon={popularSearchesIcon}
+															type="popular-search-icon"
+														/>
+													</div>
 													<SuggestionItem
 														currentValue={currentValue}
 														suggestion={sugg}
 													/>
 												</li>
-											))}
+											),
+											)}
 									</ul>
 								) : (
 									this.renderNoSuggestion(suggestionsList)
@@ -1257,9 +1272,8 @@ DataSearch.propTypes = {
 	strictSelection: types.bool,
 	searchOperators: types.bool,
 	enablePredictiveSuggestions: types.bool,
-	/* eslint-disable react/forbid-prop-types */
-	recentSearchesIcon: types.any,
-	popularSearchesIcon: types.any,
+	recentSearchesIcon: types.componentObject,
+	popularSearchesIcon: types.componentObject,
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,
@@ -1314,10 +1328,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	popularSuggestions: state.querySuggestions[props.componentId],
-	defaultPopularSuggestions: (state.defaultPopularSuggestions[props.componentId] || [])
-		.map(suggestion => (
-			{ ...suggestion, _popular_suggestion: true }
-		)),
+	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	recentSearches: state.recentSearches.data,
 	lastUsedQuery: state.queryToHits[props.componentId],
 });

@@ -122,7 +122,7 @@ const DataSearch = {
 				: [];
 		},
 		normalizedRecentSearches() {
-			return (this.recentSearches || []).map(search => ({...search, _recent_search: true}));
+			return this.recentSearches;
 		},
 		normalizedPopularSuggestions() {
 			return getTopSuggestions(
@@ -137,9 +137,15 @@ const DataSearch = {
 			if (this.currentValue) {
 				return [];
 			}
+			const customDefaultPopularSuggestions = (this.defaultPopularSuggestions || []).map(suggestion => (
+				{ ...suggestion, _popular_suggestion: true }
+			));
+			const customNormalizedRecentSearches = (this.normalizedRecentSearches || [])
+				.map(search => ({ ...search, _recent_search: true }));
+
 			const defaultSuggestions = isPopularSuggestionsEnabled
-				? [...this.normalizedRecentSearches, ...(this.defaultPopularSuggestions || [])]
-				: this.normalizedRecentSearches;
+				? [...customNormalizedRecentSearches, ...(customDefaultPopularSuggestions || [])]
+				: customNormalizedRecentSearches;
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				defaultSuggestions,
@@ -887,8 +893,12 @@ const DataSearch = {
 																	highlightedIndex,
 																	this.suggestionsList.length + index,
 																),
+																justifyContent: 'flex-start',
 															}}
 														>
+															<div style={{ padding: '0 10px 0 0' }}>
+																<CustomSvg className={getClassName(this.$props.innerClass, 'popular-search-icon') || null} icon={popularSearchesIcon} type="popular-search-icon" />
+															</div>
 															<SuggestionItem
 																currentValue={this.currentValue}
 																suggestion={sugg}
@@ -1124,7 +1134,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	querySuggestions: state.querySuggestions[props.componentId],
-	defaultPopularSuggestions: (state.defaultPopularSuggestions[props.componentId] || []).map(suggestion => ({...suggestion, _popular_suggestion: true})),
+	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	componentProps: state.props[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
 	recentSearches: state.recentSearches.data,
