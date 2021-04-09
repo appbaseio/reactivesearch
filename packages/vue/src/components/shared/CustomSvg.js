@@ -1,6 +1,10 @@
 const CustomSvg = {
     name: 'CustomSvg',
-    props: ['className', 'icon', 'type'],
+    props: {
+		className: String,
+		icon: Function,
+		type: String
+	},
     data() {
         return {
             customIcon: this.$props.icon && typeof (this.$props.icon) === 'function' ? this.$props.icon() : null,
