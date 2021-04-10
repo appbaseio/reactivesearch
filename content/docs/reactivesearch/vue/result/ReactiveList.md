@@ -42,6 +42,8 @@ Example uses:
 	dataField="ratings"
 	paginationAt="bottom"
 	loader="Loading Results.."
+	prevLabel="Prev"
+	nextLabel="Next"
 	sortBy="desc"
 	:stream="true"
 	:pagination="false"
@@ -107,6 +109,10 @@ Example uses:
     number of results to show per view. Defaults to 10.
 -   **loader** `String|slot-scope` [optional]
     display to show the user while the data is loading, accepts `String` or `JSX` markup.
+-   **prevLabel** `String` [optional]
+    Pagination previous button text. Defaults to `Prev`.
+-   **nextLabel** `String` [optional]
+    Pagination next button text. Defaults to `Next`.
 -   **showResultStats** `Boolean` [optional]
     whether to show result stats in the form of results found and time taken. Defaults to `true`.
 -   **showEndPage** `Boolean` [optional]
