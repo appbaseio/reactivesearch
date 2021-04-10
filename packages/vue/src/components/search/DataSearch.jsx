@@ -1133,7 +1133,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-	querySuggestions: state.querySuggestions[props.componentId],
+	popularSuggestions: state.querySuggestions[props.componentId],
 	defaultPopularSuggestions: state.defaultPopularSuggestions[props.componentId],
 	componentProps: state.props[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
