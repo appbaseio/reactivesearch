@@ -1081,7 +1081,7 @@ class DataSearch extends Component {
 														{sugg.source
 															&& sugg.source._recent_search
 															&& <CustomSvg
-																iconId={`${sugg.source && sugg.source.id ? sugg.source.id : sugg.value}-icon`}
+																iconId={`${sugg.label}-icon`}
 																className={getClassName(this.props.innerClass, 'recent-search-icon') || null}
 																icon={recentSearchesIcon}
 																type="recent-search-icon"
