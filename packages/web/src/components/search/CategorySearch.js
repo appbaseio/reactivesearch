@@ -43,6 +43,7 @@ import SearchSvg from '../shared/SearchSvg';
 import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import Mic from './addons/Mic';
+import CustomSvg from '../shared/CustomSvg';
 import {
 	connect,
 	isFunction,
@@ -1021,7 +1022,7 @@ class CategorySearch extends Component {
 		const {
 			recentSearches,
 		} = this.props;
-		return recentSearches || [];
+		return recentSearches;
 	}
 
 	get normalizedPopularSuggestions() {
@@ -1051,9 +1052,14 @@ class CategorySearch extends Component {
 		if (currentValue) {
 			return [];
 		}
+		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => (
+			{ ...suggestion, _popular_suggestion: true }
+		));
+		const customNormalizedRecentSearches = this.normalizedRecentSearches
+			.map(search => ({ ...search, _recent_search: true }));
 		const defaultSuggestions = isPopularSuggestionsEnabled
-			? [...this.normalizedRecentSearches, ...defaultPopularSuggestions]
-			: this.normalizedRecentSearches;
+			? [...customNormalizedRecentSearches, ...customDefaultPopularSuggestions]
+			: customNormalizedRecentSearches;
 		return getTopSuggestions(
 			// use default popular suggestions if value is empty
 			defaultSuggestions,
@@ -1082,7 +1088,9 @@ class CategorySearch extends Component {
 
 	render() {
 		const { currentValue } = this.state;
-		const { theme, themePreset, size } = this.props;
+		const {
+			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
+		} = this.props;
 		const finalSuggestionsList = this.parsedSuggestions;
 		const hasSuggestions = currentValue
 			? finalSuggestionsList.length || this.topSuggestions.length : this.defaultSuggestions.length;
@@ -1187,8 +1195,27 @@ class CategorySearch extends Component {
 																highlightedIndex,
 																index,
 															),
+															justifyContent: 'flex-start',
 														}}
 													>
+														<div style={{ padding: '0 10px 0 0' }}>
+															{sugg.source
+																&& sugg.source._recent_search
+																&& <CustomSvg
+																	iconId={`${sugg.label}-icon`}
+																	className={getClassName(this.props.innerClass, 'recent-search-icon') || null}
+																	icon={recentSearchesIcon}
+																	type="recent-search-icon"
+																/>}
+															{sugg.source
+																&& sugg.source._popular_suggestion
+																&& <CustomSvg
+																	iconId={`${sugg.label}-icon`}
+																	className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
+																	icon={popularSearchesIcon}
+																	type="popular-search-icon"
+																/>}
+														</div>
 														<SuggestionItem
 															currentValue={currentValue}
 															suggestion={sugg}
@@ -1216,8 +1243,17 @@ class CategorySearch extends Component {
 																highlightedIndex,
 																finalSuggestionsList.length + index,
 															),
+															justifyContent: 'flex-start',
 														}}
 													>
+														<div style={{ padding: '0 10px 0 0' }}>
+															<CustomSvg
+																iconId={`${sugg.label}-icon`}
+																className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
+																icon={popularSearchesIcon}
+																type="popular-search-icon"
+															/>
+														</div>
 														<SuggestionItem
 															currentValue={currentValue}
 															suggestion={sugg}
@@ -1359,6 +1395,8 @@ CategorySearch.propTypes = {
 	URLParams: types.bool,
 	strictSelection: types.bool,
 	searchOperators: types.bool,
+	recentSearchesIcon: types.componentObject,
+	popularSearchesIcon: types.componentObject,
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,

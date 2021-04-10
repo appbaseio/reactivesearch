@@ -25,6 +25,7 @@ import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
+import CustomSvg from '../shared/CustomSvg'
 
 const {
 	updateQuery,
@@ -136,9 +137,15 @@ const DataSearch = {
 			if (this.currentValue) {
 				return [];
 			}
+			const customDefaultPopularSuggestions = (this.defaultPopularSuggestions || []).map(suggestion => (
+				{ ...suggestion, _popular_suggestion: true }
+			));
+			const customNormalizedRecentSearches = (this.normalizedRecentSearches || [])
+				.map(search => ({ ...search, _recent_search: true }));
+
 			const defaultSuggestions = isPopularSuggestionsEnabled
-				? [...this.normalizedRecentSearches, ...(this.defaultPopularSuggestions || [])]
-				: this.normalizedRecentSearches;
+				? [...customNormalizedRecentSearches, ...(customDefaultPopularSuggestions || [])]
+				: customNormalizedRecentSearches;
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				defaultSuggestions,
@@ -206,6 +213,8 @@ const DataSearch = {
 		strictSelection: VueTypes.bool.def(false),
 		nestedField: types.string,
 		enablePredictiveSuggestions: VueTypes.bool.def(false),
+		recentSearchesIcon: VueTypes.any,
+		popularSearchesIcon: VueTypes.any,
 		//	mic props
 		showVoiceSearch: types.bool.def(false),
 		getMicInstance: types.func,
@@ -705,6 +714,7 @@ const DataSearch = {
 	},
 	render() {
 		const { theme, size } = this.$props;
+		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
 		const hasSuggestions
 		= this.currentValue
 			? this.suggestionsList.length || this.topSuggestions.length : this.defaultSearchSuggestions.length;
@@ -841,8 +851,13 @@ const DataSearch = {
 																	highlightedIndex,
 																	this.suggestionsList.length + index,
 																),
+																justifyContent: 'flex-start',
 															}}
 														>
+															<div style={{ padding: '0 10px 0 0' }}>
+																{sugg.source && sugg.source._recent_search && <CustomSvg className={getClassName(this.$props.innerClass, 'recent-search-icon') || null} icon={recentSearchesIcon} type="recent-search-icon" />}
+																{sugg.source && sugg.source._popular_suggestion && <CustomSvg className={getClassName(this.$props.innerClass, 'popular-search-icon') || null} icon={popularSearchesIcon} type="popular-search-icon" />}
+															</div>
 															<SuggestionItem
 																currentValue={this.currentValue}
 																suggestion={sugg}
@@ -878,8 +893,12 @@ const DataSearch = {
 																	highlightedIndex,
 																	this.suggestionsList.length + index,
 																),
+																justifyContent: 'flex-start',
 															}}
 														>
+															<div style={{ padding: '0 10px 0 0' }}>
+																<CustomSvg className={getClassName(this.$props.innerClass, 'popular-search-icon') || null} icon={popularSearchesIcon} type="popular-search-icon" />
+															</div>
 															<SuggestionItem
 																currentValue={this.currentValue}
 																suggestion={sugg}
