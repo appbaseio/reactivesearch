@@ -10,6 +10,7 @@
 				componentId="BookSensor"
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
+				:size="3"
 				:enablePopularSuggestions="true"
 				:enableRecentSearches="true"
 			/>
