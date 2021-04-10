@@ -897,7 +897,7 @@ class DataSearch extends Component {
 		const {
 			recentSearches,
 		} = this.props;
-		return recentSearches;
+		return recentSearches || [];
 	}
 
 	get normalizedPopularSuggestions() {
