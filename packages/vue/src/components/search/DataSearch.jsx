@@ -122,7 +122,7 @@ const DataSearch = {
 				: [];
 		},
 		normalizedRecentSearches() {
-			return this.recentSearches;
+			return this.recentSearches || [];
 		},
 		normalizedPopularSuggestions() {
 			return getTopSuggestions(
