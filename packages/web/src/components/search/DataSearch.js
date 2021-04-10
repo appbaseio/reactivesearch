@@ -1089,7 +1089,7 @@ class DataSearch extends Component {
 														{sugg.source
 															&& sugg.source._popular_suggestion
 															&& <CustomSvg
-																iconId={`${sugg.source && sugg.source.id ? sugg.source.id : sugg.value}-icon`}
+																iconId={`${sugg.label}-icon`}
 																className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
 																icon={popularSearchesIcon}
 																type="popular-search-icon"
