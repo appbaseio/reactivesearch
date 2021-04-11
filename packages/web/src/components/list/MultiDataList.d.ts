@@ -28,6 +28,7 @@ export interface MultiDataList extends CommonProps {
 	renderItem?: (...args: any[]) => any;
 	children?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onData?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
 }
 

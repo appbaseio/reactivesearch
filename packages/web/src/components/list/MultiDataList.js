@@ -103,6 +103,17 @@ class MultiDataList extends Component {
 			this.updateQuery(valueArray, this.props);
 		}
 
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['options', 'data', 'selectedValue'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
+		}
+
 		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
@@ -383,13 +394,19 @@ class MultiDataList extends Component {
 		}
 	};
 
-	getComponent() {
+	getData() {
 		const { currentValue } = this.state;
-		const data = {
+		return {
 			value: currentValue,
 			data: this.listItems,
-			handleChange: this.handleClick,
 			rawData: this.props.rawData,
+		};
+	}
+
+	getComponent() {
+		const data = {
+			...this.getData(),
+			handleChange: this.handleClick,
 		};
 		return getComponent(data, this.props);
 	}
@@ -550,6 +567,7 @@ MultiDataList.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	onData: types.func,
 	placeholder: types.string,
 	nestedField: types.string,
 	queryFormat: types.queryFormatSearch,

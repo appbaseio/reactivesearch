@@ -85,6 +85,17 @@ class SingleDataList extends Component {
 			}
 		});
 
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['options', 'data', 'selectedValue'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
+		}
+
 		// Treat defaultQuery and customQuery as reactive props
 		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
@@ -300,13 +311,19 @@ class SingleDataList extends Component {
 		}
 	};
 
-	getComponent() {
+	getData() {
 		const { currentValue } = this.state;
-		const data = {
+		return {
 			value: currentValue,
 			data: this.listItems,
-			handleChange: this.handleClick,
 			rawData: this.props.rawData,
+		};
+	}
+
+	getComponent() {
+		const data = {
+			...this.getData(),
+			handleChange: this.handleClick,
 		};
 		return getComponent(data, this.props);
 	}
@@ -460,6 +477,7 @@ SingleDataList.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	onData: types.func,
 	placeholder: types.string,
 	nestedField: types.string,
 	react: types.react,

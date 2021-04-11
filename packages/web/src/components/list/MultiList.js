@@ -508,13 +508,16 @@ class MultiList extends Component {
 			loading: isLoading,
 			value: currentValue,
 			data: this.listItems,
-			handleChange: this.handleClick,
 			rawData,
 		};
 	}
 
 	getComponent() {
-		return getComponent(this.getData(), this.props);
+		const data = {
+			...this.getData(),
+			handleChange: this.handleClick,
+		};
+		return getComponent(data, this.props);
 	}
 
 	render() {

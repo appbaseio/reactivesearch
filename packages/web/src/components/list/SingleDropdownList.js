@@ -120,6 +120,17 @@ class SingleDropdownList extends Component {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['error', 'isLoading', 'options', 'selectedValue'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
+		}
+
 		if (this.props.value !== prevProps.value) {
 			this.setValue(this.props.value);
 		} else if (
@@ -291,6 +302,20 @@ class SingleDropdownList extends Component {
 		return hasCustomRenderer(this.props);
 	}
 
+	getData() {
+		const { error, isLoading, rawData } = this.props;
+		const { currentValue, options } = this.state;
+		return {
+			error,
+			loading: isLoading,
+			value: currentValue,
+			data: options
+				.filter(item => String(item.key).trim().length)
+				.map(item => ({ ...item, key: String(item.key) })),
+			rawData,
+		};
+	}
+
 	getComponent = (items, downshiftProps) => {
 		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
@@ -407,6 +432,7 @@ SingleDropdownList.propTypes = {
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	onData: types.func,
 	onError: types.func,
 	placeholder: types.string,
 	searchPlaceholder: types.string,

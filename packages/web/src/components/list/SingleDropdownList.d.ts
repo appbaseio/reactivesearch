@@ -14,6 +14,7 @@ export interface SingleDropdownList extends CommonProps {
 	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onData?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	searchPlaceholder?: string;
