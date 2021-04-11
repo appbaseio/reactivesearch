@@ -15,6 +15,7 @@ export interface MultiList extends CommonProps {
 	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onData?: (...args: any[]) => any;	
 	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;

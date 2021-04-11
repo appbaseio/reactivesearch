@@ -151,6 +151,17 @@ class MultiList extends Component {
 			this.updateQuery(valueArray, this.props);
 		});
 
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['error', 'isLoading', 'options', 'selectedValue'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
+		}
+
 		let selectedValue = valueArray;
 		const { selectAllLabel } = this.props;
 
@@ -397,7 +408,7 @@ class MultiList extends Component {
 					options: [],
 				});
 			} else {
-				this.state = { 
+				this.state = {
 					...this.state || {},
 					options: [],
 				};
@@ -489,10 +500,10 @@ class MultiList extends Component {
 		return listItems;
 	}
 
-	getComponent() {
+	getData = () => {
 		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
-		const data = {
+		return {
 			error,
 			loading: isLoading,
 			value: currentValue,
@@ -500,7 +511,10 @@ class MultiList extends Component {
 			handleChange: this.handleClick,
 			rawData,
 		};
-		return getComponent(data, this.props);
+	}
+
+	getComponent() {
+		return getComponent(this.getData(), this.props);
 	}
 
 	render() {
@@ -672,6 +686,7 @@ MultiList.propTypes = {
 	loader: types.title,
 	onError: types.func,
 	renderNoResults: types.func,
+	onData: types.func,
 	onQueryChange: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
