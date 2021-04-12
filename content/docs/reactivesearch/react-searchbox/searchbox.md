@@ -414,6 +414,34 @@ Here, we are specifying that the suggestions should update whenever one of the b
 
 -   **renderMic** `Function`can be used to render the custom mic option
 
+-   **recentSearchesIcon** `JSX` [optional]
+You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-icon` key in the `innerClass` prop.
+
+    ```jsx
+        <SearchBox
+            ...
+            enableRecentSearches
+            innerClass={{
+                'recent-search-icon': '...',
+            }}
+            recentSearchesIcon={<RecentIcon />}
+        />
+    ```
+
+-   **popularSearchesIcon** `JSX` [optional]
+You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-icon` key in the `innerClass` prop.
+
+    ```jsx
+        <SearchBox
+            ...
+            enablePopularSuggestions
+            innerClass={{
+                'popular-search-icon': '...'
+            }}
+            popularSearchesIcon={<PopularIcon />}
+        />
+    ```
+
 ### Customize style
 
 -   **innerClass** `Object` `SearchBox` component supports an `innerClass` prop to provide styles to the sub-components of `SearchBox`. These are the supported keys:
@@ -421,6 +449,8 @@ Here, we are specifying that the suggestions should update whenever one of the b
     -   `title`
     -   `input`
     -   `list`
+    -   `recent-search-icon`
+    -   `popular-search-icon`
 
 -   **className** `String`
     CSS class to be injected on the component container.

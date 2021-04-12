@@ -462,6 +462,35 @@ Or you can also use render function as children
 -   **onError** `Function` [optional]
     You can pass a callback function that gets triggered in case of an error and provides the `error` object which can be used for debugging or giving feedback to the user if needed.
 
+-   **recentSearchesIcon** `JSX` [optional]
+You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-search-icon` key in the `innerClass` prop.
+
+    ```html
+        <CategorySearch
+            ...
+            enableRecentSearches
+            innerClass={{
+                'recent-search-icon': '...',
+            }}
+            recentSearchesIcon={<RecentIcon />}
+        />
+    ```
+
+-   **popularSearchesIcon** `JSX` [optional]
+You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
+
+    ```html
+        <CategorySearch
+            ...
+            enablePopularSuggestions
+            innerClass={{
+                'popular-search-icon': '...'
+            }}
+            popularSearchesIcon={<PopularIcon />}
+        />
+    ```
+
+
 ## Demo
 
 <br />
@@ -475,6 +504,8 @@ Or you can also use render function as children
 -   `title`
 -   `input`
 -   `list`
+-   `recent-search-icon`
+-   `popular-search-icon`
 
 Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
