@@ -1,8 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
-import VueRs from "@appbaseio/reactivesearch-vue";
+import { ReactiveBase, ReactiveList, DataSearch } from "@appbaseio/reactivesearch-vue";
 
-Vue.use(VueRs);
+Vue.use(ReactiveBase);
+Vue.use(ReactiveList);
+Vue.use(DataSearch);
 Vue.config.productionTip = false;
 
 new Vue({

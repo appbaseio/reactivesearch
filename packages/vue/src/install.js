@@ -1,7 +1,3 @@
-// Add polyfills to support in IE
-// eslint-disable-next-line
-import { polyfills } from '@appbaseio/reactivecore';
-
 import ReactiveList from './components/result/ReactiveList.jsx';
 import ReactiveBase from './components/ReactiveBase/index.jsx';
 import DataSearch from './components/search/DataSearch.jsx';
@@ -19,17 +15,8 @@ import ResultList from './components/result/ResultList.jsx';
 import RangeSlider from './components/range/RangeSlider.jsx';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider.jsx';
 import StateProvider from './components/basic/StateProvider.jsx';
-import initReactivesearch from './server/index';
-import version from './components/Version/index';
-import install from './install';
 
-if (typeof window !== 'undefined' && window.Vue) {
-	install(window.Vue);
-}
-
-export {
-	version,
-	install,
+const components = [
 	ReactiveList,
 	ResultCard,
 	ResultList,
@@ -43,14 +30,15 @@ export {
 	DynamicRangeSlider,
 	ReactiveComponent,
 	SelectedFilters,
+	ToggleButton,
 	SingleDropdownList,
 	MultiDropdownList,
-	ToggleButton,
 	StateProvider,
-	initReactivesearch,
-};
+];
 
-export default {
-	version,
-	install,
+export default function(Vue) {
+	components.map(component => {
+		Vue.use(component);
+		return null;
+	});
 };

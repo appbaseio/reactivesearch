@@ -18,7 +18,7 @@ let output;
 
 if (es) {
 	output = {
-		file: 'dist/@appbaseio/reactivesearch-vue.es.js',
+		dir: 'dist/es',
 		format: 'es',
 	};
 } else if (umd) {
@@ -27,20 +27,20 @@ if (es) {
 	};
 	if (minify) {
 		output = {
-			file: 'dist/@appbaseio/reactivesearch-vue.umd.min.js',
+			dir: 'dist/umd-minified',
 			format: 'umd',
 			globals: globalsUMD,
 		};
 	} else {
 		output = {
-			file: 'dist/@appbaseio/reactivesearch-vue.umd.js',
+			dir: 'dist/umd',
 			format: 'umd',
 			globals: globalsUMD,
 		};
 	}
 } else if (cjs) {
 	output = {
-		file: 'dist/@appbaseio/reactivesearch-vue.cjs.js',
+		dir: 'dist/cjs',
 		format: 'cjs',
 	};
 } else if (format) {
@@ -50,7 +50,29 @@ if (es) {
 }
 
 export default {
-	input: 'src/index.js',
+	input: {
+		index: 'src/index.js',
+		version: 'src/components/Version/index.js',
+		install: 'src/install.js',
+		ReactiveList: 'src/components/result/ReactiveList.jsx',
+		ResultCard: 'src/components/result/ResultCard.jsx',
+		ResultList: 'src/components/result/ResultList.jsx',
+		ReactiveBase: 'src/components/ReactiveBase/index.jsx',
+		DataSearch: 'src/components/search/DataSearch.jsx',
+		SingleList: 'src/components/list/SingleList.jsx',
+		MultiList: 'src/components/list/MultiList.jsx',
+		SingleRange: 'src/components/range/SingleRange.jsx',
+		MultiRange: 'src/components/range/MultiRange.jsx',
+		RangeSlider: 'src/components/range/RangeSlider.jsx',
+		DynamicRangeSlider: 'src/components/range/DynamicRangeSlider.jsx',
+		ReactiveComponent: 'src/components/basic/ReactiveComponent.jsx',
+		SelectedFilters: 'src/components/basic/SelectedFilters.jsx',
+		SingleDropdownList: 'src/components/list/SingleDropdownList.jsx',
+		MultiDropdownList: 'src/components/list/MultiDropdownList.jsx',
+		ToggleButton: 'src/components/list/ToggleButton.jsx',
+		StateProvider: 'src/components/basic/StateProvider.jsx',
+		initReactivesearch: 'src/server/index.js',
+	},
 	output: Object.assign(
 		{
 			name: umd ? 'ReactiveSearchVue' : '@appbaseio/reactivesearch-vue',

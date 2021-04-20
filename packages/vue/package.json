@@ -2,9 +2,9 @@
 	"name": "@appbaseio/reactivesearch-vue",
 	"version": "1.13.0",
 	"private": false,
-	"main": "dist/@appbaseio/reactivesearch-vue.cjs.js",
-	"jsnext:main": "dist/@appbaseio/reactivesearch-vue.es.js",
-	"module": "dist/@appbaseio/reactivesearch-vue.es.js",
+	"main": "dist/cjs/index.js",
+	"jsnext:main": "dist/es/index.js",
+	"module": "dist/es/index.js",
 	"description": "A Vue UI components library for building search experiences",
 	"keywords": [
 		"appbase",
@@ -32,6 +32,7 @@
 	"files": [
 		"dist"
 	],
+	"sideEffects": false,
 	"dependencies": {
 		"@appbaseio/reactivecore": "9.10.2",
 		"@appbaseio/vue-emotion": "0.4.4",
