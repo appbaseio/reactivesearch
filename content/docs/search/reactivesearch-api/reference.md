@@ -537,6 +537,62 @@ The following example uses all three functions (`saturation`, `log` and `sigmoid
 }
 ```
 
+### distinctField
+This property returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+| Type     | Applicable on query of type | Required |
+| ------   | --------------------------- | -------- |
+| `string` | `all`                  | false    |
+
+The following query would return the products for distinct brands.
+```js
+{
+    "query": [
+        {
+            "id": "test",
+            "dataField": [
+                "product_name"
+            ],
+            "distinctField": "brand.keyword",
+        }
+    ]
+}
+```
+
+### distinctFieldConfig
+This property allows specifying additional options to the `distinctField` property. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+| Type     | Applicable on query of type | Required |
+| ------   | --------------------------- | -------- |
+| `object` | `all`                       | false    |
+
+The following query would return the products for distinct brands. Additionally, it would return the top five products for each brand.
+```js
+{
+    "query": [
+        {
+            "id": "test",
+            "dataField": [
+                "product_name"
+            ],
+            "distinctField": "brand.keyword",
+            "distinctFieldConfig": {
+                "inner_hits": {
+                    "name": "most_recent",
+                    "size": 5,
+                    "sort": [
+                        {
+                            "crawl_timestamp.keyword": "asc"
+                        }
+                    ]
+                },
+                "max_concurrent_group_searches": 4
+            }
+        }
+    ]
+}
+```
+
 ## Settings Properties
 
 ### recordAnalytics
