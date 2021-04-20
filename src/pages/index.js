@@ -224,6 +224,21 @@ const HomePage = ({ data, location }) => {
 										],
 									},
 									'6': {
+										title: 'Speed',
+										icon: (
+											<Icon name="clock" className="dropdown-content-icon" />
+										),
+										chapters: [
+											{
+												title: 'Cache Management',
+												link: '/docs/speed/cache-management/',
+												duration: 1,
+												description:
+													'Blazing ⚡️  search performance with appbase.io cache,
+											},
+										],
+									},
+									'7': {
 										title: 'Security',
 										subtitle:
 											'Securely access and query the index using Appbase.',
@@ -256,7 +271,7 @@ const HomePage = ({ data, location }) => {
 											},
 										],
 									},
-									'7': {
+									'8': {
 										title: 'Hosting',
 										icon: (
 											<Icon name="rocket" className="dropdown-content-icon" />

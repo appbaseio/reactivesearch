@@ -618,3 +618,6 @@ The following query would return the products for distinct brands. Additionally,
 
 ### userId
 `String` It allows you to define the user id which will be used to record the Appbase.io analytics.
+
+### useCache
+`Boolean` This property when set allows you to cache the current search query. The `useCache` property takes precedence irrespective of whether caching is enabled or disabled via the dashboard.

@@ -77,6 +77,11 @@
               title: "Search Template"
             - link: /docs/security/role/
               title: "Role Based Access Control"
+      - group: Speed
+        icon: clock
+        items:
+            - link: /docs/speed/cache-management/
+              title: Cache Management
       - group: Hosting
         icon: rocket
         items:
