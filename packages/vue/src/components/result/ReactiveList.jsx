@@ -119,6 +119,8 @@ const ReactiveList = {
 		sortOptions: types.sortOptions,
 		stream: types.bool,
 		URLParams: VueTypes.bool.def(false),
+		prevLabel: types.string,
+		nextLabel: types.string,
 	},
 	computed: {
 		shouldRenderPagination() {
@@ -410,6 +412,8 @@ const ReactiveList = {
 							currentPage={this.currentPageState}
 							setPage={this.setPage}
 							innerClass={this.$props.innerClass}
+							prevLabel={this.$props.prevLabel}
+							nextLabel={this.$props.nextLabel}
 						/>
 					) : null}
 				{this.renderResults()}
@@ -435,6 +439,8 @@ const ReactiveList = {
 							setPage={this.setPage}
 							showEndPage={this.$props.showEndPage}
 							innerClass={this.$props.innerClass}
+							prevLabel={this.$props.prevLabel}
+							nextLabel={this.$props.nextLabel}
 						/>
 					) : null}
 				{this.config.url.endsWith('appbase.io') && results.length ? (
