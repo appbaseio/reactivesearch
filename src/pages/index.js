@@ -231,7 +231,7 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Cache Management',
 												link: '/docs/speed/cache-management/',
-												duration: 1,
+												duration: 3,
 												description:
 													'Blazing ⚡️ fast search performance with appbase.io cache',
 											},
@@ -239,8 +239,7 @@ const HomePage = ({ data, location }) => {
 									},
 									'7': {
 										title: 'Access Control',
-										subtitle:
-											'Out-of-the-box access control for search',
+										subtitle: 'Out-of-the-box access control for search',
 										icon: (
 											<Icon
 												name="security"
