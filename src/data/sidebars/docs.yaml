@@ -66,7 +66,12 @@
               title: "Popular Suggestions"
             - link: /docs/analytics/curated-insights/
               title: "Curated Insights"
-      - group: Security
+      - group: Speed
+        icon: zap
+        items:
+            - link: /docs/speed/cache-management/
+              title: Cache Management
+      - group: "Access Control"
         icon: security
         items:
             - link: /docs/security/credentials/
@@ -77,11 +82,6 @@
               title: "Search Template"
             - link: /docs/security/role/
               title: "Role Based Access Control"
-      - group: Speed
-        icon: clock
-        items:
-            - link: /docs/speed/cache-management/
-              title: Cache Management
       - group: Hosting
         icon: rocket
         items:

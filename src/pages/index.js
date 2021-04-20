@@ -225,23 +225,22 @@ const HomePage = ({ data, location }) => {
 									},
 									'6': {
 										title: 'Speed',
-										icon: (
-											<Icon name="clock" className="dropdown-content-icon" />
-										),
+										subtitle: 'Blazing ⚡️ fast search performance',
+										icon: <Icon name="zap" className="dropdown-content-icon" />,
 										chapters: [
 											{
 												title: 'Cache Management',
 												link: '/docs/speed/cache-management/',
 												duration: 1,
 												description:
-													'Blazing ⚡️  search performance with appbase.io cache',
+													'Blazing ⚡️ fast search performance with appbase.io cache',
 											},
 										],
 									},
 									'7': {
-										title: 'Security',
+										title: 'Access Control',
 										subtitle:
-											'Securely access and query the index using Appbase.',
+											'Out-of-the-box access control for search',
 										icon: (
 											<Icon
 												name="security"

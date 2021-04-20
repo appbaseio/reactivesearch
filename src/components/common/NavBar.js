@@ -103,6 +103,16 @@ const NavBar = ({ theme }) => {
 															/>
 															Managing Data
 														</Link>
+														<Link
+															to="/docs/hosting/clusters/"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="rocket"
+																className="dropdown-content-icon mr2"
+															/>
+															Hosting
+														</Link>
 													</div>
 													<div>
 														<Link
@@ -126,14 +136,14 @@ const NavBar = ({ theme }) => {
 															Building Search UI
 														</Link>
 														<Link
-															to="/docs/hosting/clusters/"
+															to="/docs/speed/cache-management/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
-																name="rocket"
+																name="zap"
 																className="dropdown-content-icon mr2"
 															/>
-															Hosting
+															Speed
 														</Link>
 													</div>
 													<div>
@@ -148,16 +158,6 @@ const NavBar = ({ theme }) => {
 															Actionable Analytics
 														</Link>
 														<Link
-															to="/docs/speed/cache-management/"
-															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-														>
-															<Icon
-																name="clock"
-																className="dropdown-content-icon mr2"
-															/>
-															Speed
-														</Link>
-														<Link
 															to="/docs/security/credentials/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
@@ -165,7 +165,7 @@ const NavBar = ({ theme }) => {
 																name="security"
 																className="dropdown-content-icon mr2"
 															/>
-															Security Credentials
+															Access Control
 														</Link>
 													</div>
 												</div>
