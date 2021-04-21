@@ -15,34 +15,62 @@ const umd = format === 'umd';
 const cjs = format === 'cjs';
 
 let output;
+let input;
+
+const inputChunks = {
+	index: 'src/index.js',
+	version: 'src/components/Version/index.js',
+	install: 'src/install.js',
+	ReactiveList: 'src/components/result/ReactiveList.jsx',
+	ResultCard: 'src/components/result/ResultCard.jsx',
+	ResultList: 'src/components/result/ResultList.jsx',
+	ReactiveBase: 'src/components/ReactiveBase/index.jsx',
+	DataSearch: 'src/components/search/DataSearch.jsx',
+	SingleList: 'src/components/list/SingleList.jsx',
+	MultiList: 'src/components/list/MultiList.jsx',
+	SingleRange: 'src/components/range/SingleRange.jsx',
+	MultiRange: 'src/components/range/MultiRange.jsx',
+	RangeSlider: 'src/components/range/RangeSlider.jsx',
+	DynamicRangeSlider: 'src/components/range/DynamicRangeSlider.jsx',
+	ReactiveComponent: 'src/components/basic/ReactiveComponent.jsx',
+	SelectedFilters: 'src/components/basic/SelectedFilters.jsx',
+	SingleDropdownList: 'src/components/list/SingleDropdownList.jsx',
+	MultiDropdownList: 'src/components/list/MultiDropdownList.jsx',
+	ToggleButton: 'src/components/list/ToggleButton.jsx',
+	StateProvider: 'src/components/basic/StateProvider.jsx',
+	initReactivesearch: 'src/server/index.js',
+}
 
 if (es) {
 	output = {
 		dir: 'dist/es',
 		format: 'es',
 	};
+	input = inputChunks;
 } else if (umd) {
 	const globalsUMD = {
 		vue: 'Vue',
 	};
 	if (minify) {
 		output = {
-			dir: 'dist/umd-minified',
+			file: 'dist/@appbaseio/reactivesearch-vue.umd.min.js',
 			format: 'umd',
 			globals: globalsUMD,
 		};
 	} else {
 		output = {
-			dir: 'dist/umd',
+			file: 'dist/@appbaseio/reactivesearch-vue.umd.js',
 			format: 'umd',
 			globals: globalsUMD,
 		};
 	}
+	input = 'src/index.js';
 } else if (cjs) {
 	output = {
 		dir: 'dist/cjs',
 		format: 'cjs',
 	};
+	input = inputChunks;
 } else if (format) {
 	throw new Error(`invalid format specified: "${format}".`);
 } else {
@@ -50,29 +78,7 @@ if (es) {
 }
 
 export default {
-	input: {
-		index: 'src/index.js',
-		version: 'src/components/Version/index.js',
-		install: 'src/install.js',
-		ReactiveList: 'src/components/result/ReactiveList.jsx',
-		ResultCard: 'src/components/result/ResultCard.jsx',
-		ResultList: 'src/components/result/ResultList.jsx',
-		ReactiveBase: 'src/components/ReactiveBase/index.jsx',
-		DataSearch: 'src/components/search/DataSearch.jsx',
-		SingleList: 'src/components/list/SingleList.jsx',
-		MultiList: 'src/components/list/MultiList.jsx',
-		SingleRange: 'src/components/range/SingleRange.jsx',
-		MultiRange: 'src/components/range/MultiRange.jsx',
-		RangeSlider: 'src/components/range/RangeSlider.jsx',
-		DynamicRangeSlider: 'src/components/range/DynamicRangeSlider.jsx',
-		ReactiveComponent: 'src/components/basic/ReactiveComponent.jsx',
-		SelectedFilters: 'src/components/basic/SelectedFilters.jsx',
-		SingleDropdownList: 'src/components/list/SingleDropdownList.jsx',
-		MultiDropdownList: 'src/components/list/MultiDropdownList.jsx',
-		ToggleButton: 'src/components/list/ToggleButton.jsx',
-		StateProvider: 'src/components/basic/StateProvider.jsx',
-		initReactivesearch: 'src/server/index.js',
-	},
+	input,
 	output: Object.assign(
 		{
 			name: umd ? 'ReactiveSearchVue' : '@appbaseio/reactivesearch-vue',
