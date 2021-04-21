@@ -121,6 +121,8 @@ const ReactiveList = {
 		URLParams: VueTypes.bool.def(false),
 		prevLabel: types.string,
 		nextLabel: types.string,
+		distinctField: types.string,
+		distinctFieldConfig: types.props,
 	},
 	computed: {
 		shouldRenderPagination() {

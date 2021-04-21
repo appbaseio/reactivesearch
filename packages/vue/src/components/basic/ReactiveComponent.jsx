@@ -25,6 +25,8 @@ const ReactiveComponent = {
 		react: types.react,
 		showFilter: VueTypes.bool.def(true),
 		URLParams: VueTypes.bool.def(false),
+		distinctField: types.string,
+		distinctFieldConfig: types.props,
 	},
 	created() {
 		const props = this.$props;

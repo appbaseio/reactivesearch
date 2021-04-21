@@ -1329,6 +1329,8 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 	// TODO: Remove in v4
 	enablePopularSuggestions: types.bool,
 	enableRecentSearches: types.bool,

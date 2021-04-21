@@ -1201,6 +1201,8 @@ DataSearch.propTypes = {
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 	// TODO: Remove in v4
 	enableQuerySuggestions: types.bool,
 	enablePopularSuggestions: types.bool,

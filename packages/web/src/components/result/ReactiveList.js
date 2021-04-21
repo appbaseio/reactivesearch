@@ -881,6 +881,8 @@ ReactiveList.propTypes = {
 	URLParams: types.bool,
 	defaultSortOption: types.string,
 	afterKey: types.props,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 	// eslint-disable-next-line
 	originalProps: types.any,
 };

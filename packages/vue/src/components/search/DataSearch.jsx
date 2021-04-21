@@ -219,6 +219,8 @@ const DataSearch = {
 		showVoiceSearch: types.bool.def(false),
 		getMicInstance: types.func,
 		renderMic: types.func,
+		distinctField: types.string,
+		distinctFieldConfig: types.props,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {

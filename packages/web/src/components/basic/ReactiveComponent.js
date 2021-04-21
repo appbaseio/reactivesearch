@@ -293,6 +293,8 @@ ReactiveComponent.propTypes = {
 	showFilter: types.bool,
 	URLParams: types.bool,
 	onData: types.func,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 };
 
 // Add componentType for SSR
