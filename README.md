@@ -108,7 +108,7 @@ Using ReactiveSearch API instead of ElasticSearch's query DSL is an opt-in featu
 
 We recommend checking out this [KitchenSink App](https://codesandbox.io/s/eager-sky-cnt66) that demonstrates the use of the `ReactiveSearch API` for all the ReactiveSearch components.
 
-[⬆ Back to Top](#reactive-search)
+[⬆ Back to Top](#------reactive-search--)
 
 <br />
 
@@ -139,7 +139,7 @@ You can check all of them on the [examples section of website](https://opensourc
 -   [Gitxplore on Play Store](https://play.google.com/store/apps/details?id=com.appbaseio.gitxplore): A Github repository explorer app to search over the 25k+ most popular github repos.
 -   [ReactiveTodos on App Store](https://itunes.apple.com/us/app/reactivetodos/id1347926945?mt=8): A shared collaborative to-do list app to showcase the capability of Reactivesearch.
 
-[⬆ Back to Top](#reactive-search)
+[⬆ Back to Top](#------reactive-search--)
 
 <br />
 
@@ -158,7 +158,7 @@ Here, we share how `ReactiveSearch` compares with other projects that have simil
 
 We welcome contributions to this section. If you are building a project or you know of another project that is in the similar space, let us know and we will update the comparisons.
 
-[⬆ Back to Top](#reactive-search)
+[⬆ Back to Top](#------reactive-search--)
 
 <br />
 
@@ -197,7 +197,7 @@ The components are divided into four sections:
 
 Docs for React Native version of the library are available at [docs.appbase.io/docs/reactivesearch/native](https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/).
 
-[⬆ Back to Top](#reactive-search)
+[⬆ Back to Top](#------reactive-search--)
 
 <br />
 
@@ -226,6 +226,6 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 
 -   [**appbase-js**](https://github.com/appbaseio/appbase-js) While building search UIs is dandy with Reactive Search, you might also need to add some input forms. **appbase-js** comes in handy there.
 
-[⬆ Back to Top](#reactive-search)
+[⬆ Back to Top](#------reactive-search--)
 
 <a href="https://appbase.io/support/"><img src="https://i.imgur.com/UL6B0uE.png" width="100%" /></a>
