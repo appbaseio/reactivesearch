@@ -209,14 +209,12 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 
 ## 9. Other Projects You Might Like
 
--   [**searchbox**](https://github.com/appbaseio/searchox) Lightweight and extendible searchbox UI library for React, Vue, JS, React Native and Flutter.
-
 -   [**arc**](https://github.com/appbaseio/arc) API Gateway for ElasticSearch (Out of the box Security, Rate Limit Features, Record Analytics and Request Logs).
 
--   **searchbox** A lightweight and performance focused searchbox UI libraries to query and display results from your ElasticSearch app (aka index).
-    -   [**Vanilla**](https://github.com/appbaseio/searchbox) - (~16kB Minified + Gzipped)
-    -   [**React**](https://github.com/appbaseio/react-searchbox) - (~30kB Minified + Gzipped)
-    -   [**Vue**](https://github.com/appbaseio/vue-searchbox) - (~22kB Minified + Gzipped)
+-   [**searchbox**](https://github.com/appbaseio/searchox) A lightweight and performance focused searchbox UI libraries to query and display results from your ElasticSearch app (aka index).
+    -   **Vanilla JS** - (~16kB Minified + Gzipped)
+    -   **React** - (~30kB Minified + Gzipped)
+    -   **Vue** - (~22kB Minified + Gzipped)
 
 -   [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
 
