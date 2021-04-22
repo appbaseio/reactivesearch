@@ -502,7 +502,7 @@ This prop allows specifying additional options to the `distinctField` prop. Usin
 
 > Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
 
-	```jsx
+	```html
         <CategorySearch
             ...
             distinctField="..."
