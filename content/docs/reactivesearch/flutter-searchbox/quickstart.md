@@ -118,6 +118,19 @@ class HomePage extends StatelessWidget {
                           {'field': 'original_title', 'weight': 1},
                           {'field': 'original_title.search', 'weight': 3}
                         ],
+						// This prop is used to return only the distinct value documents for the specified field
+						distinctField: 'title.keyword',
+						// This prop allows specifying additional options to the distinctField prop
+                        distinctFieldConfig: {
+                          'inner_hits': {
+                            'name': 'most_recent',
+                            'size': 5,
+                            'sort': [
+                              {'timestamp': 'asc'}
+                            ],
+                          },
+                          'max_concurrent_group_searches': 4,
+                        },
                       ));
                 }),
           ],
