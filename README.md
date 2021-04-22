@@ -5,17 +5,18 @@
   <br />
 </h2>
 
-<p align="center" style="font-size: 1.2rem">UI components library for Elasticsearch: Available for React, Vue and React Native</p>
+<p align="center" style="font-size: 1.2rem">UI components library for Elasticsearch: Available for React and Vue</p>
 <p align="center">
 Read how to build an e-commerce search UI</p>
 <p align="center">
-a.) <a href="https://codeburst.io/how-to-build-a-yelp-like-search-app-using-react-and-elasticsearch-36a432bf6f92"> with React</a>, b.) <a href="https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3">with Vue</a> or c.) <a href="https://hackernoon.com/building-an-e-commerce-search-app-with-react-native-2c87760a2315">with React Native</a>.</p>
+a.) <a href="https://codeburst.io/how-to-build-a-yelp-like-search-app-using-react-and-elasticsearch-36a432bf6f92"> with React</a>, or b.) <a href="https://medium.appbase.io/building-booksearch-application-using-vue-and-elasticsearch-a39615f4d6b3">with Vue</a>
 <br/>
 <p align="center">
-  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/web" style="padding: 10px; display: inline;"><img  width="30%" src="https://appbase.io/static/images/onboarding/finish-screen/React@2x.png" alt="web" title="web" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/vue" style="padding: 10px; display: inline;"><img   width="30%" src="https://appbase.io/static/images/onboarding/finish-screen/vue@2x.png" alt="vue" title="vue" /></a>
-  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/native" style="padding: 10px; display: inline;"><img   width="30%" src="https://appbase.io/static/images/onboarding/finish-screen/ReactNative@2x.png" alt="native" title="native" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/web" style="padding: 10px; display: inline;"><img  width="30%" src="https://docs.appbase.io/images/react.jpeg" alt="web" title="web" /></a>
+  <a href="https://github.com/appbaseio/reactivesearch/tree/next/packages/vue" style="padding: 10px; display: inline;"><img   width="30%" src="https://docs.appbase.io/images/vue.png" alt="vue" title="vue" /></a>
 </p>
+
+Check out [Searchbox](https://opensource.appbase.io/searchbox/) if you're building search UIs for other JS frameworks, React Native or Flutter.
 
 <hr />
 
@@ -207,6 +208,8 @@ Please check the [contribution guide](.github/CONTRIBUTING.md).
 <br />
 
 ## 9. Other Projects You Might Like
+
+-   [**searchbox**](https://github.com/appbaseio/searchox) Lightweight and extendible searchbox UI library for React, Vue, JS, React Native and Flutter.
 
 -   [**arc**](https://github.com/appbaseio/arc) API Gateway for ElasticSearch (Out of the box Security, Rate Limit Features, Record Analytics and Request Logs).
 
