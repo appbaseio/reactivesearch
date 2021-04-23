@@ -48,8 +48,6 @@ const ReactiveComponent = {
 			);
 		}
 
-		console.log('this.aggregationField ==>> ', `--${this.aggregationField}--`, this.aggregationField, this.aggregationField !== undefined && this.aggregationField !== '', typeof this.aggregationField);
-
 		if (customQuery) {
 			const calcCustomQuery = customQuery(props);
 			const { query } = calcCustomQuery || {};
