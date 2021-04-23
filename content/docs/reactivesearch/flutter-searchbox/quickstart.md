@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
                           {'field': 'original_title.search', 'weight': 3}
                         ],
 						// This prop is used to return only the distinct value documents for the specified field
-						distinctField: 'title.keyword',
+						distinctField: 'authors.keyword',
 						// This prop allows specifying additional options to the distinctField prop
                         distinctFieldConfig: {
                           'inner_hits': {

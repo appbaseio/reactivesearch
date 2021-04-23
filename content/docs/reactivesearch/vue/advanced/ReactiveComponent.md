@@ -333,12 +333,12 @@ This prop allows specifying additional options to the `distinctField` prop. Usin
 	```html
         <reactive-component
             ...
-            distinctField="..."
+            distinctField="authors.keyword"
 			:distinctFieldConfig="{
 				inner_hits: {
-					name: '...',
+					name: 'most_recent',
 					size: 5,
-					sort: [{ ...: 'asc' }],
+					sort: [{ timestamp: 'asc' }],
 				},
 				max_concurrent_group_searches: 4,
 			}"

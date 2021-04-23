@@ -254,22 +254,22 @@ This prop returns only the distinct value documents for the specified field. It 
 -   **distinctFieldConfig** `Object` [optional]
 This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
 
-> Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
-
-	```html
+	```jsx
         <ReactiveList
             ...
-            distinctField="..."
+            distinctField="authors.keyword"
 			distinctFieldConfig={{
 				inner_hits: {
-					name: '...',
+					name: 'most_recent',
 					size: 5,
-					sort: [{ ...: 'asc' }],
+					sort: [{ timestamp: 'asc' }],
 				},
 				max_concurrent_group_searches: 4,
 			}}
         />
     ```
+
+> Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
 
 ## Sub Components
 
