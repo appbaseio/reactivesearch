@@ -61,12 +61,24 @@ const ReactiveList = {
 		return this.__state;
 	},
 	created() {
+		const { distinctField, distinctFieldConfig } = this.$props;
 		// no support for pagination and aggregationField together
 		if (this.pagination && this.aggregationField) {
 			console.warn(
 				'Pagination is not supported when aggregationField is present. The list will be rendered with infinite scroll',
 			);
 		}
+		if (this.aggregationField !== undefined && this.aggregationField !== '') {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!this.config.enableAppbase && (distinctField !== undefined || distinctFieldConfig !== undefined)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+
 		if (this.defaultPage >= 0) {
 			this.currentPageState = this.defaultPage;
 			this.from = this.currentPageState * this.$props.size;
