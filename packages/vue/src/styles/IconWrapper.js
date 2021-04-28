@@ -1,7 +1,6 @@
-import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+import styled, { css } from '@appbaseio/vue-emotion';
 
-const IconWrapper = styled.div`
+const IconWrapper = styled('div')`
 	display: flex;
 	align-items: center;
 	justify-content: center;

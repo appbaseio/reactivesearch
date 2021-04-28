@@ -57,15 +57,44 @@ const Input = styled('input')`
 		&& css`
 			padding-right: 32px;
 		`};
-
+		${props =>
+			// for voice search icon
+			props.showVoiceSearch
+			&& css`
+					padding-right: 32px;
+				`};
 	${props =>
 		// for clear icon with search icon
 		props.showClear
 		&& props.showIcon
 		&& props.iconPosition === 'right'
 		&& css`
-			padding-right: 48px;
+			padding-right: 56px;
 		`};
+		${props =>
+			// for voice search icon with clear icon
+			props.showVoiceSearch
+			&& props.showIcon
+			&& css`
+						padding-right: 56px;
+					`};
+		${props =>
+			// for voice search icon with search icon
+			props.showVoiceSearch
+			&& props.showIcon
+			&& props.iconPosition === 'right'
+			&& css`
+				padding-right: 56px;
+				`};
+			${props =>
+			// for clear icon with search icon and voice search
+			props.showClear
+			&& props.showIcon && props.showVoiceSearch
+			&& props.iconPosition === 'right'
+			&& css`
+					padding-right: 86px;
+				`};
+
 
 	${props => props.alert && alertBorder};
 `;

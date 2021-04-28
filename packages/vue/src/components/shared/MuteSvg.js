@@ -29,6 +29,7 @@ const MuteSvg = {
 	render() {
 		return (
 			<svg
+			style={{transform:'scale(1.5)'}}
 				viewBox="0 0 480 480"
 				xmlns="http://www.w3.org/2000/svg"
 				id="el_D1rEpH2zj"

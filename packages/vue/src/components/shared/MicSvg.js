@@ -26,6 +26,7 @@ const MicSvg = {
 				width={28}
 				height={28}
 				className={this.$props.className}
+				style={{transform:'scale(1.5)'}}
 			>
 				<g id="el_TvxDfTAtKp" fillRule="evenodd">
 					<g id="el_D93PK3GbmJ" fillRule="nonzero" style={{ fill: '#595959' }}>

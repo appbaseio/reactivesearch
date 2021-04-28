@@ -710,6 +710,15 @@ class DataSearch extends Component {
 					positionType="absolute"
 				>
 
+					{this.state.currentValue && showClear && (
+						<IconWrapper
+							onClick={this.clearValue}
+							showIcon={showIcon}
+							isClearIcon
+						>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
 					{this.shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -719,24 +728,23 @@ class DataSearch extends Component {
 							className={getClassName(innerClass, 'mic') || null}
 
 						/>
-					)}{this.state.currentValue && showClear && (
-						<IconWrapper
-							onClick={this.clearValue}
-							showIcon={showIcon}
-							isClearIcon
-						>
-							{this.renderCancelIcon()}
-						</IconWrapper>
-					)}
+					)}{iconPosition==='right'&&<IconWrapper
+					onClick={this.handleSearchIconClick}
+
+				>
+					{this.renderIcon()}
+				</IconWrapper>}
 				</IconGroup>
 
 				<IconGroup groupPosition="left"
-					positionType="absolute"><IconWrapper
+					positionType="absolute">
+						{iconPosition==='left'&&<IconWrapper
 						onClick={this.handleSearchIconClick}
 
 					>
 						{this.renderIcon()}
-					</IconWrapper></IconGroup>
+					</IconWrapper>}
+					</IconGroup>
 
 			</div>);
 	};
@@ -1009,6 +1017,7 @@ class DataSearch extends Component {
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
+									showVoiceSearch={this.props.showVoiceSearch}
 									iconPosition={this.props.iconPosition}
 									ref={(c) => {
 										this._inputRef = c;
@@ -1171,6 +1180,7 @@ class DataSearch extends Component {
 							showIcon={this.props.showIcon}
 							showClear={this.props.showClear}
 							themePreset={themePreset}
+							showVoiceSearch={this.props.showVoiceSearch}
 						/>
 						{this.renderIcons()}
 					</div>

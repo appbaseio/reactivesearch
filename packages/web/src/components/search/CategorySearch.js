@@ -779,6 +779,7 @@ class CategorySearch extends Component {
 			iconPosition,
 			innerClass,
 		} = this.props;
+
 		return (
 			<div>
 				<IconGroup
@@ -804,15 +805,20 @@ class CategorySearch extends Component {
 							{this.renderCancelIcon()}
 						</IconWrapper>
 					)}
+					{iconPosition ==='right' &&<IconWrapper
+						onClick={this.handleSearchIconClick}
+
+					>
+						{this.renderIcon()}</IconWrapper>}
 				</IconGroup>
 
 				<IconGroup groupPosition="left"
-					positionType="absolute"><IconWrapper
+					positionType="absolute">{iconPosition ==='left' &&<IconWrapper
 						onClick={this.handleSearchIconClick}
 
 					>
 						{this.renderIcon()}
-					</IconWrapper></IconGroup>
+					</IconWrapper>}</IconGroup>
 
 			</div>
 		);
@@ -1131,6 +1137,7 @@ class CategorySearch extends Component {
 									showClear={this.props.showClear}
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
+									showVoiceSearch={this.props.showVoiceSearch}
 									iconPosition={this.props.iconPosition}
 									{...getInputProps({
 										className: getClassName(this.props.innerClass, 'input'),
@@ -1293,6 +1300,7 @@ class CategorySearch extends Component {
 								iconPosition={this.props.iconPosition}
 								showClear={this.props.showClear}
 								showIcon={this.props.showIcon}
+								showVoiceSearch={this.props.showVoiceSearch}
 								themePreset={themePreset}
 							/>
 							{this.renderIcons()}

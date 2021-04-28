@@ -16,6 +16,8 @@ import {
 import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import InputIcon from '../../styles/InputIcon';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
@@ -679,35 +681,43 @@ const DataSearch = {
 			const { currentValue } = this.$data;
 			return (
 				<div>
-					{currentValue && showClear && (
-						<InputIcon
-							onClick={this.clearValue}
-							iconPosition="right"
-							clearIcon={iconPosition === 'right'}
-							showIcon={showIcon}
-							isClearIcon
-						>
-							{this.renderCancelIcon()}
-						</InputIcon>
-					)}
-					{showVoiceSearch && (
+					<IconGroup groupPosition="right"
+					positionType="absolute" >
+						{currentValue && showClear && (
+							<IconWrapper
+								onClick={this.clearValue}
+								showIcon={showIcon}
+								isClearIcon
+							>
+								{this.renderCancelIcon()}
+							</IconWrapper>
+
+						)}
+						{showVoiceSearch && (
 						<Mic
-							getInstance={getMicInstance}
-							render={renderMic}
-							iconPosition={iconPosition}
-							handleResult={this.handleVoiceResults}
-							className={getClassName(innerClass, 'mic') || null}
-							applyClearStyle={!!currentValue && showClear}
-							showIcon={showIcon}
+						getInstance={getMicInstance}
+						render={renderMic}
+
+						handleResult={this.handleVoiceResults}
+						className={getClassName(innerClass, 'mic') || null}
+
 						/>
-					)}
-					<InputIcon
+						)}
+						{iconPosition==='right'&&<IconWrapper
+					onClick={this.handleSearchIconClick}
+
+				>
+					{this.renderIcon()}
+				</IconWrapper>}</IconGroup>
+
+
+				<IconGroup groupPosition="left"
+					positionType="absolute">{iconPosition==='left' && <IconWrapper
 						onClick={this.handleSearchIconClick}
-						showIcon={showIcon}
-						iconPosition={iconPosition}
+
 					>
 						{this.renderIcon()}
-					</InputIcon>
+					</IconWrapper>}</IconGroup>
 				</div>
 			);
 		},
@@ -748,6 +758,7 @@ const DataSearch = {
 										id={`${this.$props.componentId}-input`}
 										showIcon={this.$props.showIcon}
 										showClear={this.$props.showClear}
+										showVoiceSearch={this.$props.showVoiceSearch}
 										iconPosition={this.$props.iconPosition}
 										ref={this.$props.innerRef}
 										class={getClassName(this.$props.innerClass, 'input')}
