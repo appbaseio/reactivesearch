@@ -7,6 +7,7 @@ const IconGroup = styled.div`
 	justify-content: center;
 	grid-gap: 6px;
 	margin: 0 10px;
+	height: 100%;
 
 	${({ positionType }) => {
 		if (positionType === 'absolute') {

@@ -6,8 +6,9 @@ const IconWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	max-width: 23px;
-	width: fit-content;
+	width: max-content;
 	cursor: pointer;
+	height: 100%;
 
 	svg.search-icon {
 		fill: ${({ theme }) => theme.colors.primaryColor};

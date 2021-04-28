@@ -27,8 +27,6 @@ const Main = () => (
 					enableRecentSearches
 					enablePopularSuggestions
 					size={5}
-					showClear={true}
-					showVoiceSearch={true}
 				/>
 			</div>
 

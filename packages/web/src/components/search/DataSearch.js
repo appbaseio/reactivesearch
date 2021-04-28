@@ -57,6 +57,8 @@ import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../../lib/styles/IconWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -702,38 +704,41 @@ class DataSearch extends Component {
 			innerClass,
 		} = this.props;
 		return (
-			<div>
-				{this.state.currentValue && showClear && (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={iconPosition === 'right'}
-						showIcon={showIcon}
-						isClearIcon
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)}
-				{this.shouldMicRender(showVoiceSearch) && (
-					<Mic
-						getInstance={getMicInstance}
-						render={renderMic}
-						iconPosition={iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(innerClass, 'mic') || null}
-						applyClearStyle={!!currentValue && showClear}
-						showIcon={showIcon}
-					/>
-				)}
-				<InputIcon
-					onClick={this.handleSearchIconClick}
-					iconPosition={iconPosition}
-					showIcon={showIcon}
+					<div>
+				<IconGroup
+					groupPosition="right"
+					positionType="absolute"
 				>
-					{this.renderIcon()}
-				</InputIcon>
-			</div>
-		);
+
+					{this.shouldMicRender(showVoiceSearch) && (
+						<Mic
+							getInstance={getMicInstance}
+							render={renderMic}
+
+							onResult={this.handleVoiceResults}
+							className={getClassName(innerClass, 'mic') || null}
+
+						/>
+					)}{this.state.currentValue && showClear && (
+						<IconWrapper
+							onClick={this.clearValue}
+							showIcon={showIcon}
+							isClearIcon
+						>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+
+				<IconGroup groupPosition="left"
+					positionType="absolute"><IconWrapper
+						onClick={this.handleSearchIconClick}
+
+					>
+						{this.renderIcon()}
+					</IconWrapper></IconGroup>
+
+			</div>);
 	};
 
 	shouldMicRender(showVoiceSearch) {
