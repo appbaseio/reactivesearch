@@ -57,6 +57,8 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import IconWrapper from '../../styles/IconWrapper';
+import IconGroup from '../../styles/IconGroup';
 
 const Text = withTheme(props => (
 	<span
@@ -384,11 +386,10 @@ class CategorySearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
-			}`;
+			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+				? `^${props.fieldWeights[index]}`
+				: ''
+				}`;
 			if (
 				!(
 					field.endsWith('.keyword')
@@ -780,35 +781,39 @@ class CategorySearch extends Component {
 		} = this.props;
 		return (
 			<div>
-				{this.state.currentValue && showClear && (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={iconPosition === 'right'}
-						showIcon={showIcon}
-						isClearIcon
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)}
-				{this.shouldMicRender(showVoiceSearch) && (
-					<Mic
-						getInstance={getMicInstance}
-						render={renderMic}
-						iconPosition={iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(innerClass, 'mic') || null}
-						applyClearStyle={!!currentValue && showClear}
-						showIcon={showIcon}
-					/>
-				)}
-				<InputIcon
-					onClick={this.handleSearchIconClick}
-					iconPosition={iconPosition}
-					showIcon={showIcon}
+				<IconGroup
+					groupPosition="right"
+					positionType="absolute"
 				>
-					{this.renderIcon()}
-				</InputIcon>
+
+					{this.shouldMicRender(showVoiceSearch) && (
+						<Mic
+							getInstance={getMicInstance}
+							render={renderMic}
+
+							onResult={this.handleVoiceResults}
+							className={getClassName(innerClass, 'mic') || null}
+
+						/>
+					)}{this.state.currentValue && showClear && (
+						<IconWrapper
+							onClick={this.clearValue}
+							showIcon={showIcon}
+							isClearIcon
+						>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+
+				<IconGroup groupPosition="left"
+					positionType="absolute"><IconWrapper
+						onClick={this.handleSearchIconClick}
+
+					>
+						{this.renderIcon()}
+					</IconWrapper></IconGroup>
+
 			</div>
 		);
 	};
@@ -1269,30 +1274,30 @@ class CategorySearch extends Component {
 						{...this.props.downShiftProps}
 					/>
 				) : (
-					<div css={suggestionsContainer}>
-						<Input
-							ref={(c) => {
-								this._inputRef = c;
-							}}
-							aria-label={this.props.componentId}
-							className={getClassName(this.props.innerClass, 'input')}
-							placeholder={this.props.placeholder}
-							value={this.state.currentValue ? this.state.currentValue : ''}
-							onChange={this.onInputChange}
-							onBlur={this.withTriggerQuery(this.props.onBlur)}
-							onFocus={this.withTriggerQuery(this.props.onFocus)}
-							onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
-							onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
-							onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
-							autoFocus={this.props.autoFocus}
-							iconPosition={this.props.iconPosition}
-							showClear={this.props.showClear}
-							showIcon={this.props.showIcon}
-							themePreset={themePreset}
-						/>
-						{this.renderIcons()}
-					</div>
-				)}
+						<div css={suggestionsContainer}>
+							<Input
+								ref={(c) => {
+									this._inputRef = c;
+								}}
+								aria-label={this.props.componentId}
+								className={getClassName(this.props.innerClass, 'input')}
+								placeholder={this.props.placeholder}
+								value={this.state.currentValue ? this.state.currentValue : ''}
+								onChange={this.onInputChange}
+								onBlur={this.withTriggerQuery(this.props.onBlur)}
+								onFocus={this.withTriggerQuery(this.props.onFocus)}
+								onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
+								onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
+								onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
+								autoFocus={this.props.autoFocus}
+								iconPosition={this.props.iconPosition}
+								showClear={this.props.showClear}
+								showIcon={this.props.showIcon}
+								themePreset={themePreset}
+							/>
+							{this.renderIcons()}
+						</div>
+					)}
 			</Container>
 		);
 	}

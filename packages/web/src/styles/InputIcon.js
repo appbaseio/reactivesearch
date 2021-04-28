@@ -18,7 +18,10 @@ const clear = css`
 
 const InputIcon = styled.div`
 	position: absolute;
-	top: ${({ isClearIcon }) => (isClearIcon ? '12px' : '13px')};
+	display: flex;
+	align-items: center;
+	top: 50%;
+	transform: translateY(-50%);
 	cursor: pointer;
 	${({ iconPosition }) => {
 		if (iconPosition === 'left') {

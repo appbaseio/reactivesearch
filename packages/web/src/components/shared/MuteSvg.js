@@ -32,7 +32,7 @@ const MuteSvg = props => (
 			id="el_D1rEpH2zj"
 			width={28}
 			height={28}
-			{...props}
+			{...props} style={{transform:'scale(1.5)'}}
 		>
 			<g id="el_X81iT9kZYo" fillRule="evenodd">
 				<g id="el_gMpyalCphp">
