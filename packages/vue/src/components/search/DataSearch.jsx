@@ -69,7 +69,7 @@ const DataSearch = {
 		},
 	},
 	created() {
-		const { enableQuerySuggestions, renderQuerySuggestions, enableRecentSearches } = this.$props;
+		const { enableQuerySuggestions, renderQuerySuggestions, enableRecentSearches, distinctField, distinctFieldConfig } = this.$props;
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
 			console.warn(
@@ -80,6 +80,16 @@ const DataSearch = {
 		if (renderQuerySuggestions) {
 			console.warn(
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
+			);
+		}
+		if (this.config.enableAppbase && this.aggregationField && this.aggregationField !== '') {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!this.config.enableAppbase && (distinctField || distinctFieldConfig)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -219,6 +229,8 @@ const DataSearch = {
 		showVoiceSearch: types.bool.def(false),
 		getMicInstance: types.func,
 		renderMic: types.func,
+		distinctField: types.string,
+		distinctFieldConfig: types.props,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {

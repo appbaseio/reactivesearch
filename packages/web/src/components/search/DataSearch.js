@@ -108,7 +108,14 @@ class DataSearch extends Component {
 			enableRecentSearches,
 			fetchRecentSearches,
 			componentId,
+			aggregationField,
+			config,
+			distinctField,
+			distinctFieldConfig,
 		} = this.props;
+
+		const { enableAppbase } = config;
+
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
 			console.warn(
@@ -119,6 +126,16 @@ class DataSearch extends Component {
 		if (renderQuerySuggestions !== undefined) {
 			console.warn(
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
+			);
+		}
+		if (enableAppbase && aggregationField) {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 		fetchPopularSuggestions(componentId);
@@ -1201,6 +1218,8 @@ DataSearch.propTypes = {
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 	// TODO: Remove in v4
 	enableQuerySuggestions: types.bool,
 	enablePopularSuggestions: types.bool,

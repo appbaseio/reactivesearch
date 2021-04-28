@@ -41,6 +41,8 @@ declare namespace ReactiveListTree {
 		onData?: (...args: any[]) => any;
 		renderNoResults?: types.title;
 		scrollOnChange?: boolean;
+		distinctField?: string;
+		distinctFieldConfig?: object;
 	}
 
 	interface CommonWrapperProps extends React.HTMLAttributes<HTMLDivElement> {

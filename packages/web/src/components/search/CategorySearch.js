@@ -253,7 +253,14 @@ class CategorySearch extends Component {
 			enableRecentSearches,
 			fetchRecentSearches,
 			componentId,
+			aggregationField,
+			config,
+			distinctField,
+			distinctFieldConfig,
 		} = this.props;
+
+		const { enableAppbase } = config;
+
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
 			console.warn(
@@ -264,6 +271,16 @@ class CategorySearch extends Component {
 		if (renderQuerySuggestions !== undefined) {
 			console.warn(
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
+			);
+		}
+		if (enableAppbase && aggregationField) {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 		if (enableRecentSearches) {
@@ -1329,6 +1346,8 @@ CategorySearch.propTypes = {
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	enableQuerySuggestions: types.bool,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 	// TODO: Remove in v4
 	enablePopularSuggestions: types.bool,
 	enableRecentSearches: types.bool,
