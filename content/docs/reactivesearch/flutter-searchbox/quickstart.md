@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
       title: 'SearchBox Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    	visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
         appBar: AppBar(
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                           },
                           'max_concurrent_group_searches': 4,
                         },
-                    ));
+                      ));
                 }),
           ],
           title: Text('SearchBox Demo'),
@@ -147,8 +147,7 @@ class HomePage extends StatelessWidget {
               size: 10,
               triggerQueryOnInit: true,
               preserveResults: true,
-              builder: (context, searchController) =>
-                  ResultsWidget(searchController)),
+			  builder: (context, searchController) => ResultsWidget(searchController)),
         ),
       ),
     );
@@ -177,10 +176,9 @@ class ResultsWidget extends StatelessWidget {
           child: ListView.builder(
             itemBuilder: (context, index) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                var offset = (searchController.from != null
-                        ? searchController.from
-                        : 0) +
-                    searchController.size;
+                var offset =
+                    (searchController.from != null ? searchController.from : 0) +
+                        searchController.size;
                 if (index == offset - 1) {
                   if (searchController.results.numberOfResults > offset) {
                     // Load next set of results
@@ -352,10 +350,9 @@ class ResultsWidget extends StatelessWidget {
                               title: Center(
                                 child: RichText(
                                   text: TextSpan(
-                                    text:
-                                        searchController.results.data.length > 0
-                                            ? "No more results"
-                                            : 'No results found',
+                                    text: searchController.results.data.length > 0
+                                        ? "No more results"
+                                        : 'No results found',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 20,
@@ -372,7 +369,6 @@ class ResultsWidget extends StatelessWidget {
     );
   }
 }
-
 ```
 
 ### An example with a facet
