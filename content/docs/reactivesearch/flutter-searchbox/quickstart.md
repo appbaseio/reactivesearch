@@ -118,9 +118,9 @@ class HomePage extends StatelessWidget {
                           {'field': 'original_title', 'weight': 1},
                           {'field': 'original_title.search', 'weight': 3}
                         ],
-						// This prop is used to return only the distinct value documents for the specified field
-						distinctField: 'authors.keyword',
-						// This prop allows specifying additional options to the distinctField prop
+                        // This prop is used to return only the distinct value documents for the specified field
+                        distinctField: 'authors.keyword',
+                        // This prop allows specifying additional options to the distinctField prop
                         distinctFieldConfig: {
                           'inner_hits': {
                             'name': 'most_recent',
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                           },
                           'max_concurrent_group_searches': 4,
                         },
-                      ));
+                    ));
                 }),
           ],
           title: Text('SearchBox Demo'),
@@ -147,7 +147,8 @@ class HomePage extends StatelessWidget {
               size: 10,
               triggerQueryOnInit: true,
               preserveResults: true,
-              builder: (context, searchController) => ResultsWidget(searchController)),
+              builder: (context, searchController) =>
+                  ResultsWidget(searchController)),
         ),
       ),
     );
@@ -176,9 +177,10 @@ class ResultsWidget extends StatelessWidget {
           child: ListView.builder(
             itemBuilder: (context, index) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                var offset =
-                    (searchController.from != null ? searchController.from : 0) +
-                        searchController.size;
+                var offset = (searchController.from != null
+                        ? searchController.from
+                        : 0) +
+                    searchController.size;
                 if (index == offset - 1) {
                   if (searchController.results.numberOfResults > offset) {
                     // Load next set of results
@@ -350,9 +352,10 @@ class ResultsWidget extends StatelessWidget {
                               title: Center(
                                 child: RichText(
                                   text: TextSpan(
-                                    text: searchController.results.data.length > 0
-                                        ? "No more results"
-                                        : 'No results found',
+                                    text:
+                                        searchController.results.data.length > 0
+                                            ? "No more results"
+                                            : 'No results found',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 20,
@@ -369,6 +372,7 @@ class ResultsWidget extends StatelessWidget {
     );
   }
 }
+
 ```
 
 ### An example with a facet

@@ -200,6 +200,27 @@ Here, we are specifying that the results should update whenever one of the black
 -   **selectAllLabel**: string
     This property allows you to add a new property in the list with a particular value in such a way that when selected i.e `value` is similar/contains to that label(`selectAllLabel`) then `term` query will make sure that the `field` exists in the `results`.
 
+-   **distinctField** `String` [optional]
+	This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+-   **distinctFieldConfig** `Object` [optional]
+	This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+	```jsx
+        <SearchComponent
+            ...
+            distinctField="authors.keyword"
+			distinctFieldConfig={{
+				inner_hits: {
+					name: 'most_recent',
+					size: 5,
+					sort: [{ timestamp: 'asc' }],
+				},
+				max_concurrent_group_searches: 4,
+			}}
+        />
+    ```
+
 #### To customize the AutoSuggestions
 
 -   **enablePopularSuggestions** `boolean` [optional]
