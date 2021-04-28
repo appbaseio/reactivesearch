@@ -20,6 +20,8 @@ export interface ReactiveComponentProps {
 	showFilter?: boolean;
 	onQueryChange?: (...args: any[]) => any;
 	URLParams?: boolean;
+	distinctField?: string;
+	distinctFieldConfig?: object;
 }
 
 declare const ReactiveComponent: React.ComponentClass<ReactiveComponentProps>;
