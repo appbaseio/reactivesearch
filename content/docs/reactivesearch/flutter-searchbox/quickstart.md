@@ -78,7 +78,7 @@ class FlutterSearchBoxApp extends StatelessWidget {
         title: "SearchBox Demo",
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
+		  visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: HomePage(),
       ),
@@ -131,7 +131,7 @@ class HomePage extends StatelessWidget {
                           },
                           'max_concurrent_group_searches': 4,
                         },
-                      ));
+					));
                 }),
           ],
           title: Text('SearchBox Demo'),
