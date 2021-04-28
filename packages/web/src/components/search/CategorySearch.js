@@ -273,12 +273,12 @@ class CategorySearch extends Component {
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
 		}
-		if (aggregationField !== undefined) {
+		if (enableAppbase && aggregationField) {
 			console.warn(
 				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
 			);
 		}
-		if (!enableAppbase && (distinctField !== undefined || distinctFieldConfig !== undefined)) {
+		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
