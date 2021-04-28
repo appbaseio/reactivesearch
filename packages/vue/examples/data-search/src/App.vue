@@ -13,6 +13,7 @@
 				:size="3"
 				:enablePopularSuggestions="true"
 				:enableRecentSearches="true"
+
 			/>
 			<ReactiveList
 				componentId="SearchResult"
