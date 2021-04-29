@@ -171,6 +171,8 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **queryString** `boolean` [optional]
     Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 
+-  **clearOnQueryChange** `boolean` [optional]
+    Defaults to `true`, i.e. clear the component's input selection when the query of its dependent component changes (which is set via react prop). When set to `false`, the component's input selection isn't cleared.
 ### To customize the AutoSuggestions
 
 -   **enablePopularSuggestions** `Boolean`
