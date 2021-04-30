@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.10.0":
-  version "9.10.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.10.0.tgz#082b97d11f8e80b5398225e547878a0521e8b965"
-  integrity sha512-SHtx7hIwJ/gBaVMXViszbeHqezE6T6hsj5EYY2AiWJKJLYPGxG2FZMtHqffRygoTByf7TqIj+33WL9QZsCr1+A==
+"@appbaseio/reactivecore@9.10.2":
+  version "9.10.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.10.2.tgz#9213259c7dc4000173a196aa2c4dcc3b8d966bf0"
+  integrity sha512-UQU2BUCZxkEtOgc2qcyS7elxDG+F0z2NtFcLk9nhFCq8LfMEk6TIHt3EgqpebuRbpZbAI1aRgQzt9ueIilgcTQ==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -13,12 +13,12 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch@3.16.1":
-  version "3.16.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.16.1.tgz#9ca37643d489a4b298e79fbeee4f92c91c556e30"
-  integrity sha512-Xh9KmwBROGTsb3Se+ps4QP0qZcDb1zjLmBz+ZLbE+SfdvalZHfnY6yIc38hXvNDs96X+BuoPIzVKGKvvk0aGKA==
+"@appbaseio/reactivesearch@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.17.0.tgz#9e8b5d5ac135ae86c0dfc8bcadda1294fff78e35"
+  integrity sha512-6bAeVRQaVehT48AtBvElNK4AYvhY0mrT39JEbEv9r12vVdmMVJ0aD9B0zBZfPdVZp2eHTOeQtjfmR2GstJ4vrA==
   dependencies:
-    "@appbaseio/reactivecore" "9.10.0"
+    "@appbaseio/reactivecore" "9.10.2"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
     appbase-js "^4.1.0"
@@ -4480,9 +4480,9 @@ fb-watchman@^2.0.0:
     bser "^2.0.0"
 
 figgy-pudding@^3.1.0, figgy-pudding@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
-  integrity sha512-vNKxJHTEKNThjfrdJwHc7brvM6eVevuO5nTj6ez8ZQ1qbXTvGthucRF7S4vf2cr71QVnT70V34v0S1DyQsti0w==
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.2.tgz#b4eee8148abb01dcf1d1ac34367d59e12fa61d6e"
+  integrity sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==
 
 figures@^2.0.0:
   version "2.0.0"
@@ -9659,9 +9659,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.0, ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 

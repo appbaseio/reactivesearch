@@ -108,8 +108,24 @@ class ReactiveComponent extends Component {
 			filterLabel,
 			showFilter,
 			URLParams,
+			aggregationField,
+			config,
+			distinctField,
+			distinctFieldConfig,
 		} = this.props;
 		const initialValue = selectedValue || value || defaultValue || null;
+		const { enableAppbase } = config;
+
+		if (enableAppbase && aggregationField) {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 
 		if (customQuery) {
 			const calcCustomQuery = customQuery(this.props);
@@ -293,6 +309,9 @@ ReactiveComponent.propTypes = {
 	showFilter: types.bool,
 	URLParams: types.bool,
 	onData: types.func,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
+	config: types.props,
 };
 
 // Add componentType for SSR
@@ -314,6 +333,7 @@ const mapStateToProps = (state, props) => ({
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({

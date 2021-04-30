@@ -78,6 +78,26 @@ class ReactiveList extends Component {
 	}
 
 	componentDidMount() {
+		const {
+			aggregationField,
+			config,
+			distinctField,
+			distinctFieldConfig,
+		} = this.props;
+
+		const { enableAppbase } = config;
+
+		if (enableAppbase && aggregationField) {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+
 		if (this.props.stream) {
 			this.props.setStreaming(this.props.componentId, true);
 		}
@@ -881,6 +901,8 @@ ReactiveList.propTypes = {
 	URLParams: types.bool,
 	defaultSortOption: types.string,
 	afterKey: types.props,
+	distinctField: types.string,
+	distinctFieldConfig: types.componentObject,
 	// eslint-disable-next-line
 	originalProps: types.any,
 };
