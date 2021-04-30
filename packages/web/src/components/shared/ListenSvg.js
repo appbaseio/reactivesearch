@@ -321,7 +321,7 @@ const ListenSvg = props => (
 			width={28}
 			height={29}
 			{...props}
-			style={{transform:'scale(1.5)'}}
+			style={{ transform: 'scale(1.5)' }}
 		>
 			<defs>
 				<path

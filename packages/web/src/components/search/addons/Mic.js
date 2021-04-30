@@ -1,6 +1,5 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import MicIcon from '../../../styles/MicIcon';
 import { getComponent, hasCustomRenderer } from '../../../utils';
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
