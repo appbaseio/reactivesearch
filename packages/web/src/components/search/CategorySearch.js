@@ -40,7 +40,6 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
-import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import Mic from './addons/Mic';
 import CustomSvg from '../shared/CustomSvg';
@@ -389,7 +388,7 @@ class CategorySearch extends Component {
 			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
 				? `^${props.fieldWeights[index]}`
 				: ''
-				}`;
+			}`;
 			if (
 				!(
 					field.endsWith('.keyword')
@@ -769,7 +768,6 @@ class CategorySearch extends Component {
 	};
 
 	renderIcons = () => {
-		const { currentValue } = this.state;
 		const {
 			showIcon,
 			showClear,
@@ -805,20 +803,14 @@ class CategorySearch extends Component {
 							{this.renderCancelIcon()}
 						</IconWrapper>
 					)}
-					{iconPosition ==='right' &&<IconWrapper
-						onClick={this.handleSearchIconClick}
-
-					>
-						{this.renderIcon()}</IconWrapper>}
+					{iconPosition === 'right' && <IconWrapper onClick={this.handleSearchIconClick}>{this.renderIcon()}</IconWrapper>}
 				</IconGroup>
 
-				<IconGroup groupPosition="left"
-					positionType="absolute">{iconPosition ==='left' &&<IconWrapper
-						onClick={this.handleSearchIconClick}
-
-					>
-						{this.renderIcon()}
-					</IconWrapper>}</IconGroup>
+				<IconGroup
+					groupPosition="left"
+					positionType="absolute"
+				>{iconPosition === 'left' && <IconWrapper	onClick={this.handleSearchIconClick}>{this.renderIcon()}</IconWrapper>}
+				</IconGroup>
 
 			</div>
 		);
@@ -1281,31 +1273,31 @@ class CategorySearch extends Component {
 						{...this.props.downShiftProps}
 					/>
 				) : (
-						<div css={suggestionsContainer}>
-							<Input
-								ref={(c) => {
-									this._inputRef = c;
-								}}
-								aria-label={this.props.componentId}
-								className={getClassName(this.props.innerClass, 'input')}
-								placeholder={this.props.placeholder}
-								value={this.state.currentValue ? this.state.currentValue : ''}
-								onChange={this.onInputChange}
-								onBlur={this.withTriggerQuery(this.props.onBlur)}
-								onFocus={this.withTriggerQuery(this.props.onFocus)}
-								onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
-								onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
-								onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
-								autoFocus={this.props.autoFocus}
-								iconPosition={this.props.iconPosition}
-								showClear={this.props.showClear}
-								showIcon={this.props.showIcon}
-								showVoiceSearch={this.props.showVoiceSearch}
-								themePreset={themePreset}
-							/>
-							{this.renderIcons()}
-						</div>
-					)}
+					<div css={suggestionsContainer}>
+						<Input
+							ref={(c) => {
+								this._inputRef = c;
+							}}
+							aria-label={this.props.componentId}
+							className={getClassName(this.props.innerClass, 'input')}
+							placeholder={this.props.placeholder}
+							value={this.state.currentValue ? this.state.currentValue : ''}
+							onChange={this.onInputChange}
+							onBlur={this.withTriggerQuery(this.props.onBlur)}
+							onFocus={this.withTriggerQuery(this.props.onFocus)}
+							onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
+							onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
+							onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
+							autoFocus={this.props.autoFocus}
+							iconPosition={this.props.iconPosition}
+							showClear={this.props.showClear}
+							showIcon={this.props.showIcon}
+							showVoiceSearch={this.props.showVoiceSearch}
+							themePreset={themePreset}
+						/>
+						{this.renderIcons()}
+					</div>
+				)}
 			</Container>
 		);
 	}

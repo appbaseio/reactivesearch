@@ -21,13 +21,14 @@ const IconGroup = styled.div`
 	}};
 
 	${({ groupPosition }) => {
-		return groupPosition === 'right'
-			? css`
-					right: 0;
-			  `
-			: css`
-					left: 0;
-			  `;
+		if (groupPosition === 'right') {
+			return css`
+				right: 0;
+			`;
+		}
+		return css`
+			left: 0;
+		`;
 	}};
 `;
 

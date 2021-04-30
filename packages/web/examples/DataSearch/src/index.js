@@ -30,7 +30,6 @@ const Main = () => (
 					enableRecentSearches
 					enablePopularSuggestions
 					size={5}
-
 				/>
 			</div>
 

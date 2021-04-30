@@ -11,6 +11,7 @@ const IconWrapper = styled('div')`
 
 	svg.search-icon {
 		fill: ${({ theme }) => theme.colors.primaryColor};
+		transform:scale(1.5);
 	}
 
 	svg.cancel-icon {

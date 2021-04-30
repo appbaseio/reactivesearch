@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/core';
 
 const IconWrapper = styled.div`
 	display: flex;
@@ -8,10 +7,12 @@ const IconWrapper = styled.div`
 	max-width: 23px;
 	width: max-content;
 	cursor: pointer;
-	height: 100%;min-width:20px;
+	height: 100%;
+	min-width: 20px;
 
 	svg.search-icon {
 		fill: ${({ theme }) => theme.colors.primaryColor};
+		transform: scale(1.25);
 	}
 
 	svg.cancel-icon {
