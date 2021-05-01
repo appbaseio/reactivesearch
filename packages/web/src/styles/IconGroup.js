@@ -6,7 +6,7 @@ const IconGroup = styled.div`
 	align-items: center;
 	justify-content: center;
 	grid-gap: 6px;
-	margin: 0 10px;
+	padding: 0 10px;
 	height: 100%;
 
 	${({ positionType }) => {

@@ -1,4 +1,4 @@
-import MicIcon from '../../../styles/MicIcon';
+
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';

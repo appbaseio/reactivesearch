@@ -801,7 +801,15 @@ class CategorySearch extends Component {
 					groupPosition="right"
 					positionType="absolute"
 				>
-
+					{this.state.currentValue && showClear && (
+						<IconWrapper
+							onClick={this.clearValue}
+							showIcon={showIcon}
+							isClearIcon
+						>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
 					{this.shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -811,14 +819,6 @@ class CategorySearch extends Component {
 							className={getClassName(innerClass, 'mic') || null}
 
 						/>
-					)}{this.state.currentValue && showClear && (
-						<IconWrapper
-							onClick={this.clearValue}
-							showIcon={showIcon}
-							isClearIcon
-						>
-							{this.renderCancelIcon()}
-						</IconWrapper>
 					)}
 					{iconPosition === 'right' && <IconWrapper onClick={this.handleSearchIconClick}>{this.renderIcon()}</IconWrapper>}
 				</IconGroup>
