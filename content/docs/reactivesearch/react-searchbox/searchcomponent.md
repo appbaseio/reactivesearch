@@ -208,16 +208,16 @@ Here, we are specifying that the results should update whenever one of the black
 
 	```jsx
 		<SearchComponent
-			...
-			distinctField="authors.keyword"
-			distinctFieldConfig={{
-			inner_hits: {
-				name: 'most_recent',
-				size: 5,
-				sort: [{ timestamp: 'asc' }],
-			},
-			max_concurrent_group_searches: 4,
-			}}
+		...
+		distinctField="authors.keyword"
+		distinctFieldConfig={{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+		}}
 		/>
 	```
 
