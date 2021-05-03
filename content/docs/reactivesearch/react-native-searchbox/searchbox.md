@@ -170,20 +170,20 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **distinctFieldConfig** `Object` [optional]
 	This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
 
-	```jsx
-        <SearchBox
-            ...
-            distinctField="authors.keyword"
-			distinctFieldConfig={{
-				inner_hits: {
-					name: 'most_recent',
-					size: 5,
-					sort: [{ timestamp: 'asc' }],
-				},
-				max_concurrent_group_searches: 4,
-			}}
-        />
-    ```
+```jsx
+<SearchBox
+    ...
+    distinctField="authors.keyword"
+    distinctFieldConfig={{
+	inner_hits: {
+		name: 'most_recent',
+		size: 5,
+		sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}}
+/>
+```
 
 ### To customize the AutoSuggestions
 
