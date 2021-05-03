@@ -178,7 +178,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 		sort: [{ timestamp: 'asc' }],
 	},
 	max_concurrent_group_searches: 4,
-	}}
+}}
 />
 ```
 
