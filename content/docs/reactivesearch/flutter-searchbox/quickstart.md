@@ -147,8 +147,7 @@ class HomePage extends StatelessWidget {
               size: 10,
               triggerQueryOnInit: true,
               preserveResults: true,
-              builder: (context, searchController) =>
-                  ResultsWidget(searchController)),
+              builder: (context, searchController) => ResultsWidget(searchController)),
         ),
       ),
     );
@@ -168,8 +167,7 @@ class ResultsWidget extends StatelessWidget {
             child: Container(
               color: Colors.white,
               height: 20,
-              child: Text(
-                  '${searchController.results.numberOfResults} results found in ${searchController.results.time.toString()} ms'),
+              child: Text('${searchController.results.numberOfResults} results found in ${searchController.results.time.toString()} ms'),
             ),
           ),
         ),
@@ -177,10 +175,7 @@ class ResultsWidget extends StatelessWidget {
           child: ListView.builder(
             itemBuilder: (context, index) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                var offset = (searchController.from != null
-                        ? searchController.from
-                        : 0) +
-                    searchController.size;
+                var offset = (searchController.from != null ? searchController.from : 0) + searchController.size;
                 if (index == offset - 1) {
                   if (searchController.results.numberOfResults > offset) {
                     // Load next set of results
@@ -208,8 +203,7 @@ class ResultsWidget extends StatelessWidget {
                                       semanticContainer: true,
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
                                       child: Image.network(
-                                        searchController.results.data[index]
-                                            ["image_medium"],
+                                        searchController.results.data[index]["image_medium"],
                                         fit: BoxFit.fill,
                                       ),
                                       elevation: 5,
@@ -234,8 +228,7 @@ class ResultsWidget extends StatelessWidget {
                                               textStyle: TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.grey,
-                                                  fontWeight:
-                                                      FontWeight.normal),
+                                                  fontWeight: FontWeight.normal),
                                               decoration: BoxDecoration(
                                                 boxShadow: [
                                                   BoxShadow(
@@ -250,15 +243,8 @@ class ResultsWidget extends StatelessWidget {
                                               message:
                                                   'By: ${searchController.results.data[index]["original_title"]}',
                                               child: Text(
-                                                searchController
-                                                            .results
-                                                            .data[index][
-                                                                "original_title"]
-                                                            .length <
-                                                        40
-                                                    ? searchController
-                                                            .results.data[index]
-                                                        ["original_title"]
+                                                searchController.results.data[index]["original_title"].length < 40
+                                                    ? searchController.results.data[index]["original_title"]
                                                     : '${searchController.results.data[index]["original_title"].substring(0, 39)}...',
                                                 style: TextStyle(
                                                   fontSize: 20.0,
@@ -287,12 +273,7 @@ class ResultsWidget extends StatelessWidget {
                                               message:
                                                   'By: ${searchController.results.data[index]["authors"]}',
                                               child: Text(
-                                                searchController
-                                                            .results
-                                                            .data[index]
-                                                                ["authors"]
-                                                            .length >
-                                                        50
+                                                searchController.results.data[index]["authors"].length > 50
                                                     ? 'By: ${searchController.results.data[index]["authors"].substring(0, 49)}...'
                                                     : 'By: ${searchController.results.data[index]["authors"]}',
                                                 style: TextStyle(
@@ -372,7 +353,6 @@ class ResultsWidget extends StatelessWidget {
     );
   }
 }
-
 ```
 
 ### An example with a facet
