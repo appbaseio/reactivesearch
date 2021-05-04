@@ -473,17 +473,20 @@ You can use a custom icon in place of the default icon for the recent search ite
 -   **popularSearchesIcon** `slot-scope` [optional]
 You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
 
-    ```html
-        <DataSearch
-            ...
-            :enablePopularSuggestions="true"
-            :innerClass="{
-                'popular-search-icon': '...'
-            }"
-        >
-            <popular-icon slot="popularSearchesIcon" />
-        </DataSearch>
-    ```
+```html
+<data-search
+	....
+	distinctField="authors.keyword"
+	:distinctFieldConfig="{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}"
+/>
+```
 
 -   **distinctField** `String` [optional]
 This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
