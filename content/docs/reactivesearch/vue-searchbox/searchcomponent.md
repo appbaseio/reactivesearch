@@ -221,16 +221,16 @@ export default App {
 
 ```html
 <search-component
-    ...
-    distinctField="authors.keyword"
-    :distinctFieldConfig="{
-	inner_hits: {
-		name: 'most_recent',
-		size: 5,
-		sort: [{ timestamp: 'asc' }],
-	},
-	max_concurrent_group_searches: 4,
-}"
+	....
+	distinctField="authors.keyword"
+	:distinctFieldConfig="{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}"
 />
 ```
 
