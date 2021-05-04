@@ -29,18 +29,19 @@ const ToggleButton = {
 		renderItem: types.func,
 	},
 	data() {
-		const props = this.$props;
-		const value = this.selectedValue || props.value || props.defaultValue || [];
-		const currentValue = ToggleButton.parseValue(value, props);
 		this.__state = {
-			currentValue,
+			currentValue: [],
 		};
-
 		return this.__state;
 	},
 	beforeMount() {
 		const props = this.$props;
 		const hasMounted = false;
+		const value = this.selectedValue || props.value || props.defaultValue || [];
+		const currentValue = ToggleButton.parseValue(value, props);
+
+		this.setValue(currentValue);
+
 		if (this.$data.currentValue.length) {
 			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
 		}
