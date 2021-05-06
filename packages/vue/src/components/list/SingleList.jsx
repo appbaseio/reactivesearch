@@ -131,8 +131,13 @@ const SingleList = {
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
+
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
-			return null;
+			if(this.renderNoResult) {
+				this.renderNoResult();
+			} else {
+				return null;
+			}
 		}
 
 		let itemsToRender = this.$data.modifiedOptions;

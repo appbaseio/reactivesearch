@@ -175,6 +175,7 @@ const MultiDropdownList = {
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
 		const { isLastBucket } = this.$data;
+		const renderNoResults = this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 		let selectAll = [];
 
 		if (renderErrorCalc && this.error) {
@@ -182,7 +183,13 @@ const MultiDropdownList = {
 		}
 
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0) {
-			return null;
+			if(renderNoResults && isFunction(renderNoResults)) {
+				return (<div>{renderNoResults()}</div>);
+			} else if (renderNoResults && !isFunction(renderNoResults)) {
+				return renderNoResults;
+			} else {
+				return null;
+			}
 		}
 
 		if (this.$props.selectAllLabel) {
