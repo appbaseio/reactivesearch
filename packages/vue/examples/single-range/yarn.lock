@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.10.0":
-  version "9.10.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.10.0.tgz#082b97d11f8e80b5398225e547878a0521e8b965"
+"@appbaseio/reactivecore@9.11.0":
+  version "9.11.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.0.tgz#e115e15adccf009a897cbd73cb8d6c290687e713"
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -12,11 +12,11 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.12.1.tgz#8fc8607492f47a84b63a92f73c660ac7ae57a888"
+"@appbaseio/reactivesearch-vue@1.14.1":
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.14.1.tgz#5de05ab4e315090551f513f41deb3c2434e2d50a"
   dependencies:
-    "@appbaseio/reactivecore" "9.10.0"
+    "@appbaseio/reactivecore" "9.11.0"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^4.1.0"
@@ -6160,9 +6160,9 @@ querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 
-querystringify@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.0.tgz#7ded8dfbf7879dcc60d0a644ac6754b283ad17ef"
+querystringify@^2.1.1:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
 
 randomatic@^3.0.0:
   version "3.1.0"
@@ -7720,10 +7720,10 @@ url-parse-lax@^1.0.0:
     prepend-http "^1.0.1"
 
 url-parse@^1.1.8, url-parse@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
   dependencies:
-    querystringify "^2.0.0"
+    querystringify "^2.1.1"
     requires-port "^1.0.0"
 
 url-parser-lite@^0.1.0:
