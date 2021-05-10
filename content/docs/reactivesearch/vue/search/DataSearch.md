@@ -138,7 +138,7 @@ Example uses:
 -   **icon** `JSX` [optional]
     set a custom search icon instead of the default icon 🔍
 -   **showClear** `Boolean` [optional]
-    show a clear text `X` icon. Defaults to `false`.
+    show a clear text `X` icon. Defaults to `true`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showVoiceSearch** `Boolean` [optional]
