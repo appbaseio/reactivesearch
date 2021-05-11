@@ -464,6 +464,17 @@ You can use a custom icon in place of the default icon for the popular searches 
         />
     ```
 
+-   **focusShortcuts** `Array<string | number>` [optional]
+A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+
+
+-   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
+
+
+-   **addonBefore** `string|JSX` [optional] The label text displayed before (on the left side of) the searchbox input field.
+
+
+-   **addonAfter** `string|JSX` [optional] The label text displayed after (on the right side of) the searchbox input field.
 ### Customize style
 
 -   **innerClass** `Object` `SearchBox` component supports an `innerClass` prop to provide styles to the sub-components of `SearchBox`. These are the supported keys:
