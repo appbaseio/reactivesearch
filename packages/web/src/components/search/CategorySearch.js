@@ -37,6 +37,9 @@ import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transf
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import Title from '../../styles/Title';
+import InputGroup from '../../styles/InputGroup';
+import InputWrapper from '../../styles/InputWrapper';
+import InputAddon from '../../styles/InputAddon';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
@@ -53,10 +56,12 @@ import {
 	isQueryIdentical,
 	hasPopularSuggestionsRenderer,
 	getPopularSuggestionsComponent,
+	isEmpty, parseFocusShortcuts, isNumeric,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
+
 
 const Text = withTheme(props => (
 	<span
@@ -72,7 +77,7 @@ const Text = withTheme(props => (
 class CategorySearch extends Component {
 	constructor(props) {
 		super(props);
-
+		const { focusShortcuts } = props;
 		const value = props.value || props.defaultValue || {};
 		// eslint-disable-next-line
 		let { term: currentValue = '', category: currentCategory = null } = value;
@@ -124,6 +129,27 @@ class CategorySearch extends Component {
 				props.onChange(calcValue, () => this.triggerQuery(calcValue));
 			}
 			this.setValue(currentValue, true, props, currentCategory, cause, hasMounted);
+		}
+
+		// dynamically import hotkey-js
+		if (!isEmpty(focusShortcuts)) {
+			this.hotKeyCombinationsUsed = false;
+			for (let index = 0; index < focusShortcuts.length; index += 1) {
+				if (
+					typeof focusShortcuts[index] === 'string'
+					&& focusShortcuts[index].indexOf('+') !== -1
+				) {
+					this.hotKeyCombinationsUsed = true;
+					break;
+				}
+			}
+			if (this.hotKeyCombinationsUsed) {
+				// import('hotkeys-js').then((module) => {
+				// 	this.hotkeys = module.default;
+				// });
+				// eslint-disable-next-line global-require
+				this.hotkeys = require('hotkeys-js').default;
+			}
 		}
 	}
 
@@ -246,6 +272,7 @@ class CategorySearch extends Component {
 	}
 
 	componentDidMount() {
+		document.addEventListener('keydown', this.onKeyDown);
 		const {
 			enableQuerySuggestions,
 			renderQuerySuggestions,
@@ -287,6 +314,10 @@ class CategorySearch extends Component {
 			fetchRecentSearches();
 		}
 		fetchPopularSuggestions(componentId);
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('keydown', this.onKeyDown);
 	}
 
 	getAggsQuery = field => ({
@@ -401,10 +432,9 @@ class CategorySearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
+			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+				? `^${props.fieldWeights[index]}`
+				: ''
 			}`;
 			if (
 				!(
@@ -770,6 +800,25 @@ class CategorySearch extends Component {
 		}
 	};
 
+	renderInputAddonBefore = () => {
+		const { addonBefore } = this.props;
+		if (addonBefore) {
+			return <InputAddon>{addonBefore}</InputAddon>;
+		}
+
+		return null;
+	};
+
+	renderInputAddonAfter = () => {
+		const { addonAfter } = this.props;
+		if (addonAfter) {
+			return <InputAddon>{addonAfter}</InputAddon>;
+		}
+
+		return null;
+	};
+
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -1103,6 +1152,55 @@ class CategorySearch extends Component {
 		return undefined;
 	};
 
+	onKeyDown = (e) => {
+		if (isEmpty(this.props.focusShortcuts)) {
+			return;
+		}
+
+		// for hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc, we use hotkeys-js
+		if (this.hotKeyCombinationsUsed) {
+			this.hotkeys(
+				parseFocusShortcuts(this.props.focusShortcuts).join(','),
+				// eslint-disable-next-line no-unused-vars
+				(event, handler) => {
+					// Prevent the default refresh event under WINDOWS system
+					event.preventDefault();
+					const elt = e.target || e.srcElement;
+					const tagName = elt.tagName;
+					if (elt.isContentEditable || tagName === 'INPUT') {
+						// already in an input
+						return;
+					}
+					this._inputRef.focus();
+				},
+			);
+			return;
+		}
+		const shortcuts = this.props.focusShortcuts.map((key) => {
+			if (typeof key === 'string') {
+				return isNumeric(key) ? +key : key.toUpperCase().charCodeAt(0);
+			}
+			return key;
+		});
+		const elt = e.target || e.srcElement;
+		const tagName = elt.tagName;
+		if (elt.isContentEditable || tagName === 'INPUT') {
+			// already in an input
+			return;
+		}
+		const which = e.which || e.keyCode;
+		const chrCode = which - (48 * Math.floor(which / 48));
+		if (shortcuts.indexOf(which >= 96 ? chrCode : which) === -1) {
+			// not the right shortcut
+			return;
+		}
+
+		this._inputRef.focus();
+		e.stopPropagation();
+		e.preventDefault();
+	};
+
+
 	render() {
 		const { currentValue } = this.state;
 		const {
@@ -1135,36 +1233,42 @@ class CategorySearch extends Component {
 							...rest
 						}) => (
 							<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
-								<Input
-									ref={(c) => {
-										this._inputRef = c;
-									}}
-									aria-label={this.props.componentId}
-									showClear={this.props.showClear}
-									id={`${this.props.componentId}-input`}
-									showIcon={this.props.showIcon}
-									iconPosition={this.props.iconPosition}
-									{...getInputProps({
-										className: getClassName(this.props.innerClass, 'input'),
-										placeholder: this.props.placeholder,
-										value:
-											this.state.currentValue === null
-												? ''
-												: this.state.currentValue,
-										onChange: this.onInputChange,
-										onBlur: this.withTriggerQuery(this.props.onBlur),
-										onFocus: this.handleFocus,
-										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
-										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
-										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
-										onClick: () => {
-											// clear highlighted index
-											setHighlightedIndex(null);
-										},
-									})}
-									themePreset={themePreset}
-								/>
-								{this.renderIcons()}
+								<InputGroup>
+									{this.renderInputAddonBefore()}
+									<InputWrapper>
+										<Input
+											ref={(c) => {
+												this._inputRef = c;
+											}}
+											aria-label={this.props.componentId}
+											showClear={this.props.showClear}
+											id={`${this.props.componentId}-input`}
+											showIcon={this.props.showIcon}
+											iconPosition={this.props.iconPosition}
+											{...getInputProps({
+												className: getClassName(this.props.innerClass, 'input'),
+												placeholder: this.props.placeholder,
+												value:
+													this.state.currentValue === null
+														? ''
+														: this.state.currentValue,
+												onChange: this.onInputChange,
+												onBlur: this.withTriggerQuery(this.props.onBlur),
+												onFocus: this.handleFocus,
+												onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
+												onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+												onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
+												onClick: () => {
+													// clear highlighted index
+													setHighlightedIndex(null);
+												},
+												autoFocus: this.props.autoFocus,
+											})}
+											themePreset={themePreset}
+										/>
+										{this.renderIcons()}
+									</InputWrapper>{this.renderInputAddonAfter()}
+								</InputGroup>
 								{isOpen && this.renderLoader()}
 								{isOpen && this.renderError()}
 								{this.hasCustomRenderer
@@ -1420,6 +1524,9 @@ CategorySearch.propTypes = {
 	getMicInstance: types.func,
 	renderMic: types.func,
 	enablePredictiveSuggestions: types.bool,
+	focusShortcuts: types.focusShortcuts,
+	addonBefore: types.children,
+	addonAfter: types.children,
 };
 
 CategorySearch.defaultProps = {
@@ -1448,6 +1555,10 @@ CategorySearch.defaultProps = {
 	recentSearches: [],
 	time: 0,
 	enablePredictiveSuggestions: false,
+	autoFocus: false,
+	focusShortcuts: ['/'],
+	addonBefore: undefined,
+	addonAfter: undefined,
 };
 
 // Add componentType for SSR
