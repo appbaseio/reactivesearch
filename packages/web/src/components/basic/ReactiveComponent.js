@@ -362,5 +362,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<ConnectedComponent {...props} myForwardedRef={ref} />
 ));
 
-ForwardRefComponent.name = 'ReactiveComponent';
+ForwardRefComponent.displayName = 'ReactiveComponent';
 export default ForwardRefComponent;

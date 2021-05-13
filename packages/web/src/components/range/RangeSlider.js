@@ -472,5 +472,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, RangeSlider);
 
-ForwardRefComponent.name = 'RangeSlider';
+ForwardRefComponent.displayName = 'RangeSlider';
 export default ForwardRefComponent;
