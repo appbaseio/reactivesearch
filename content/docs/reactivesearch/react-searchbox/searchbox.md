@@ -450,7 +450,7 @@ You can use a custom icon in place of the default icon for the recent search ite
         />
     ```
 
--   **popularSearchesIcon** `JSX` [optional]
+-   **popularSearchesIcon** `JSX` [boolean]
 You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-icon` key in the `innerClass` prop.
 
     ```jsx
@@ -475,6 +475,8 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 
 
 -   **addonAfter** `string|JSX` [optional] The label text displayed after (on the right side of) the searchbox input field.
+
+-   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
 ### Customize style
 
 -   **innerClass** `Object` `SearchBox` component supports an `innerClass` prop to provide styles to the sub-components of `SearchBox`. These are the supported keys:
