@@ -279,5 +279,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, RatingsFilter);
 
-ForwardRefComponent.name = 'RatingsFilter';
+ForwardRefComponent.displayName = 'RatingsFilter';
 export default ForwardRefComponent;

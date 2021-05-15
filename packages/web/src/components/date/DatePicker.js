@@ -314,5 +314,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, DatePicker);
 
-ForwardRefComponent.name = 'DatePicker';
+ForwardRefComponent.displayName = 'DatePicker';
 export default ForwardRefComponent;

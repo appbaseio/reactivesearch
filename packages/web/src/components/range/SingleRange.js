@@ -258,5 +258,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, SingleRange);
 
-ForwardRefComponent.name = 'SingleRange';
+ForwardRefComponent.displayName = 'SingleRange';
 export default ForwardRefComponent;

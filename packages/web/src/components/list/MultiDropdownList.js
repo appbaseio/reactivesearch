@@ -608,5 +608,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiDropdownList);
 
-ForwardRefComponent.name = 'MultiDropdownList';
+ForwardRefComponent.displayName = 'MultiDropdownList';
 export default ForwardRefComponent;
