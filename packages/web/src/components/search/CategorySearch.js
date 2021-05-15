@@ -144,9 +144,6 @@ class CategorySearch extends Component {
 				}
 			}
 			if (this.hotKeyCombinationsUsed) {
-				// import('hotkeys-js').then((module) => {
-				// 	this.hotkeys = module.default;
-				// });
 				// eslint-disable-next-line global-require
 				this.hotkeys = require('hotkeys-js').default;
 			}
@@ -272,6 +269,7 @@ class CategorySearch extends Component {
 	}
 
 	componentDidMount() {
+		// listening to keydown events : globally
 		document.addEventListener('keydown', this.onKeyDown);
 		const {
 			enableQuerySuggestions,
@@ -1391,27 +1389,32 @@ class CategorySearch extends Component {
 					/>
 				) : (
 					<div css={suggestionsContainer}>
-						<Input
-							ref={(c) => {
-								this._inputRef = c;
-							}}
-							aria-label={this.props.componentId}
-							className={getClassName(this.props.innerClass, 'input')}
-							placeholder={this.props.placeholder}
-							value={this.state.currentValue ? this.state.currentValue : ''}
-							onChange={this.onInputChange}
-							onBlur={this.withTriggerQuery(this.props.onBlur)}
-							onFocus={this.withTriggerQuery(this.props.onFocus)}
-							onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
-							onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
-							onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
-							autoFocus={this.props.autoFocus}
-							iconPosition={this.props.iconPosition}
-							showClear={this.props.showClear}
-							showIcon={this.props.showIcon}
-							themePreset={themePreset}
-						/>
-						{this.renderIcons()}
+						<InputGroup>
+							{this.renderInputAddonBefore()}
+							<InputWrapper>
+								<Input
+									ref={(c) => {
+										this._inputRef = c;
+									}}
+									aria-label={this.props.componentId}
+									className={getClassName(this.props.innerClass, 'input')}
+									placeholder={this.props.placeholder}
+									value={this.state.currentValue ? this.state.currentValue : ''}
+									onChange={this.onInputChange}
+									onBlur={this.withTriggerQuery(this.props.onBlur)}
+									onFocus={this.withTriggerQuery(this.props.onFocus)}
+									onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
+									onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
+									onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
+									autoFocus={this.props.autoFocus}
+									iconPosition={this.props.iconPosition}
+									showClear={this.props.showClear}
+									showIcon={this.props.showIcon}
+									themePreset={themePreset}
+								/>
+								{this.renderIcons()}
+							</InputWrapper>{this.renderInputAddonAfter()}
+						</InputGroup>
 					</div>
 				)}
 			</Container>
@@ -1524,6 +1527,7 @@ CategorySearch.propTypes = {
 	getMicInstance: types.func,
 	renderMic: types.func,
 	enablePredictiveSuggestions: types.bool,
+	//
 	focusShortcuts: types.focusShortcuts,
 	addonBefore: types.children,
 	addonAfter: types.children,

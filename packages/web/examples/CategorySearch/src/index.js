@@ -29,7 +29,10 @@ const Main = () => (
 					size={5}
 					focusShortcuts={['/', 65, 'cmd+65']}
 					addonBefore="hi"
-					addonAfter={<img src="https://picsum.photos/30/30" alt="sample" />}
+					addonAfter={[
+						<img src="https://picsum.photos/30/30" alt="sample" />,
+						<img src="https://picsum.photos/25/30" alt="sample2" />,
+					]}
 				/>
 			</div>
 
@@ -71,14 +74,14 @@ const Main = () => (
 												<div className="ratings-list flex align-center">
 													<span className="stars">
 														{/* eslint-disable */
-															Array(item.average_rating_rounded)
-																.fill('x')
-																.map((_, index) => (
-																	<i
-																		className="fas fa-star"
-																		key={index}
-																	/>
-																))
+														Array(item.average_rating_rounded)
+															.fill('x')
+															.map((_, index) => (
+																<i
+																	className="fas fa-star"
+																	key={index}
+																/>
+															))
 														/* eslint-enable */
 														}
 													</span>

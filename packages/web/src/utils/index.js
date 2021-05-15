@@ -181,7 +181,22 @@ export function isHotkeyCombination(hotkey) {
 	return typeof hotkey === 'string' && hotkey.indexOf('+') !== -1;
 }
 
+// parse focusshortcuts array for key combinations
+export function isHotkeyCombinationUsed(focusShortcuts) {
+	for (let index = 0; index < focusShortcuts.length; index += 1) {
+		if (isHotkeyCombination(focusShortcuts[index])) {
+			return true;
+		}
+	}
+	return false;
+}
+
 // used for getting correct string char from keycode passed
+// the below algebraic expression is used to get the correct ascii code out of the e.which
+// || e.keycode returned value
+// since the keyboards doesn't understand ascii but scan codes and they differ for
+// certain keys such as '/'
+// stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
 	const chrCode = which - (48 * Math.floor(which / 48));
