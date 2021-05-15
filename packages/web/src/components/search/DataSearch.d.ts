@@ -77,7 +77,8 @@ export interface DataSearchProps extends CommonProps {
 	distinctFieldConfig?: object;
 	focusShortcuts?: types.focusShortcuts;
 	addonBefore?: types.children;
-	addonAfter?: types.children
+	addonAfter?: types.children;
+	expandSuggestionsContainer?: boolean;
 }
 declare const DataSearch: React.ComponentClass<DataSearchProps>;
 

@@ -30,10 +30,6 @@ const Main = () => (
 					enableRecentSearches
 					enablePopularSuggestions
 					size={5}
-					addonBefore="hi"
-					addonAfter={[<img src="https://picsum.photos/30/30" alt="sample" />]}
-					expandSuggestionsContainer={false}
-					focusShortcuts={['/', 'ctrl+a', 'cmd+66']}
 				/>
 			</div>
 
