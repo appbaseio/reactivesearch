@@ -450,7 +450,7 @@ You can use a custom icon in place of the default icon for the recent search ite
         />
     ```
 
--   **popularSearchesIcon** `JSX` [boolean]
+-   **popularSearchesIcon** `JSX` [optional]
 You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-icon` key in the `innerClass` prop.
 
     ```jsx
