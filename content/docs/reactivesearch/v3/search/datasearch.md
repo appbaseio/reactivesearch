@@ -647,6 +647,12 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         -   `String` is used for specifying a single component by its `componentId`.
         -   `Array` is used for specifying multiple components by their `componentId`.
         -   `Object` is used for nesting other key clauses.
+-   **focusShortcuts** `Array<string | number>` [optional]
+A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+-   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
+-   **addonBefore** `string|JSX` [optional] The label text displayed before (on the left side of) the searchbox input field.
+-   **addonAfter** `string|JSX` [optional] The label text displayed after (on the right side of) the searchbox input field.
+-   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
 
 ## Examples
 
