@@ -33,6 +33,8 @@
               link: /docs/reactivesearch/vue/range/RangeSlider/
             - title: DynamicRangeSlider
               link: /docs/reactivesearch/vue/range/DynamicRangeSlider/
+            - title: RangeInput
+              link: /docs/reactivesearch/vue/range/RangeInput/
       - group: Search Components
         items:
             - title: DataSearch
