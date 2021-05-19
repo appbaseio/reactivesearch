@@ -273,7 +273,7 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(RangeSlider), {
+export const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(RangeSlider), {
 	componentType: componentTypes.rangeSlider,
 });
 

@@ -58,6 +58,17 @@ const RangeInput = {
 		componentStyle: types.style,
 		componentId: types.stringRequired,
 		includeNullValues: types.bool,
+		beforeValueChange: types.func,
+		customQuery: types.func,
+		data: types.data,
+		filterLabel: types.string,
+		react: types.react,
+		showFilter: VueTypes.bool.def(true),
+		showCheckbox: VueTypes.bool.def(true),
+		title: types.title,
+		URLParams: VueTypes.bool.def(false),
+		sliderOptions: VueTypes.object.def({}),
+		nestedField: types.string,
 	},
 
 	methods: {
@@ -157,7 +168,18 @@ const RangeInput = {
 			stepValue,
 			componentStyle,
 			themePreset,
-			includeNullValues
+			includeNullValues,
+			beforeValueChange,
+			customQuery,
+			data,
+			filterLabel,
+			react,
+			showFilter,
+			showCheckbox,
+			title,
+			URLParams,
+			sliderOptions,
+			nestedField,
 		} = this.$props;
 		return (
 			<Container style={componentStyle} class={className}>
@@ -171,6 +193,17 @@ const RangeInput = {
 					dataField={dataField}
 					rangeLabels={rangeLabels}
 					includeNullValues={includeNullValues}
+					beforeValueChange={beforeValueChange}
+					customQuery={customQuery}
+					data={data}
+					filterLabel={filterLabel}
+					react={react}
+					showFilter={showFilter}
+					showCheckbox={showCheckbox}
+					title={title}
+					URLParams={URLParams}
+					sliderOptions={sliderOptions}
+					nestedField={nestedField}
 					on-change={this.handleOnChange}
 					on-value-change={this.handleValueChange}
 				/>
