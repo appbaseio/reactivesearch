@@ -144,6 +144,11 @@ const RangeInput = {
 		}
 	},
 	watch: {
+		defaultValue(newVal, oldVal) {
+			if (oldVal.start !== newVal.start || oldVal.end !== newVal.end) {
+				this.handleChange(newVal, 'none')
+			}
+		},
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				if (this.isControlled()) {
