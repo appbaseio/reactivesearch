@@ -184,6 +184,10 @@ Example uses:
     when highlighting is enabled, this prop allows specifying the fields which should be returned with the matching highlights. When not specified, it defaults to applying highlights on the field(s) specified in the **dataField** prop.
 -   **customHighlight** `Function` [optional]
     a function which returns the custom [highlight settings](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-highlighting.html). It receives the `props` and expects you to return an object with the `highlight` key. Check out the <a href="https://opensource.appbase.io/reactivesearch/demos/technews/" target="_blank">technews demo</a> where the `DataSearch` component uses a `customHighlight` as given below,
+-   **focusShortcuts** `Array<string | number>` [optional]
+A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+-   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
+-   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
 
 ```html
 <template>
@@ -485,6 +489,34 @@ You can use a custom icon in place of the default icon for the popular searches 
         </DataSearch>
     ```
 
+-   **addonBefore** `slot-scope` [optional] The label text displayed before (on the left side of) the searchbox input field.
+
+     ```jsx
+           <search-box
+            ...
+            :enablePopularSuggestions="true"
+            :innerClass="{
+                'popular-search-icon': '...'
+            }"
+        >
+            <h1 slot="addonBefore">Any markup is accepted.</h1>
+        </search-box>
+    ```
+
+-   **addonAfter** `slot-scope` [optional] The label text displayed after (on the right side of) the searchbox input field.
+
+   ```jsx
+           <search-box
+            ...
+            :enablePopularSuggestions="true"
+            :innerClass="{
+                'popular-search-icon': '...'
+            }"
+        >
+            <h1 slot="addonAfter">Any markup is accepted.</h1>
+        </search-box>
+    ```
+    
 -   **distinctField** `String` [optional]
 This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
 
