@@ -13,13 +13,7 @@
 				:size="3"
 				:enablePopularSuggestions="true"
 				:enableRecentSearches="true"
-				:autoFocus="true"
-				:focusShortcuts="['b', 'ctrl+q','cmd+66']"
-				:expandSuggestionsContainer="true"
-			>
-				<h1 slot="addonBefore">node test</h1>
-				<img slot="addonAfter" src="https://picsum.photos/seed/picsum/20/30" />
-			</DataSearch>
+			/>
 			<ReactiveList
 				componentId="SearchResult"
 				dataField="original_title.keyword"
