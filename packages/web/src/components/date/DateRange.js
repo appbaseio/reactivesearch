@@ -571,5 +571,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, DateRange);
 
-ForwardRefComponent.name = 'DateRange';
+ForwardRefComponent.displayName = 'DateRange';
 export default ForwardRefComponent;

@@ -618,5 +618,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiDataList);
 
-ForwardRefComponent.name = 'MultiDataList';
+ForwardRefComponent.displayName = 'MultiDataList';
 export default ForwardRefComponent;

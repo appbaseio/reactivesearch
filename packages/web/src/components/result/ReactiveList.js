@@ -999,5 +999,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, ReactiveList);
 
-ForwardRefComponent.name = 'ReactiveList';
+ForwardRefComponent.displayName = 'ReactiveList';
 export default ForwardRefComponent;
