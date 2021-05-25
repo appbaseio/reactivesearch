@@ -29,7 +29,6 @@ const RangeSlider = {
 		};
 		return state;
 	},
-
 	props: {
 		beforeValueChange: types.func,
 		className: VueTypes.string.def(''),
@@ -56,19 +55,23 @@ const RangeSlider = {
 	},
 
 	methods: {
-		handleSlider(values) {
+		handleSliderChange(values) {
 			const { value } = this.$props;
-
 			if (value === undefined) {
-				this.handleChange(values.currentValue);
+				this.handleChange(values);
 			} else {
 				this.$emit('change', {
-					start: values.currentValue[0],
-					end: values.currentValue[1],
+					start: values[0],
+					end: values[1],
 				});
 			}
 		},
-
+		handleSlider(values) {
+			clearTimeout(this.handleSliderChange._tId);
+			this.handleSliderChange._tId = setTimeout(() => {
+				this.handleSliderChange(values);
+			}, 100);
+		},
 		handleChange(currentValue, props = this.$props) {
 			const performUpdate = () => {
 				this.currentValue = currentValue;
@@ -135,6 +138,7 @@ const RangeSlider = {
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
 				this.handleChange(RangeSlider.parseValue(newVal, this.$props));
+				this.$emit('change', newVal);
 			}
 		},
 
@@ -186,11 +190,15 @@ const RangeSlider = {
 								value={this.currentValue}
 								min={this.$props.range.start}
 								max={this.$props.range.end}
-								onDrag-end={this.handleSlider}
 								dotSize={20}
 								height={4}
 								enable-cross={false}
 								{...{ props: this.$props.sliderOptions }}
+								{...{
+									on: {
+										input: this.handleSlider,
+									},
+								}}
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">

@@ -63,6 +63,7 @@ export interface DataSearchProps extends CommonProps {
 	showIcon?: boolean;
 	title?: types.title;
 	theme?: types.style;
+	type?: string;
 	loader?: types.title;
 	themePreset?: types.themePreset;
 	clearIcon?: types.children;

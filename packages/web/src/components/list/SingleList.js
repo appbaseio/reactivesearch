@@ -624,5 +624,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, SingleList);
 
-ForwardRefComponent.name = 'SingleList';
+ForwardRefComponent.displayName = 'SingleList';
 export default ForwardRefComponent;

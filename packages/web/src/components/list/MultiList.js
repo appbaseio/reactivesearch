@@ -397,7 +397,7 @@ class MultiList extends Component {
 					options: [],
 				});
 			} else {
-				this.state = { 
+				this.state = {
 					...this.state || {},
 					options: [],
 				};
@@ -757,5 +757,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiList);
 
-ForwardRefComponent.name = 'MultiList';
+ForwardRefComponent.displayName = 'MultiList';
 export default ForwardRefComponent;
