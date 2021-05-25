@@ -128,9 +128,9 @@ const DataSearch = {
 		suggestionsList() {
 			let suggestionsList = [];
 			if (
-				!this.$data.currentValue &&
-				this.$props.defaultSuggestions &&
-				this.$props.defaultSuggestions.length
+				!this.$data.currentValue
+				&& this.$props.defaultSuggestions
+				&& this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = this.$props.defaultSuggestions;
 			} else if (this.$data.currentValue) {
@@ -158,8 +158,8 @@ const DataSearch = {
 			);
 		},
 		defaultSearchSuggestions() {
-			const isPopularSuggestionsEnabled =
-				this.enableQuerySuggestions || this.enablePopularSuggestions;
+			const isPopularSuggestionsEnabled
+				= this.enableQuerySuggestions || this.enablePopularSuggestions;
 			if (this.currentValue) {
 				return [];
 			}
@@ -550,12 +550,12 @@ const DataSearch = {
 		},
 		handleVoiceResults({ results }) {
 			if (
-				results &&
-				results[0] &&
-				results[0].isFinal &&
-				results[0][0] &&
-				results[0][0].transcript &&
-				results[0][0].transcript.trim()
+				results
+				&& results[0]
+				&& results[0].isFinal
+				&& results[0][0]
+				&& results[0][0].transcript
+				&& results[0][0].transcript.trim()
 			) {
 				this.isPending = false;
 				this.setValue(results[0][0].transcript.trim(), true);
@@ -694,17 +694,17 @@ const DataSearch = {
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
-			const renderNoSuggestion =
-				this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderNoSuggestion
+				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
-				renderNoSuggestion &&
-				isOpen &&
-				!finalSuggestionsList.length &&
-				!this.isLoading &&
-				currentValue &&
-				!(renderError && this.error)
+				renderNoSuggestion
+				&& isOpen
+				&& !finalSuggestionsList.length
+				&& !this.isLoading
+				&& currentValue
+				&& !(renderError && this.error)
 			) {
 				return (
 					<SuggestionWrapper
@@ -788,10 +788,10 @@ const DataSearch = {
 			const elt = event.target || event.srcElement;
 			const { tagName } = elt;
 			if (
-				elt.isContentEditable ||
-				tagName === 'INPUT' ||
-				tagName === 'SELECT' ||
-				tagName === 'TEXTAREA'
+				elt.isContentEditable
+				|| tagName === 'INPUT'
+				|| tagName === 'SELECT'
+				|| tagName === 'TEXTAREA'
 			) {
 				// already in an input
 				return;
@@ -870,198 +870,196 @@ const DataSearch = {
 								highlightedIndex,
 								setHighlightedIndex,
 							}) => {
-								const renderSuggestionsContainer = () => {
-									return (
-										<div>
-											{this.hasCustomRenderer &&
-												this.getComponent({
+								const renderSuggestionsContainer = () => (
+									<div>
+										{this.hasCustomRenderer
+												&& this.getComponent({
 													isOpen,
 													getItemProps,
 													getItemEvents,
 													highlightedIndex,
 												})}
-											{this.renderErrorComponent()}
-											{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
-												<ul
-													class={`${suggestions(
-														this.themePreset,
-														theme,
-													)} ${getClassName(
-														this.$props.innerClass,
-														'list',
-													)}`}
-												>
-													{this.suggestionsList
-														.slice(0, size)
-														.map((item, index) => (
-															<li
-																{...{
-																	domProps: getItemProps({
-																		item,
-																	}),
-																}}
-																{...{
-																	on: getItemEvents({
-																		item,
-																	}),
-																}}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor: this.getBackgroundColor(
-																		highlightedIndex,
-																		index,
-																	),
-																}}
-															>
-																<SuggestionItem
-																	currentValue={this.currentValue}
-																	suggestion={item}
-																/>
-															</li>
-														))}
-													{this.defaultSearchSuggestions.map(
-														(sugg, index) => (
-															<li
-																{...{
-																	domProps: getItemProps({
-																		item: sugg,
-																	}),
-																}}
-																{...{
-																	on: getItemEvents({
-																		item: sugg,
-																	}),
-																}}
-																key={`${this.suggestionsList
-																	.length +
-																	index +
-																	1}-${sugg.value}`}
-																style={{
-																	backgroundColor: this.getBackgroundColor(
-																		highlightedIndex,
-																		this.suggestionsList
-																			.length + index,
-																	),
-																	justifyContent: 'flex-start',
-																}}
-															>
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																	}}
-																>
-																	{sugg.source &&
-																		sugg.source
-																			._recent_search && (
-																			<CustomSvg
-																				className={
-																					getClassName(
-																						this.$props
-																							.innerClass,
-																						'recent-search-icon',
-																					) || null
-																				}
-																				icon={
-																					recentSearchesIcon
-																				}
-																				type="recent-search-icon"
-																			/>
-																		)}
-																	{sugg.source &&
-																		sugg.source
-																			._popular_suggestion && (
-																			<CustomSvg
-																				className={
-																					getClassName(
-																						this.$props
-																							.innerClass,
-																						'popular-search-icon',
-																					) || null
-																				}
-																				icon={
-																					popularSearchesIcon
-																				}
-																				type="popular-search-icon"
-																			/>
-																		)}
-																</div>
-																<SuggestionItem
-																	currentValue={this.currentValue}
-																	suggestion={sugg}
-																/>
-															</li>
-														),
-													)}
-													{hasQuerySuggestionsRenderer(this)
-														? this.getComponent(
-																{
-																	isOpen,
-																	getItemProps,
-																	getItemEvents,
+										{this.renderErrorComponent()}
+										{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
+											<ul
+												class={`${suggestions(
+													this.themePreset,
+													theme,
+												)} ${getClassName(
+													this.$props.innerClass,
+													'list',
+												)}`}
+											>
+												{this.suggestionsList
+													.slice(0, size)
+													.map((item, index) => (
+														<li
+															{...{
+																domProps: getItemProps({
+																	item,
+																}),
+															}}
+															{...{
+																on: getItemEvents({
+																	item,
+																}),
+															}}
+															key={`${index + 1}-${item.value}`}
+															style={{
+																backgroundColor: this.getBackgroundColor(
 																	highlightedIndex,
-																},
-																true,
-														  )
-														: this.topSuggestions.map((sugg, index) => (
-																<li
-																	{...{
-																		domProps: getItemProps({
-																			item: sugg,
-																		}),
-																	}}
-																	{...{
-																		on: getItemEvents({
-																			item: sugg,
-																		}),
-																	}}
-																	key={`${this.suggestionsList
-																		.length +
-																		index +
-																		1}-${sugg.value}`}
-																	style={{
-																		backgroundColor: this.getBackgroundColor(
-																			highlightedIndex,
-																			this.suggestionsList
-																				.length + index,
-																		),
-																		justifyContent:
-																			'flex-start',
-																	}}
-																>
-																	<div
-																		style={{
-																			padding: '0 10px 0 0',
-																		}}
-																	>
-																		<CustomSvg
-																			className={
-																				getClassName(
-																					this.$props
-																						.innerClass,
-																					'popular-search-icon',
-																				) || null
-																			}
-																			icon={
-																				popularSearchesIcon
-																			}
-																			type="popular-search-icon"
-																		/>
-																	</div>
-																	<SuggestionItem
-																		currentValue={
-																			this.currentValue
+																	index,
+																),
+															}}
+														>
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={item}
+															/>
+														</li>
+													))}
+												{this.defaultSearchSuggestions.map(
+													(sugg, index) => (
+														<li
+															{...{
+																domProps: getItemProps({
+																	item: sugg,
+																}),
+															}}
+															{...{
+																on: getItemEvents({
+																	item: sugg,
+																}),
+															}}
+															key={`${this.suggestionsList
+																.length
+																	+ index
+																	+ 1}-${sugg.value}`}
+															style={{
+																backgroundColor: this.getBackgroundColor(
+																	highlightedIndex,
+																	this.suggestionsList
+																		.length + index,
+																),
+																justifyContent: 'flex-start',
+															}}
+														>
+															<div
+																style={{
+																	padding: '0 10px 0 0',
+																}}
+															>
+																{sugg.source
+																		&& sugg.source
+																			._recent_search && (
+																	<CustomSvg
+																		className={
+																			getClassName(
+																				this.$props
+																					.innerClass,
+																				'recent-search-icon',
+																			) || null
 																		}
-																		suggestion={sugg}
+																		icon={
+																			recentSearchesIcon
+																		}
+																		type="recent-search-icon"
 																	/>
-																</li>
+																)}
+																{sugg.source
+																		&& sugg.source
+																			._popular_suggestion && (
+																	<CustomSvg
+																		className={
+																			getClassName(
+																				this.$props
+																					.innerClass,
+																				'popular-search-icon',
+																			) || null
+																		}
+																		icon={
+																			popularSearchesIcon
+																		}
+																		type="popular-search-icon"
+																	/>
+																)}
+															</div>
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={sugg}
+															/>
+														</li>
+													),
+												)}
+												{hasQuerySuggestionsRenderer(this)
+													? this.getComponent(
+														{
+															isOpen,
+															getItemProps,
+															getItemEvents,
+															highlightedIndex,
+														},
+														true,
+														  )
+													: this.topSuggestions.map((sugg, index) => (
+														<li
+															{...{
+																domProps: getItemProps({
+																	item: sugg,
+																}),
+															}}
+															{...{
+																on: getItemEvents({
+																	item: sugg,
+																}),
+															}}
+															key={`${this.suggestionsList
+																.length
+																		+ index
+																		+ 1}-${sugg.value}`}
+															style={{
+																backgroundColor: this.getBackgroundColor(
+																	highlightedIndex,
+																	this.suggestionsList
+																		.length + index,
+																),
+																justifyContent:
+																			'flex-start',
+															}}
+														>
+															<div
+																style={{
+																	padding: '0 10px 0 0',
+																}}
+															>
+																<CustomSvg
+																	className={
+																		getClassName(
+																			this.$props
+																				.innerClass,
+																			'popular-search-icon',
+																		) || null
+																	}
+																	icon={
+																		popularSearchesIcon
+																	}
+																	type="popular-search-icon"
+																/>
+															</div>
+															<SuggestionItem
+																currentValue={
+																	this.currentValue
+																}
+																suggestion={sugg}
+															/>
+														</li>
 														  ))}
-												</ul>
-											) : (
-												this.renderNoSuggestions(this.suggestionsList)
-											)}
-										</div>
-									);
-								};
+											</ul>
+										) : (
+											this.renderNoSuggestions(this.suggestionsList)
+										)}
+									</div>
+								);
 								return (
 									<div class={suggestionsContainer}>
 										<InputGroup>
@@ -1137,8 +1135,8 @@ const DataSearch = {
 													autocomplete="off"
 												/>
 												{this.renderIcons()}
-												{!expandSuggestionsContainer &&
-													renderSuggestionsContainer()}
+												{!expandSuggestionsContainer
+													&& renderSuggestionsContainer()}
 											</InputWrapper>{' '}
 											{this.renderInputAddonAfter()}
 										</InputGroup>
@@ -1254,9 +1252,9 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 		}`;
 		if (
 			!(
-				field.endsWith('.keyword') ||
-				field.endsWith('.autosuggest') ||
-				field.endsWith('.search')
+				field.endsWith('.keyword')
+				|| field.endsWith('.autosuggest')
+				|| field.endsWith('.search')
 			)
 		) {
 			phrasePrefixFields.push(queryField);
@@ -1363,9 +1361,9 @@ DataSearch.highlightQuery = props => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
