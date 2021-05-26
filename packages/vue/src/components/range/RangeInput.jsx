@@ -86,6 +86,12 @@ const RangeInput = {
 			return false;
 		},
 		handleChange(value, event) {
+			if(!value) {
+				value = {
+					start: this.$props.range ? this.$props.range.start : 0,
+					end: this.$props.range ? this.$props.range.end : 10
+				}
+			}
 			if (this.shouldUpdate(value)) {
 				this.$data.currentValue = value;
 				switch (event) {
@@ -152,7 +158,7 @@ const RangeInput = {
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				if (this.isControlled()) {
-					this.handleChange(newVal, 'value-change');
+					this.handleChange(newVal, 'change');
 				}
 			}
 		},
