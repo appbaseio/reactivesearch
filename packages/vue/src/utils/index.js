@@ -98,7 +98,7 @@ export const isQueryIdentical = (newVal, oldVal, value, props) => {
  */
 export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
 	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$scopedSlots || _ref.$props;
-	const render = renderPopularSuggestions || renderPopularSuggestions;
+	const render = renderPopularSuggestions || renderQuerySuggestions
 	if (render) return render(data);
 	return null;
 };
@@ -192,3 +192,10 @@ export function parseFocusShortcuts(focusShortcutsArray) {
 	});
 	return parsedFocusShortcutsArray;
 }
+export const debounce = (method, delay) => {
+	clearTimeout(method._tId);
+	// eslint-disable-next-line
+	method._tId = setTimeout(() => {
+		method();
+	}, delay);
+};
