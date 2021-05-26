@@ -11,13 +11,13 @@
       - group: REST
         icon: rest
         items:
-            - title: Quickstart
-              link: /api/rest/quickstart/
-            - title: ABC - Appbase via command line
-              link: /api/rest/abc/
+            - title: APIs Overview
+              link: /api/rest/overview
       - group: Interactive Examples
         icon: github
         items:
+            - title: REST
+              link: /api/examples/rest/
             - title: Javascript / Node.js
               link: /api/examples/js/
             - title: Go
