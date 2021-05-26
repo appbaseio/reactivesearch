@@ -174,7 +174,6 @@ const ToggleButton = {
 		},
 
 		handleClick(item) {
-			console.log('handleClick called ==>> ', item);
 			const { value } = this.$props;
 			if (value === undefined) {
 				this.handleToggle(item);
