@@ -10,7 +10,6 @@ const CancelSvg = ({ onClick }) => (
 		height="20px"
 		viewBox="0 0 24 24"
 		width="20px"
-		fill="#000000"
 	>
 		<title>Clear</title>
 		<path d="M0 0h24v24H0V0z" fill="none" />

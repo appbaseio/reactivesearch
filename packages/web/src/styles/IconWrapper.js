@@ -16,7 +16,7 @@ const IconWrapper = styled.div`
 	}
 
 	svg.cancel-icon {
-		fill: ${({ theme }) => theme.colors.borderColor};
+		fill: ${({ theme }) => theme.colors.borderColor || '#000'};
 	}
 `;
 
