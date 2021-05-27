@@ -69,7 +69,7 @@ const DataSearch = {
 		},
 	},
 	created() {
-		const { enableQuerySuggestions, renderQuerySuggestions, enableRecentSearches, distinctField, distinctFieldConfig } = this.$props;
+		const { enableQuerySuggestions, renderQuerySuggestions, enableRecentSearches, distinctField, distinctFieldConfig, index } = this.$props;
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
 			console.warn(
@@ -90,6 +90,11 @@ const DataSearch = {
 		if (!this.config.enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!this.config.enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -231,6 +236,10 @@ const DataSearch = {
 		renderMic: types.func,
 		distinctField: types.string,
 		distinctFieldConfig: types.props,
+		index: {
+			types: types.string,
+			default: undefined,
+		},
 	},
 	beforeMount() {
 		if (this.$props.highlight) {

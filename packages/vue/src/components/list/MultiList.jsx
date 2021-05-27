@@ -61,6 +61,10 @@ const MultiList = {
 		showMissing: VueTypes.bool.def(false),
 		missingLabel: VueTypes.string.def('N/A'),
 		nestedField: types.string,
+		index: {
+			types: types.string,
+			default: undefined,
+		},
 	},
 	data() {
 		const props = this.$props;
@@ -76,6 +80,11 @@ const MultiList = {
 		return this.__state;
 	},
 	created() {
+		if (!this.config.enableAppbase && this.$props.index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -576,6 +585,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
+	config: state.config,
 });
 
 const mapDispatchtoProps = {

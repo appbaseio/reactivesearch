@@ -61,7 +61,7 @@ const ReactiveList = {
 		return this.__state;
 	},
 	created() {
-		const { distinctField, distinctFieldConfig } = this.$props;
+		const { distinctField, distinctFieldConfig, index } = this.$props;
 		// no support for pagination and aggregationField together
 		if (this.pagination && this.aggregationField) {
 			console.warn(
@@ -76,6 +76,11 @@ const ReactiveList = {
 		if (!this.config.enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!this.config.enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -135,6 +140,10 @@ const ReactiveList = {
 		nextLabel: types.string,
 		distinctField: types.string,
 		distinctFieldConfig: types.props,
+		index: {
+			types: types.string,
+			default: undefined,
+		},
 	},
 	computed: {
 		shouldRenderPagination() {
