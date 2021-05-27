@@ -230,7 +230,7 @@ const RangeInput = {
 							themePreset={themePreset}
 							aria-label={`${componentId}-start-input`}
 							min={this.$props.range ? this.$props.range.start : 0}
-							className={getClassName(innerClass, 'input') || null}
+							class={getClassName(innerClass, 'input') || null}
 							alert={!this.$data.isStartValid}
 						/>
 						{!this.$data.isStartValid && (
