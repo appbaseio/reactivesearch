@@ -51,6 +51,16 @@ class RatingsFilter extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { config, index } = this.props;
+		const { enableAppbase } = config;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -216,6 +226,7 @@ RatingsFilter.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
+	config: types.props,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -238,6 +249,7 @@ RatingsFilter.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	includeNullValues: types.bool,
+	index: types.string,
 };
 
 RatingsFilter.defaultProps = {
@@ -245,6 +257,7 @@ RatingsFilter.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
+	index: undefined,
 };
 
 // Add componentType for SSR
@@ -255,6 +268,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({

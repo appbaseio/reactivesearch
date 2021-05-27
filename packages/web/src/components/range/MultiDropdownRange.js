@@ -52,6 +52,16 @@ class MultiDropdownRange extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { config, index } = this.props;
+		const { enableAppbase } = config;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -230,6 +240,7 @@ MultiDropdownRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
+	config: types.props,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -255,6 +266,7 @@ MultiDropdownRange.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	renderLabel: types.func,
+	index: types.string,
 };
 
 MultiDropdownRange.defaultProps = {
@@ -264,6 +276,7 @@ MultiDropdownRange.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
+	index: undefined,
 };
 
 // Add componentType for SSR
@@ -274,6 +287,7 @@ const mapStateToProps = (state, props) => ({
 		? state.selectedValues[props.componentId].value
 		: null,
 	themePreset: state.config.themePreset,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({

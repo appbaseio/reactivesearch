@@ -80,6 +80,7 @@ export interface CategorySearchProps extends CommonProps {
 	enablePredictiveSuggestions?: boolean;
 	distinctField?: string;
 	distinctFieldConfig?: object;
+	index?: string;
 }
 
 declare const CategorySearch: React.ComponentClass<CategorySearchProps>;

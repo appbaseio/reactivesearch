@@ -60,6 +60,16 @@ class DateRange extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { config, index } = this.props;
+		const { enableAppbase } = config;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		if (!isEqual(JSON.stringify(this.props.value), JSON.stringify(prevProps.value))) {
 			this.handleDateChange(this.props.value, false, this.props);
@@ -498,6 +508,7 @@ DateRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
+	config: types.props,
 	// component props
 	autoFocusEnd: types.bool,
 	beforeValueChange: types.func,
@@ -525,6 +536,7 @@ DateRange.propTypes = {
 	style: types.style,
 	theme: types.style,
 	title: types.string,
+	index: types.string,
 };
 
 DateRange.defaultProps = {
@@ -537,6 +549,7 @@ DateRange.defaultProps = {
 	showClear: true,
 	showFilter: true,
 	queryFormat: 'epoch_millis',
+	index: undefined,
 };
 
 // Add componentType for SSR
@@ -546,6 +559,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({

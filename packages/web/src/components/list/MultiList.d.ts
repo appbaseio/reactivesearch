@@ -38,6 +38,7 @@ export interface MultiList extends CommonProps {
 	loadMoreLabel?: types.title;
 	children?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
+	index?: string;
 }
 
 declare const MultiList: React.ComponentClass<MultiList>;

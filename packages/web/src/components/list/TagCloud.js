@@ -59,6 +59,16 @@ class TagCloud extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { config, index } = this.props;
+		const { enableAppbase } = config;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { buckets } = this.props.options[this.props.dataField];
@@ -309,6 +319,7 @@ TagCloud.propTypes = {
 	setCustomQuery: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
+	config: types.props,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -336,6 +347,7 @@ TagCloud.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	index: types.string,
 };
 
 TagCloud.defaultProps = {
@@ -347,6 +359,7 @@ TagCloud.defaultProps = {
 	sortBy: 'asc',
 	style: {},
 	URLParams: false,
+	index: undefined,
 };
 
 // Add componentType for SSR
@@ -369,6 +382,7 @@ const mapStateToProps = (state, props) => {
 			|| null,
 		isLoading: state.isLoading[props.componentId],
 		error: state.error[props.componentId],
+		config: state.config,
 	};
 };
 

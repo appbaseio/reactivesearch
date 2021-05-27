@@ -27,6 +27,7 @@ export interface DynamicRangeSliderProps extends CommonProps {
 	tooltipTrigger?: types.tooltipTrigger;
 	renderTooltipData?: (...args: any[]) => any;
 	includeNullValues?: boolean;
+	index?: string;
 }
 
 declare const DynamicRange: React.ComponentClass<DynamicRangeSliderProps>;

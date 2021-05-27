@@ -42,6 +42,16 @@ class ToggleButton extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { config, index } = this.props;
+		const { enableAppbase } = config;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -255,6 +265,7 @@ ToggleButton.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
+	config: types.props,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -274,6 +285,7 @@ ToggleButton.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	index: types.string,
 };
 
 ToggleButton.defaultProps = {
@@ -282,6 +294,7 @@ ToggleButton.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	index: undefined,
 };
 
 // Add componentType for SSR
@@ -292,6 +305,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	config: state.config,
 });
 
 const mapDispatchtoProps = dispatch => ({

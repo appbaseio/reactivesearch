@@ -257,6 +257,7 @@ class CategorySearch extends Component {
 			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
 		} = this.props;
 
 		const { enableAppbase } = config;
@@ -281,6 +282,11 @@ class CategorySearch extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 		if (enableRecentSearches) {
@@ -1348,6 +1354,7 @@ CategorySearch.propTypes = {
 	enableQuerySuggestions: types.bool,
 	distinctField: types.string,
 	distinctFieldConfig: types.componentObject,
+	index: types.string,
 	// TODO: Remove in v4
 	enablePopularSuggestions: types.bool,
 	enableRecentSearches: types.bool,
@@ -1448,6 +1455,7 @@ CategorySearch.defaultProps = {
 	recentSearches: [],
 	time: 0,
 	enablePredictiveSuggestions: false,
+	index: undefined,
 };
 
 // Add componentType for SSR

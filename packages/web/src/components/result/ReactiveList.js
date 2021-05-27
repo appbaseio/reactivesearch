@@ -83,6 +83,7 @@ class ReactiveList extends Component {
 			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
 		} = this.props;
 
 		const { enableAppbase } = config;
@@ -95,6 +96,11 @@ class ReactiveList extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -905,6 +911,7 @@ ReactiveList.propTypes = {
 	distinctFieldConfig: types.componentObject,
 	// eslint-disable-next-line
 	originalProps: types.any,
+	index: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -928,6 +935,7 @@ ReactiveList.defaultProps = {
 	scrollOnChange: true,
 	defaultSortOption: null,
 	originalProps: {},
+	index: undefined,
 };
 
 // Add componentType for SSR
