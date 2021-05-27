@@ -218,7 +218,7 @@ const RangeInput = {
 					on-change={this.handleOnChange}
 					on-value-change={this.handleValueChange}
 				/>
-				<Flex className={getClassName(innerClass, 'input-container') || null}>
+				<Flex class={getClassName(innerClass, 'input-container') || null}>
 					<Flex direction="column" flex={2}>
 						<Input
 							key={this.$data.currentValue.start}
