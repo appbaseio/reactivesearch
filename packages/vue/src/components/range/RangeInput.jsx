@@ -251,7 +251,7 @@ const RangeInput = {
 							themePreset={themePreset}
 							aria-label={`${componentId}-end-input`}
 							max={this.$props.range ? this.$props.range.end : 10}
-							className={getClassName(innerClass, 'input') || null}
+							class={getClassName(innerClass, 'input') || null}
 							alert={!this.$data.isEndValid}
 						/>
 						{!this.$data.isEndValid && <Content alert>Input range is invalid</Content>}
