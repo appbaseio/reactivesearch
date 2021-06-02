@@ -8,6 +8,7 @@ import {
 	updateQuery,
 	loadMore,
 	setMapData,
+	setValue,
 	setQueryListener,
 	setDefaultQuery,
 	setComponentProps,
@@ -25,7 +26,12 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { connect, isFunction, ReactReduxContext, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
+import {
+	connect,
+	isFunction,
+	ReactReduxContext,
+	getValidPropsKeys,
+} from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 import geohash from 'ngeohash';
@@ -204,7 +210,13 @@ class ReactiveMap extends Component {
 					distance: this.props.defaultRadius,
 					coordinates: `${coordinatesObject.lat}, ${coordinatesObject.lon}`,
 				};
-				this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute, meta);
+				this.props.setMapData(
+					this.props.componentId,
+					query,
+					persistMapQuery,
+					forceExecute,
+					meta,
+				);
 			}
 		}
 
@@ -402,9 +414,7 @@ class ReactiveMap extends Component {
 	};
 
 	getAllData = () => {
-		const {
-			size, promotedResults, customData,
-		} = this.props;
+		const { size, promotedResults, customData } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const streamResults = parseHits(this.props.streamHits) || [];
@@ -438,10 +448,7 @@ class ReactiveMap extends Component {
 
 	getData = () => {
 		const {
-			streamResults,
-			filteredResults,
-			promotedResults,
-			customData,
+			streamResults, filteredResults, promotedResults, customData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
@@ -487,7 +494,7 @@ class ReactiveMap extends Component {
 			}
 			this.props.setDefaultQuery(this.props.componentId, defaultQuery);
 		}
-	}
+	};
 
 	getHitsCenter = (hits) => {
 		const data = hits.map(hit => hit[this.props.dataField]);
@@ -562,7 +569,10 @@ class ReactiveMap extends Component {
 	getGeoQuery = (props = this.props) => {
 		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
 
-		const mapBounds = this.props.mapRef && typeof this.props.mapRef.getBounds === 'function' ? this.props.mapRef.getBounds() : false;
+		const mapBounds
+			= this.props.mapRef && typeof this.props.mapRef.getBounds === 'function'
+				? this.props.mapRef.getBounds()
+				: false;
 
 		let north;
 		let south;
@@ -726,7 +736,9 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			(this.props.mapRef && typeof this.props.mapRef.getCenter === 'function' && this.state.preserveCenter)
+			(this.props.mapRef
+				&& typeof this.props.mapRef.getCenter === 'function'
+				&& this.state.preserveCenter)
 			|| (this.props.stream && this.props.streamHits.length && !this.props.streamAutoCenter)
 		) {
 			const currentCenter = this.props.mapRef.getCenter();
@@ -894,7 +906,10 @@ class ReactiveMap extends Component {
 	};
 
 	handleZoomChange = () => {
-		const zoom = (this.props.mapRef && typeof this.props.mapRef.getZoom === 'function' ? this.props.mapRef.getZoom() : false);
+		const zoom
+			= this.props.mapRef && typeof this.props.mapRef.getZoom === 'function'
+				? this.props.mapRef.getZoom()
+				: false;
 		if (zoom) {
 			if (this.state.searchAsMove) {
 				this.setState(
@@ -1117,12 +1132,11 @@ const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setComponentProps: (component, options, componentType) =>
 		dispatch(setComponentProps(component, options, componentType)),
+	setPageURL: (component, value, label, showFilter, URLParams) =>
+		dispatch(setValue(component, value, label, showFilter, URLParams)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
 	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
 });
 
-export default connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(ReactiveMap);
+export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveMap);

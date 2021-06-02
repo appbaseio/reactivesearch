@@ -38,8 +38,9 @@ const inputChunks = {
 	MultiDropdownList: 'src/components/list/MultiDropdownList.jsx',
 	ToggleButton: 'src/components/list/ToggleButton.jsx',
 	StateProvider: 'src/components/basic/StateProvider.jsx',
+	ReactiveGoogleMap: 'src/components/maps/ReactiveGoogleMap.jsx',
 	initReactivesearch: 'src/server/index.js',
-}
+};
 
 if (es) {
 	output = {

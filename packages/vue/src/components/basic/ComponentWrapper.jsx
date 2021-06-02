@@ -2,6 +2,8 @@ import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transf
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
+import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
+
 const {
 	addComponent,
 	removeComponent,
@@ -16,8 +18,6 @@ const {
 	checkPropChange,
 	checkSomePropChange,
 } = helper;
-
-import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
 /**
  * ComponentWrapper component is a wrapper component for each ReactiveSearch component
