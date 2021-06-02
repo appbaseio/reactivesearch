@@ -604,9 +604,9 @@ You can use a custom icon in place of the default icon for the popular searches 
 <SearchBox
     id="search-component"
     dataField={["original_title", "original_title.search"]}
-    defaultQuery={() => {
+    defaultQuery={() => ({
         "timeout": "1s"
-    }}
+    })}
 />
 ```
 
