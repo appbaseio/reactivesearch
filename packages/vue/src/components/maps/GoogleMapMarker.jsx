@@ -1,4 +1,5 @@
-import { Marker, InfoWindow } from 'gmap-vue';
+import Marker from 'gmap-vue/dist/components/marker';
+import InfoWindow from 'gmap-vue/dist/components-implementation/info-window';
 import { Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
@@ -142,7 +143,7 @@ const GoogleMapMarker = {
 						)}
 					/>
 				);
-			} else if ('icon' in data) {
+			} if ('icon' in data) {
 				markerProps.icon = data.icon;
 			} else {
 				return (

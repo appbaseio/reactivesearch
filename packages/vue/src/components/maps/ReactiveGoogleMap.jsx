@@ -1,5 +1,5 @@
 import * as GmapMapFull from 'gmap-vue';
-import { Map } from 'gmap-vue';
+import Map from 'gmap-vue/dist/components-implementation/map';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { RMConnected } from './ReactiveMap.jsx';

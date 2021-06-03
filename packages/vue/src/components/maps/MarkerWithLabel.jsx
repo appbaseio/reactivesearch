@@ -1,4 +1,4 @@
-import { MapElementMixin } from 'gmap-vue';
+import MapElementMixin from 'gmap-vue/dist/mixins/map-element';
 import VueTypes from 'vue-types';
 
 // Note: This file has been taken from https://github.com/eregnier/vue2-gmap-custom-marker/blob/master/gmap-custom-marker.vue
@@ -99,6 +99,7 @@ const MarkerWithLabel = {
 					this.draw = () => this.repaint();
 					this.setPosition = () => this.repaint();
 				}
+
 				repaint() {
 					const div = self.$el;
 					const projection = this.getProjection();
@@ -160,6 +161,7 @@ const MarkerWithLabel = {
 						div.style['z-index'] = self.zIndex;
 					}
 				}
+
 				onAdd() {
 					if (this.$clusterObject) {
 						this.$clusterObject.removeMarker(this.$overlay, true);
