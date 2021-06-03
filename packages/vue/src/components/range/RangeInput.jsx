@@ -77,7 +77,10 @@ const RangeInput = {
 			if (validateRange && value) {
 				return validateRange([value.start, value.end]);
 			}
-			return true;
+			if (value) {
+				return value.start <= value.end;
+			}
+			return false;
 		},
 		isControlled() {
 			if (this.$props.value && this.$listeners) {
@@ -217,7 +220,7 @@ const RangeInput = {
 				<Flex class={getClassName(innerClass, 'input-container') || ''}>
 					<Flex direction="column" flex={2}>
 						<Input
-							key={this.$data.currentValue.start}
+							key={`${componentId}-start-value`}
 							name="start"
 							type="number"
 							onChange={this.handleInputChange}
@@ -238,7 +241,7 @@ const RangeInput = {
 					</Flex>
 					<Flex direction="column" flex={2}>
 						<Input
-							key={this.$data.currentValue.end}
+							key={`${componentId}-end-value`}
 							name="end"
 							type="number"
 							onChange={this.handleInputChange}
