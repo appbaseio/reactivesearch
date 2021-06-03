@@ -116,7 +116,6 @@ const RangeInput = {
 		},
 		handleInputChange(e) {
 			const { name, value } = e.target;
-			console.log('handleINputChange called ==>>', value);
 			if (Number.isNaN(value)) {
 				if (name === 'start') {
 					this.$data.isStartValid = false;
