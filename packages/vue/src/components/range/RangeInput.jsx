@@ -77,7 +77,10 @@ const RangeInput = {
 			if (validateRange && value) {
 				return validateRange([value.start, value.end]);
 			}
-			return true;
+			if (value) {
+				return value.start <= value.end;
+			}
+			return false;
 		},
 		isControlled() {
 			if (this.$props.value && this.$listeners) {
