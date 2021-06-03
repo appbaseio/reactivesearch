@@ -19,6 +19,7 @@ const ReactiveGoogleMap = {
 		URLParams: types.bool,
 		mapProps: VueTypes.object,
 		showMarkers: VueTypes.bool.def(true),
+		showMarkerClusters : VueTypes.bool.def(false),
 		searchAsMove: VueTypes.bool.def(false),
 		markerProps: types.props,
 		renderItem: VueTypes.func,
@@ -93,6 +94,7 @@ const ReactiveGoogleMap = {
 								defaultPin={defaultPin}
 								autoClosePopover={autoClosePopover}
 								renderPopover={renderPopover}
+								showMarkerClusters={this.showMarkerClusters}
 							/>
 						) : null}
 					</Map>
@@ -159,6 +161,9 @@ const ReactiveGoogleMap = {
 
 ReactiveGoogleMap.install = function(Vue, options) {
 	Vue.component(ReactiveGoogleMap.name, ReactiveGoogleMap);
+	if(!options || !options.key) {
+		console.error('ReactiveSearch: map key is required to use ReactiveGoogleMap component')
+	}
 	Vue.use(GmapMapFull, {
 		load: {
 			key: options.key,

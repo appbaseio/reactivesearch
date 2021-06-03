@@ -133,8 +133,6 @@ const ReactiveMap = {
 		autoClosePopover: types.bool,
 		renderMap: VueTypes.func.isRequired,
 		renderPopover: VueTypes.func,
-		// To optimize rendering
-		// 	updaterKey: types.number,
 		onDragEnd: types.func,
 		onZoomChanged: types.func,
 		onIdle: types.func,

@@ -150,9 +150,7 @@ const MultiList = {
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
 			return null;
 		}
-
 		let itemsToRender = this.$data.modifiedOptions;
-
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
@@ -312,7 +310,7 @@ const MultiList = {
 					};
 				} else if (Array.isArray(value)) {
 					value.forEach(val => {
-						currentValue[val] = true
+						currentValue[val] = true;
 					});
 				} else {
 					currentValue[value] = true;

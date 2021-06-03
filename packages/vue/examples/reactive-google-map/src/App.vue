@@ -7,7 +7,7 @@
 		>
 			<div class="row">
 				<div class="col">
-					<multi-list
+					<single-list
 						title="Places"
 						componentId="places"
 						dataField="place.keyword"
@@ -25,19 +25,24 @@
 						:style="{ height: '90vh' }"
 						:react="{ and: 'places' }"
 						:defaultZoom="3"
-						:defaultRadius="200"
-						:autoCenter="false"
-						:defaultCenter="{ lat: 37.74, lng: -122.45 }"
-						unit="km"
 						:showSearchAsMove="true"
-						:renderItem="(result) => ({ label: result._id })"
+						:showMarkerClusters="true"
 					>
-					<div slot="renderPopover" slot-scope="{ _id }" >
-						Id: {{_id}}
-					</div>
-					<template slot="renderItem" slot-scope="{ _id }" >
-						<div>Id: {{_id}}</div>
-					</template>
+						<div
+							slot="renderItem"
+							slot-scope="{ magnitude }"
+							:style="{
+								background: 'dodgerblue',
+								color: '#fff',
+								paddingLeft: '5px',
+								paddingRight: '5px',
+								borderRadius: '3px',
+								padding: '10px',
+							}"
+						>
+							<i class="fas fa-globe-europe" />
+							&nbsp;{{ magnitude }}
+						</div>
 					</reactive-google-map>
 				</div>
 			</div>
@@ -49,7 +54,7 @@
 import './styles.css';
 
 export default {
-	name: 'app'
+	name: 'app',
 };
 </script>
 
