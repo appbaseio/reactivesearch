@@ -166,7 +166,7 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
 				return {
 					query: {
 						match: {
-							data_field: 'this is a test',
+							price: 1000,
 						},
 					},
 				};
