@@ -32,8 +32,8 @@ Example uses:
 		componentId="BookSensor"
 		title="RangeSlider: Ratings"
 		:range="{
-        start: 3000,
-        end: 50000
+			start: 3000,
+			end: 50000
       }"
 	/>
 </template>
@@ -120,11 +120,10 @@ Example uses:
 -   **includeNullValues** `Boolean` [optional]
     If you have sparse data or document or items not having the value in the specified field or mapping, then this prop enables you to show that data. Defaults to `false`.
 
-## Checkout the example in vue-playground
+## Demo
 
-<a href="https://reactivesearch-vue-playground.netlify.app/?path=/story/range-components-rangeinput--basic" target="_blank">RangeInput component with basic props</a>
-<a href="https://reactivesearch-vue-playground.netlify.app/?path=/story/range-components-rangeinput--with-title" target="_blank">RangeInput component with title</a>
-<a href="https://reactivesearch-vue-playground.netlify.app/?path=/story/range-components-rangeinput--with-defaultvalue" target="_blank">RangeInput component with default value</a>
+<br/>
+<iframe src="https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/next/packages/vue/examples/range-input" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
 
 ## Styles
 
@@ -231,3 +230,11 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
     is an event which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This event is handy in cases where you want to generate a side-effect on value selection.For example: You want to show a pop-up modal with the valid discount coupon code when some range is selected in a “Discounted Price” RangeSlider.
 -   **change**
     is an event which accepts component's current **value** as a parameter. It is called when you are using the value prop and the component's value changes.
+
+## Examples
+
+See more stories for RangeInput on Vue playground.
+
+<a href="https://reactivesearch-vue-playground.netlify.app/?path=/story/range-components-rangeinput--basic" target="_blank">RangeInput component with basic props</a><br/>
+<a href="https://reactivesearch-vue-playground.netlify.app/?path=/story/range-components-rangeinput--with-title" target="_blank">RangeInput component with title</a><br/>
+<a href="https://reactivesearch-vue-playground.netlify.app/?path=/story/range-components-rangeinput--with-defaultvalue" target="_blank">RangeInput component with default value</a>
