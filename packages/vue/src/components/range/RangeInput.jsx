@@ -89,7 +89,7 @@ const RangeInput = {
 			return false;
 		},
 		handleChange(value, event) {
-			if (this.shouldUpdate(value)) {
+			if (this.shouldUpdate(value) && !isEqual(value, this.currentValue)) {
 				switch (event) {
 					case 'change':
 						if(!value) {
@@ -98,7 +98,7 @@ const RangeInput = {
 								end: this.$props.range ? this.$props.range.end : 10
 							}
 						}
-						this.$data.currentValue = value;
+						this.$data.currentValue = {...value};
 						this.$emit('change', this.$data.currentValue);
 						break;
 					case 'value-change':
@@ -106,7 +106,7 @@ const RangeInput = {
 						this.$emit('value-change', this.$data.currentValue);
 						break;
 					default:
-						this.$data.currentValue = value;
+						this.$data.currentValue = {...value};
 						break;
 				}
 			}
@@ -196,8 +196,8 @@ const RangeInput = {
 				<RangeSlider
 					componentId={componentId}
 					value={{
-						start: this.$data.currentValue.start,
-						end: this.$data.currentValue.end
+						start: this.currentValue.start,
+						end: this.currentValue.end
 					}}
 					range={range}
 					dataField={dataField}
@@ -224,15 +224,21 @@ const RangeInput = {
 							name="start"
 							type="number"
 							onChange={this.handleInputChange}
-							value={this.$data.currentValue.start}
 							step={stepValue}
 							themePreset={themePreset}
 							aria-label={`${componentId}-start-input`}
 							min={this.$props.range ? this.$props.range.start : 0}
 							class={getClassName(innerClass, 'input') || ''}
-							alert={!this.$data.isStartValid}
+							alert={!this.isStartValid}
+							{
+								...{
+									domProps: {
+										value: this.currentValue.start
+									}
+								}
+							}
 						/>
-						{!this.$data.isStartValid && (
+						{!this.isStartValid && (
 							<Content alert>Input range is invalid</Content>
 						)}
 					</Flex>
@@ -245,15 +251,21 @@ const RangeInput = {
 							name="end"
 							type="number"
 							onChange={this.handleInputChange}
-							value={this.$data.currentValue.end}
 							step={stepValue}
 							themePreset={themePreset}
 							aria-label={`${componentId}-end-input`}
 							max={this.$props.range ? this.$props.range.end : 10}
 							class={getClassName(innerClass, 'input') || ''}
-							alert={!this.$data.isEndValid}
+							alert={!this.isEndValid}
+							{
+								...{
+									domProps: {
+										value: this.currentValue.end
+									}
+								}
+							}
 						/>
-						{!this.$data.isEndValid && <Content alert>Input range is invalid</Content>}
+						{!this.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 				</Flex>
 			</Container>
