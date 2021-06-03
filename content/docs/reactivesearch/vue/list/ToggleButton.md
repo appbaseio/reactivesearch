@@ -87,16 +87,13 @@ Example uses:
     <!-- prettier-ignore -->
     ```html
     <toggle-button>
-		<div
+		<a
 			slot="renderItem"
 			slot-scope="{ item, handleClick, isSelected }"
-			:style="{margin: '10px'}"
-		>
-			{{item.label}}
-			<span :style="{ marginLeft: 5, color: isSelected ? 'blue' : 'dodgerblue', cursor: 'pointer' }" @click="handleClick">
-				{{item.value}}
-			</span>
-		</div>
+			:href="item.url"
+			@click="handleClick"
+			:style="{ color: isSelected ? 'blue': 'dodgerblue'}"
+		/>
     </toggle-button>
     ```
 
