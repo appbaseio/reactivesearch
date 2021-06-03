@@ -384,7 +384,7 @@ const HomePage = ({ data, location }) => {
 								Android
 							</Box>
 							<Box
-								to="/api/rest/quickstart/"
+								to="/api/rest/overview/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -392,7 +392,7 @@ const HomePage = ({ data, location }) => {
 								<img
 									className="w15 mb1"
 									src="https://miro.medium.com/max/790/1*uHzooF1EtgcKn9_XiSST4w.png"
-									alt="REST APi"
+									alt="REST API"
 								/>
 								REST API
 							</Box>
