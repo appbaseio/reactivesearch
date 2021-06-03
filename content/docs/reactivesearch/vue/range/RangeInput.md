@@ -56,9 +56,6 @@ Example uses:
 			start: '3K',
 			end: '50K',
 		}"
-		:componentStyle="{
-			margin: '10px'
-		}"
 		:defaultValue="{
 			start: 10000,
 			end: 30000
@@ -138,7 +135,7 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
 
 `RangeInput` component can be extended to
 
-1. customize the look and feel with `className`, `componentStyle`,
+1. customize the look and feel with `className`,
 2. update the underlying DB query with `customQuery`,
 3. connect with external interfaces using `beforeValueChange`, `valueChange` and `queryChange`,
 4. filter data using a combined query context via the `react` prop,
