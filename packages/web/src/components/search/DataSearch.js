@@ -1385,5 +1385,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, DataSearch);
 
-ForwardRefComponent.name = 'DataSearch';
+ForwardRefComponent.displayName = 'DataSearch';
 export default ForwardRefComponent;

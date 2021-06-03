@@ -234,5 +234,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, RangeInput);
 
-ForwardRefComponent.name = 'RangeInput';
+ForwardRefComponent.displayName = 'RangeInput';
 export default ForwardRefComponent;

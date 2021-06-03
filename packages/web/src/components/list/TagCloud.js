@@ -394,5 +394,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 
 hoistNonReactStatics(ForwardRefComponent, TagCloud);
 
-ForwardRefComponent.name = 'TagCloud';
+ForwardRefComponent.displayName = 'TagCloud';
 export default ForwardRefComponent;

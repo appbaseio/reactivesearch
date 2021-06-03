@@ -244,5 +244,5 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 ));
 hoistNonReactStatics(ForwardRefComponent, SingleDropdownRange);
 
-ForwardRefComponent.name = 'SingleDropdownRange';
+ForwardRefComponent.displayName = 'SingleDropdownRange';
 export default ForwardRefComponent;
