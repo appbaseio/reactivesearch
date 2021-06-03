@@ -485,9 +485,9 @@ For example,
 <SearchBox
     id="search-component"
     dataField={["original_title", "original_title.search"]}
-    defaultQuery={() => {
+    defaultQuery={() => ({
         "timeout": "1s"
-    }}
+    })}
 />
 ```
 
