@@ -326,7 +326,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 	export default {
 		name: 'App',
 		methods: {
-			transformRequest(elasticsearchResponse) {
+			transformRequest(request) {
 				return Promise.resolve({
 					...request,
 					credentials: include,
