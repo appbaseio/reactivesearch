@@ -23,6 +23,7 @@ import ReactiveGoogleMap from './components/maps/ReactiveGoogleMap.jsx';
 import initReactivesearch from './server/index';
 import version from './components/Version/index';
 import install from './install';
+import RangeInput from './components/range/RangeInput.jsx';
 
 if (typeof window !== 'undefined' && window.Vue) {
 	install(window.Vue);
@@ -50,6 +51,7 @@ export {
 	StateProvider,
 	ReactiveGoogleMap,
 	initReactivesearch,
+	RangeInput,
 };
 
 export default {

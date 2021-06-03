@@ -40,7 +40,8 @@ const inputChunks = {
 	StateProvider: 'src/components/basic/StateProvider.jsx',
 	ReactiveGoogleMap: 'src/components/maps/ReactiveGoogleMap.jsx',
 	initReactivesearch: 'src/server/index.js',
-};
+	RangeInput: 'src/components/range/RangeInput.jsx'
+}
 
 if (es) {
 	output = {
