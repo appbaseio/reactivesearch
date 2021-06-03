@@ -132,7 +132,7 @@ const SingleList = {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
+		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
 			if(this.renderNoResult) {
 				this.renderNoResult();
 			} else {
