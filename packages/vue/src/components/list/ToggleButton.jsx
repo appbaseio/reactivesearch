@@ -186,7 +186,7 @@ const ToggleButton = {
 			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
 			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
 
-			return (
+			return renderItem ? renderItem({ item, isSelected, handleClick: () => this.handleClick(item) }) : (
 				<Button
 					class={`${getClassName(this.$props.innerClass, 'button')} ${
 						isSelected ? 'active' : ''
@@ -198,9 +198,9 @@ const ToggleButton = {
 					tabIndex={isSelected ? '-1' : '0'}
 					onKeypress={e => handleA11yAction(e, () => this.handleClick(item))}
 				>
-					{renderItem ? renderItem({ item, isSelected }) : item.label}
+					{item.label}
 				</Button>
-			);
+			)
 		},
 	},
 
