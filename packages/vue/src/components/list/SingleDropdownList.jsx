@@ -79,6 +79,10 @@ const SingleDropdownList = {
 		showLoadMore: VueTypes.bool.def(false),
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
+		enableStrictSelection: {
+			types: types.bool,
+			default: false,
+		},
 	},
 	created() {
 		// Set custom and default queries in store
@@ -230,6 +234,9 @@ const SingleDropdownList = {
 
 	methods: {
 		setValue(value, props = this.$props) {
+			if (props.enableStrictSelection && !value) {
+				return;
+			}
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.updateQueryHandler(value, props);

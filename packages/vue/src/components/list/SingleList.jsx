@@ -53,6 +53,10 @@ const SingleList = {
 		showMissing: VueTypes.bool.def(false),
 		missingLabel: VueTypes.string.def('N/A'),
 		nestedField: types.string,
+		enableStrictSelection: {
+			types: types.bool,
+			default: false,
+		},
 	},
 	data() {
 		const props = this.$props;
@@ -262,10 +266,12 @@ const SingleList = {
 		setValue(nextValue, props = this.$props) {
 			let value = nextValue;
 
-			if (nextValue === this.$data.currentValue) {
+			if (!value && props.enableStrictSelection) {
+				return;
+			}
+			if (nextValue === this.$data.currentValue && !props.enableStrictSelection) {
 				value = '';
 			}
-
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.updateQueryHandler(value, props);

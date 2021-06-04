@@ -37,6 +37,10 @@ const SingleRange = {
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		nestedField: types.string,
+		enableStrictSelection: {
+			types: types.bool,
+			default: false,
+		},
 	},
 	created() {
 		// Set custom query in store
@@ -116,8 +120,10 @@ const SingleRange = {
 
 	methods: {
 		setValue(value, props = this.$props) {
+			if (props.enableStrictSelection && !value) {
+				return;
+			}
 			const currentValue = SingleRange.parseValue(value, props);
-
 			const performUpdate = () => {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(currentValue, props);
