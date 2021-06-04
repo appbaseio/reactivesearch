@@ -334,7 +334,7 @@ class SingleList extends Component {
 		let isValueUnselected = false;
 		if (isEvent(e)) {
 			currentValue = e.target.value;
-			isValueUnselected = e.target.tabIndex === -1;
+			isValueUnselected = currentValue === this.state.currentValue;
 		}
 		const { value, onChange, enableStrictSelection } = this.props;
 		if (value === undefined) {
