@@ -30,7 +30,7 @@ Example uses:
 	<range-input
 		dataField="ratings_count"
 		componentId="BookSensor"
-		title="RangeSlider: Ratings"
+		title="RangeInput: Ratings"
 		:range="{
 			start: 3000,
 			end: 50000
@@ -201,13 +201,13 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
     CSS class to be injected on the component container.
 -   **customQuery** `Function`
     takes **value** and **props** as parameters and **returns** the data query to be applied to the component, as defined in Elasticsearch Query DSL.
-    `Note:` customQuery is called on value changes in the **RangeSlider** component as long as the component is a part of `react` dependency of at least one other component.
--   **beforeValueChange** `Function`
-    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved.
 
-    > Note:
-    >
-    > If you're using Reactivesearch version >= `1.1.0`, `beforeValueChange` can also be defined as a synchronous function. `value` is updated by default, unless you throw an `Error` to reject the update. For example:
+	> Note:
+	> customQuery is called on value changes in the **RangeInput** component as long as the component is a part of
+    >`react` dependency of at least one other component.
+
+-   **beforeValueChange** `Function`
+    is a callback function which accepts component's future **value** as a parameter and **returns** a promise. It is called everytime before a component's value changes. The promise, if and when resolved, triggers the execution of the component's query and if rejected, kills the query execution. This method can act as a gatekeeper for query execution, since it only executes the query after the provided promise has been resolved. For example,
 
     ```js
     beforeValueChange = value => {
@@ -224,7 +224,7 @@ The other `innerClass` properties are the same as supported by [RangeSlider](/do
 -   **queryChange**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.
 -   **valueChange**
-    is an event which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This event is handy in cases where you want to generate a side-effect on value selection.For example: You want to show a pop-up modal with the valid discount coupon code when some range is selected in a “Discounted Price” RangeSlider.
+    is an event which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This event is handy in cases where you want to generate a side-effect on value selection.For example: You want to show a pop-up modal with the valid discount coupon code when some range is selected in a “Discounted Price” RangeInput.
 -   **change**
     is an event which accepts component's current **value** as a parameter. It is called when you are using the value prop and the component's value changes.
 
