@@ -331,16 +331,11 @@ class SingleList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
-		let isValueUnselected = false;
 		if (isEvent(e)) {
 			currentValue = e.target.value;
-			isValueUnselected = currentValue === this.state.currentValue;
 		}
-		const { value, onChange, enableStrictSelection } = this.props;
+		const { value, onChange } = this.props;
 		if (value === undefined) {
-			if (enableStrictSelection && isValueUnselected) {
-				return;
-			}
 			this.setValue(currentValue);
 		} else if (onChange) {
 			onChange(currentValue);
@@ -395,6 +390,7 @@ class SingleList extends Component {
 			renderError,
 			error,
 			isLoading,
+			enableStrictSelection,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -468,7 +464,7 @@ class SingleList extends Component {
 											tabIndex={isChecked ? '-1' : '0'}
 											value={item.key}
 											readOnly
-											onClick={this.handleClick}
+											onClick={enableStrictSelection && isChecked ? () => false : this.handleClick}
 											checked={isChecked}
 											show={this.props.showRadio}
 										/>

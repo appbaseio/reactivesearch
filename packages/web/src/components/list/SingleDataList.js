@@ -289,16 +289,11 @@ class SingleDataList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
-		let isValueUnselected = false;
 		if (isEvent(e)) {
 			currentValue = e.target.value;
-			isValueUnselected = currentValue === this.state.currentValue;
 		}
-		const { value, onChange, enableStrictSelection } = this.props;
+		const { value, onChange } = this.props;
 		if (value === undefined) {
-			if (enableStrictSelection && isValueUnselected) {
-				return;
-			}
 			this.setValue(currentValue);
 		} else if (onChange) {
 			onChange(currentValue);
@@ -333,7 +328,9 @@ class SingleDataList extends Component {
 	}
 
 	render() {
-		const { selectAllLabel, showCount, renderItem } = this.props;
+		const {
+			selectAllLabel, showCount, renderItem, enableStrictSelection,
+		} = this.props;
 		const { options } = this.state;
 
 		if (!this.hasCustomRenderer && options.length === 0) {
@@ -400,7 +397,7 @@ class SingleDataList extends Component {
 											id={`${this.props.componentId}-${item.label}`}
 											tabIndex={isChecked ? '-1' : '0'}
 											value={item.label}
-											onClick={this.handleClick}
+											onClick={enableStrictSelection && isChecked ? () => false : this.handleClick}
 											readOnly
 											checked={isChecked}
 											show={this.props.showRadio}
