@@ -203,7 +203,6 @@ class SingleList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-
 			if (hasMounted) {
 				this.setState(
 					{
@@ -391,6 +390,7 @@ class SingleList extends Component {
 			renderError,
 			error,
 			isLoading,
+			enableStrictSelection,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -464,7 +464,7 @@ class SingleList extends Component {
 											tabIndex={isChecked ? '-1' : '0'}
 											value={item.key}
 											readOnly
-											onClick={this.handleClick}
+											onClick={enableStrictSelection && isChecked ? () => false : this.handleClick}
 											checked={isChecked}
 											show={this.props.showRadio}
 										/>
@@ -562,6 +562,7 @@ SingleList.propTypes = {
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
 	nestedField: types.string,
+	enableStrictSelection: types.bool,
 };
 
 SingleList.defaultProps = {
@@ -579,6 +580,7 @@ SingleList.defaultProps = {
 	missingLabel: 'N/A',
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	enableStrictSelection: false,
 };
 
 // Add componentType for SSR

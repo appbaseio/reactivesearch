@@ -184,7 +184,6 @@ class SingleDropdownList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-
 			if (hasMounted) {
 				this.setState(
 					{
