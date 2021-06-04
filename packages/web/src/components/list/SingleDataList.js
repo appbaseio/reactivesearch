@@ -154,9 +154,7 @@ class SingleDataList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-			if (props.enableStrictSelection && !value) {
-				return;
-			}
+
 			if (hasMounted) {
 				this.setState(
 					{
@@ -291,11 +289,16 @@ class SingleDataList extends Component {
 
 	handleClick = (e) => {
 		let currentValue = e;
+		let isValueUnselected = false;
 		if (isEvent(e)) {
 			currentValue = e.target.value;
+			isValueUnselected = e.target.tabIndex === -1;
 		}
-		const { value, onChange } = this.props;
+		const { value, onChange, enableStrictSelection } = this.props;
 		if (value === undefined) {
+			if (enableStrictSelection && isValueUnselected) {
+				return;
+			}
 			this.setValue(currentValue);
 		} else if (onChange) {
 			onChange(currentValue);
