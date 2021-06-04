@@ -203,7 +203,9 @@ class SingleList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-
+			if (props.enableStrictSelection && !value) {
+				return;
+			}
 			if (hasMounted) {
 				this.setState(
 					{
@@ -562,6 +564,7 @@ SingleList.propTypes = {
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
 	nestedField: types.string,
+	enableStrictSelection: types.bool,
 };
 
 SingleList.defaultProps = {
@@ -579,6 +582,7 @@ SingleList.defaultProps = {
 	missingLabel: 'N/A',
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	enableStrictSelection: false,
 };
 
 // Add componentType for SSR

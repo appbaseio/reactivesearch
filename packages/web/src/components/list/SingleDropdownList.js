@@ -184,7 +184,9 @@ class SingleDropdownList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-
+			if (props.enableStrictSelection && !value) {
+				return;
+			}
 			if (hasMounted) {
 				this.setState(
 					{
@@ -432,6 +434,7 @@ SingleDropdownList.propTypes = {
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
 	nestedField: types.string,
+	enableStrictSelection: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -448,6 +451,7 @@ SingleDropdownList.defaultProps = {
 	showSearch: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	enableStrictSelection: false,
 };
 
 // Add componentType for SSR

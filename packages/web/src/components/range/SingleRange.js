@@ -92,7 +92,9 @@ class SingleRange extends Component {
 				this.updateQuery(currentValue, props);
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
-
+			if (props.enableStrictSelection && !value) {
+				return;
+			}
 			if (hasMounted) {
 				this.setState(
 					{
@@ -215,6 +217,7 @@ SingleRange.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	includeNullValues: types.bool,
+	enableStrictSelection: types.bool,
 };
 
 SingleRange.defaultProps = {
@@ -224,6 +227,7 @@ SingleRange.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
+	enableStrictSelection: false,
 };
 
 // Add componentType for SSR

@@ -154,7 +154,9 @@ class SingleDataList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-
+			if (props.enableStrictSelection && !value) {
+				return;
+			}
 			if (hasMounted) {
 				this.setState(
 					{
@@ -475,6 +477,7 @@ SingleDataList.propTypes = {
 	render: types.func,
 	renderItem: types.func,
 	renderNoResults: types.func,
+	enableStrictSelection: types.bool,
 };
 
 SingleDataList.defaultProps = {
@@ -486,6 +489,7 @@ SingleDataList.defaultProps = {
 	style: {},
 	URLParams: false,
 	showCount: false,
+	enableStrictSelection: false,
 };
 
 
