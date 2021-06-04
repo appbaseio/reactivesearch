@@ -266,9 +266,6 @@ const SingleList = {
 		setValue(nextValue, props = this.$props) {
 			let value = nextValue;
 
-			if (!value && props.enableStrictSelection) {
-				return;
-			}
 			if (nextValue === this.$data.currentValue && !props.enableStrictSelection) {
 				value = '';
 			}
