@@ -96,9 +96,6 @@ class SingleDropdownRange extends Component {
 				this.updateQuery(currentValue, props);
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
-			if (props.enableStrictSelection && !value) {
-				return;
-			}
 			if (hasMounted) {
 				this.setState(
 					{
@@ -201,7 +198,6 @@ SingleDropdownRange.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	renderLabel: types.func,
-	enableStrictSelection: types.bool,
 };
 
 SingleDropdownRange.defaultProps = {
@@ -211,7 +207,6 @@ SingleDropdownRange.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
-	enableStrictSelection: false,
 };
 
 

@@ -19,7 +19,6 @@ export interface SingleRangeProps extends CommonProps {
 	showRadio: boolean;
 	title?: types.title;
 	includeNullValues?: boolean;
-	enableStrictSelection?: boolean;
 }
 
 declare const SingleRange: React.ComponentClass<SingleRangeProps>;
