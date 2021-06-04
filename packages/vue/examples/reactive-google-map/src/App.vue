@@ -19,13 +19,12 @@
 				<div class="col">
 					<selected-filters />
 					<reactive-google-map
-						componentId="googleMap"
+						componentId="map"
 						dataField="location"
 						:size="50"
-						:style="{ height: '90vh' }"
+						:style="{ height: '90vh', minWidth: '300px' }"
 						:react="{ and: 'places' }"
 						:defaultZoom="3"
-						:showSearchAsMove="true"
 						:showMarkerClusters="true"
 					>
 						<div
@@ -49,7 +48,6 @@
 		</reactive-base>
 	</div>
 </template>
-
 <script>
 import './styles.css';
 

@@ -34,11 +34,6 @@ const ReactiveGoogleMap = {
 		unit: types.string,
 		pages: VueTypes.number.def(5),
 	},
-	data() {
-		return {
-			mapRef: null,
-		};
-	},
 	methods: {
 		renderMap({
 			resultsToRender,
@@ -102,6 +97,9 @@ const ReactiveGoogleMap = {
 				</div>
 			);
 		},
+		getMapRef() {
+			return this.mapRef
+		}
 	},
 	mounted() {
 		if (this.$refs.mapRef) {
@@ -113,7 +111,7 @@ const ReactiveGoogleMap = {
 	render() {
 		return (
 			<RMConnected
-				mapRef={this.mapRef}
+				getMapRef={this.getMapRef}
 				renderMap={this.renderMap}
 				componentId={this.componentId}
 				className={this.className}

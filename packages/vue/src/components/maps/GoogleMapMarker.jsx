@@ -11,6 +11,7 @@ const {
 } = Actions;
 
 const GoogleMapMarker = {
+	name: 'GoogleMapMarker',
 	props: {
 		index: VueTypes.number,
 		marker: VueTypes.object.isRequired,

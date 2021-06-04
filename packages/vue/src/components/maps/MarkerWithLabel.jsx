@@ -3,6 +3,7 @@ import VueTypes from 'vue-types';
 
 // Note: This file has been taken from https://github.com/eregnier/vue2-gmap-custom-marker/blob/master/gmap-custom-marker.vue
 const MarkerWithLabel = {
+	name: 'MarkerWithLabel',
 	props: {
 		marker: {
 			type: Object,

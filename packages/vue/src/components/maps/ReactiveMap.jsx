@@ -110,7 +110,7 @@ const ReactiveMap = {
 		sortBy: types.sortBy,
 		URLParams: types.bool,
 		autoCenter: types.bool,
-		mapRef: VueTypes.object,
+		getMapRef: VueTypes.func.isRequired,
 		center: types.location,
 		defaultCenter: types.location,
 		defaultPin: types.string,
@@ -343,8 +343,9 @@ const ReactiveMap = {
 			if (this.center) {
 				return this.parseLocation(this.center);
 			}
-			if (this.mapRef && typeof this.mapRef.getCenter === 'function' && this.preserveCenter) {
-				const currentCenter = this.mapRef.getCenter();
+			const mapRef = this.getMapRef();
+			if (mapRef && typeof mapRef.getCenter === 'function' && this.preserveCenter) {
+				const currentCenter = mapRef.getCenter();
 				setTimeout(() => {
 					this.preserveCenter = false;
 				}, 100);
@@ -562,9 +563,10 @@ const ReactiveMap = {
 		},
 		getGeoQuery(props = this.$props) {
 			this.$defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
+			const mapRef = this.getMapRef();
 			const mapBounds
-				= this.mapRef && typeof this.mapRef.getBounds === 'function'
-					? this.mapRef.getBounds()
+				= mapRef && typeof mapRef.getBounds === 'function'
+					? mapRef.getBounds()
 					: false;
 			let north;
 			let south;
