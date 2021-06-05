@@ -20,12 +20,7 @@ import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
-const {
-	updateQuery,
-	setQueryOptions,
-	setCustomQuery,
-	setDefaultQuery,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const { isEqual, getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const MultiList = {
@@ -155,24 +150,22 @@ const MultiList = {
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
 			return null;
 		}
-
 		let itemsToRender = this.$data.modifiedOptions;
-
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
 
-		var filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter(item => {
 			if (String(item.key).length) {
 				if (this.$props.showSearch && this.$data.searchTerm) {
 					return String(item.key)
 						.toLowerCase()
 						.includes(this.$data.searchTerm.toLowerCase());
-					}
-					return true;
 				}
-				return false;
-			});
+				return true;
+			}
+			return false;
+		});
 
 		return (
 			<Container class={this.$props.className}>
@@ -213,12 +206,16 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
-						&& !this.isLoading ) ? this.renderNoResult() :
-						filteredItemsToRender.map(item => (
+						{!this.hasCustomRenderer
+						&& filteredItemsToRender.length === 0
+						&& !this.isLoading
+							? this.renderNoResult()
+							: filteredItemsToRender.map(item => (
 								<li
 									key={item.key}
-									class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
+									class={`${
+										this.$data.currentValue[item.key] ? 'active' : ''
+									}`}
 								>
 									<Checkbox
 										type="checkbox"
@@ -254,7 +251,7 @@ const MultiList = {
 															'count',
 														)}
 													>
-														&nbsp;(
+															&nbsp;(
 														{item.doc_count})
 													</span>
 												)}
@@ -262,7 +259,7 @@ const MultiList = {
 										)}
 									</label>
 								</li>
-							))}
+							  ))}
 					</UL>
 				)}
 			</Container>
@@ -311,13 +308,12 @@ const MultiList = {
 					currentValue = {
 						...rest,
 					};
-
+				} else if (Array.isArray(value)) {
+					value.forEach(val => {
+						currentValue[val] = true;
+					});
 				} else {
-					if (Array.isArray(value)) {
-						value.forEach( val => currentValue[val] = true );
-					} else {
-						currentValue[value] = true;
-					}
+					currentValue[value] = true;
 				}
 
 				if (selectAllLabel && selectAllLabel in currentValue) {

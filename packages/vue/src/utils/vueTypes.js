@@ -10,18 +10,30 @@ const reactKeyType = VueTypes.oneOfType([
 	VueTypes.arrayOf(VueTypes.object),
 ]);
 
-function validateLocation(props, propName) {
+function validateLocation(value) {
+	if (!value || !value.lat || !value.lng) {
+		console.error(new Error('location must be an object with lat and lng keys defined'));
+		return false;
+	}
 	// eslint-disable-next-line
-	if (isNaN(props[propName])) {
-		return new Error(`${propName} value must be a VueTypes.number`);
+	if (isNaN(value.lat)) {
+		console.error(new Error('lat value must be a number'));
+		return false;
 	}
-	if (propName === 'lat' && (props[propName] < -90 || props[propName] > 90)) {
-		return new Error(`${propName} value should be between -90 and 90.`);
+	// eslint-disable-next-line
+	if (isNaN(value.lat)) {
+		console.error(new Error('lng value must be a number'));
+		return false;
 	}
-	if (propName === 'lng' && (props[propName] < -180 || props[propName] > 180)) {
-		return new Error(`${propName} value should be between -180 and 180.`);
+	if (value.lat < -90 || value.lat > 90) {
+		console.error(new Error('lat value should be between -90 and 90.'));
+		return false;
 	}
-	return null;
+	if (value.lat < -180 || value.lat > 180) {
+		console.error(new Error('lng value should be between -180 and 180.'));
+		return false;
+	}
+	return true;
 }
 
 const types = {
@@ -108,10 +120,7 @@ const types = {
 	rangeLabelsAlign: VueTypes.oneOf(['left', 'right']),
 	title: VueTypes.oneOfType([VueTypes.string, VueTypes.any]),
 	tooltipTrigger: VueTypes.oneOf(['always', 'none', 'hover']),
-	location: VueTypes.shape({
-		lat: validateLocation,
-		lng: validateLocation,
-	}),
+	location: VueTypes.custom(validateLocation),
 	unit: VueTypes.oneOf([
 		'mi',
 		'miles',

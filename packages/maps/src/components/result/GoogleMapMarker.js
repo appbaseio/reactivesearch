@@ -202,7 +202,6 @@ class GoogleMapMarker extends React.Component {
 				onMouseOut={this.removeMarkerZIndex}
 				onBlur={this.removeMarkerZIndex}
 				{...markerProps}
-				{...markerProps}
 			>
 				{onPopoverClick ? this.renderPopover(marker) : null}
 			</Marker>

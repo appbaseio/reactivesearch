@@ -1,6 +1,8 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import globals from 'rollup-plugin-node-globals';
+import postCSS from 'rollup-plugin-postcss';
+import vuePlugin from 'rollup-plugin-vue';
 import { terser } from 'rollup-plugin-terser';
 import replace from 'rollup-plugin-replace';
 import builtins from 'rollup-plugin-node-builtins';
@@ -38,9 +40,10 @@ const inputChunks = {
 	MultiDropdownList: 'src/components/list/MultiDropdownList.jsx',
 	ToggleButton: 'src/components/list/ToggleButton.jsx',
 	StateProvider: 'src/components/basic/StateProvider.jsx',
+	ReactiveGoogleMap: 'src/components/maps/ReactiveGoogleMap.jsx',
 	initReactivesearch: 'src/server/index.js',
-	RangeInput: 'src/components/range/RangeInput.jsx'
-}
+	RangeInput: 'src/components/range/RangeInput.jsx',
+};
 
 if (es) {
 	output = {
@@ -92,6 +95,10 @@ export default {
 		: [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})],
 	plugins: [
 		json(),
+		vuePlugin({
+			preprocessStyles: true
+		}),
+		postCSS(),
 		umd
 			? resolve({
 				mainFields: ['browser', 'module'],

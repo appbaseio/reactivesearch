@@ -19,6 +19,7 @@ import ResultList from './components/result/ResultList.jsx';
 import RangeSlider from './components/range/RangeSlider.jsx';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider.jsx';
 import StateProvider from './components/basic/StateProvider.jsx';
+import ReactiveGoogleMap from './components/maps/ReactiveGoogleMap.jsx';
 import initReactivesearch from './server/index';
 import version from './components/Version/index';
 import install from './install';
@@ -48,6 +49,7 @@ export {
 	MultiDropdownList,
 	ToggleButton,
 	StateProvider,
+	ReactiveGoogleMap,
 	initReactivesearch,
 	RangeInput,
 };

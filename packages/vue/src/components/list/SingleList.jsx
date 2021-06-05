@@ -124,7 +124,7 @@ const SingleList = {
 		},
 	},
 	render() {
-		const { selectAllLabel, renderItem, renderError, renderNoResults } = this.$props;
+		const { selectAllLabel, renderItem, renderError } = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 
@@ -141,17 +141,17 @@ const SingleList = {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
 
-		var filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter(item => {
 			if (String(item.key).length) {
 				if (this.$props.showSearch && this.$data.searchTerm) {
 					return String(item.key)
 						.toLowerCase()
 						.includes(this.$data.searchTerm.toLowerCase());
-					}
-					return true;
 				}
-				return false;
-			});
+				return true;
+			}
+			return false;
+		});
 
 		return (
 			<Container class={this.$props.className}>
@@ -194,10 +194,11 @@ const SingleList = {
 								</label>
 							</li>
 						) : null}
-						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
-						&& !this.isLoading ) ? this.renderNoResult() :
-						filteredItemsToRender
-							.map(item => (
+						{!this.hasCustomRenderer
+						&& filteredItemsToRender.length === 0
+						&& !this.isLoading
+							? this.renderNoResult()
+							: filteredItemsToRender.map(item => (
 								<li
 									key={item.key}
 									class={`${
@@ -221,7 +222,8 @@ const SingleList = {
 									/>
 									<label
 										class={
-											getClassName(this.$props.innerClass, 'label') || null
+											getClassName(this.$props.innerClass, 'label')
+												|| null
 										}
 										for={`${this.$props.componentId}-${item.key}`}
 									>
@@ -229,7 +231,8 @@ const SingleList = {
 											renderItemCalc({
 												label: item.key,
 												count: item.doc_count,
-												isChecked: this.currentValue === String(item.key),
+												isChecked:
+														this.currentValue === String(item.key),
 											})
 										) : (
 											<span>
@@ -243,7 +246,7 @@ const SingleList = {
 															) || null
 														}
 													>
-														&nbsp;(
+															&nbsp;(
 														{item.doc_count})
 													</span>
 												)}
@@ -251,7 +254,7 @@ const SingleList = {
 										)}
 									</label>
 								</li>
-							))}
+							  ))}
 					</UL>
 				)}
 			</Container>
