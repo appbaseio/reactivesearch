@@ -114,7 +114,7 @@ const ReactiveMap = {
 		center: types.location,
 		defaultCenter: types.location,
 		defaultPin: types.string,
-		defaultZoom: VueTypes.number.def(4),
+		defaultZoom: VueTypes.number.def(13),
 		markerProps: types.props,
 		defaultQuery: types.func,
 		innerClass: types.style,

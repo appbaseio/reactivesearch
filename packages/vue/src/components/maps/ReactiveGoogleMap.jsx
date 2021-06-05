@@ -12,7 +12,7 @@ const ReactiveGoogleMap = {
 		className: types.string,
 		componentId: types.stringRequired,
 		dataField: types.stringRequired,
-		defaultZoom: VueTypes.number.def(4),
+		defaultZoom: VueTypes.number.def(13),
 		react: types.react,
 		size: types.number,
 		sortBy: types.sortBy,
