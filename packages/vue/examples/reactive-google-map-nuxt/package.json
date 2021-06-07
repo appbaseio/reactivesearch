@@ -1,5 +1,5 @@
 {
-	"name": "with-nuxt",
+	"name": "reactive-google-map-nuxt",
 	"version": "1.0.0",
 	"description": "A reactivesearch example with Nuxt.js",
 	"author": "Kuldeep Saxena",
@@ -11,7 +11,7 @@
 		"generate": "nuxt generate"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "1.15.0",
+		"@appbaseio/reactivesearch-vue": "1.16.0-alpha.2",
 		"cross-env": "^5.2.0",
 		"nuxt": "^2.0.0"
 	},
