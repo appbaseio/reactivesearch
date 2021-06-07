@@ -11,7 +11,7 @@ Vue.use(ReactiveBase);
 Vue.use(SingleList);
 Vue.use(SelectedFilters);
 Vue.use(ReactiveGoogleMap, {
-	key: 'AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U',
+	key: '',
 });
 Vue.config.productionTip = false;
 
