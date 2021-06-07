@@ -129,7 +129,6 @@ const SingleList = {
 			selectAllLabel,
 			renderItem,
 			renderError,
-			renderNoResults,
 			enableStrictSelection,
 		} = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
