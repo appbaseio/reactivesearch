@@ -334,12 +334,17 @@ class SingleList extends Component {
 		if (isEvent(e)) {
 			currentValue = e.target.value;
 		}
+		const { enableStrictSelection } = this.props;
+		if (enableStrictSelection && currentValue === this.state.currentValue) {
+			return false;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
 			onChange(currentValue);
 		}
+		return false;
 	};
 
 	get hasCustomRenderer() {
@@ -464,7 +469,7 @@ class SingleList extends Component {
 											tabIndex={isChecked ? '-1' : '0'}
 											value={item.key}
 											readOnly
-											onClick={enableStrictSelection && isChecked ? () => false : this.handleClick}
+											onClick={this.handleClick}
 											checked={isChecked}
 											show={this.props.showRadio}
 										/>
