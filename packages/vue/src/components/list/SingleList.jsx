@@ -53,6 +53,7 @@ const SingleList = {
 		showMissing: VueTypes.bool.def(false),
 		missingLabel: VueTypes.string.def('N/A'),
 		nestedField: types.string,
+		enableStrictSelection: VueTypes.bool.def(false),
 	},
 	data() {
 		const props = this.$props;
@@ -124,7 +125,12 @@ const SingleList = {
 		},
 	},
 	render() {
-		const { selectAllLabel, renderItem, renderError } = this.$props;
+		const {
+			selectAllLabel,
+			renderItem,
+			renderError,
+			enableStrictSelection,
+		} = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 
@@ -211,7 +217,12 @@ const SingleList = {
 										name={this.$props.componentId}
 										value={item.key}
 										readOnly
-										onClick={this.handleClick}
+										onClick={
+											this.$data.currentValue === String(item.key)
+												&& enableStrictSelection
+												? () => false
+												: this.handleClick
+										}
 										type="radio"
 										show={this.$props.showRadio}
 										{...{
@@ -268,7 +279,6 @@ const SingleList = {
 			if (nextValue === this.$data.currentValue) {
 				value = '';
 			}
-
 			const performUpdate = () => {
 				this.currentValue = value;
 				this.updateQueryHandler(value, props);
