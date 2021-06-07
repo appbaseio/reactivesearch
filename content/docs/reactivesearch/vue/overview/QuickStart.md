@@ -76,7 +76,6 @@ Vue.config.productionTip = false;
 
 Vue.use(ReactiveBase);
 
-/* eslint-disable no-new */
 new Vue({
 	el: '#app',
 	components: { App },

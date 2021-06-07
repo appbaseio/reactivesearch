@@ -334,10 +334,10 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 <reactive-list>
 	<div slot="render" slot-scope="{ loading, error, data }">
 		<div v-if="loading">Fetching Results.</div>
-		<div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
+		<div v-if="Boolean(error)">Something went wrong! Error details {{JSON.stringify(error)}}</div>
 		<ul v-bind:key="result._id" v-for="result in data">
 			<li>
-				{result.title}
+				{{result.title}}
 				<!-- Render UI -->
 			</li>
 		</ul>
