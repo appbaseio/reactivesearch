@@ -395,7 +395,6 @@ class SingleList extends Component {
 			renderError,
 			error,
 			isLoading,
-			enableStrictSelection,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
