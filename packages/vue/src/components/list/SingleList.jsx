@@ -129,7 +129,6 @@ const SingleList = {
 			selectAllLabel,
 			renderItem,
 			renderError,
-			enableStrictSelection,
 		} = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
@@ -217,12 +216,7 @@ const SingleList = {
 										name={this.$props.componentId}
 										value={item.key}
 										readOnly
-										onClick={
-											this.$data.currentValue === String(item.key)
-												&& enableStrictSelection
-												? () => false
-												: this.handleClick
-										}
+										onClick={this.handleClick}
 										type="radio"
 										show={this.$props.showRadio}
 										{...{
@@ -397,12 +391,16 @@ const SingleList = {
 			if (isEvent(e)) {
 				currentValue = e.target.value;
 			}
+			if(this.enableStrictSelection && currentValue === this.currentValue) {
+				return false
+			}
 			const { value } = this.$props;
 			if (value === undefined) {
 				this.setValue(currentValue);
 			} else {
 				this.$emit('change', currentValue);
 			}
+			return true
 		},
 
 		renderNoResult() {
