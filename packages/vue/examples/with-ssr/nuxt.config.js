@@ -41,6 +41,7 @@ export default {
 	 ** Build configuration
 	 */
 	build: {
+		transpile: [/^gmap-vue($|\/)/, /^@appbaseio\/reactivesearch-vue($|\/)/],
 		babel: {
 			presets: [],
 			plugins: ['@babel/plugin-syntax-dynamic-import'],

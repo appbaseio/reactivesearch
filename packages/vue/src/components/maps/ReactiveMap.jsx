@@ -171,6 +171,9 @@ const ReactiveMap = {
 		},
 	},
 	watch: {
+		defaultZoom(newVal) {
+			this.zoom = newVal
+		},
 		currentPage(newVal, oldVal) {
 			if (oldVal !== newVal && newVal > 0 && newVal <= this.totalPages) {
 				this.setPage(newVal - 1);
@@ -819,7 +822,7 @@ const ReactiveMap = {
 			<div style={{ ...style, ...this.$props.style }} class={this.$props.className}>
 				{this.renderErrorComponent()}
 				{this.isLoading && loader}
-				{!(this.isLoading && loader) && this.hasCustomRender ? this.getComponent() : null}
+				{this.hasCustomRender ? this.getComponent() : null}
 				{this.renderMap(this.getMapParams())}
 				{this.pagination ? this.renderPagination() : null}
 			</div>

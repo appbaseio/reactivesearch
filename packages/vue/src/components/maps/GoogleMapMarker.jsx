@@ -170,7 +170,9 @@ const GoogleMapMarker = {
 				);
 			}
 		} else if (defaultPin) {
-			markerProps.icon = defaultPin;
+			markerProps.icon = {
+				url: defaultPin
+			};
 		}
 		return (
 			<Marker

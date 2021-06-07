@@ -12,6 +12,7 @@ const ReactiveGoogleMap = {
 		className: types.string,
 		componentId: types.stringRequired,
 		dataField: types.stringRequired,
+		loader: types.title,
 		defaultZoom: VueTypes.number.def(13),
 		react: types.react,
 		size: types.number,
@@ -148,6 +149,7 @@ const ReactiveGoogleMap = {
 				unit={this.unit}
 				pages={this.pages}
 				center={this.center}
+				loader={this.loader}
 				{...{
 					scopedSlots: this.$scopedSlots,
 					on: this.$listeners
