@@ -133,9 +133,7 @@ const ReactiveMap = {
 		autoClosePopover: types.bool,
 		renderMap: VueTypes.func.isRequired,
 		renderPopover: VueTypes.func,
-		onDragEnd: types.func,
-		onZoomChanged: types.func,
-		onIdle: types.func,
+		calculateMarkers: VueTypes.func,
 	},
 	data() {
 		const props = this.$props;
@@ -151,6 +149,7 @@ const ReactiveMap = {
 			currentPageState,
 			preserveCenter: false,
 			mapBoxBounds: null,
+			markersData: null
 		};
 		return this.__state;
 	},
@@ -172,7 +171,7 @@ const ReactiveMap = {
 	},
 	watch: {
 		defaultZoom(newVal) {
-			this.zoom = newVal
+			this.zoom = newVal;
 		},
 		currentPage(newVal, oldVal) {
 			if (oldVal !== newVal && newVal > 0 && newVal <= this.totalPages) {
@@ -231,6 +230,34 @@ const ReactiveMap = {
 		},
 		rawData(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
+				const { promotedResults, hits } = this;
+				const results = parseHits(hits) || [];
+				const parsedPromotedResults = parseHits(promotedResults) || [];
+				let filteredResults = results;
+
+				if (parsedPromotedResults.length) {
+					const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
+					if (ids) {
+						filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+					}
+
+					filteredResults = [...parsedPromotedResults, ...filteredResults];
+				}
+
+				filteredResults = filteredResults
+					.filter(item => !!item[this.dataField])
+					.map(item => ({
+						...item,
+						[this.dataField]: getLocationObject(item[this.dataField]),
+					}));
+
+				this.filteredResults = this.addNoise(filteredResults);
+				if(this.calculateMarkers) {
+					this.markersData = this.calculateMarkers({
+						data: this.filteredResults,
+						rawData: this.rawData,
+					}) || [];
+				}
 				this.$emit('data', this.getData());
 			}
 		},
@@ -370,6 +397,7 @@ const ReactiveMap = {
 		},
 		handleZoomChange(zoom) {
 			if (zoom) {
+				const prevZoom = this.zoom;
 				if (this.searchAsMove) {
 					this.zoom = zoom;
 					this.preserveCenter = true;
@@ -377,7 +405,9 @@ const ReactiveMap = {
 				} else {
 					this.zoom = zoom;
 				}
-				if (this.onZoomChanged) this.onZoomChanged(zoom);
+				if(prevZoom !== zoom) {
+					this.$emit('zoom-changed', zoom)
+				}
 			}
 		},
 		handleOnDragEnd() {
@@ -385,7 +415,7 @@ const ReactiveMap = {
 				this.preserveCenter = true;
 				this.setGeoQuery(true);
 			}
-			if (this.onDragEnd) this.onDragEnd();
+			this.$emit('drag-end')
 		},
 		handlePreserveCenter(preserveCenter) {
 			this.preserveCenter = preserveCenter;
@@ -398,7 +428,7 @@ const ReactiveMap = {
 				const executeUpdate = !!this.center;
 				this.setGeoQuery(executeUpdate);
 			}
-			if (this.onIdle) this.onIdle();
+			this.$emit('idle')
 		},
 		setGeoQuery(executeUpdate = false) {
 			// execute a new query on the initial mount
@@ -450,30 +480,16 @@ const ReactiveMap = {
 				handleZoomChange: this.handleZoomChange,
 			};
 		},
+
 		getAllData() {
 			const { size, promotedResults, customData, currentPage, hits } = this;
 			const results = parseHits(hits) || [];
 			const parsedPromotedResults = parseHits(promotedResults) || [];
-			let filteredResults = results;
 			const base = currentPage * size;
-
-			if (parsedPromotedResults.length) {
-				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
-				if (ids) {
-					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-				}
-
-				filteredResults = [...parsedPromotedResults, ...filteredResults];
+			let resultsToRender = this.filteredResults || [];
+			if (this.markersData) {
+				resultsToRender = this.markersData;
 			}
-
-			filteredResults = filteredResults
-				.filter(item => !!item[this.dataField])
-				.map(item => ({
-					...item,
-					[this.dataField]: getLocationObject(item[this.dataField]),
-				}));
-
-			const resultsToRender = this.addNoise(filteredResults);
 
 			return {
 				results,
@@ -568,9 +584,7 @@ const ReactiveMap = {
 			this.$defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
 			const mapRef = this.getMapRef();
 			const mapBounds
-				= mapRef && typeof mapRef.getBounds === 'function'
-					? mapRef.getBounds()
-					: false;
+				= mapRef && typeof mapRef.getBounds === 'function' ? mapRef.getBounds() : false;
 			let north;
 			let south;
 			let east;

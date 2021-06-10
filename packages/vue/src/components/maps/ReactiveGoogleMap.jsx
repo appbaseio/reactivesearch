@@ -12,6 +12,7 @@ const ReactiveGoogleMap = {
 		className: types.string,
 		componentId: types.stringRequired,
 		dataField: types.stringRequired,
+		defaultQuery: types.func,
 		loader: types.title,
 		defaultZoom: VueTypes.number.def(13),
 		react: types.react,
@@ -34,6 +35,7 @@ const ReactiveGoogleMap = {
 		defaultRadius: types.number,
 		unit: types.string,
 		pages: VueTypes.number.def(5),
+		calculateMarkers: VueTypes.func
 	},
 	methods: {
 		renderMap({
@@ -129,20 +131,12 @@ const ReactiveGoogleMap = {
 				markerProps={this.markerProps}
 				autoClosePopover={this.autoClosePopover}
 				defaultPin={this.defaultPin}
+				defaultQuery={this.defaultQuery}
 				renderPopover={
 					this.$scopedSlots.renderPopover
 						? item => this.$scopedSlots.renderPopover(item)
 						: null
 				}
-				onZoomChanged={zoom => {
-					this.$emit('zoom-changed', zoom);
-				}}
-				onIdle={() => {
-					this.$emit('idle');
-				}}
-				onDragEnd={() => {
-					this.$emit('drag-end');
-				}}
 				autoCenter={this.autoCenter}
 				defaultCenter={this.defaultCenter}
 				defaultRadius={this.defaultRadius}
@@ -150,6 +144,7 @@ const ReactiveGoogleMap = {
 				pages={this.pages}
 				center={this.center}
 				loader={this.loader}
+				calculateMarkers={this.calculateMarkers}
 				{...{
 					scopedSlots: this.$scopedSlots,
 					on: this.$listeners
