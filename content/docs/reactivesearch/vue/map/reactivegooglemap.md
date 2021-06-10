@@ -95,10 +95,37 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     DB data field to be connected to the component's UI view, usually of a [geopoint](https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-point.html) (i.e. location) data type and used for rendering the markers on the map.
 -   **size** `Number` [optional]
     number of results to show in the map view, can be a number in the range [1, 1000]. Defaults to 10.
+-   **calculateMarkers** `Function` [optional] The `ReactiveGoogleMap` component uses the 
+    ElasticSearch `hits` to render the markers, if you wish to override the default markers then `calculateMarkers` prop is the way.
+    The `calculateMarkers` function accepts an object with following properties:
+    - `data`, parsed hits data
+    - `rawData`, Elasticsearch raw response
+
+    The function must return an array of markers where each marker must have the following properties:
+    - `_id`, unique identifier for each marker
+    - [dataField], location object with `lat` and `lng` values.
+
+    > Note: The `dataField` key should be similar to the `dataField` prop defined for the `ReactiveGoogleMap` component. For example, if your `dataField` name is `location` then the marker object would look like below:
+    ```js
+    {
+        "_id": "xyz",
+        "location": {
+            lat: 37.7749,
+            lng: 122.4194,
+        }
+    }
+    ```
+    You can check the following example that uses the Elasticsearch aggregations to render the markers.
+    https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/vue-maps/packages/vue/examples/reactive-google-map-aggregations?file=/src/App.vue
 -   **defaultZoom** `Number` [optional]
     preset map's zoom level, accepts integer values between [0, 20]. 0 is the minimum zoom level, where you can see the entire globe. 20 is the maximum zoom level. Defaults to 13.
 -   **defaultCenter** `Object` [optional]
     preset map's center position by specifying an object with valid `lat` and `lng` values. This prop, when set, will cause the component to run a geo-distance query with a distance of 10mi (Refer: `defaultRadius` and `unit` prop to configure the distance).
+-   **defaultQuery** `Function` [optional]
+    applies a default query to the map component. This query will be run when no other components are being watched (via React prop), as well as in conjunction with the query generated from the React prop. The function should return a query.
+    Read more about it [here](/docs/reactivesearch/v3/advanced/customqueries/#when-to-use-default-query).
+    The following example uses the `defaultQuery` with `calculateMarkers` to display the markers using Elasticsearch `aggregations` instead of `hits`.
+    https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/vue-maps/packages/vue/examples/reactive-google-map-aggregations?from-embed=&file=/src/App.vue
 -   **center** `Object` [optional]
     set map's center position by specifying an object with valid `lat` and `lng` values. This prop, when set, will cause the component to run a geo-distance query with a distance of 10mi (Refer: `defaultRadius` and `unit` prop to configure the distance).
 -   **defaultRadius** `Number` [optional]
@@ -116,7 +143,7 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
 > Note
 >
 > 1. It requires `showMarkers` prop enabled.
-> 2. You have to define the [m1-m5] cluster images at `public/images` folder. Please check this [example](https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/feat/vue-map/packages/vue/examples/reactive-google-map?from-embed=&file=/src/main.js).
+> 2. You have to define the [m1-m5] cluster images at `public/images` folder. Please check this [example](https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/vue-maps/packages/vue/examples/reactive-google-map?from-embed=&file=/src/main.js).
 
 -   **showSearchAsMove** `Boolean` [optional]
     whether to show the _Search As I Move_ checkbox in the UI. Defaults to `true`.
@@ -279,7 +306,16 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
 -   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 
-## Extending
+-   **zoom-changed**
+    called whenever map zoom gets changed
+
+-   **drag-end**
+    gets triggered when map drag ends
+
+-   **idle**
+    gets called when map is in idle position
+
+## Extending 
 
 `ReactiveGoogleMap` component can be extended to
 
