@@ -125,11 +125,7 @@ const SingleList = {
 		},
 	},
 	render() {
-		const {
-			selectAllLabel,
-			renderItem,
-			renderError,
-		} = this.$props;
+		const { selectAllLabel, renderItem, renderError } = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 
@@ -391,8 +387,8 @@ const SingleList = {
 			if (isEvent(e)) {
 				currentValue = e.target.value;
 			}
-			if(this.enableStrictSelection && currentValue === this.currentValue) {
-				return false
+			if (this.enableStrictSelection && currentValue === this.currentValue) {
+				return false;
 			}
 			const { value } = this.$props;
 			if (value === undefined) {
@@ -400,7 +396,7 @@ const SingleList = {
 			} else {
 				this.$emit('change', currentValue);
 			}
-			return true
+			return true;
 		},
 
 		renderNoResult() {

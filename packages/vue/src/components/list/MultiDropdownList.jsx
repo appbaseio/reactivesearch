@@ -2,7 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
-import { getAggsQuery } from './utils'
+import { getAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -19,12 +19,7 @@ import {
 	isQueryIdentical,
 } from '../../utils/index';
 
-const {
-	updateQuery,
-	setQueryOptions,
-	setCustomQuery,
-	setDefaultQuery,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const {
 	isEqual,
 	getQueryOptions,
@@ -221,7 +216,9 @@ const MultiDropdownList = {
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
 					renderItem={renderItemCalc}
-					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
+					renderNoResults={
+						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+					}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
 					footer={
@@ -239,7 +236,6 @@ const MultiDropdownList = {
 	},
 
 	methods: {
-
 		handleChange(item) {
 			const { value } = this.$props;
 			if (value === undefined) {
@@ -365,7 +361,7 @@ const MultiDropdownList = {
 					query: queryOptions,
 					props,
 					after,
-				})
+				  })
 				: getAggsQuery(queryOptions, props);
 		},
 
@@ -501,8 +497,10 @@ MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
 		? getCompositeAggsQuery({
-			query: queryOptions, props, after
-		})
+			query: queryOptions,
+			props,
+			after,
+		  })
 		: getAggsQuery(queryOptions, props);
 };
 const mapStateToProps = (state, props) => ({
@@ -528,11 +526,13 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList), {
-	componentType: componentTypes.multiDropdownList,
-	internalComponent: true,
-});
+const ListConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList),
+	{
+		componentType: componentTypes.multiDropdownList,
+		internalComponent: true,
+	},
+);
 
 MultiDropdownList.install = function(Vue) {
 	Vue.component(MultiDropdownList.name, ListConnected);

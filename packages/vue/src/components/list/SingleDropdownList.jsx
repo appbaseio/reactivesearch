@@ -18,12 +18,7 @@ import {
 	isQueryIdentical,
 } from '../../utils/index';
 
-const {
-	updateQuery,
-	setQueryOptions,
-	setCustomQuery,
-	setDefaultQuery,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const {
 	getQueryOptions,
 	checkValueChange,
@@ -31,7 +26,7 @@ const {
 	getClassName,
 	getOptionsFromQuery,
 	isEqual,
-	getCompositeAggsQuery
+	getCompositeAggsQuery,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -210,7 +205,9 @@ const SingleDropdownList = {
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
-					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
+					renderNoResults={
+						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+					}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
 					transformData={this.$props.transformData}
@@ -295,8 +292,10 @@ const SingleDropdownList = {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
 				? getCompositeAggsQuery({
-					query: queryOptions, props, after
-				})
+					query: queryOptions,
+					props,
+					after,
+				  })
 				: getAggsQuery(queryOptions, props);
 		},
 
@@ -390,8 +389,10 @@ SingleDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
 		? getCompositeAggsQuery({
-			query: queryOptions, props, after
-		})
+			query: queryOptions,
+			props,
+			after,
+		  })
 		: getAggsQuery(queryOptions, props);
 };
 
@@ -418,11 +419,13 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
-	componentType: componentTypes.singleDropdownList,
-	internalComponent: true,
-});
+const ListConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList),
+	{
+		componentType: componentTypes.singleDropdownList,
+		internalComponent: true,
+	},
+);
 
 SingleDropdownList.install = function(Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);
