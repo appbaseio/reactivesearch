@@ -36,7 +36,7 @@ export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
  */
 export const isFunction = element => typeof element === 'function';
 
-// parses current array (i.e. this.props.value) for `onChange` callback for multi-* components
+// parses current array (i.e. this.$props.value) for `onChange` callback for multi-* components
 export function parseValueArray(objectValues, currentValue) {
 	const keys = Object.keys(objectValues);
 	const selectedValues = keys.map(key => (objectValues[key] ? key : null));
