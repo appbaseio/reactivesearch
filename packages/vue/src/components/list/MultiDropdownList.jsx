@@ -187,9 +187,9 @@ const MultiDropdownList = {
 				return (<div>{renderNoResults()}</div>);
 			} else if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
-			} else {
-				return null;
-			}
+			} 
+			return null;
+			
 		}
 
 		if (this.$props.selectAllLabel) {
