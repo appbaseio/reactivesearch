@@ -166,6 +166,25 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
+"@appbaseio/reactivesearch-vue@1.15.2":
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.15.2.tgz#3e6645472c069f5aa70e86741a712f633feecc93"
+  integrity sha512-X4OeUDgwhUjyFW6Hf3mUc2sjtPLFZao+0N2XXlJ2X9yZ1f2n91CapIeR5SwiWz2TM2mZWakFmo/tyWKbGfGIWw==
+  dependencies:
+    "@appbaseio/reactivecore" "9.11.3"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^4.1.0"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^2.8.16"
+    vue-types "^1.3.3"
+
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
@@ -34128,7 +34147,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.7.0:
+vue-types@^1.3.3:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==

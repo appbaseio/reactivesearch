@@ -1,4 +1,5 @@
 import { helper } from '@appbaseio/reactivecore';
+import VueTypes from 'vue-types';
 import Button, { pagination } from '../../../styles/Button';
 import types from '../../../utils/vueTypes';
 
@@ -18,7 +19,7 @@ const Pagination = {
 		pages: types.number,
 		setPage: types.func,
 		totalPages: types.number,
-		showEndPage: types.bool,
+		showEndPage: VueTypes.bool,
 		prevLabel: types.string,
 		nextLabel: types.string,
 	},

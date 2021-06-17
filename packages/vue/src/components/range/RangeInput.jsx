@@ -2,7 +2,7 @@ import VueTypes from 'vue-types';
 import { helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
-import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
+import { connect } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import types from '../../utils/vueTypes';
 import { RangeConnected as RangeSlider } from './RangeSlider.jsx';
@@ -10,7 +10,7 @@ import Input from '../../styles/Input';
 import Content from '../../styles/Content';
 import Flex from '../../styles/Flex';
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
+const { getClassName, isEqual } = helper;
 
 const RangeInput = {
 	name: 'RangeInput',
@@ -26,10 +26,10 @@ const RangeInput = {
 		const state = {
 			currentValue: {
 				start: this.$props.range ? this.$props.range.start : 0,
-				end: this.$props.range ? this.$props.range.end : 10
+				end: this.$props.range ? this.$props.range.end : 10,
 			},
 			isStartValid: true,
-			isEndValid: true
+			isEndValid: true,
 		};
 		return state;
 	},
@@ -37,7 +37,7 @@ const RangeInput = {
 	props: {
 		className: {
 			types: types.string,
-			default: ''
+			default: '',
 		},
 		defaultValue: types.range,
 		validateRange: types.func,
@@ -49,15 +49,15 @@ const RangeInput = {
 			default() {
 				return {
 					start: 0,
-					end: 10
-				}
-			}
+					end: 10,
+				};
+			},
 		},
 		rangeLabels: types.rangeLabels,
 		stepValue: types.number,
 		componentStyle: types.style,
 		componentId: types.stringRequired,
-		includeNullValues: types.bool,
+		includeNullValues: VueTypes.bool,
 		beforeValueChange: types.func,
 		customQuery: types.func,
 		data: types.data,
@@ -89,16 +89,17 @@ const RangeInput = {
 			return false;
 		},
 		handleChange(value, event) {
+			let currentValue = value;
 			if (this.shouldUpdate(value) && !isEqual(value, this.currentValue)) {
 				switch (event) {
 					case 'change':
-						if(!value) {
-							value = {
+						if (!value) {
+							currentValue = {
 								start: this.$props.range ? this.$props.range.start : 0,
-								end: this.$props.range ? this.$props.range.end : 10
-							}
+								end: this.$props.range ? this.$props.range.end : 10,
+							};
 						}
-						this.$data.currentValue = {...value};
+						this.$data.currentValue = { ...currentValue };
 						this.$emit('change', this.$data.currentValue);
 						break;
 					case 'value-change':
@@ -106,7 +107,7 @@ const RangeInput = {
 						this.$emit('value-change', this.$data.currentValue);
 						break;
 					default:
-						this.$data.currentValue = {...value};
+						this.$data.currentValue = { ...currentValue };
 						break;
 				}
 			}
@@ -125,33 +126,37 @@ const RangeInput = {
 				} else {
 					this.$data.isEndValid = false;
 				}
-			} else {
-				if (name === 'start' && !this.$data.isStartValid) {
-					this.$data.isStartValid = true;
-				} else if (name === 'end' && !this.$data.isEndValid) {
-					this.$data.isEndValid = true;
-				}
+			} else if (name === 'start' && !this.$data.isStartValid) {
+				this.$data.isStartValid = true;
+			} else if (name === 'end' && !this.$data.isEndValid) {
+				this.$data.isEndValid = true;
 			}
 
 			if (this.$data.isStartValid && this.$data.isEndValid) {
 				if (name === 'start') {
-					this.handleChange({
-						start: Number(value),
-						end: this.$data.currentValue.end
-					}, 'change');
+					this.handleChange(
+						{
+							start: Number(value),
+							end: this.$data.currentValue.end,
+						},
+						'change',
+					);
 				} else {
-					this.handleChange({
-						start: this.$data.currentValue.start,
-						end: Number(value)
-					}, 'change');
+					this.handleChange(
+						{
+							start: this.$data.currentValue.start,
+							end: Number(value),
+						},
+						'change',
+					);
 				}
 			}
-		}
+		},
 	},
 	watch: {
 		defaultValue(newVal, oldVal) {
 			if (oldVal.start !== newVal.start || oldVal.end !== newVal.end) {
-				this.handleChange(newVal)
+				this.handleChange(newVal);
 			}
 		},
 		value(newVal, oldVal) {
@@ -163,8 +168,12 @@ const RangeInput = {
 		},
 	},
 	created() {
-		if (this.$props.defaultValue && this.$props.defaultValue.start && this.$props.defaultValue.end) {
-			this.handleChange(this.$props.defaultValue)
+		if (
+			this.$props.defaultValue
+			&& this.$props.defaultValue.start
+			&& this.$props.defaultValue.end
+		) {
+			this.handleChange(this.$props.defaultValue);
 		}
 	},
 	render() {
@@ -197,7 +206,7 @@ const RangeInput = {
 					componentId={componentId}
 					value={{
 						start: this.currentValue.start,
-						end: this.currentValue.end
+						end: this.currentValue.end,
 					}}
 					range={range}
 					dataField={dataField}
@@ -230,17 +239,13 @@ const RangeInput = {
 							min={this.$props.range ? this.$props.range.start : 0}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isStartValid}
-							{
-								...{
-									domProps: {
-										value: this.currentValue.start
-									}
-								}
-							}
+							{...{
+								domProps: {
+									value: this.currentValue.start,
+								},
+							}}
 						/>
-						{!this.isStartValid && (
-							<Content alert>Input range is invalid</Content>
-						)}
+						{!this.isStartValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 					<Flex justifyContent="center" alignItems="center" flex={1}>
 						-
@@ -257,13 +262,11 @@ const RangeInput = {
 							max={this.$props.range ? this.$props.range.end : 10}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isEndValid}
-							{
-								...{
-									domProps: {
-										value: this.currentValue.end
-									}
-								}
-							}
+							{...{
+								domProps: {
+									value: this.currentValue.end,
+								},
+							}}
 						/>
 						{!this.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
@@ -273,7 +276,7 @@ const RangeInput = {
 	},
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
 	themePreset: state.config.themePreset,
 });
 
