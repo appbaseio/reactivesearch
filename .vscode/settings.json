@@ -10,5 +10,15 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.tslint": true,
 		"source.fixAll.eslint": true
-	}
+	},
+	"eslint.workingDirectories": [
+		{
+			"directory": "packages/vue",
+			"changeProcessCWD": true
+		},
+		{
+			"directory": "vue-playground",
+			"changeProcessCWD": true
+		}
+	]
 }

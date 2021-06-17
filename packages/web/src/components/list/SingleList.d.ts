@@ -37,6 +37,7 @@ export interface SingleList extends CommonProps {
 	loadMoreLabel?: types.title;
 	children?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
+	enableStrictSelection?: boolean;
 }
 
 declare const SingleList: React.ComponentClass<SingleList>;

@@ -39,6 +39,7 @@ const inputChunks = {
 	ToggleButton: 'src/components/list/ToggleButton.jsx',
 	StateProvider: 'src/components/basic/StateProvider.jsx',
 	initReactivesearch: 'src/server/index.js',
+	RangeInput: 'src/components/range/RangeInput.jsx'
 }
 
 if (es) {
