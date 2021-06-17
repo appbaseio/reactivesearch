@@ -110,6 +110,9 @@ Example uses:
     > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
 
     > It is possible to override this query by providing `customQuery`.
+
+	> Note: This prop has been marked as deprecated starting v1.14.0. Please use the `distinctField` prop instead.
+
 -   **aggregationSize**
     To set the number of buckets to be returned by aggregations.
 
@@ -135,7 +138,7 @@ Example uses:
 -   **icon** `JSX` [optional]
     set a custom search icon instead of the default icon 🔍
 -   **showClear** `Boolean` [optional]
-    show a clear text `X` icon. Defaults to `false`.
+    show a clear text `X` icon. Defaults to `true`.
 -   **showFilter** `Boolean` [optional]
     show as filter when a value is selected in a global selected filters view. Defaults to `true`.
 -   **showVoiceSearch** `Boolean` [optional]
@@ -482,6 +485,28 @@ You can use a custom icon in place of the default icon for the popular searches 
         </DataSearch>
     ```
 
+-   **distinctField** `String` [optional]
+This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+
+-   **distinctFieldConfig** `Object` [optional]
+This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+```html
+<data-search
+	....
+	distinctField="authors.keyword"
+	:distinctFieldConfig="{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}"
+/>
+```
+	> Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
 
 ## Demo
 

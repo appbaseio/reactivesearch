@@ -292,13 +292,13 @@ ReactiveSearch now internally validates the user-provided queries and compute th
 For example, in a `SingleList` component showing list of cities you may only want to render cities belonging to India.
 
 ```js
-defaultQuery = {() => {
+defaultQuery = {() => ({
         query: {
             terms: {
                 country: [ "India" ]
             }
         }
-    }
+    })
 }
 ```
 
@@ -307,13 +307,13 @@ defaultQuery = {() => {
 `customQuery` is used to change the component's behavior for its subscribers. It gets triggered after an interaction on the component. Every component is shipped with a default behavior i.e. selecting a city on the SingleList component generates a term query. If you wish to change this behavior i.e. maybe perform additional query besides `term` query or do something else altogether, you can use `customQuery` prop.
 
 ```js
-customQuery = {() => {
+customQuery = {() => ({
     query: {
         term: {
                 user : "Kimchy"
             }
         }
-    }
+    })
 }
 ```
 

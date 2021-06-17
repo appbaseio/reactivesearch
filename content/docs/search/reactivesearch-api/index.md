@@ -1,7 +1,7 @@
 ---
 title: 'ReactiveSearch API: Overview'
 meta_title: 'ReactiveSearch API - Overview'
-meta_description: 'ReactiveSearch API offers a declarative interface to querying Elasticsearch, prevents query injections and lets you extend the API via Query Rules and Functions.'
+meta_description: 'ReactiveSearch API provides a declarative interface to query Elasticsearch. Learn about the benefits of using it.'
 keywords:
     - concepts
     - appbase
@@ -12,13 +12,17 @@ sidebar: 'docs'
 
 ## Overview
 
-At Appbase.io, we're determined to help our users build a better search experience. While working with Elasticsearch, we found some challenges which were restricting us to provide some built-in features to customize your search because it is hard to parse and interpret / enrich queries created using the Elasticsearch query DSL because of its non-declarative nature.
 
-Many users also reported security as a big concern for them when using ReactiveSearch directly with an Elasticsearch backend:
-1. There is a possibility for an attacker to do a query injection.
-2. ReactiveSearch, by querying Elasticsearch directly exposed their search business logic and queries.
+While appbase.io maintains 100% API compatibility with Elasticsearch, it also provides a  declarative API to query Elasticsearch. This is the recommended way to query via web and mobile apps as it prevents query injection attacks. It composes well with Elasticsearch's query DSL, and lets you make use of appbase.io features like caching, query rules, server-side search settings, and analytics.
 
-To address these issues effectively, we have introduced a new declarative API - the `ReactiveSearch API`. ReactiveSearch API is 100% compatible with the declarative ReactiveSearch library. When using ReactiveSearch API, you:
-1. use the same declarative props that you're familiar with when using the ReactiveSearch library. This prevents query injections (as you can whitelist all your search queries to only be passed via the ReactiveSearch API)
-2. Encapsulate your search business logic away from your search UIs.
-3. Extend by setting [query rules](/docs/search/rules/) and [functions](/docs/search/functions/) that validate, enrich or modify the incoming search requests made via declarative APIs.
+### Why build ReactiveSearch API?
+
+Elasticsearch's query DSL is imperative in nature. Enabling the whole DSL to be accessible from a web or mobile frontend opens a can of security worms. The query DSL's imperative nature also makes it hard to enrich, transform or apply access controls to search requests. We saw these problems as earlier versions of ReactiveSearch UI kit only supported the Elasticsearch query DSL.
+
+### Benefits
+
+- Appbase.io magic: Accelerate, enrich, and transform your search requests using appbase.io features such as query rules, search relevance, caching, analytics
+- Easy to secure: As ReactiveSearch API doesn't expose Elasticsearch APIs directly, it prevents the possibility of DSL based injection attacks
+- Composable: Easily composes with Elasticsearch's query DSL for advanced use-cases
+- Encapsulate business logic: Don't want to expose sensitive fields to web and mobile clients? Set the fields to return with appbase.io dashboard once and avoid declaring them as part of the network requests.
+- If you're an existing user of ReactiveSearch UI libraries, you can switch to using ReactiveSearch API with no code changes. Simply set `enableAppbase` prop to true. Searchbox libraries already come with a native support for the ReactiveSearch API.
