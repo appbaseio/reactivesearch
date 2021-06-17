@@ -81,6 +81,10 @@ const SingleDropdownList = {
 		nestedField: types.string,
 	},
 	created() {
+		const props = this.$props;
+		this.modifiedOptions = this.options && this.options[props.dataField]
+			? this.options[props.dataField].buckets
+			: []
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
