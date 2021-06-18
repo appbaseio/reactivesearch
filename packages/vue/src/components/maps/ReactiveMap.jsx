@@ -199,7 +199,7 @@ const ReactiveMap = {
 				const forceExecute = true;
 				// Update default query to include the geo bounding box query
 				this.setDefaultQueryForRSAPI();
-				this.props.setMapData(this.componentId, query, persistMapQuery, forceExecute);
+				this.setMapData(this.componentId, query, persistMapQuery, forceExecute);
 				this.currentPageState = 0;
 				this.from = 0;
 			}
