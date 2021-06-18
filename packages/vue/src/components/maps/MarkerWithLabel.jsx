@@ -5,6 +5,10 @@ import VueTypes from 'vue-types';
 const MarkerWithLabel = {
 	name: 'MarkerWithLabel',
 	props: {
+		metaData: {
+			type: Object,
+			default: undefined,
+		},
 		marker: {
 			type: Object,
 			default: undefined,
@@ -96,6 +100,7 @@ const MarkerWithLabel = {
 			class Overlay extends window.google.maps.OverlayView {
 				constructor(map2) {
 					super();
+					this.metaData = self.metaData;
 					this.setMap(map2);
 					this.draw = () => this.repaint();
 					this.setPosition = () => this.repaint();

@@ -23,7 +23,8 @@ const ReactiveGoogleMap = {
 		showMarkers: VueTypes.bool.def(true),
 		showMarkerClusters : VueTypes.bool.def(false),
 		searchAsMove: VueTypes.bool.def(false),
-		markerProps: types.props,
+		markerProps:  VueTypes.object,
+		clusterProps: VueTypes.object,
 		renderItem: VueTypes.func,
 		showSearchAsMove: VueTypes.bool.def(true),
 		autoClosePopover: VueTypes.bool,
@@ -48,7 +49,6 @@ const ReactiveGoogleMap = {
 			renderSearchAsMove,
 			handlePreserveCenter,
 			getPosition,
-			markerProps,
 			autoClosePopover,
 			renderPopover,
 			defaultPin,
@@ -80,7 +80,8 @@ const ReactiveGoogleMap = {
 							<GoogleMapMarkers
 								resultsToRender={resultsToRender}
 								getPosition={getPosition}
-								markerProps={markerProps}
+								markerProps={this.markerProps}
+								clusterProps={this.clusterProps}
 								handlePreserveCenter={handlePreserveCenter}
 								renderItem={
 									this.$scopedSlots.renderItem
@@ -92,7 +93,11 @@ const ReactiveGoogleMap = {
 								defaultPin={defaultPin}
 								autoClosePopover={autoClosePopover}
 								renderPopover={renderPopover}
+								renderClusterPopover={this.$scopedSlots.renderClusterPopover}
 								showMarkerClusters={this.showMarkerClusters}
+								{...{
+									on: this.$listeners
+								}}
 							/>
 						) : null}
 					</Map>

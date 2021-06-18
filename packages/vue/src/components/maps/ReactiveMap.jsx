@@ -115,7 +115,6 @@ const ReactiveMap = {
 		defaultCenter: types.location,
 		defaultPin: types.string,
 		defaultZoom: VueTypes.number.def(13),
-		markerProps: types.props,
 		defaultQuery: types.func,
 		innerClass: types.style,
 		loader: types.title,
@@ -458,7 +457,6 @@ const ReactiveMap = {
 				defaultPin,
 				renderPopover,
 				autoClosePopover,
-				markerProps,
 				renderItem,
 			} = this;
 			return {
@@ -472,7 +470,6 @@ const ReactiveMap = {
 				renderPopover,
 				autoClosePopover,
 				renderSearchAsMove: this.renderSearchAsMove,
-				markerProps,
 				handlePreserveCenter: this.handlePreserveCenter,
 				preserveCenter: this.preserveCenter,
 				handleOnDragEnd: this.handleOnDragEnd,

@@ -53,6 +53,7 @@ const GoogleMapMarker = {
 			handleOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
 			this.triggerAnalytics();
+			this.$emit('open-marker-popover');
 		},
 		closeMarker() {
 			const {
@@ -69,6 +70,7 @@ const GoogleMapMarker = {
 
 			handleOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
+			this.$emit('close-marker-popover');
 		},
 		triggerAnalytics() {
 			this.recordResultClick(this.index, this.marker._id);
@@ -126,6 +128,7 @@ const GoogleMapMarker = {
 				return (
 					<MarkerWithLabel
 						key={marker._id}
+						metaData={marker}
 						marker={getPosition(marker)}
 						labelAnchor={new window.google.maps.Point(0, 30)}
 						handleMouseOver={this.increaseMarkerZIndex}
@@ -150,6 +153,7 @@ const GoogleMapMarker = {
 				return (
 					<MarkerWithLabel
 						key={marker._id}
+						metaData={marker}
 						marker={getPosition(marker)}
 						handleClick={this.openMarker}
 						handleMouseOver={this.increaseMarkerZIndex}
@@ -188,6 +192,9 @@ const GoogleMapMarker = {
 				onblur={this.removeMarkerZIndex}
 				{...{ props: customMarkerProps }}
 				position={getPosition(marker)}
+				options={{
+					metaData: marker
+				}}
 			>
 				{renderPopover ? this.renderPopoverClick(marker) : null}
 			</Marker>
