@@ -3,6 +3,8 @@
         items:
             - title: QuickStart
               link: /docs/reactivesearch/vue/overview/QuickStart/
+            - title: ReactiveMaps QuickStart
+              link: /docs/reactivesearch/vue/overview/reactivemaps/
             - title: Importing Data
               link: /docs/reactivesearch/vue/overview/Importing/
             - title: ReactiveBase
@@ -33,6 +35,8 @@
               link: /docs/reactivesearch/vue/range/RangeSlider/
             - title: DynamicRangeSlider
               link: /docs/reactivesearch/vue/range/DynamicRangeSlider/
+            - title: RangeInput
+              link: /docs/reactivesearch/vue/range/RangeInput/
       - group: Search Components
         items:
             - title: DataSearch
@@ -45,6 +49,10 @@
               link: /docs/reactivesearch/vue/result/ResultList/
             - title: ResultCard
               link: /docs/reactivesearch/vue/result/ResultCard/
+      - group: Map Components
+        items:
+            - title: ReactiveGoogleMap
+              link: /docs/reactivesearch/vue/map/reactivegooglemap/
       - group: Theming
         items:
             - title: Themes

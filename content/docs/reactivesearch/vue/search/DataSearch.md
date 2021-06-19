@@ -61,116 +61,115 @@ Example uses:
 
 ## Props
 
-- **componentId** `String`
-  unique identifier of the component, can be referenced in other components' `react` prop.
-- **dataField** `String or Array` [optional*]
-  database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+-   **componentId** `String`
+    unique identifier of the component, can be referenced in other components' `react` prop.
+-   **dataField** `String or Array` [optional*]
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 
-  > Note:
-  > This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
+    >   Note:
+    >   This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
+    >
 
-- **size** `Number` [optional]
-  number of suggestions to show. Defaults to `10`.
-- **excludeFields** `String Array` [optional]
-  fields to be excluded in the suggestion's query when `autoSuggest` is true.
-- **includeFields** `String Array` [optional]
-  fields to be included in the suggestion's query when `autoSuggest` is true.
-- **enableQuerySuggestions** `bool` [optional]
-  This prop has been marked as deprecated starting `v1.7.8`. Please use the `enablePopularSuggestions` prop instead.
-- **enablePopularSuggestions** `bool` [optional]
-  Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
+-   **size** `Number` [optional]
+    number of suggestions to show. Defaults to `10`.
+-   **excludeFields** `String Array` [optional]
+    fields to be excluded in the suggestion's query when `autoSuggest` is true.
+-   **includeFields** `String Array` [optional]
+    fields to be included in the suggestion's query when `autoSuggest` is true.
+-   **enableQuerySuggestions** `bool` [optional]
+    This prop has been marked as deprecated starting `v1.7.8`. Please use the `enablePopularSuggestions` prop instead.
+-   **enablePopularSuggestions** `bool` [optional]
+    Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
-  > Note:
-  >
-  > Popular Suggestions only work when `enableAppbase` prop is `true`.
+    > Note:
+    >
+    > Popular Suggestions only work when `enableAppbase` prop is `true`.
 
-- **enablePredictiveSuggestions** `bool` [optional]
-  Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
+-   **enablePredictiveSuggestions** `bool` [optional]
+    Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
 
-- **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
+-   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
+> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 
-  > Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
+-   **aggregationField** `String` [optional]
+    One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
+    You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
 
-- **aggregationField** `String` [optional]
-  One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
-  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html). You can access `aggregationData` using `render` slot as shown:
+    ```html
+    <template
+    	slot="render"
+    	slot-scope="{
+            ...
+            aggregationData
+        }"
+    >
+    	...
+    </template>
+    ```
 
-  ```html
-  <template
-  	slot="render"
-  	slot-scope="{
-          ...
-          aggregationData
-      }"
-  >
-  	...
-  </template>
-  ```
+    > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
 
-  > If you are using an app with elastic search version less than 6, then defining this prop will result in error and you need to handle it manually using **renderError** slot.
+    > It is possible to override this query by providing `customQuery`.
 
-  > It is possible to override this query by providing `customQuery`.
+	> Note: This prop has been marked as deprecated starting v1.14.0. Please use the `distinctField` prop instead.
 
-  > Note: This prop has been marked as deprecated starting v1.14.0. Please use the `distinctField` prop instead.
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
 
-- **aggregationSize**
-  To set the number of buckets to be returned by aggregations.
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+-   **nestedField** `String` [optional]
+    Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
+-   **title** `String or JSX` [optional]
+    set the title of the component to be shown in the UI.
+-   **defaultValue** `string` [optional]
+    preset the search query text in the search box.
+-   **value** `string` [optional]
+    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `change` event.
+-   **fieldWeights** `Array` [optional]
+    set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
+-   **placeholder** `String` [optional]
+    set placeholder text to be shown in the component's input field. Defaults to "Search".
+-   **autosuggest** `Boolean` [optional]
+    set whether the autosuggest functionality should be enabled or disabled. Defaults to `true`. When set to `false`, it searches as user types, unless `debounce` is also set.
+-   **showIcon** `Boolean` [optional]
+    whether to display a search or custom icon in the input box. Defaults to `true`.
+-   **iconPosition** `String` [optional]
+    sets the position of the search icon. Can be set to either `left` or `right`. Defaults to `right`.
+-   **icon** `JSX` [optional]
+    set a custom search icon instead of the default icon 🔍
+-   **showClear** `Boolean` [optional]
+    show a clear text `X` icon. Defaults to `true`.
+-   **showFilter** `Boolean` [optional]
+    show as filter when a value is selected in a global selected filters view. Defaults to `true`.
+-   **showVoiceSearch** `Boolean` [optional]
+    show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
+-   **showDistinctSuggestions** `Boolean` [optional]
+    Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
+	<br/> <br/>
+    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
 
-  > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+	```js
+	// Your document:
+	{
+		"name": "Warn",
+		"address": "Washington"
+	}
 
-- **nestedField** `String` [optional]
-  Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
-- **title** `String or JSX` [optional]
-  set the title of the component to be shown in the UI.
-- **defaultValue** `string` [optional]
-  preset the search query text in the search box.
-- **value** `string` [optional]
-  sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `change` event.
-- **fieldWeights** `Array` [optional]
-  set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
-- **placeholder** `String` [optional]
-  set placeholder text to be shown in the component's input field. Defaults to "Search".
-- **autosuggest** `Boolean` [optional]
-  set whether the autosuggest functionality should be enabled or disabled. Defaults to `true`. When set to `false`, it searches as user types, unless `debounce` is also set.
-- **showIcon** `Boolean` [optional]
-  whether to display a search or custom icon in the input box. Defaults to `true`.
-- **iconPosition** `String` [optional]
-  sets the position of the search icon. Can be set to either `left` or `right`. Defaults to `right`.
-- **icon** `JSX` [optional]
-  set a custom search icon instead of the default icon 🔍
-- **showClear** `Boolean` [optional]
-  show a clear text `X` icon. Defaults to `false`.
-- **showFilter** `Boolean` [optional]
-  show as filter when a value is selected in a global selected filters view. Defaults to `true`.
-- **showVoiceSearch** `Boolean` [optional]
-  show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
-- **showDistinctSuggestions** `Boolean` [optional]
-  Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
-  <br/> <br/>
-  **Example** if you have `showDistinctSuggestions` is set to `false` and have following configurations
+	// Component:
+	<DataSearch dataField=['name', 'address'] .../>
 
-  ```js
-  // Your document:
-  {
-  	"name": "Warn",
-  	"address": "Washington"
-  }
+	// Search Query:
+	"wa"
+	```
 
-  // Component:
-  <DataSearch dataField=['name', 'address'] .../>
+	Then there will be 2 suggestions from the same document
+	as we have the search term present in both the fields
+	specified in `dataField`.
 
-  // Search Query:
-  "wa"
-  ```
-
-  Then there will be 2 suggestions from the same document
-  as we have the search term present in both the fields
-  specified in `dataField`.
-
-  ```
-  Warn
-  Washington
-  ```
+	```
+	Warn
+	Washington
+	```
 
 `Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 

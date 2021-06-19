@@ -663,9 +663,9 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 <SearchBox
     id="search-component"
     dataField={["original_title", "original_title.search"]}
-    defaultQuery={() => {
+    defaultQuery={() => ({
         "timeout": "1s"
-    }}
+    })}
 />
 ```
 

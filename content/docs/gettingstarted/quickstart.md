@@ -1,7 +1,7 @@
 ---
 title: 'Introduction'
 meta_title: 'Introduction to Appbase.io'
-meta_description: 'Appbase.io is a search stack for building modern search apps.'
+meta_description: 'Appbase.io provides a supercharged search experience for creating the most demanding app search experiences with NoCode, REST APIs or JavaScript components.'
 keywords:
     - concepts
     - appbase.io
@@ -9,28 +9,25 @@ keywords:
 sidebar: 'docs'
 ---
 
-[Appbase.io](https://appbase.io) provides the search stack for building modern apps - a hosted (or managed) developer-first search service. It supercharges [Elasticsearch](https://github.com/elastic/elasticsearch), an Apache 2.0 licensed search engine: to offer a streamlined development experience, out of the box actionable analytics and enterprise grade security.
+[Appbase.io](https://appbase.io) provides a supercharged [Elasticsearch](https://github.com/elastic/elasticsearch) experience for creating the most demanding app search experiences with a NoCode control plane, REST APIs or UI components.
+
+## Overview
 
 With appbase.io, you can:
 
--   Import your data from any sources via dashboard or CLI or REST API,
--   Test search relevancy visually. [Read more here](/docs/search/relevancy/)
--   Build production-grade search UIs using one of:
-    -   our UI component libraries,
-    -   our SDKs,
-    -   or the REST API.
-        You should [start here to learn more](/docs/reactivesearch/v3/overview/quickstart/).
--   Get out of the box actionable analytics on top searches, no result searches, slow queries. [Read more here](/docs/analytics/overview/)
--   Out of the box security with built-in Basic Auth or JWT based authentication, read/write access keys with granular ACLs, field level security, IP based Rate Limits, Time to Live. [Read more over here](/docs/security/credentials/)
+-   [Import your data](/docs/data/import/) from various sources via dashboard or CLI or REST APIs,
+-   [Test search relevancy visually](/docs/search/relevancy/),
+-   Build production grade search UIs using:
+    1.   [UI component libraries](https://docs.appbase.io/docs/reactivesearch/gettingstarted/) that are available for React, Vue, React Native, Flutter, and vanilla JavaScript,
+    2.  [A declarative REST API](/api/rest/overview/) or
+    3.  [NoCode search UI builder](/docs/reactivesearch/ui-builder/search/).
 
-`New:` Introducing [role-based access control](/docs/security/role/) and [search templates](/docs/security/template/).
+-   Get out of the box [actionable analytics](/docs/analytics/overview/) on top searches, no result searches, slow queries and more,
+-   Get improved search performance and throughput with [application layer caching](/docs/speed/cache-management/),
+-   Build access controled search experiences with built-in Basic Auth or JWT based authentication, read/write access keys with granular ACLs, field level security, IP based rate limits, time to live - [read more over here](/docs/security/credentials/).
 
 ![Appbase.io Architecture](https://i.imgur.com/lM8NNC8.png)
 **Image:** appbase.io overview diagram
-
-## API Intro
-
-The appbase.io API is interoperable with the Elasticsearch API and builds on top of it. We offer [hosted or managed clusters](https://www.appbase.io/#hosting), where we maintain 100% compatibility with the Apache 2.0 licensed Elasticsearch and support every Elasticsearch release starting v5.6.
 
 ## Out of the Box Features
 
@@ -44,7 +41,6 @@ appbase.io offers the following advantages over running your own Elasticsearch c
 3. **Zero Ops** - Automated provisioning, scaling, logging and daily backups so you can enjoy a peace of mind.
 4. **An Active Ecosystem** - From UI toolkits to build [search interfaces](https://opensource.appbase.io/reactivesearch) and [map UIs](https://opensource.appbase.io/reactivemaps), to the [leading Elasticsearch data browser](https://opensource.appbase.io/dejavu/) to a [GUI for writing queries](https://opensource.appbase.io/mirage/) to [backend data connectors](https://medium.appbase.io/abc-import-import-your-mongodb-sql-json-csv-data-into-elasticsearch-a202cafafc0d) to import data from SQL, MongoDB, JSON, CSV sources into Elasticsearch, we are actively working on open-standards to improve accessibility of building apps with appbase.io and Elasticsearch.
 5. **No Vendor Lock-in** - Hosted APIs often come with a huge lock-in cost. appbase.io is offered as [a hosted API](https://appbase.io) as well as a [cloud native software](https://github.com/appbaseio/arc), offering a consistent experience without becoming a walled garden.
-6. **Built-in Realtime Streaming** - appbase.io for clusters offering a realtime pub/sub API for the entire Elasticsearch Query DSL.
 
 ## Choose your hosting
 

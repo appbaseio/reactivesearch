@@ -53,13 +53,7 @@ const HomePage = ({ data, location }) => {
 													'Overview and Quickstart with appbase.io',
 												link: '/docs/gettingstarted/quickstart/',
 												duration: 3,
-											},
-											{
-												title: 'Why Appbase.io',
-												description: 'Benefits of using appbase.io',
-												link: '/docs/gettingstarted/why/',
-												duration: 6,
-											},
+											}
 										],
 									},
 									'2': {
@@ -278,16 +272,9 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Clusters',
 												link: '/docs/hosting/clusters/',
-												duration: 5,
+												duration: 3,
 												description:
-													'Fully managed Elasticsearch clusters available in over 16 global regions.',
-											},
-											{
-												title: 'Apps',
-												link: '/docs/hosting/apps',
-												duration: 1,
-												description:
-													'Apps let you get the best of Elasticsearch without running a dedicated cluster.',
+													'Get a fully hosted Elasticsearch + appbase.io experience in 16+ global regions.',
 											},
 											{
 												title: 'Bring your own Cluster',
@@ -384,7 +371,7 @@ const HomePage = ({ data, location }) => {
 								Android
 							</Box>
 							<Box
-								to="/api/rest/quickstart/"
+								to="/api/rest/overview/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -392,7 +379,7 @@ const HomePage = ({ data, location }) => {
 								<img
 									className="w15 mb1"
 									src="https://miro.medium.com/max/790/1*uHzooF1EtgcKn9_XiSST4w.png"
-									alt="REST APi"
+									alt="REST API"
 								/>
 								REST API
 							</Box>

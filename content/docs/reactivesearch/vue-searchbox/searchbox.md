@@ -347,7 +347,7 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 	export default {
 		name: 'App',
 		methods: {
-			transformRequest(elasticsearchResponse) {
+			transformRequest(request) {
 				return Promise.resolve({
 					...request,
 					credentials: include,
