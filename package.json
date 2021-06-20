@@ -39,7 +39,7 @@
 			"pre-commit": "yarn test"
 		}
 	},
-	"engines" : { "node" : ">=15.4.0" },
+	"engines" : { "node" : ">=14.17.1" },
 	"devDependencies": {
 		"autoprefixer": "9.5.0",
 		"cssnano": "4.1.10",
