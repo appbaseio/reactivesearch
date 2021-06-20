@@ -78,9 +78,9 @@ We will demonstrate creating an index using [appbase.io](https://appbase.io) ser
 
 ![create an appbase.io app](https://i.imgur.com/r6hWKAG.gif)
 
-**Caption:** For the example that we will build, the app is called **earthquake** and the associated read-only credentials are **OrXIHcgHn:d539c6e7-ed14-4407-8214-c227b0600d8e**. You can browse and clone the dataset into your own app from [here](https://opensource.appbase.io/dejavu/live/#?input_state=XQAAAALbAAAAAAAAAAA9iIqnY-B2BnTZGEQz6wkFsksm3uHy0SJtl-GeS5hzLniAOGDpQVx6D3EoHDw86D_nWcj3PFS3n-DeQd1AOGTWMc5BFSwDVWM1rIpc6OlpeC62Gy4w2bVXsGB02GpXZQAh7epRyt_JV9IiqJyJgzW4vnZefow_cv_nao-NILgskqGbL7TKfAlU6TNHrnj6tr0m0GfAmwInsE1EsphIl_PBW7bxGvDzAfZF13Ec1QA8dB_-a82A&editable=false).
+**Caption:** For the example that we will build, the app is called **earthquake** and the associated read-only credentials are **a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61**. You can browse and clone the dataset into your own app from [here](https://dejavu.appbase.io/?editable=false&appname=earthquakes&url=https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io).
 
-![Dataset](https://i.imgur.com/vKmqxdP.png)
+![Dataset](https://i.imgur.com/J91nj8r.png)
 
 We will update our `src/App.js` file to add ReactiveBase component.
 
@@ -93,7 +93,8 @@ class App extends Component {
 		return (
 			<ReactiveBase
 				app="earthquake"
-				credentials="OrXIHcgHn:d539c6e7-ed14-4407-8214-c227b0600d8e"
+				url="https://@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+				credentials="a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61"
 				type="places"
 				mapKey="<ADD YOUR GOOGLE MAPS KEY HERE>"
 			>
@@ -111,7 +112,7 @@ This is how the app should look after running the `yarn start` command.
 
 ---
 
-### Step 3: Adding Filters and Map Components
+### Step 3: Adding Filters and Map Component
 
 For this app, we will be using [SingleList](/docs/reactivesearch/v3/list/singlelist/) component for filtering the dataset. And [ReactiveGoogleMap](/docs/reactivesearch/v3/map/reactivegooglemap/) component for showing the search results.
 Lets add them within the ReactiveBase component. But before we do that, we will look at the important props for each.
@@ -165,8 +166,9 @@ class App extends Component {
 	render() {
 		return (
 			<ReactiveBase
+				url="https://@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				app="earthquake"
-				credentials="OrXIHcgHn:d539c6e7-ed14-4407-8214-c227b0600d8e"
+				credentials="a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61"
 				type="places"
 				mapKey="<ADD YOUR GOOGLE MAPS KEY HERE>"
 			>
