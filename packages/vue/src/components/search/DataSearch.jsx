@@ -190,7 +190,7 @@ const DataSearch = {
 	},
 	props: {
 		options: types.options,
-		autoFocus: types.bool,
+		autoFocus: VueTypes.bool,
 		autosuggest: VueTypes.bool.def(true),
 		beforeValueChange: types.func,
 		className: VueTypes.string.def(''),
@@ -208,14 +208,14 @@ const DataSearch = {
 		excludeFields: types.excludeFields.def([]),
 		value: types.value,
 		defaultSuggestions: types.suggestions,
-		enableSynonyms: types.bool.def(true),
+		enableSynonyms: VueTypes.bool.def(true),
 		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSearches: VueTypes.bool.def(false),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
-		highlight: types.bool,
+		highlight: VueTypes.bool,
 		highlightField: types.stringOrArray,
 		icon: types.children,
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
@@ -244,7 +244,7 @@ const DataSearch = {
 		recentSearchesIcon: VueTypes.any,
 		popularSearchesIcon: VueTypes.any,
 		//	mic props
-		showVoiceSearch: types.bool.def(false),
+		showVoiceSearch: VueTypes.bool.def(false),
 		getMicInstance: types.func,
 		renderMic: types.func,
 		distinctField: types.string,
@@ -255,7 +255,7 @@ const DataSearch = {
 		).def(['/']),
 		addonBefore: VueTypes.any,
 		addonAfter: VueTypes.any,
-		expandSuggestionsContainer: types.bool.def(true),
+		expandSuggestionsContainer: VueTypes.bool.def(true),
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -293,7 +293,7 @@ const DataSearch = {
 					.catch(err =>
 						// eslint-disable-next-line no-console
 						console.warn(
-							'Warning(SearchBox): The `hotkeys-js` library seems to be missing, it is required when using key combinations( eg: `ctrl+a`) in focusShortcuts prop.',
+							'Warning(ReactiveSearch): The `hotkeys-js` library seems to be missing, it is required when using key combinations( eg: `ctrl+a`) in focusShortcuts prop.',
 						),
 					);
 			}

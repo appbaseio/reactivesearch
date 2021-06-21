@@ -1,4 +1,5 @@
 
+import VueTypes from 'vue-types';
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
@@ -25,8 +26,8 @@ const Mic = {
 		getInstance: types.func,
 		render: types.func,
 		className: types.string,
-		applyClearStyle: types.bool,
-		showIcon: types.bool,
+		applyClearStyle: VueTypes.bool,
+		showIcon: VueTypes.bool,
 	},
 	methods: {
 		getComponent() {

@@ -112,7 +112,7 @@ class DataSearch extends Component {
 		if (!isEmpty(focusShortcuts)) {
 			this.hotKeyCombinationsUsed = isHotkeyCombinationUsed(focusShortcuts);
 			if (this.hotKeyCombinationsUsed) {
-				try { // eslint-disable-next-line global-require
+				try { // eslint-disable-next-line
 					this.hotkeys = require('hotkeys-js').default;
 				} catch (err) {
 					// eslint-disable-next-line no-console
