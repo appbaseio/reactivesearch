@@ -139,7 +139,7 @@ class CategorySearch extends Component {
 			this.hotKeyCombinationsUsed = isHotkeyCombinationUsed(focusShortcuts);
 			if (this.hotKeyCombinationsUsed) {
 				try {
-					// eslint-disable-next-line global-require
+					// eslint-disable-next-line global-require, import/no-unresolved
 					this.hotkeys = require('hotkeys-js').default;
 				} catch (err) {
 					// eslint-disable-next-line no-console

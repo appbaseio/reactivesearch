@@ -27,6 +27,7 @@ const Main = () => (
 					enableRecentSearches
 					enablePopularSuggestions
 					size={5}
+					focusShortcuts={['cmd+k']}
 				/>
 			</div>
 
