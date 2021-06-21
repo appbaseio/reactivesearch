@@ -147,8 +147,12 @@ const MultiList = {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
-			return null;
+		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
+			if(this.renderNoResult) {
+				this.renderNoResult();
+			} else {
+				return null;
+			}
 		}
 		let itemsToRender = this.$data.modifiedOptions;
 		if (this.$props.transformData) {
@@ -206,10 +210,8 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{!this.hasCustomRenderer
-						&& filteredItemsToRender.length === 0
-						&& !this.isLoading
-							? this.renderNoResult()
+						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
+						&& !this.isLoading ) ? this.renderNoResult()
 							: filteredItemsToRender.map(item => (
 								<li
 									key={item.key}
@@ -308,9 +310,10 @@ const MultiList = {
 					currentValue = {
 						...rest,
 					};
+
 				} else if (Array.isArray(value)) {
-					value.forEach(val => {
-						currentValue[val] = true;
+					value.forEach((val) => {
+						currentValue[val] = true
 					});
 				} else {
 					currentValue[value] = true;

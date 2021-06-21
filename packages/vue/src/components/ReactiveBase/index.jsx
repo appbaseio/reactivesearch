@@ -36,7 +36,7 @@ const ReactiveBase = {
 		analytics: VueTypes.bool,
 		analyticsConfig: types.analyticsConfig,
 		appbaseConfig: types.appbaseConfig,
-		enableAppbase: VueTypes.bool,
+		enableAppbase: VueTypes.bool.def(false),
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,

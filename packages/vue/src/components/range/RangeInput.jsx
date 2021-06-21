@@ -93,13 +93,13 @@ const RangeInput = {
 			if (this.shouldUpdate(value) && !isEqual(value, this.currentValue)) {
 				switch (event) {
 					case 'change':
-						if (!value) {
+						if(!value) {
 							currentValue = {
 								start: this.$props.range ? this.$props.range.start : 0,
 								end: this.$props.range ? this.$props.range.end : 10,
 							};
 						}
-						this.$data.currentValue = { ...currentValue };
+						this.$data.currentValue = {...currentValue};
 						this.$emit('change', this.$data.currentValue);
 						break;
 					case 'value-change':
@@ -107,7 +107,7 @@ const RangeInput = {
 						this.$emit('value-change', this.$data.currentValue);
 						break;
 					default:
-						this.$data.currentValue = { ...currentValue };
+						this.$data.currentValue = {...currentValue};
 						break;
 				}
 			}
@@ -239,11 +239,13 @@ const RangeInput = {
 							min={this.$props.range ? this.$props.range.start : 0}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isStartValid}
-							{...{
+							{
+							...{
 								domProps: {
-									value: this.currentValue.start,
-								},
-							}}
+									value: this.currentValue.start
+								}
+							}
+							}
 						/>
 						{!this.isStartValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
@@ -262,11 +264,13 @@ const RangeInput = {
 							max={this.$props.range ? this.$props.range.end : 10}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isEndValid}
-							{...{
+							{
+							...{
 								domProps: {
-									value: this.currentValue.end,
-								},
-							}}
+									value: this.currentValue.end
+								}
+							}
+							}
 						/>
 						{!this.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
@@ -276,7 +280,7 @@ const RangeInput = {
 	},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	themePreset: state.config.themePreset,
 });
 

@@ -1,3 +1,4 @@
+import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';

@@ -162,13 +162,20 @@ const SingleDropdownList = {
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
+		const renderNoResults = this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0) {
+		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
+			if(renderNoResults && isFunction(renderNoResults)) {
+				return (<div>{renderNoResults()}</div>);
+			} else if (renderNoResults && !isFunction(renderNoResults)) {
+				return renderNoResults;
+			}
 			return null;
+
 		}
 
 		if (this.$props.selectAllLabel) {

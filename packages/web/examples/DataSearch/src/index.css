@@ -1,9 +1,9 @@
 /* layout */
 
 body {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 15px;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-top: 15px;
 }
 
 .row {
@@ -13,7 +13,7 @@ body {
 }
 
 .col {
-    flex: 1;
+	flex: 1;
 	padding: 15px;
 }
 
@@ -55,14 +55,14 @@ body {
 }
 
 @media all and (max-width: 767px) {
-    .row {
-        flex-direction: column;
-    }
+	.row {
+		flex-direction: column;
+	}
 
-    .row > .col:first-child {
-        border-right: none;
-        max-width: none;
-    }
+	.row > .col:first-child {
+		border-right: none;
+		max-width: none;
+	}
 }
 
 /* apps */
@@ -119,7 +119,7 @@ body {
 .book-content {
 	background: white;
 	margin: 10px 0;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .meetup-title {
@@ -133,7 +133,7 @@ body {
 
 .meetup-topic {
 	background-color: #dedede;
-    color: #555;
+	color: #555;
 	padding: 5px 10px;
 	margin: 5px;
 	border-radius: 4px;
@@ -146,3 +146,4 @@ body {
 .col .meetup-list-image {
 	background-size: cover;
 }
+
