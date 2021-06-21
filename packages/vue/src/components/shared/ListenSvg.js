@@ -323,6 +323,7 @@ const ListenSvg = {
 				width={28}
 				height={29}
 				className={this.$props.className}
+				style={{transform:'scale(1.5)'}}
 			>
 				<defs>
 					<path

@@ -43,7 +43,6 @@ import InputAddon from '../../styles/InputAddon';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import CancelSvg from '../shared/CancelSvg';
 import SearchSvg from '../shared/SearchSvg';
-import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import Mic from './addons/Mic';
 import CustomSvg from '../shared/CustomSvg';
@@ -64,6 +63,8 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import IconWrapper from '../../styles/IconWrapper';
+import IconGroup from '../../styles/IconGroup';
 
 const Text = withTheme(props => (
 	<span
@@ -831,7 +832,6 @@ class CategorySearch extends Component {
 	};
 
 	renderIcons = () => {
-		const { currentValue } = this.state;
 		const {
 			showIcon,
 			showClear,
@@ -841,37 +841,37 @@ class CategorySearch extends Component {
 			iconPosition,
 			innerClass,
 		} = this.props;
+
 		return (
 			<div>
-				{this.state.currentValue && showClear && (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={iconPosition === 'right'}
-						showIcon={showIcon}
-						isClearIcon
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)}
-				{this.shouldMicRender(showVoiceSearch) && (
-					<Mic
-						getInstance={getMicInstance}
-						render={renderMic}
-						iconPosition={iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(innerClass, 'mic') || null}
-						applyClearStyle={!!currentValue && showClear}
-						showIcon={showIcon}
-					/>
-				)}
-				<InputIcon
-					onClick={this.handleSearchIconClick}
-					iconPosition={iconPosition}
-					showIcon={showIcon}
-				>
-					{this.renderIcon()}
-				</InputIcon>
+				<IconGroup groupPosition="right" positionType="absolute">
+					{this.state.currentValue && showClear && (
+						<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
+					{this.shouldMicRender(showVoiceSearch) && (
+						<Mic
+							getInstance={getMicInstance}
+							render={renderMic}
+							onResult={this.handleVoiceResults}
+							className={getClassName(innerClass, 'mic') || null}
+						/>
+					)}
+					{iconPosition === 'right' && (
+						<IconWrapper onClick={this.handleSearchIconClick}>
+							{this.renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+
+				<IconGroup groupPosition="left" positionType="absolute">
+					{iconPosition === 'left' && (
+						<IconWrapper onClick={this.handleSearchIconClick}>
+							{this.renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
 			</div>
 		);
 	};
@@ -1282,7 +1282,7 @@ class CategorySearch extends Component {
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
-															index,
+															finalSuggestionsList.length + index,
 														),
 														justifyContent: 'flex-start',
 													}}

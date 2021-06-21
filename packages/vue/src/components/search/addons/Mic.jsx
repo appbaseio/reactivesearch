@@ -1,9 +1,10 @@
-import MicIcon from '../../../styles/MicIcon';
+
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
 import { hasCustomRenderer, getComponent } from '../../../utils/index';
 import types from '../../../utils/vueTypes';
+import IconWrapper from '../../../styles/IconWrapper';
 
 const STATUS = {
 	inactive: 'INACTIVE',
@@ -137,14 +138,14 @@ const Mic = {
 		}
 	},
 	render() {
-		const { iconPosition, applyClearStyle, showIcon } = this.$props;
+
 		if (this.hasCustomRenderer) {
 			return this.getComponent();
 		}
 		return (
-			<MicIcon showIcon={showIcon} showClear={applyClearStyle} iconPosition={iconPosition}>
+			<IconWrapper>
 				{this.Icon}
-			</MicIcon>
+			</IconWrapper>
 		);
 	},
 };

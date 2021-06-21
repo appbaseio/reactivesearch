@@ -40,7 +40,6 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
-import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import CustomSvg from '../shared/CustomSvg';
 import {
@@ -64,6 +63,8 @@ import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../../lib/styles/IconWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -355,10 +356,9 @@ class DataSearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
+			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+				? `^${props.fieldWeights[index]}`
+				: ''
 			}`;
 			if (
 				!(
@@ -761,7 +761,6 @@ class DataSearch extends Component {
 	};
 
 	renderIcons = () => {
-		const { currentValue } = this.state;
 		const {
 			showIcon,
 			showClear,
@@ -773,35 +772,34 @@ class DataSearch extends Component {
 		} = this.props;
 		return (
 			<div>
-				{this.state.currentValue && showClear && (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={iconPosition === 'right'}
-						showIcon={showIcon}
-						isClearIcon
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)}
-				{this.shouldMicRender(showVoiceSearch) && (
-					<Mic
-						getInstance={getMicInstance}
-						render={renderMic}
-						iconPosition={iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(innerClass, 'mic') || null}
-						applyClearStyle={!!currentValue && showClear}
-						showIcon={showIcon}
-					/>
-				)}
-				<InputIcon
-					onClick={this.handleSearchIconClick}
-					iconPosition={iconPosition}
-					showIcon={showIcon}
-				>
-					{this.renderIcon()}
-				</InputIcon>
+				<IconGroup groupPosition="right" positionType="absolute">
+					{this.state.currentValue && showClear && (
+						<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
+					{this.shouldMicRender(showVoiceSearch) && (
+						<Mic
+							getInstance={getMicInstance}
+							render={renderMic}
+							onResult={this.handleVoiceResults}
+							className={getClassName(innerClass, 'mic') || null}
+						/>
+					)}
+					{iconPosition === 'right' && (
+						<IconWrapper onClick={this.handleSearchIconClick}>
+							{this.renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+
+				<IconGroup groupPosition="left" positionType="absolute">
+					{iconPosition === 'left' && (
+						<IconWrapper onClick={this.handleSearchIconClick}>
+							{this.renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
 			</div>
 		);
 	};
@@ -1098,7 +1096,6 @@ class DataSearch extends Component {
 		const hasSuggestions = currentValue
 			? suggestionsList.length || this.topSuggestions.length
 			: this.defaultSuggestions.length;
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
