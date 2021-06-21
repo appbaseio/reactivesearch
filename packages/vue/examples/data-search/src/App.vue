@@ -1,3 +1,5 @@
+
+
 <template>
 	<div id="app">
 		<ReactiveBase
@@ -59,9 +61,10 @@
 	</div>
 </template>
 
+
+
 <script>
 import './styles.css';
-
 export default {
 	name: 'app',
 };

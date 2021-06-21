@@ -2,13 +2,16 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 
 const right = css`
-	right: 35px;
+	right: 30px;
 `;
 
 const MicIcon = styled.div`
-	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
 	position: absolute;
-	top: 8px;
 	cursor: pointer;
 	right: 15px;
 	${({ iconPosition, showClear }) => {
@@ -22,8 +25,12 @@ const MicIcon = styled.div`
 		if (!showIcon && showClear) return 'right: 32px;';
 		if (!showIcon && !showClear) return 'right: 15px;';
 		return null;
-	}}
-  width: 11px;
+	}};
+	> * {
+		position: absolute;
+		object-fit: cover;
+	}
+	width: 11px;
 `;
 
 export default MicIcon;
