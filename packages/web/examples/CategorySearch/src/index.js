@@ -68,14 +68,14 @@ const Main = () => (
 												<div className="ratings-list flex align-center">
 													<span className="stars">
 														{/* eslint-disable */
-															Array(item.average_rating_rounded)
-																.fill('x')
-																.map((_, index) => (
-																	<i
-																		className="fas fa-star"
-																		key={index}
-																	/>
-																))
+														Array(item.average_rating_rounded)
+															.fill('x')
+															.map((_, index) => (
+																<i
+																	className="fas fa-star"
+																	key={index}
+																/>
+															))
 														/* eslint-enable */
 														}
 													</span>

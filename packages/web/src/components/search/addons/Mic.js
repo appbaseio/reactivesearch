@@ -1,10 +1,10 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import MicIcon from '../../../styles/MicIcon';
 import { getComponent, hasCustomRenderer } from '../../../utils';
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
+import IconWrapper from '../../../../lib/styles/IconWrapper';
 
 const STATUS = {
 	inactive: 'INACTIVE',
@@ -152,14 +152,13 @@ class Mic extends React.Component {
 	}
 
 	render() {
-		const { iconPosition, applyClearStyle, showIcon } = this.props;
 		if (this.hasCustomRenderer) {
 			return this.getComponent();
 		}
 		return (
-			<MicIcon showIcon={showIcon} showClear={applyClearStyle} iconPosition={iconPosition}>
+			<IconWrapper>
 				{this.Icon}
-			</MicIcon>
+			</IconWrapper>
 		);
 	}
 }

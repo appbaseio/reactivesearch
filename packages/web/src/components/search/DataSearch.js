@@ -40,7 +40,6 @@ import Title from '../../styles/Title';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
-import InputIcon from '../../styles/InputIcon';
 import Container from '../../styles/Container';
 import CustomSvg from '../shared/CustomSvg';
 import {
@@ -57,6 +56,8 @@ import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../../lib/styles/IconWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -326,10 +327,9 @@ class DataSearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
+			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+				? `^${props.fieldWeights[index]}`
+				: ''
 			}`;
 			if (
 				!(
@@ -468,14 +468,20 @@ class DataSearch extends Component {
 						};
 						// Set the already fetched suggestions if query is same as used last to fetch the hits
 						if (value === props.lastUsedQuery) {
-							this.setState({
-								suggestions: this.onSuggestions(this.props.suggestions),
-							}, suggestionChangeHandler);
+							this.setState(
+								{
+									suggestions: this.onSuggestions(this.props.suggestions),
+								},
+								suggestionChangeHandler,
+							);
 						} else if (!value) {
 							// reset suggestions
-							this.setState({
-								suggestions: [],
-							}, suggestionChangeHandler);
+							this.setState(
+								{
+									suggestions: [],
+								},
+								suggestionChangeHandler,
+							);
 						}
 					},
 				);
@@ -708,7 +714,6 @@ class DataSearch extends Component {
 	};
 
 	renderIcons = () => {
-		const { currentValue } = this.state;
 		const {
 			showIcon,
 			showClear,
@@ -720,35 +725,34 @@ class DataSearch extends Component {
 		} = this.props;
 		return (
 			<div>
-				{this.state.currentValue && showClear && (
-					<InputIcon
-						onClick={this.clearValue}
-						iconPosition="right"
-						clearIcon={iconPosition === 'right'}
-						showIcon={showIcon}
-						isClearIcon
-					>
-						{this.renderCancelIcon()}
-					</InputIcon>
-				)}
-				{this.shouldMicRender(showVoiceSearch) && (
-					<Mic
-						getInstance={getMicInstance}
-						render={renderMic}
-						iconPosition={iconPosition}
-						onResult={this.handleVoiceResults}
-						className={getClassName(innerClass, 'mic') || null}
-						applyClearStyle={!!currentValue && showClear}
-						showIcon={showIcon}
-					/>
-				)}
-				<InputIcon
-					onClick={this.handleSearchIconClick}
-					iconPosition={iconPosition}
-					showIcon={showIcon}
-				>
-					{this.renderIcon()}
-				</InputIcon>
+				<IconGroup groupPosition="right" positionType="absolute">
+					{this.state.currentValue && showClear && (
+						<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
+							{this.renderCancelIcon()}
+						</IconWrapper>
+					)}
+					{this.shouldMicRender(showVoiceSearch) && (
+						<Mic
+							getInstance={getMicInstance}
+							render={renderMic}
+							onResult={this.handleVoiceResults}
+							className={getClassName(innerClass, 'mic') || null}
+						/>
+					)}
+					{iconPosition === 'right' && (
+						<IconWrapper onClick={this.handleSearchIconClick}>
+							{this.renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+
+				<IconGroup groupPosition="left" positionType="absolute">
+					{iconPosition === 'left' && (
+						<IconWrapper onClick={this.handleSearchIconClick}>
+							{this.renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
 			</div>
 		);
 	};
@@ -897,10 +901,7 @@ class DataSearch extends Component {
 	}
 
 	get topSuggestions() {
-		const {
-			enableQuerySuggestions,
-			enablePopularSuggestions,
-		} = this.props;
+		const { enableQuerySuggestions, enablePopularSuggestions } = this.props;
 		const { currentValue } = this.state;
 		if (!currentValue) {
 			return [];
@@ -911,9 +912,7 @@ class DataSearch extends Component {
 	}
 
 	get normalizedRecentSearches() {
-		const {
-			recentSearches,
-		} = this.props;
+		const { recentSearches } = this.props;
 		return recentSearches || [];
 	}
 
@@ -944,11 +943,14 @@ class DataSearch extends Component {
 		if (currentValue) {
 			return [];
 		}
-		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => (
-			{ ...suggestion, _popular_suggestion: true }
-		));
-		const customNormalizedRecentSearches = this.normalizedRecentSearches
-			.map(search => ({ ...search, _recent_search: true }));
+		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => ({
+			...suggestion,
+			_popular_suggestion: true,
+		}));
+		const customNormalizedRecentSearches = this.normalizedRecentSearches.map(search => ({
+			...search,
+			_recent_search: true,
+		}));
 		const defaultSuggestions = isPopularSuggestionsEnabled
 			? [...customNormalizedRecentSearches, ...customDefaultPopularSuggestions]
 			: customNormalizedRecentSearches;
@@ -986,7 +988,8 @@ class DataSearch extends Component {
 			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
 		} = this.props;
 		const hasSuggestions = currentValue
-			? suggestionsList.length || this.topSuggestions.length : this.defaultSuggestions.length;
+			? suggestionsList.length || this.topSuggestions.length
+			: this.defaultSuggestions.length;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1021,6 +1024,7 @@ class DataSearch extends Component {
 									id={`${this.props.componentId}-input`}
 									showIcon={this.props.showIcon}
 									showClear={this.props.showClear}
+									showVoiceSearch={this.props.showVoiceSearch}
 									iconPosition={this.props.iconPosition}
 									ref={(c) => {
 										this._inputRef = c;
@@ -1066,9 +1070,7 @@ class DataSearch extends Component {
 										{suggestionsList.slice(0, size).map((item, index) => (
 											<li
 												{...getItemProps({ item })}
-												key={`${index + 1}-${
-													item.value
-												}`}
+												key={`${index + 1}-${item.value}`}
 												style={{
 													backgroundColor: this.getBackgroundColor(
 														highlightedIndex,
@@ -1082,44 +1084,53 @@ class DataSearch extends Component {
 												/>
 											</li>
 										))}
-										{
-											this.defaultSuggestions.map((sugg, index) => (
-												<li
-													{...getItemProps({ item: sugg })}
-													key={`${index + 1}-${sugg.value}`}
-													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex,
-															index,
-														),
-														justifyContent: 'flex-start',
-													}}
-												>
-													<div style={{ padding: '0 10px 0 0' }}>
-														{sugg.source
-															&& sugg.source._recent_search
-															&& <CustomSvg
-																iconId={`${sugg.label}-icon`}
-																className={getClassName(this.props.innerClass, 'recent-search-icon') || null}
-																icon={recentSearchesIcon}
-																type="recent-search-icon"
-															/>}
-														{sugg.source
-															&& sugg.source._popular_suggestion
-															&& <CustomSvg
-																iconId={`${sugg.label}-icon`}
-																className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
-																icon={popularSearchesIcon}
-																type="popular-search-icon"
-															/>}
-													</div>
-													<SuggestionItem
-														currentValue={currentValue}
-														suggestion={sugg}
-													/>
-												</li>
-											))
-										}
+										{this.defaultSuggestions.map((sugg, index) => (
+											<li
+												{...getItemProps({ item: sugg })}
+												key={`${index + 1}-${sugg.value}`}
+												style={{
+													backgroundColor: this.getBackgroundColor(
+														highlightedIndex,
+														index,
+													),
+													justifyContent: 'flex-start',
+												}}
+											>
+												<div style={{ padding: '0 10px 0 0' }}>
+													{sugg.source && sugg.source._recent_search && (
+														<CustomSvg
+															iconId={`${sugg.label}-icon`}
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'recent-search-icon',
+																) || null
+															}
+															icon={recentSearchesIcon}
+															type="recent-search-icon"
+														/>
+													)}
+													{sugg.source
+														&& sugg.source._popular_suggestion && (
+														<CustomSvg
+															iconId={`${sugg.label}-icon`}
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'popular-search-icon',
+																) || null
+															}
+															icon={popularSearchesIcon}
+															type="popular-search-icon"
+														/>
+													)}
+												</div>
+												<SuggestionItem
+													currentValue={currentValue}
+													suggestion={sugg}
+												/>
+											</li>
+										))}
 										{hasPopularSuggestionsRenderer(this.props)
 											? this.getComponent(
 												{
@@ -1134,7 +1145,9 @@ class DataSearch extends Component {
 											: this.topSuggestions.map((sugg, index) => (
 												<li
 													{...getItemProps({ item: sugg })}
-													key={`${suggestionsList.length + index + 1}-${sugg.value}`}
+													key={`${suggestionsList.length
+														+ index
+														+ 1}-${sugg.value}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
@@ -1146,7 +1159,12 @@ class DataSearch extends Component {
 													<div style={{ padding: '0 10px 0 0' }}>
 														<CustomSvg
 															iconId={`${sugg.label}-icon`}
-															className={getClassName(this.props.innerClass, 'popular-search-icon') || null}
+															className={
+																getClassName(
+																	this.props.innerClass,
+																	'popular-search-icon',
+																) || null
+															}
 															icon={popularSearchesIcon}
 															type="popular-search-icon"
 														/>
@@ -1156,8 +1174,7 @@ class DataSearch extends Component {
 														suggestion={sugg}
 													/>
 												</li>
-											),
-											)}
+											))}
 									</ul>
 								) : (
 									this.renderNoSuggestion(suggestionsList)
@@ -1184,6 +1201,7 @@ class DataSearch extends Component {
 							showIcon={this.props.showIcon}
 							showClear={this.props.showClear}
 							themePreset={themePreset}
+							showVoiceSearch={this.props.showVoiceSearch}
 						/>
 						{this.renderIcons()}
 					</div>
