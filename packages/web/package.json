@@ -50,7 +50,8 @@
 	},
 	"peerDependencies": {
 		"react": ">=15",
-		"react-dom": ">=15"
+		"react-dom": ">=15",
+		"hotkeys-js": "^3.8.5"
 	},
 	"devDependencies": {
 		"@types/react": "^16.3.8",
