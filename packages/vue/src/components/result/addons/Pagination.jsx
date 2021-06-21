@@ -1,6 +1,5 @@
 import VueTypes from 'vue-types';
 import { helper } from '@appbaseio/reactivecore';
-import VueTypes from 'vue-types';
 import Button, { pagination } from '../../../styles/Button';
 import types from '../../../utils/vueTypes';
 

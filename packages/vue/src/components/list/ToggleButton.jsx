@@ -1,6 +1,5 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
-import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '../../utils/vueTypes';
 import Title from '../../styles/Title';
