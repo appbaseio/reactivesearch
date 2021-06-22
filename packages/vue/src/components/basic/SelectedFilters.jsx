@@ -4,7 +4,7 @@ import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect  } from '../../utils/index';
+import { connect,areArraysEqual  } from '../../utils/index';
 
 const { setValue, clearValues } = Actions;
 const { getClassName, handleA11yAction } = helper;
@@ -29,6 +29,7 @@ const SelectedFilters = {
 			return this.$scopedSlots.default({
 				components: this.components,
 				selectedValues: this.selectedValues,
+				componentProps: this.componentProps,
 				clearValues: this.clearValues,
 				setValue: this.setValue,
 			});
@@ -68,7 +69,25 @@ const SelectedFilters = {
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
-			this.clearValuesAction();
+			const {
+			  resetToDefault, componentProps, selectedValues,
+			} = this;
+			if (resetToDefault) {
+				Object.keys(selectedValues).map((component) => {
+					if (
+						componentProps[component].defaultValue
+					&& !areArraysEqual(
+						selectedValues[component].value,
+						componentProps[component].defaultValue,
+					)
+					) {
+						this.setValue(component, componentProps[component].defaultValue);
+					}
+					return true;
+				});
+			} else {
+				this.clearValuesAction();
+			}
 			this.$emit('clear', null);
 		},
 
@@ -143,6 +162,7 @@ const SelectedFilters = {
 const mapStateToProps = state => ({
 	components: state.components,
 	selectedValues: state.selectedValues,
+	componentProps: state.props,
 });
 
 const mapDispatchtoProps = {

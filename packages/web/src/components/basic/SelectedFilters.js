@@ -48,7 +48,7 @@ class SelectedFilters extends Component {
 			onClear, resetToDefault, componentProps, selectedValues,
 		} = this.props;
 		if (resetToDefault) {
-			Object.keys(this.props.selectedValues).map((component) => {
+			Object.keys(selectedValues).map((component) => {
 				if (
 					componentProps[component].defaultValue
 					&& !areArraysEqual(
