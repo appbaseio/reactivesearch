@@ -217,10 +217,6 @@ export default {
 
 - **focusShortcuts** `Array<string | number>` [optional]
   A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
-  > Note
-  >
-  > 1.  By default, pressing `'/'` would focus the search box.
-  > 2.  The `hotkeys-js` library needs to be installed manually when using combinations in `focusShortcuts` prop, eg: 'cmd+b', 'ctrl+q', etc, without which only single key shortcuts would work if passed in the prop, eg: From among ['/', 'b', '#', 'ctrl+r'], only '/', 'b', '#' would work without hotkey-js installation.
 - **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
 - **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
   <img src="https://i.imgur.com/x3jF23m.png"/>
