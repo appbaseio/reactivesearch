@@ -4,7 +4,7 @@ import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect,areArraysEqual  } from '../../utils/index';
+import { connect, areArraysEqual } from '../../utils/index';
 
 const { setValue, clearValues } = Actions;
 const { getClassName, handleA11yAction } = helper;
@@ -17,7 +17,7 @@ const SelectedFilters = {
 		innerClass: types.style,
 		showClearAll: VueTypes.bool.def(true),
 		title: types.title,
-		resetToDefault: VueTypes.bool.def(false)
+		resetToDefault: VueTypes.bool.def(false),
 	},
 	inject: {
 		theme: {
@@ -69,17 +69,15 @@ const SelectedFilters = {
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
-			const {
-			  resetToDefault, componentProps, selectedValues,
-			} = this;
+			const { resetToDefault, componentProps, selectedValues } = this;
 			if (resetToDefault) {
-				Object.keys(selectedValues).map((component) => {
+				Object.keys(selectedValues).map(component => {
 					if (
 						componentProps[component].defaultValue
-					&& !areArraysEqual(
-						selectedValues[component].value,
-						componentProps[component].defaultValue,
-					)
+						&& !areArraysEqual(
+							selectedValues[component].value,
+							componentProps[component].defaultValue,
+						)
 					) {
 						this.setValue(component, componentProps[component].defaultValue);
 					}
@@ -156,7 +154,7 @@ const SelectedFilters = {
 		selectedValues(newVal) {
 			this.$emit('change', newVal);
 		},
-	}
+	},
 };
 
 const mapStateToProps = state => ({
