@@ -35,15 +35,9 @@ class SelectedFilters extends Component {
 
 	remove = (component, value = null) => {
 		const {
-			onClear, resetToDefault, componentProps, selectedValues,
+			onClear,
 		} = this.props;
-		if (
-			areArraysEqual(selectedValues[component].value, componentProps[component].defaultValue)
-		) {
-			return;
-		}
-		const valueToSet = resetToDefault ? componentProps[component].defaultValue : null;
-		this.props.setValue(component, valueToSet);
+		this.props.setValue(component, null);
 		if (onClear) {
 			onClear(component, value);
 		}

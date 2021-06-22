@@ -4,7 +4,7 @@ import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect } from '../../utils/index';
+import { connect  } from '../../utils/index';
 
 const { setValue, clearValues } = Actions;
 const { getClassName, handleA11yAction } = helper;
@@ -17,6 +17,7 @@ const SelectedFilters = {
 		innerClass: types.style,
 		showClearAll: VueTypes.bool.def(true),
 		title: types.title,
+		resetToDefault: VueTypes.bool.def(false)
 	},
 	inject: {
 		theme: {
@@ -136,7 +137,7 @@ const SelectedFilters = {
 		selectedValues(newVal) {
 			this.$emit('change', newVal);
 		},
-	},
+	}
 };
 
 const mapStateToProps = state => ({

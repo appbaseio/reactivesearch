@@ -75,7 +75,7 @@ export const getValidPropsKeys = (props = {}) =>
  * Handles the caret position for input components
  * @param {HTMLInputElement} e
  */
-export const handleCaretPosition = (e) => {
+export const handleCaretPosition = e => {
 	if (window) {
 		const caret = e.target.selectionStart;
 		const element = e.target;
@@ -170,7 +170,7 @@ export const getPopularSuggestionsComponent = (data = {}, props = {}) => {
 	return null;
 };
 
-// to check whether arrays are equal
+// to check whether arrays are equal in values
 // irrespective of the order of entries
 export const areArraysEqual = (arr1, arr2) => {
 	const n = arr1.length;
