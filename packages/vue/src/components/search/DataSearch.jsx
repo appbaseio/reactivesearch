@@ -286,8 +286,7 @@ const DataSearch = {
 			this.hotKeyCombinationsUsed = isHotkeyCombinationUsed(focusShortcuts);
 
 			if (this.hotKeyCombinationsUsed) {
-				const moduleName = 'hotkeys-js';
-				import(moduleName)
+				import('hotkeys-js')
 					.then(module => {
 						this.hotkeys = module.default;
 					}) // eslint-disable-next-line no-unused-vars
