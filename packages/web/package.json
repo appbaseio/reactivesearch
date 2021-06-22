@@ -32,7 +32,7 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "9.11.3",
+		"@appbaseio/reactivecore": "9.11.4",
 		"@emotion/core": "^10.0.28",
 		"@emotion/styled": "^10.0.27",
 		"appbase-js": "^4.1.0",
@@ -46,12 +46,12 @@
 		"react-redux": "^6.0.1",
 		"rheostat": "^2.1.1",
 		"url-search-params-polyfill": "^7.0.0",
-		"xdate": "^0.8.2"
+		"xdate": "^0.8.2",
+		"hotkeys-js": "^3.8.5"
 	},
 	"peerDependencies": {
 		"react": ">=15",
-		"react-dom": ">=15",
-		"hotkeys-js": "^3.8.5"
+		"react-dom": ">=15"
 	},
 	"devDependencies": {
 		"@types/react": "^16.3.8",

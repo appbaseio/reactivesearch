@@ -190,7 +190,7 @@ const DataSearch = {
 	},
 	props: {
 		options: types.options,
-		autoFocus: types.bool,
+		autoFocus: VueTypes.bool,
 		autosuggest: VueTypes.bool.def(true),
 		beforeValueChange: types.func,
 		className: VueTypes.string.def(''),
@@ -208,14 +208,14 @@ const DataSearch = {
 		excludeFields: types.excludeFields.def([]),
 		value: types.value,
 		defaultSuggestions: types.suggestions,
-		enableSynonyms: types.bool.def(true),
+		enableSynonyms: VueTypes.bool.def(true),
 		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSearches: VueTypes.bool.def(false),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
-		highlight: types.bool,
+		highlight: VueTypes.bool,
 		highlightField: types.stringOrArray,
 		icon: types.children,
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
@@ -244,7 +244,7 @@ const DataSearch = {
 		recentSearchesIcon: VueTypes.any,
 		popularSearchesIcon: VueTypes.any,
 		//	mic props
-		showVoiceSearch: types.bool.def(false),
+		showVoiceSearch: VueTypes.bool.def(false),
 		getMicInstance: types.func,
 		renderMic: types.func,
 		distinctField: types.string,
@@ -284,6 +284,7 @@ const DataSearch = {
 		// dynamically import hotkey-js
 		if (!isEmpty(focusShortcuts)) {
 			this.hotKeyCombinationsUsed = isHotkeyCombinationUsed(focusShortcuts);
+
 			if (this.hotKeyCombinationsUsed) {
 				const moduleName = 'hotkeys-js';
 				import(moduleName)
@@ -805,7 +806,7 @@ const DataSearch = {
 			}
 
 			// for hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc, we use hotkeys-js
-			if (this.hotKeyCombinationsUsed) {
+			if (this.hotKeyCombinationsUsed && this.hotkeys) {
 				this.hotkeys(
 					parseFocusShortcuts(focusShortcuts).join(','), // eslint-disable-next-line no-unused-vars
 					/* eslint-disable no-shadow */ (event, handler) => {
