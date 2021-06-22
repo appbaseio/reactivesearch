@@ -10,7 +10,7 @@ import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/util
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect } from '../../utils';
+import { connect, areArraysEqual } from '../../utils';
 
 class SelectedFilters extends Component {
 	constructor(props) {
@@ -34,16 +34,41 @@ class SelectedFilters extends Component {
 	};
 
 	remove = (component, value = null) => {
-		const { onClear } = this.props;
-		this.props.setValue(component, null);
+		const {
+			onClear, resetToDefault, componentProps, selectedValues,
+		} = this.props;
+		if (
+			areArraysEqual(selectedValues[component].value, componentProps[component].defaultValue)
+		) {
+			return;
+		}
+		const valueToSet = resetToDefault ? componentProps[component].defaultValue : null;
+		this.props.setValue(component, valueToSet);
 		if (onClear) {
 			onClear(component, value);
 		}
 	};
 
 	clearValues = () => {
-		const { onClear } = this.props;
-		this.props.clearValues();
+		const {
+			onClear, resetToDefault, componentProps, selectedValues,
+		} = this.props;
+		if (resetToDefault) {
+			Object.keys(this.props.selectedValues).map((component) => {
+				if (
+					componentProps[component].defaultValue
+					&& !areArraysEqual(
+						selectedValues[component].value,
+						componentProps[component].defaultValue,
+					)
+				) {
+					this.props.setValue(component, componentProps[component].defaultValue);
+				}
+				return true;
+			});
+		} else {
+			this.props.clearValues();
+		}
 		if (onClear) {
 			onClear(null);
 		}
@@ -174,6 +199,7 @@ SelectedFilters.propTypes = {
 	title: types.title,
 	onChange: types.func,
 	componentProps: types.props,
+	resetToDefault: types.bool,
 };
 
 SelectedFilters.defaultProps = {
@@ -182,6 +208,7 @@ SelectedFilters.defaultProps = {
 	showClearAll: true,
 	style: {},
 	componentProps: {},
+	resetToDefault: false,
 };
 
 const mapStateToProps = state => ({
