@@ -117,7 +117,6 @@ const SingleRange = {
 	methods: {
 		setValue(value, props = this.$props) {
 			const currentValue = SingleRange.parseValue(value, props);
-
 			const performUpdate = () => {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(currentValue, props);

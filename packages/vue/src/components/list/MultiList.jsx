@@ -152,8 +152,12 @@ const MultiList = {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
 		}
 
-		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0) {
-			return null;
+		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
+			if(this.renderNoResult) {
+				this.renderNoResult();
+			} else {
+				return null;
+			}
 		}
 
 		let itemsToRender = this.$data.modifiedOptions;
@@ -162,17 +166,17 @@ const MultiList = {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
 
-		var filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter(item => {
 			if (String(item.key).length) {
 				if (this.$props.showSearch && this.$data.searchTerm) {
 					return String(item.key)
 						.toLowerCase()
 						.includes(this.$data.searchTerm.toLowerCase());
-					}
-					return true;
 				}
-				return false;
-			});
+				return true;
+			}
+			return false;
+		});
 
 		return (
 			<Container class={this.$props.className}>
@@ -214,8 +218,8 @@ const MultiList = {
 							</li>
 						) : null}
 						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
-						&& !this.isLoading ) ? this.renderNoResult() :
-						filteredItemsToRender.map(item => (
+						&& !this.isLoading ) ? this.renderNoResult()
+							: filteredItemsToRender.map(item => (
 								<li
 									key={item.key}
 									class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
@@ -312,12 +316,12 @@ const MultiList = {
 						...rest,
 					};
 
+				} else if (Array.isArray(value)) {
+					value.forEach((val) => {
+						currentValue[val] = true
+					});
 				} else {
-					if (Array.isArray(value)) {
-						value.forEach( val => currentValue[val] = true );
-					} else {
-						currentValue[value] = true;
-					}
+					currentValue[value] = true;
 				}
 
 				if (selectAllLabel && selectAllLabel in currentValue) {

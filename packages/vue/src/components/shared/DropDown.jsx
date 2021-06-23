@@ -26,22 +26,22 @@ const Dropdown = {
 		items: types.data,
 		keyField: VueTypes.string.def('key'),
 		labelField: VueTypes.string.def('label'),
-		multi: types.bool, // change event
+		multi: VueTypes.bool, // change event
 		placeholder: types.string,
-		returnsObject: types.bool,
+		returnsObject: VueTypes.bool,
 		customLabelRenderer: types.func,
-		hasCustomRenderer: types.bool,
+		hasCustomRenderer: VueTypes.bool,
 		customRenderer: types.func,
 		renderItem: types.func,
 		renderNoResults: VueTypes.any,
 		handleChange: types.func,
 		transformData: types.func,
 		selectedItem: types.selectedValue,
-		showCount: types.bool,
-		single: types.bool,
+		showCount: VueTypes.bool,
+		single: VueTypes.bool,
 		small: VueTypes.bool.def(false),
 		themePreset: types.themePreset,
-		showSearch: types.bool,
+		showSearch: VueTypes.bool,
 	},
 
 	render() {
@@ -65,7 +65,7 @@ const Dropdown = {
 			itemsToRender = transformData(itemsToRender);
 		}
 
-		var filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter(item => {
 			if (String(item[labelField]).length) {
 				if (
 					this.$props.showSearch
@@ -156,8 +156,8 @@ const Dropdown = {
 										/>
 									) : null}
 									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
-										? this.renderNoResult() :
-											filteredItemsToRender.map((item, index) => {
+										? this.renderNoResult()
+										: filteredItemsToRender.map((item, index) => {
 											let selected
 												= this.$props.multi // MultiDropdownList
 												&& ((selectedItem && !!selectedItem[item[keyField]]) // MultiDropdownRange

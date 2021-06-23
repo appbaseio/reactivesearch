@@ -29,6 +29,7 @@ export interface SingleDataList extends CommonProps {
 	onChange?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
 	index?: string;
+	enableStrictSelection?: boolean;
 }
 
 declare const SingleDataList: React.ComponentClass<SingleDataList>;

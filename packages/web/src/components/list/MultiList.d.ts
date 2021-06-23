@@ -29,6 +29,7 @@ export interface MultiList extends CommonProps {
 	showFilter?: boolean;
 	showSearch?: boolean;
 	size?: number;
+	aggregationSize?: number;
 	sortBy?: types.sortByWithCount;
 	themePreset?: types.themePreset;
 	title?: types.title;

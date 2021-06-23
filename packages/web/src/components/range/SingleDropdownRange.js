@@ -106,7 +106,6 @@ class SingleDropdownRange extends Component {
 				this.updateQuery(currentValue, props);
 				if (props.onValueChange) props.onValueChange(currentValue);
 			};
-
 			if (hasMounted) {
 				this.setState(
 					{

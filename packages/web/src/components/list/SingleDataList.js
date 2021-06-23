@@ -302,12 +302,17 @@ class SingleDataList extends Component {
 		if (isEvent(e)) {
 			currentValue = e.target.value;
 		}
+		const { enableStrictSelection } = this.props;
+		if (enableStrictSelection && currentValue === this.state.currentValue) {
+			return false;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
 			onChange(currentValue);
 		}
+		return true;
 	};
 
 	getComponent() {
@@ -338,7 +343,9 @@ class SingleDataList extends Component {
 	}
 
 	render() {
-		const { selectAllLabel, showCount, renderItem } = this.props;
+		const {
+			selectAllLabel, showCount, renderItem,
+		} = this.props;
 		const { options } = this.state;
 
 		if (!this.hasCustomRenderer && options.length === 0) {
@@ -487,6 +494,7 @@ SingleDataList.propTypes = {
 	renderItem: types.func,
 	renderNoResults: types.func,
 	index: types.string,
+	enableStrictSelection: types.bool,
 };
 
 SingleDataList.defaultProps = {
@@ -499,6 +507,7 @@ SingleDataList.defaultProps = {
 	URLParams: false,
 	showCount: false,
 	index: undefined,
+	enableStrictSelection: false,
 };
 
 

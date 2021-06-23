@@ -129,7 +129,7 @@ const ReactiveList = {
 		size: VueTypes.number.def(10),
 		sortBy: types.sortBy,
 		sortOptions: types.sortOptions,
-		stream: types.bool,
+		stream: VueTypes.bool,
 		URLParams: VueTypes.bool.def(false),
 		prevLabel: types.string,
 		nextLabel: types.string,

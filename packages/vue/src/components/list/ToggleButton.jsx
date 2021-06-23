@@ -1,3 +1,4 @@
+import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '../../utils/vueTypes';
@@ -21,11 +22,11 @@ const ToggleButton = {
 		filterLabel: types.string,
 		nestedField: types.string,
 		innerClass: types.style,
-		multiSelect: types.bool,
+		multiSelect: VueTypes.bool,
 		react: types.react,
-		showFilter: types.bool,
+		showFilter: VueTypes.bool,
 		title: types.title,
-		URLParams: types.bool,
+		URLParams: VueTypes.bool,
 		renderItem: types.func,
 	},
 	data() {
@@ -186,7 +187,7 @@ const ToggleButton = {
 			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
 			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
 
-			return (
+			return renderItem ? renderItem({ item, isSelected, handleClick: () => this.handleClick(item) }) : (
 				<Button
 					class={`${getClassName(this.$props.innerClass, 'button')} ${
 						isSelected ? 'active' : ''
@@ -198,9 +199,9 @@ const ToggleButton = {
 					tabIndex={isSelected ? '-1' : '0'}
 					onKeypress={e => handleA11yAction(e, () => this.handleClick(item))}
 				>
-					{renderItem ? renderItem({ item, isSelected }) : item.label}
+					{item.label}
 				</Button>
-			);
+			)
 		},
 	},
 
