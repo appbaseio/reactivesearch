@@ -277,7 +277,7 @@ const DataSearch = {
 		}
 	},
 	mounted() {
-		document.addEventListener('keydown', this.onKeyDown);
+		this.listenForFocusShortcuts();
 	},
 	watch: {
 		highlight() {
@@ -334,6 +334,9 @@ const DataSearch = {
 				this.setValue(newVal || '', true, this.$props);
 			}
 		},
+		focusShortcuts() {
+			this.listenForFocusShortcuts();
+		}
 	},
 	methods: {
 		validateDataField() {
@@ -778,29 +781,31 @@ const DataSearch = {
 			}
 			this.$refs.searchInputField.focus();
 		},
-		// eslint-disable-next-line no-unused-vars
-		onKeyDown(event) {
+		listenForFocusShortcuts(){
 			const { focusShortcuts = ['/'] } = this.$props;
+
 			if (isEmpty(focusShortcuts)) {
 				return;
 			}
+			const shortcutsString = parseFocusShortcuts(focusShortcuts).join(',');
+
 			// handler for alphabets and other key combinations
 			hotkeys(
-				parseFocusShortcuts(focusShortcuts).join(','), // eslint-disable-next-line no-unused-vars
-				/* eslint-disable no-shadow */(event, handler) => {
-					// Prevent the default refresh event under WINDOWS system
+				shortcutsString, // eslint-disable-next-line no-unused-vars
+				/* eslint-disable no-shadow */ (event, handler) => {
+				// Prevent the default refresh event under WINDOWS system
 					event.preventDefault();
 					this.focusSearchBox(event);
 				},
 			);
 
 			// if one of modifier keys are used, they are handled below
-			hotkeys('*', () => {
+			hotkeys('*', (event) => {
 				const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
 
 				if (modifierKeys.length === 0) return;
 
-				for (let index = 0; index < modifierKeys.length; index+=1) {
+				for (let index = 0; index < modifierKeys.length; index += 1) {
 					const element = modifierKeys[index];
 					if (hotkeys[element]) {
 						this.focusSearchBox(event);
@@ -808,7 +813,8 @@ const DataSearch = {
 					}
 				}
 			});
-		},
+
+		}
 	},
 	render() {
 		const { theme, size, expandSuggestionsContainer } = this.$props;
