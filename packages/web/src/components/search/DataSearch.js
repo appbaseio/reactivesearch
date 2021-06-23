@@ -109,8 +109,8 @@ class DataSearch extends Component {
 	}
 
 	componentDidMount() {
-		// listening to keydown events : globally
-		document.addEventListener('keydown', this.onKeyDown);
+		// register hotkeys for listening to focusShortcuts' key presses
+		this.listenForFocusShortcuts();
 		const {
 			enableQuerySuggestions,
 			renderQuerySuggestions,
@@ -1024,10 +1024,11 @@ class DataSearch extends Component {
 			// already in an input
 			return;
 		}
+
 		this._inputRef.focus();
 	};
 
-	onKeyDown = (event) => {
+	listenForFocusShortcuts = () => {
 		const { focusShortcuts } = this.props;
 		if (isEmpty(focusShortcuts)) {
 			return;
@@ -1046,7 +1047,7 @@ class DataSearch extends Component {
 		);
 
 		// if one of modifier keys are used, they are handled below
-		hotkeys('*', () => {
+		hotkeys('*', (event) => {
 			const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
 
 			if (modifierKeys.length === 0) return;
@@ -1511,13 +1512,15 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setCustomHighlightOptions: (component, options) => dispatch(setCustomHighlightOptions(component, options)),
+	setCustomHighlightOptions: (component, options) => dispatch(
+		setCustomHighlightOptions(component, options)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	triggerAnalytics: (searchPosition, documentId) => dispatch(recordSuggestionClick(searchPosition, documentId)),
+	triggerAnalytics: (searchPosition, documentId) => dispatch(
+		recordSuggestionClick(searchPosition, documentId)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 });

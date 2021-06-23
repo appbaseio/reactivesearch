@@ -253,8 +253,8 @@ class CategorySearch extends Component {
 	}
 
 	componentDidMount() {
-		// listening to keydown events : globally
-		document.addEventListener('keydown', this.onKeyDown);
+		// register hotkeys for listening to focusShortcuts' key presses
+		this.listenForFocusShortcuts();
 		const {
 			enableQuerySuggestions,
 			renderQuerySuggestions,
@@ -500,7 +500,8 @@ class CategorySearch extends Component {
 		return finalQuery;
 	};
 
-	onSuggestions = searchResults => handleOnSuggestions(searchResults, this.state.currentValue, this.props);
+	onSuggestions = searchResults =>
+		handleOnSuggestions(searchResults, this.state.currentValue, this.props);
 
 	setValue = (
 		value,
@@ -1144,7 +1145,7 @@ class CategorySearch extends Component {
 		this._inputRef.focus();
 	};
 
-	onKeyDown = (event) => {
+	listenForFocusShortcuts = () => {
 		const { focusShortcuts } = this.props;
 		if (isEmpty(focusShortcuts)) {
 			return;
@@ -1163,7 +1164,7 @@ class CategorySearch extends Component {
 		);
 
 		// if one of modifier keys are used, they are handled below
-		hotkeys('*', () => {
+		hotkeys('*', (event) => {
 			const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
 
 			if (modifierKeys.length === 0) return;
@@ -1387,7 +1388,8 @@ class CategorySearch extends Component {
 													onKeyPress: this.withTriggerQuery(
 														this.props.onKeyPress,
 													),
-													onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+													onKeyDown: e =>
+														this.handleKeyDown(e, highlightedIndex),
 													onKeyUp: this.withTriggerQuery(
 														this.props.onKeyUp,
 													),
@@ -1644,13 +1646,16 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setCustomHighlightOptions: (component, options) => dispatch(setCustomHighlightOptions(component, options)),
+	setCustomHighlightOptions: (component, options) =>
+		dispatch(setCustomHighlightOptions(component, options)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
+	setQueryOptions: (component, props, execute) =>
+		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	triggerAnalytics: (searchPosition, documentId) => dispatch(recordSuggestionClick(searchPosition, documentId)),
+	triggerAnalytics: (searchPosition, documentId) =>
+		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 });

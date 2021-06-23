@@ -779,7 +779,7 @@ const DataSearch = {
 				// already in an input
 				return;
 			}
-			this.$refs.searchInputField.focus();
+			this.$refs.searchInputField?.focus();
 		},
 		listenForFocusShortcuts(){
 			const { focusShortcuts = ['/'] } = this.$props;
