@@ -98,7 +98,7 @@ export const isQueryIdentical = (newVal, oldVal, value, props) => {
  */
 export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
 	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$scopedSlots || _ref.$props;
-	const render = renderPopularSuggestions || renderQuerySuggestions
+	const render = renderPopularSuggestions || renderQuerySuggestions;
 	if (render) return render(data);
 	return null;
 };
@@ -134,16 +134,6 @@ export function isNumeric(value) {
 // check if passed shortcut a key combination
 export function isHotkeyCombination(hotkey) {
 	return typeof hotkey === 'string' && hotkey.indexOf('+') !== -1;
-}
-
-// parse focusshortcuts array for key combinations
-export function isHotkeyCombinationUsed(focusShortcuts) {
-	for (let index = 0; index < focusShortcuts.length; index += 1) {
-		if (isHotkeyCombination(focusShortcuts[index])) {
-			return true;
-		}
-	}
-	return false;
 }
 
 // used for getting correct string char from keycode passed
@@ -197,7 +187,7 @@ export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd'
 
 // filter out modifierkeys such as ctrl, alt, command, shift from focusShortcuts prop
 export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
-	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey))
+	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }
 
 export const debounce = (method, delay) => {

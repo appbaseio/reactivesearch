@@ -75,7 +75,7 @@ export const getValidPropsKeys = (props = {}) =>
  * Handles the caret position for input components
  * @param {HTMLInputElement} e
  */
-export const handleCaretPosition = e => {
+export const handleCaretPosition = (e) => {
 	if (window) {
 		const caret = e.target.selectionStart;
 		const element = e.target;
@@ -181,16 +181,6 @@ export function isHotkeyCombination(hotkey) {
 	return typeof hotkey === 'string' && hotkey.indexOf('+') !== -1;
 }
 
-// parse focusshortcuts array for key combinations
-export function isHotkeyCombinationUsed(focusShortcuts) {
-	for (let index = 0; index < focusShortcuts.length; index += 1) {
-		if (isHotkeyCombination(focusShortcuts[index])) {
-			return true;
-		}
-	}
-	return false;
-}
-
 // used for getting correct string char from keycode passed
 // the below algebraic expression is used to get the correct ascii code out of the e.which
 // || e.keycode returned value
@@ -199,7 +189,7 @@ export function isHotkeyCombinationUsed(focusShortcuts) {
 // stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
-	const chrCode = which - 48 * Math.floor(which / 48);
+	const chrCode = which - (48 * Math.floor(which / 48));
 	return String.fromCharCode(which >= 96 ? chrCode : which);
 }
 
@@ -209,7 +199,7 @@ export function parseFocusShortcuts(focusShortcutsArray) {
 	if (isEmpty(focusShortcutsArray)) return [];
 
 	const parsedFocusShortcutsArray = [];
-	focusShortcutsArray.forEach(element => {
+	focusShortcutsArray.forEach((element) => {
 		if (typeof element === 'string') {
 			if (isHotkeyCombination(element)) {
 				// splitting the combination into pieces
