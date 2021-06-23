@@ -255,13 +255,11 @@ class CategorySearch extends Component {
 			fetchRecentSearches,
 			componentId,
 			aggregationField,
-			config,
 			distinctField,
 			distinctFieldConfig,
 			index,
+			enableAppbase,
 		} = this.props;
-
-		const { enableAppbase } = config;
 
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
@@ -1356,7 +1354,7 @@ CategorySearch.propTypes = {
 	suggestions: types.suggestions,
 	aggregationData: types.aggregationData,
 	isLoading: types.bool,
-	config: types.props,
+	enableAppbase: types.bool,
 	triggerAnalytics: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	setDefaultQuery: types.funcRequired,
@@ -1474,7 +1472,6 @@ CategorySearch.defaultProps = {
 	recentSearches: [],
 	time: 0,
 	enablePredictiveSuggestions: false,
-	index: undefined,
 };
 
 // Add componentType for SSR
@@ -1500,7 +1497,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,

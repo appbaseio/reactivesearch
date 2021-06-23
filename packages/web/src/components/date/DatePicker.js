@@ -43,8 +43,7 @@ class DatePicker extends Component {
 	}
 
 	componentDidMount() {
-		const { config, index } = this.props;
-		const { enableAppbase } = config;
+		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
@@ -255,7 +254,7 @@ DatePicker.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	config: types.props,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	clickUnselectsDay: types.bool,
@@ -292,7 +291,6 @@ DatePicker.defaultProps = {
 	showClear: true,
 	showFilter: true,
 	queryFormat: 'epoch_millis',
-	index: undefined,
 };
 
 // Add componentType for SSR
@@ -302,7 +300,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -42,8 +42,7 @@ class SingleRange extends Component {
 
 
 	componentDidMount() {
-		const { config, index } = this.props;
-		const { enableAppbase } = config;
+		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
@@ -203,7 +202,7 @@ SingleRange.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
-	config: types.props,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -236,7 +235,6 @@ SingleRange.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
-	index: undefined,
 };
 
 // Add componentType for SSR
@@ -247,7 +245,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

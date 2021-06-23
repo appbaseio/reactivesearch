@@ -74,8 +74,7 @@ class MultiDropdownList extends Component {
 	}
 
 	componentDidMount() {
-		const { config, index } = this.props;
-		const { enableAppbase } = config;
+		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
@@ -517,7 +516,7 @@ MultiDropdownList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	config: types.props,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -578,7 +577,6 @@ MultiDropdownList.defaultProps = {
 	showSearch: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
-	index: undefined,
 };
 
 // Add componentType for SSR
@@ -597,7 +595,7 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -110,13 +110,11 @@ class DataSearch extends Component {
 			fetchRecentSearches,
 			componentId,
 			aggregationField,
-			config,
 			distinctField,
 			distinctFieldConfig,
 			index,
+			enableAppbase,
 		} = this.props;
-
-		const { enableAppbase } = config;
 
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
@@ -332,9 +330,10 @@ class DataSearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-				? `^${props.fieldWeights[index]}`
-				: ''
+			const queryField = `${field}${
+				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+					? `^${props.fieldWeights[index]}`
+					: ''
 			}`;
 			if (
 				!(
@@ -1151,8 +1150,8 @@ class DataSearch extends Component {
 												<li
 													{...getItemProps({ item: sugg })}
 													key={`${suggestionsList.length
-														+ index
-														+ 1}-${sugg.value}`}
+															+ index
+															+ 1}-${sugg.value}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
@@ -1235,9 +1234,9 @@ DataSearch.propTypes = {
 	triggerAnalytics: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	config: types.props,
 	lastUsedQuery: types.string,
 	time: types.number,
+	enableAppbase: types.bool,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -1350,7 +1349,6 @@ DataSearch.defaultProps = {
 	recentSearches: [],
 	defaultPopularSuggestions: [],
 	time: 0,
-	index: undefined,
 };
 
 // Add componentType for SSR
@@ -1367,7 +1365,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,

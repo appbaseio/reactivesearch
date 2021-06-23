@@ -34,8 +34,7 @@ class RangeInput extends Component {
 	}
 
 	componentDidMount() {
-		const { config, index } = this.props;
-		const { enableAppbase } = config;
+		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
@@ -215,7 +214,7 @@ RangeInput.propTypes = {
 	themePreset: types.themePreset,
 	componentId: types.stringRequired,
 	includeNullValues: types.bool,
-	config: types.props,
+	enableAppbase: types.bool,
 	index: types.string,
 };
 
@@ -226,7 +225,6 @@ RangeInput.defaultProps = {
 	},
 	stepValue: 1,
 	includeNullValues: false,
-	index: undefined,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -234,7 +232,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const ConnectedComponent = connect(

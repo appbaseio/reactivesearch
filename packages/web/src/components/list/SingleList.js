@@ -74,8 +74,7 @@ class SingleList extends Component {
 	}
 
 	componentDidMount() {
-		const { config, index } = this.props;
-		const { enableAppbase } = config;
+		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
@@ -536,7 +535,7 @@ SingleList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	config: types.props,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -596,7 +595,6 @@ SingleList.defaultProps = {
 	missingLabel: 'N/A',
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
-	index: undefined,
 	enableStrictSelection: false,
 };
 
@@ -616,7 +614,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
