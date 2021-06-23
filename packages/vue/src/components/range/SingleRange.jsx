@@ -37,13 +37,10 @@ const SingleRange = {
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		nestedField: types.string,
-		index: {
-			types: types.string,
-			default: undefined,
-		},
+		index: VueTypes.string,
 	},
 	created() {
-		if (!this.config.enableAppbase && this.$props.index) {
+		if (!this.enableAppbase && this.$props.index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
@@ -214,7 +211,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	componentProps: state.props[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

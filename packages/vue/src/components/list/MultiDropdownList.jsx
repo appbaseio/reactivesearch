@@ -81,13 +81,10 @@ const MultiDropdownList = {
 		showLoadMore: VueTypes.bool.def(false),
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
-		index: {
-			types: types.string,
-			default: undefined,
-		},
+		index: VueTypes.string,
 	},
 	created() {
-		if (!this.config.enableAppbase && this.$props.index) {
+		if (!this.enableAppbase && this.$props.index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
@@ -196,9 +193,9 @@ const MultiDropdownList = {
 				return (<div>{renderNoResults()}</div>);
 			} else if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
-			} 
+			}
 			return null;
-			
+
 		}
 
 		if (this.$props.selectAllLabel) {
@@ -535,7 +532,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

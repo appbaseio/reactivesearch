@@ -90,17 +90,17 @@ const DataSearch = {
 				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
 			);
 		}
-		if (this.config.enableAppbase && this.aggregationField && this.aggregationField !== '') {
+		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
 			console.warn(
 				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
 			);
 		}
-		if (!this.config.enableAppbase && (distinctField || distinctFieldConfig)) {
+		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		if (!this.config.enableAppbase && index) {
+		if (!this.enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
@@ -240,10 +240,7 @@ const DataSearch = {
 		renderMic: types.func,
 		distinctField: types.string,
 		distinctFieldConfig: types.props,
-		index: {
-			types: types.string,
-			default: undefined,
-		},
+		index: VueTypes.string,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -336,7 +333,7 @@ const DataSearch = {
 			const props = this.$props;
 			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
 			const propValue = props[propName];
-			if (this.config && !this.config.enableAppbase) {
+			if (!this.enableAppbase) {
 				if (!propValue) {
 					console.error(requiredError);
 					return;
@@ -1190,7 +1187,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	analytics: state.analytics,
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	headers: state.appbaseRef.headers,
 	promotedResults: state.promotedResults[props.componentId] || [],
 	customData: state.customData[props.componentId],

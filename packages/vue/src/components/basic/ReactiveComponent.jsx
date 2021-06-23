@@ -27,10 +27,7 @@ const ReactiveComponent = {
 		URLParams: VueTypes.bool.def(false),
 		distinctField: types.string,
 		distinctFieldConfig: types.props,
-		index: {
-			types: types.string,
-			default: undefined,
-		},
+		index: VueTypes.string,
 	},
 	created() {
 		const props = this.$props;
@@ -41,17 +38,17 @@ const ReactiveComponent = {
 
 		const { customQuery, componentId, filterLabel, showFilter, URLParams, distinctField, distinctFieldConfig, index } = props;
 
-		if (this.config.enableAppbase && this.aggregationField && this.aggregationField !== '') {
+		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
 			console.warn(
 				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
 			);
 		}
-		if (!this.config.enableAppbase && (distinctField || distinctFieldConfig)) {
+		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		if (!this.config.enableAppbase && index) {
+		if (!this.enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
@@ -289,7 +286,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	componentProps: state.props[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {
