@@ -166,10 +166,17 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
+<<<<<<< HEAD
+"@appbaseio/reactivecore@9.11.5":
+  version "9.11.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.5.tgz#a76abd5931e700d4310275d584c7e50b315b52bf"
+  integrity sha512-T6vdXOlbXV7tbE25b20QTSriud8Z8/atKoVbvq4qFWHPCwDr2xYzKWu18+4viBY26GE35p8SjuptWJO3dIQxVQ==
+=======
 "@appbaseio/reactivecore@9.11.3":
   version "9.11.3"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.3.tgz#d34fc38efe4eca02da1b3232aa92e354385c1d43"
   integrity sha512-2W5x9kQfiZHfcZ005Cy5omdtW0lCbRjEAD9Xot/YCMuO0iImDkAsh4rtuaNXbuhF9sKmDhGNQORf3Pxs3LAsZw==
+>>>>>>> next
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -177,6 +184,13 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+<<<<<<< HEAD
+"@appbaseio/reactivemaps@3.0.0-beta.11":
+  version "3.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.11.tgz#b3dc66a4047eec4f6663f7ea21fa2a7f2957d124"
+  integrity sha512-ef74S3dAdfqOtrn2AKAphBPlcTnTfxAmdGrFrLbMT7R0V2+OXg32La4cQqJ3QPI0WaO0koOk0EBKO2HCEvZlRg==
+  dependencies:
+=======
 "@appbaseio/reactivecore@9.11.5":
   version "9.11.5"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.5.tgz#a76abd5931e700d4310275d584c7e50b315b52bf"
@@ -193,11 +207,14 @@
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.11.tgz#b3dc66a4047eec4f6663f7ea21fa2a7f2957d124"
   integrity sha512-ef74S3dAdfqOtrn2AKAphBPlcTnTfxAmdGrFrLbMT7R0V2+OXg32La4cQqJ3QPI0WaO0koOk0EBKO2HCEvZlRg==
   dependencies:
+>>>>>>> next
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
     downshift "^1.31.2"
     emotion-theming "^10.0.27"
     leaflet "^1.3.4"
+<<<<<<< HEAD
+=======
     ngeohash "^0.6.3"
     prop-types "^15.6.0"
     react-google-maps "^9.4.5"
@@ -216,14 +233,12 @@
     compute-scroll-into-view "^1.0.11"
     emotion "9.2.12"
     gmap-vue "^1.5.0"
+>>>>>>> next
     ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    url-search-params-polyfill "^7.0.0"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component "^2.8.16"
-    vue-types "^1.7.0"
+    prop-types "^15.6.0"
+    react-google-maps "^9.4.5"
+    react-leaflet "^2.1.3"
+    rheostat "^2.1.1"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -3051,11 +3066,6 @@
     prop-types "^15.5.8"
     unescape "^0.2.0"
 
-"@google/markerclustererplus@^5.1.0":
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/@google/markerclustererplus/-/markerclustererplus-5.1.3.tgz#dd7ddbb2a17c977e0b0252c3d8e61fcf502b1bf2"
-  integrity sha512-2wQGO6GGbKPC2tNmTz8ei1zBa64zV3QBBvgLHiPvYqUA63230qNqfQpN+nzsrl1RM40NJtty4Y1CEQKxq6MBGg==
-
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -5407,13 +5417,12 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^16.3.8":
-  version "16.9.35"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.35.tgz#a0830d172e8aadd9bd41709ba2281a3124bbd368"
-  integrity sha512-q0n0SsWcGc8nDqH2GJfWQWUOmZSJhXV64CjVN5SvcNti3TdEaA3AH0D8DwNmMdzjMAC/78tB8nAZIlV8yTz+zQ==
+"@types/react@*":
+  version "16.3.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.7.tgz#3b90fc4c8382fc55f4d18a8d487dbd314eb6ec4c"
+  integrity sha512-7V1OfJvx2jKSBfBEDdjpozPzxPJN9ruzR1GtfDE7HmZymmvjMQqFHfHbiI4zzVzU09Yieg9B7ur0wPCu1edfQA==
   dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
+    csstype "^2.0.0"
 
 "@types/react@16.8.14":
   version "16.8.14"
@@ -5422,6 +5431,15 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/react@^16.3.8":
+  version "16.14.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.8.tgz#4aee3ab004cb98451917c9b7ada3c7d7e52db3fe"
+  integrity sha512-QN0/Qhmx+l4moe7WJuTxNiTsjBwlBGHqKGvInSQCBdo7Qio0VtOqwsC0Wq7q3PbJlB0cR4Y4CVo1OOe6BOsOmA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
 
 "@types/reactcss@*":
   version "1.2.3"
@@ -5436,6 +5454,11 @@
   integrity sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
   dependencies:
     "@types/node" "*"
+
+"@types/scheduler@*":
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
+  integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -12094,6 +12117,11 @@ cssstyle@^1.0.0, cssstyle@^1.1.1:
   dependencies:
     cssom "0.3.x"
 
+csstype@^2.0.0:
+  version "2.6.17"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.17.tgz#4cf30eb87e1d1a005d8b6510f95292413f6a1c0e"
+  integrity sha512-u1wmTI1jJGzCJzWndZo8mk4wnPTZd1eOIYTYvuEyOQGfmDl3TrabCCfKnOC86FZwW/9djqTl933UF/cS425i9A==
+
 csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.10.tgz#e63af50e66d7c266edb6b32909cfd0aabe03928b"
@@ -16825,13 +16853,6 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-gmap-vue@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/gmap-vue/-/gmap-vue-1.5.0.tgz#43de7cba85c61280bfa65e6450b9d55657e9a82f"
-  integrity sha512-WE0VnSM1EsaTFVsnq53WGnre9cP1Q9DPCr0IiPmaoqsQioAKtTNBNyomrEvg0NIsVuxrdC2qvbgZPXCa8v/mBA==
-  dependencies:
-    "@google/markerclustererplus" "^5.1.0"
-
 good-listener@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/good-listener/-/good-listener-1.2.2.tgz#d53b30cdf9313dffb7dc9a0d477096aa6d145c50"
@@ -17457,6 +17478,11 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.5.0:
   version "2.8.9"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
   integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
+
+hotkeys-js@^3.8.5, hotkeys-js@^3.8.7:
+  version "3.8.7"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.8.7.tgz#c16cab978b53d7242f860ca3932e976b92399981"
+  integrity sha512-ckAx3EkUr5XjDwjEHDorHxRO2Kb7z6Z2Sxul4MbBkN8Nho7XDslQsgMJT+CiJ5Z4TgRxxvKHEpuLE3imzqy4Lg==
 
 hpack.js@^2.1.6:
   version "2.1.6"
@@ -33223,7 +33249,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.3, vue-types@^1.7.0:
+vue-types@^1.3.3:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==
