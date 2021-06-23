@@ -1025,7 +1025,9 @@ class DataSearch extends Component {
 			return;
 		}
 
-		this._inputRef.focus();
+		if (this._inputRef) {
+			this._inputRef.focus();
+		}
 	};
 
 	listenForFocusShortcuts = () => {

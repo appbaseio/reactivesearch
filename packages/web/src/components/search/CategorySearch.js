@@ -1142,7 +1142,9 @@ class CategorySearch extends Component {
 			// already in an input
 			return;
 		}
-		this._inputRef.focus();
+		if (this._inputRef) {
+			this._inputRef.focus();
+		}
 	};
 
 	listenForFocusShortcuts = () => {
