@@ -330,7 +330,7 @@ const DataSearch = {
 		},
 		focusShortcuts() {
 			this.listenForFocusShortcuts();
-		}
+		},
 	},
 	methods: {
 		handleText(value) {
@@ -780,9 +780,10 @@ const DataSearch = {
 				// already in an input
 				return;
 			}
+			// eslint-disable-next-line no-unused-expressions
 			this.$refs.searchInputField?.focus();
 		},
-		listenForFocusShortcuts(){
+		listenForFocusShortcuts() {
 			const { focusShortcuts = ['/'] } = this.$props;
 
 			if (isEmpty(focusShortcuts)) {
@@ -794,14 +795,14 @@ const DataSearch = {
 			hotkeys(
 				shortcutsString, // eslint-disable-next-line no-unused-vars
 				/* eslint-disable no-shadow */ (event, handler) => {
-				// Prevent the default refresh event under WINDOWS system
+					// Prevent the default refresh event under WINDOWS system
 					event.preventDefault();
 					this.focusSearchBox(event);
 				},
 			);
 
 			// if one of modifier keys are used, they are handled below
-			hotkeys('*', (event) => {
+			hotkeys('*', event => {
 				const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
 
 				if (modifierKeys.length === 0) return;
@@ -814,8 +815,7 @@ const DataSearch = {
 					}
 				}
 			});
-
-		}
+		},
 	},
 	render() {
 		const { theme, size, expandSuggestionsContainer } = this.$props;
