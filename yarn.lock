@@ -166,10 +166,10 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
-"@appbaseio/reactivecore@9.11.4":
-  version "9.11.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.4.tgz#30361b5c941a9684b607cea23240b637c3a4f3a8"
-  integrity sha512-OJ/itgGiHNZH6pOB5wFEi5YL1tmvMFewyuIpSleaVUUqW7NqtiKYFNQEmK59RXnpbaPdEQO8Mda2pPBIyMO+Zw==
+"@appbaseio/reactivecore@9.11.3":
+  version "9.11.3"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.3.tgz#d34fc38efe4eca02da1b3232aa92e354385c1d43"
+  integrity sha512-2W5x9kQfiZHfcZ005Cy5omdtW0lCbRjEAD9Xot/YCMuO0iImDkAsh4rtuaNXbuhF9sKmDhGNQORf3Pxs3LAsZw==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -177,12 +177,39 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.16.0-alpha.7":
-  version "1.16.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.7.tgz#22340a8aa9278c8fe16213cd7cf47471aa0c8ac4"
-  integrity sha512-Xs1FLKQ3TCqK09Q+TSfhdOkTAn5HjSS5UQ5EtpdETtGybo6cpYCVO5E0tdvKallHu3Vm+Om/nqvnmv5O+K3HvA==
+"@appbaseio/reactivecore@9.11.5":
+  version "9.11.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.5.tgz#a76abd5931e700d4310275d584c7e50b315b52bf"
+  integrity sha512-T6vdXOlbXV7tbE25b20QTSriud8Z8/atKoVbvq4qFWHPCwDr2xYzKWu18+4viBY26GE35p8SjuptWJO3dIQxVQ==
   dependencies:
-    "@appbaseio/reactivecore" "9.11.4"
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivemaps@3.0.0-beta.11":
+  version "3.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.11.tgz#b3dc66a4047eec4f6663f7ea21fa2a7f2957d124"
+  integrity sha512-ef74S3dAdfqOtrn2AKAphBPlcTnTfxAmdGrFrLbMT7R0V2+OXg32La4cQqJ3QPI0WaO0koOk0EBKO2HCEvZlRg==
+  dependencies:
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    downshift "^1.31.2"
+    emotion-theming "^10.0.27"
+    leaflet "^1.3.4"
+    ngeohash "^0.6.3"
+    prop-types "^15.6.0"
+    react-google-maps "^9.4.5"
+    react-leaflet "^2.1.3"
+    rheostat "^2.1.1"
+
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.6":
+  version "1.16.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.6.tgz#e55f8a767b0cf2e6f6f8ca1ac1ee5c676055791f"
+  integrity sha512-MVyRSuebMCTy9vorA5Fo/9sQFZG+V9bAwLlozs+t9lEnJayRrMFjLvrJg7iKFgIFq/HacVmgfwcfxtLC4yyK7Q==
+  dependencies:
+    "@appbaseio/reactivecore" "9.11.3"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^4.1.0"
