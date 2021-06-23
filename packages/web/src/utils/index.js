@@ -75,7 +75,7 @@ export const getValidPropsKeys = (props = {}) =>
  * Handles the caret position for input components
  * @param {HTMLInputElement} e
  */
-export const handleCaretPosition = (e) => {
+export const handleCaretPosition = e => {
 	if (window) {
 		const caret = e.target.selectionStart;
 		const element = e.target;
@@ -199,7 +199,7 @@ export function isHotkeyCombinationUsed(focusShortcuts) {
 // stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
-	const chrCode = which - (48 * Math.floor(which / 48));
+	const chrCode = which - 48 * Math.floor(which / 48);
 	return String.fromCharCode(which >= 96 ? chrCode : which);
 }
 
@@ -209,7 +209,7 @@ export function parseFocusShortcuts(focusShortcutsArray) {
 	if (isEmpty(focusShortcutsArray)) return [];
 
 	const parsedFocusShortcutsArray = [];
-	focusShortcutsArray.forEach((element) => {
+	focusShortcutsArray.forEach(element => {
 		if (typeof element === 'string') {
 			if (isHotkeyCombination(element)) {
 				// splitting the combination into pieces
@@ -238,4 +238,11 @@ export function parseFocusShortcuts(focusShortcutsArray) {
 		}
 	});
 	return parsedFocusShortcutsArray;
+}
+
+export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd', 'command'];
+
+// filter out modifierkeys such as ctrl, alt, command, shift from focusShortcuts prop
+export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
+	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }

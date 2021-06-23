@@ -192,6 +192,14 @@ export function parseFocusShortcuts(focusShortcutsArray) {
 	});
 	return parsedFocusShortcutsArray;
 }
+
+export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd', 'command'];
+
+// filter out modifierkeys such as ctrl, alt, command, shift from focusShortcuts prop
+export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
+	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey))
+}
+
 export const debounce = (method, delay) => {
 	clearTimeout(method._tId);
 	// eslint-disable-next-line

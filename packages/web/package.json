@@ -40,14 +40,14 @@
 		"downshift": "^1.31.2",
 		"emotion-theming": "^10.0.27",
 		"hoist-non-react-statics": "^3.2.1",
+		"hotkeys-js": "^3.8.7",
 		"polished": "^1.9.3",
 		"prop-types": "^15.6.0",
 		"react-day-picker": "^7.0.5",
 		"react-redux": "^6.0.1",
 		"rheostat": "^2.1.1",
 		"url-search-params-polyfill": "^7.0.0",
-		"xdate": "^0.8.2",
-		"hotkeys-js": "^3.8.5"
+		"xdate": "^0.8.2"
 	},
 	"peerDependencies": {
 		"react": ">=15",

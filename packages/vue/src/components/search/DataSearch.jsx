@@ -1,5 +1,6 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import hotkeys from 'hotkeys-js';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
 import {
@@ -13,9 +14,8 @@ import {
 	getQuerySuggestionsComponent,
 	hasQuerySuggestionsRenderer,
 	isEmpty,
-	isHotkeyCombinationUsed,
 	parseFocusShortcuts,
-	isNumeric,
+	extractModifierKeysFromFocusShortcuts,
 } from '../../utils/index';
 import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
@@ -67,8 +67,6 @@ const DataSearch = {
 			isOpen: false,
 			normalizedSuggestions: [],
 			isPending: false,
-			hotkeys: undefined,
-			hotKeyCombinationsUsed: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -280,24 +278,6 @@ const DataSearch = {
 	},
 	mounted() {
 		document.addEventListener('keydown', this.onKeyDown);
-		const { focusShortcuts } = this.$props;
-		// dynamically import hotkey-js
-		if (!isEmpty(focusShortcuts)) {
-			this.hotKeyCombinationsUsed = isHotkeyCombinationUsed(focusShortcuts);
-
-			if (this.hotKeyCombinationsUsed) {
-				import('hotkeys-js')
-					.then(module => {
-						this.hotkeys = module.default;
-					}) // eslint-disable-next-line no-unused-vars
-					.catch(err =>
-						// eslint-disable-next-line no-console
-						console.warn(
-							'Warning(SearchBox): The `hotkeys-js` library seems to be missing, it is required when using key combinations( eg: `ctrl+a`) in focusShortcuts prop.',
-						),
-					);
-			}
-		}
 	},
 	watch: {
 		highlight() {
@@ -798,45 +778,36 @@ const DataSearch = {
 			}
 			this.$refs.searchInputField.focus();
 		},
+		// eslint-disable-next-line no-unused-vars
 		onKeyDown(event) {
 			const { focusShortcuts = ['/'] } = this.$props;
 			if (isEmpty(focusShortcuts)) {
 				return;
 			}
+			// handler for alphabets and other key combinations
+			hotkeys(
+				parseFocusShortcuts(focusShortcuts).join(','), // eslint-disable-next-line no-unused-vars
+				/* eslint-disable no-shadow */(event, handler) => {
+					// Prevent the default refresh event under WINDOWS system
+					event.preventDefault();
+					this.focusSearchBox(event);
+				},
+			);
 
-			// for hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc, we use hotkeys-js
-			if (this.hotKeyCombinationsUsed && this.hotkeys) {
-				this.hotkeys(
-					parseFocusShortcuts(focusShortcuts).join(','), // eslint-disable-next-line no-unused-vars
-					/* eslint-disable no-shadow */ (event, handler) => {
-						// Prevent the default refresh event under WINDOWS system
-						event.preventDefault();
+			// if one of modifier keys are used, they are handled below
+			hotkeys('*', () => {
+				const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
 
+				if (modifierKeys.length === 0) return;
+
+				for (let index = 0; index < modifierKeys.length; index+=1) {
+					const element = modifierKeys[index];
+					if (hotkeys[element]) {
 						this.focusSearchBox(event);
-					},
-				);
-				return;
-			}
-			const shortcuts = focusShortcuts.map(key => {
-				if (typeof key === 'string') {
-					return isNumeric(key) ? parseInt(key, 10) : key.toUpperCase().charCodeAt(0);
+						break;
+					}
 				}
-				return key;
 			});
-
-			// the below algebraic expression is used to get the correct ascii code out of the e.which || e.keycode returned value
-			// since the keyboards doesn't understand ascii but scan codes and they differ for certain keys such as '/'
-			// stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
-			const which = event.which || event.keyCode;
-			const chrCode = which - 48 * Math.floor(which / 48);
-			if (shortcuts.indexOf(which >= 96 ? chrCode : which) === -1) {
-				// not the right shortcut
-				return;
-			}
-			this.focusSearchBox(event);
-
-			event.stopPropagation();
-			event.preventDefault();
 		},
 	},
 	render() {
@@ -873,22 +844,19 @@ const DataSearch = {
 								const renderSuggestionsContainer = () => (
 									<div>
 										{this.hasCustomRenderer
-												&& this.getComponent({
-													isOpen,
-													getItemProps,
-													getItemEvents,
-													highlightedIndex,
-												})}
+											&& this.getComponent({
+												isOpen,
+												getItemProps,
+												getItemEvents,
+												highlightedIndex,
+											})}
 										{this.renderErrorComponent()}
 										{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
 											<ul
 												class={`${suggestions(
 													this.themePreset,
 													theme,
-												)} ${getClassName(
-													this.$props.innerClass,
-													'list',
-												)}`}
+												)} ${getClassName(this.$props.innerClass, 'list')}`}
 											>
 												{this.suggestionsList
 													.slice(0, size)
@@ -931,15 +899,14 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${this.suggestionsList
-																.length
-																	+ index
-																	+ 1}-${sugg.value}`}
+															key={`${this.suggestionsList.length
+																+ index
+																+ 1}-${sugg.value}`}
 															style={{
 																backgroundColor: this.getBackgroundColor(
 																	highlightedIndex,
-																	this.suggestionsList
-																		.length + index,
+																	this.suggestionsList.length
+																		+ index,
 																),
 																justifyContent: 'flex-start',
 															}}
@@ -950,8 +917,7 @@ const DataSearch = {
 																}}
 															>
 																{sugg.source
-																		&& sugg.source
-																			._recent_search && (
+																	&& sugg.source._recent_search && (
 																	<CustomSvg
 																		className={
 																			getClassName(
@@ -967,8 +933,8 @@ const DataSearch = {
 																	/>
 																)}
 																{sugg.source
-																		&& sugg.source
-																			._popular_suggestion && (
+																	&& sugg.source
+																		._popular_suggestion && (
 																	<CustomSvg
 																		className={
 																			getClassName(
@@ -1000,7 +966,7 @@ const DataSearch = {
 															highlightedIndex,
 														},
 														true,
-														  )
+													  )
 													: this.topSuggestions.map((sugg, index) => (
 														<li
 															{...{
@@ -1015,16 +981,15 @@ const DataSearch = {
 															}}
 															key={`${this.suggestionsList
 																.length
-																		+ index
-																		+ 1}-${sugg.value}`}
+																	+ index
+																	+ 1}-${sugg.value}`}
 															style={{
 																backgroundColor: this.getBackgroundColor(
 																	highlightedIndex,
 																	this.suggestionsList
 																		.length + index,
 																),
-																justifyContent:
-																			'flex-start',
+																justifyContent: 'flex-start',
 															}}
 														>
 															<div
@@ -1040,20 +1005,16 @@ const DataSearch = {
 																			'popular-search-icon',
 																		) || null
 																	}
-																	icon={
-																		popularSearchesIcon
-																	}
+																	icon={popularSearchesIcon}
 																	type="popular-search-icon"
 																/>
 															</div>
 															<SuggestionItem
-																currentValue={
-																	this.currentValue
-																}
+																currentValue={this.currentValue}
 																suggestion={sugg}
 															/>
 														</li>
-														  ))}
+													  ))}
 											</ul>
 										) : (
 											this.renderNoSuggestions(this.suggestionsList)

@@ -36,6 +36,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
+import hotkeys from 'hotkeys-js';
 import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
@@ -57,8 +58,7 @@ import {
 	getPopularSuggestionsComponent,
 	isEmpty,
 	parseFocusShortcuts,
-	isNumeric,
-	isHotkeyCombinationUsed,
+	extractModifierKeysFromFocusShortcuts,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -80,7 +80,6 @@ const Text = withTheme(props => (
 class CategorySearch extends Component {
 	constructor(props) {
 		super(props);
-		const { focusShortcuts } = props;
 		const value = props.value || props.defaultValue || {};
 		// eslint-disable-next-line
 		let { term: currentValue = '', category: currentCategory = null } = value;
@@ -132,22 +131,6 @@ class CategorySearch extends Component {
 				props.onChange(calcValue, () => this.triggerQuery(calcValue));
 			}
 			this.setValue(currentValue, true, props, currentCategory, cause, hasMounted);
-		}
-
-		// dynamically import hotkey-js
-		if (!isEmpty(focusShortcuts)) {
-			this.hotKeyCombinationsUsed = isHotkeyCombinationUsed(focusShortcuts);
-			if (this.hotKeyCombinationsUsed) {
-				try {
-					// eslint-disable-next-line global-require, import/no-unresolved
-					this.hotkeys = require('hotkeys-js').default;
-				} catch (err) {
-					// eslint-disable-next-line no-console
-					console.warn(
-						'Warning(SearchBox): The `hotkeys-js` library seems to be missing, it is required when using key combinations( eg: `ctrl+a`) in focusShortcuts prop.',
-					);
-				}
-			}
 		}
 	}
 
@@ -431,9 +414,10 @@ class CategorySearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-				? `^${props.fieldWeights[index]}`
-				: ''
+			const queryField = `${field}${
+				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+					? `^${props.fieldWeights[index]}`
+					: ''
 			}`;
 			if (
 				!(
@@ -516,8 +500,7 @@ class CategorySearch extends Component {
 		return finalQuery;
 	};
 
-	onSuggestions = searchResults =>
-		handleOnSuggestions(searchResults, this.state.currentValue, this.props);
+	onSuggestions = searchResults => handleOnSuggestions(searchResults, this.state.currentValue, this.props);
 
 	setValue = (
 		value,
@@ -1162,45 +1145,37 @@ class CategorySearch extends Component {
 	};
 
 	onKeyDown = (event) => {
-		if (isEmpty(this.props.focusShortcuts)) {
+		const { focusShortcuts } = this.props;
+		if (isEmpty(focusShortcuts)) {
 			return;
 		}
 
-		// for hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc, we use hotkeys-js
-		if (this.hotKeyCombinationsUsed) {
-			this.hotkeys(
-				parseFocusShortcuts(this.props.focusShortcuts).join(','),
-				/* eslint-disable no-shadow */
-				// eslint-disable-next-line no-unused-vars
-				(event, handler) => {
-					// Prevent the default refresh event under WINDOWS system
-					event.preventDefault();
+		// for single press keys (a-z, A-Z) &, hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc
+		hotkeys(
+			parseFocusShortcuts(focusShortcuts).join(','),
+			/* eslint-disable no-shadow */
+			// eslint-disable-next-line no-unused-vars
+			(event, handler) => {
+				// Prevent the default refresh event under WINDOWS system
+				event.preventDefault();
+				this.focusSearchBox(event);
+			},
+		);
+
+		// if one of modifier keys are used, they are handled below
+		hotkeys('*', () => {
+			const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
+
+			if (modifierKeys.length === 0) return;
+
+			for (let index = 0; index < modifierKeys.length; index += 1) {
+				const element = modifierKeys[index];
+				if (hotkeys[element]) {
 					this.focusSearchBox(event);
-				},
-			);
-			return;
-		}
-		const shortcuts = this.props.focusShortcuts.map((key) => {
-			if (typeof key === 'string') {
-				return isNumeric(key) ? parseInt(key, 10) : key.toUpperCase().charCodeAt(0);
+					break;
+				}
 			}
-			return key;
 		});
-		// the below algebraic expression is used to get the correct ascii code out of the
-		// e.which || e.keycode returned value
-		// since the keyboards doesn't understand ascii but scan codes and they differ for
-		// certain keys such as '/'
-		// stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
-		const which = event.which || event.keyCode;
-		const chrCode = which - (48 * Math.floor(which / 48));
-		if (shortcuts.indexOf(which >= 96 ? chrCode : which) === -1) {
-			// not the right shortcut
-			return;
-		}
-		this.focusSearchBox(event);
-
-		event.stopPropagation();
-		event.preventDefault();
 	};
 
 	render() {
@@ -1338,13 +1313,13 @@ class CategorySearch extends Component {
 													<li
 														{...getItemProps({ item: sugg })}
 														key={`${finalSuggestionsList.length
-															+ index
-															+ 1}-${sugg.value}`}
+																+ index
+																+ 1}-${sugg.value}`}
 														style={{
 															backgroundColor: this.getBackgroundColor(
 																highlightedIndex,
 																finalSuggestionsList.length
-																+ index,
+																		+ index,
 															),
 															justifyContent: 'flex-start',
 														}}
@@ -1412,8 +1387,7 @@ class CategorySearch extends Component {
 													onKeyPress: this.withTriggerQuery(
 														this.props.onKeyPress,
 													),
-													onKeyDown: e =>
-														this.handleKeyDown(e, highlightedIndex),
+													onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
 													onKeyUp: this.withTriggerQuery(
 														this.props.onKeyUp,
 													),
@@ -1670,16 +1644,13 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setCustomHighlightOptions: (component, options) =>
-		dispatch(setCustomHighlightOptions(component, options)),
+	setCustomHighlightOptions: (component, options) => dispatch(setCustomHighlightOptions(component, options)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
+	setQueryOptions: (component, props, execute) => dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	triggerAnalytics: (searchPosition, documentId) =>
-		dispatch(recordSuggestionClick(searchPosition, documentId)),
+	triggerAnalytics: (searchPosition, documentId) => dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 });
