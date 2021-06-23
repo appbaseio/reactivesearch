@@ -166,6 +166,17 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
+"@appbaseio/reactivecore@9.11.4":
+  version "9.11.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.4.tgz#30361b5c941a9684b607cea23240b637c3a4f3a8"
+  integrity sha512-OJ/itgGiHNZH6pOB5wFEi5YL1tmvMFewyuIpSleaVUUqW7NqtiKYFNQEmK59RXnpbaPdEQO8Mda2pPBIyMO+Zw==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
 "@appbaseio/reactivesearch-vue@1.16.0-alpha.7":
   version "1.16.0-alpha.7"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.7.tgz#22340a8aa9278c8fe16213cd7cf47471aa0c8ac4"
