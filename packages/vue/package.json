@@ -42,6 +42,7 @@
 		"emotion": "9.2.12",
 		"gmap-vue": "^1.5.0",
 		"ngeohash": "^0.6.3",
+		"hotkeys-js": "^3.8.7",
 		"polished": "^2.2.0",
 		"redux": "^4.0.0",
 		"url-search-params-polyfill": "^7.0.0",
