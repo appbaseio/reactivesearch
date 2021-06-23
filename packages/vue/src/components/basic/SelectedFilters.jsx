@@ -70,13 +70,14 @@ const SelectedFilters = {
 		},
 		clearValues() {
 			const { resetToDefault, componentProps, selectedValues } = this;
+			// this.clearValuesAction();
 			if (resetToDefault) {
 				Object.keys(selectedValues || {}).map(component => {
 					this.setValue(component, componentProps?.[component]?.defaultValue);
+					console.log('default value', componentProps?.[component]?.defaultValue);
+					console.log('selected values', selectedValues?.[component]?.value);
 					return true;
 				});
-			} else {
-				this.clearValuesAction();
 			}
 			this.$emit('clear', null);
 		},
