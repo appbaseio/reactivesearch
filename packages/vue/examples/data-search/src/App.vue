@@ -15,6 +15,7 @@
 				:size="3"
 				:enablePopularSuggestions="true"
 				:enableRecentSearches="true"
+				:focusShortcuts="['shift','/','control+k']"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
