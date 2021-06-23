@@ -105,13 +105,7 @@ const DataSearch = {
 		if (enableRecentSearches) {
 			this.getRecentSearches();
 		}
-		this.handleTextChange = debounce(value => {
-			if (this.$props.autosuggest) {
-				this.updateDefaultQueryHandler(value, this.$props);
-			} else {
-				this.updateQueryHandler(this.$props.componentId, value, this.$props);
-			}
-		}, this.$props.debounce);
+		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -319,6 +313,13 @@ const DataSearch = {
 		},
 	},
 	methods: {
+		handleText(value) {
+			if (this.$props.autosuggest) {
+				this.updateDefaultQueryHandler(value, this.$props);
+			} else {
+				this.updateQueryHandler(this.$props.componentId, value, this.$props);
+			}
+		},
 		validateDataField() {
 			const propName = 'dataField';
 			const componentName = DataSearch.name;

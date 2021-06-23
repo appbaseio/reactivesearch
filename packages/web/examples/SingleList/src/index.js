@@ -18,7 +18,7 @@ class Main extends Component {
 						<SingleList
 							componentId="BookSensor"
 							dataField="original_series.keyword"
-							size={100}
+							aggregationSize={100}
 						/>
 					</div>
 

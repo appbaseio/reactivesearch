@@ -10,4 +10,3 @@ packages/web/src/types.js
 vue-playground
 .expo/
 packages/reactivecore/coverage/
-packages/web/src/components/
