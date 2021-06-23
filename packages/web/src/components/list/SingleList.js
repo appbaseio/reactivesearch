@@ -203,7 +203,6 @@ class SingleList extends Component {
 				this.updateQuery(value, props);
 				if (props.onValueChange) props.onValueChange(value);
 			};
-
 			if (hasMounted) {
 				this.setState(
 					{
@@ -335,12 +334,17 @@ class SingleList extends Component {
 		if (isEvent(e)) {
 			currentValue = e.target.value;
 		}
+		const { enableStrictSelection } = this.props;
+		if (enableStrictSelection && currentValue === this.state.currentValue) {
+			return false;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
 			onChange(currentValue);
 		}
+		return false;
 	};
 
 	get hasCustomRenderer() {
@@ -562,6 +566,7 @@ SingleList.propTypes = {
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
 	nestedField: types.string,
+	enableStrictSelection: types.bool,
 };
 
 SingleList.defaultProps = {
@@ -579,6 +584,7 @@ SingleList.defaultProps = {
 	missingLabel: 'N/A',
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	enableStrictSelection: false,
 };
 
 // Add componentType for SSR

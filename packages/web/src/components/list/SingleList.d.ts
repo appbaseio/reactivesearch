@@ -28,6 +28,7 @@ export interface SingleList extends CommonProps {
 	showRadio?: boolean;
 	showSearch?: boolean;
 	size?: number;
+	aggregationSize?: number;
 	sortBy?: types.sortByWithCount;
 	themePreset?: types.themePreset;
 	title?: types.title;
@@ -37,6 +38,7 @@ export interface SingleList extends CommonProps {
 	loadMoreLabel?: types.title;
 	children?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
+	enableStrictSelection?: boolean;
 }
 
 declare const SingleList: React.ComponentClass<SingleList>;

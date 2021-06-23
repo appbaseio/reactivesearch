@@ -24,7 +24,7 @@ const Main = () => (
 					componentId="CitySensor"
 					dataField="group.group_city.keyword"
 					multiSelect
-					size={50}
+					aggregationSize={50}
 				/>
 			</div>
 			<div className="col">

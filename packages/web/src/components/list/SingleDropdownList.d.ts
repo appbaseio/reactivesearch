@@ -27,6 +27,7 @@ export interface SingleDropdownList extends CommonProps {
 	showCount?: boolean;
 	showFilter?: boolean;
 	size?: number;
+	aggregationSize?: number;
 	sortBy?: types.sortByWithCount;
 	title?: types.title;
 	themePreset?: types.themePreset;

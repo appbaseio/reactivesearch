@@ -49,7 +49,7 @@ function Main() {
 					<MultiList
 						componentId="BookSensor"
 						dataField="original_series.keyword"
-						size={100}
+						aggregationSize={100}
 						value={values}
 						onChange={setValues}
 					/>

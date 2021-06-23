@@ -432,7 +432,7 @@ class ReactiveMap extends Component {
 			customData: customData || {},
 			loadMore: this.loadMore,
 			base,
-			triggerClickAnalytics: this.triggerClickAnalytics,
+			triggerClickAnalytics: this.triggerAnalytics,
 		};
 	};
 
