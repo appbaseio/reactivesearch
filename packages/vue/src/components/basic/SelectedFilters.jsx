@@ -4,7 +4,7 @@ import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect, areArraysEqual } from '../../utils/index';
+import { connect } from '../../utils/index';
 
 const { setValue, clearValues } = Actions;
 const { getClassName, handleA11yAction } = helper;
@@ -71,16 +71,8 @@ const SelectedFilters = {
 		clearValues() {
 			const { resetToDefault, componentProps, selectedValues } = this;
 			if (resetToDefault) {
-				Object.keys(selectedValues).map(component => {
-					if (
-						componentProps[component].defaultValue
-						&& !areArraysEqual(
-							selectedValues[component].value,
-							componentProps[component].defaultValue,
-						)
-					) {
-						this.setValue(component, componentProps[component].defaultValue);
-					}
+				Object.keys(selectedValues || {}).map(component => {
+					this.setValue(component, componentProps?.[component]?.defaultValue);
 					return true;
 				});
 			} else {
