@@ -169,7 +169,7 @@ const ReactiveList = {
 		showInfiniteScroll() {
 			// Pagination has higher priority then infinite scroll
 			return this.infiniteScroll && !this.shouldRenderPagination;
-		}
+		},
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -207,7 +207,7 @@ const ReactiveList = {
 				let options = getQueryOptions(this.$props);
 				options.from = 0;
 				this.$defaultQuery = newVal(null, this.$props);
-				const { sort, query } = this.$defaultQuery ||  {};
+				const { sort, query } = this.$defaultQuery || {};
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
@@ -312,7 +312,7 @@ const ReactiveList = {
 			this.setStreaming(this.$props.componentId, true);
 		}
 
-		if(this.defaultPage < 0 && this.currentPage > 0) {
+		if (this.defaultPage < 0 && this.currentPage > 0) {
 			if (this.$props.URLParams) {
 				this.setPageURL(
 					this.$props.componentId,
@@ -398,7 +398,7 @@ const ReactiveList = {
 	},
 
 	beforeDestroy() {
-		if(this.showInfiniteScroll) {
+		if (this.showInfiniteScroll) {
 			window.removeEventListener('scroll', this.scrollHandler);
 		}
 	},
@@ -509,15 +509,17 @@ const ReactiveList = {
 						renderItem({
 							item,
 							triggerClickAnalytics: () =>
-								this.triggerClickAnalytics(
-									this.currentPageState * size + index,
-								),
+								this.triggerClickAnalytics(this.currentPageState * size + index),
 						}),
 					)}
 				</div>
 			);
 			// If analytics is set to true then render with impression tracker
-			return this.analytics ? <ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker> : element;
+			return this.analytics ? (
+				<ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker>
+			) : (
+				element
+			);
 		},
 		updateQueryOptions(props) {
 			const options = getQueryOptions(props);
@@ -554,13 +556,11 @@ const ReactiveList = {
 			const { afterKey } = this.$data;
 			const queryOptions = { size };
 			if (aggregationField) {
-				queryOptions.aggs = getCompositeAggsQuery(
-					{
-						props: this.$props,
-						after: afterKey || null,
-						showTopHits: true,
-					}
-				).aggs;
+				queryOptions.aggs = getCompositeAggsQuery({
+					props: this.$props,
+					after: afterKey || null,
+					showTopHits: true,
+				}).aggs;
 			}
 			return queryOptions;
 		},
@@ -833,7 +833,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	updateComponentProps,
 	setDefaultQuery,
-	recordResultClick
+	recordResultClick,
 };
 // Only used for SSR
 ReactiveList.generateQueryOptions = props => {

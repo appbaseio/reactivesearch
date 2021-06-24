@@ -13,11 +13,7 @@ const {
 	updateComponentProps,
 } = Actions;
 
-const {
-	pushToAndClause,
-	checkPropChange,
-	checkSomePropChange,
-} = helper;
+const { pushToAndClause, checkPropChange, checkSomePropChange } = helper;
 
 /**
  * ComponentWrapper component is a wrapper component for each ReactiveSearch component
