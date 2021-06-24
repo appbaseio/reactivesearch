@@ -1,3 +1,4 @@
+import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '../../utils/vueTypes';
@@ -21,11 +22,11 @@ const ToggleButton = {
 		filterLabel: types.string,
 		nestedField: types.string,
 		innerClass: types.style,
-		multiSelect: types.bool,
+		multiSelect: VueTypes.bool,
 		react: types.react,
-		showFilter: types.bool,
+		showFilter: VueTypes.bool,
 		title: types.title,
-		URLParams: types.bool,
+		URLParams: VueTypes.bool,
 		renderItem: types.func,
 	},
 	data() {

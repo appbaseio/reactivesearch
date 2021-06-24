@@ -4,6 +4,8 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
+import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
+
 const {
 	addComponent,
 	removeComponent,

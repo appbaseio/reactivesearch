@@ -28,6 +28,7 @@ export interface SingleList extends CommonProps {
 	showRadio?: boolean;
 	showSearch?: boolean;
 	size?: number;
+	aggregationSize?: number;
 	sortBy?: types.sortByWithCount;
 	themePreset?: types.themePreset;
 	title?: types.title;

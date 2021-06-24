@@ -7,7 +7,6 @@ import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils'
 
 import { MapPin, mapPinWrapper } from './addons/styles/MapPin';
 import ReactiveMap, { MAP_SERVICES } from './ReactiveMap';
-import { triggerClickAnalytics } from '../utils';
 
 let OpenStreetMap;
 let OpenStreetLayer;
@@ -38,19 +37,6 @@ class ReactiveOpenStreetMap extends Component {
 		this.forceUpdate();
 	}
 
-	triggerAnalytics = searchPosition => {
-		// click analytics would only work client side and after javascript loads
-		const { config, analytics, headers } = this.props;
-
-		triggerClickAnalytics({
-			config,
-			headers,
-			analytics,
-			searchPosition: searchPosition + 1,
-			context: this.context,
-		});
-	};
-
 	getMarkers = ({
 		showMarkers,
 		renderData,
@@ -58,13 +44,14 @@ class ReactiveOpenStreetMap extends Component {
 		onPopoverClick,
 		resultsToRender,
 		getPosition,
+		triggerClickAnalytics
 	}) => {
 		if (showMarkers) {
 			const markers = resultsToRender.map((item, index) => {
 				const position = getPosition(item);
 				const openStreetMarkerProps = {
 					riseOnHover: true,
-					onClick: () => this.triggerAnalytics(index),
+					onClick: () => triggerClickAnalytics(index, item._id),
 				};
 
 				const openStreetPopupPorops = {
