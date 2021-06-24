@@ -53,6 +53,7 @@ const SingleList = {
 		showMissing: VueTypes.bool.def(false),
 		missingLabel: VueTypes.string.def('N/A'),
 		nestedField: types.string,
+		index: VueTypes.string,
 		enableStrictSelection: VueTypes.bool.def(false),
 	},
 	data() {
@@ -69,6 +70,11 @@ const SingleList = {
 		return this.__state;
 	},
 	created() {
+		if (!this.enableAppbase && this.$props.index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -485,6 +491,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

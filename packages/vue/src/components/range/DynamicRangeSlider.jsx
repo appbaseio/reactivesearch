@@ -52,6 +52,7 @@ const DynamicRangeSlider = {
 		URLParams: VueTypes.bool.def(false),
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
+		index: VueTypes.string,
 	},
 
 	data() {
@@ -76,6 +77,11 @@ const DynamicRangeSlider = {
 			this.$props,
 			componentTypes.dynamicRangeSlider,
 		);
+		if (!this.enableAppbase && this.$props.index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
@@ -398,6 +404,7 @@ const mapStateToProps = (state, props) => {
 			? state.selectedValues[props.componentId].value
 			: null,
 		componentProps: state.props[props.componentId],
+		enableAppbase: state.config.enableAppbase,
 	};
 };
 

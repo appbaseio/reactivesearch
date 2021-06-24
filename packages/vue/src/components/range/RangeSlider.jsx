@@ -52,6 +52,7 @@ const RangeSlider = {
 		URLParams: VueTypes.bool.def(false),
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
+		index: VueTypes.string,
 	},
 
 	methods: {
@@ -154,6 +155,11 @@ const RangeSlider = {
 			console.error(
 				'%crange is not defined. Read more about this at https://opensource.appbase.io/reactive-manual/vue/range-components/rangeslider.html#props',
 				'font-size: 12.5px;',
+			);
+		}
+		if (!this.enableAppbase && this.$props.index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 		// Set custom query in store
@@ -273,6 +279,7 @@ const mapStateToProps = (state, props) => ({
 		? state.selectedValues[props.componentId].value
 		: null,
 	componentProps: state.props[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

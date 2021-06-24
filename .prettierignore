@@ -8,5 +8,7 @@ packages/web/webpack.config.umd.js
 packages/maps/webpack.config.umd.js
 packages/web/src/types.js
 vue-playground
+vue
 .expo/
 packages/reactivecore/coverage/
+packages/web/src/components/
