@@ -13,6 +13,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
@@ -202,7 +203,7 @@ SingleRange.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,

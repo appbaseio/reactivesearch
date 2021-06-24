@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { isEqual, getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import VueTypes from 'vue-types';
 import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
 import Flex from '../../styles/Flex';
@@ -214,7 +215,7 @@ RangeInput.propTypes = {
 	themePreset: types.themePreset,
 	componentId: types.stringRequired,
 	includeNullValues: types.bool,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	index: types.string,
 };
 

@@ -10,6 +10,7 @@ import configureStore from '@appbaseio/reactivecore';
 import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import VueTypes from 'vue-types';
 import URLParamsProvider from './URLParamsProvider';
 
 import getTheme from '../../styles/theme';
@@ -200,7 +201,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	analyticsConfig: types.analyticsConfig,
 	appbaseConfig: types.appbaseConfig,
 	graphQLUrl: types.string,

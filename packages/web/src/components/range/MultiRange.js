@@ -12,6 +12,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -272,7 +273,7 @@ MultiRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,

@@ -13,6 +13,7 @@ import {
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Dropdown from '../shared/Dropdown';
@@ -239,7 +240,7 @@ MultiDropdownRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,

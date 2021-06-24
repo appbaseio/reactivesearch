@@ -25,6 +25,7 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
+import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -516,7 +517,7 @@ MultiDropdownList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,

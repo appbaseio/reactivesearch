@@ -16,6 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
+import VueTypes from 'vue-types';
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
 import SliderHandle from './addons/SliderHandle';
@@ -389,7 +390,7 @@ RangeSlider.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,

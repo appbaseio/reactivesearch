@@ -23,6 +23,7 @@ import {
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -399,7 +400,7 @@ SingleDropdownList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,

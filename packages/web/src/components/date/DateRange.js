@@ -15,6 +15,7 @@ import XDate from 'xdate';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
+import VueTypes from 'vue-types';
 
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
@@ -507,7 +508,7 @@ DateRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	autoFocusEnd: types.bool,
 	beforeValueChange: types.func,

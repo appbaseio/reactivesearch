@@ -15,6 +15,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
+import VueTypes from 'vue-types';
 
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
@@ -254,7 +255,7 @@ DatePicker.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
+	enableAppbase: VueTypes.bool,
 	// component props
 	className: types.string,
 	clickUnselectsDay: types.bool,
