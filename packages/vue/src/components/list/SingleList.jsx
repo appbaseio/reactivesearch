@@ -87,9 +87,11 @@ const SingleList = {
 	},
 	watch: {
 		options(newVal) {
-			this.modifiedOptions = newVal[this.$props.dataField]
-				? newVal[this.$props.dataField].buckets
-				: [];
+			if(newVal) {
+				this.modifiedOptions = newVal[this.$props.dataField]
+					? newVal[this.$props.dataField].buckets
+					: [];
+			}
 		},
 		size() {
 			this.updateQueryHandlerOptions(this.$props);

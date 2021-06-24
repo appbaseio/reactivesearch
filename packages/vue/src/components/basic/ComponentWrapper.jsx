@@ -4,7 +4,6 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
-import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
 const {
 	addComponent,
@@ -41,7 +40,7 @@ const ComponentWrapper = (
 ) => ({
 	name: 'ComponentWrapper',
 	props: {
-		destroyOnUnmount: VueTypes.bool.def(true)
+		destroyOnUnmount: VueTypes.bool.def(false)
 	},
 	created() {
 		// clone the props for component it is needed because attrs gets changed on time
