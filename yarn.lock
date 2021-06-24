@@ -172,10 +172,10 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
-"@appbaseio/reactivecore@9.11.4":
-  version "9.11.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.4.tgz#30361b5c941a9684b607cea23240b637c3a4f3a8"
-  integrity sha512-OJ/itgGiHNZH6pOB5wFEi5YL1tmvMFewyuIpSleaVUUqW7NqtiKYFNQEmK59RXnpbaPdEQO8Mda2pPBIyMO+Zw==
+"@appbaseio/reactivecore@9.11.3":
+  version "9.11.3"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.3.tgz#d34fc38efe4eca02da1b3232aa92e354385c1d43"
+  integrity sha512-2W5x9kQfiZHfcZ005Cy5omdtW0lCbRjEAD9Xot/YCMuO0iImDkAsh4rtuaNXbuhF9sKmDhGNQORf3Pxs3LAsZw==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -199,24 +199,26 @@
     react-leaflet "^2.1.3"
     rheostat "^2.1.1"
 
-"@appbaseio/reactivesearch-vue@1.15.3":
-  version "1.15.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.15.3.tgz#a1ec83420ce358a2ad1755fdf3e85e13dfe9bfc0"
-  integrity sha512-VKX/cKovVS4RNeMwLGPyB0LogrXoD+OvJPRfxpmeBzg2YH2BAbJVzDPBDi7Vq8amrM7c001yKl7p6nhWHt3Ebw==
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.6":
+  version "1.16.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.6.tgz#e55f8a767b0cf2e6f6f8ca1ac1ee5c676055791f"
+  integrity sha512-MVyRSuebMCTy9vorA5Fo/9sQFZG+V9bAwLlozs+t9lEnJayRrMFjLvrJg7iKFgIFq/HacVmgfwcfxtLC4yyK7Q==
   dependencies:
-    "@appbaseio/reactivecore" "9.11.4"
+    "@appbaseio/reactivecore" "9.11.3"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^4.1.0"
     compute-scroll-into-view "^1.0.11"
     emotion "9.2.12"
+    gmap-vue "^1.5.0"
+    ngeohash "^0.6.3"
     polished "^2.2.0"
     redux "^4.0.0"
     url-search-params-polyfill "^7.0.0"
     vue-highlight-words "^1.2.0"
     vue-no-ssr "^1.1.0"
     vue-slider-component "^2.8.16"
-    vue-types "^1.3.3"
+    vue-types "^1.7.0"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -27243,7 +27245,7 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
@@ -33024,7 +33026,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.3, vue-types@^1.7.0:
+vue-types@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==
