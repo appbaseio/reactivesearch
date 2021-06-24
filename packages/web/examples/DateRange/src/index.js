@@ -51,11 +51,15 @@ class Main extends Component {
 							dataField="date_from"
 							customQuery={this.dateQuery}
 							initialMonth={new Date('2017-05-05')}
+							defaultValue={{
+								start: new Date('2017-04-01'),
+								end: new Date('2017-04-07'),
+							}}
 						/>
 					</div>
 
 					<div className="col">
-						<SelectedFilters />
+						<SelectedFilters resetToDefault />
 						<ReactiveList
 							componentId="SearchResult"
 							dataField="name"
