@@ -1,6 +1,6 @@
 import VueTypes from 'vue-types';
 import GmapCluster from 'gmap-vue/dist/components/cluster';
-import InfoWindow from 'gmap-vue/dist/components-implementation/info-window';
+import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import GoogleMapMarker from './GoogleMapMarker.jsx';
 
 const GoogleMapMarkers = {
@@ -43,13 +43,18 @@ const GoogleMapMarkers = {
 			return {
 				position: {
 					lat: this.clickedCluster.getCenter().lat(),
-					lng: this.clickedCluster.getCenter().lng()
+					lng: this.clickedCluster.getCenter().lng(),
 				},
 				defaultOptions: {
 					pixelOffset: new window.google.maps.Size(0, -30),
 				},
-			}
-		}
+			};
+		},
+		closeMarker() {
+			this.clickedCluster = null;
+			this.clusterMarkers = [];
+			this.$emit('close-cluster-popover');
+		},
 	},
 	render() {
 		const { resultsToRender } = this.$props;
@@ -88,27 +93,31 @@ const GoogleMapMarkers = {
 								marker={marker}
 								{...{
 									props: markerProps,
-									on: this.$listeners
+									on: this.$listeners,
 								}}
 							/>
 						))}
 					</GmapCluster>
 					{this.clickedCluster && this.renderClusterPopover ? (
-						<InfoWindow
-							zIndex={500}
-							oncloseclick={() => {
-								this.clickedCluster = null;
-								this.clusterMarkers = [];
-								this.$emit('close-cluster-popover');
+						<InfoWindowWrapper
+							id="cluster"
+							infoWindowProps={{
+								zIndex: 500,
+								position: this.getAdditionalProps().position,
+								options: this.getAdditionalProps().defaultOptions,
 							}}
-							position={this.getAdditionalProps().position}
-							options={this.getAdditionalProps().defaultOptions}
-						>
-							{this.renderClusterPopover({
+							renderPopover={handleClose => this.renderClusterPopover({
 								markers: this.clusterMarkers,
-								cluster: this.clickedCluster
+								cluster: this.clickedCluster,
+								handleClose: () => {
+									handleClose();
+									this.closeMarker();
+								},
 							})}
-						</InfoWindow>
+							events={{
+								closeclick: this.closeMarker,
+							}}
+						/>
 					) : null}
 				</div>
 			);
@@ -121,7 +130,7 @@ const GoogleMapMarkers = {
 						marker={marker}
 						{...{
 							props: markerProps,
-							on: this.$listeners
+							on: this.$listeners,
 						}}
 					/>
 				))}

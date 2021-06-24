@@ -21,9 +21,9 @@ const ReactiveGoogleMap = {
 		URLParams: VueTypes.bool,
 		mapProps: VueTypes.object,
 		showMarkers: VueTypes.bool.def(true),
-		showMarkerClusters : VueTypes.bool.def(false),
+		showMarkerClusters: VueTypes.bool.def(false),
 		searchAsMove: VueTypes.bool.def(false),
-		markerProps:  VueTypes.object,
+		markerProps: VueTypes.object,
 		clusterProps: VueTypes.object,
 		renderItem: VueTypes.func,
 		showSearchAsMove: VueTypes.bool.def(true),
@@ -36,7 +36,7 @@ const ReactiveGoogleMap = {
 		defaultRadius: types.number,
 		unit: types.string,
 		pages: VueTypes.number.def(5),
-		calculateMarkers: VueTypes.func
+		calculateMarkers: VueTypes.func,
 	},
 	methods: {
 		renderMap({
@@ -50,7 +50,6 @@ const ReactiveGoogleMap = {
 			handlePreserveCenter,
 			getPosition,
 			autoClosePopover,
-			renderPopover,
 			defaultPin,
 		}) {
 			const style = {
@@ -92,11 +91,11 @@ const ReactiveGoogleMap = {
 								}
 								defaultPin={defaultPin}
 								autoClosePopover={autoClosePopover}
-								renderPopover={renderPopover}
+								renderPopover={this.$scopedSlots.renderPopover}
 								renderClusterPopover={this.$scopedSlots.renderClusterPopover}
 								showMarkerClusters={this.showMarkerClusters}
 								{...{
-									on: this.$listeners
+									on: this.$listeners,
 								}}
 							/>
 						) : null}
@@ -106,8 +105,8 @@ const ReactiveGoogleMap = {
 			);
 		},
 		getMapRef() {
-			return this.mapRef
-		}
+			return this.mapRef;
+		},
 	},
 	mounted() {
 		if (this.$refs.mapRef) {
@@ -137,11 +136,6 @@ const ReactiveGoogleMap = {
 				autoClosePopover={this.autoClosePopover}
 				defaultPin={this.defaultPin}
 				defaultQuery={this.defaultQuery}
-				renderPopover={
-					this.$scopedSlots.renderPopover
-						? item => this.$scopedSlots.renderPopover(item)
-						: null
-				}
 				autoCenter={this.autoCenter}
 				defaultCenter={this.defaultCenter}
 				defaultRadius={this.defaultRadius}
@@ -152,7 +146,7 @@ const ReactiveGoogleMap = {
 				calculateMarkers={this.calculateMarkers}
 				{...{
 					scopedSlots: this.$scopedSlots,
-					on: this.$listeners
+					on: this.$listeners,
 				}}
 			/>
 		);
@@ -161,8 +155,8 @@ const ReactiveGoogleMap = {
 
 ReactiveGoogleMap.install = function(Vue, options) {
 	Vue.component(ReactiveGoogleMap.name, ReactiveGoogleMap);
-	if(!options || !options.key) {
-		console.error('ReactiveSearch: map key is required to use ReactiveGoogleMap component')
+	if (!options || !options.key) {
+		console.error('ReactiveSearch: map key is required to use ReactiveGoogleMap component');
 	}
 	Vue.use(GmapMapFull, {
 		load: {

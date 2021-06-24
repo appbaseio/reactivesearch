@@ -1,14 +1,12 @@
 import Marker from 'gmap-vue/dist/components/marker';
-import InfoWindow from 'gmap-vue/dist/components-implementation/info-window';
 import { Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
 import MarkerWithLabel from './MarkerWithLabel.jsx';
+import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles';
 
-const {
-	recordResultClick,
-} = Actions;
+const { recordResultClick } = Actions;
 
 const GoogleMapMarker = {
 	name: 'GoogleMapMarker',
@@ -90,15 +88,27 @@ const GoogleMapMarker = {
 
 			if (item._id in openMarkers) {
 				return (
-					<InfoWindow
-						zIndex={500}
+					<InfoWindowWrapper
 						key={`${item._id}-InfoWindow`}
-						oncloseclick={() => this.closeMarker()}
-						position={additionalProps.position}
-						options={additionalProps.defaultOptions}
-					>
-						<div>{renderPopover(item)}</div>
-					</InfoWindow>
+						id={item._id}
+						renderPopover={handleClose =>
+							renderPopover({
+								item,
+								handleClose: () => {
+									handleClose();
+									this.closeMarker();
+								},
+							})
+						}
+						infoWindowProps={{
+							zIndex: 500,
+							position: additionalProps.position,
+							options: additionalProps.defaultOptions,
+						}}
+						events={{
+							closeclick: () => this.closeMarker(),
+						}}
+					/>
 				);
 			}
 			return null;
@@ -147,7 +157,8 @@ const GoogleMapMarker = {
 						)}
 					/>
 				);
-			} if ('icon' in data) {
+			}
+			if ('icon' in data) {
 				markerProps.icon = data.icon;
 			} else {
 				return (
@@ -175,7 +186,7 @@ const GoogleMapMarker = {
 			}
 		} else if (defaultPin) {
 			markerProps.icon = {
-				url: defaultPin
+				url: defaultPin,
 			};
 		}
 		return (
@@ -193,7 +204,7 @@ const GoogleMapMarker = {
 				{...{ props: customMarkerProps }}
 				position={getPosition(marker)}
 				options={{
-					metaData: marker
+					metaData: marker,
 				}}
 			>
 				{renderPopover ? this.renderPopoverClick(marker) : null}
@@ -204,6 +215,6 @@ const GoogleMapMarker = {
 
 const mapDispatchToProps = {
 	recordResultClick,
-}
+};
 
 export default connect(() => null, mapDispatchToProps)(GoogleMapMarker);
