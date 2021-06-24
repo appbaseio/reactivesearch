@@ -70,14 +70,19 @@ const SelectedFilters = {
 		},
 		clearValues() {
 			const { resetToDefault, componentProps, selectedValues } = this;
-			// this.clearValuesAction();
 			if (resetToDefault) {
 				Object.keys(selectedValues || {}).map(component => {
-					this.setValue(component, componentProps?.[component]?.defaultValue);
+					const valueToSet = componentProps?.[component]?.data?.filter(entity =>
+						componentProps?.[component]?.defaultValue.includes(entity.label),
+					);
+					this.setValue(component, valueToSet);
 					console.log('default value', componentProps?.[component]?.defaultValue);
-					console.log('selected values', selectedValues?.[component]?.value);
+					console.log('selected values', selectedValues);
+					console.log('value to set', valueToSet[0]);
 					return true;
 				});
+			} else {
+				this.clearValuesAction();
 			}
 			this.$emit('clear', null);
 		},
@@ -89,11 +94,11 @@ const SelectedFilters = {
 			}
 			if (value && typeof value === 'object') {
 				// TODO: support for NestedList
-				let label
-					= (typeof value.label === 'string' ? value.label : value.value)
-					|| value.key
-					|| value.distance
-					|| null;
+				let label =
+					(typeof value.label === 'string' ? value.label : value.value) ||
+					value.key ||
+					value.distance ||
+					null;
 
 				if (value.location) {
 					label = `${value.location} - ${label}`;
