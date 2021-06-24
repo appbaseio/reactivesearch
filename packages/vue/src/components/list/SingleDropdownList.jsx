@@ -87,6 +87,10 @@ const SingleDropdownList = {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
+		const props = this.$props;
+		this.modifiedOptions = this.options && this.options[props.dataField]
+			? this.options[props.dataField].buckets
+			: []
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -104,32 +108,35 @@ const SingleDropdownList = {
 	},
 	watch: {
 		options(newVal, oldVal) {
-			checkPropChange(oldVal, newVal, () => {
-				const { showLoadMore, dataField } = this.$props;
-				const { modifiedOptions } = this.$data;
-				if (showLoadMore) {
-					// append options with showLoadMore
-					const { buckets } = newVal[dataField];
-					const nextOptions = [
-						...modifiedOptions,
-						...buckets.map(bucket => ({
-							key: bucket.key[dataField],
-							doc_count: bucket.doc_count,
-						})),
-					];
-					const after = newVal[dataField].after_key; // detect the last bucket by checking if the next set of buckets were empty
-					const isLastBucket = !buckets.length;
-					this.after = {
-						after,
-					};
-					this.isLastBucket = isLastBucket;
-					this.modifiedOptions = nextOptions;
-				} else {
-					this.modifiedOptions = newVal[this.$props.dataField]
-						? newVal[this.$props.dataField].buckets
-						: [];
-				}
-			});
+			if(newVal) {
+				checkPropChange(oldVal, newVal, () => {
+					const { showLoadMore, dataField } = this.$props;
+					const { modifiedOptions } = this.$data;
+					if (showLoadMore) {
+						// append options with showLoadMore
+						const { buckets } = newVal[dataField];
+						const nextOptions = [
+							...modifiedOptions,
+							...buckets.map(bucket => ({
+								key: bucket.key[dataField],
+								doc_count: bucket.doc_count,
+							})),
+						];
+						const after = newVal[dataField].after_key; // detect the last bucket by checking if the next set of buckets were empty
+						const isLastBucket = !buckets.length;
+						this.after = {
+							after,
+						};
+						this.isLastBucket = isLastBucket;
+						this.modifiedOptions = nextOptions;
+					} else {
+						this.modifiedOptions = newVal[this.$props.dataField]
+							? newVal[this.$props.dataField].buckets
+							: [];
+					}
+				});
+			}
+
 		},
 		size() {
 			this.updateQueryOptions(this.$props);

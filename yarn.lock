@@ -166,22 +166,6 @@
     string.prototype.repeat "^0.2.0"
     unist-util-visit "^1.1.3"
 
-"@appbaseio/reactivemaps@3.0.0-beta.11":
-  version "3.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.11.tgz#b3dc66a4047eec4f6663f7ea21fa2a7f2957d124"
-  integrity sha512-ef74S3dAdfqOtrn2AKAphBPlcTnTfxAmdGrFrLbMT7R0V2+OXg32La4cQqJ3QPI0WaO0koOk0EBKO2HCEvZlRg==
-  dependencies:
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    downshift "^1.31.2"
-    emotion-theming "^10.0.27"
-    leaflet "^1.3.4"
-    ngeohash "^0.6.3"
-    prop-types "^15.6.0"
-    react-google-maps "^9.4.5"
-    react-leaflet "^2.1.3"
-    rheostat "^2.1.1"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"

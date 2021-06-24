@@ -1,8 +1,9 @@
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-
+import VueTypes from 'vue-types';
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
+
 
 const {
 	addComponent,
@@ -34,6 +35,9 @@ const ComponentWrapper = (
 	},
 ) => ({
 	name: 'ComponentWrapper',
+	props: {
+		destroyOnUnmount: VueTypes.bool.def(false)
+	},
 	created() {
 		// clone the props for component it is needed because attrs gets changed on time
 		const componentProps = { ...this.$attrs };
@@ -47,35 +51,44 @@ const ComponentWrapper = (
 		this.react = this.componentProps.react;
 	},
 	beforeMount() {
-		// Register  component
-		this.addComponent(this.componentId);
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-			this.$emit('query-change', ...args);
-		};
-		const onError = e => {
-			this.$emit('error', e);
-		};
-		this.setQueryListener(this.componentId, onQueryChange, onError);
-		// Update props in store
-		this.setComponentProps(this.componentId, this.componentProps, options.componentType);
+		let components = [];
+		if(this.$$store) {
+			({components} = this.$$store.getState())
+		}
+		// Register a component only when `destroyOnUnmount` is `true`
+		// or component is not present in store
+		if(this.destroyOnUnmount
+			|| components.indexOf(this.componentProps.componentId) === -1) {
+			// Register  component
+			this.addComponent(this.componentId);
+			const onQueryChange = (...args) => {
+				this.$emit('queryChange', ...args);
+				this.$emit('query-change', ...args);
+			};
+			const onError = e => {
+				this.$emit('error', e);
+			};
+			this.setQueryListener(this.componentId, onQueryChange, onError);
+			// Update props in store
+			this.setComponentProps(this.componentId, this.componentProps, options.componentType);
 
-		// if default query prop is defined and component is reactive component then register the internal component
-		if (
-			options.internalComponent
+			// if default query prop is defined and component is reactive component then register the internal component
+			if (
+				options.internalComponent
 			|| (this.componentProps.defaultQuery
 				&& options.componentType === componentTypes.reactiveComponent)
-		) {
-			this.internalComponent = getInternalComponentID(this.componentId);
-		}
-		// Register internal component
-		if (this.internalComponent) {
-			this.addComponent(this.internalComponent);
-			this.setComponentProps(
-				this.internalComponent,
-				this.componentProps,
-				options.componentType,
-			);
+			) {
+				this.internalComponent = getInternalComponentID(this.componentId);
+			}
+			// Register internal component
+			if (this.internalComponent) {
+				this.addComponent(this.internalComponent);
+				this.setComponentProps(
+					this.internalComponent,
+					this.componentProps,
+					options.componentType,
+				);
+			}
 		}
 	},
 	mounted() {
@@ -85,10 +98,12 @@ const ComponentWrapper = (
 		}
 	},
 	beforeDestroy() {
-		// Unregister components
-		this.removeComponent(this.componentId);
-		if (this.internalComponent) {
-			this.removeComponent(this.internalComponent);
+		if(this.destroyOnUnmount) {
+			// Unregister components
+			this.removeComponent(this.componentId);
+			if (this.internalComponent) {
+				this.removeComponent(this.internalComponent);
+			}
 		}
 	},
 	watch: {
