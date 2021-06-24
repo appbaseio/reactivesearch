@@ -60,10 +60,7 @@ const SingleList = {
 		const props = this.$props;
 		this.__state = {
 			currentValue: '',
-			modifiedOptions:
-				props.options && props.options[props.dataField]
-					? props.options[props.dataField].buckets
-					: [],
+			modifiedOptions: [],
 			searchTerm: '',
 		};
 		this.internalComponent = `${props.componentId}__internal`;
@@ -75,6 +72,10 @@ const SingleList = {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
+		const props = this.$props;
+		this.modifiedOptions = this.options && this.options[props.dataField]
+			? this.options[props.dataField].buckets
+			: []
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -92,9 +93,11 @@ const SingleList = {
 	},
 	watch: {
 		options(newVal) {
-			this.modifiedOptions = newVal[this.$props.dataField]
-				? newVal[this.$props.dataField].buckets
-				: [];
+			if(newVal) {
+				this.modifiedOptions = newVal[this.$props.dataField]
+					? newVal[this.$props.dataField].buckets
+					: [];
+			}
 		},
 		size() {
 			this.updateQueryHandlerOptions(this.$props);
