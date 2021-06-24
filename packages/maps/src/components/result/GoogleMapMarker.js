@@ -8,7 +8,6 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
-import { triggerClickAnalytics } from '../utils';
 
 class GoogleMapMarker extends React.Component {
 	static contextType = ReactReduxContext;
@@ -34,16 +33,12 @@ class GoogleMapMarker extends React.Component {
 	triggerAnalytics = () => {
 		// click analytics would only work client side and after javascript loads
 		const {
-			config, analytics, headers, index,
+			triggerClickAnalytics,
+			marker,
+			index,
 		} = this.props;
 
-		triggerClickAnalytics({
-			config,
-			headers,
-			analytics,
-			searchPosition: index + 1,
-			context: this.context,
-		});
+		triggerClickAnalytics(index, marker._id);
 	};
 
 	openMarker = () => {
@@ -131,7 +126,6 @@ class GoogleMapMarker extends React.Component {
 			marker,
 			markerOnTop,
 		} = this.props;
-
 		const markerProps = {
 			position: getPosition(marker),
 		};

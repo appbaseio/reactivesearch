@@ -76,8 +76,14 @@ const MultiDropdownList = {
 		showLoadMore: VueTypes.bool.def(false),
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
+		index: VueTypes.string,
 	},
 	created() {
+		if (!this.enableAppbase && this.$props.index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -182,9 +188,9 @@ const MultiDropdownList = {
 				return (<div>{renderNoResults()}</div>);
 			} else if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
-			} 
+			}
 			return null;
-			
+
 		}
 
 		if (this.$props.selectAllLabel) {
@@ -524,6 +530,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

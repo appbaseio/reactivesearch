@@ -981,6 +981,7 @@ class ReactiveMap extends Component {
 			renderSearchAsMove: this.renderSearchAsMove,
 			markerProps,
 			innerRef,
+			triggerClickAnalytics: this.triggerAnalytics,
 			handlePreserveCenter: this.handlePreserveCenter,
 			preserveCenter: this.state.preserveCenter,
 			handleOnDragEnd: this.handleOnDragEnd,
