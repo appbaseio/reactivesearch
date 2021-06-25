@@ -69,7 +69,16 @@ Example uses:
 -   **title** `String or JSX` [optional]
     title of the component to be shown in the UI.
 -   **size** `Number` [optional]
-    control how many items to display in the List. Defaults to 100.
+    number of list items to be displayed.
+
+    > Note: 
+    > 1. Appbase users should use the `aggregationSize` prop instead. The `size` prop would only set the size for `hits` not the `aggregations`.
+    > 2. We recommend Appbase users to not use the `size` prop unless they are using `hits` because it can impact the query performance.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 -   **sortBy** `String` [optional]
     property that decides on how to sort the list items, accepts one of `count`, `asc` or `desc` as valid values.
     -   `count` sorts the list based on the count occurences, with highest value at the top.

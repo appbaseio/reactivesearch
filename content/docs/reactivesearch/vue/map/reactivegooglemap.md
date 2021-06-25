@@ -218,20 +218,26 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     </reactive-google-map>
     ```
 -   **renderPopover** `slot-scope` [optional]
-    It is useful to render the popover content when a marker is clicked.
+    It is useful to render the popover content when a marker is clicked. The slot data would be an object with the following properties:
+    - **item** represents the marker data
+    - **handleClose** useful to close the popover programmatically
 
+    
     The following example displays the `title` and `description` in popover.
 
     ```html
     <reactive-google-map>
-        <div slot="renderPopover" slot-scope="{ title, description }">
-           <div>{{ title }}</div>
-           <p>{{ description }}</p>
+        <div slot="renderPopover" slot-scope="{ item }">
+           <div>{{ item.title }}</div>
+           <p>{{ item.description }}</p>
         </div>
     </reactive-google-map>
     ```
 -   **renderClusterPopover** `slot-scope` [optional]
-    It is useful to render the popover content when a cluster is clicked.
+    It is useful to render the popover content when a cluster is clicked. The slot data would be an object with the following properties:
+    - **markers** An array of markers for the selected cluster
+    - **cluster** Cluster reference object
+    - **handleClose** useful to close the popover programmatically
 
     The following example displays the `markers` information for a particular cluster.
 

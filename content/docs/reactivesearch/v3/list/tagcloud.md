@@ -63,7 +63,16 @@ Example uses:
 -   **loader** `String or JSX` [optional]
     to display an optional loader while fetching the options.
 -   **size** `Number` [optional]
-    number of items to be displayed in the list. Defaults to 100.
+    number of list items to be displayed.
+
+    > Note: 
+    > 1. Appbase users should use the `aggregationSize` prop instead. The `size` prop would only set the size for `hits` not the `aggregations`.
+    > 2. We recommend Appbase users to not use the `size` prop unless they are using `hits` because it can impact the query performance.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 -   **showCount** `Boolean` [optional]
     show a count of the number of occurrences besides each list item. Defaults to `true`.
 -   **multiSelect** `Boolean` [optional]

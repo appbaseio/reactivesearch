@@ -86,7 +86,7 @@ Example uses:
 -   **aggregationSize**
     To set the number of buckets to be returned by aggregations.
 
-    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
