@@ -647,6 +647,61 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         -   `String` is used for specifying a single component by its `componentId`.
         -   `Array` is used for specifying multiple components by their `componentId`.
         -   `Object` is used for nesting other key clauses.
+-   **focusShortcuts** `Array<string | number>` [optional]
+A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+-   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
+
+
+-   **addonBefore** `string|JSX` [optional] The HTML markup displayed before (on the left side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
+<img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
+```jsx
+ <DataSearch
+        showIcon={false}
+        addonBefore={
+          <img
+            src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+            height="30px"
+          />
+        }
+        id="search-component"
+        ...
+         />
+```
+
+
+-   **addonAfter** `string|JSX` [optional] The HTML markup displayed after (on the right side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
+
+<img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
+
+```jsx
+ <DataSearch
+        showIcon={false}
+        addonAfter={
+          <img
+            src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+            height="30px"
+          />
+        }
+        id="search-component"
+        ...
+     />
+```
+
+-   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
+<img src="https://i.imgur.com/x3jF23m.png"/>
+```jsx
+ <DataSearch
+        expandSuggestionsContainer={false}
+        addonBefore={
+          <img ... />
+        }
+        addonAfter={
+          <img ... />
+        }
+        id="search-component"
+        ...
+         />
+```
 
 ## Examples
 

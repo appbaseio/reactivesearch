@@ -82,20 +82,18 @@ Example uses:
 -   **filterLabel** `String` [optional]
     An optional label to display for the component in the global selected filters view. This is only applicable if `showFilter` is enabled. Default value used here is `componentId`.
 -   **renderItem** `Function|slot-scope` [optional]
-    customize the rendered button via a function or slot-scope which receives the item object and isSelected & expects a JSX or String back. For example:
+    customize the rendered button via a function or slot-scope which receives the item object, `isSelected` and `handleClick` method to listen to the click events & expects the html back. For example:
 
     <!-- prettier-ignore -->
     ```html
     <toggle-button>
-        <div
-            slot="renderItem"
-            slot-scope="{ item }"
-        >
-            {{item.label}}
-            <span :style="{ marginLeft: 5, color: 'dodgerblue' }">
-                {{item.value}}
-            </span>
-        </div>
+		<a
+			slot="renderItem"
+			slot-scope="{ item, handleClick, isSelected }"
+			:href="item.url"
+			@click="handleClick"
+			:style="{ color: isSelected ? 'blue': 'dodgerblue'}"
+		/>
     </toggle-button>
     ```
 

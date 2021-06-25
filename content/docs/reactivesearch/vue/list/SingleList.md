@@ -199,6 +199,9 @@ export default {
 -   **transformData** `Function` [optional]
     allows transforming the data to render inside the list. You can change the order, remove, or add items, transform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
 
+-   **enableStrictSelection** `Boolean` [optional]
+    When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
+
 ## Demo
 
 <br />

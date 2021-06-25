@@ -53,13 +53,7 @@ const HomePage = ({ data, location }) => {
 													'Overview and Quickstart with appbase.io',
 												link: '/docs/gettingstarted/quickstart/',
 												duration: 3,
-											},
-											{
-												title: 'Why Appbase.io',
-												description: 'Benefits of using appbase.io',
-												link: '/docs/gettingstarted/why/',
-												duration: 6,
-											},
+											}
 										],
 									},
 									'2': {
@@ -278,16 +272,9 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Clusters',
 												link: '/docs/hosting/clusters/',
-												duration: 5,
+												duration: 3,
 												description:
-													'Fully managed Elasticsearch clusters available in over 16 global regions.',
-											},
-											{
-												title: 'Apps',
-												link: '/docs/hosting/apps',
-												duration: 1,
-												description:
-													'Apps let you get the best of Elasticsearch without running a dedicated cluster.',
+													'Get a fully hosted Elasticsearch + appbase.io experience in 16+ global regions.',
 											},
 											{
 												title: 'Bring your own Cluster',
