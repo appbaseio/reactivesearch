@@ -163,7 +163,7 @@ const ReactiveList = {
 		showInfiniteScroll() {
 			// Pagination has higher priority then infinite scroll
 			return this.infiniteScroll && !this.shouldRenderPagination;
-		}
+		},
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -201,7 +201,7 @@ const ReactiveList = {
 				let options = getQueryOptions(this.$props);
 				options.from = 0;
 				this.$defaultQuery = newVal(null, this.$props);
-				const { sort, query } = this.$defaultQuery ||  {};
+				const { sort, query } = this.$defaultQuery || {};
 
 				if (sort) {
 					options.sort = this.$defaultQuery.sort;
@@ -300,13 +300,76 @@ const ReactiveList = {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
 		},
+		selectedValues(newVal, oldVal) {
+			if (this.pagination) {
+				if (!isEqual(newVal, oldVal)) {
+					// excluding the current/ self component
+					const filterComponents = Object.keys(newVal).filter(
+						component => component !== this.componentId,
+					);
+
+					let pageResetToFirstFlag = false;
+					// eslint-disable-next-line
+					for (const filterComponent of filterComponents) {
+						if (
+							(!!newVal[filterComponent] && !oldVal[filterComponent])
+							|| (!newVal[filterComponent] && !!oldVal[filterComponent])
+							|| (newVal[filterComponent]?.URLParams
+								&& !isEqual(
+									newVal[filterComponent]?.value,
+									oldVal[filterComponent]?.value,
+								))
+						) {
+							this.setPage(0);
+							pageResetToFirstFlag = true;
+							break;
+						}
+					}
+
+					if (!pageResetToFirstFlag) {
+						let page = 0;
+						if (
+							!!newVal[this.componentId]
+							&& !!oldVal[this.componentId]
+							&& newVal[this.componentId]?.URLParams
+							&& !isEqual(
+								newVal[this.componentId]?.value,
+								oldVal[this.componentId]?.value,
+							)
+						) {
+							page = newVal[this.componentId]?.value;
+						} else if (!newVal[this.componentId] && !!oldVal[this.componentId]) {
+							page = 0;
+						} else if (!newVal[this.componentId] && !!oldVal[this.componentId]) {
+							return;
+						}
+						if (this.currentPageState === page-1) {
+							return;
+						}
+						const value = this.$props.size * page;
+						const options = getQueryOptions(this.$props);
+						options.from = this.$data.from;
+						this.from = value;
+						this.currentPageState = page-1;
+						this.loadMoreAction(
+							this.$props.componentId,
+							{
+								...options,
+								from: value,
+							},
+							false,
+						);
+					}
+				}
+			}
+		},
 	},
 	mounted() {
 		if (this.$props.stream) {
 			this.setStreaming(this.$props.componentId, true);
 		}
 
-		if(this.defaultPage < 0 && this.currentPage > 0) {
+		if (this.defaultPage < 0 && this.currentPage > 0) {
 			if (this.$props.URLParams) {
 				this.setPageURL(
 					this.$props.componentId,
@@ -392,7 +455,7 @@ const ReactiveList = {
 	},
 
 	beforeDestroy() {
-		if(this.showInfiniteScroll) {
+		if (this.showInfiniteScroll) {
 			window.removeEventListener('scroll', this.scrollHandler);
 		}
 	},
@@ -413,7 +476,7 @@ const ReactiveList = {
 					class={getClassName(this.$props.innerClass, 'resultsInfo')}
 				>
 					{this.$props.sortOptions ? this.renderSortOptions() : null}
-					{this.$props.showResultStats ? this.renderStats() : null}
+					{this.$props.showResultStats && !!results.length ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && results.length === 0 && streamResults.length === 0
 					? this.renderNoResult()
@@ -503,15 +566,17 @@ const ReactiveList = {
 						renderItem({
 							item,
 							triggerClickAnalytics: () =>
-								this.triggerClickAnalytics(
-									this.currentPageState * size + index,
-								),
+								this.triggerClickAnalytics(this.currentPageState * size + index),
 						}),
 					)}
 				</div>
 			);
 			// If analytics is set to true then render with impression tracker
-			return this.analytics ? <ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker> : element;
+			return this.analytics ? (
+				<ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker>
+			) : (
+				element
+			);
 		},
 		updateQueryOptions(props) {
 			const options = getQueryOptions(props);
@@ -548,13 +613,11 @@ const ReactiveList = {
 			const { afterKey } = this.$data;
 			const queryOptions = { size };
 			if (aggregationField) {
-				queryOptions.aggs = getCompositeAggsQuery(
-					{
-						props: this.$props,
-						after: afterKey || null,
-						showTopHits: true,
-					}
-				).aggs;
+				queryOptions.aggs = getCompositeAggsQuery({
+					props: this.$props,
+					after: afterKey || null,
+					showTopHits: true,
+				}).aggs;
 			}
 			return queryOptions;
 		},
@@ -817,6 +880,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
+	selectedValues: state.selectedValues,
 });
 const mapDispatchtoProps = {
 	loadMoreAction: loadMore,
@@ -826,7 +890,7 @@ const mapDispatchtoProps = {
 	updateQuery,
 	updateComponentProps,
 	setDefaultQuery,
-	recordResultClick
+	recordResultClick,
 };
 // Only used for SSR
 ReactiveList.generateQueryOptions = props => {
