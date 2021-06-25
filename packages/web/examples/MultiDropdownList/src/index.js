@@ -24,11 +24,12 @@ class Main extends Component {
 							componentId="BookSensor"
 							dataField="original_series.keyword"
 							size={100}
+							defaultValue={['Anita Blake', 'Alex Cross']}
 						/>
 					</div>
 
 					<div className="col">
-						<SelectedFilters />
+						<SelectedFilters resetToDefault />
 						<ReactiveList
 							componentId="SearchResult"
 							dataField="original_title"

@@ -6,11 +6,11 @@ import { withTheme } from 'emotion-theming';
 import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getClassName, handleA11yAction, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect, areArraysEqual } from '../../utils';
+import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
 	constructor(props) {
@@ -34,9 +34,7 @@ class SelectedFilters extends Component {
 	};
 
 	remove = (component, value = null) => {
-		const {
-			onClear,
-		} = this.props;
+		const { onClear } = this.props;
 		this.props.setValue(component, null);
 		if (onClear) {
 			onClear(component, value);
@@ -48,15 +46,33 @@ class SelectedFilters extends Component {
 			onClear, resetToDefault, componentProps, selectedValues,
 		} = this.props;
 		if (resetToDefault) {
+			let valueToSet;
 			Object.keys(selectedValues).map((component) => {
-				if (
-					componentProps[component].defaultValue
-					&& !areArraysEqual(
-						selectedValues[component].value,
-						componentProps[component].defaultValue,
-					)
+				if (!componentProps[component]) {
+					return true;
+				}
+				if (componentProps[component].range) {
+					valueToSet = componentProps[component].defaultValue
+						? componentProps[component].defaultValue
+						: null;
+				} else if (
+					[
+						'MULTIDROPDOWNLIST',
+						'MULTIDATALIST',
+						'MULTILIST',
+						'SINGLEDATALIST',
+						'SINGLEDROPDOWNLIST',
+						'SINGLELIST',
+						'TAGCLOUD',
+						'TOGGLEBUTTON',
+					].includes(componentProps[component].componentType)
 				) {
-					this.props.setValue(component, componentProps[component].defaultValue);
+					valueToSet = componentProps[component].defaultValue;
+				}
+				// eslint-disable-next-line
+				console.log(valueToSet);
+				if (!isEqual(selectedValues[component].value, valueToSet)) {
+					this.props.setValue(component, valueToSet);
 				}
 				return true;
 			});
