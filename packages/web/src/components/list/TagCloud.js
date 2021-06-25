@@ -18,7 +18,6 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
@@ -319,7 +318,7 @@ TagCloud.propTypes = {
 	setCustomQuery: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,

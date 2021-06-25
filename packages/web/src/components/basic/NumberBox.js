@@ -14,7 +14,6 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Button, { numberBoxContainer } from '../../styles/Button';
@@ -219,7 +218,7 @@ NumberBox.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,

@@ -34,7 +34,6 @@ import {
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import hotkeys from 'hotkeys-js';
-import VueTypes from 'vue-types';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
@@ -1369,7 +1368,7 @@ DataSearch.propTypes = {
 	isLoading: types.bool,
 	lastUsedQuery: types.string,
 	time: types.number,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,

@@ -27,7 +27,6 @@ import {
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import VueTypes from 'vue-types';
 import Pagination from './addons/Pagination';
 import PoweredBy from './addons/PoweredBy';
 
@@ -864,7 +863,7 @@ ReactiveList.propTypes = {
 	queryLog: types.props,
 	error: types.title,
 	headers: types.headers,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,

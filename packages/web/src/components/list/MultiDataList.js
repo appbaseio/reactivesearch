@@ -22,7 +22,6 @@ import {
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -542,7 +541,7 @@ MultiDataList.propTypes = {
 	selectedValue: types.selectedValue,
 	rawData: types.rawData,
 	options: types.options,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 
 	setCustomQuery: types.funcRequired,
 	// component props

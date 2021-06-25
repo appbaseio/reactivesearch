@@ -26,7 +26,6 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -666,7 +665,7 @@ MultiList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,

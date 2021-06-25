@@ -37,7 +37,6 @@ import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transf
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import hotkeys from 'hotkeys-js';
-import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
@@ -1489,7 +1488,7 @@ CategorySearch.propTypes = {
 	suggestions: types.suggestions,
 	aggregationData: types.aggregationData,
 	isLoading: types.bool,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	triggerAnalytics: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	setDefaultQuery: types.funcRequired,

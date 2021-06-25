@@ -22,7 +22,6 @@ import {
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -462,7 +461,7 @@ SingleDataList.propTypes = {
 	options: types.options,
 	rawData: types.rawData,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,

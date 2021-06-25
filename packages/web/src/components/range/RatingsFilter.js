@@ -16,7 +16,6 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { element } from 'prop-types';
-import VueTypes from 'vue-types';
 
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
@@ -226,7 +225,7 @@ RatingsFilter.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: VueTypes.bool,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
