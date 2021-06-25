@@ -75,6 +75,7 @@ export interface DataSearchProps extends CommonProps {
 	enablePredictiveSuggestions?: boolean;
 	distinctField?: string;
 	distinctFieldConfig?: object;
+	index?: string;
 	focusShortcuts?: types.focusShortcuts;
 	addonBefore?: types.children;
 	addonAfter?: types.children;

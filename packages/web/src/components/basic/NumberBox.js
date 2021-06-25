@@ -42,6 +42,15 @@ class NumberBox extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { enableAppbase, index } = this.props;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.value, prevProps.value, () => {
 			this.setValue(this.props.value, this.props);
@@ -209,6 +218,7 @@ NumberBox.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -227,6 +237,7 @@ NumberBox.propTypes = {
 	style: types.style,
 	title: types.title,
 	URLParams: types.bool,
+	index: types.string,
 };
 
 NumberBox.defaultProps = {
@@ -244,6 +255,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

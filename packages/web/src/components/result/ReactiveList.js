@@ -80,12 +80,11 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		const {
 			aggregationField,
-			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
+			enableAppbase,
 		} = this.props;
-
-		const { enableAppbase } = config;
 
 		if (enableAppbase && aggregationField) {
 			console.warn(
@@ -95,6 +94,11 @@ class ReactiveList extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -859,6 +863,7 @@ ReactiveList.propTypes = {
 	queryLog: types.props,
 	error: types.title,
 	headers: types.headers,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -905,6 +910,7 @@ ReactiveList.propTypes = {
 	distinctFieldConfig: types.componentObject,
 	// eslint-disable-next-line
 	originalProps: types.any,
+	index: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -948,6 +954,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],

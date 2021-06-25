@@ -16,6 +16,7 @@ export interface ToggleButtonProps extends CommonProps {
 	react?: types.react;
 	showFilter?: boolean;
 	title?: types.title;
+	index?: string;
 }
 
 declare const ToggleButton: React.ComponentClass<ToggleButtonProps>;

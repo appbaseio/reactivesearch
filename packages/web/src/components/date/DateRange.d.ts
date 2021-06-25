@@ -24,6 +24,7 @@ export interface DateRangeProps extends CommonProps {
 	title?: string;
 	onChange?: (...args: any[]) => any;
 	parseDate?: (...args: any[]) => any;
+	index?: string;
 }
 
 declare const DateRange: React.ComponentClass<DateRangeProps>;
