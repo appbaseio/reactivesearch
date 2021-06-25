@@ -69,6 +69,15 @@ class MultiDataList extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { enableAppbase, index } = this.props;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		const valueArray
 			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
@@ -532,6 +541,7 @@ MultiDataList.propTypes = {
 	selectedValue: types.selectedValue,
 	rawData: types.rawData,
 	options: types.options,
+	enableAppbase: types.bool,
 
 	setCustomQuery: types.funcRequired,
 	// component props
@@ -566,6 +576,7 @@ MultiDataList.propTypes = {
 	render: types.func,
 	renderItem: types.func,
 	renderNoResults: types.func,
+	index: types.string,
 };
 
 MultiDataList.defaultProps = {
@@ -594,6 +605,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

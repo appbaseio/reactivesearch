@@ -58,6 +58,15 @@ class MultiRange extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { enableAppbase, index } = this.props;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -263,6 +272,7 @@ MultiRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -287,6 +297,7 @@ MultiRange.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	includeNullValues: types.bool,
+	index: types.string,
 };
 
 MultiRange.defaultProps = {
@@ -305,6 +316,7 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
