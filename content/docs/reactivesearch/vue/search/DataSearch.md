@@ -26,10 +26,7 @@ Example uses:
 
 ```html
 <template>
-	<data-search
-        componentId="SearchSensor"
-        :dataField="['group_venue', 'group_city']"
-    />
+	<data-search componentId="SearchSensor" :dataField="['group_venue', 'group_city']" />
 </template>
 ```
 
@@ -37,25 +34,25 @@ Example uses:
 
 ```html
 <data-search
-  componentId="SearchSensor"
-  title="Search"
-  defaultValue="Songwriting"
-  placeholder="Search for cities or venues"
-  highlightField="group_city"
-  queryFormat="or"
-  filterLabel="City"
-  :autosuggest="true"
-  :highlight="true"
-  :showFilter="true"
-  :fieldWeights="[1, 3]"
-  :fuzziness="0"
-  :size="10"
-  :debounce="100"
-  :react="{
+	componentId="SearchSensor"
+	title="Search"
+	defaultValue="Songwriting"
+	placeholder="Search for cities or venues"
+	highlightField="group_city"
+	queryFormat="or"
+	filterLabel="City"
+	:autosuggest="true"
+	:highlight="true"
+	:showFilter="true"
+	:fieldWeights="[1, 3]"
+	:fuzziness="0"
+	:size="10"
+	:debounce="100"
+	:react="{
     and: ['CategoryFilter', 'SearchFilter']
   }"
-  :dataField="['group_venue', 'group_city']"
-  :URLParams="false"
+	:dataField="['group_venue', 'group_city']"
+	:URLParams="false"
 />
 ```
 
@@ -66,9 +63,8 @@ Example uses:
 -   **dataField** `String or Array` [optional*]
     database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
 
-    >   Note:
-    >   This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
-    >
+    > Note:
+    > This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
 
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
@@ -89,7 +85,8 @@ Example uses:
     Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
 
 -   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
-> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
+
+    > Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 
 -   **aggregationField** `String` [optional]
     One of the most important use-cases this enables is showing `DISTINCT` results (useful when you are dealing with sessions, events and logs type data). It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
@@ -111,12 +108,13 @@ Example uses:
 
     > It is possible to override this query by providing `customQuery`.
 
-	> Note: This prop has been marked as deprecated starting v1.14.0. Please use the `distinctField` prop instead.
+    > Note: This prop has been marked as deprecated starting v1.14.0. Please use the `distinctField` prop instead.
 
 -   **aggregationSize**
     To set the number of buckets to be returned by aggregations.
 
     > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **title** `String or JSX` [optional]
@@ -145,31 +143,31 @@ Example uses:
     show a voice icon in the searchbox to enable users to set voice input. Defaults to `false`.
 -   **showDistinctSuggestions** `Boolean` [optional]
     Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
-	<br/> <br/>
-    **Example** if you have `showDistinctSuggestions`  is set to `false` and have following configurations
+    <br/> <br/>
+    **Example** if you have `showDistinctSuggestions` is set to `false` and have following configurations
 
-	```js
-	// Your document:
-	{
-		"name": "Warn",
-		"address": "Washington"
-	}
+    ```js
+    // Your document:
+    {
+    	"name": "Warn",
+    	"address": "Washington"
+    }
 
-	// Component:
-	<DataSearch dataField=['name', 'address'] .../>
+    // Component:
+    <DataSearch dataField=['name', 'address'] .../>
 
-	// Search Query:
-	"wa"
-	```
+    // Search Query:
+    "wa"
+    ```
 
-	Then there will be 2 suggestions from the same document
-	as we have the search term present in both the fields
-	specified in `dataField`.
+    Then there will be 2 suggestions from the same document
+    as we have the search term present in both the fields
+    specified in `dataField`.
 
-	```
-	Warn
-	Washington
-	```
+    ```
+    Warn
+    Washington
+    ```
 
 `Note:` Check the above concept in action over [here](https://codesandbox.io/s/musing-allen-qc58z).
 
@@ -188,30 +186,30 @@ Example uses:
 
 ```html
 <template>
-    <data-search
-        componentId="title"
-        highlight="true"
-        :dataField="['title', 'text']"
-        :customHighlight="getCustomHighlight"
-    />
+	<data-search
+		componentId="title"
+		highlight="true"
+		:dataField="['title', 'text']"
+		:customHighlight="getCustomHighlight"
+	/>
 </template>
 <script>
-export default {
-	name: 'app',
-	methods: {
-		getCustomHighlight: (props) => ({
-            highlight: {
-                pre_tags: ['<mark>'],
-                post_tags: ['</mark>'],
-                fields: {
-                    text: {},
-                    title: {},
-                },
-                number_of_fragments: 0,
-            },
-        }),
-	},
-};
+	export default {
+		name: 'app',
+		methods: {
+			getCustomHighlight: props => ({
+				highlight: {
+					pre_tags: ['<mark>'],
+					post_tags: ['</mark>'],
+					fields: {
+						text: {},
+						title: {},
+					},
+					number_of_fragments: 0,
+				},
+			}),
+		},
+	};
 </script>
 ```
 
@@ -247,20 +245,20 @@ export default {
 
 ```html
 <template>
-    <data-search
-        componentId="BookSensor"
+	<data-search
+		componentId="BookSensor"
 		dataField="['original_title', 'original_title.search']"
-        ref="data-search"
+		ref="data-search"
 		innerRef="input"
-    />
+	/>
 </template>
 <script>
-export default {
-	name: 'app',
-	mounted() {
-		this.$refs['data-search'].$children[0].$refs['input'].type = "search"
-	}
-};
+	export default {
+		name: 'app',
+		mounted() {
+			this.$refs['data-search'].$children[0].$refs['input'].type = 'search';
+		},
+	};
 </script>
 ```
 
@@ -372,11 +370,9 @@ Or you can also use render as prop.
   can be used to render an error message in case of any error.
 
 ```html
-    <template slot="renderError" slot-scope="error">
-        <div>
-            Something went wrong!<br />Error details<br />{{ error }}
-        </div>
-    </template>
+<template slot="renderError" slot-scope="error">
+	<div>Something went wrong!<br />Error details<br />{{ error }}</div>
+</template>
 ```
 
 - **renderQuerySuggestions** `Function|slot-scope` [optional]
@@ -414,7 +410,7 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
 	componentId="BookSensor"
 	:dataField="['original_title', 'original_title.search']"
 	:URLParams="true"
-    :enablePopularSuggestions="true"
+	:enablePopularSuggestions="true"
 >
 	<div
 		class="suggestions"
@@ -552,6 +548,11 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
 
     > Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
 
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
+
 ## Demo
 
 <br />
@@ -584,16 +585,16 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 	<data-search :parseSuggestion="parseSuggestion" />
 </template>
 <script>
-export default {
-	name: 'app',
-	methods: {
-		parseSuggestion: suggestion => ({
-            label: `${suggestion._source.original_title} by ${suggestion._source.authors}`,
-            value: suggestion._source.original_title,
-            source: suggestion._source  // for onValueSelected to work with renderSuggestion
-        }),
-	},
-};
+	export default {
+		name: 'app',
+		methods: {
+			parseSuggestion: suggestion => ({
+				label: `${suggestion._source.original_title} by ${suggestion._source.authors}`,
+				value: suggestion._source.original_title,
+				source: suggestion._source, // for onValueSelected to work with renderSuggestion
+			}),
+		},
+	};
 </script>
 ```
 
@@ -603,52 +604,52 @@ The `suggestions` parameter receives all the unparsed suggestions from elasticse
 
 ```html
 <template>
-    <data-search
-        className="custom-class"
-        :customQuery="getCustomQuery"
-        :beforeValueChange="handleBeforeValueChange"
-        :react="{
+	<data-search
+		className="custom-class"
+		:customQuery="getCustomQuery"
+		:beforeValueChange="handleBeforeValueChange"
+		:react="{
             and: ['pricingFilter', 'dateFilter'],
             or: ['searchFilter']
         }"
-        @valueChange="handleValueChange"
-        @queryChange="handleQueryChange"
-/>
+		@valueChange="handleValueChange"
+		@queryChange="handleQueryChange"
+	/>
 </template>
 <script>
-export default {
-	name: 'app',
-	methods: {
-		getCustomQuery: (value, props) => {
-            return {
-                query: {
-                    match: {
-                        data_field: "this is a test"
-                    }
-                }
-            }
-        },
-        handleBeforeValueChange: (value) => {
-            // called before the value is set
-            // returns a promise
-            return new Promise((resolve, reject) => {
-                // update state or component props
-                resolve()
-                // or reject()
-            })
-        },
-        handleValueChange: (value) => {
-            console.log("current value: ", value)
-            // set the state
-            // use the value with other js code
-        },
-        handleQueryChange: (prevQuery, nextQuery) => {
-            // use the query with other js code
-            console.log('prevQuery', prevQuery);
-            console.log('nextQuery', nextQuery);
-        }
-	},
-};
+	export default {
+		name: 'app',
+		methods: {
+			getCustomQuery: (value, props) => {
+				return {
+					query: {
+						match: {
+							data_field: 'this is a test',
+						},
+					},
+				};
+			},
+			handleBeforeValueChange: value => {
+				// called before the value is set
+				// returns a promise
+				return new Promise((resolve, reject) => {
+					// update state or component props
+					resolve();
+					// or reject()
+				});
+			},
+			handleValueChange: value => {
+				console.log('current value: ', value);
+				// set the state
+				// use the value with other js code
+			},
+			handleQueryChange: (prevQuery, nextQuery) => {
+				// use the query with other js code
+				console.log('prevQuery', prevQuery);
+				console.log('nextQuery', nextQuery);
+			},
+		},
+	};
 </script>
 ```
 
