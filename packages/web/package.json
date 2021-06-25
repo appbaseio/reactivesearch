@@ -40,7 +40,6 @@
 		"downshift": "^1.31.2",
 		"emotion-theming": "^10.0.27",
 		"hoist-non-react-statics": "^3.2.1",
-		"hotkeys-js": "^3.8.7",
 		"polished": "^1.9.3",
 		"prop-types": "^15.6.0",
 		"react-day-picker": "^7.0.5",
