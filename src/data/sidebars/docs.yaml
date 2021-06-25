@@ -5,8 +5,6 @@
         items:
             - link: /docs/gettingstarted/quickstart/
               title: Overview
-            - link: /docs/gettingstarted/why/
-              title: "Why Appbase.io"
       - group: "Managing Data"
         icon: importData
         items:
@@ -87,8 +85,6 @@
         items:
             - link: /docs/hosting/clusters/
               title: Clusters
-            - link: /docs/hosting/apps/
-              title: Apps
             - link: /docs/hosting/byoc/
               title: "Bring Your Own Cluster"
               items:
