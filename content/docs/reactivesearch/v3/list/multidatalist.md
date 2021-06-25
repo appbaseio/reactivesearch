@@ -226,6 +226,10 @@ Or you can also use render function as children
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
 
 ## Demo
 
