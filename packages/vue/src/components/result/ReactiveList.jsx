@@ -301,8 +301,8 @@ const ReactiveList = {
 				}
 			} // handle window url history change (on native back and forth interactions)
 		},
-		defaultPage(newVal) {
-			if (this.currentPageState !== newVal && this.defaultPage !== newVal) {
+		defaultPage(newVal, oldVal) {
+			if (this.currentPageState !== newVal && oldVal !== newVal) {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
 		},
@@ -419,7 +419,7 @@ const ReactiveList = {
 					class={getClassName(this.$props.innerClass, 'resultsInfo')}
 				>
 					{this.$props.sortOptions ? this.renderSortOptions() : null}
-					{this.$props.showResultStats ? this.renderStats() : null}
+					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && results.length === 0 && streamResults.length === 0
 					? this.renderNoResult()

@@ -182,28 +182,6 @@
     react-leaflet "^2.1.3"
     rheostat "^2.1.1"
 
-"@appbaseio/reactivesearch-vue@1.16.0-alpha.9":
-  version "1.16.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.9.tgz#73c6925c6ded853b1d80366d70a2091056cba0b4"
-  integrity sha512-vNkvc4jpTxzqkMUlStRRbCszkjNHg9/Hzo1KlRZrZDf76LC83yx4LD0pjSgHeW1ptaKxtM+WyU5gVtlYU2dYdg==
-  dependencies:
-    "@appbaseio/reactivecore" "9.11.6"
-    "@appbaseio/vue-emotion" "0.4.4"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^4.1.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "9.2.12"
-    gmap-vue "^1.5.0"
-    hotkeys-js "^3.8.7"
-    ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    url-search-params-polyfill "^7.0.0"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component "^2.8.16"
-    vue-types "^1.7.0"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
@@ -3029,11 +3007,6 @@
     prismjs "^1.6.0"
     prop-types "^15.5.8"
     unescape "^0.2.0"
-
-"@google/markerclustererplus@^5.1.0":
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/@google/markerclustererplus/-/markerclustererplus-5.1.3.tgz#dd7ddbb2a17c977e0b0252c3d8e61fcf502b1bf2"
-  integrity sha512-2wQGO6GGbKPC2tNmTz8ei1zBa64zV3QBBvgLHiPvYqUA63230qNqfQpN+nzsrl1RM40NJtty4Y1CEQKxq6MBGg==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
@@ -16804,13 +16777,6 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-gmap-vue@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/gmap-vue/-/gmap-vue-1.5.0.tgz#43de7cba85c61280bfa65e6450b9d55657e9a82f"
-  integrity sha512-WE0VnSM1EsaTFVsnq53WGnre9cP1Q9DPCr0IiPmaoqsQioAKtTNBNyomrEvg0NIsVuxrdC2qvbgZPXCa8v/mBA==
-  dependencies:
-    "@google/markerclustererplus" "^5.1.0"
-
 good-listener@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/good-listener/-/good-listener-1.2.2.tgz#d53b30cdf9313dffb7dc9a0d477096aa6d145c50"
@@ -17436,11 +17402,6 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.5.0:
   version "2.8.9"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
   integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
-
-hotkeys-js@^3.8.7:
-  version "3.8.7"
-  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.8.7.tgz#c16cab978b53d7242f860ca3932e976b92399981"
-  integrity sha512-ckAx3EkUr5XjDwjEHDorHxRO2Kb7z6Z2Sxul4MbBkN8Nho7XDslQsgMJT+CiJ5Z4TgRxxvKHEpuLE3imzqy4Lg==
 
 hpack.js@^2.1.6:
   version "2.1.6"
@@ -33207,7 +33168,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.3, vue-types@^1.7.0:
+vue-types@^1.3.3:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==
