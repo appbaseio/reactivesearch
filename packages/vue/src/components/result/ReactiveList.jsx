@@ -301,6 +301,8 @@ const ReactiveList = {
 			}
 		},
 		selectedValues(newVal, oldVal) {
+
+			// checking if pagination is added
 			if (this.pagination) {
 				if (!isEqual(newVal, oldVal)) {
 					// excluding the current/ self component
@@ -308,6 +310,8 @@ const ReactiveList = {
 						component => component !== this.componentId,
 					);
 
+					// flag to check if page is reset to first-page 
+					// happens when one of the filters' value change
 					let pageResetToFirstFlag = false;
 					// eslint-disable-next-line
 					for (const filterComponent of filterComponents) {
@@ -320,15 +324,26 @@ const ReactiveList = {
 									oldVal[filterComponent]?.value,
 								))
 						) {
+							// resetting the page number to first
 							this.setPage(0);
 							pageResetToFirstFlag = true;
 							break;
 						}
 					}
 
+					// if page is not reset then filter values not changed
+					// we check if only page number filter has changed
+					// POPSTATE event didn't took care of page changes and stale results were there
 					if (!pageResetToFirstFlag) {
+						// page number to set
 						let page = 0;
-						if (
+
+						// if pagination filter (doesn't && didn't) exist then return
+						if (!newVal[this.componentId] && !oldVal[this.componentId]) {
+							return;
+						}
+						// if popstate or pushstate event fires then pagination filter should have changed
+						else if (
 							!!newVal[this.componentId]
 							&& !!oldVal[this.componentId]
 							&& newVal[this.componentId]?.URLParams
@@ -338,11 +353,13 @@ const ReactiveList = {
 							)
 						) {
 							page = newVal[this.componentId]?.value;
-						} else if (!newVal[this.componentId] && !!oldVal[this.componentId]) {
-							page = 0;
-						} else if (!newVal[this.componentId] && !!oldVal[this.componentId]) {
-							return;
 						}
+						// if page filter is removed then current page should be '1'
+						else if (!newVal[this.componentId] && !!oldVal[this.componentId]) {
+							page = 0;
+						}
+
+						// check if currentpage is already equal to intended page number
 						if (this.currentPageState === page-1) {
 							return;
 						}
@@ -350,7 +367,7 @@ const ReactiveList = {
 						const options = getQueryOptions(this.$props);
 						options.from = this.$data.from;
 						this.from = value;
-						this.currentPageState = page-1;
+						this.currentPageState = page-1; // subtracted '1' due to zero indexing
 						this.loadMoreAction(
 							this.$props.componentId,
 							{
