@@ -23,8 +23,7 @@ class Main extends Component {
 						<MultiDropdownList
 							componentId="BookSensor"
 							dataField="original_series.keyword"
-							size={100}
-							defaultValue={['Anita Blake', 'Alex Cross']}
+							aggregationSize={100}
 						/>
 					</div>
 

@@ -17,6 +17,7 @@ export interface RangeInputProps extends CommonProps {
 	themePreset?: types.themePreset;
 	selectedValue?: types.selectedValue;
 	includeNullValues?: boolean;
+	index?: string;
 }
 
 declare const RangeInput: React.ComponentClass<RangeInputProps>;

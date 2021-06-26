@@ -190,6 +190,12 @@ class DynamicRangeSlider extends Component {
 	}
 
 	componentDidMount() {
+		const { enableAppbase, index } = this.props;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 		this.setReact(this.props);
 	}
 
@@ -557,6 +563,7 @@ DynamicRangeSlider.propTypes = {
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	setCustomQuery: types.funcRequired,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -586,6 +593,7 @@ DynamicRangeSlider.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	includeNullValues: types.bool,
+	index: types.string,
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -647,6 +655,7 @@ const mapStateToProps = (state, props) => {
 		selectedValue: state.selectedValues[props.componentId]
 			? state.selectedValues[props.componentId].value
 			: null,
+		enableAppbase: state.config.enableAppbase,
 	};
 };
 

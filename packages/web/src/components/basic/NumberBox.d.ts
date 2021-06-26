@@ -14,6 +14,7 @@ export interface NumberBoxProps extends CommonProps {
 	queryFormat?: types.queryFormatNumberBox;
 	react?: types.react;
 	title?: types.title;
+	index?: string;
 }
 
 declare const NumberBox: React.ComponentClass<NumberBoxProps>;

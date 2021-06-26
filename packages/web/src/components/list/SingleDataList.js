@@ -64,6 +64,15 @@ class SingleDataList extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { enableAppbase, index } = this.props;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -452,6 +461,7 @@ SingleDataList.propTypes = {
 	options: types.options,
 	rawData: types.rawData,
 	setCustomQuery: types.funcRequired,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -482,6 +492,7 @@ SingleDataList.propTypes = {
 	render: types.func,
 	renderItem: types.func,
 	renderNoResults: types.func,
+	index: types.string,
 	enableStrictSelection: types.bool,
 };
 
@@ -512,6 +523,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

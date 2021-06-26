@@ -432,7 +432,7 @@ class ReactiveMap extends Component {
 			customData: customData || {},
 			loadMore: this.loadMore,
 			base,
-			triggerClickAnalytics: this.triggerClickAnalytics,
+			triggerClickAnalytics: this.triggerAnalytics,
 		};
 	};
 
@@ -966,6 +966,7 @@ class ReactiveMap extends Component {
 			renderSearchAsMove: this.renderSearchAsMove,
 			markerProps,
 			innerRef,
+			triggerClickAnalytics: this.triggerAnalytics,
 			handlePreserveCenter: this.handlePreserveCenter,
 			preserveCenter: this.state.preserveCenter,
 			handleOnDragEnd: this.handleOnDragEnd,

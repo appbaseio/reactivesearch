@@ -27,6 +27,7 @@ export interface SingleDropdownList extends CommonProps {
 	showCount?: boolean;
 	showFilter?: boolean;
 	size?: number;
+	aggregationSize?: number;
 	sortBy?: types.sortByWithCount;
 	title?: types.title;
 	themePreset?: types.themePreset;
@@ -37,6 +38,7 @@ export interface SingleDropdownList extends CommonProps {
 	nestedField?: string;
 	renderNoResults?: (...args: any[]) => any;
 	showSearch?: boolean;
+	index?: string;
 }
 
 declare const SingleDropdownList: React.ComponentClass<SingleDropdownList>;

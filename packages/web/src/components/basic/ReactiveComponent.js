@@ -112,6 +112,7 @@ class ReactiveComponent extends Component {
 			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
 		} = this.props;
 		const initialValue = selectedValue || value || defaultValue || null;
 		const { enableAppbase } = config;
@@ -124,6 +125,11 @@ class ReactiveComponent extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -312,6 +318,7 @@ ReactiveComponent.propTypes = {
 	distinctField: types.string,
 	distinctFieldConfig: types.componentObject,
 	config: types.props,
+	index: types.string,
 };
 
 // Add componentType for SSR
