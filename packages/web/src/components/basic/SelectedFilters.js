@@ -51,10 +51,8 @@ class SelectedFilters extends Component {
 				if (!componentProps[component]) {
 					return true;
 				}
-				if (componentProps[component].range) {
-					valueToSet = componentProps[component].defaultValue
-						? componentProps[component].defaultValue
-						: null;
+				if ([].includes(componentProps[component].componentType)) {
+					// valueToSet =
 				} else if (
 					[
 						'MULTIDROPDOWNLIST',
@@ -65,6 +63,8 @@ class SelectedFilters extends Component {
 						'SINGLELIST',
 						'TAGCLOUD',
 						'TOGGLEBUTTON',
+						'MULTIDROPDOWNRANGE',
+						'MULTIRANGE',
 					].includes(componentProps[component].componentType)
 				) {
 					valueToSet = componentProps[component].defaultValue;
