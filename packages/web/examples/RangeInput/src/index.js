@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { ReactiveBase, RangeInput, ResultList, ReactiveList } from '@appbaseio/reactivesearch';
-import SelectedFilters from '../../../src/components/basic/SelectedFilters';
+
 import './index.css';
 
 const Main = () => (
@@ -25,15 +25,10 @@ const Main = () => (
 						end: '50K',
 					}}
 					URLParams
-					defaultValue={{
-						start: 3500,
-						end: 40000,
-					}}
 				/>
 			</div>
 
 			<div className="col">
-				{/* <SelectedFilters resetToDefault /> */}
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"

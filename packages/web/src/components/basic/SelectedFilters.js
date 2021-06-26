@@ -7,6 +7,7 @@ import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName, handleA11yAction, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import XDate from 'xdate';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
@@ -51,26 +52,57 @@ class SelectedFilters extends Component {
 				if (!componentProps[component]) {
 					return true;
 				}
-				if ([].includes(componentProps[component].componentType)) {
-					// valueToSet =
+				if (
+					[componentTypes.rangeSlider, componentTypes.ratingsFilter].includes(
+						componentProps[component].componentType,
+					)
+				) {
+					valueToSet
+						= typeof componentProps[component].defaultValue === 'object'
+							? [
+								componentProps[component].defaultValue.start,
+								componentProps[component].defaultValue.end,
+							]
+							: null;
 				} else if (
 					[
-						'MULTIDROPDOWNLIST',
-						'MULTIDATALIST',
-						'MULTILIST',
-						'SINGLEDATALIST',
-						'SINGLEDROPDOWNLIST',
-						'SINGLELIST',
-						'TAGCLOUD',
-						'TOGGLEBUTTON',
-						'MULTIDROPDOWNRANGE',
-						'MULTIRANGE',
+						componentTypes.multiDropdownList,
+						componentTypes.multiDataList,
+						componentTypes.multiList,
+						componentTypes.singleDataList,
+						componentTypes.singleDropdownList,
+						componentTypes.singleList,
+						componentTypes.tagCloud,
+						componentTypes.toggleButton,
+						componentTypes.multiDropdownRange,
+						componentTypes.multiRange,
+						componentTypes.singleDropdownRange,
+						componentTypes.singleRange,
+						componentTypes.dataSearch,
+						componentTypes.datePicker,
 					].includes(componentProps[component].componentType)
 				) {
 					valueToSet = componentProps[component].defaultValue;
+				} else if (
+					[componentTypes.categorySearch].includes(
+						componentProps[component].componentType,
+					)
+				) {
+					valueToSet = componentProps[component].defaultValue
+						? componentProps[component].defaultValue.term
+						: '';
+				} else if (
+					[componentTypes.dateRange].includes(componentProps[component].componentType)
+				) {
+					const formatInputDate = (date) => {
+						const xdate = new XDate(date);
+						return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
+					};
+					valueToSet = [
+						formatInputDate(componentProps[component].defaultValue.start),
+						formatInputDate(componentProps[component].defaultValue.end),
+					];
 				}
-				// eslint-disable-next-line
-				console.log(valueToSet);
 				if (!isEqual(selectedValues[component].value, valueToSet)) {
 					this.props.setValue(component, valueToSet);
 				}

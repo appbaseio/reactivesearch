@@ -33,15 +33,6 @@ class RangeInput extends Component {
 		};
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		if (!isEqual(this.props.value, prevProps.value)) {
 			this.handleSlider(this.props.value);
@@ -52,7 +43,7 @@ class RangeInput extends Component {
 	static defaultQuery = RangeSlider.defaultQuery;
 	static parseValue = RangeSlider.parseValue;
 
-	handleInputChange = (e) => {
+	handleInputChange = e => {
 		const { name, value } = e.target;
 		if (Number.isNaN(value)) {
 			// set errors for invalid inputs
@@ -113,9 +104,9 @@ class RangeInput extends Component {
 			return validateRange([value.start, value.end]);
 		}
 		return true;
-	}
+	};
 
-	handleSliderChange = (sliderValue) => {
+	handleSliderChange = sliderValue => {
 		const [start, end] = sliderValue || [this.props.range.start, this.props.range.end];
 		const { value, onChange } = this.props;
 
@@ -142,9 +133,7 @@ class RangeInput extends Component {
 	};
 
 	render() {
-		const {
-			className, style, themePreset, ...rest
-		} = this.props;
+		const { className, style, themePreset, ...rest } = this.props;
 
 		return (
 			<Container style={style} className={className}>
@@ -214,8 +203,6 @@ RangeInput.propTypes = {
 	themePreset: types.themePreset,
 	componentId: types.stringRequired,
 	includeNullValues: types.bool,
-	enableAppbase: types.bool,
-	index: types.string,
 };
 
 RangeInput.defaultProps = {
@@ -232,7 +219,6 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const ConnectedComponent = connect(
