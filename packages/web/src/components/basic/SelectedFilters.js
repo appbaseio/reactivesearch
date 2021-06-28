@@ -49,7 +49,11 @@ class SelectedFilters extends Component {
 		if (resetToDefault) {
 			let valueToSet;
 			Object.keys(selectedValues).map((component) => {
-				if (!componentProps[component]) {
+				if (
+					!componentProps[component]
+					|| !componentProps[component].defaultValue
+					|| !componentProps[component].componentType
+				) {
 					return true;
 				}
 				if (

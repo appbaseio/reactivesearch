@@ -75,7 +75,11 @@ const SelectedFilters = {
 			if (resetToDefault) {
 				let valueToSet;
 				Object.keys(selectedValues).map(component => {
-					if (!componentProps[component] && !componentProps[component].defaultValue) {
+					if (
+						!componentProps[component]
+						|| !componentProps[component].defaultValue
+						|| !componentProps[component].componentType
+					) {
 						return true;
 					}
 					if (
@@ -114,11 +118,11 @@ const SelectedFilters = {
 			}
 			if (value && typeof value === 'object') {
 				// TODO: support for NestedList
-				let label =
-					(typeof value.label === 'string' ? value.label : value.value) ||
-					value.key ||
-					value.distance ||
-					null;
+				let label
+					= (typeof value.label === 'string' ? value.label : value.value)
+					|| value.key
+					|| value.distance
+					|| null;
 
 				if (value.location) {
 					label = `${value.location} - ${label}`;
