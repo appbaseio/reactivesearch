@@ -43,7 +43,7 @@ class RangeInput extends Component {
 	static defaultQuery = RangeSlider.defaultQuery;
 	static parseValue = RangeSlider.parseValue;
 
-	handleInputChange = e => {
+	handleInputChange = (e) => {
 		const { name, value } = e.target;
 		if (Number.isNaN(value)) {
 			// set errors for invalid inputs
@@ -106,7 +106,7 @@ class RangeInput extends Component {
 		return true;
 	};
 
-	handleSliderChange = sliderValue => {
+	handleSliderChange = (sliderValue) => {
 		const [start, end] = sliderValue || [this.props.range.start, this.props.range.end];
 		const { value, onChange } = this.props;
 
@@ -133,7 +133,9 @@ class RangeInput extends Component {
 	};
 
 	render() {
-		const { className, style, themePreset, ...rest } = this.props;
+		const {
+			className, style, themePreset, ...rest
+		} = this.props;
 
 		return (
 			<Container style={style} className={className}>

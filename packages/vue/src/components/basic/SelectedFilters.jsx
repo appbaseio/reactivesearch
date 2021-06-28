@@ -1,4 +1,6 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
@@ -71,14 +73,32 @@ const SelectedFilters = {
 		clearValues() {
 			const { resetToDefault, componentProps, selectedValues } = this;
 			if (resetToDefault) {
-				Object.keys(selectedValues || {}).map(component => {
-					const valueToSet = componentProps?.[component]?.data?.filter(entity =>
-						componentProps?.[component]?.defaultValue.includes(entity.label),
-					);
-					this.setValue(component, valueToSet);
-					console.log('default value', componentProps?.[component]?.defaultValue);
-					console.log('selected values', selectedValues);
-					console.log('value to set', valueToSet[0]);
+				let valueToSet;
+				Object.keys(selectedValues).map(component => {
+					if (!componentProps[component] && !componentProps[component].defaultValue) {
+						return true;
+					}
+					if (
+						[
+							componentTypes.multiDropdownList,
+							componentTypes.multiList,
+							componentTypes.singleDropdownList,
+							componentTypes.singleList,
+							componentTypes.toggleButton,
+							componentTypes.multiRange,
+							componentTypes.dynamicRangeSlider,
+							componentTypes.singleRange,
+							componentTypes.dataSearch,
+							componentTypes.rangeSlider,
+							componentTypes.rangeInput,
+						].includes(componentProps[component].componentType)
+					) {
+						valueToSet = componentProps[component].defaultValue;
+					}
+
+					if (!isEqual(selectedValues[component].value, valueToSet)) {
+						this.setValue(component, valueToSet);
+					}
 					return true;
 				});
 			} else {

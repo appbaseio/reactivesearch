@@ -15,11 +15,10 @@
 							{ start: 3, end: 4, label: 'Rating 3 to 4' },
 							{ start: 4, end: 5, label: 'Rating > 4' },
 						]"
-						:defaultValue="[ 'Rating < 3']"
 					/>
 				</div>
 				<div class="col">
-					<SelectedFilters :resetToDefault="true"/>
+					<SelectedFilters />
 					<ReactiveList
 						componentId="SearchResult"
 						dataField="original_title.keyword"
