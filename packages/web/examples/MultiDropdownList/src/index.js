@@ -28,7 +28,7 @@ class Main extends Component {
 					</div>
 
 					<div className="col">
-						<SelectedFilters resetToDefault />
+						<SelectedFilters />
 						<ReactiveList
 							componentId="SearchResult"
 							dataField="original_title"
@@ -62,9 +62,8 @@ class Main extends Component {
 									{Array(data.average_rating_rounded)
 										.fill('x')
 										.map((item, index) => (
-											<i className="fas fa-star" key={index} />
-										)) // eslint-disable-line
-									}
+											<i className="fas fa-star" key={index} /> // eslint-disable-line
+										))}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>
 							</div>

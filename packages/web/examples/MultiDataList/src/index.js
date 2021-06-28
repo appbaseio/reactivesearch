@@ -29,10 +29,11 @@ const Main = () => (
 						{ label: 'Adventure', value: 'Adventure' },
 						{ label: 'Music', value: 'Music' },
 					]}
+					defaultValue={['Adventure']}
 				/>
 			</div>
 			<div className="col">
-				<SelectedFilters />
+				<SelectedFilters resetToDefault />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="group.group_topics.topic_name_raw.keyword"

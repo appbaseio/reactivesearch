@@ -31,7 +31,6 @@ const SelectedFilters = {
 			return this.$scopedSlots.default({
 				components: this.components,
 				selectedValues: this.selectedValues,
-				componentProps: this.componentProps,
 				clearValues: this.clearValues,
 				setValue: this.setValue,
 			});
@@ -71,46 +70,49 @@ const SelectedFilters = {
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
-			const { resetToDefault, componentProps, selectedValues } = this;
+			const { resetToDefault } = this;
 			if (resetToDefault) {
-				let valueToSet;
-				Object.keys(selectedValues).map(component => {
-					if (
-						!componentProps[component]
-						|| !componentProps[component].defaultValue
-						|| !componentProps[component].componentType
-					) {
-						return true;
-					}
-					if (
-						[
-							componentTypes.multiDropdownList,
-							componentTypes.multiList,
-							componentTypes.singleDropdownList,
-							componentTypes.singleList,
-							componentTypes.toggleButton,
-							componentTypes.multiRange,
-							componentTypes.dynamicRangeSlider,
-							componentTypes.singleRange,
-							componentTypes.dataSearch,
-							componentTypes.rangeSlider,
-							componentTypes.rangeInput,
-						].includes(componentProps[component].componentType)
-					) {
-						valueToSet = componentProps[component].defaultValue;
-					}
-
-					if (!isEqual(selectedValues[component].value, valueToSet)) {
-						this.setValue(component, valueToSet);
-					}
-					return true;
-				});
+				this.clearValuesToDefault();
 			} else {
 				this.clearValuesAction();
 			}
 			this.$emit('clear', null);
 		},
+		clearValuesToDefault() {
+			const { selectedValues } = this;
+			const { componentProps } = this.$$store.getState();
+			let valueToSet;
+			Object.keys(selectedValues).forEach(component => {
+				if (
+					!componentProps[component]
+					|| !componentProps[component].defaultValue
+					|| !componentProps[component].componentType
+				) {
+					return;
+				}
+				if (
+					[
+						componentTypes.multiDropdownList,
+						componentTypes.multiList,
+						componentTypes.singleDropdownList,
+						componentTypes.singleList,
+						componentTypes.toggleButton,
+						componentTypes.multiRange,
+						componentTypes.dynamicRangeSlider,
+						componentTypes.singleRange,
+						componentTypes.dataSearch,
+						componentTypes.rangeSlider,
+						componentTypes.rangeInput,
+					].includes(componentProps[component].componentType)
+				) {
+					valueToSet = componentProps[component].defaultValue;
+				}
 
+				if (!isEqual(selectedValues[component].value, valueToSet)) {
+					this.setValue(component, valueToSet);
+				}
+			});
+		},
 		renderValue(value, isArray) {
 			if (isArray && value.length) {
 				const arrayToRender = value.map(item => this.renderValue(item));
@@ -182,7 +184,6 @@ const SelectedFilters = {
 const mapStateToProps = state => ({
 	components: state.components,
 	selectedValues: state.selectedValues,
-	componentProps: state.props,
 });
 
 const mapDispatchtoProps = {

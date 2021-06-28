@@ -3,17 +3,18 @@ import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import { withTheme } from 'emotion-theming';
 
-import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
+import { setValue, clearValues, resetValuesToDefault } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { getClassName, handleA11yAction, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
-import XDate from 'xdate';
+import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect } from '../../utils';
+import { connect, ReactReduxContext } from '../../utils';
 
 class SelectedFilters extends Component {
+	static contextType = ReactReduxContext;
+
 	constructor(props) {
 		super(props);
 		this.extracted(props);
@@ -34,6 +35,8 @@ class SelectedFilters extends Component {
 		}
 	};
 
+	getStoreAccess = () => (this.context && this.context.storeState ? this.context.storeState : {});
+
 	remove = (component, value = null) => {
 		const { onClear } = this.props;
 		this.props.setValue(component, null);
@@ -43,75 +46,9 @@ class SelectedFilters extends Component {
 	};
 
 	clearValues = () => {
-		const {
-			onClear, resetToDefault, componentProps, selectedValues,
-		} = this.props;
+		const { onClear, resetToDefault } = this.props;
 		if (resetToDefault) {
-			let valueToSet;
-			Object.keys(selectedValues).map((component) => {
-				if (
-					!componentProps[component]
-					|| !componentProps[component].defaultValue
-					|| !componentProps[component].componentType
-				) {
-					return true;
-				}
-				if (
-					[componentTypes.rangeSlider, componentTypes.ratingsFilter].includes(
-						componentProps[component].componentType,
-					)
-				) {
-					valueToSet
-						= typeof componentProps[component].defaultValue === 'object'
-							? [
-								componentProps[component].defaultValue.start,
-								componentProps[component].defaultValue.end,
-							]
-							: null;
-				} else if (
-					[
-						componentTypes.multiDropdownList,
-						componentTypes.multiDataList,
-						componentTypes.multiList,
-						componentTypes.singleDataList,
-						componentTypes.singleDropdownList,
-						componentTypes.singleList,
-						componentTypes.tagCloud,
-						componentTypes.toggleButton,
-						componentTypes.multiDropdownRange,
-						componentTypes.multiRange,
-						componentTypes.singleDropdownRange,
-						componentTypes.singleRange,
-						componentTypes.dataSearch,
-						componentTypes.datePicker,
-					].includes(componentProps[component].componentType)
-				) {
-					valueToSet = componentProps[component].defaultValue;
-				} else if (
-					[componentTypes.categorySearch].includes(
-						componentProps[component].componentType,
-					)
-				) {
-					valueToSet = componentProps[component].defaultValue
-						? componentProps[component].defaultValue.term
-						: '';
-				} else if (
-					[componentTypes.dateRange].includes(componentProps[component].componentType)
-				) {
-					const formatInputDate = (date) => {
-						const xdate = new XDate(date);
-						return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
-					};
-					valueToSet = [
-						formatInputDate(componentProps[component].defaultValue.start),
-						formatInputDate(componentProps[component].defaultValue.end),
-					];
-				}
-				if (!isEqual(selectedValues[component].value, valueToSet)) {
-					this.props.setValue(component, valueToSet);
-				}
-				return true;
-			});
+			this.props.resetValuesToDefault();
 		} else {
 			this.props.clearValues();
 		}
@@ -174,19 +111,19 @@ class SelectedFilters extends Component {
 	};
 
 	// determines whether any filter has been applied regardless of `showFilter=false`
-	hasFilters = () =>
-		Object.keys(this.props.selectedValues)
+	hasFilters = () => {
+		const componentProps = this.getStoreAccess().props;
+		return Object.keys(this.props.selectedValues)
 			.filter(id => this.props.components.includes(id))
 			.some((component) => {
 				const { value } = this.props.selectedValues[component];
 				const isResultComponent
-					= this.props.componentProps[component]
-					&& this.props.componentProps[component].componentType
-						=== componentTypes.reactiveList;
+					= componentProps[component]
+					&& componentProps[component].componentType === componentTypes.reactiveList;
 				const isArray = Array.isArray(value);
 				return ((isArray && value.length) || (!isArray && value)) && !isResultComponent;
 			});
-
+	};
 	render() {
 		if (this.props.render) {
 			return this.props.render(this.props);
@@ -244,8 +181,8 @@ SelectedFilters.propTypes = {
 	render: types.func,
 	title: types.title,
 	onChange: types.func,
-	componentProps: types.props,
 	resetToDefault: types.bool,
+	resetValuesToDefault: types.func,
 };
 
 SelectedFilters.defaultProps = {
@@ -253,19 +190,18 @@ SelectedFilters.defaultProps = {
 	clearAllLabel: 'Clear All',
 	showClearAll: true,
 	style: {},
-	componentProps: {},
 	resetToDefault: false,
 };
 
 const mapStateToProps = state => ({
 	components: state.components,
 	selectedValues: state.selectedValues,
-	componentProps: state.props,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	clearValues: () => dispatch(clearValues()),
 	setValue: (component, value) => dispatch(setValue(component, value)),
+	resetValuesToDefault: () => dispatch(resetValuesToDefault()),
 });
 
 const ConnectedComponent = connect(
