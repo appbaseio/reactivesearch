@@ -693,16 +693,16 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 <img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
 ```jsx
  <CategorySearch
-        showIcon={false}
-        addonBefore={
-          <img
+    showIcon={false}
+    addonBefore={
+        <img
             src="https://img.icons8.com/cute-clipart/64/000000/search.png"
             height="30px"
-          />
-        }
-        id="search-component"
-        ...
-         />
+        />
+    }
+    id="search-component"
+    ...
+ />
 ```
 
 
@@ -711,32 +711,32 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 <img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
 ```jsx
  <CategorySearch
-        showIcon={false}
-        addonAfter={
-          <img
+    showIcon={false}
+    addonAfter={
+        <img
             src="https://img.icons8.com/cute-clipart/64/000000/search.png"
             height="30px"
-          />
-        }
-        id="search-component"
-        ...
-         />
+        />
+    }
+    id="search-component"
+    ...
+ />
 ```
 
 -   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
 <img src="https://i.imgur.com/x3jF23m.png"/>
 ```jsx
- <CategorySearch
-        expandSuggestionsContainer={false}
-        addonBefore={
+<CategorySearch
+    expandSuggestionsContainer={false}
+    addonBefore={
           <img ... />
         }
-        addonAfter={
+    addonAfter={
           <img ... />
         }
-        id="search-component"
-        ...
-         />
+    id="search-component"
+     ...
+/>
 ```
 ## Examples
 
