@@ -27,11 +27,12 @@ const Main = () => (
 					enableRecentSearches
 					enablePopularSuggestions
 					size={5}
+					defaultValue={{ term: 'harry', category: '*' }}
 				/>
 			</div>
 
 			<div className="col">
-				<SelectedFilters />
+				<SelectedFilters resetToDefault />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"

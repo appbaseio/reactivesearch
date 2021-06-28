@@ -1,6 +1,4 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
@@ -8,7 +6,7 @@ import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import { connect } from '../../utils/index';
 
-const { setValue, clearValues } = Actions;
+const { setValue, clearValues, resetValuesToDefault } = Actions;
 const { getClassName, handleA11yAction } = helper;
 
 const SelectedFilters = {
@@ -33,6 +31,7 @@ const SelectedFilters = {
 				selectedValues: this.selectedValues,
 				clearValues: this.clearValues,
 				setValue: this.setValue,
+				resetValuesToDefault: this.resetValuesToDefault,
 			});
 		}
 		const filtersToRender = this.renderFilters();
@@ -72,46 +71,11 @@ const SelectedFilters = {
 		clearValues() {
 			const { resetToDefault } = this;
 			if (resetToDefault) {
-				this.clearValuesToDefault();
+				this.resetValuesToDefault();
 			} else {
 				this.clearValuesAction();
 			}
 			this.$emit('clear', null);
-		},
-		clearValuesToDefault() {
-			const { selectedValues } = this;
-			const { componentProps } = this.$$store.getState();
-			let valueToSet;
-			Object.keys(selectedValues).forEach(component => {
-				if (
-					!componentProps[component]
-					|| !componentProps[component].defaultValue
-					|| !componentProps[component].componentType
-				) {
-					return;
-				}
-				if (
-					[
-						componentTypes.multiDropdownList,
-						componentTypes.multiList,
-						componentTypes.singleDropdownList,
-						componentTypes.singleList,
-						componentTypes.toggleButton,
-						componentTypes.multiRange,
-						componentTypes.dynamicRangeSlider,
-						componentTypes.singleRange,
-						componentTypes.dataSearch,
-						componentTypes.rangeSlider,
-						componentTypes.rangeInput,
-					].includes(componentProps[component].componentType)
-				) {
-					valueToSet = componentProps[component].defaultValue;
-				}
-
-				if (!isEqual(selectedValues[component].value, valueToSet)) {
-					this.setValue(component, valueToSet);
-				}
-			});
 		},
 		renderValue(value, isArray) {
 			if (isArray && value.length) {
@@ -189,6 +153,7 @@ const mapStateToProps = state => ({
 const mapDispatchtoProps = {
 	clearValuesAction: clearValues,
 	setValue,
+	resetValuesToDefault,
 };
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
