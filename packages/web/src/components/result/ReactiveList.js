@@ -349,36 +349,6 @@ class ReactiveList extends Component {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(1, totalPages);
 				}
-			} else if (this.initialFrom && this.initialFrom === this.props.queryLog.from) {
-				// [non-zero] initialFrom matches the current query's from
-				// but the query has changed
-
-				// we need to update the query options in this case
-				// because the initial load had set the query 'from' in the store
-				// which is not valid anymore because the query has changed
-				const options = getQueryOptions(this.props);
-				options.from = 0;
-				this.initialFrom = 0;
-
-				if (this.props.sortOptions) {
-					options.sort = [
-						{
-							[this.props.sortOptions[this.sortOptionIndex].dataField]: {
-								order: this.props.sortOptions[this.sortOptionIndex].sortBy,
-							},
-						},
-					];
-				} else if (this.props.sortBy) {
-					options.sort = [
-						{
-							[this.props.dataField]: {
-								order: this.props.sortBy,
-							},
-						},
-					];
-				}
-
-				this.props.setQueryOptions(this.props.componentId, options, true);
 			}
 		}
 

@@ -41,7 +41,6 @@ class RangeInput extends Component {
 			);
 		}
 	}
-
 	componentDidUpdate(prevProps) {
 		if (!isEqual(this.props.value, prevProps.value)) {
 			this.handleSlider(this.props.value);
@@ -113,7 +112,7 @@ class RangeInput extends Component {
 			return validateRange([value.start, value.end]);
 		}
 		return true;
-	}
+	};
 
 	handleSliderChange = (sliderValue) => {
 		const [start, end] = sliderValue || [this.props.range.start, this.props.range.end];

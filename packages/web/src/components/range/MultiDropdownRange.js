@@ -132,7 +132,6 @@ class MultiDropdownRange extends Component {
 		item, isDefaultValue = false, props = this.props, hasMounted = true,
 	}) => {
 		let { currentValue } = this.state;
-
 		if (!item) {
 			currentValue = [];
 			this.selectedValues = {};
@@ -144,6 +143,16 @@ class MultiDropdownRange extends Component {
 					...this.selectedValues,
 					[value.label]: true,
 				};
+			});
+		} else if (Array.isArray(item) && item.length && typeof item[0] === 'string') {
+			currentValue = props.data.filter(dataItem => item.includes(dataItem.label));
+			this.selectedValues = {};
+			item.forEach((value) => {
+				this.selectedValues = {
+					...this.selectedValues,
+					[value]: true,
+				};
+				return true;
 			});
 		} else if (this.selectedValues[item.label]) {
 			currentValue = currentValue.filter(value => value.label !== item.label);
