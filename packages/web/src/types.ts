@@ -110,6 +110,8 @@ export type rangeLabelsAlign = 'left' | 'right';
 
 export type title = string | any;
 
+export type focusShortcuts = string[] | number[];
+
 export interface location {
 	lat: number;
 	lng: number;
