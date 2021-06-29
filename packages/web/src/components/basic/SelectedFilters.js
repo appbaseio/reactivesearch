@@ -2,7 +2,6 @@
 import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import { withTheme } from 'emotion-theming';
-
 import { setValue, clearValues, resetValuesToDefault } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -10,11 +9,9 @@ import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/util
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect, ReactReduxContext } from '../../utils';
+import { connect } from '../../utils';
 
 class SelectedFilters extends Component {
-	static contextType = ReactReduxContext;
-
 	constructor(props) {
 		super(props);
 		this.extracted(props);
@@ -112,11 +109,11 @@ class SelectedFilters extends Component {
 
 	// determines whether any filter has been applied regardless of `showFilter=false`
 	hasFilters = () => {
-		const componentProps = this.getStoreAccess().props;
-		return Object.keys(this.props.selectedValues)
-			.filter(id => this.props.components.includes(id))
+		const { componentProps, selectedValues, components } = this.props;
+		return Object.keys(selectedValues)
+			.filter(id => components.includes(id))
 			.some((component) => {
-				const { value } = this.props.selectedValues[component];
+				const { value } = selectedValues[component];
 				const isResultComponent
 					= componentProps[component]
 					&& componentProps[component].componentType === componentTypes.reactiveList;
@@ -170,6 +167,7 @@ SelectedFilters.propTypes = {
 	clearValues: types.func,
 	setValue: types.func,
 	components: types.components,
+	componentProps: types.props,
 	selectedValues: types.selectedValues,
 	className: types.string,
 	clearAllLabel: types.title,
@@ -190,12 +188,14 @@ SelectedFilters.defaultProps = {
 	clearAllLabel: 'Clear All',
 	showClearAll: true,
 	style: {},
+	componentProps: {},
 	resetToDefault: false,
 };
 
 const mapStateToProps = state => ({
 	components: state.components,
 	selectedValues: state.selectedValues,
+	componentProps: state.props,
 });
 
 const mapDispatchtoProps = dispatch => ({
