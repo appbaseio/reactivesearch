@@ -332,8 +332,8 @@ class DateRange extends Component {
 		let modCurrentDate = currentDate;
 		if (typeof currentDate.start === 'string' || typeof currentDate.end === 'string') {
 			modCurrentDate = {
-				start: new XDate(currentDate.start)[0],
-				end: new XDate(currentDate.end)[0],
+				start: currentDate.start ? new XDate(currentDate.start)[0] : '',
+				end: currentDate.end ? new XDate(currentDate.end)[0] : '',
 			};
 		}
 		if (modCurrentDate && !(modCurrentDate.start === '' && modCurrentDate.end === '')) {
