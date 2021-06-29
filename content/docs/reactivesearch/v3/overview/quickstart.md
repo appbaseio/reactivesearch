@@ -58,7 +58,7 @@ Alternatively, you can directly add the `@appbaseio/reactivesearch` dependency t
 
 ### Step 2: Adding the first component
 
-Lets add our first ReactiveSearch component: [ReactiveBase](/docs/reactivesearch/v3/overview/reactivebase/), it is a provider component that allows specifying the Elasticsearch index to connect to.
+Lets add our first ReactiveSearch component: [ReactiveBase](/docs/reactivesearch/v3/overview/reactivebase/), it is a provider component that allows specifying the Elasticsearch index to connect to. Here, we will be using an Elasticsearch instance hosted with appbase.io. [Sign up here to create your cluster](https://dashboard.appbase.io/signup?utm_source=docs&utm_medium=react&utm_campaign=appbaseio). If you already have an Elasticsearch cluster setup, you can see [this guide](https://docs.appbase.io/docs/hosting/byoc/) on how to connect appbase.io to it.
 
 ![create an appbase.io index](https://www.dropbox.com/s/qa5nazj2ajaskr6/wky0vrsPPB.gif?raw=1)
 
