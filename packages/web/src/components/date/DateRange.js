@@ -76,6 +76,10 @@ class DateRange extends Component {
 			const { currentDate } = this.state;
 			const { selectedValue, value, onChange } = this.props;
 			// comparing array format of selectedValue with object form of the state if not null
+			const formattedSelectedValue = Array.isArray(selectedValue) && selectedValue.length ? [
+				this.formatInputDate(selectedValue[0]),
+				this.formatInputDate(selectedValue[1]),
+			] : [];
 			if (
 				!isEqual(
 					currentDate
@@ -84,7 +88,7 @@ class DateRange extends Component {
 							this.formatInputDate(currentDate.end),
 						] // prettier-ignore
 						: null,
-					selectedValue,
+					formattedSelectedValue,
 				)
 				&& !isEqual(prevProps.selectedValue, selectedValue)
 			) {
@@ -314,18 +318,29 @@ class DateRange extends Component {
 
 	handleDateChange = (
 		currentDate,
+		// eslint-disable-next-line
 		isDefaultValue = false,
 		props = this.props,
 		hasMounted = true,
 	) => {
 		let value = null;
-		if (currentDate && !(currentDate.start === '' && currentDate.end === '')) {
-			value = isDefaultValue
-				? currentDate
-				: {
-					start: this.formatInputDate(currentDate.start),
-					end: this.formatInputDate(currentDate.end),
-				}; // prettier-ignore
+		// modCurrentDate would check if the currentValue passed is
+		// in correct format or not
+		// when setting value from outside this component
+		// the selectedvalue passed was in a different format and
+		// thus breaking the code
+		let modCurrentDate = currentDate;
+		if (typeof currentDate.start === 'string' || typeof currentDate.end === 'string') {
+			modCurrentDate = {
+				start: new XDate(currentDate.start)[0],
+				end: new XDate(currentDate.end)[0],
+			};
+		}
+		if (modCurrentDate && !(modCurrentDate.start === '' && modCurrentDate.end === '')) {
+			value = {
+				start: this.formatInputDate(modCurrentDate.start),
+				end: this.formatInputDate(modCurrentDate.end),
+			}; // prettier-ignore
 		}
 
 		const performUpdate = () => {
@@ -337,7 +352,7 @@ class DateRange extends Component {
 			if (hasMounted) {
 				this.setState(
 					{
-						currentDate,
+						currentDate: modCurrentDate,
 					},
 					handleUpdates,
 				);

@@ -54,7 +54,6 @@ const MultiRange = {
 		},
 		selectItem(item, isDefaultValue = false, props = this.$props, reset = false) {
 			let { currentValue, selectedValues } = this;
-
 			if (!item) {
 				currentValue = [];
 				selectedValues = {};
@@ -76,7 +75,10 @@ const MultiRange = {
 			} else {
 				const currentItems = props.data.filter(value => item.indexOf(value.label) !== -1);
 				currentValue = [...currentValue, ...currentItems];
-				selectedValues = { ...selectedValues, [item]: true };
+				selectedValues = {
+					...selectedValues,
+					[typeof item === 'object' ? item.label : item]: true,
+				};
 			}
 
 			const performUpdate = () => {
@@ -138,7 +140,7 @@ const MultiRange = {
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
-				this.selectItem(newVal);
+				this.selectItem(newVal, true, undefined, true);
 			}
 		},
 		customQuery(newVal, oldVal) {
