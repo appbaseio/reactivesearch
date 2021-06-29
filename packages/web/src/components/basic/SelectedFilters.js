@@ -32,8 +32,6 @@ class SelectedFilters extends Component {
 		}
 	};
 
-	getStoreAccess = () => (this.context && this.context.storeState ? this.context.storeState : {});
-
 	remove = (component, value = null) => {
 		const { onClear } = this.props;
 		this.props.setValue(component, null);
