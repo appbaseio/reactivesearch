@@ -19,6 +19,7 @@ export interface RatingsFilterProps extends CommonProps {
 	dimmedIcon?: React.ElementType;
 	icon?: React.ElementType;
 	includeNullValues?: boolean;
+	index?: string;
 }
 
 declare const RatingsFilter: React.ComponentClass<RatingsFilterProps>;

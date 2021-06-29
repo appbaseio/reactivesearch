@@ -119,12 +119,11 @@ class DataSearch extends Component {
 			fetchRecentSearches,
 			componentId,
 			aggregationField,
-			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
+			enableAppbase,
 		} = this.props;
-
-		const { enableAppbase } = config;
 
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
@@ -146,6 +145,11 @@ class DataSearch extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 		fetchPopularSuggestions(componentId);
@@ -332,7 +336,6 @@ class DataSearch extends Component {
 				},
 			};
 		}
-
 		return finalQuery;
 	};
 
@@ -340,9 +343,10 @@ class DataSearch extends Component {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-				? `^${props.fieldWeights[index]}`
-				: ''
+			const queryField = `${field}${
+				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
+					? `^${props.fieldWeights[index]}`
+					: ''
 			}`;
 			if (
 				!(
@@ -1362,15 +1366,16 @@ DataSearch.propTypes = {
 	triggerAnalytics: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	config: types.props,
 	lastUsedQuery: types.string,
 	time: types.number,
+	enableAppbase: types.bool,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
 	enableSynonyms: types.bool,
 	distinctField: types.string,
 	distinctFieldConfig: types.componentObject,
+	index: types.string,
 	// TODO: Remove in v4
 	enableQuerySuggestions: types.bool,
 	enablePopularSuggestions: types.bool,
@@ -1501,7 +1506,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,

@@ -38,6 +38,7 @@ export interface SingleDropdownList extends CommonProps {
 	nestedField?: string;
 	renderNoResults?: (...args: any[]) => any;
 	showSearch?: boolean;
+	index?: string;
 }
 
 declare const SingleDropdownList: React.ComponentClass<SingleDropdownList>;

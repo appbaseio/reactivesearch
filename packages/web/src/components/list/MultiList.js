@@ -82,6 +82,15 @@ class MultiList extends Component {
 		}
 	}
 
+	componentDidMount() {
+		const { enableAppbase, index } = this.props;
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+	}
+
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField, options } = this.props;
@@ -656,6 +665,7 @@ MultiList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
+	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -696,6 +706,7 @@ MultiList.propTypes = {
 	missingLabel: types.string,
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
+	index: types.string,
 };
 
 MultiList.defaultProps = {
@@ -731,6 +742,7 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -263,12 +263,11 @@ class CategorySearch extends Component {
 			fetchRecentSearches,
 			componentId,
 			aggregationField,
-			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
+			enableAppbase,
 		} = this.props;
-
-		const { enableAppbase } = config;
 
 		// TODO: Remove in 4.0
 		if (enableQuerySuggestions !== undefined) {
@@ -290,6 +289,11 @@ class CategorySearch extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 		if (enableRecentSearches) {
@@ -1484,7 +1488,7 @@ CategorySearch.propTypes = {
 	suggestions: types.suggestions,
 	aggregationData: types.aggregationData,
 	isLoading: types.bool,
-	config: types.props,
+	enableAppbase: types.bool,
 	triggerAnalytics: types.funcRequired,
 	setCustomQuery: types.funcRequired,
 	setDefaultQuery: types.funcRequired,
@@ -1501,6 +1505,7 @@ CategorySearch.propTypes = {
 	enableQuerySuggestions: types.bool,
 	distinctField: types.string,
 	distinctFieldConfig: types.componentObject,
+	index: types.string,
 	// TODO: Remove in v4
 	enablePopularSuggestions: types.bool,
 	enableRecentSearches: types.bool,
@@ -1636,7 +1641,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,

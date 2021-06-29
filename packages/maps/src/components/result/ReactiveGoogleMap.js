@@ -99,6 +99,7 @@ class ReactiveGoogleMap extends Component {
 			handlePreserveCenter: params.handlePreserveCenter,
 			onPopoverClick: params.onPopoverClick,
 			markerProps: this.props.markerProps,
+			triggerClickAnalytics: params.triggerClickAnalytics,
 		};
 
 		return (
@@ -218,6 +219,7 @@ ReactiveGoogleMap.propTypes = {
 	defaultRadius: types.number,
 	unit: types.string,
 	autoClosePopover: types.bool,
+	triggerClickAnalytics: types.func,
 	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line

@@ -47,11 +47,13 @@ const DynamicRangeSlider = {
 		innerClass: types.style,
 		react: types.react,
 		showFilter: VueTypes.bool.def(true),
+		destroyOnUnmount: VueTypes.bool,
 		showCheckbox: VueTypes.bool.def(true),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
+		index: VueTypes.string,
 	},
 
 	data() {
@@ -76,6 +78,11 @@ const DynamicRangeSlider = {
 			this.$props,
 			componentTypes.dynamicRangeSlider,
 		);
+		if (!this.enableAppbase && this.$props.index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
@@ -83,16 +90,22 @@ const DynamicRangeSlider = {
 		this.setReact();
 	},
 	beforeMount() {
-		this.addComponent(this.$props.componentId);
-		this.addComponent(this.internalRangeComponent);
-		if (Array.isArray(this.selectedValue)) {
-			this.handleChange(this.selectedValue);
-		} else if (this.selectedValue) {
-			this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
+		let components = [];
+		if (this.$$store) {
+			({ components } = this.$$store.getState());
 		}
+		if (this.destroyOnUnmount || components.indexOf(this.componentId) === -1) {
+			this.addComponent(this.componentId);
+			this.addComponent(this.internalRangeComponent);
+			if (Array.isArray(this.selectedValue)) {
+				this.handleChange(this.selectedValue);
+			} else if (this.selectedValue) {
+				this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
+			}
 
-		// get range before executing other queries
-		this.updateRangeQueryOptions();
+			// get range before executing other queries
+			this.updateRangeQueryOptions();
+		}
 	},
 
 	beforeUpdate() {
@@ -102,8 +115,10 @@ const DynamicRangeSlider = {
 	},
 
 	beforeDestroy() {
-		this.removeComponent(this.$props.componentId);
-		this.removeComponent(this.internalRangeComponent);
+		if (this.destroyOnUnmount) {
+			this.removeComponent(this.$props.componentId);
+			this.removeComponent(this.internalRangeComponent);
+		}
 	},
 
 	methods: {
@@ -274,7 +289,7 @@ const DynamicRangeSlider = {
 	},
 
 	render() {
-		if (!this.range) {
+		if (!this.range || !this.currentValue) {
 			return null;
 		}
 		const { start, end } = this.range;
@@ -398,6 +413,7 @@ const mapStateToProps = (state, props) => {
 			? state.selectedValues[props.componentId].value
 			: null,
 		componentProps: state.props[props.componentId],
+		enableAppbase: state.config.enableAppbase,
 	};
 };
 

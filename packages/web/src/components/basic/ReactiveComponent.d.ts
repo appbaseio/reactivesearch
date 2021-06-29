@@ -22,6 +22,7 @@ export interface ReactiveComponentProps {
 	URLParams?: boolean;
 	distinctField?: string;
 	distinctFieldConfig?: object;
+	index?: string;
 }
 
 declare const ReactiveComponent: React.ComponentClass<ReactiveComponentProps>;

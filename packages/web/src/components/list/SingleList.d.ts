@@ -38,6 +38,7 @@ export interface SingleList extends CommonProps {
 	loadMoreLabel?: types.title;
 	children?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
+	index?: string;
 	enableStrictSelection?: boolean;
 }
 

@@ -80,12 +80,11 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		const {
 			aggregationField,
-			config,
 			distinctField,
 			distinctFieldConfig,
+			index,
+			enableAppbase,
 		} = this.props;
-
-		const { enableAppbase } = config;
 
 		if (enableAppbase && aggregationField) {
 			console.warn(
@@ -95,6 +94,11 @@ class ReactiveList extends Component {
 		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -343,36 +347,6 @@ class ReactiveList extends Component {
 				if (this.props.onPageChange) {
 					this.props.onPageChange(1, totalPages);
 				}
-			} else if (this.initialFrom && this.initialFrom === this.props.queryLog.from) {
-				// [non-zero] initialFrom matches the current query's from
-				// but the query has changed
-
-				// we need to update the query options in this case
-				// because the initial load had set the query 'from' in the store
-				// which is not valid anymore because the query has changed
-				const options = getQueryOptions(this.props);
-				options.from = 0;
-				this.initialFrom = 0;
-
-				if (this.props.sortOptions) {
-					options.sort = [
-						{
-							[this.props.sortOptions[this.sortOptionIndex].dataField]: {
-								order: this.props.sortOptions[this.sortOptionIndex].sortBy,
-							},
-						},
-					];
-				} else if (this.props.sortBy) {
-					options.sort = [
-						{
-							[this.props.dataField]: {
-								order: this.props.sortBy,
-							},
-						},
-					];
-				}
-
-				this.props.setQueryOptions(this.props.componentId, options, true);
 			}
 		}
 
@@ -859,6 +833,7 @@ ReactiveList.propTypes = {
 	queryLog: types.props,
 	error: types.title,
 	headers: types.headers,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -905,6 +880,7 @@ ReactiveList.propTypes = {
 	distinctFieldConfig: types.componentObject,
 	// eslint-disable-next-line
 	originalProps: types.any,
+	index: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -948,6 +924,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
+	enableAppbase: state.config.enableAppbase,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId] || [],

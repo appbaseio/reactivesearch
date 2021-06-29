@@ -79,6 +79,7 @@ export interface DataSearchProps extends CommonProps {
 	addonBefore?: types.children;
 	addonAfter?: types.children;
 	expandSuggestionsContainer?: boolean;
+	index?: string;
 }
 declare const DataSearch: React.ComponentClass<DataSearchProps>;
 
