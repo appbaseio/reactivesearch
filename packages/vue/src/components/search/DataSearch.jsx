@@ -219,7 +219,7 @@ const DataSearch = {
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
 		includeFields: types.includeFields.def(['*']),
 		innerClass: types.style,
-		innerRef: types.string,
+		innerRef: types.string.def('searchInputField'),
 		render: types.func,
 		renderQuerySuggestions: types.func,
 		renderPopularSuggestions: types.func,
@@ -254,7 +254,7 @@ const DataSearch = {
 		addonBefore: VueTypes.any,
 		addonAfter: VueTypes.any,
 		expandSuggestionsContainer: types.bool.def(true),
-		index: VueTypes.string
+		index: VueTypes.string,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -758,15 +758,15 @@ const DataSearch = {
 								className={getClassName(innerClass, 'mic') || null}
 							/>
 						)}
-						{iconPosition === 'right' && (
+						{iconPosition === 'right' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
-								{this.renderIcon()}
+								{this.renderIcon()} 
 							</IconWrapper>
 						)}
 					</IconGroup>
 
 					<IconGroup groupPosition="left" positionType="absolute">
-						{iconPosition === 'left' && (
+						{iconPosition === 'left' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
 								{this.renderIcon()}
 							</IconWrapper>
@@ -787,8 +787,8 @@ const DataSearch = {
 				// already in an input
 				return;
 			}
-			// eslint-disable-next-line no-unused-expressions
-			this.$refs.searchInputField?.focus();
+
+			this.$refs?.[this.$props.innerRef]?.focus(); // eslint-disable-line
 		},
 		listenForFocusShortcuts() {
 			const { focusShortcuts = ['/'] } = this.$props;
@@ -1045,8 +1045,7 @@ const DataSearch = {
 													showIcon={this.$props.showIcon}
 													showClear={this.$props.showClear}
 													iconPosition={this.$props.iconPosition}
-													ref="searchInputField"
-													innerRef={this.$props.innerRef}
+													ref={this.$props.innerRef}
 													class={getClassName(
 														this.$props.innerClass,
 														'input',
@@ -1163,8 +1162,7 @@ const DataSearch = {
 									iconPosition={this.$props.iconPosition}
 									showIcon={this.$props.showIcon}
 									showClear={this.$props.showClear}
-									ref="searchInputField"
-									innerRef={this.$props.innerRef}
+									ref={this.$props.innerRef}
 									themePreset={this.themePreset}
 								/>
 								{this.renderIcons()}
