@@ -64,6 +64,7 @@
 		"eslint-config-airbnb-base": "^13.1.0",
 		"eslint-config-prettier": "^3.1.0",
 		"eslint-plugin-vue": "^4.7.1",
+		"eslint": "^4.12.0",
 		"nps": "^5.9.3",
 		"nps-utils": "^1.7.0",
 		"rollup": "^1.20.3",

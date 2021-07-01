@@ -313,15 +313,13 @@ const ReactiveList = {
 		}
 
 		if (this.defaultPage < 0 && this.currentPage > 0) {
-			if (this.$props.URLParams) {
-				this.setPageURL(
-					this.$props.componentId,
-					this.currentPage,
-					this.$props.componentId,
-					false,
-					true,
-				);
-			}
+			this.setPageURL(
+				this.$props.componentId,
+				this.currentPage,
+				this.$props.componentId,
+				false,
+				this.URLParams,
+			);
 		}
 		let options = getQueryOptions(this.$props);
 		options.from = this.$data.from;
@@ -622,15 +620,13 @@ const ReactiveList = {
 					},
 					false,
 				);
-				if (this.$props.URLParams) {
-					this.setPageURL(
-						this.$props.componentId,
-						page + 1,
-						this.$props.componentId,
-						false,
-						true,
-					);
-				}
+				this.setPageURL(
+					this.$props.componentId,
+					page + 1,
+					this.$props.componentId,
+					false,
+					this.URLParams,
+				);
 			}
 		},
 
@@ -639,7 +635,7 @@ const ReactiveList = {
 				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
-			} else if (this.stats.numberOfResults) {
+			} if (this.stats.numberOfResults) {
 				return (
 					<p
 						class={`${resultStats} ${getClassName(

@@ -10270,9 +10270,9 @@ content-type@^1.0.4, content-type@~1.0.4:
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
 contentful-management@^7.5.1:
-  version "7.26.0"
-  resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-7.26.0.tgz#ee351fada26fbc63c440ccc4dd54592d2751f64e"
-  integrity sha512-o2ltgPUjMsR4i8bQVsxZQQO01xx23rt2lKGWKKzSfFRZFHzLtFo2YFOAUlTYsKnzmZ4IG34K2fk+P40rS0fOdQ==
+  version "7.27.0"
+  resolved "https://registry.yarnpkg.com/contentful-management/-/contentful-management-7.27.0.tgz#9432034f8a98d06c8027fb85b273ff405f5bdbf7"
+  integrity sha512-HGwUmR0160TI9RNiqLWjlFpPmjiXGC2VAgtzqM0mXMCJKJTzLBmsETVycQ7Nwip+2+CHdDRta5a9vQEN89UNTw==
   dependencies:
     "@types/json-patch" "0.0.30"
     axios "^0.21.0"
@@ -12160,9 +12160,9 @@ ejs@^2.6.1, ejs@^2.7.4:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.247, electron-to-chromium@^1.3.30, electron-to-chromium@^1.3.47, electron-to-chromium@^1.3.488, electron-to-chromium@^1.3.723:
-  version "1.3.761"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.761.tgz#6a1748bab8ed94984391ec8be8a7e7ec1fe3d843"
-  integrity sha512-7a/wV/plM/b95XjTdA2Q4zAxxExTDKkNQpTiaU/nVT8tGCQVtX9NsnTjhALBFICpOB58hU6xg5fFC3CT2Bybpg==
+  version "1.3.763"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.763.tgz#93f6f02506d099941f557b9db9ba50b30215bf15"
+  integrity sha512-UyvEPae0wvzsyNJhVfGeFSOlUkHEze8xSIiExO5tZQ8QTr7obFiJWGk3U4e7afFOJMQJDszqU/3Pk5jtKiaSEg==
 
 element-resize-detector@^1.2.1:
   version "1.2.3"
@@ -12963,7 +12963,7 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.1.0.tgz#f65328259305927392c938ed44eb0a5c9b2bd303"
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
-eslint@^4.19.1, eslint@^4.4.0:
+eslint@^4.12.0, eslint@^4.19.1, eslint@^4.4.0:
   version "4.19.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.19.1.tgz#32d1d653e1d90408854bfb296f076ec7e186a300"
   integrity sha512-bT3/1x1EbZB7phzYu7vCr1v3ONuzDtX8WjuM9c0iYxe+cq+pwcKEoQjl7zd3RpC6YOLgnSy3cTN58M2jcoPDIQ==
@@ -26292,7 +26292,7 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
@@ -29662,9 +29662,9 @@ sudo-prompt@^8.2.0:
   integrity sha512-rlBo3HU/1zAJUrkY6jNxDOC9eVYliG6nS4JA8u8KAshITd07tafMc/Br7xQwCSseXwJ2iCcHCE8SNWX3q8Z+kw==
 
 sumoselect@^3.0.3:
-  version "3.3.21"
-  resolved "https://registry.yarnpkg.com/sumoselect/-/sumoselect-3.3.21.tgz#af1dec0bdb3b8b02daf3188f37a5e6ad74f196d5"
-  integrity sha512-Q6zwidKY+Fs3QJaxm3vfav/9QyF6gaaXJ7wHG0Cv4kQGQ9v84jcVtV2poimdII1Y99tF453A9/q5EUUZJN3z5Q==
+  version "3.3.22"
+  resolved "https://registry.yarnpkg.com/sumoselect/-/sumoselect-3.3.22.tgz#9c1704fce6bc3080ed96a5d374f93002d35bd766"
+  integrity sha512-Boh6TgsTKebCs1DFG9YkmdDVDVfMpa8jHK8ellZrSLGZdParvxOA0ilVvb/TSSVHyyqbP93cxJ5zNB2QzlMq5A==
   dependencies:
     jquery ">=1.6"
 
@@ -30679,9 +30679,9 @@ ua-parser-js@^0.7.18, ua-parser-js@^0.7.19, ua-parser-js@^0.7.28:
   integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
 
 ufo@^0.7.4:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/ufo/-/ufo-0.7.5.tgz#5d5b2174747c0072edd30501994c8ac4ad2e77ea"
-  integrity sha512-FGG+EgguC1oz5dTE1JptPWCyj6Z9mYpwvZY8PTu9Vh/Aoy+Mj9cpeQ3gg4kyEMDbMrH+lTYiw7bomG58B8X7Kg==
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/ufo/-/ufo-0.7.7.tgz#0062f9e5e790819b0fb23ca24d7c63a4011c036a"
+  integrity sha512-N25aY3HBkJBnahm+2l4JRBBrX5I+JPakF/tDHYDTjd3wUR7iFLdyiPhj8mBwBz21v728BKwM9L9tgBfCntgdlw==
 
 uglify-es@^3.1.9, uglify-es@^3.3.4:
   version "3.3.9"
@@ -32806,9 +32806,9 @@ xstate@^3.1.0:
   integrity sha512-p0ZYDPWxZZZRAJyD3jaGO9/MYioHuxZp6sjcLhPfBZHAprl4EDrZRGDqRVH9VvK8oa6Nrbpf+U5eNmn8KFwO3g==
 
 xstate@^4.11.0, xstate@^4.9.1:
-  version "4.20.1"
-  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.20.1.tgz#d841b241f53d11ceaaf93a05f1ee156873f4858c"
-  integrity sha512-oLqFEYKUG3Y4t3Pg5tb7ZXz2kZcrRA1inrEVfzDVf1JoBb+KGpKlNaLzxF5bE7swo0xcc8H+B/gdPb1feyO1gg==
+  version "4.20.2"
+  resolved "https://registry.yarnpkg.com/xstate/-/xstate-4.20.2.tgz#a22e6e63fc327b8d707494be3bf4897fb7890b37"
+  integrity sha512-HvU+NCYffTOC1oiopNKve3IdLNRpuvNa3tv+fhM8mo9+TGCF35wIMQJON7bWG/2041ySBKw78PW2goV+Ug073w==
 
 xtend@^2.2.0:
   version "2.2.0"
