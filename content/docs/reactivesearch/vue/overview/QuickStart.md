@@ -44,7 +44,7 @@ or
 
 Alternatively, you can go to Codesandbox.io and choose the Vue Template
 
-![Vue Template, Codesandbox](https://i.imgur.com/Vl4BVZ0.png).
+![Vue Template, Codesandbox](https://i.imgur.com/7zy9GVh.png).
 
 ### Step 1: Install ReactiveSearch
 

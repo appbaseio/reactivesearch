@@ -1,7 +1,7 @@
 ---
 title: 'Quickstart'
 meta_title: 'ReactiveSearch Quickstart'
-meta_description: 'React Search UI components for Elasticsearch'
+meta_description: 'Getting started with ReactiveSearch, a search UI components library for Elasticsearch'
 keywords:
     - reactivesearch
     - quickstart
