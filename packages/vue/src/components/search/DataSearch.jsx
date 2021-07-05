@@ -531,9 +531,6 @@ const DataSearch = {
 			) {
 				this.isPending = false;
 				this.setValue(results[0][0].transcript.trim(), true);
-				if (this.$props.autosuggest) {
-					this.isOpen = true;
-				}
 			}
 		},
 		triggerQuery() {
