@@ -755,7 +755,6 @@ class CategorySearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
-		const { autosuggest } = this.props;
 		if (
 			results
 			&& results[0]
@@ -765,13 +764,7 @@ class CategorySearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), !autosuggest);
-			if (autosuggest) {
-				this._inputRef.focus();
-				this.setState({
-					isOpen: true,
-				});
-			}
+			this.setValue(results[0][0].transcript.trim(), true);
 		}
 	};
 
