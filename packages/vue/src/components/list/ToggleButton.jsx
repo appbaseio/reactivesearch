@@ -29,6 +29,7 @@ const ToggleButton = {
 		URLParams: VueTypes.bool,
 		renderItem: types.func,
 		index: VueTypes.string,
+		enableStrictSelection: VueTypes.bool,
 	},
 	data() {
 		this.__state = {
@@ -85,8 +86,8 @@ const ToggleButton = {
 					: null;
 
 				if (
-					!isEqual(currentValue, this.selectedValue)
-					&& !isEqual(oldVal, this.selectedValue)
+					!isEqual(currentValue, this.selectedValue) &&
+					!isEqual(oldVal, this.selectedValue)
 				) {
 					this.handleToggle(this.selectedValue || [], true, this.$props);
 				}
@@ -181,6 +182,14 @@ const ToggleButton = {
 		},
 
 		handleClick(item) {
+			const { enableStrictSelection, multiSelect } = this.$props;
+			if (
+				enableStrictSelection &&
+				!multiSelect &&
+				this.$data.currentValue.find(stateItem => isEqual(item, stateItem))
+			) {
+				return false;
+			}
 			const { value } = this.$props;
 			if (value === undefined) {
 				this.handleToggle(item);
@@ -193,7 +202,9 @@ const ToggleButton = {
 			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
 			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
 
-			return renderItem ? renderItem({ item, isSelected, handleClick: () => this.handleClick(item) }) : (
+			return renderItem ? (
+				renderItem({ item, isSelected, handleClick: () => this.handleClick(item) })
+			) : (
 				<Button
 					class={`${getClassName(this.$props.innerClass, 'button')} ${
 						isSelected ? 'active' : ''
@@ -207,7 +218,7 @@ const ToggleButton = {
 				>
 					{item.label}
 				</Button>
-			)
+			);
 		},
 	},
 
@@ -266,9 +277,9 @@ ToggleButton.defaultQuery = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	componentProps: state.props[props.componentId],
 	enableAppbase: state.config.enableAppbase,
 });
