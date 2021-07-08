@@ -15,8 +15,6 @@
 							{ label: 'Adventure', value: 'Adventure' },
 							{ label: 'Music', value: 'Music' },
 						]"
-						:enableStrictSelection="true"
-						:multiSelect="false"
 					/>
 				</div>
 				<div class="col">
