@@ -216,10 +216,19 @@ class ToggleButton extends Component {
 
 	handleClick = (item, e) => {
 		e.preventDefault();
+		const { enableStrictSelection, multiSelect } = this.props;
+		if (
+			enableStrictSelection
+			&& !multiSelect
+			&& this.state.currentValue.find(stateItem => isEqual(item, stateItem))
+		) {
+			return false;
+		}
 		const { value, onChange } = this.props;
 		if (value === undefined) {
 			this.handleToggle(item);
 		} else if (onChange) onChange(item);
+		return true;
 	};
 
 	render() {
@@ -285,6 +294,7 @@ ToggleButton.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	index: types.string,
+	enableStrictSelection: types.bool,
 };
 
 ToggleButton.defaultProps = {
@@ -293,6 +303,7 @@ ToggleButton.defaultProps = {
 	showFilter: true,
 	style: {},
 	URLParams: false,
+	enableStrictSelection: false,
 };
 
 // Add componentType for SSR

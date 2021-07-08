@@ -642,15 +642,13 @@ class ReactiveList extends Component {
 	};
 
 	updatePageURL = (page) => {
-		if (this.props.URLParams) {
-			this.props.setPageURL(
-				this.props.componentId,
-				page + 1,
-				this.props.componentId,
-				false,
-				true,
-			);
-		}
+		this.props.setPageURL(
+			this.props.componentId,
+			page + 1,
+			this.props.componentId,
+			false,
+			this.props.URLParams,
+		);
 	};
 
 	triggerClickAnalytics = (searchPosition, documentId) => {
