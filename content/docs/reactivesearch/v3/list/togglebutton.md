@@ -83,7 +83,10 @@ Example uses:
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **onChange** `function` [optional]
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
-
+-   **enableStrictSelection** `Boolean` [optional]
+    When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
+    
+	> Note: This only works when `multiSelect` prop is set to `false`.
 ## Demo
 
 <br />
