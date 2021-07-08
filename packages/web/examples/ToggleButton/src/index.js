@@ -27,6 +27,8 @@ const Main = () => (
 						{ label: 'Adventure', value: 'Adventure' },
 						{ label: 'Music', value: 'Music' },
 					]}
+					enableStrictSelection
+					multiSelect={false}
 				/>
 			</div>
 			<div className="col">
