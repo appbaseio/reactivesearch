@@ -86,6 +86,7 @@ Example uses:
 -   **enableStrictSelection** `Boolean` [optional]
     When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
     
+	> Note: This only works when `multiSelect` prop is set to `false`.
 ## Demo
 
 <br />
