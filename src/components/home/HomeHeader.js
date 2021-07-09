@@ -34,9 +34,8 @@ class HomeHeader extends React.Component {
 							className={`${Spirit.sectionSubHeading} lh-1-65 f1 darkgrey`}
 							style={{ lineHeight: '1.6' }}
 						>
-							Appbase.io offers the search stack for building modern apps. Import data
-							instantly from your favorite sources. Deploy in minutes with a fully
-							managed backend. Build amazing search Ux with reactive UI components.
+							Appbase.io offers a supercharged experience for building app search. Host in our cloud or connect to your Elasticsearch. Import data
+							instantly from your favorite sources. Create relevance visually. Build delightful search experiences with our low code UI kits.
 						</p>
 						<div className="mt8">
 							<Button
@@ -73,23 +72,23 @@ class HomeHeader extends React.Component {
 						<div className="graphic">
 							<img src="images/app-cluster@3x.png" />
 							<p className={`${Spirit.p} middarkgrey text-center`}>
-								Host Anywhere
-							</p>
-						</div>
-						<div className="graphic">
-							<img src="images/home-search-relevancy@3x.png" />
-							<p className={`${Spirit.p} middarkgrey text-center`}>
-								Set Search Relevancy
+								Choose how to deploy
 							</p>
 						</div>
 						<div className="graphic">
 							<img src="images/home-search@3x.png" />
-							<p className={`${Spirit.p} middarkgrey text-center`}>Build Search UI</p>
+							<p className={`${Spirit.p} middarkgrey text-center`}>Low code UI Kits</p>
+						</div>
+						<div className="graphic">
+							<img src="images/home-search-relevancy@3x.png" />
+							<p className={`${Spirit.p} middarkgrey text-center`}>
+								Search Relevance ⚙️ 
+							</p>
 						</div>
 						<div className="graphic">
 							<img src="images/home-analytics@3x.png" />
 							<p className={`${Spirit.p} middarkgrey text-center`}>
-								Actionable Analytics
+								Search Insights
 							</p>
 						</div>
 					</div>
