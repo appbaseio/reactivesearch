@@ -375,7 +375,28 @@ For example,
 -   **value** `string` [optional]
     sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
 
--   **onChange** `Function` is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes.
+-   **onChange** `function` [optional]
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
+
+    ```js
+    <SearchBox
+    	value={this.state.text}
+    	onChange={(value, searchComponent) => {
+    		// Perform actions after updating the value
+    		this.setState(
+    			{
+    				text: value,
+    			},
+    			() => {
+    				// To fetch suggestions
+    				searchComponent.triggerDefaultQuery();
+    				// To update results
+    				searchComponent.triggerCustomQuery();
+    			},
+    		);
+    	}}
+    />
+    ```
 
 ### Callbacks for change events
 
@@ -395,6 +416,12 @@ For example,
     - **raw**: `Object` Response returned by ES composite aggs query in the raw form.
     - **rawData**: `Object` An object of raw response as-is from elasticsearch query.
     - **afterKey**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the afterKey parameter to retrieve the next
+
+-   **onBlur** `Function` is a callback handler for input blur event
+
+-   **onKeyPress** `Function` is a callback handler for keypress event
+
+-   **onFocus** `Function` is a callback handler for input focus event
 
 ### To customize the query execution
 
