@@ -379,23 +379,30 @@ For example,
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 
     ```js
-    <SearchBox
-    	value={this.state.text}
-    	onChange={(value, searchComponent) => {
-    		// Perform actions after updating the value
-    		this.setState(
-    			{
-    				text: value,
-    			},
-    			() => {
-    				// To fetch suggestions
-    				searchComponent.triggerDefaultQuery();
-    				// To update results
-    				searchComponent.triggerCustomQuery();
-    			},
-    		);
-    	}}
-    />
+	import { SearchContext } from '@appbaseio/react-searchbox';
+	const Search = () => {
+		// To retrieve the searchbase context
+		const searchbase = useContext(SearchContext);
+		useEffect(() => {
+			// Get the instance of search component
+			const searchComponent = searchbase.getComponent('book-search');
+			if(searchComponent) {
+				// To fetch suggestions
+				searchComponent.triggerDefaultQuery();
+				// To update results
+				searchComponent.triggerCustomQuery();
+			}
+		}, [text])
+		return (
+			<SearchBox
+				id="book-search"
+				value={text}
+				onChange={(value) => {
+					setText(value);
+				}}
+			/>
+		)
+	}
     ```
 
 ### Callbacks for change events
