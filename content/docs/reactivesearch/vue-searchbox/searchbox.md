@@ -114,7 +114,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html).
     You can use `aggregationData` using `onAggregationData` callback or `subscriber`.
-	> Note: This prop has been marked as deprecated starting v1.2.0. Please use the `distinctField` prop instead.
+    > Note: This prop has been marked as deprecated starting v1.2.0. Please use the `distinctField` prop instead.
 
 ```html
 <template>
@@ -136,10 +136,12 @@ Here, we are specifying that the suggestions should update whenever one of the b
 	}
 </script>
 ```
+
 -   **aggregationSize**
     To set the number of buckets to be returned by aggregations.
 
     > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+
 -   **highlight** `boolean` [optional]
     whether highlighting should be enabled in the returned results.
 
@@ -173,10 +175,10 @@ Here, we are specifying that the suggestions should update whenever one of the b
     Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 
 -   **distinctField** `String` [optional]
-	This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+    This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
 
 -   **distinctFieldConfig** `Object` [optional]
-	This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+    This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
 
 ```html
 <search-box
@@ -193,13 +195,33 @@ Here, we are specifying that the suggestions should update whenever one of the b
 />
 ```
 
+-   **value** `string` [optional]
+    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
+
+-   **onChange** `function` [optional]
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
+
+    ```html
+    <search-box
+    	:value="this.$data.text"
+    	@change="(value, searchComponent, e) => {
+    		this.$data.text = value;
+    		// To fetch suggestions
+    		searchComponent.triggerDefaultQuery();
+    		// To update results
+    		searchComponent.triggerCustomQuery();
+    	}"
+    />
+    ```
+
 ### To customize the AutoSuggestions
 
 -   **enablePopularSuggestions** `Boolean`
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 
 -   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
-> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
+
+    > Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 
 -   **enablePredictiveSuggestions** `bool` [optional]
     Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
@@ -282,15 +304,17 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **showVoiceSearch** `Boolean` Enable voice search for searchbox
 
 -   **focusShortcuts** `Array<string | number>` [optional]
-A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
-> Note
->1. By default, pressing `'/'` would focus the search box.
->2. The `hotkeys-js` library needs to be installed manually when using combinations in `focusShortcuts` prop, eg: 'cmd+b', 'ctrl+q', etc, without which only single key shortcuts would work if passed in the prop, eg: From among ['/', 'b', '#', 'ctrl+r'], only '/', 'b', '#' would work without hotkey-js installation.
+    A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+
+    > Note
+    >
+    > 1.  By default, pressing `'/'` would focus the search box.
+    > 2.  The `hotkeys-js` library needs to be installed manually when using combinations in `focusShortcuts` prop, eg: 'cmd+b', 'ctrl+q', etc, without which only single key shortcuts would work if passed in the prop, eg: From among ['/', 'b', '#', 'ctrl+r'], only '/', 'b', '#' would work without hotkey-js installation.
 
 -   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
 
-- **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
-  <img src="https://i.imgur.com/x3jF23m.png"/>
+-   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
+    <img src="https://i.imgur.com/x3jF23m.png"/>
 
 ```jsx
  <search-box
@@ -566,20 +590,22 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 -   **render** `Function` You can render suggestions in a custom layout by using the `render` prop.
     <br/>
     It accepts an object with these properties:
-    - **`loading`**: `boolean`
-    indicates that the query is still in progress.
-    - **`error`**: `Object`
-    An object containing the error info.
-    - **`suggestions`** `() => Array<Object>`
-    This method can be used to get the parsed suggestions from the `results`. If `enablePopularSuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_popular_suggestion` as `true`. The `suggestion` object will have the following shape:
 
-            ```ts
-            {
-                label: string;
-                value: string;
-                source: Object;
-            }
-            ```
+    -   **`loading`**: `boolean`
+        indicates that the query is still in progress.
+    -   **`error`**: `Object`
+        An object containing the error info.
+    -   **`suggestions`** `() => Array<Object>`
+        This method can be used to get the parsed suggestions from the `results`. If `enablePopularSuggestions` property is set to `true` then the popular suggestions will get appended at the top with a top-level property named `_popular_suggestion` as `true`. The `suggestion` object will have the following shape:
+
+                ```ts
+                {
+                    label: string;
+                    value: string;
+                    source: Object;
+                }
+                ```
+
     -   **`results`** `Results`
         It is an object which contains the following details of `suggestions` query response.
 
@@ -647,7 +673,7 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
     -   **`enablePopularSuggestions`** `boolean` as defined in props
     -   **`showDistinctSuggestions`** `boolean` as defined in props
     -   **`defaultQuery`** represents the current value of `defaultQuery` property
-    -   **`customQuery`**  represents the current value of `customQuery` property
+    -   **`customQuery`** represents the current value of `customQuery` property
     -   **`requestStatus`** represents the current state of the request, can have values as `INACTIVE`, `PENDING` or `ERROR`.
     -   **`appbaseConfig`** `Object` as defined in props
     -   **`queryId`** `string` to get the query id returned by appbase.io search to track the analytics
@@ -655,8 +681,8 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
     -   **`unsubscribeToStateChanges`** `function` can be used to unsubscribe to the changes for the properties. Read more at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#subscribe-to-the-properties-changes).
     -   **`recordClick`** `function` enables recording click analytics of a search request. Please check the usage at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#record-analytics).
     -   **`recordConversions`** `function` enables recording conversions of a search request. Please check the usage at [here](/docs/reactivesearch/searchbase/overview/searchcomponent/#record-analytics).
-    > Note:
-    > All of the methods accept `options` as the second parameter which has the following shape:
+        > Note:
+        > All of the methods accept `options` as the second parameter which has the following shape:
 
 ```ts
 {
@@ -722,66 +748,53 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 -   **renderMic** `slot`can be used to render the custom mic option
 
 -   **recentSearchesIcon** `slot-scope` [optional]
-You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-search-icon` key in the `innerClass` prop.
+    You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-search-icon` key in the `innerClass` prop.
 
-    ```jsx
-        <search-box
-            ...
-            :enableRecentSearches="true"
-            :innerClass="{
-                'recent-search-icon': '...',
-            }"
-        >
-            <recent-icon slot="recentSearchesIcon" />
-        </search-box>
-    ```
+        ```jsx
+            <search-box
+                ...
+                :enableRecentSearches="true"
+                :innerClass="{
+                    'recent-search-icon': '...',
+                }"
+            >
+                <recent-icon slot="recentSearchesIcon" />
+            </search-box>
+        ```
 
 -   **popularSearchesIcon** `slot-scope` [optional]
-You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
+    You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
 
-    ```jsx
-        <search-box
-            ...
-            :enablePopularSuggestions="true"
-            :innerClass="{
-                'popular-search-icon': '...'
-            }"
-        >
-            <popular-icon slot="popularSearchesIcon" />
-        </search-box>
-    ```
+        ```jsx
+            <search-box
+                ...
+                :enablePopularSuggestions="true"
+                :innerClass="{
+                    'popular-search-icon': '...'
+                }"
+            >
+                <popular-icon slot="popularSearchesIcon" />
+            </search-box>
+        ```
 
 -   **addonBefore** `slot-scope` [optional] The HTML markup displayed before (on the left side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
-<img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
-     ```jsx
-           <search-box
-            ...
-            :enablePopularSuggestions="true"
-            :innerClass="{
-                'popular-search-icon': '...'
-            }"
-        >
-           <img  slot="addonBefore"
-            src="https://img.icons8.com/cute-clipart/64/000000/search.png"
-            height="30px"
-          />
-        </search-box>
-    ```
+    <img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
+    `jsx <search-box ... :enablePopularSuggestions="true" :innerClass="{ 'popular-search-icon': '...' }" > <img slot="addonBefore" src="https://img.icons8.com/cute-clipart/64/000000/search.png" height="30px" /> </search-box>`
 
 -   **addonAfter** `slot-scope` [optional] The HTML markup displayed before (on the right side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
-<img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
-   ```jsx
-           <search-box
-            ...
-            :enablePopularSuggestions="true"
-            :innerClass="{
-                'popular-search-icon': '...'
-            }"
-        >
-         <img  slot="addonAfter"
-             src="https://img.icons8.com/cute-clipart/64/000000/search.png"
-            height="30px"
-          />
-        </search-box>
-   ```
-   
+    <img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
+
+```jsx
+        <search-box
+         ...
+         :enablePopularSuggestions="true"
+         :innerClass="{
+             'popular-search-icon': '...'
+         }"
+     >
+      <img  slot="addonAfter"
+          src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+         height="30px"
+       />
+     </search-box>
+```
