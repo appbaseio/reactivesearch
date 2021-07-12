@@ -283,6 +283,27 @@ Here, we are specifying that the suggestions should update whenever one of the b
 
 -   **showVoiceSearch** `Boolean` Enable voice search for searchbox
 
+-   **focusShortcuts** `Array<string | number>` [optional]
+A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+> Note
+>1. By default, pressing `'/'` would focus the search box.
+>2. The `hotkeys-js` library needs to be installed manually when using combinations in `focusShortcuts` prop, eg: 'cmd+b', 'ctrl+q', etc, without which only single key shortcuts would work if passed in the prop, eg: From among ['/', 'b', '#', 'ctrl+r'], only '/', 'b', '#' would work without hotkey-js installation.
+
+-   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
+
+- **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
+  <img src="https://i.imgur.com/x3jF23m.png"/>
+
+```jsx
+ <search-box
+        expandSuggestionsContainer={false}
+        ...
+         >
+         <img slot="addonBefore" src="..." />
+         <img slot="addonAfter" src="..." />
+ </search-box>
+```
+
 ### Customize style
 
 -   **innerClass** `Object` `SearchBox` component supports an `innerClass` prop to provide styles to the sub-components of `SearchBox`. These are the supported keys:
@@ -731,3 +752,38 @@ You can use a custom icon in place of the default icon for the popular searches 
             <popular-icon slot="popularSearchesIcon" />
         </search-box>
     ```
+
+-   **addonBefore** `slot-scope` [optional] The HTML markup displayed before (on the left side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
+<img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
+     ```jsx
+           <search-box
+            ...
+            :enablePopularSuggestions="true"
+            :innerClass="{
+                'popular-search-icon': '...'
+            }"
+        >
+           <img  slot="addonBefore"
+            src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+            height="30px"
+          />
+        </search-box>
+    ```
+
+-   **addonAfter** `slot-scope` [optional] The HTML markup displayed before (on the right side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
+<img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
+   ```jsx
+           <search-box
+            ...
+            :enablePopularSuggestions="true"
+            :innerClass="{
+                'popular-search-icon': '...'
+            }"
+        >
+         <img  slot="addonAfter"
+             src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+            height="30px"
+          />
+        </search-box>
+   ```
+   

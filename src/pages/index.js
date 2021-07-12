@@ -149,13 +149,13 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Choose your UI Library',
 												link: '/docs/reactivesearch/gettingstarted',
-												duration: 4,
+												duration: 1,
 											},
 											{
 												title: 'ReactiveSearch QuickStart',
 												link:
 													'/docs/reactivesearch/v3/overview/quickstart/',
-												duration: 8,
+												duration: 6,
 											},
 											{
 												title: 'Vue ReactiveSearch QuickStart',

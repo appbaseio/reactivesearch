@@ -27,15 +27,15 @@ Example uses:
 
 ```html
 <template>
-    <toggle-button
-        componentId="MeetupTops"
-        dataField="group_topics.topic_name.raw"
-        :data="[
+	<toggle-button
+		componentId="MeetupTops"
+		dataField="group_topics.topic_name.raw"
+		:data="[
             {'label': 'Social',   'value': 'Social'},
             {'label': 'Travel',   'value': 'Travel'},
             {'label': 'Outdoors', 'value': 'Outdoors'}
         ]"
-    />
+	/>
 </template>
 ```
 
@@ -43,19 +43,19 @@ Example uses:
 
 ```html
 <toggle-button
-  componentId="MeetupTops"
-  dataField="group_topics.topic_name.raw"
-  title="Meetups"
-  filterLabel="City"
-  :data="[
+	componentId="MeetupTops"
+	dataField="group_topics.topic_name.raw"
+	title="Meetups"
+	filterLabel="City"
+	:data="[
       {'label': 'Social',   'value': 'Social'},
       {'label': 'Travel',   'value': 'Travel'},
       {'label': 'Outdoors', 'value': 'Outdoors'}
   ]"
-  :defaultValue="['Social']"
-  :multiSelect="true"
-  :showFilter="true"
-  :URLParams="false"
+	:defaultValue="['Social']"
+	:multiSelect="true"
+	:showFilter="true"
+	:URLParams="false"
 />
 ```
 
@@ -99,7 +99,14 @@ Example uses:
 
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
 
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
+-   **enableStrictSelection** `Boolean` [optional]
+    When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
+	
+	> Note: This only works when `multiSelect` prop is set to `false`.
 ## Demo
 
 <br/>
@@ -181,7 +188,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
     ```js
     beforeValueChange = values => {
-        // The update is accepted by default
+    	// The update is accepted by default
     	if (values.includes('Social')) {
     		// To reject the update, throw an error
     		throw Error('Selected value should not include Social.');

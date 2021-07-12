@@ -83,7 +83,10 @@ Example uses:
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
 -   **onChange** `function` [optional]
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
-
+-   **enableStrictSelection** `Boolean` [optional]
+    When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
+    
+	> Note: This only works when `multiSelect` prop is set to `false`.
 ## Demo
 
 <br />
@@ -179,6 +182,10 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     is a callback function which accepts component's current **value** as a parameter. It is called everytime the component's value changes. This prop is handy in cases where you want to generate a side-effect on value selection. For example: You want to show a pop-up modal with the valid discount coupon code(s) when button(s) is/are selected in a "Discounted Price" ToggleButton.
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
 
 ## Examples
 
