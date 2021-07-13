@@ -129,10 +129,31 @@
     react-leaflet "^2.1.3"
     rheostat "^2.1.1"
 
-"@appbaseio/reactivesearch-vue@1.17.0":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.17.0.tgz#e344d40519dfa2de6a0ec8e54f7e256d0986d921"
-  integrity sha512-SAQv0CPYWqp54nE7pU4odrP2UzxMvto3HI1luMoTxHqQ6Ss51cGpgop22d5mbitdgjFRqqxl2fypHogeuHhImQ==
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.11":
+  version "1.16.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.11.tgz#c79c85e0f05a1b7dfad82bdc1475bd9471f6a08f"
+  integrity sha512-aEoVO82VQIu8u/4429g3ITmZZwpH2pWS/cRC9wh3RBY63WrUjjERDpMoNf01a0tx+o2JIJ8xBwAchEj6LPmp6A==
+  dependencies:
+    "@appbaseio/reactivecore" "9.11.9"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^4.1.0"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    gmap-vue "^1.5.0"
+    ngeohash "^0.6.3"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^2.8.16"
+    vue-types "^1.7.0"
+
+"@appbaseio/reactivesearch-vue@1.18.0":
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.18.0.tgz#421153d711168214b421046cfa2cad9178e68551"
+  integrity sha512-GLThrrIFey6hJyU+Y25LidViqY9ZmSbzmjDRjWI422VS+EA1k7r2rgTpU5qsGK1Ap+dODj6llf0mt/UPz2VnZw==
   dependencies:
     "@appbaseio/reactivecore" "9.11.9"
     "@appbaseio/vue-emotion" "0.4.4"
@@ -26817,7 +26838,7 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
