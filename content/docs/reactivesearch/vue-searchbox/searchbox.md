@@ -203,7 +203,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 <search-box
 	:value="text"
 	@change="(value, searchComponent, e) => {
-		this.$data.text = value;
+		this.text = value;
 		// To fetch suggestions
 		searchComponent.triggerDefaultQuery();
 		// To update results
