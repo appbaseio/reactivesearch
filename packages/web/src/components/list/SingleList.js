@@ -133,6 +133,17 @@ class SingleList extends Component {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
+		if (this.props.onData) {
+			checkSomePropChange(
+				this.props,
+				prevProps,
+				['error', 'isLoading', 'options', 'selectedValue'],
+				() => {
+					this.props.onData(this.getData());
+				},
+			);
+		}
+
 		if (this.props.value !== prevProps.value) {
 			this.setValue(this.props.value);
 		} else if (
@@ -381,15 +392,21 @@ class SingleList extends Component {
 		return listItems;
 	}
 
-	getComponent() {
+	getData = () => {
 		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
-		const data = {
+		return {
 			error,
 			loading: isLoading,
 			value: currentValue,
 			data: this.listItems,
 			rawData,
+		};
+	}
+
+	getComponent() {
+		const data = {
+			...this.getData(),
 			handleChange: this.handleClick,
 		};
 		return getComponent(data, this.props);
@@ -553,6 +570,7 @@ SingleList.propTypes = {
 	onError: types.func,
 	onValueChange: types.func,
 	onChange: types.func,
+	onData: types.func,
 	placeholder: types.string,
 	react: types.react,
 	render: types.func,

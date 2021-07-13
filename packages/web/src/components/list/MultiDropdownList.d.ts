@@ -13,6 +13,7 @@ export interface MultiDropdownList extends CommonProps {
 	innerClass?: types.style;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
+	onData?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;
 	placeholder?: string;
 	searchPlaceholder?: string;
