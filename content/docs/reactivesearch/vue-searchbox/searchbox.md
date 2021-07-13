@@ -201,7 +201,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 
 ```html
 <search-box
-	:value="this.$data.text"
+	:value="text"
 	@change="(value, searchComponent, e) => {
 		this.$data.text = value;
 		// To fetch suggestions
