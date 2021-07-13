@@ -683,7 +683,6 @@ class DataSearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
-		const { autosuggest } = this.props;
 		if (
 			results
 			&& results[0]
@@ -693,13 +692,7 @@ class DataSearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), !autosuggest);
-			if (autosuggest) {
-				this._inputRef.focus();
-				this.setState({
-					isOpen: true,
-				});
-			}
+			this.setValue(results[0][0].transcript.trim(), true);
 		}
 	};
 
@@ -1150,8 +1143,8 @@ class DataSearch extends Component {
 												<li
 													{...getItemProps({ item: sugg })}
 													key={`${suggestionsList.length
-														+ index
-														+ 1}-${sugg.value}`}
+															+ index
+															+ 1}-${sugg.value}`}
 													style={{
 														backgroundColor: this.getBackgroundColor(
 															highlightedIndex,
