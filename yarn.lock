@@ -113,6 +113,17 @@
     react-responsive-modal "^4.0.1"
     tocbot "4.5.0"
 
+"@appbaseio/reactivecore@9.11.9":
+  version "9.11.9"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.9.tgz#97f6e7c232203b1957928e53b943dbdcc756dea6"
+  integrity sha512-/UQX0mw9riiEJnH4UcGtAXFc2+gwINUp8clTZlsNX6wkDKVSnU6jSrHxfh2pf8wyonp+Bv+G41Z5TltPa0bGVg==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
 "@appbaseio/reactivemaps@3.0.0-beta.12":
   version "3.0.0-beta.12"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.12.tgz#991823cddd9955a9716ac0bf820f5f9afe3adc1d"
