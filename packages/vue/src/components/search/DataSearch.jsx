@@ -543,11 +543,11 @@ const DataSearch = {
 				this.setValue(results[0][0].transcript.trim(), true);
 			}
 		},
-		triggerQuery() {
+		triggerQuery({ isOpen = false } = false) {
 			const { value } = this.$props;
 			if (value !== undefined) {
 				this.isPending = false;
-				this.setValue(this.$props.value, true);
+				this.setValue(this.$props.value, !isOpen);
 			}
 		},
 		triggerClickAnalytics(searchPosition, documentId) {
@@ -610,6 +610,7 @@ const DataSearch = {
 			if (value === undefined) {
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
 			} else {
+				this.isPending = false;
 				this.$emit('change', suggestion.value, this.triggerQuery);
 			}
 			this.onValueSelectedHandler(

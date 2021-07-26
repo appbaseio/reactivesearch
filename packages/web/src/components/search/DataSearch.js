@@ -622,9 +622,11 @@ class DataSearch extends Component {
 		}
 	};
 
-	triggerQuery = () => {
+	triggerQuery = ({
+		isOpen = false,
+	} = {}) => {
 		this.isPending = false;
-		this.setValue(this.props.value, true, this.props);
+		this.setValue(this.props.value, !isOpen, this.props);
 	};
 
 	onSuggestionSelected = (suggestion) => {

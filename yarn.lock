@@ -113,6 +113,17 @@
     react-responsive-modal "^4.0.1"
     tocbot "4.5.0"
 
+"@appbaseio/reactivecore@9.11.9":
+  version "9.11.9"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.11.9.tgz#97f6e7c232203b1957928e53b943dbdcc756dea6"
+  integrity sha512-/UQX0mw9riiEJnH4UcGtAXFc2+gwINUp8clTZlsNX6wkDKVSnU6jSrHxfh2pf8wyonp+Bv+G41Z5TltPa0bGVg==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
 "@appbaseio/reactivemaps@3.0.0-beta.12":
   version "3.0.0-beta.12"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.12.tgz#991823cddd9955a9716ac0bf820f5f9afe3adc1d"
@@ -128,6 +139,27 @@
     react-google-maps "^9.4.5"
     react-leaflet "^2.1.3"
     rheostat "^2.1.1"
+
+"@appbaseio/reactivesearch@3.20.0":
+  version "3.20.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.20.0.tgz#4842bf15272cd4627d876e5d28dfc0d9ed5c048d"
+  integrity sha512-v+bBbwrz7CBbAl5hCU9T7uQPBJ9I3/G67hsVPe1srHELTJeipb72o9S2BOuH8VA65xfJXIqCi8HcEUAJREhI8w==
+  dependencies:
+    "@appbaseio/reactivecore" "9.11.9"
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    appbase-js "^4.1.0"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion-theming "^10.0.27"
+    hoist-non-react-statics "^3.2.1"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -6008,7 +6040,7 @@ appbase-js@^4.0.2-beta.11:
     url-parser-lite "^0.1.0"
     ws "^6.1.2"
 
-appbase-js@^4.1.5:
+appbase-js@^4.1.0, appbase-js@^4.1.5:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.1.5.tgz#d5ff9389762d07ed598a5ebcedff63de0fbb8d23"
   integrity sha512-j1F/IEKGdX6XDZOuCQrS+KnHmbG5VRd7Ja4TuClaWNdRhTr4mwz044bVYG0pmkV5A+yR1XV8slhlUM1S2N09gg==

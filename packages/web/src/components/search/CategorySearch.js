@@ -684,9 +684,9 @@ class CategorySearch extends Component {
 	};
 
 	triggerQuery = (value) => {
-		const { term: currentValue, category: currentCategory = null } = value;
+		const { term: currentValue, category: currentCategory = null, isOpen = false } = value;
 		this.isPending = false;
-		this.setValue(currentValue, true, this.props, currentCategory);
+		this.setValue(currentValue, !isOpen, this.props, currentCategory);
 	};
 
 	onSuggestionSelected = (suggestion) => {
