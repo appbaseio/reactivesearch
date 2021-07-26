@@ -44,7 +44,7 @@
         "husky": "^0.14.3",
         "prettier": "^1.12.1",
         "react": "~16.8.6",
-        "react-native": "~0.59.1"
+        "react-native": "~0.62.3"
     },
     "dependencies": {
         "@appbaseio/reactivecore": "9.11.11",
