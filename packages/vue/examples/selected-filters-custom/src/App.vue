@@ -35,14 +35,7 @@
 								v-for="componentId in Object.keys(getFilteredValues(selectedValues))"
 								:key="componentId"
 							>
-								<div
-									v-if="
-										selectedValues[componentId].showFilter &&
-										(Array.isArray(selectedValues[componentId].value)
-											? selectedValues[componentId].value.length
-											: !!selectedValues[componentId].value)
-									"
-								>
+								<div>
 									component: {{ componentId }} value:
 									{{ selectedValues[componentId].value }}
 									<button @click="() => setValue(componentId, null)">
