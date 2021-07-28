@@ -265,11 +265,11 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 1. customize the look and feel with `className`,
 2. render individual result data items using `renderItem`,
 3. render the entire result data using `render`.
-4. connect with external interfaces using `queryChange`.
+4. connect with external interfaces using `query-change`.
 
 ```html
 <template>
-	<reactive-list className="custom-class" @queryChange="handleQueryChange" />
+	<reactive-list className="custom-class" @query-change="handleQueryChange" />
 </template>
 <script>
 	export default {
@@ -356,12 +356,12 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 ## Events
 
--   **queryChange**
+-   **query-change**
     is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.
--   **pageChange**
+-   **page-change**
     called when the current page is changed. If not defined, `window` will be scrolled to the top of the page.
 
--   **pageClick**
+-   **page-click**
     accepts a function which is invoked with the updated page value when a pagination button is clicked. For example if 'Next' is clicked with the current page number as '1', you would receive the value '2' as the function parameter.
 
 -   **data** `Function` [optional]
@@ -373,7 +373,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
 > Note:
 >
-> The fundamental difference between `pageChange` and `pageClick` is that `pageClick` is only called on a manual interaction with the pagination buttons, whereas, `pageChange` would also be invoked if some other side effects caused the results to update which includes updating filters, queries or changing pages. The behaviour of these two may change in the future versions as we come up with a better API.
+> The fundamental difference between `page-change` and `page-click` is that `page-click` is only called on a manual interaction with the pagination buttons, whereas, `page-change` would also be invoked if some other side effects caused the results to update which includes updating filters, queries or changing pages. The behaviour of these two may change in the future versions as we come up with a better API.
 
 ## Examples
 
