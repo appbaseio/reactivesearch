@@ -195,6 +195,25 @@ Here, we are specifying that the suggestions should update whenever one of the b
 />
 ```
 
+-   **value** `string` [optional]
+    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop to take the control of search input value.
+
+-   **onChange** `function` [optional]
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes.
+
+```html
+<search-box
+	:value="text"
+	@change="(value, searchComponent, e) => {
+		this.text = value;
+		// To fetch suggestions
+		searchComponent.triggerDefaultQuery();
+		// To update results
+		searchComponent.triggerCustomQuery();
+	}"
+/>
+```
+
 ### To customize the AutoSuggestions
 
 -   **enablePopularSuggestions** `Boolean`
@@ -786,4 +805,3 @@ You can use a custom icon in place of the default icon for the popular searches 
           />
         </search-box>
    ```
-   
