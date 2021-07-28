@@ -53,13 +53,7 @@ const HomePage = ({ data, location }) => {
 													'Overview and Quickstart with appbase.io',
 												link: '/docs/gettingstarted/quickstart/',
 												duration: 3,
-											},
-											{
-												title: 'Why Appbase.io',
-												description: 'Benefits of using appbase.io',
-												link: '/docs/gettingstarted/why/',
-												duration: 6,
-											},
+											}
 										],
 									},
 									'2': {
@@ -155,13 +149,13 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Choose your UI Library',
 												link: '/docs/reactivesearch/gettingstarted',
-												duration: 4,
+												duration: 1,
 											},
 											{
 												title: 'ReactiveSearch QuickStart',
 												link:
 													'/docs/reactivesearch/v3/overview/quickstart/',
-												duration: 8,
+												duration: 6,
 											},
 											{
 												title: 'Vue ReactiveSearch QuickStart',
@@ -174,6 +168,13 @@ const HomePage = ({ data, location }) => {
 												description: '',
 												link:
 													'/docs/reactivesearch/react-native-searchbox/quickstart/',
+												duration: 6,
+											},
+											{
+												title: 'Flutter Searchbox QuickStart',
+												description: '',
+												link:
+													'/docs/reactivesearch/flutter-searchbox/quickstart/',
 												duration: 6,
 											},
 										],
@@ -217,9 +218,22 @@ const HomePage = ({ data, location }) => {
 										],
 									},
 									'6': {
-										title: 'Security',
-										subtitle:
-											'Securely access and query the index using Appbase.',
+										title: 'Speed',
+										subtitle: 'Blazing ⚡️ fast search performance',
+										icon: <Icon name="zap" className="dropdown-content-icon" />,
+										chapters: [
+											{
+												title: 'Cache Management',
+												link: '/docs/speed/cache-management/',
+												duration: 3,
+												description:
+													'Blazing ⚡️ fast search performance with appbase.io cache',
+											},
+										],
+									},
+									'7': {
+										title: 'Access Control',
+										subtitle: 'Out-of-the-box access control for search',
 										icon: (
 											<Icon
 												name="security"
@@ -249,7 +263,7 @@ const HomePage = ({ data, location }) => {
 											},
 										],
 									},
-									'7': {
+									'8': {
 										title: 'Hosting',
 										icon: (
 											<Icon name="rocket" className="dropdown-content-icon" />
@@ -258,16 +272,9 @@ const HomePage = ({ data, location }) => {
 											{
 												title: 'Clusters',
 												link: '/docs/hosting/clusters/',
-												duration: 5,
+												duration: 3,
 												description:
-													'Fully managed Elasticsearch clusters available in over 16 global regions.',
-											},
-											{
-												title: 'Apps',
-												link: '/docs/hosting/apps',
-												duration: 1,
-												description:
-													'Apps let you get the best of Elasticsearch without running a dedicated cluster.',
+													'Get a fully hosted Elasticsearch + appbase.io experience in 16+ global regions.',
 											},
 											{
 												title: 'Bring your own Cluster',
@@ -329,7 +336,7 @@ const HomePage = ({ data, location }) => {
 								Vue
 							</Box>
 							<Box
-								to="/docs/reactivesearch/native/overview/QuickStart/"
+								to="/docs/reactivesearch/react-native-searchbox/quickstart/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -364,7 +371,7 @@ const HomePage = ({ data, location }) => {
 								Android
 							</Box>
 							<Box
-								to="/api/rest/quickstart/"
+								to="/api/rest/overview/"
 								className="flex flex-column justify-between items-center middarkgrey pa2 pt5 pb5 tdn tc"
 								elevation="2"
 								radius="4"
@@ -372,7 +379,7 @@ const HomePage = ({ data, location }) => {
 								<img
 									className="w15 mb1"
 									src="https://miro.medium.com/max/790/1*uHzooF1EtgcKn9_XiSST4w.png"
-									alt="REST APi"
+									alt="REST API"
 								/>
 								REST API
 							</Box>
@@ -382,11 +389,7 @@ const HomePage = ({ data, location }) => {
 								elevation="2"
 								radius="4"
 							>
-								<img
-									className="w10 mb1"
-									src="/images/swift-logo.png"
-									alt="Swift"
-								/>
+								<img className="w10 mb1" src="/images/swift-logo.png" alt="Swift" />
 								Swift
 							</Box>
 							<Box

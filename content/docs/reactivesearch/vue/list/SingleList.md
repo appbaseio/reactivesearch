@@ -26,11 +26,7 @@ Example uses:
 
 ```html
 <template>
-	<single-list
-		componentId="CitySensor"
-		dataField="group.group_city.raw"
-		title="Cities"
-	/>
+	<single-list componentId="CitySensor" dataField="group.group_city.raw" title="Cities" />
 </template>
 ```
 
@@ -69,7 +65,16 @@ Example uses:
 -   **title** `String or JSX` [optional]
     title of the component to be shown in the UI.
 -   **size** `Number` [optional]
-    control how many items to display in the List. Defaults to 100.
+    number of list items to be displayed.
+
+    > Note: 
+    > 1. Appbase users should use the `aggregationSize` prop instead. The `size` prop would only set the size for `hits` not the `aggregations`.
+    > 2. We recommend Appbase users to not use the `size` prop unless they are using `hits` because it can impact the query performance.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 -   **sortBy** `String` [optional]
     sort the list items by one of `count`, `asc`, `desc`. Defaults to `count`, which sorts the list by the frequency of count value, most first.
 -   **defaultValue** `string` [optional]
@@ -171,8 +176,40 @@ You can use render as a slot as shown below:
 </template>
 ```
 
+-   **renderNoResults** `String|Function|slot-scope` [optional]
+    show custom message or component when no results found.
+
+<!-- prettier-ignore -->
+```html
+<template
+    slot="renderNoResults"
+>
+	<h4>No Results Found!</h4>
+</template>
+
+<!-- or -->
+
+<single-list
+	...
+	:renderNoResults="renderNoResults"
+/>
+
+export default {
+	...,
+	method: {
+		renderNoResults() {
+			return 'Try Again';
+		}
+	},
+}
+
+```
+
 -   **transformData** `Function` [optional]
     allows transforming the data to render inside the list. You can change the order, remove, or add items, transform their values with this method. It provides the data as param which is an array of objects of shape { key: <string>, doc_count: <number> } and expects you to return the array of objects of same shape.
+
+-   **enableStrictSelection** `Boolean` [optional]
+    When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
 
 ## Demo
 
@@ -275,7 +312,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
     ```js
     beforeValueChange = value => {
-        // The update is accepted by default
+    	// The update is accepted by default
     	if (value === 'In Death') {
     		// To reject the update, throw an error
     		throw Error('Selected value should not be equal to In Death.');
@@ -294,6 +331,10 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         -   `String` is used for specifying a single component by its `componentId`.
         -   `Array` is used for specifying multiple components by their `componentId`.
         -   `Object` is used for nesting other key clauses.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
 
 ## Events
 

@@ -60,7 +60,10 @@ Example uses:
 	}}
 />
 ```
-
+-   **resetToDefault** `boolean` [optional]
+    When set to true and clearAll functionality is utilised, then it would set the filter's value to its default set value(the `defaultValue` prop) instead of null/ undefined. 
+    Defaults to `false`.
+    
 Most ReactiveSearch filter components have a prop `showFilter` (defaults to `true`) which can be used to control whether the component's selected state appears in the SelectedFilters component. There is also a `filterLabel` prop which controls how that component is displayed.
 
 > Note

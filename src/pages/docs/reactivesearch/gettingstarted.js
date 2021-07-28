@@ -71,6 +71,20 @@ const GettingStarted = props => {
 					</div>
 				</div>
 				<div className="card">
+					<img src="/images/Searchbox_Vue@1x.png" alt="Vue Searchbox" />
+					<div className="content">
+						<h2>Vue Searchbox</h2>
+						<p>
+							Vue searchbox UI component to query and display results from your
+							Elasticsearch app (aka index) using declarative props.
+						</p>
+						<a className="btn" href="/docs/reactivesearch/vue-searchbox/quickstart/">
+							Start with Vue Searchbox
+						</a>
+					</div>
+				</div>
+
+				<div className="card">
 					<img src="/images/Searchbox_react_native.png" alt="React Native Searchbox" />
 					<div className="content">
 						<h2>React Native Searchbox</h2>
@@ -86,16 +100,20 @@ const GettingStarted = props => {
 						</a>
 					</div>
 				</div>
+
 				<div className="card">
-					<img src="/images/Searchbox_Vue@1x.png" alt="Vue Searchbox" />
+					<img src="/images/flutter.png" alt="Flutter Searchbox" />
 					<div className="content">
-						<h2>Vue Searchbox</h2>
+						<h2>Flutter Searchbox</h2>
 						<p>
-							Vue searchbox UI component to query and display results from your
+							Flutter searchbox UI component to query and display results from your
 							Elasticsearch app (aka index) using declarative props.
 						</p>
-						<a className="btn" href="/docs/reactivesearch/vue-searchbox/quickstart/">
-							Start with Vue Searchbox
+						<a
+							className="btn"
+							href="/docs/reactivesearch/flutter-searchbox/quickstart/"
+						>
+							Start with Flutter Searchbox
 						</a>
 					</div>
 				</div>

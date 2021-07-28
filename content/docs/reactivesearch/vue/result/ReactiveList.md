@@ -42,6 +42,8 @@ Example uses:
 	dataField="ratings"
 	paginationAt="bottom"
 	loader="Loading Results.."
+	prevLabel="Prev"
+	nextLabel="Next"
 	sortBy="desc"
 	:stream="true"
 	:pagination="false"
@@ -78,6 +80,13 @@ Example uses:
 
     > It is possible to override this query by providing `defaultQuery`.
 
+    > Note: This prop has been marked as deprecated starting v1.14.0. Please use the `distinctField` prop instead.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
@@ -86,6 +95,8 @@ Example uses:
     whether to stream new result updates in the UI. Defaults to `false`. `stream: true` is appended to the streaming hit objects, which can be used to selectively react to streaming changes (eg. showing fade in animation on new streaming hits, Twitter/Facebook like streams, showing the count of new feed items available like _2 New Tweets_)
 -   **pagination** `Boolean` [optional]
     pagination <> infinite scroll switcher. Defaults to `false`, i.e. an infinite scroll based view. When set to `true`, a pagination based list view with page numbers will appear.
+-   **infiniteScroll** `Boolean` [optional]
+    Defaults to `true`, When set to `true`, an infinite scroll based view will appear.
 -   **paginationAt** `String` [optional]
     Determines the position where to show the pagination, only applicable when **pagination** prop is set to `true`. Accepts one of `top`, `bottom` or `both` as valid values. Defaults to `bottom`.
 -   **pages** `Number` [optional]
@@ -107,6 +118,10 @@ Example uses:
     number of results to show per view. Defaults to 10.
 -   **loader** `String|slot-scope` [optional]
     display to show the user while the data is loading, accepts `String` or `JSX` markup.
+-   **prevLabel** `String` [optional]
+    Pagination previous button text. Defaults to `Prev`.
+-   **nextLabel** `String` [optional]
+    Pagination next button text. Defaults to `Next`.
 -   **showResultStats** `Boolean` [optional]
     whether to show result stats in the form of results found and time taken. Defaults to `true`.
 -   **showEndPage** `Boolean` [optional]
@@ -184,6 +199,34 @@ Example uses:
 -   **defaultQuery** `Function` [optional]
     applies a default query to the result component. This query will be run when no other components are being watched (via React prop), as well as in conjunction with the query generated from the React prop. The function should return a query.
 
+-   **distinctField** `String` [optional]
+    This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+-   **distinctFieldConfig** `Object` [optional]
+    This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
+
+```html
+<reactive-list
+	....
+	distinctField="authors.keyword"
+	:distinctFieldConfig="{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}"
+/>
+```
+
+    > Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
+
 ## Sub Components
 
 -   **ResultCardsWrapper**
@@ -256,6 +299,8 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         An object containing the error info
     -   **`data`**: `array`
         An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
+    -   **`aggregationData`** `array`
+        An array of aggregations buckets. Each bucket would have a `top_hits` property if you're using Elasticsearch top hits aggregations in `defaultQuery` prop.
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
@@ -294,10 +339,10 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 <reactive-list>
 	<div slot="render" slot-scope="{ loading, error, data }">
 		<div v-if="loading">Fetching Results.</div>
-		<div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
+		<div v-if="Boolean(error)">Something went wrong! Error details {{JSON.stringify(error)}}</div>
 		<ul v-bind:key="result._id" v-for="result in data">
 			<li>
-				{result.title}
+				{{result.title}}
 				<!-- Render UI -->
 			</li>
 		</ul>

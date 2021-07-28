@@ -13,13 +13,13 @@ nestedSidebar: 'searchbase-reactivesearch'
 
 ## How does it work?
 
-The `SearchComponent` class represents a search component that can be used to build different kinds of search components for examples,
+The `SearchComponent` class is a search component that can be used to bind with different kinds of search UI widgets. For example:
 
 -   a category filter component,
 -   a search bar component,
 -   a price range component,
 -   a location filter component,
--   a component to render the search results etc.
+-   a component to render the search results.
 
 ## Constructor
 
@@ -73,6 +73,14 @@ The following properties can be used to configure the appbase.io [ReactiveSearch
     	field: string;
     	weight: number;
     };
+    ```
+
+-   **enablePredictiveSuggestions** `bool` [optional]
+    Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
+
+    ```ts
+    // pass this prop as true in searchComponent to enable predictive suggestions
+    enablePredictiveSuggestions: true,
     ```
 
 -   **value** `any`
@@ -150,6 +158,10 @@ Here, we are specifying that the result component should update whenever one of 
         'aggregationData'
     );
     ```
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 
 -   **highlight** `boolean` [optional]
     whether highlighting should be enabled in the returned results.
@@ -512,7 +524,7 @@ These properties are automatically calculated or managed by the `SearchBase` cla
 -   **requestPending** `boolean`
     Useful for getting the status of the API, whether it has been executed or not
 
--  **requestStatus** `string`
+-   **requestStatus** `string`
     Represents the current state of the request, can have values as `INACTIVE`, `PENDING` or `ERROR`.
 
 -   **micStatus** `MicStatusField`
@@ -559,7 +571,7 @@ The following methods of `SearchComponent` class can be used to set or update th
 -   **setFrom** `(from: number, options?: Options) => void`
     can be used to set the `from` property, which is useful while implementing pagination
 -   **setAfter** `(after: object, options?: Options) => void`
-    can be used to set the `after` property, which is useful while implementing pagination when the `type` of the component is `term`
+    can be used to set the `after` property, which is useful while implementing pagination when the `type` of the component is `term`. The `after` key is a a property of `aggregationData`.
 -   **setFuzziness** `(fuzziness: number | string, options?: Options) => void`
     can be used to set the `fuzziness` property
 -   **setIncludeFields** `(includeFields: Array<string>, options?: Options) => void`
@@ -647,8 +659,8 @@ The following methods can be used to trigger the queries for components.
     This method can be used to execute the default query for a particular component.
     For examples,
 
-    - to display the `suggestions` or `results` for a `search` type of component,
-    - to display the filter options(`aggregations`) for a `term` type of component
+    -   to display the `suggestions` or `results` for a `search` type of component,
+    -   to display the filter options(`aggregations`) for a `term` type of component
 
 -   **triggerCustomQuery** `(options?: types.Option): Promise<any>`
     This method can be used to execute queries for the dependent components.

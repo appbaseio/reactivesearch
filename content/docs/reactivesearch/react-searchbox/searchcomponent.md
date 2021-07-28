@@ -1,7 +1,7 @@
 ---
 title: 'SearchComponent API Reference'
 meta_title: 'Documentation for SearchComponent'
-meta_description: '`SearchComponent` component represents a search component that can be used to build different kinds of search components.'
+meta_description: 'SearchComponent represents a search component that can be used to build different kinds of search components.'
 keywords:
     - react-searchbox
     - search library
@@ -12,13 +12,13 @@ nestedSidebar: 'react-searchbox-reactivesearch'
 
 ## How does it work?
 
-`SearchComponent` component represents a search component that can be used to build different kinds of search components. It uses the [SearchComponent](docs/reactivesearch/searchbase/overview/searchcomponent/) class from [SearchBase](docs/reactivesearch/searchbase/overview/QuickStart/) to integrate the UI components with Elasticsearch. Some of the use-cases are:
+`SearchComponent` represents a search component that can be used to bind to different kinds of search UI widgets. It uses the [SearchComponent](/docs/reactivesearch/searchbase/overview/searchcomponent/) class from [SearchBase](/docs/reactivesearch/searchbase/overview/QuickStart/) to bind any UI component to be able to query appbase.io declaratively. Some examples of components you can bind this with:
 
 -   a category filter component,
 -   a search bar component,
 -   a price range component,
 -   a location filter component,
--   a component to render the search results etc.
+-   a component to render the search results.
 
 ## Props
 
@@ -134,6 +134,10 @@ Here, we are specifying that the results should update whenever one of the black
     onAggregationData={(next, prev) => {}}
 />
 ```
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 
 -   **highlight** `boolean` [optional]
     whether highlighting should be enabled in the returned results.
@@ -165,7 +169,10 @@ Here, we are specifying that the results should update whenever one of the black
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
 
 -   **queryString** `boolean` [optional]
-    Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
+    Defaults to `false`. If set to `true` then it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
+
+-  **clearOnQueryChange** `boolean` [optional]
+    Defaults to `false`, i.e. the component's input selection isn't cleared when the query of its dependent component changes (which is set via react prop). When set to `true`, the component's input selection is cleared.
 
 -   **pagination**: boolean
     This property allows you to implement the `pagination` for `term` type of queries. If `pagination` is set to `true` then appbase will use the [composite aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html) of Elasticsearch instead of [terms aggregations](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html).
@@ -195,6 +202,27 @@ Here, we are specifying that the results should update whenever one of the black
 
 -   **selectAllLabel**: string
     This property allows you to add a new property in the list with a particular value in such a way that when selected i.e `value` is similar/contains to that label(`selectAllLabel`) then `term` query will make sure that the `field` exists in the `results`.
+
+-   **distinctField** `String` [optional]
+	This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+-   **distinctFieldConfig** `Object` [optional]
+	This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+```jsx
+<SearchComponent
+	....
+	distinctField="authors.keyword"
+	distinctFieldConfig={{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}}
+/>
+```
 
 #### To customize the AutoSuggestions
 

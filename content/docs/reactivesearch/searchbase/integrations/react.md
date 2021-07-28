@@ -33,6 +33,8 @@ constructor(props) {
 
     // Register search component
     const searchComponent = this.searchBase.register('search-component', {
+      // pass this prop as true to enable predictive suggestions
+      enablePredictiveSuggestions: true,
       dataField: [
         'name',
         'description',
@@ -59,16 +61,16 @@ constructor(props) {
 
 ```js
 handleSelect = value => {
-  // Fetch results on selection
+	// Fetch results on selection
 	this.searchComponent.setValue(value, {
-    triggerDefaultQuery: true,
-  });
+		triggerDefaultQuery: true,
+	});
 };
 
 handleChange = e => {
-  // Just update value on change
+	// Just update value on change
 	this.searchComponent.setValue(e.target.value, {
-    triggerDefaultQuery: false,
+		triggerDefaultQuery: false,
 	});
 };
 ```
@@ -109,6 +111,7 @@ handleChange = e => {
 ```
 
 ## Demo
+
 <br />
 
 <iframe src="https://codesandbox.io/embed/github/appbaseio/searchbase/tree/master/packages/searchbase/examples/with-react" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>

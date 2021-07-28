@@ -95,7 +95,7 @@ Similarily, in `OpenStreetMap`:
 
 Impressions tracking is tied to the result components. You may have to do some extra setup in the `ReactiveList` component to track the impressions. Please follow the following instructions for different kind of use-cases.
 
-2. If you're using the `render` or `renderItem` method for the results UI then you have to define the `id` property for each result element. The value of `id` property must be the `_id` value from the elasticsearch hit object. 
+1. If you're using the `render` or `renderItem` method for the results UI then you have to define the `id` property for each result element. The value of `id` property must be the `_id` value from the elasticsearch hit object.
 
 For an example, the following example uses the `renderItem` method
 ```jsx

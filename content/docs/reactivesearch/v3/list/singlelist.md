@@ -77,8 +77,16 @@ Example uses:
     to display an optional loader while fetching the options.
 
 -   **size** `Number` [optional]
+    number of list items to be displayed.
 
-    control how many items to display in the List. Defaults to 100.
+    > Note: 
+    > 1. Appbase users should use the `aggregationSize` prop instead. The `size` prop would only set the size for `hits` not the `aggregations`.
+    > 2. We recommend Appbase users to not use the `size` prop unless they are using `hits` because it can impact the query performance.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 
 -   **sortBy** `String` [optional]
 
@@ -249,6 +257,12 @@ Or you can also use render function as children
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` props and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms/#controlled-components) behavior.
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
+-   **enableStrictSelection** `Boolean` [optional]
+    When set to `true`, a selected option can't be unselected. Although, it is possible to change the selected option. Defaults to `false`.
 
 ## Demo
 

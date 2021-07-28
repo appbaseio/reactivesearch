@@ -47,6 +47,9 @@ Example uses:
     Sets the label for the clear all button.
 -   **title** `string` [optional]
     Can be used to set a title
+-   **resetToDefault** `boolean` [optional]
+    When set to true and clearAll functionality is utilised, then it would set the filter's value to its default set value(the `defaultValue` prop) instead of null/ undefined.
+    Defaults to `false`.
 
 Most ReactiveSearch filter components have a prop `showFilter` (defaults to `true`) which can be used to control whether the component's selected state appears in the SelectedFilters component. There is also a `filterLabel` prop which controls how that component is displayed.
 
@@ -82,4 +85,4 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 -   **className** `String`
     CSS class to be injected on the component container.
 -   **slot-scope** ( Default Slot )
-    Enables custom rendering for **SelectedFilters** component. It provides an object as a param which contains all the props needed to render the custom selected-filters, including the functions to clear and update the component values.
+    Enables custom rendering for **SelectedFilters** component. It provides an object as a param which contains all the props needed to render the custom selected-filters, including the functions to clear and update the component values. You can find the example at [here](https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/next/packages/vue/examples/selected-filters-custom).

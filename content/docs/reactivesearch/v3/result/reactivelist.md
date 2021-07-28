@@ -81,6 +81,12 @@ Example uses:
 
     > It is possible to override this query by providing `defaultQuery`.
 
+	> Note: This prop has been marked as deprecated starting v3.18.0. Please use the `distinctField` prop instead.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 -   **excludeFields** `String Array` [optional]
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
@@ -241,6 +247,30 @@ Example uses:
 >
 > The fundamental difference between `onPageChange` and `onPageClick` is that `onPageClick` is only called on a manual interaction with the pagination buttons, whereas, `onPageChange` would also be invoked if some other side effects caused the results to update which includes updating filters, queries or changing pages. The behaviour of these two may change in the future versions as we come up with a better API.
 
+-   **distinctField** `String` [optional]
+	This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+
+-   **distinctFieldConfig** `Object` [optional]
+	This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+```jsx
+<ReactiveList
+	....
+	distinctField="authors.keyword"
+	distinctFieldConfig={{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}}
+/>
+```
+
+	> Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
+
 ## Sub Components
 
 -   **ResultCardsWrapper**
@@ -320,7 +350,9 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
+        An array of results obtained from combining `stream` and `promoted` results along with the `hits`.
+    -   **`aggregationData`** `array`
+        An array of aggregations buckets. Each bucket would have a `top_hits` property if you're using Elasticsearch top hits aggregations in `defaultQuery` prop.
     -   **`streamData`**: `array`
         An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
@@ -405,6 +437,10 @@ Or you can also use render function as children
 
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
 
 ## Examples
 

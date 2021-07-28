@@ -103,6 +103,16 @@ const NavBar = ({ theme }) => {
 															/>
 															Managing Data
 														</Link>
+														<Link
+															to="/docs/hosting/clusters/"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="rocket"
+																className="dropdown-content-icon mr2"
+															/>
+															Hosting
+														</Link>
 													</div>
 													<div>
 														<Link
@@ -126,14 +136,14 @@ const NavBar = ({ theme }) => {
 															Building Search UI
 														</Link>
 														<Link
-															to="/docs/hosting/clusters/"
+															to="/docs/speed/cache-management/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
-																name="rocket"
+																name="zap"
 																className="dropdown-content-icon mr2"
 															/>
-															Hosting
+															Speed
 														</Link>
 													</div>
 													<div>
@@ -155,7 +165,7 @@ const NavBar = ({ theme }) => {
 																name="security"
 																className="dropdown-content-icon mr2"
 															/>
-															Security Credentials
+															Access Control
 														</Link>
 													</div>
 												</div>
@@ -193,7 +203,7 @@ const NavBar = ({ theme }) => {
 															APIs and Integrations
 														</h3>
 														<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
-															Clients, tools and libraries for working
+															UI Libraries, clients and interactive examples for working
 															with appbase.io
 														</p>
 														<Link
@@ -276,16 +286,6 @@ const NavBar = ({ theme }) => {
 															React
 														</Link>
 														<Link
-															to="/docs/reactivesearch/react-native-searchbox/quickstart/"
-															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-														>
-															<Icon
-																name="react-bw"
-																className="dropdown-content-icon mr2"
-															/>
-															React Native
-														</Link>
-														<Link
 															to="/docs/reactivesearch/vue-searchbox/quickstart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
@@ -296,20 +296,44 @@ const NavBar = ({ theme }) => {
 															Vue
 														</Link>
 														<Link
-															to="/docs/reactivesearch/searchbase/overview/QuickStart/"
+															to="/docs/reactivesearch/react-native-searchbox/quickstart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
 														>
 															<Icon
-																name="js-bw"
+																name="react-bw"
 																className="dropdown-content-icon mr2"
 															/>
-															Headless
+															React Native
+														</Link>
+														<Link
+															to="/docs/reactivesearch/flutter-searchbox/quickstart"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="flutter"
+																className="dropdown-content-icon mr2"
+															/>
+															Flutter
 														</Link>
 													</div>
 													<div>
 														<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
+															REST API
+														</h2>
+													<Link
+															to="/api/rest/overview/"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="rest"
+																className="dropdown-content-icon mr2"
+															/>
+															Overview
+														</Link>
+														<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
 															Clients
 														</h2>
+
 														<Link
 															to="/api/javascript/quickstart/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
@@ -319,16 +343,6 @@ const NavBar = ({ theme }) => {
 																className="dropdown-content-icon mr2"
 															/>
 															Javascript
-														</Link>
-														<Link
-															to="/api/rest/quickstart/"
-															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
-														>
-															<Icon
-																name="rest"
-																className="dropdown-content-icon mr2"
-															/>
-															REST
 														</Link>
 														<a
 															href="https://github.com/appbaseio/appbase-droid"
@@ -362,6 +376,16 @@ const NavBar = ({ theme }) => {
 														<h2 className="f4 lh-h5 lh-h4-l fw6 ma0 pa0  mt0 mt2-ns darkgrey mb2">
 															Interactive Examples
 														</h2>
+														<Link
+															to="/api/examples/rest/"
+															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}
+														>
+															<Icon
+																name="rest"
+																className="dropdown-content-icon mr2"
+															/>
+															REST
+														</Link>
 														<Link
 															to="/api/examples/python/"
 															className={`${themeClasses[theme].menuItem} nowrap f5 pa3 mr1 mr3-l nl3 dropdown-link`}

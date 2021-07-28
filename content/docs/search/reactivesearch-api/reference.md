@@ -161,6 +161,40 @@ The below example represents a **geo bounding box** query:
         }
     }
 ```
+
+### index
+
+The `index` property can be used to explicitly specify an `index` for a particular query. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `index` path variable defined in the URL.
+
+| Type     | Applicable on query of type | Required |
+| -------- | --------------------------- | -------- |
+| `string` | `all`                       | false    |
+
+
+Let's take this example to see how this works:
+
+```
+URL: /my-index/_reactivesearch.v3
+
+Body:
+{
+	"query": [
+	  {
+		 "id": "search",
+		 "type": "search",
+		 ...
+	  },
+	  {
+		 "id": "facet",
+		 "type": "term",
+		 "index": "optimized-facet-index"
+	  }
+	]
+}
+```
+
+Here, the first query uses the `my-index` index to query against, as specified in the request URL. However, the second query will use the `optimized-facet-index` index as specified by the `index` key in it.
+
 ### size
 
 To set the number of results to be returned by a query.
@@ -187,6 +221,18 @@ This property allows you to implement the `pagination` for `term` type of querie
 > Note:
 > 1. Sort by as `count` doesn't work with composite aggregations i.e when `pagination` is set to `true`.
 > 2. The [missingLabel](/docs/search/reactivesearch-api/reference/#missinglabel) property also won't work when composite aggregations have been used.
+
+### aggregationSize
+
+To set the number of buckets to be returned by aggregations.
+
+| Type  | Applicable on query of type | Required |
+| ----- | --------------------------- | -------- |
+| `int` | `term`                      | false    |
+
+> Note:
+> 1. This property can also be used for `search` type of queries when `aggregationField` is set.
+> 2. This is a new feature and only available for appbase versions >= 7.41.0.
 
 ### queryFormat
 
@@ -525,6 +571,62 @@ The following example uses all three functions (`saturation`, `log` and `sigmoid
 }
 ```
 
+### distinctField
+This property returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+| Type     | Applicable on query of type | Required |
+| ------   | --------------------------- | -------- |
+| `string` | `all`                  | false    |
+
+The following query would return the products for distinct brands.
+```js
+{
+    "query": [
+        {
+            "id": "test",
+            "dataField": [
+                "product_name"
+            ],
+            "distinctField": "brand.keyword",
+        }
+    ]
+}
+```
+
+### distinctFieldConfig
+This property allows specifying additional options to the `distinctField` property. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+| Type     | Applicable on query of type | Required |
+| ------   | --------------------------- | -------- |
+| `object` | `all`                       | false    |
+
+The following query would return the products for distinct brands. Additionally, it would return the top five products for each brand.
+```js
+{
+    "query": [
+        {
+            "id": "test",
+            "dataField": [
+                "product_name"
+            ],
+            "distinctField": "brand.keyword",
+            "distinctFieldConfig": {
+                "inner_hits": {
+                    "name": "most_recent",
+                    "size": 5,
+                    "sort": [
+                        {
+                            "crawl_timestamp.keyword": "asc"
+                        }
+                    ]
+                },
+                "max_concurrent_group_searches": 4
+            }
+        }
+    ]
+}
+```
+
 ## Settings Properties
 
 ### recordAnalytics
@@ -550,3 +652,6 @@ The following example uses all three functions (`saturation`, `log` and `sigmoid
 
 ### userId
 `String` It allows you to define the user id which will be used to record the Appbase.io analytics.
+
+### useCache
+`Boolean` This property when set allows you to cache the current search query. The `useCache` property takes precedence irrespective of whether caching is enabled or disabled via the dashboard.

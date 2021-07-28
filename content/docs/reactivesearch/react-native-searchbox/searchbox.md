@@ -114,6 +114,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
     It utilizes `composite aggregations` which are newly introduced in ES v6 and offer vast performance benefits over a traditional terms aggregation.
     You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html).
     You can use `aggregationData` using `onAggregationData` callback or `subscriber`.
+	> Note: This prop has been marked as deprecated starting v1.2.0. Please use the `distinctField` prop instead.
 
 ```jsx
 <SearchBox
@@ -123,6 +124,12 @@ Here, we are specifying that the suggestions should update whenever one of the b
     onAggregationData={(next, prev) => {}}
 />
 ```
+
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 
 -   **highlight** `boolean` [optional]
     whether highlighting should be enabled in the returned results.
@@ -156,14 +163,35 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **queryString** `boolean` [optional]
     Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
 
+-   **distinctField** `String` [optional]
+	This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+
+-   **distinctFieldConfig** `Object` [optional]
+	This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+```jsx
+<SearchBox
+	....
+	distinctField="authors.keyword"
+	distinctFieldConfig={{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}}
+/>
+```
 
 ### To customize the AutoSuggestions
 
 -   **enablePopularSuggestions** `Boolean`
     Defaults to `false`. When enabled, it can be useful to curate search suggestions based on actual search queries that your users are making. Read more about it over [here](/docs/analytics/popular-suggestions/).
 -   **maxPopularSuggestions** `Number` can be used to configure the size of popular suggestions. The default value is `5`.
--   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id for each user to personalize the recent searches. 
-> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`. 
+-   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id for each user to personalize the recent searches.
+> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 
 For example,
 ```js
@@ -177,7 +205,7 @@ For example,
             userId: 'jon@appbase.io',
         }}
     >
-        <SearchBox 
+        <SearchBox
             id="search-component"
             dataField={[
                 {
@@ -192,6 +220,15 @@ For example,
             enableRecentSearches
         />
     </SearchBase>
+```
+-   **enablePredictiveSuggestions** `bool` [optional]
+    Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
+
+```jsx
+<SearchBox
+	....
+	enablePredictiveSuggestions
+/>
 ```
 -   **showAutoFill** `Boolean` Defaults to `true`. This property allows you to enable the auto-fill behavior for suggestions. It helps users to select a suggestion without applying the search which further refines the auto-suggestions i.e minimizes the number of taps or scrolls that the user has to perform before finding the result.
 -   **showDistinctSuggestions** `Boolean` Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as the searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
@@ -260,7 +297,7 @@ For example,
         }
 />
 ```
--   **render** `Function` 
+-   **render** `Function`
     You can render suggestions in a custom layout by using the `render` prop.
     <br/>
     It accepts an object with these properties:
@@ -320,7 +357,7 @@ For example,
 
 -   **goBackIcon**: `any`
     This prop allows to override the [Icon props](https://reactnativeelements.com/docs/icon#props) or use a custom component. Use `null` or `false` to hide the icon.
-  
+
 ### Customize style
 
 -   **theme** `Object`
@@ -347,7 +384,35 @@ For example,
 -   **value** `string` [optional]
     sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
 
--   **onChange** `Function` is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes.
+-   **onChange** `Function` [optional]
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
+
+    ```js
+	import { SearchContext } from '@appbaseio/react-searchbox';
+	const Search = () => {
+		// To retrieve the searchbase context
+		const searchbase = useContext(SearchContext);
+		useEffect(() => {
+			// Get the instance of search component
+			const searchComponent = searchbase.getComponent('book-search');
+			if(searchComponent) {
+				// To fetch suggestions
+				searchComponent.triggerDefaultQuery();
+				// To update results
+				searchComponent.triggerCustomQuery();
+			}
+		}, [text])
+		return (
+			<SearchBox
+				id="book-search"
+				value={text}
+				onChange={(value) => {
+					setText(value);
+				}}
+			/>
+		)
+	}
+    ```
 
 ### Callbacks for change events
 
@@ -367,6 +432,12 @@ For example,
     - **raw**: `Object` Response returned by ES composite aggs query in the raw form.
     - **rawData**: `Object` An object of raw response as-is from elasticsearch query.
     - **afterKey**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the afterKey parameter to retrieve the next
+
+-   **onBlur** `Function` is a callback handler for input blur event
+
+-   **onKeyPress** `Function` is a callback handler for keypress event
+
+-   **onFocus** `Function` is a callback handler for input focus event
 
 ### To customize the query execution
 
@@ -457,9 +528,9 @@ For example,
 <SearchBox
     id="search-component"
     dataField={["original_title", "original_title.search"]}
-    defaultQuery={() => {
+    defaultQuery={() => ({
         "timeout": "1s"
-    }}
+    })}
 />
 ```
 

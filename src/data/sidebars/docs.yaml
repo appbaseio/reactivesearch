@@ -5,8 +5,6 @@
         items:
             - link: /docs/gettingstarted/quickstart/
               title: Overview
-            - link: /docs/gettingstarted/why/
-              title: "Why Appbase.io"
       - group: "Managing Data"
         icon: importData
         items:
@@ -66,7 +64,12 @@
               title: "Popular Suggestions"
             - link: /docs/analytics/curated-insights/
               title: "Curated Insights"
-      - group: Security
+      - group: Speed
+        icon: zap
+        items:
+            - link: /docs/speed/cache-management/
+              title: Cache Management
+      - group: "Access Control"
         icon: security
         items:
             - link: /docs/security/credentials/
@@ -82,8 +85,6 @@
         items:
             - link: /docs/hosting/clusters/
               title: Clusters
-            - link: /docs/hosting/apps/
-              title: Apps
             - link: /docs/hosting/byoc/
               title: "Bring Your Own Cluster"
               items:

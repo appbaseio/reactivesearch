@@ -89,6 +89,12 @@ Example uses:
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
 
+	> Note: This prop has been marked as deprecated starting v3.18.0. Please use the `distinctField` prop instead.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This is a new feature and only available for appbase versions >= 7.41.0.
 -   **nestedField** `String` [optional]
     Set the path of the `nested` type under which the `dataField` is present. Only applicable only when the field(s) specified in the `dataField` is(are) present under a [`nested` type](https://www.elastic.co/guide/en/elasticsearch/reference/current/nested.html) mapping.
 -   **categoryField** `String` [optional]
@@ -134,6 +140,8 @@ Example uses:
     > Note:
     >
     > Popular Suggestions only work when `enableAppbase` prop is `true`.
+-   **enableRecentSearches** `Boolean` Defaults to `false`. If set to `true` then users will see the top recent searches as the default suggestions. Appbase.io recommends defining a unique id(`userId` property) in `appbaseConfig` prop for each user to personalize the recent searches.
+> Note: Please note that this feature only works when `recordAnalytics` is set to `true` in `appbaseConfig`.
 -   **enablePredictiveSuggestions** `bool` [optional]
     Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
 
@@ -253,6 +261,8 @@ Example uses:
         An array of popular suggestions obtained based on search value.
     -   **`querySuggestions`**: `array`
         This prop has been marked as deprecated starting `v3.12.6`. Please use the `popularSuggestions` prop instead.
+    -   **`recentSearches`**: `array`
+        An array of recent searches made by user if `enableRecentSearches` is set to `true`.
     -   **`rawData`** `object`
         An object of raw response as-is from elasticsearch query.
     -   **`aggregationData`**: `array`
@@ -455,6 +465,61 @@ Or you can also use render function as children
 -   **onError** `Function` [optional]
     You can pass a callback function that gets triggered in case of an error and provides the `error` object which can be used for debugging or giving feedback to the user if needed.
 
+-   **recentSearchesIcon** `JSX` [optional]
+You can use a custom icon in place of the default icon for the recent search items that are shown when `enableRecentSearches` prop is set to true. You can also provide styles using the `recent-search-icon` key in the `innerClass` prop.
+
+    ```html
+        <CategorySearch
+            ...
+            enableRecentSearches
+            innerClass={{
+                'recent-search-icon': '...',
+            }}
+            recentSearchesIcon={<RecentIcon />}
+        />
+    ```
+
+-   **popularSearchesIcon** `JSX` [optional]
+You can use a custom icon in place of the default icon for the popular searches that are shown when `enablePopularSuggestions` prop is set to true. You can also provide styles using the `popular-search-icon` key in the `innerClass` prop.
+
+    ```html
+        <CategorySearch
+            ...
+            enablePopularSuggestions
+            innerClass={{
+                'popular-search-icon': '...'
+            }}
+            popularSearchesIcon={<PopularIcon />}
+        />
+    ```
+
+-   **distinctField** `String` [optional]
+This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+
+-   **distinctFieldConfig** `Object` [optional]
+This prop allows specifying additional options to the `distinctField` prop. Using the allowed DSL, one can specify how to return K distinct values (default value of K=1), sort them by a specific order, or return a second level of distinct values. `distinctFieldConfig` object corresponds to the `inner_hits` key's DSL.  You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
+
+```jsx
+<CategorySearch
+	....
+	distinctField="authors.keyword"
+	distinctFieldConfig={{
+		inner_hits: {
+			name: 'most_recent',
+			size: 5,
+			sort: [{ timestamp: 'asc' }],
+		},
+		max_concurrent_group_searches: 4,
+	}}
+/>
+```
+
+	> Note: In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.
+
+
+
+
 ## Demo
 
 <br />
@@ -468,6 +533,8 @@ Or you can also use render function as children
 -   `title`
 -   `input`
 -   `list`
+-   `recent-search-icon`
+-   `popular-search-icon`
 
 Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
 
@@ -617,7 +684,64 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
         -   `String` is used for specifying a single component by its `componentId`.
         -   `Array` is used for specifying multiple components by their `componentId`.
         -   `Object` is used for nesting other key clauses.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
 
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
+-   **focusShortcuts** `Array<string | number>` [optional]
+A list of keyboard shortcuts that focus the search box. Accepts key names and key codes. Compatible with key combinations separated using '+'. Defaults to `['/']`.
+-   **autoFocus** `boolean` [optional] When set to true, search box is auto-focused on page load. Defaults to `false`.
+
+
+-   **addonBefore** `string|JSX` [optional] The HTML markup displayed before (on the left side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
+<img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
+```jsx
+ <CategorySearch
+    showIcon={false}
+    addonBefore={
+        <img
+            src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+            height="30px"
+        />
+    }
+    id="search-component"
+    ...
+ />
+```
+
+
+-   **addonAfter** `string|JSX` [optional] The HTML markup displayed after (on the right side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
+
+<img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
+```jsx
+ <CategorySearch
+    showIcon={false}
+    addonAfter={
+        <img
+            src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+            height="30px"
+        />
+    }
+    id="search-component"
+    ...
+ />
+```
+
+-   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
+<img src="https://i.imgur.com/x3jF23m.png"/>
+```jsx
+<CategorySearch
+    expandSuggestionsContainer={false}
+    addonBefore={
+          <img ... />
+        }
+    addonAfter={
+          <img ... />
+        }
+    id="search-component"
+     ...
+/>
+```
 ## Examples
 
 <a href="https://opensource.appbase.io/playground/?selectedKind=Search%20components%2FCategorySearch" target="_blank">CategorySearch with default props</a>

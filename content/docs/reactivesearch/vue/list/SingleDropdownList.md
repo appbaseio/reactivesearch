@@ -69,7 +69,16 @@ Example uses:
 -   **title** `String or JSX` [optional]
     title of the component to be shown in the UI.
 -   **size** `Number` [optional]
-    control how many items to display in the List. Defaults to 100.
+    number of list items to be displayed.
+
+    > Note: 
+    > 1. Appbase users should use the `aggregationSize` prop instead. The `size` prop would only set the size for `hits` not the `aggregations`.
+    > 2. We recommend Appbase users to not use the `size` prop unless they are using `hits` because it can impact the query performance.
+
+-   **aggregationSize**
+    To set the number of buckets to be returned by aggregations.
+
+    > Note: This prop is only applicable when `enableAppbase` is set to `true`.
 -   **sortBy** `String` [optional]
     property that decides on how to sort the list items, accepts one of `count`, `asc` or `desc` as valid values. `count` sorts the list based on the count occurences, with highest value at the top. `asc` sorts the list in the ascending order of the list item (Alphabetical). `desc` sorts the list in the descending order of the term. Defaulted to `count`.
 -   **defaultValue** `string` [optional]
@@ -297,13 +306,42 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 
     ```js
     beforeValueChange = value => {
-        // The update is accepted by default
+    	// The update is accepted by default
     	if (value === 'Dirk Pitt') {
     		// To reject the update, throw an error
     		throw Error('Selected value should not be equal to Dirk Pitt.');
     	}
     };
     ```
+
+-   **renderNoResults** `String|Function|slot-scope` [optional]
+    show custom message or component when no results found.
+
+<!-- prettier-ignore -->
+```html
+<template
+    slot="renderNoResults"
+>
+	<h4>No Results Found!</h4>
+</template>
+
+<!-- or -->
+
+<single-dropdown-list
+	...
+	:renderNoResults="renderNoResults"
+/>
+
+export default {
+	...,
+	method: {
+		renderNoResults() {
+			return 'Try Again';
+		}
+	},
+}
+
+```
 
 -   **transformData** `Function` [optional]
     allows transforming the data to render inside the list. You can change the order, remove, or add items, tranform their values with this method. It provides the data as param which is an array of objects of shape `{ key: <string>, doc_count: <number> }` and expects you to return the array of objects of same shape.
@@ -318,6 +356,10 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
         -   `String` is used for specifying a single component by its `componentId`.
         -   `Array` is used for specifying multiple components by their `componentId`.
         -   `Object` is used for nesting other key clauses.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
 
 ## Events
 

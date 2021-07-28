@@ -24,9 +24,6 @@ const getValue = () => {
 		if (path && path.startsWith('/docs/reactivesearch/native')) {
 			return 'Native';
 		}
-		if (path && path.startsWith('/docs/reactivesearch/searchbase')) {
-			return 'SearchBase';
-		}
 		if (path && path.startsWith('/docs/reactivesearch/react-searchbox')) {
 			return 'React SearchBox';
 		}
@@ -35,6 +32,15 @@ const getValue = () => {
 		}
 		if (path && path.startsWith('/docs/reactivesearch/searchbox')) {
 			return 'Searchbox';
+		}
+		if (path && path.startsWith('/docs/reactivesearch/searchbase-dart')) {
+			return 'Searchbase Dart';
+		}
+		if (path && path.startsWith('/docs/reactivesearch/flutter-searchbox')) {
+			return 'Flutter Searchbox';
+		}
+		if (path && path.startsWith('/docs/reactivesearch/searchbase')) {
+			return 'SearchBase';
 		}
 	}
 
@@ -59,6 +65,10 @@ const getFileName = value => {
 			return 'react-native-searchbox-reactivesearch';
 		case 'Vue SearchBox':
 			return 'vue-searchbox-reactivesearch';
+		case 'Flutter Searchbox':
+			return 'flutter-searchbox';
+		case 'Searchbase Dart':
+			return 'searchbase-dart';
 		case 'UI Builder':
 			return 'ui-builder-reactivesearch';
 		default:
@@ -143,7 +153,7 @@ class MobileNav extends React.Component {
 							APIs and Integrations
 						</h2>
 						<p className="f5 lh-h5 lh-h4-l fw4 ma0 pa0 mt0 mt2-ns middarkgrey mb2">
-							Clients, tools and libraries for working with appbase.io
+							UI Libraries, clients and interactive examples for working with appbase.io
 						</p>
 						<div className="mt5 mb3">
 							<div className="mobile-links-container">
@@ -168,6 +178,8 @@ class MobileNav extends React.Component {
 								'React SearchBox',
 								'React Native SearchBox',
 								'Vue SearchBox',
+								'Searchbase Dart',
+								'Flutter Searchbox',
 							]}
 							value={rs}
 							className="version-switcher shadow-3 br2"
