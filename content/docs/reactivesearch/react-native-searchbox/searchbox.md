@@ -221,6 +221,15 @@ For example,
         />
     </SearchBase>
 ```
+-   **enablePredictiveSuggestions** `bool` [optional]
+    Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
+
+```jsx
+<SearchBox
+	....
+	enablePredictiveSuggestions
+/>
+```
 -   **showAutoFill** `Boolean` Defaults to `true`. This property allows you to enable the auto-fill behavior for suggestions. It helps users to select a suggestion without applying the search which further refines the auto-suggestions i.e minimizes the number of taps or scrolls that the user has to perform before finding the result.
 -   **showDistinctSuggestions** `Boolean` Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as the searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
     <br/> <br/>
@@ -375,7 +384,35 @@ For example,
 -   **value** `string` [optional]
     sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
 
--   **onChange** `Function` is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes.
+-   **onChange** `Function` [optional]
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
+
+    ```js
+	import { SearchContext } from '@appbaseio/react-searchbox';
+	const Search = () => {
+		// To retrieve the searchbase context
+		const searchbase = useContext(SearchContext);
+		useEffect(() => {
+			// Get the instance of search component
+			const searchComponent = searchbase.getComponent('book-search');
+			if(searchComponent) {
+				// To fetch suggestions
+				searchComponent.triggerDefaultQuery();
+				// To update results
+				searchComponent.triggerCustomQuery();
+			}
+		}, [text])
+		return (
+			<SearchBox
+				id="book-search"
+				value={text}
+				onChange={(value) => {
+					setText(value);
+				}}
+			/>
+		)
+	}
+    ```
 
 ### Callbacks for change events
 
@@ -395,6 +432,12 @@ For example,
     - **raw**: `Object` Response returned by ES composite aggs query in the raw form.
     - **rawData**: `Object` An object of raw response as-is from elasticsearch query.
     - **afterKey**: `Object` If the number of composite buckets is too high (or unknown) to be returned in a single response use the afterKey parameter to retrieve the next
+
+-   **onBlur** `Function` is a callback handler for input blur event
+
+-   **onKeyPress** `Function` is a callback handler for keypress event
+
+-   **onFocus** `Function` is a callback handler for input focus event
 
 ### To customize the query execution
 

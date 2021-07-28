@@ -159,7 +159,10 @@ Here, we are specifying that the suggestions should update whenever one of the b
     Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html).
 
 -   **queryString** `boolean` [optional]
-    Defaults to `false`. If set to `true` than it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
+    Defaults to `false`. If set to `true` then it allows you to create a complex search that includes wildcard characters, searches across multiple fields, and more. Read more about it [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html).
+
+-  **clearOnQueryChange** `boolean` [optional]
+    Defaults to `true`, i.e. clear the component's input selection when the query of its dependent component changes (which is set via react prop). When set to `false`, the component's input selection isn't cleared.
 
 -   **distinctField** `String` [optional]
 	This prop returns only the distinct value documents for the specified field. It is equivalent to the `DISTINCT` clause in SQL. It internally uses the collapse feature of Elasticsearch. You can read more about it over [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/collapse-search-results.html).
@@ -181,6 +184,32 @@ Here, we are specifying that the suggestions should update whenever one of the b
 	}}
 />
 ```
+
+-   **value** `string` [optional]
+    sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
+
+-   **onChange** `Function` [optional]
+    is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
+
+    ```js
+    <SearchBox
+    	value={this.state.text}
+    	onChange={(value, searchComponent, e) => {
+    		// Perform actions after updating the value
+    		this.setState(
+    			{
+    				text: value,
+    			},
+    			() => {
+    				// To fetch suggestions
+    				searchComponent.triggerDefaultQuery();
+    				// To update results
+    				searchComponent.triggerCustomQuery();
+    			},
+    		);
+    	}}
+    />
+    ```
 
 ### To customize the AutoSuggestions
 

@@ -116,10 +116,12 @@ You can also take advantage of various ReactiveSearch components static method f
     > If you are using an app with elastic search version less than 6, then defining this prop will result in error.
 
     > It is possible to override this query by providing `defaultQuery` or `customQuery`.
+
 -   **aggregationSize**
     To set the number of buckets to be returned by aggregations.
 
     > Note: This is a new feature and only available for appbase versions >= 7.41.0.
+
 -   **defaultQuery** `Function`
     **returns** the default query to be applied to the component, as defined in Elasticsearch Query DSL.
 -   **customQuery** `Function`
@@ -148,6 +150,10 @@ You can also take advantage of various ReactiveSearch components static method f
 
 -   **URLParams** `Boolean` [optional]
     enable creating a URL query string parameter based on the selected value of the list. This is useful for sharing URLs with the component state. Defaults to `false`.
+-   **index** `String` [optional]
+    The index prop can be used to explicitly specify an index to query against for this component. It is suitable for use-cases where you want to fetch results from more than one index in a single ReactiveSearch API request. The default value for the index is set to the `app` prop defined in the ReactiveBase component.
+
+    > Note: This only works when `enableAppbase` prop is set to true in `ReactiveBase`.
 
 ### Demo
 

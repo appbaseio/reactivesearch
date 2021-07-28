@@ -117,6 +117,22 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     ```
     You can check the following example that uses the Elasticsearch aggregations to render the markers.
     https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/vue-maps/packages/vue/examples/reactive-google-map-aggregations?file=/src/App.vue
+-   **clusterProps** `Object` [optional] can be used to bind the properties to the Google 
+    Maps Cluster object. It supports the following properties:
+    - *maxZoom* `Number`
+    - *batchSizeIE* `Number`
+    - *calculator* `Function`
+    - *enableRetinaIcons* `Boolean`
+    - *gridSize*  `Boolean`
+    - *averageCenter* `Boolean`
+    - *ignoreHidden* `Boolean`
+    - *imageExtension* `Boolean`
+    - *imagePath* `String`
+    - *imageSizes* `Array`
+    - *minimumClusterSize* `Number`
+    - *clusterClass* `String`
+    - *styles* `Array`
+    - *zoomOnClick* `Boolean` 
 -   **defaultZoom** `Number` [optional]
     preset map's zoom level, accepts integer values between [0, 20]. 0 is the minimum zoom level, where you can see the entire globe. 20 is the maximum zoom level. Defaults to 13.
 -   **defaultCenter** `Object` [optional]
@@ -126,6 +142,8 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     Read more about it [here](/docs/reactivesearch/v3/advanced/customqueries/#when-to-use-default-query).
     The following example uses the `defaultQuery` with `calculateMarkers` to display the markers using Elasticsearch `aggregations` instead of `hits`.
     https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/vue-maps/packages/vue/examples/reactive-google-map-aggregations?from-embed=&file=/src/App.vue
+    The following example changes the `defaultQuery` whenever the zoom value changes.
+    https://codesandbox.io/s/github/appbaseio/reactivesearch/tree/vue-maps/packages/vue/examples/reactive-google-map-default-query?from-embed=&file=/src/App.vue
 -   **center** `Object` [optional]
     set map's center position by specifying an object with valid `lat` and `lng` values. This prop, when set, will cause the component to run a geo-distance query with a distance of 10mi (Refer: `defaultRadius` and `unit` prop to configure the distance).
 -   **defaultRadius** `Number` [optional]
@@ -200,19 +218,37 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     </reactive-google-map>
     ```
 -   **renderPopover** `slot-scope` [optional]
-    It is useful to render the popover content when a marker is clicked.
+    It is useful to render the popover content when a marker is clicked. The slot data would be an object with the following properties:
+    - **item** represents the marker data
+    - **handleClose** useful to close the popover programmatically
 
+    
     The following example displays the `title` and `description` in popover.
 
     ```html
     <reactive-google-map>
-        <div slot="renderPopover" slot-scope="{ title, description }">
-           <div>{{ title }}</div>
-           <p>{{ description }}</p>
+        <div slot="renderPopover" slot-scope="{ item }">
+           <div>{{ item.title }}</div>
+           <p>{{ item.description }}</p>
         </div>
     </reactive-google-map>
     ```
+-   **renderClusterPopover** `slot-scope` [optional]
+    It is useful to render the popover content when a cluster is clicked. The slot data would be an object with the following properties:
+    - **markers** An array of markers for the selected cluster
+    - **cluster** Cluster reference object
+    - **handleClose** useful to close the popover programmatically
 
+    The following example displays the `markers` information for a particular cluster.
+
+    ```html
+    <reactive-google-map>
+        <div slot="renderClusterPopover" slot-scope="{ markers, cluster }">
+           <pre>{{ JSON.stringify(markers, null, 2) }}</pre>
+        </div>
+    </reactive-google-map>
+    ```
+    ![alt cluster](https://i.imgur.com/e1JwXOi.jpg)
 -   **render** `slot-scope` [optional]
     The `render` slot can be used to render the results in a list based UI.
     <br/>
@@ -315,6 +351,17 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
 -   **idle**
     gets called when map is in idle position
 
+-   **open-marker-popover**
+    gets called when marker popover gets opened or marker is clicked
+
+-   **close-marker-popover**
+    gets called when marker popover is closed
+
+-   **open-cluster-popover**
+    gets called when cluster popover gets opened or cluster is clicked
+
+-   **close-cluster-popover**
+    gets called when cluster popover is closed
 ## Extending 
 
 `ReactiveGoogleMap` component can be extended to
