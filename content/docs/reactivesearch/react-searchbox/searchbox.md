@@ -506,17 +506,17 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 -   **addonBefore** `string|JSX` [optional] The HTML markup displayed before (on the left side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
 <img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
 ```jsx
- <SearchBox
-        showIcon={false}
-        addonBefore={
-          <img
+<SearchBox
+    showIcon={false}
+    addonBefore={
+        <img
             src="https://img.icons8.com/cute-clipart/64/000000/search.png"
             height="30px"
-          />
-        }
-        id="search-component"
-        ...
-         />
+        />
+    }
+    id="search-component"
+    ...
+/>
 ```
 
 
@@ -524,33 +524,33 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
 
 <img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
 ```jsx
- <SearchBox
-        showIcon={false}
-        addonAfter={
-          <img
+<SearchBox
+    showIcon={false}
+    addonAfter={
+        <img
             src="https://img.icons8.com/cute-clipart/64/000000/search.png"
             height="30px"
-          />
-        }
-        id="search-component"
-        ...
-         />
+        />
+    }
+    id="search-component"
+    ...
+/>
 ```
 
 -   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
 <img src="https://i.imgur.com/x3jF23m.png"/>
 ```jsx
- <SearchBox
-        expandSuggestionsContainer={false}
-        addonBefore={
+<SearchBox
+    expandSuggestionsContainer={false}
+    addonBefore={
           <img ... />
         }
-        addonAfter={
+    addonAfter={
           <img ... />
         }
-        id="search-component"
-        ...
-         />
+    id="search-component"
+    ...
+/>
 ```
 ### Customize style
 

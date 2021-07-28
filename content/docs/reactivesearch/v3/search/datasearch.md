@@ -669,7 +669,7 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
         }
         id="search-component"
         ...
-         />
+ />
 ```
 
 
@@ -688,7 +688,7 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
         }
         id="search-component"
         ...
-     />
+ />
 ```
 
 -   **expandSuggestionsContainer** `boolean` [optional] When set to false the width of suggestions dropdown container is limited to the width of searchbox input field. Defaults to `true`.
@@ -704,7 +704,7 @@ A list of keyboard shortcuts that focus the search box. Accepts key names and ke
         }
         id="search-component"
         ...
-         />
+ />
 ```
 
 ## Examples

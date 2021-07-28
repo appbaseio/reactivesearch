@@ -221,12 +221,12 @@ Example uses:
 
 ```jsx
  <data-search
-        expandSuggestionsContainer={false}
-        ...
-         >
-         <img slot="addonBefore" src="..." />
-         <img slot="addonAfter" src="..." />
- </data-sesarch>
+      expandSuggestionsContainer={false}
+      ...
+  >
+      <img slot="addonBefore" src="..." />
+      <img slot="addonAfter" src="..." />
+  </data-sesarch>
 ```
 
 - **queryFormat** `String` [optional]
@@ -505,24 +505,39 @@ You can use `DataSearch` with `renderQuerySuggestions slot` as shown:
 
 - **addonBefore** `slot-scope` [optional] The HTML markup displayed before (on the left side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
   <img src="https://i.imgur.com/Lhm8PgV.png" style="margin:0 auto;display:block;"/>
-  `jsx <data-search ... :enablePopularSuggestions="true" :innerClass="{ 'popular-search-icon': '...' }" > <img slot="addonBefore" src="https://img.icons8.com/cute-clipart/64/000000/search.png" height="30px" /> </data-search> `
+```jsx
+  <data-search
+      ...
+      :enablePopularSuggestions="true"
+      :innerClass="{
+         'popular-search-icon': '...'
+      }"
+  >
+      <img 
+        slot="addonBefore"
+        src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+        height="30px"
+      />
+  </data-search>
+```
 
 - **addonAfter** `slot-scope` [optional] The HTML markup displayed before (on the right side of) the searchbox input field. Users can use it to render additional actions/ markup, eg: a custom search icon hiding the default.
   <img src="https://i.imgur.com/upZRx9K.png" style="margin:0 auto;display:block;"/>
 
 ```jsx
-        <data-search
-         ...
-         :enablePopularSuggestions="true"
-         :innerClass="{
-             'popular-search-icon': '...'
-         }"
-     >
-      <img  slot="addonAfter"
-          src="https://img.icons8.com/cute-clipart/64/000000/search.png"
-         height="30px"
-       />
-     </data-search>
+  <data-search
+      ...
+      :enablePopularSuggestions="true"
+      :innerClass="{
+         'popular-search-icon': '...'
+      }"
+  >
+      <img 
+        slot="addonBefore"
+        src="https://img.icons8.com/cute-clipart/64/000000/search.png"
+        height="30px"
+      />
+  </data-search>
 ```
 
 - **distinctField** `String` [optional]
