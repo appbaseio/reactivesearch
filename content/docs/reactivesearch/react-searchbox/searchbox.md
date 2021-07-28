@@ -185,7 +185,7 @@ Here, we are specifying that the suggestions should update whenever one of the b
 -   **value** `string` [optional]
     sets the current value of the component. It sets the search query text (on mount and on update). Use this prop in conjunction with the `onChange` prop.
 
--   **onChange** `function` [optional]
+-   **onChange** `Function` [optional]
     is a callback function which accepts component's current **value** as a parameter. It is called when you are using the `value` prop and the component's value changes. This prop is used to implement the [controlled component](https://reactjs.org/docs/forms.html/#controlled-components) behavior.
 
     ```js
