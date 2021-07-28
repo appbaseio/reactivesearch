@@ -85,4 +85,4 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 -   **className** `String`
     CSS class to be injected on the component container.
 -   **slot-scope** ( Default Slot )
-    Enables custom rendering for **SelectedFilters** component. It provides an object as a param which contains all the props needed to render the custom selected-filters, including the functions to clear and update the component values.
+    Enables custom rendering for **SelectedFilters** component. It provides an object as a param which contains all the props needed to render the custom selected-filters, including the functions to clear and update the component values. You can find the example at [here](https://codesandbox.io/embed/github/appbaseio/reactivesearch/tree/next/packages/vue/examples/selected-filters-custom).
