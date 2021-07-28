@@ -221,6 +221,15 @@ For example,
         />
     </SearchBase>
 ```
+-   **enablePredictiveSuggestions** `bool` [optional]
+    Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
+
+```jsx
+<SearchBox
+	....
+	enablePredictiveSuggestions
+/>
+```
 -   **showAutoFill** `Boolean` Defaults to `true`. This property allows you to enable the auto-fill behavior for suggestions. It helps users to select a suggestion without applying the search which further refines the auto-suggestions i.e minimizes the number of taps or scrolls that the user has to perform before finding the result.
 -   **showDistinctSuggestions** `Boolean` Show 1 suggestion per document. If set to `false` multiple suggestions may show up for the same document as the searched value might appear in multiple fields of the same document, this is true only if you have configured multiple fields in `dataField` prop. Defaults to `true`.
     <br/> <br/>
