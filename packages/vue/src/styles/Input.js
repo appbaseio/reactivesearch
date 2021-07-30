@@ -36,7 +36,8 @@ const darkInput = ({ theme }) => css`
 
 const Input = styled('input')`
 	${input};
-	${({ themePreset }) => themePreset === 'dark' && darkInput};
+	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })
+};
 
 	${props =>
 		props.showIcon
@@ -147,7 +148,7 @@ const suggestions = (themePreset, theme) => css`
 		}
 	}
 
-	${themePreset === 'dark' && dark(theme)};
+	${themePreset === 'dark' && theme && dark(theme)};
 `;
 
 const suggestionsContainer = css`
@@ -196,7 +197,7 @@ const noSuggestions = (themePreset, theme) => css`
 		}
 	}
 
-	${themePreset === 'dark' && dark(theme)}
+	${themePreset === 'dark' && theme && dark(theme)}
 `;
 
 export default Input;

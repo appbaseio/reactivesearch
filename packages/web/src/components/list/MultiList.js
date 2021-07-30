@@ -116,7 +116,9 @@ class MultiList extends Component {
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue).filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(
+							item => currentValue[item],
+						);
 						if (value.length) this.setValue(value, true);
 					},
 				);
@@ -133,7 +135,9 @@ class MultiList extends Component {
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue).filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(
+							item => currentValue[item],
+						);
 						if (value.length) this.setValue(value, true);
 					},
 				);
@@ -169,7 +173,6 @@ class MultiList extends Component {
 				selectedValue = [selectAllLabel];
 			}
 		}
-
 		if (this.props.value !== prevProps.value) {
 			this.setValue(this.props.value, true);
 		} else if (
@@ -277,7 +280,6 @@ class MultiList extends Component {
 		const { selectAllLabel } = props;
 		let { currentValue } = this.state;
 		let finalValues = null;
-
 		if (
 			selectAllLabel
 			&& ((Array.isArray(value) && value.includes(selectAllLabel))
@@ -407,7 +409,7 @@ class MultiList extends Component {
 				});
 			} else {
 				this.state = {
-					...this.state || {},
+					...(this.state || {}),
 					options: [],
 				};
 			}
@@ -465,11 +467,36 @@ class MultiList extends Component {
 		if (isEvent(e)) {
 			currentValue = e.target.value;
 		}
-		const { value, onChange } = this.props;
+		const { value, onChange, selectAllLabel } = this.props;
 		if (value === undefined) {
 			this.setValue(currentValue);
 		} else if (onChange) {
-			onChange(parseValueArray(this.props.value, currentValue));
+			let valueToSet = parseValueArray(value, currentValue);
+			if (selectAllLabel) {
+				// Remove selectAllLabel if any other option is selected
+				if (currentValue === selectAllLabel) {
+					if (
+						value === selectAllLabel
+						|| (Array.isArray(value) && value.includes(selectAllLabel))
+					) {
+						valueToSet = [];
+					} else {
+						const options = [];
+						this.state.options.forEach((item) => {
+							options.unshift(item.key);
+						});
+						options.unshift(selectAllLabel);
+						valueToSet = options;
+					}
+				} else if (
+					Array.isArray(valueToSet)
+					&& valueToSet.length > 1
+					&& valueToSet.includes(selectAllLabel)
+				) {
+					valueToSet = valueToSet.filter(val => val !== selectAllLabel);
+				}
+			}
+			onChange(valueToSet);
 		}
 	};
 
