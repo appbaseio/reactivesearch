@@ -65,8 +65,10 @@ export default {
 			if (zoom) {
 				return {
 					query: {
-						term: {
-							magnitude: zoom.toString(),
+						range: {
+							magnitude: {
+								gte: zoom
+							},
 						},
 					},
 				};

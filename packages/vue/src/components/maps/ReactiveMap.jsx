@@ -192,13 +192,16 @@ const ReactiveMap = {
 					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 				}
 				// Update calculated default query in store
-				this.setQueryOptions(this.$props.componentId, options, !query);
+				this.setQueryOptions(this.$props.componentId, options, false);
 
 				const persistMapQuery = true;
 				const forceExecute = true;
 				// Update default query to include the geo bounding box query
 				this.setDefaultQueryForRSAPI();
-				this.setMapData(this.componentId, query, persistMapQuery, forceExecute);
+				const meta = {
+					mapBoxBounds: this.mapBoxBounds,
+				};
+				this.setMapData(this.componentId, query, persistMapQuery, forceExecute, meta);
 				this.currentPageState = 0;
 				this.from = 0;
 			}
@@ -551,26 +554,7 @@ const ReactiveMap = {
 		},
 		setDefaultQueryForRSAPI() {
 			if (this.defaultQuery && typeof this.defaultQuery === 'function') {
-				let defaultQuery = this.defaultQuery();
-				if (this.mapBoxBounds) {
-					const geoQuery = {
-						geo_bounding_box: {
-							[this.dataField]: this.mapBoxBounds,
-						},
-					};
-					const { query, ...options } = defaultQuery;
-
-					if (query) {
-						// adds defaultQuery's query to geo-query
-						// to generate a map query
-						defaultQuery = {
-							query: {
-								must: [geoQuery, query],
-							},
-							...options,
-						};
-					}
-				}
+				const defaultQuery = this.defaultQuery();
 				this.setDefaultQuery(this.componentId, defaultQuery);
 			}
 		},
@@ -790,11 +774,16 @@ const ReactiveMap = {
 			// Update default query for RS API
 			this.setDefaultQueryForRSAPI();
 
+			const meta = {
+				mapBoxBounds: this.mapBoxBounds,
+			};
+
 			this.setMapData(
 				this.componentId,
 				this.$defaultQuery.query,
 				persistMapQuery,
 				forceExecute,
+				meta
 			);
 		} else {
 			// only apply geo-distance when defaultQuery prop is not set
