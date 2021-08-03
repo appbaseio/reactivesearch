@@ -5,7 +5,6 @@ import { Text, Spinner, Button, Icon } from 'native-base';
 import {
 	addComponent,
 	removeComponent,
-	setStreaming,
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
@@ -50,10 +49,6 @@ class ReactiveList extends Component {
 	componentDidMount() {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
-
-		if (this.props.stream) {
-			this.props.setStreaming(this.props.componentId, true);
-		}
 
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
@@ -179,10 +174,6 @@ class ReactiveList extends Component {
 			);
 		}
 
-		if (this.props.stream !== nextProps.stream) {
-			this.props.setStreaming(nextProps.componentId, nextProps.stream);
-		}
-
 		if (!isEqual(nextProps.react, this.props.react)) {
 			this.setReact(nextProps);
 		}
@@ -214,11 +205,12 @@ class ReactiveList extends Component {
 			});
 		}
 
-		if (nextProps.pagination && (nextProps.total !== this.props.total || nextProps.size !== this.props.size)) {
-		    this.setState({
-			totalPages: nextProps.total / nextProps.size,
-			currentPage: 0
-		    });
+		if (nextProps.pagination
+			&& (nextProps.total !== this.props.total || nextProps.size !== this.props.size)) {
+			this.setState({
+				totalPages: nextProps.total / nextProps.size,
+				currentPage: 0,
+			});
 		}
 	}
 
@@ -483,13 +475,7 @@ class ReactiveList extends Component {
 
 	render() {
 		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
-		let filteredResults = results;
-
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
+		const filteredResults = results;
 
 		return (
 			<View style={this.props.style}>
@@ -497,15 +483,15 @@ class ReactiveList extends Component {
 				{this.props.pagination && this.props.paginationAt === 'top'
 					? this.renderPagination()
 					: null}
-				{!this.state.isLoading && (results.length === 0 && streamResults.length === 0)
+				{!this.state.isLoading && (results.length === 0)
 					? this.renderNoResults()
 					: null}
 				{this.props.onAllData ? (
-					this.props.onAllData(results, streamResults, this.loadMore)
+					this.props.onAllData(results, this.loadMore)
 				) : (
 					<List
 						setRef={this.setRef}
-						data={[...streamResults, ...filteredResults]}
+						data={[...filteredResults]}
 						onData={this.props.onData}
 						onEndReached={this.loadMore}
 						innerProps={this.props.innerProps}
@@ -527,7 +513,6 @@ class ReactiveList extends Component {
 ReactiveList.propTypes = {
 	addComponent: types.funcRequired,
 	removeComponent: types.funcRequired,
-	setStreaming: types.func,
 	setQueryOptions: types.funcRequired,
 	setQueryListener: types.funcRequired,
 	updateQuery: types.funcRequired,
@@ -555,8 +540,6 @@ ReactiveList.propTypes = {
 	showResultStats: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
-	stream: types.bool,
-	streamHits: types.hits,
 	style: types.style,
 	theming: types.style,
 	time: types.number,
@@ -583,7 +566,6 @@ ReactiveList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-	streamHits: state.streamHits[props.componentId] || [],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	isLoading: state.isLoading[props.componentId] || false,
@@ -593,7 +575,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),

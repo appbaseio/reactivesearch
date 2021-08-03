@@ -47,7 +47,7 @@ export default () => (
 				className={rightCol}
 				showMarkerClusters={false}
 				showSearchAsMove={false}
-				renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
+				renderAllData={(hits, loadMore, renderMap, renderPagination) => (
 					<div style={{ display: 'flex' }}>
 						<div className="card-container">
 							{hits.map(data => (

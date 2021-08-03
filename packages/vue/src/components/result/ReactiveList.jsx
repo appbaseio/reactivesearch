@@ -20,7 +20,6 @@ import { resultStats, sortOptions } from '../../styles/results';
 import ImpressionTracker from './addons/ImpressionTracker.jsx';
 
 const {
-	setStreaming,
 	setQueryOptions,
 	updateQuery,
 	loadMore,
@@ -134,7 +133,6 @@ const ReactiveList = {
 		size: VueTypes.number.def(10),
 		sortBy: types.sortBy,
 		sortOptions: types.sortOptions,
-		stream: VueTypes.bool,
 		URLParams: VueTypes.bool.def(false),
 		prevLabel: types.string,
 		nextLabel: types.string,
@@ -235,14 +233,6 @@ const ReactiveList = {
 				this.from = 0;
 			}
 		},
-		stream(newVal, oldVal) {
-			if (oldVal !== newVal) {
-				this.setStreaming(this.$props.componentId, newVal);
-			}
-		},
-		streamHits() {
-			this.$emit('data', this.getData());
-		},
 		promotedResults(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.$emit('data', this.getData());
@@ -308,9 +298,6 @@ const ReactiveList = {
 		},
 	},
 	mounted() {
-		if (this.$props.stream) {
-			this.setStreaming(this.$props.componentId, true);
-		}
 
 		if (this.defaultPage < 0 && this.currentPage > 0) {
 			this.setPageURL(
@@ -404,7 +391,6 @@ const ReactiveList = {
 	render() {
 		const { hits } = this.$data;
 		const results = parseHits(hits) || [];
-		const streamResults = parseHits(this.$data.streamHits) || [];
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
 				{this.isLoading
@@ -419,7 +405,7 @@ const ReactiveList = {
 					{this.$props.sortOptions ? this.renderSortOptions() : null}
 					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
-				{!this.isLoading && results.length === 0 && streamResults.length === 0
+				{!this.isLoading && results.length === 0 
 					? this.renderNoResult()
 					: null}
 				{this.shouldRenderPagination
@@ -485,15 +471,10 @@ const ReactiveList = {
 			const { size } = this.$props;
 			const { hits } = this.$data;
 			const results = parseHits(hits) || [];
-			const streamResults = parseHits(this.$data.streamHits) || [];
-			let filteredResults = results;
+			const filteredResults = results;
 
 			const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
 
-			if (streamResults.length) {
-				const ids = streamResults.map(item => item._id);
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
 			const element = this.hasCustomRender ? (
 				this.getComponent()
 			) : (
@@ -503,7 +484,7 @@ const ReactiveList = {
 						'list',
 					)}`}
 				>
-					{[...streamResults, ...filteredResults].map((item, index) =>
+					{[...filteredResults].map((item, index) =>
 						renderItem({
 							item,
 							triggerClickAnalytics: () =>
@@ -729,18 +710,12 @@ const ReactiveList = {
 				aggregationData,
 				customData,
 				currentPage,
-				hits,
-				streamHits,
+				hits
 			} = this;
 			const results = parseHits(hits) || [];
-			const streamResults = parseHits(streamHits) || [];
 			const parsedPromotedResults = parseHits(promotedResults) || [];
 			let filteredResults = results;
 			const base = currentPage * size;
-			if (streamResults.length) {
-				const ids = streamResults.map(item => item._id);
-				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-			}
 
 			if (parsedPromotedResults.length) {
 				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
@@ -748,11 +723,10 @@ const ReactiveList = {
 					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 				}
 
-				filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
+				filteredResults = [...parsedPromotedResults, ...filteredResults];
 			}
 			return {
 				results,
-				streamResults,
 				filteredResults,
 				customData: customData || {},
 				promotedResults: parsedPromotedResults,
@@ -764,7 +738,6 @@ const ReactiveList = {
 		},
 		getData() {
 			const {
-				streamResults,
 				filteredResults,
 				promotedResults,
 				aggregationData,
@@ -773,7 +746,6 @@ const ReactiveList = {
 			return {
 				data: this.withClickIds(filteredResults),
 				aggregationData: this.withClickIds(aggregationData || []),
-				streamData: this.withClickIds(streamResults),
 				promotedData: this.withClickIds(promotedResults),
 				rawData: this.rawData,
 				resultStats: this.stats,
@@ -806,7 +778,6 @@ const mapStateToProps = (state, props) => ({
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	promotedResults: state.promotedResults[props.componentId] || [],
 	customData: state.customData[props.componentId],
-	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
@@ -825,7 +796,6 @@ const mapDispatchtoProps = {
 	loadMoreAction: loadMore,
 	setPageURL: setValue,
 	setQueryOptions,
-	setStreaming,
 	updateQuery,
 	updateComponentProps,
 	setDefaultQuery,
