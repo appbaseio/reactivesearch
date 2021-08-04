@@ -56,7 +56,7 @@ When rendering results using `renderAllData` in `ReactiveGoogleMap` you may have
 ```jsx
 <ReactiveGoogleMap
     ...
-    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerClickAnalytics) => {
+    renderAllData={(hits, loadMore, renderMap, renderPagination, triggerClickAnalytics) => {
         return(
             <>
 				{hits.map(hit => (
@@ -76,7 +76,7 @@ Similarily, in `OpenStreetMap`:
 ```jsx
 <ReactiveOpenStreetMap
     ...
-    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerClickAnalytics) => {
+    renderAllData={(hits, loadMore, renderMap, renderPagination, triggerClickAnalytics) => {
         return(
             <>
 				{hits.map(hit => (
