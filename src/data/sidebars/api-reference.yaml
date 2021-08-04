@@ -6,8 +6,6 @@
               link: /api/javascript/quickstart/
             - title: API Reference
               link: /api/javascript/apireference/
-            - title: Webhooks Guide
-              link: /api/javascript/webhooks/
       - group: REST
         icon: rest
         items:

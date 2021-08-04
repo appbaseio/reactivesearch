@@ -18,7 +18,6 @@ nestedSidebar: 'vue-reactivesearch'
 Example uses:
 
 -   showing a feed of results based on the applied search criteria.
--   streaming realtime feed updates based on applied criteria like in a newsfeed.
 
 ## Usage
 
@@ -45,7 +44,6 @@ Example uses:
 	prevLabel="Prev"
 	nextLabel="Next"
 	sortBy="desc"
-	:stream="true"
 	:pagination="false"
 	:pages="5"
 	:size="10"
@@ -91,8 +89,6 @@ Example uses:
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
     fields to be included in search results.
--   **stream** `Boolean` [optional]
-    whether to stream new result updates in the UI. Defaults to `false`. `stream: true` is appended to the streaming hit objects, which can be used to selectively react to streaming changes (eg. showing fade in animation on new streaming hits, Twitter/Facebook like streams, showing the count of new feed items available like _2 New Tweets_)
 -   **pagination** `Boolean` [optional]
     pagination <> infinite scroll switcher. Defaults to `false`, i.e. an infinite scroll based view. When set to `true`, a pagination based list view with page numbers will appear.
 -   **infiniteScroll** `Boolean` [optional]
@@ -298,16 +294,14 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
+        An array of results obtained from combining `promoted` results along with the `hits` .
     -   **`aggregationData`** `array`
         An array of aggregations buckets. Each bucket would have a `top_hits` property if you're using Elasticsearch top hits aggregations in `defaultQuery` prop.
-    -   **`streamData`**: `array`
-        An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
-        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
+        > `data` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
     -   **`customData`** `object`
         Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
@@ -350,10 +344,6 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
 </reactive-list>
 ```
 
-> Note
->
-> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/vue/advanced/Guides/#handling-stream-updates) guide for more info.
-
 ## Events
 
 -   **query-change**
@@ -365,8 +355,7 @@ Read more about it [here](/docs/reactivesearch/vue/theming/ClassnameInjection/).
     accepts a function which is invoked with the updated page value when a pagination button is clicked. For example if 'Next' is clicked with the current page number as '1', you would receive the value '2' as the function parameter.
 
 -   **data** `Function` [optional]
-    gets triggered after data changes, which returns an object with these properties: `data`,
-    `streamData`, `promotedData`, `rawData`, `customData` & `resultStats`.
+    gets triggered after data changes, which returns an object with these properties: `data`, `promotedData`, `rawData`, `customData` & `resultStats`.
 
 -   **error**
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
