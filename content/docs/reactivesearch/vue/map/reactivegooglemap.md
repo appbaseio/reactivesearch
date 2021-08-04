@@ -258,12 +258,12 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from combining `stream` and `promoted` results along with the `hits` .
+        An array of results obtained from combining `promoted` results along with the `hits` .
     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
-        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
+        > `data` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
     -   **`customData`** `object`
         Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
