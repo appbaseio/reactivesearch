@@ -43,7 +43,6 @@ import ReactiveMap from '@appbaseio/reactivemaps-native';
 	defaultCenter={{ lat: 37.74, lng: -122.45 }}
 	defaultMapStyle="Standard"
 	onPopoverClick={this.onPopoverClick}
-	stream={true}
 	// 'react' defines when and how the map component should update
 	react={{
 		and: 'CitySensor',
@@ -75,8 +74,6 @@ import ReactiveMap from '@appbaseio/reactivemaps-native';
     whether to aggregate and form a cluster of nearby markers. Defaults to `true`.
 -   **onPopoverClick** `function` [optional]
     a function that takes one argument for getting a marker's data and returns an HTML markup to be displayed in the popover box.
--   **stream** `Boolean` [optional]
-    whether to stream new result (aka realtime view) updates in the UI. Defaults to `false`.
 -   **react** `Object`
     specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/docs/reactivesearch/v3/advanced/reactprop/).
     -   **key** `String`
