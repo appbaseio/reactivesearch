@@ -55,7 +55,7 @@ class ReactiveBase extends Component {
 			['app', 'url', 'type', 'credentials', 'mapKey', 'headers', 'graphQLUrl'],
 			() => {
 				this.setStore(this.props);
-				this.setState(state => ({
+				this.setState((state) => ({
 					key: `${state.key}-0`,
 				}));
 			},
@@ -87,8 +87,8 @@ class ReactiveBase extends Component {
 	setStore = (props) => {
 		this.type = props.type ? props.type : '*';
 
-		const credentials
-			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
+		const credentials =
+			props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
 		const appbaseConfig = {
 			searchStateHeader: props.searchStateHeader, // for backward compatibility
@@ -139,9 +139,9 @@ class ReactiveBase extends Component {
 			}
 		});
 
-		const { headers = {}, themePreset } = props;
+		const { themePreset } = props;
 
-		const headersObject = { 'X-Search-Client': 'ReactiveSearch React', ...headers };
+		const headers = { 'X-Search-Client': 'ReactiveSearch React', ...this.props.headers };
 
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
@@ -152,7 +152,7 @@ class ReactiveBase extends Component {
 			config: { ...config, mapKey: props.mapKey, themePreset },
 			appbaseRef,
 			selectedValues,
-			headers: headersObject,
+			headers,
 			...this.props.initialState,
 		};
 		this.store = configureStore(initialState);
@@ -161,12 +161,12 @@ class ReactiveBase extends Component {
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
 
-		const headersObject = { 'X-Search-Client': 'ReactiveSearch React', ...this.props.headers };
+		const headers = { 'X-Search-Client': 'ReactiveSearch React', ...this.props.headers };
 		return (
 			<ThemeProvider theme={theme} key={this.state.key}>
 				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
-						headers={headersObject}
+						headers={headers}
 						style={this.props.style}
 						as={this.props.as}
 						className={this.props.className}
