@@ -160,11 +160,13 @@ class ReactiveBase extends Component {
 
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
+
+		const headersObject = { 'X-Search-Client': 'ReactiveSearch React', ...this.props.headers };
 		return (
 			<ThemeProvider theme={theme} key={this.state.key}>
 				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
-						headers={this.props.headers}
+						headers={headersObject}
 						style={this.props.style}
 						as={this.props.as}
 						className={this.props.className}
