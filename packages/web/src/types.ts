@@ -152,6 +152,7 @@ export interface appbaseConfig {
 	suggestionAnalytics: boolean;
 	userId: string;
 	customEvents: object;
+	enableTelemetry: boolean;
 }
 
 export type showClearAll = 'never' | 'always' | 'default' | true | false;

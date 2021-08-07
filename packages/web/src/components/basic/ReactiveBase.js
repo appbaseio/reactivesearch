@@ -55,7 +55,7 @@ class ReactiveBase extends Component {
 			['app', 'url', 'type', 'credentials', 'mapKey', 'headers', 'graphQLUrl'],
 			() => {
 				this.setStore(this.props);
-				this.setState((state) => ({
+				this.setState(state => ({
 					key: `${state.key}-0`,
 				}));
 			},
@@ -87,8 +87,8 @@ class ReactiveBase extends Component {
 	setStore = (props) => {
 		this.type = props.type ? props.type : '*';
 
-		const credentials =
-			props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
+		const credentials
+			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
 		const appbaseConfig = {
 			searchStateHeader: props.searchStateHeader, // for backward compatibility
@@ -188,6 +188,9 @@ ReactiveBase.defaultProps = {
 	graphQLUrl: '',
 	as: 'div',
 	enableAppbase: false,
+	appbaseConfig: {
+		enableTelemetry: true,
+	},
 };
 
 ReactiveBase.propTypes = {
