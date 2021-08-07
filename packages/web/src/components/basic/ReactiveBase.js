@@ -78,7 +78,9 @@ class ReactiveBase extends Component {
 			`${process.env.VERSION || require('../../../package.json').version}.`,
 			'If you think this is a problem with Reactivesearch, please try updating',
 			"to the latest version. If you're already at the latest version, please open",
-			'an issue at https://github.com/appbaseio/reactivesearch/issues', error, errorInfo,
+			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+			error,
+			errorInfo,
 		);
 	}
 
@@ -92,7 +94,6 @@ class ReactiveBase extends Component {
 			searchStateHeader: props.searchStateHeader, // for backward compatibility
 			...props.analyticsConfig, // TODO: remove in 4.0
 			...props.appbaseConfig,
-
 		};
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
@@ -100,7 +101,9 @@ class ReactiveBase extends Component {
 			credentials,
 			type: this.type,
 			transformRequest: props.transformRequest,
-			analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : !!props.analytics,
+			analytics: props.appbaseConfig
+				? props.appbaseConfig.recordAnalytics
+				: !!props.analytics,
 			enableAppbase: props.enableAppbase,
 			analyticsConfig: appbaseConfig,
 			graphQLUrl: props.graphQLUrl,
@@ -137,6 +140,9 @@ class ReactiveBase extends Component {
 		});
 
 		const { headers = {}, themePreset } = props;
+
+		const headersObject = { 'X-Search-Client': 'ReactiveSearch React', ...headers };
+
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
 			appbaseRef.transformRequest = this.props.transformRequest;
@@ -146,7 +152,7 @@ class ReactiveBase extends Component {
 			config: { ...config, mapKey: props.mapKey, themePreset },
 			appbaseRef,
 			selectedValues,
-			headers,
+			headers: headersObject,
 			...this.props.initialState,
 		};
 		this.store = configureStore(initialState);
