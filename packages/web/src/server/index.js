@@ -80,7 +80,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				: true;
 		const headers = {
 			'X-Search-Client': 'ReactiveSearch React',
-			'X-Enable-Telemetry': enableTelemetry,
+			...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			...settings.headers,
 		};
 		const config = {

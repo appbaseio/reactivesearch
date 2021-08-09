@@ -161,7 +161,7 @@ const ReactiveBase = {
 
 			const headers = {
 				'X-Search-Client': 'ReactiveSearch Vue',
-				'X-Enable-Telemetry': enableTelemetry ?? true,
+				...(enableTelemetry ===false && {'X-Enable-Telemetry': false}),
 				...props.headers,
 			};
 			const appbaseRef = Appbase(config);
@@ -197,7 +197,7 @@ const ReactiveBase = {
 		} = this.$props;
 		const headers = {
 			'X-Search-Client': 'ReactiveSearch Vue',
-			'X-Enable-Telemetry': enableTelemetry ?? true,
+			...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			...this.$props.headers,
 		};
 		return (

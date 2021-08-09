@@ -146,7 +146,7 @@ class ReactiveBase extends Component {
 				: true;
 		const headers = {
 			'X-Search-Client': 'ReactiveSearch React',
-			'X-Enable-Telemetry': enableTelemetry,
+			...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			...this.props.headers,
 		};
 
