@@ -150,7 +150,7 @@ const types = {
 		userId: VueTypes.string,
 		customEvents: VueTypes.object,
 		enableTelemetry: VueTypes.bool.def(true),
-	}),
+	}).def({}),
 };
 
 export default types;
