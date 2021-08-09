@@ -102,8 +102,8 @@ const ReactiveBase = {
 			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
-			const credentials =
-				props.url && props.url.trim() !== '' && !props.credentials
+			const credentials
+				= props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
 			const appbaseConfig = {
