@@ -140,8 +140,15 @@ class ReactiveBase extends Component {
 		});
 
 		const { themePreset } = props;
-
-		const headers = { 'X-Search-Client': 'ReactiveSearch React', ...this.props.headers };
+		const enableTelemetry
+			= props.appbaseConfig && props.appbaseConfig.enableTelemetry !== undefined
+				? props.appbaseConfig.enableTelemetry
+				: true;
+		const headers = {
+			'X-Search-Client': 'ReactiveSearch React',
+			'X-Enable-Telemetry': enableTelemetry,
+			...this.props.headers,
+		};
 
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {

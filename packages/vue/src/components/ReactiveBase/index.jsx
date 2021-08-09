@@ -102,8 +102,8 @@ const ReactiveBase = {
 			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
-			const credentials
-				= props.url && props.url.trim() !== '' && !props.credentials
+			const credentials =
+				props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
 			const appbaseConfig = {
@@ -156,8 +156,16 @@ const ReactiveBase = {
 				}
 			});
 
-			const { themePreset } = props;
-			const headers = { 'X-Search-Client': 'ReactiveSearch Vue', ...props.headers };
+			const {
+				themePreset,
+				appbaseConfig: { enableTelemetry },
+			} = props;
+
+			const headers = {
+				'X-Search-Client': 'ReactiveSearch Vue',
+				'X-Enable-Telemetry': enableTelemetry ?? true,
+				...props.headers,
+			};
 			const appbaseRef = Appbase(config);
 
 			if (this.$props.transformRequest) {
@@ -184,8 +192,16 @@ const ReactiveBase = {
 	},
 	render() {
 		const children = this.$slots.default;
-		const { style, className } = this.$props;
-		const headers = { 'X-Search-Client': 'ReactiveSearch Vue', ...this.$props.headers };
+		const {
+			style,
+			className,
+			appbaseConfig: { enableTelemetry },
+		} = this.$props;
+		const headers = {
+			'X-Search-Client': 'ReactiveSearch Vue',
+			'X-Enable-Telemetry': enableTelemetry ?? true,
+			...this.$props.headers,
+		};
 		return (
 			<Provider store={this.store}>
 				<URLParamsProvider

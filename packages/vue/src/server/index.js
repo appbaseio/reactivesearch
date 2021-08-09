@@ -70,10 +70,19 @@ function getQuery(component, value, componentType) {
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
 	return new Promise((resolve, reject) => {
-		const credentials
-			= settings.url && settings.url.trim() !== '' && !settings.credentials
+		const credentials =
+			settings.url && settings.url.trim() !== '' && !settings.credentials
 				? null
 				: settings.credentials;
+		const enableTelemetry =
+			settings.appbaseConfig && settings.appbaseConfig.enableTelemetry !== undefined
+				? settings.appbaseConfig.enableTelemetry
+				: true;
+		const headers = {
+			'X-Search-Client': 'ReactiveSearch Vue',
+			'X-Enable-Telemetry': enableTelemetry,
+			...settings.headers,
+		};
 		const config = {
 			url:
 				settings.url && settings.url.trim() !== ''
@@ -85,7 +94,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			type: settings.type ? settings.type : '*',
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
-			headers: settings.headers || {},
+			headers,
 			analyticsConfig: settings.appbaseConfig || null,
 		};
 		const appbaseRef = Appbase(config);
@@ -120,10 +129,16 @@ export default function initReactivesearch(componentCollection, searchState, set
 			let isInternalComponentPresent = false;
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(component.value, compProps);
+				customQueries[component.componentId] = component.customQuery(
+					component.value,
+					compProps,
+				);
 			}
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(component.value, compProps);
+				defaultQueries[component.componentId] = component.defaultQuery(
+					component.value,
+					compProps,
+				);
 			}
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
@@ -161,8 +176,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 				}
 
 				if (
-					(options && Object.keys(options).length)
-					|| (highlightQuery && Object.keys(highlightQuery).length)
+					(options && Object.keys(options).length) ||
+					(highlightQuery && Object.keys(highlightQuery).length)
 				) {
 					// eslint-disable-next-line
 					let { aggs, size, ...otherQueryOptions } = options || {};
@@ -181,8 +196,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 					// sort, highlight, size, from - query should be applied on the main component
 					if (
-						(otherQueryOptions && Object.keys(otherQueryOptions).length)
-						|| (highlightQuery && Object.keys(highlightQuery).length)
+						(otherQueryOptions && Object.keys(otherQueryOptions).length) ||
+						(highlightQuery && Object.keys(highlightQuery).length)
 					) {
 						if (!otherQueryOptions) otherQueryOptions = {};
 						if (!highlightQuery) highlightQuery = {};
@@ -194,8 +209,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 						if (isResultComponent) {
 							let currentPage = component.currentPage ? component.currentPage - 1 : 0;
 							if (
-								selectedValues[component.componentId]
-								&& selectedValues[component.componentId].value
+								selectedValues[component.componentId] &&
+								selectedValues[component.componentId].value
 							) {
 								currentPage = selectedValues[component.componentId].value - 1 || 0;
 							}
@@ -278,8 +293,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const validOptions = ['aggs', 'from', 'sort'];
 			// check if query or options are valid - non-empty
 			if (
-				(queryObj && !!Object.keys(queryObj).length)
-				|| (options && Object.keys(options).some(item => validOptions.includes(item)))
+				(queryObj && !!Object.keys(queryObj).length) ||
+				(options && Object.keys(options).some((item) => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -335,7 +350,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			if (config.transformResponse && typeof config.transformResponse === 'function') {
 				return config.transformResponse(res, component);
 			}
-			return new Promise(resolveTransformResponse => resolveTransformResponse(res));
+			return new Promise((resolveTransformResponse) => resolveTransformResponse(res));
 		};
 
 		const handleResponse = (res) => {
@@ -363,7 +378,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 								};
 								responseResolve();
 							})
-							.catch(err => responseReject(err));
+							.catch((err) => responseReject(err));
 					}),
 			);
 
@@ -382,14 +397,14 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const rawData = {};
 			const customData = {};
 			const allPromises = orderOfQueries.map(
-				component =>
+				(component) =>
 					new Promise((responseResolve, responseReject) => {
 						handleTransformResponse(res[component], component)
 							.then((response) => {
 								if (response) {
 									if (response.promoted) {
 										promotedResults[component] = response.promoted.map(
-											promoted => ({
+											(promoted) => ({
 												...promoted.doc,
 												_position: promoted.position,
 											}),
@@ -421,7 +436,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 									responseResolve();
 								}
 							})
-							.catch(err => responseReject(err));
+							.catch((err) => responseReject(err));
 					}),
 			);
 
@@ -460,21 +475,25 @@ export default function initReactivesearch(componentCollection, searchState, set
 						.then((res) => {
 							handleResponse(res);
 						})
-						.catch(err => reject(err));
+						.catch((err) => reject(err));
 				})
-				.catch(err => reject(err));
+				.catch((err) => reject(err));
 		} else if (settings.enableAppbase && Object.keys(appbaseQuery).length) {
-			finalQuery = Object.keys(appbaseQuery).map(c => appbaseQuery[c]);
+			finalQuery = Object.keys(appbaseQuery).map((c) => appbaseQuery[c]);
 			// Call RS API
 			const rsAPISettings = {};
 			if (config.analyticsConfig) {
-				rsAPISettings.recordAnalytics = isPropertyDefined(config.analyticsConfig.recordAnalytics)
+				rsAPISettings.recordAnalytics = isPropertyDefined(
+					config.analyticsConfig.recordAnalytics,
+				)
 					? config.analyticsConfig.recordAnalytics
 					: undefined;
 				rsAPISettings.userId = isPropertyDefined(config.analyticsConfig.userId)
 					? config.analyticsConfig.userId
 					: undefined;
-				rsAPISettings.enableQueryRules = isPropertyDefined(config.analyticsConfig.enableQueryRules)
+				rsAPISettings.enableQueryRules = isPropertyDefined(
+					config.analyticsConfig.enableQueryRules,
+				)
 					? config.analyticsConfig.enableQueryRules
 					: undefined;
 				rsAPISettings.customEvents = isPropertyDefined(config.analyticsConfig.customEvents)
@@ -486,7 +505,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				.then((res) => {
 					handleRSResponse(res);
 				})
-				.catch(err => reject(err));
+				.catch((err) => reject(err));
 		} else {
 			appbaseRef
 				.msearch({
@@ -496,7 +515,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				.then((res) => {
 					handleResponse(res);
 				})
-				.catch(err => reject(err));
+				.catch((err) => reject(err));
 		}
 	});
 }

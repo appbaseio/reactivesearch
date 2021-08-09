@@ -74,7 +74,15 @@ export default function initReactivesearch(componentCollection, searchState, set
 			= settings.url && settings.url.trim() !== '' && !settings.credentials
 				? null
 				: settings.credentials;
-		const headers = { 'X-Search-Client': 'ReactiveSearch React', ...settings.headers };
+		const enableTelemetry
+			= settings.appbaseConfig && settings.appbaseConfig.enableTelemetry !== undefined
+				? settings.appbaseConfig.enableTelemetry
+				: true;
+		const headers = {
+			'X-Search-Client': 'ReactiveSearch React',
+			'X-Enable-Telemetry': enableTelemetry,
+			...settings.headers,
+		};
 		const config = {
 			url:
 				settings.url && settings.url.trim() !== ''
