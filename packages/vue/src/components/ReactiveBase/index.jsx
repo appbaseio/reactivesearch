@@ -94,7 +94,7 @@ const ReactiveBase = {
 					this.store.dispatch(updateAnalyticsConfig(newVal));
 				}
 			}
-		},
+		}
 	},
 	methods: {
 		updateState(props) {
@@ -102,14 +102,14 @@ const ReactiveBase = {
 			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
-			const credentials =
-				props.url && props.url.trim() !== '' && !props.credentials
+			const credentials
+				= props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
 			const appbaseConfig = {
 				...props.analyticsConfig,
 				...props.appbaseConfig,
-			};
+			}
 			const config = {
 				url:
 					props.url && props.url.trim() !== ''
@@ -121,9 +121,7 @@ const ReactiveBase = {
 				transformRequest: props.transformRequest,
 				transformResponse: props.transformResponse,
 				enableAppbase: props.enableAppbase,
-				analytics: props.appbaseConfig
-					? props.appbaseConfig.recordAnalytics
-					: props.analytics,
+				analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : props.analytics,
 				analyticsConfig: appbaseConfig,
 			};
 			let queryParams = '';
@@ -137,7 +135,7 @@ const ReactiveBase = {
 			const params = new URLSearchParams(queryParams);
 			let selectedValues = {};
 
-			Array.from(params.keys()).forEach((key) => {
+			Array.from(params.keys()).forEach(key => {
 				try {
 					const parsedParams = JSON.parse(params.get(key));
 					const selectedValue = {};
@@ -218,7 +216,7 @@ const ReactiveBase = {
 		);
 	},
 };
-ReactiveBase.install = function (Vue) {
+ReactiveBase.install = function(Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);
 };
 
