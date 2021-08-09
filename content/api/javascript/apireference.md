@@ -37,6 +37,7 @@ var appbaseRef = Appbase({
     -   **username** `String` <br>username as displayed in the [access control dashboard](/docs/security/credentials/)<br/>
     -   **password** `String` <br>password as displayed in the [access control dashboard](/docs/security/credentials/)<br/>
     -   **credentials** `String` <br>Api key as displayed in the [access control dashboard](/docs/security/credentials/)<br/>
+	- 	**enableTelemetry** `Boolean` <br>when set to false, disables telemetry. Defaults to `true`.</br> 
 
 **Note**: Either you can use a combination of `username` & `password` or use `credentials`.
 
