@@ -167,6 +167,8 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     whether to show the _Search As I Move_ checkbox in the UI. Defaults to `true`.
 -   **searchAsMove** `Boolean` [optional]
     whether to set the _Search As I Move_ checkbox. Defaults to `false`.
+-   **searchAsMoveLabel** `String` [optional]
+    allows to customize the default text for search as move button
 -   **autoClosePopover** `Boolean` [optional]
     automatically closes the existing open popovers when a new marker is clicked. Defaults to `false`.
 -   **react** `Object` [optional]
@@ -362,6 +364,9 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
 
 -   **close-cluster-popover**
     gets called when cluster popover is closed
+
+-   **search-as-move**
+    gets called whenever _Search As I Move_ checkbox is clicked. It returns the `checked` state of the _Search As I Move_ checkbox.
 ## Extending 
 
 `ReactiveGoogleMap` component can be extended to
