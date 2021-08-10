@@ -133,6 +133,7 @@ const ReactiveMap = {
 		renderMap: VueTypes.func.isRequired,
 		renderPopover: VueTypes.func,
 		calculateMarkers: VueTypes.func,
+		searchAsMoveLabel: VueTypes.string.def('Search as I move the map')
 	},
 	data() {
 		const props = this.$props;
@@ -657,6 +658,7 @@ const ReactiveMap = {
 		},
 		toggleSearchAsMove() {
 			this.searchAsMove = !this.searchAsMove;
+			this.$emit('search-as-move', this.searchAsMove);
 		},
 		renderErrorComponent() {
 			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
@@ -695,7 +697,7 @@ const ReactiveMap = {
 							className={getClassName(this.innerClass, 'label') || null}
 							for={`${this.$props.componentId}-searchasmove`}
 						>
-							Search as I move the map
+							{this.searchAsMoveLabel}
 						</label>
 					</div>
 				);

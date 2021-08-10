@@ -23,6 +23,7 @@ const ReactiveGoogleMap = {
 		showMarkers: VueTypes.bool.def(true),
 		showMarkerClusters: VueTypes.bool.def(false),
 		searchAsMove: VueTypes.bool.def(false),
+		searchAsMoveLabel: VueTypes.string,
 		markerProps: VueTypes.object,
 		clusterProps: VueTypes.object,
 		renderItem: VueTypes.func,
@@ -131,6 +132,7 @@ const ReactiveGoogleMap = {
 				URLParams={this.URLParams}
 				defaultSearchAsMove={this.searchAsMove}
 				showSearchAsMove={this.showSearchAsMove}
+				searchAsMoveLabel={this.searchAsMoveLabel}
 				showMarkers={this.showMarkers}
 				markerProps={this.markerProps}
 				autoClosePopover={this.autoClosePopover}
