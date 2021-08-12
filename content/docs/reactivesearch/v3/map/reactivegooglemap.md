@@ -44,7 +44,6 @@ Example uses:
 	showSearchAsMove={true}
 	searchAsMove={true}
 	onPopoverClick={this.onPopoverClick}
-	stream={true}
 	// 'react' defines when and how the map component should update
 	react={{
 		and: 'CitySensor',
@@ -98,8 +97,6 @@ Example uses:
     a function that takes one argument for getting a marker's data and returns an HTML markup to be displayed in the popover box.
 -   **autoClosePopover** `Boolean` [optional]
     automatically closes the exisiting open popovers when `onPopoverClick` gets fired. Defaults to `false`.
--   **stream** `Boolean` [optional]
-    whether to stream new result (aka realtime view) updates in the UI. Defaults to `false`.
 -   **react** `Object`
     specify dependent components to reactively update **GeoDistanceDropdown's** options. Read more about it [here](/docs/reactivesearch/v3/advanced/reactprop/).
     -   **key** `String`
@@ -113,10 +110,6 @@ Example uses:
         -   `Object` is used for nesting other key clauses.
 -   **autoCenter** `Boolean` [optional]
     whether to auto center the map based on the geometric center of all the location markers. Defaults to `false`.
--   **streamAutoCenter** `Boolean` [optional]
-    whether to auto center the map based on the geometric center of all the location markers while `stream` prop is set to `true`. Defaults to `false`.
-    <!-- - **autoMarkerPosition** `Boolean` [optional]
-        whether to set the rotation angle of the marker image based on the delta changes in its location, useful when displaying realtime traffic data. Defaults to `false`. -->
 -   **className** `String`
     CSS class to be injected on the component container.
 -   **style** `Object`
@@ -145,9 +138,8 @@ renderData={result => ({
     use to display results and map component together. Usage:
 
 ```js
-    renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination, triggerClickAnalytics, meta) => {
+    renderAllData={(hits, loadMore, renderMap, renderPagination, triggerClickAnalytics, meta) => {
         // hits are the results returned from query.
-        // streamHits are the results which are returned only  when stream prop is true.
         // loadMore is used to load more results.
         // renderMap is the function which is used to render Map.
 		// renderPagination is the function which is used to render Pagination like in ReactiveList.
@@ -187,8 +179,7 @@ renderError={(error) => (
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 -   **onData** `Function` [optional]
-    gets triggered after data changes, which returns an object with these properties: `data`,
-    `streamData`, `promotedData`, `customData`, `rawData` & `resultStats`.
+    gets triggered after data changes, which returns an object with these properties: `data`, `promotedData`, `customData`, `rawData` & `resultStats`.
 
 ## Demo
 

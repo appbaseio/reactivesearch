@@ -18,7 +18,7 @@ nestedSidebar: 'web-reactivesearch'
 Example uses:
 
 -   showing a feed of results based on the applied search criteria.
--   streaming realtime feed updates based on applied criteria like in a newsfeed.
+
 
 ## Usage
 
@@ -40,7 +40,6 @@ Example uses:
 <ReactiveList
 	componentId="SearchResult"
 	dataField="ratings"
-	stream={true}
 	pagination={false}
 	paginationAt="bottom"
 	pages={5}
@@ -91,8 +90,6 @@ Example uses:
     fields to be excluded in search results.
 -   **includeFields** `String Array` [optional]
     fields to be included in search results.
--   **stream** `Boolean` [optional]
-    whether to stream new result updates in the UI. Defaults to `false`. `stream: true` is appended to the streaming hit objects, which can be used to selectively react to streaming changes (eg. showing fade in animation on new streaming hits, Twitter/Facebook like streams, showing the count of new feed items available like _2 New Tweets_)
 -   **scrollTarget** `String` or `Object` [optional]
     accepts `id` or the dom node of the container you wish to apply infinite loading on. **Note:** The container should be scrollable.
 -   **scrollOnChange** `Boolean` [optional]
@@ -234,8 +231,7 @@ Example uses:
     ```
 
 -   **onData** `Function` [optional]
-    gets triggered after data changes, which returns an object with these properties: `data`,
-    `streamData`, `promotedData`, `customData`, `rawData` & `resultStats`.
+    gets triggered after data changes, which returns an object with these properties: `data`, `promotedData`, `customData`, `rawData` & `resultStats`.
 -   **onError** `Function` [optional]
     gets triggered in case of an error and provides the `error` object, which can be used for debugging or giving feedback to the user if needed.
 -   **onPageChange** `Function` [optional]
@@ -350,16 +346,14 @@ Read more about it [here](/docs/reactivesearch/v3/theming/classnameinjection/).
     -   **`error`**: `object`
         An object containing the error info
     -   **`data`**: `array`
-        An array of results obtained from combining `stream` and `promoted` results along with the `hits`.
+        An array of results obtained from combining `promoted` results along with the `hits`.
     -   **`aggregationData`** `array`
         An array of aggregations buckets. Each bucket would have a `top_hits` property if you're using Elasticsearch top hits aggregations in `defaultQuery` prop.
-    -   **`streamData`**: `array`
-        An array of results streamed since the applied query, aka realtime data. Here, a meta property `_updated` or `_deleted` is also present within a result object to denote if an existing object has been updated or deleted.
-    -   **`promotedData`**: `array`
+     -   **`promotedData`**: `array`
         An array of promoted results obtained from the applied query. [Read More](/docs/search/rules/)
         > Note:
         >
-        > `data`, `streamData` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
+        > `data` and `promotedData` results has a property called `_click_id` which can be used with triggerClickAnalytics to register the click analytics info.
     -   **`customData`** `object`
         Custom data set in the query rule when appbase.io is used as backend. [Read More](/docs/search/rules/#custom-data)
     -   **`rawData`** `object`
@@ -418,7 +412,6 @@ Or you can also use render function as children
             loading,
             error,
             data,
-            streamData,
             promotedData,
             rawData,
             resultStats,
@@ -431,9 +424,6 @@ Or you can also use render function as children
 </ReactiveList>
 ```
 
-> Note
->
-> The `streamResults` parameter will be `[]` unless `stream` prop is set to `true`. Check the [handling streaming](/docs/reactivesearch/v3/advanced/guides/#handling-stream-updates) guide for more info.
 
 -   **onQueryChange** `Function`
     is a callback function which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This prop is handy in cases where you want to generate a side-effect whenever the component's query would change.

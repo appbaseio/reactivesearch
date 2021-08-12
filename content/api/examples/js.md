@@ -106,20 +106,6 @@ We'll use the appbase-js [`get()`](/api/javascript/apireference/#get) method to 
 
 <iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbase-js-get?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
-## Stream data
-
-Let's now subscribe to some streaming data updates based on an `id` location. For this, we'll use the appbase-js [`getStream()`](/api/javascript/apireference/#getstream) method which continuously streams new updates to a specific JSON document based on the `id`.
-
-We'll also make a change on the same doc we've subscribed to to show how streaming updates work. To make a change in any existing data, we can use the [`update()`](/api/javascript/apireference/#update) method.
-
-<br/>
-
-<iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbase-js-getStream?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
-
-> Note <i class="fa fa-info-circle"></i>
->
-> If you intended to replace the complete data object use [`index()`](/api/javascript/apireference/#index) method instead of [`update()`](/api/javascript/apireference/#update) which partially updates an existing doc.
-
 ## Bulk Index Data
 
 Let's now learn to index multiple documents in one request. For this, we'll use the appbase-js [`bulk()`](/api/javascript/apireference/#bulk) method which is based on <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html" target="_blank">Bulk API</a> and applies many operations together.
@@ -142,17 +128,6 @@ We'll use the appbase-js [`search()`](/api/javascript/apireference/#search) meth
 <iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbase-js-RangeQuery?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
 <a href="https://opensource.appbase.io/mirage/#?input_state=XQAAAAJfCAAAAAAAAAA9iIhnNAWbsswtYjeQNZkpzQK4_mOzUeDpWmI_q1W5J_v7Zsy4Ujaaw71A1BS9rYYbaidH1ngBtQ-I1sDSXRgrmGsCDzBYBoUXwDHQtefpH-PChYyyKqpnVdVrmIsxvIDhOBtThtu_W53GnLmSMoma1UPnh9E7LZRkgXxp3ltXA31wX1fcfowk1r2gVrCN8VgmuPFOWM3o65_HcKkYs4OQ0hAB7hnHy3CILQ5MgAbYZpuCAVHzQcRXBvN2fFZCuCSUNYX32cshZ3d4lrzfi6fQXgJyuLDjbofRzIiFdNbnDTxOh7awm5G8KyWubtxOjtXV8bilwzwGRcwaa6Vwl0TchA1_BpzJh_fwAq12FFL4R-I5_ibh6CZnEvt4-KnlIuy77b7P8zLtJY5p9O0p5F9in_I1bpUcoSjIVyDVUw7CO3XhqV8GV08WBceOu8bcrsKmeZnI-Tz7wJnFBanEKKCvxmdgNX5iWOlyqb-KulI-V5b7Kd0MnlaLDE9KV4rJlTuHN38cafRSw9KFDmA369s6KHGfK4E8tjcHhkopCEWlojhNy-YDYrfkpB4hBkSRnaoc-Ehh6YMq5B_KZpn0W096kfKkWqUYOqjJkBPWLydygFC5kxq4739mGAfM8pTAFnMN5Qt7qFqbuST9fmTei6v0lp3RT2Uxd9LVAqm3Zwpe8RBtPFYbcd_j8RuCqd4O1HeEgZz60qAFmYL37FBNNLpbxT4mhagGqPSzB6jDCruEgDwj6598PSwxTs3SBIqdZtuv_ZTluhF7jvFMerbm7dw7E8yu-B3jNfPoGW9bTfiMthMn620XFd8bmenoEP8pWq4A" target="_blank">Here's</a> the same query executed on Mirage.
-
-## Search Stream
-
-Let's now subscribe to streaming updates for a query. For this, we'll use the [`searchStream()`](/api/javascript/apireference/#searchstream) method which continuously streams new results of the subscribed query on a given `type`. Here, we're querying with `match_all` to get streaming updates about any data change.
-
-To see this in action, we'll also use the [`index()`](/api/javascript/apireference/#index) method to add a new data object, which **searchStream()** should stream back as an update.
-
-<br/>
-
-<iframe height="600px" width="100%" src="https://repl.it/@lakhansamani/Appbase-js-searchStream?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
-<!-- Mirage: stream query note? -->
 
 ## GeoDistance Query
 

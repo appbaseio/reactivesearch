@@ -18,7 +18,7 @@ nestedSidebar: 'native-reactivesearch'
 Example uses:
 
 -   showing a feed of results based on the applied search criteria.
--   streaming realtime feed updates based on applied criteria like in a newsfeed.
+
 
 ## Usage
 
@@ -39,7 +39,6 @@ Example uses:
 <ReactiveList
 	componentId="SearchResult"
 	dataField="ratings"
-	stream={true}
 	pagination={false}
 	paginationAt="bottom"
 	pages={5}
@@ -62,8 +61,6 @@ Example uses:
     unique identifier of the component, can be referenced in other components' `react` prop.
 -   **dataField** `String`
     data field to be connected to the component's UI view. It is useful for providing a sorting context.
--   **stream** `Boolean` [optional]
-    whether to stream new result updates in the UI. Defaults to `false`. `stream: true` is appended to the streaming hit objects, which can be used to selectively react to streaming changes (eg. showing fade in animation on new streaming hits, Twitter/Facebook like streams, showing the count of new feed items available like _2 New Tweets_)
 -   **pagination** `Boolean` [optional]
     pagination <> infinite scroll switcher. Defaults to `false`, i.e. an infinite scroll based view. When set to `true`, a pagination based list view with page numbers will appear.
 -   **paginationAt** `String` [optional]
@@ -145,10 +142,10 @@ Read more about it [here](/docs/reactivesearch/native/advanced/Style/#innerstyle
 -   **onData** `Function` [optional]
     a callback function where user can define how to render the view based on the data changes.
 -   **onAllData** `Function` [optional]
-    an alternative callback function to `onData`, where user can define how to render the view based on all the data changes. It accepts three parameters, `results`, `streamResults` and a **callback** function which should be called when the results reach the end (on scroll).
+    an alternative callback function to `onData`, where user can define how to render the view based on all the data changes. It accepts two parameters, `results`, and a **callback** function which should be called when the results reach the end (on scroll).
 
 ```js
-onAllData(results, streamReasults, loadMoreData) {
+onAllData(results, loadMoreData) {
 	// return the list to render
 }
 ```

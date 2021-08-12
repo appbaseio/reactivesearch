@@ -60,7 +60,6 @@ Let's go over each kind of authorization constraint you can apply to a key:
     - **Get** (get) allows retrieving documents and data mappings.
     - **Search** (search) allows searching for documents in an app.
     - **Settings** (settings) allow access to the settings endpoints.
-    - **Stream** (stream) allows access to the streaming endpoints for realtime data updates.
     - **Bulk** (bulk) allows access to the bulk endpoints.
     - **Delete** (delete) allows access to all the deletion related endpoints.
     - **Analytics** (analytics) allows access to the Analytics APIs programmatically. [only available for `growth` plan users]

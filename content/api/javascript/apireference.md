@@ -43,7 +43,7 @@ var appbaseRef = Appbase({
 
 **Returns**
 
-`Object` **appbaseRef** _Appbase reference object_ - has `index()`, `update()`, `delete()`, `bulk()`, `search()`, `get()`, `getTypes()`, `getStream()`, `searchStream()` and `searchStreamToURL()` methods.
+`Object` **appbaseRef** _Appbase reference object_ - has `index()`, `update()`, `delete()`, `bulk()`, `search()`, `get()` and `getTypes()` methods.
 
 ## WRITING DATA
 
@@ -59,7 +59,7 @@ appbaseRef
 		body: {
 			msg: 'writing my first tweet!',
 			by: 'jack',
-			using: ['appbase.io', 'javascript', 'streams'],
+			using: ['appbase.io', 'javascript'],
 			test: true,
 		},
 	})
@@ -157,7 +157,7 @@ appbaseRef
 			{
 				msg: 'writing my second tweet!',
 				by: 'Ev',
-				using: ['appbase.io', 'javascript', 'streams'],
+				using: ['appbase.io', 'javascript'],
 				test: true,
 			},
 			// action#2 description
@@ -194,7 +194,7 @@ appbaseRef
 
 ### get()
 
-Get the JSON document from a particular `type` and `id`. For subscribing to realtime updates on a document, check out `getStream()`.
+Get the JSON document from a particular `type` and `id`.
 
 ```js
 appbaseRef
@@ -263,7 +263,7 @@ Returns the current app's mapping scheme as an object.
 
 ### search()
 
-Search for matching documents in a type. It's a convenience method for Elasticsearch's `/_search` endpoint. For subscribing to realtime updates on the search query, check out `searchStream()`.
+Search for matching documents in a type. It's a convenience method for Elasticsearch's `/_search` endpoint. 
 
 ```js
 appbaseRef
@@ -401,205 +401,3 @@ appbaseRef
 
 **Returns**
 Promise.
-
-## STREAMING DATA
-
-### getStream()
-
-Continuously stream new updates to a specific JSON document. If you wish to only fetch the existing value, `get()` is sufficient.
-
-```js
-appbaseRef.getStream(
-	{
-		type: 'tweet',
-		id: 'aX12c5',
-	},
-	function(data) {
-		console.log('data update: ', res);
-	},
-	function(err) {
-		console.log('streaming error: ', err);
-	},
-	function(close) {
-		console.log('streaming closed');
-	},
-);
-```
-
-**Usage**
-
-`appbaseRef.getStream(params)`
-
--   **params** `Object` <br>A JavaScript object containing the `type` and `id` of the document to be streamed.
-
-    -   **type** `String` <br>Document type
-    -   **id** `String` <br>Document ID (The ID is always a `String` value)
-
-> Note <span class="fa fa-info-circle"></span>
->
-> The `streamOnly` field parameter is deprecated starting v0.9.0 onwards, and is the default for how `getStream()` works (previously `readStream()`).
-
-**Returns**
-
-An `Object` with
-
--   a **stop()** method to stop the stream
--   a **reconnect()** method to reconnect the stream
-
-```js
-var responseStream = appbaseRef.getStream(
-	{
-		type: 'tweet',
-		id: 1,
-	},
-	function(res) {
-		console.log('data update: ', res);
-	},
-);
-```
-
-> Note <i class="fa fa-info-circle"></i>
->
-> appbase.js lib uses websockets to stream changes to a subscribed method.
-
-### searchStream()
-
-Continuously stream results of search query on a given `type`. Search queries can be a variety of things: from simple monitoring queries, finding an exact set of documents, full-text search queries, to geolocation queries.
-
-`searchStream()` subscribes to search results on new document inserts, existing search results can be fetched via `search()` method.
-
-```js
-appbaseRef.searchStream(
-	{
-		type: 'tweet',
-		body: {
-			query: {
-				match_all: {},
-			},
-		},
-	},
-	function(res) {
-		console.log('query update: ', res);
-	},
-	function(err) {
-		console.log('streaming error: ', err);
-	},
-);
-```
-
-**Usage**
-
-`appbaseRef.searchStream(params)`
-
--   **params** `Object` <br>A JavaScript object containing the query `type` and `body`
-
-    -   **type** `String` <br>Document type
-    -   **body** `Object` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
-
-> Note <span class="fa fa-info-circle"></span>
->
-> The `streamOnly` field parameter is deprecated starting v0.9.0 onwards, and is the default for how `searchStream()` works.
-
-**Returns**
-
-An `Object` with
-
--   a **stop()** method to stop the stream
--   a **reconnect()** method to reconnect the stream
-
-```js
-var responseStream = appbaseRef.searchStream(
-	{
-		type: 'tweet',
-		body: {
-			query: {
-				match_all: {},
-			},
-		},
-	},
-	function(res) {
-		console.log('data update: ', res);
-	},
-);
-
-setTimeout(responseStream.stop, 5000); // stop stream after 5s
-```
-
-### searchStreamToURL()
-
-Continuously stream results of search query on a given `type` to a URL. **searchStreamToURL()** executes a webhook query on document insertion.
-
-`searchStreamToURL()` subscribes to search query results on new document inserts.
-
-```js
-appbaseRef.searchStreamToURL(
-{
- type: "tweet",
- body: {
-  query: {
-   match_all: {}
-  }
- }
-}, {
- url: 'http://mockbin.org/bin/0844bdda-24f6-4589-a45b-a2139d2ccc84',
- string_body: {{{_source}}}
-}, function(res) {
- console.log("Webhook registered: ", res)
-}, function(err) {
- console.log("Error in registering webhook: ", err)
-})
-```
-
-**Usage**
-
-`appbaseRef.searchStreamToURL(queryParams, urlParams)`
-
--   **queryParams** `Object` <br>A JavaScript object containing the query `type` and `body`
-
-    -   **type** `String` <br>Document type
-    -   **body** `Object` <br>A JSON object specifying a valid query in the [Elasticsearch Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) format
-
--   **urlParams** `Object` - A JavaScript object containing the `url` to which data would be streamed on a query match. It supports optional fields to attach JSON (or string) payloads, control the frequency and number of updates.
-
-    -   **url** `String` <br>A URL string
-    -   **body** `Object` <br>A JSON object to be sent to the URL (used as an alternative to **string_body**)
-    -   **string_body** `String` <br>A raw string to be sent to the URL (used as an alternative to **body**)
-    -   **count** `Number` <br># of times the result-request should be sent before terminating the webhook
-    -   **interval** `Number` <br>Wait duration in seconds before the next result-request
-
-> Note <span class="fa fa-info-circle"></span>
->
-> **body** and **string_body** fields support [mustache syntax](http://mustache.github.io/mustache.5.html) for accessing values inside the matching result object.
-
-**Returns**
-
-An `Object` with
-
--   a **stop()** method to de-register the webhook
--   a **change()** method to replace the destination URL object
-
-> Note <span class="fa fa-info-circle"></span>
->
-> We recommend using both **change()** and **stop()** methods inside the `data` or `error` event handlers due to the async nature of the `searchStreamToURL()` method.
-
-```js
-var responseStream = appbaseRef.searchStreamToURL(
-	{
-		type: 'tweet',
-		body: {
-			query: {
-				match_all: {},
-			},
-		},
-	},
-	{
-		url: 'http://mockbin.org/bin/0844bdda-24f6-4589-a45b-a2139d2ccc84',
-	},
-	function(res) {
-		console.log('webhook registered: ', res);
-		responseStream.stop().then(function(res) {
-			console.log('webhook de-registered: ', res);
-		});
-	},
-);
-```
