@@ -70,7 +70,7 @@ export default () => (
 					top: '168px',
 				}}
 				showMarkerClusters={false}
-				renderAllData={(hits, streamHits, loadMore, renderMap, renderPagination) => (
+				renderAllData={(hits, loadMore, renderMap, renderPagination) => (
 					<div style={{ display: 'flex' }}>
 						<div id="list" className={listContainer}>
 							{hits.map(data => (

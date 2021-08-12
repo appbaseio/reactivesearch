@@ -54,7 +54,7 @@ class Main extends React.Component {
 							},
 						},
 					})}
-					renderAllData={(hits, streamHits, loadMore, renderMap) => {
+					renderAllData={(hits, loadMore, renderMap) => {
 						if (this.mapRef) {
 							const { map } = this.mapRef;
 							const count = {

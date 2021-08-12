@@ -55,7 +55,6 @@ class Main extends Component {
 							defaultZoom={13}
 							onAllData={(
 								hits,
-								streamHits,
 								loadMore,
 								renderMap,
 								renderPagination,
