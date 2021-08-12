@@ -1,4 +1,4 @@
-import styled, { css } from '@appbaseio/vue-emotion';
+import styled from '@appbaseio/vue-emotion';
 
 const IconWrapper = styled('div')`
 	display: flex;
