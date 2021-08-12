@@ -13,7 +13,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
 import getTheme from '../../styles/theme';
-import { composeThemeObject, ReactReduxContext } from '../../utils';
+import { composeThemeObject, ReactReduxContext, X_SEARCH_CLIENT } from '../../utils';
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -84,6 +84,18 @@ class ReactiveBase extends Component {
 		);
 	}
 
+	get headers() {
+		const { enableAppbase, headers, appbaseConfig } = this.props;
+		const { enableTelemetry } = appbaseConfig || {};
+		return {
+			...(enableAppbase && {
+				'X-Search-Client': X_SEARCH_CLIENT,
+				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+			}),
+			...headers,
+		};
+	}
+
 	setStore = (props) => {
 		this.type = props.type ? props.type : '*';
 
@@ -140,15 +152,6 @@ class ReactiveBase extends Component {
 		});
 
 		const { themePreset } = props;
-		const enableTelemetry
-			= props.appbaseConfig && props.appbaseConfig.enableTelemetry !== undefined
-				? props.appbaseConfig.enableTelemetry
-				: true;
-		const headers = {
-			'X-Search-Client': 'ReactiveSearch React',
-			...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-			...this.props.headers,
-		};
 
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
@@ -159,7 +162,7 @@ class ReactiveBase extends Component {
 			config: { ...config, mapKey: props.mapKey, themePreset },
 			appbaseRef,
 			selectedValues,
-			headers,
+			headers: this.headers,
 			...this.props.initialState,
 		};
 		this.store = configureStore(initialState);
@@ -167,13 +170,11 @@ class ReactiveBase extends Component {
 
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
-
-		const headers = { 'X-Search-Client': 'ReactiveSearch React', ...this.props.headers };
 		return (
 			<ThemeProvider theme={theme} key={this.state.key}>
 				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
-						headers={headers}
+						headers={this.headers}
 						style={this.props.style}
 						as={this.props.as}
 						className={this.props.className}

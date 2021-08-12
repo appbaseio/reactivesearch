@@ -7,6 +7,8 @@ export const ReactReduxContext = React.createContext(null);
 
 export const connect = (...args) => connectToStore(...args, null, { context: ReactReduxContext });
 
+export const X_SEARCH_CLIENT = 'ReactiveSearch React';
+
 export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 	typography: {
 		...ownTheme.typography,
