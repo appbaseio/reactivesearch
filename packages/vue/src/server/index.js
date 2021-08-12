@@ -13,6 +13,7 @@ import {
 	getDependentQueries,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
+import { X_SEARCH_CLIENT } from '../utils';
 
 const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
 
@@ -79,8 +80,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 				? settings.appbaseConfig.enableTelemetry
 				: true;
 		const headers = {
-			'X-Search-Client': 'ReactiveSearch Vue',
-			...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+			...(settings.enableAppbase && {
+				'X-Search-Client': X_SEARCH_CLIENT,
+				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+			}),
 			...settings.headers,
 		};
 		const config = {
