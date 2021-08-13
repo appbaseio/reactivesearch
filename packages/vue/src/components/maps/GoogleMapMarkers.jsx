@@ -83,7 +83,7 @@ const GoogleMapMarkers = {
 						onclick={cluster => {
 							this.clickedCluster = cluster;
 							this.clusterMarkers = this.getClusterMarkers();
-							this.$emit('open-cluster-popover');
+							this.$emit('open-cluster-popover', this.clusterMarkers);
 						}}
 						ref="clusterRef"
 					>
