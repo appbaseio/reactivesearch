@@ -354,13 +354,13 @@ You can also check this [example](https://codesandbox.io/s/github/appbaseio/reac
     gets called when map is in idle position
 
 -   **open-marker-popover**
-    gets called when marker popover gets opened or marker is clicked
+    gets called when marker popover gets opened or marker is clicked, the current marker object is also emitted along.
 
 -   **close-marker-popover**
-    gets called when marker popover is closed
+    gets called when marker popover is closed, the current marker object is also emitted along.
 
 -   **open-cluster-popover**
-    gets called when cluster popover gets opened or cluster is clicked
+    gets called when cluster popover gets opened or cluster is clicked, an array of associated marker objects is also emitted along.
 
 -   **close-cluster-popover**
     gets called when cluster popover is closed
