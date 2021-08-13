@@ -51,7 +51,7 @@ const GoogleMapMarker = {
 			handleOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
 			this.triggerAnalytics();
-			this.$emit('open-marker-popover');
+			this.$emit('open-marker-popover', marker);
 		},
 		closeMarker() {
 			const {
@@ -68,7 +68,7 @@ const GoogleMapMarker = {
 
 			handleOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
-			this.$emit('close-marker-popover');
+			this.$emit('close-marker-popover', marker);
 		},
 		triggerAnalytics() {
 			this.recordResultClick(this.index, this.marker._id);
