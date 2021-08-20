@@ -71,24 +71,26 @@ const ComponentWrapper = (
 			this.setQueryListener(this.componentId, onQueryChange, onError);
 			// Update props in store
 			this.setComponentProps(this.componentId, this.componentProps, options.componentType);
+		}
 
-			// if default query prop is defined and component is reactive component then register the internal component
-			if (
-				options.internalComponent
-			|| (this.componentProps.defaultQuery
-				&& options.componentType === componentTypes.reactiveComponent)
-			) {
-				this.internalComponent = getInternalComponentID(this.componentId);
-			}
-			// Register internal component
-			if (this.internalComponent) {
-				this.addComponent(this.internalComponent);
-				this.setComponentProps(
-					this.internalComponent,
-					this.componentProps,
-					options.componentType,
-				);
-			}
+		// if default query prop is defined and component is reactive component then register the internal component
+		if (
+			options.internalComponent
+		|| (this.componentProps.defaultQuery
+			&& options.componentType === componentTypes.reactiveComponent)
+		) {
+			this.internalComponent = getInternalComponentID(this.componentId);
+		}
+		// Register internal component
+		if (this.internalComponent && (this.destroyOnUnmount
+				|| components.indexOf(this.internalComponent) === -1))
+		{
+			this.addComponent(this.internalComponent);
+			this.setComponentProps(
+				this.internalComponent,
+				this.componentProps,
+				options.componentType,
+			);
 		}
 	},
 	mounted() {
