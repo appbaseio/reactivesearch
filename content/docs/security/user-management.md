@@ -55,4 +55,4 @@ When creating a new user, you can either provide admin privileges or set the spe
 
 ## User Management vs API Credentials
 
-When you need to provide GUI access to the dashboard, we recommend creating a new user. On the other hand, when you need to offer programmatic access to a subset of the APIs or set restrictions based on IPs, HTTP Referers, fields, time, we recommend creating an [API credential](/docs/security/credentials/#adding-and-updating-credentials).
+When you need to provide GUI access to the dashboard, we recommend creating a new user. On the other hand, when you need to offer programmatic access to a subset of the APIs or set restrictions based on IPs, HTTP Referers, fields, time, we recommend creating an [API credential](/docs/security/credentials/).
