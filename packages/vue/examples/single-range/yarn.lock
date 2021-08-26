@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.12.0":
-  version "9.12.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.0.tgz#233beddfa8b6e345b610bdf13e9ff33bd4636681"
+"@appbaseio/reactivecore@9.12.1":
+  version "9.12.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.1.tgz#e209459dfbb48ad65987d75fc0eb61c82edf0961"
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -12,11 +12,11 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.21.0":
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.21.0.tgz#ab127fb8d35cf9936e305933348822d4907ba3ba"
+"@appbaseio/reactivesearch-vue@1.21.1":
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.21.1.tgz#ef9663b314fb70afae7d8e412528974bb0a972f1"
   dependencies:
-    "@appbaseio/reactivecore" "9.12.0"
+    "@appbaseio/reactivecore" "9.12.1"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^4.1.5"
@@ -5619,8 +5619,8 @@ path-key@^2.0.0, path-key@^2.0.1:
   resolved "https://registry.yarnpkg.com/path-key/-/path-key-2.0.1.tgz#411cadb574c5a140d3a4b1910d40d80cc9f40b40"
 
 path-parse@^1.0.5, path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
 
 path-to-regexp@0.1.7:
   version "0.1.7"
