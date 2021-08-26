@@ -240,6 +240,8 @@ class ReactiveList extends Component {
 			let options = getQueryOptions(this.props);
 			options.from = 0;
 			this.defaultQuery = this.props.defaultQuery();
+			// Update calculated default query in store
+			updateDefaultQuery(this.props.componentId, this.props);
 
 			const { query } = this.defaultQuery;
 
@@ -249,8 +251,6 @@ class ReactiveList extends Component {
 				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
 
-			// Update calculated default query in store
-			updateDefaultQuery(this.props.componentId, this.props);
 
 			this.props.updateQuery(
 				{
