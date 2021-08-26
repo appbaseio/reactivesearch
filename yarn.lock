@@ -129,27 +129,6 @@
     react-leaflet "^2.1.3"
     rheostat "^2.1.1"
 
-"@appbaseio/reactivesearch@3.21.0":
-  version "3.21.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.21.0.tgz#7e35dc28f0c024d739ca2e1c858bec3786f4fbaa"
-  integrity sha512-/2XB94k7ohabLezjOJcdbJ16gPVwsPOWB1Nrt3FBNHXAE0KEw2GdD9WEv47g3ku4Tybnmm8d388q4nprmIKv3g==
-  dependencies:
-    "@appbaseio/reactivecore" "9.11.11"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^4.1.5"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    rheostat "^2.1.1"
-    url-search-params-polyfill "^7.0.0"
-    xdate "^0.8.2"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
