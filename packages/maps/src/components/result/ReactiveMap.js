@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
 	addComponent,
 	removeComponent,
-	setStreaming,
 	watchComponent,
 	setQueryOptions,
 	updateQuery,
@@ -148,10 +147,6 @@ class ReactiveMap extends Component {
 		this.props.addComponent(this.internalComponent);
 		this.props.addComponent(this.props.componentId);
 
-		if (this.props.stream) {
-			this.props.setStreaming(this.props.componentId, true);
-		}
-
 		const options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortBy) {
@@ -277,7 +272,6 @@ class ReactiveMap extends Component {
 					'size',
 					'time',
 					'hidden',
-					'streamHits',
 				],
 				() => {
 					this.props.onData(this.getData());
@@ -323,9 +317,6 @@ class ReactiveMap extends Component {
 			this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute);
 		}
 
-		if (this.props.stream !== prevProps.stream) {
-			this.props.setStreaming(this.props.componentId, this.props.stream);
-		}
 
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
@@ -384,7 +375,6 @@ class ReactiveMap extends Component {
 			|| this.props.autoCenter !== nextProps.autoCenter
 			|| this.props.isLoading !== nextProps.isLoading
 			|| this.props.error !== nextProps.error
-			|| this.props.streamAutoCenter !== nextProps.streamAutoCenter
 			|| this.props.defaultZoom !== nextProps.defaultZoom
 			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
 			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
@@ -395,7 +385,6 @@ class ReactiveMap extends Component {
 
 		if (
 			isEqual(this.props.hits, nextProps.hits)
-			&& isEqual(this.props.streamHits, nextProps.streamHits)
 		) {
 			return false;
 		}
@@ -417,14 +406,9 @@ class ReactiveMap extends Component {
 		const { size, promotedResults, customData } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
 		const parsedPromotedResults = parseHits(promotedResults) || [];
 		let filteredResults = results;
 		const base = currentPage * size;
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
 
 		if (parsedPromotedResults.length) {
 			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
@@ -432,11 +416,10 @@ class ReactiveMap extends Component {
 				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
-			filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
+			filteredResults = [...parsedPromotedResults, ...filteredResults];
 		}
 		return {
 			results,
-			streamResults,
 			filteredResults,
 			promotedResults: parsedPromotedResults,
 			customData: customData || {},
@@ -448,11 +431,12 @@ class ReactiveMap extends Component {
 
 	getData = () => {
 		const {
-			streamResults, filteredResults, promotedResults, customData,
+			filteredResults,
+			promotedResults,
+			customData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
-			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
 			customData,
 			rawData: this.props.rawData,
@@ -736,10 +720,7 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			(this.props.mapRef
-				&& typeof this.props.mapRef.getCenter === 'function'
-				&& this.state.preserveCenter)
-			|| (this.props.stream && this.props.streamHits.length && !this.props.streamAutoCenter)
+			(this.props.mapRef && typeof this.props.mapRef.getCenter === 'function' && this.state.preserveCenter)
 		) {
 			const currentCenter = this.props.mapRef.getCenter();
 			setTimeout(() => {
@@ -761,7 +742,7 @@ class ReactiveMap extends Component {
 		}
 
 		if (hits && hits.length) {
-			if (this.props.autoCenter || this.props.streamAutoCenter) {
+			if (this.props.autoCenter) {
 				return this.getHitsCenter(hits) || this.getDefaultCenter();
 			}
 			return hits[0] && hits[0][this.props.dataField]
@@ -857,15 +838,9 @@ class ReactiveMap extends Component {
 
 	getResultsToRender = () => {
 		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
 		let filteredResults = results.filter(item => !!item[this.props.dataField]);
 
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
-
-		filteredResults = [...streamResults, ...filteredResults].map(item => ({
+		filteredResults = [...filteredResults].map(item => ({
 			...item,
 			[this.props.dataField]: getLocationObject(item[this.props.dataField]),
 		}));
@@ -1005,7 +980,6 @@ class ReactiveMap extends Component {
 					&& (this.props.renderAllData
 						? this.props.renderAllData(
 							this.withClickIds(parseHits(this.props.hits)),
-							this.withClickIds(parseHits(this.props.streamHits)),
 							this.loadMore,
 							() => this.props.renderMap(this.mapParams),
 							this.renderPagination,
@@ -1030,13 +1004,11 @@ ReactiveMap.propTypes = {
 	onQueryChange: types.func,
 	setPageURL: types.func,
 	setQueryOptions: types.funcRequired,
-	setStreaming: types.func,
 	updateQuery: types.funcRequired,
 	watchComponent: types.funcRequired,
 	currentPage: types.number,
 	hits: types.hits,
 	isLoading: types.bool,
-	streamHits: types.hits,
 	time: types.number,
 	total: types.number,
 	url: types.string,
@@ -1084,8 +1056,6 @@ ReactiveMap.propTypes = {
 	showSearchAsMove: types.bool,
 	size: types.number,
 	sortBy: types.sortBy,
-	stream: types.bool,
-	streamAutoCenter: types.bool,
 	style: types.style,
 	URLParams: types.bool,
 	defaultRadius: types.number,
@@ -1099,7 +1069,6 @@ ReactiveMap.propTypes = {
 const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
-	streamHits: state.streamHits[props.componentId] || [],
 	currentPage:
 		(state.selectedValues[`${props.componentId}-page`]
 			&& state.selectedValues[`${props.componentId}-page`].value - 1)
@@ -1120,7 +1089,6 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),

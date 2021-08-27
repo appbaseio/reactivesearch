@@ -32,7 +32,6 @@ declare namespace ReactiveListTree {
 		size?: number;
 		sortBy?: types.sortBy;
 		sortOptions?: types.sortOption[];
-		stream?: boolean;
 		onPageChange?: (...args: any[]) => any;
 		onPageClick?: (...args: any[]) => any;
 		defaultPage?: number;

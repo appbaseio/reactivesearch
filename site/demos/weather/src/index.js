@@ -50,7 +50,7 @@ const Main = () => (
 			showSearchAsMove
 			searchAsMove
 			defaultMapStyles="Blue Water"
-			onAllData={(hits, streamHits, loadMore, renderMap) => {
+			onAllData={(hits, loadMore, renderMap) => {
 				if (this.mapRef) {
 					if (this.heatmap) {
 						this.heatmap.getData().clear();

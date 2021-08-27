@@ -32,7 +32,7 @@ class Main extends Component {
 		this.setState({ isReady: true });
 	}
 
-	onAllData = (items, streamData, loadMore) => (
+	onAllData = (items, loadMore) => (
 		<FlatList
 			style={{ width: '100%' }}
 			data={items || []}

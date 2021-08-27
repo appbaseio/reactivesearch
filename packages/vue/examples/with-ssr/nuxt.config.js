@@ -1,45 +1,43 @@
-const { resolve } = require('path');
-const pkg = require('./package');
-
 export default {
-	modulesDir: resolve(__dirname, '../../../../node_modules/'),
-
-	/*
-	 ** Headers of the page
-	 */
+	// Global page headers: https://go.nuxtjs.dev/config-head
 	head: {
-		title: pkg.name,
+		title: 'with-ssr',
+		htmlAttrs: {
+			lang: 'en'
+		},
 		meta: [
 			{ charset: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
-			{ hid: 'description', name: 'description', content: pkg.description },
+			{ hid: 'description', name: 'description', content: '' },
+			{ name: 'format-detection', content: 'telephone=no' }
 		],
-		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+		link: [
+			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+		]
 	},
 
-	/*
-	 ** Customize the progress-bar color
-	 */
-	loading: { color: '#fff' },
+	// Global CSS: https://go.nuxtjs.dev/config-css
+	css: [
+	],
 
-	/*
-	 ** Global CSS
-	 */
-	css: [],
 
 	/*
 	 ** Plugins to load before mounting the App
 	 */
 	plugins: ['~/plugins/reactivesearch-vue'],
 
-	/*
-	 ** Nuxt.js modules
-	 */
-	modules: [],
+	// Auto import components: https://go.nuxtjs.dev/config-components
+	components: true,
 
-	/*
-	 ** Build configuration
-	 */
+	// Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+	buildModules: [
+	],
+
+	// Modules: https://go.nuxtjs.dev/config-modules
+	modules: [
+	],
+
+	// Build Configuration: https://go.nuxtjs.dev/config-build
 	build: {
 		transpile: [/^gmap-vue($|\/)/, /^@appbaseio\/reactivesearch-vue($|\/)/],
 		babel: {

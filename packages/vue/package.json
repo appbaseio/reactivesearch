@@ -34,7 +34,7 @@
 	],
 	"sideEffects": false,
 	"dependencies": {
-		"@appbaseio/reactivecore": "9.12.0-beta",
+		"@appbaseio/reactivecore": "9.12.1",
 		"@appbaseio/vue-emotion": "0.4.4",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
 		"appbase-js": "^4.1.5",

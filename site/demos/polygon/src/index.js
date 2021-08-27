@@ -51,7 +51,7 @@ class Main extends React.Component {
 					size={500}
 					defaultZoom={5}
 					center={{ lat: 24.886, lng: -70.268 }}
-					renderAllData={(hits, streamHits, loadMore, renderMap) => {
+					renderAllData={(hits, loadMore, renderMap) => {
 						if (this.mapRef) {
 							const { map } = this.mapRef;
 							const bermudaTriangle = new window.google.maps.Polygon({

@@ -58,7 +58,7 @@ import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../../lib/styles/IconWrapper';
+import IconWrapper from '../../styles/IconWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {

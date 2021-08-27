@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { withTheme } from 'emotion-theming';
 import {
-	setStreaming,
 	setQueryOptions,
 	updateQuery,
 	loadMore,
@@ -104,10 +103,6 @@ class ReactiveList extends Component {
 			);
 		}
 
-		if (this.props.stream) {
-			this.props.setStreaming(this.props.componentId, true);
-		}
-
 		let options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
@@ -197,7 +192,6 @@ class ReactiveList extends Component {
 				prevProps,
 				[
 					'hits',
-					'streamHits',
 					'promotedResults',
 					'customData',
 					'total',
@@ -248,6 +242,8 @@ class ReactiveList extends Component {
 			let options = getQueryOptions(this.props);
 			options.from = 0;
 			this.defaultQuery = this.props.defaultQuery();
+			// Update calculated default query in store
+			updateDefaultQuery(this.props.componentId, this.props);
 
 			const { query } = this.defaultQuery;
 
@@ -257,8 +253,6 @@ class ReactiveList extends Component {
 				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
 
-			// Update calculated default query in store
-			updateDefaultQuery(this.props.componentId, this.props);
 
 			this.props.updateQuery(
 				{
@@ -279,10 +273,6 @@ class ReactiveList extends Component {
 					this.updatePageURL(0);
 				},
 			);
-		}
-
-		if (this.props.stream !== prevProps.stream) {
-			this.props.setStreaming(this.props.componentId, this.props.stream);
 		}
 
 		if (this.shouldRenderPagination) {
@@ -389,14 +379,9 @@ class ReactiveList extends Component {
 		} = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
-		const streamResults = parseHits(this.props.streamHits) || [];
 		const parsedPromotedResults = parseHits(promotedResults) || [];
 		let filteredResults = results;
 		const base = currentPage * size;
-		if (streamResults.length) {
-			const ids = streamResults.map(item => item._id);
-			filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-		}
 
 		if (parsedPromotedResults.length) {
 			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
@@ -404,11 +389,10 @@ class ReactiveList extends Component {
 				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
-			filteredResults = [...streamResults, ...parsedPromotedResults, ...filteredResults];
+			filteredResults = [...parsedPromotedResults, ...filteredResults];
 		}
 		return {
 			results,
-			streamResults,
 			filteredResults,
 			promotedResults: parsedPromotedResults,
 			customData: customData || {},
@@ -698,7 +682,6 @@ class ReactiveList extends Component {
 
 	getData = () => {
 		const {
-			streamResults,
 			filteredResults,
 			promotedResults,
 			aggregationData,
@@ -707,7 +690,6 @@ class ReactiveList extends Component {
 		return {
 			data: this.withClickIds(filteredResults),
 			aggregationData: this.withClickIds(aggregationData || []),
-			streamData: this.withClickIds(streamResults),
 			promotedData: this.withClickIds(promotedResults),
 			customData,
 			rawData: this.props.rawData,
@@ -819,14 +801,12 @@ ReactiveList.propTypes = {
 	setQueryOptions: types.funcRequired,
 	setDefaultQuery: types.funcRequired,
 	updateComponentProps: types.funcRequired,
-	setStreaming: types.func,
 	updateQuery: types.funcRequired,
 	currentPage: types.number,
 	hits: types.hits,
 	rawData: types.rawData,
 	isLoading: types.bool,
 	includeFields: types.includeFields,
-	streamHits: types.hits,
 	promotedResults: types.hits,
 	customData: types.title,
 	time: types.number,
@@ -874,7 +854,6 @@ ReactiveList.propTypes = {
 	size: types.number,
 	sortBy: types.sortBy,
 	sortOptions: types.sortOptions,
-	stream: types.bool,
 	style: types.style,
 	triggerAnalytics: types.funcRequired,
 	URLParams: types.bool,
@@ -923,7 +902,6 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.config && state.config.analytics,
 	aggregationData: state.compositeAggregations[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
-	streamHits: state.streamHits[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
@@ -949,7 +927,6 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setValue(component, value, label, showFilter, URLParams)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
-	setStreaming: (component, stream) => dispatch(setStreaming(component, stream)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
 });
