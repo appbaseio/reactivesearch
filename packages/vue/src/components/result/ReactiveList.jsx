@@ -422,7 +422,7 @@ const ReactiveList = {
 					) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
-					? this.$props.loader || (
+					? (this.$scopedSlots.loader || this.$props.loader) || (
 						<div
 							style={{
 								textAlign: 'center',
