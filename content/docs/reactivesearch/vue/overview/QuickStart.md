@@ -168,15 +168,26 @@ Lets add them within the ReactiveBase component. But before we do that, we will 
 	componentId="SearchBox"
 	placeholder="Search for books or authors"
 	:dataField="[
-		'authors',
-		'authors.autosuggest',
-		'original_title',
-		'original_title.autosuggest',
+		{
+			'field': 'authors',
+			'weight': 3
+		},
+		{
+			'field': 'authors.autosuggest',
+			'weight': 1
+		},
+		{
+			'field': 'original_title',
+			'weight': 5
+		},
+		{
+			'field': 'original_title.autosuggest',
+			'weight': 1
+		}
 	]"
-	:fieldWeights="[3, 1, 5, 1]"
 />
 ```
-The [data-search](/docs/reactivesearch/vue/search/DataSearch/) component creates a searchbox UI component that queries on the specified fields with weights as specified by `fieldWeights` prop. That's all it takes to create a functional search component.
+The [data-search](/docs/reactivesearch/vue/search/DataSearch/) component creates a searchbox UI component that queries on the specified fields with weights as specified by `dataField` prop. That's all it takes to create a functional search component.
 
 At this point, you should see the following:
 
@@ -280,12 +291,23 @@ Now, we will put all three components together to create the UI view.
         componentId="SearchBox"
         placeholder="Search for books or authors"
         :dataField="[
-          'authors',
-          'authors.autosuggest',
-          'original_title',
-          'original_title.autosuggest',
-        ]"
-        :fieldWeights="[3, 1, 5, 1]"
+			{
+				'field': 'authors',
+				'weight': 3
+			},
+			{
+				'field': 'authors.autosuggest',
+				'weight': 1
+			},
+			{
+				'field': 'original_title',
+				'weight': 5
+			},
+			{
+				'field': 'original_title.autosuggest',
+				'weight': 1
+			}
+		]"
       />
       <multi-list
         componentId="Authors"

@@ -44,14 +44,30 @@ Example uses:
 	:autosuggest="true"
 	:highlight="true"
 	:showFilter="true"
-	:fieldWeights="[1, 3]"
+  :dataField="[
+			{
+				'field': 'group_venue',
+				'weight': 1
+			},
+			{
+				'field': 'group_city',
+				'weight': 3
+			},
+			{
+				'field': 'original_title',
+				'weight': 5
+			},
+			{
+				'field': 'original_title.autosuggest',
+				'weight': 1
+			}
+	]"
 	:fuzziness="0"
 	:size="10"
 	:debounce="100"
 	:react="{
     and: ['CategoryFilter', 'SearchFilter']
   }"
-	:dataField="['group_venue', 'group_city']"
 	:URLParams="false"
 />
 ```
@@ -60,11 +76,23 @@ Example uses:
 
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
--   **dataField** `String or Array` [optional*]
-    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
+-   **dataField** `string | Array<string | DataField*>` [optional*]
+    index field(s) to be connected to the component’s UI view. DataSearch accepts an `Array` in addition to `string`, which is useful for searching across multiple fields with or without field weights.<br/>
+    Field weights allow weighted search for the index fields. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
+    You can define the `dataField` property as an array of objects of the `DataField` type to set the field weights.<br/>
+    The `DataField` type has the following shape:
+
+    ```ts
+    type DataField = {
+    	field: string;
+    	weight: number;
+    };
+    ```
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields. Check examples at [here](/docs/search/reactivesearch-api/reference/#datafield).
 
     > Note:
-    > This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
+    > 1. This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
+    > 2. The `dataField` property as `DataField` object is only available for ReactiveSearch version >= `v3.21.0` and Appbase version `v7.47.0`.
 
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
@@ -730,7 +758,9 @@ The `suggestions` parameter receives all the unparsed suggestions from elasticse
           handleChange(value, triggerQuery, event) {
               this.value = value;
               // Trigger the search query to update the dependent components
-              triggerQuery()
+              triggerQuery({
+                isOpen: false // To close the suggestions dropdown; optional
+              })
           }
       }
   };
@@ -739,7 +769,7 @@ The `suggestions` parameter receives all the unparsed suggestions from elasticse
 
 > Note:
 >
-> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`. The `triggerQuery` method accepts an object with `isOpen` property (default to `false`) that can be used to control the opening state of the suggestion dropdown.
 
 - **query-change**
   is an event which accepts component's **prevQuery** and **nextQuery** as parameters. It is called everytime the component's query changes. This event is handy in cases where you want to generate a side-effect whenever the component's query would change.

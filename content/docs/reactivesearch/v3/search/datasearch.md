@@ -33,10 +33,18 @@ Example uses:
 ```js
 <DataSearch
 	componentId="SearchSensor"
-	dataField={['group_venue', 'group_city']}
+    dataField={[
+		{
+			"field": "group_venue",
+			"weight": 1
+		},
+		{
+			"field": "group_city",
+			"weight": 3
+		}
+	]}
 	title="Search"
 	defaultValue="Songwriting"
-	fieldWeights={[1, 3]}
 	placeholder="Search for cities or venues"
 	autosuggest={true}
 	defaultSuggestions={[
@@ -62,11 +70,23 @@ Example uses:
 
 -   **componentId** `String`
     unique identifier of the component, can be referenced in other components' `react` prop.
--   **dataField** `String or Array` [optional*]
-    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields.
->   Note:
->   This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
->
+-   **dataField** `string | Array<string | DataField*>` [optional*]
+    index field(s) to be connected to the component’s UI view. DataSearch accepts an `Array` in addition to `string`, which is useful for searching across multiple fields with or without field weights.<br/>
+    Field weights allow weighted search for the index fields. A higher number implies a higher relevance weight for the corresponding field in the search results.<br/>
+    You can define the `dataField` property as an array of objects of the `DataField` type to set the field weights.<br/>
+    The `DataField` type has the following shape:
+
+    ```ts
+    type DataField = {
+    	field: string;
+    	weight: number;
+    };
+    ```
+    database field(s) to be queried against. Accepts an Array in addition to String, useful for applying search across multiple fields. Check examples at [here](/docs/search/reactivesearch-api/reference/#datafield).
+
+    > Note:
+    > 1. This prop is optional only when `enableAppbase` prop is set to `true` in `ReactiveBase` component.
+    > 2. The `dataField` property as `DataField` object is only available for ReactiveSearch version >= `v3.21.0` and Appbase version `v7.47.0`.
 -   **size** `Number` [optional]
     number of suggestions to show. Defaults to `10`.
 -   **aggregationField** `String` [optional]
@@ -117,8 +137,9 @@ Example uses:
     Defaults to `false`. When set to `true`, it predicts the next relevant words from a field's value based on the search query typed by the user. When set to `false` (default), the entire field's value would be displayed. This may not be desirable for long-form fields (where average words per field value is greater than 4 and may not fit in a single line).
 -   **downShiftProps** `Object` [optional]
     allow passing props directly to the underlying `Downshift` component. You can read more about Downshift props [here](https://github.com/paypal/downshift#--downshift-------).
--   **fieldWeights** `Array` [optional]
+-   **fieldWeights** `Array` [optional] <mark color="yellow">[deprecated]</mark>
     set the search weight for the database fields, useful when dataField is an Array of more than one field. This prop accepts an array of numbers. A higher number implies a higher relevance weight for the corresponding field in the search results.
+> Note: The `fieldWeights` property has been marked as deprecated in <b>v3.21.0</b> of ReactiveSearch and <b>v7.47.0</b> of Appbase and would be removed in the next major release. We recommend you to use the [dataField](/docs/search/reactivesearch-api/reference/#datafield) property to define the weights.
 -   **placeholder** `String` [optional]
     set placeholder text to be shown in the component's input field. Defaults to "Search".
 -   **showIcon** `Boolean` [optional]
@@ -423,7 +444,7 @@ You can render popular suggestions in a custom layout by using the `renderQueryS
 
 > Note:
 >
-> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`.
+> If you're using the controlled behavior than it's your responsibility to call the `triggerQuery` method to update the query i.e execute the search query and update the query results in connected components by `react` prop. It is not mandatory to call the `triggerQuery` in `onChange` you can also call it in other input handlers like `onBlur` or `onKeyPress`. The `triggerQuery` method accepts an object with `isOpen` property (default to `false`) that can be used to control the opening state of the suggestion dropdown.
 
 -   **onSuggestions** `Function` [optional]
     You can pass a callback function to listen for the changes in suggestions. The function receives `suggestions` list.

@@ -114,17 +114,28 @@ Lets add them within the ReactiveBase component. But before we do that, we will 
 <DataSearch
 	componentId="searchbox"
 	dataField={[
-		"authors",
-		"authors.autosuggest",
-		"original_title",
-		"original_title.autosuggest"
+		{
+			"field": "authors",
+			"weight": 3
+		},
+		{
+			"field": "authors.autosuggest",
+			"weight": 1
+		},
+		{
+			"field": "original_title",
+			"weight": 5
+		},
+		{
+			"field": "original_title.autosuggest",
+			"weight": 1
+		},
 	]}
-	fieldWeights={[3, 1, 5, 1]}
 	placeholder="Search for books or authors"
 />
 ```
 
-The [**DataSearch**](/docs/reactivesearch/v3/search/datasearch/) component creates a searchbox UI component that queries on the specified fields with weights as specified by `fieldWeights` prop. That's all it takes to create a functional search component.
+The [**DataSearch**](/docs/reactivesearch/v3/search/datasearch/) component creates a searchbox UI component that queries on the specified fields with weights as specified by `dataField` prop. That's all it takes to create a functional search component.
 
 At this point, you should see the following:
 

@@ -169,8 +169,16 @@ const Main = () => (
         <div className="col">
             <DataSearch
                 title="DataSearch"
-                dataField={["key", "key.autosuggest"]}
-				fieldWeights={[3, 1]}
+				dataField={[
+					{
+						"field": "key",
+						"weight": 3
+					},
+					{
+						"field": "key.autosuggest",
+						"weight": 1
+					},
+				]}
                 componentId="SearchComponent"
             />
         </div>

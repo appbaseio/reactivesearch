@@ -18,7 +18,7 @@ This guide helps you to learn more about the each property of `ReactiveSearch` A
 {
     query: [{
         id: "phone-search",
-        dataField: ["title"],
+        dataField: "title",
         size: 10,
         value: "iphone"
     }],
@@ -41,16 +41,67 @@ The unique identifier for the query can be referenced in the `react` property of
 
 ### dataField
 
-database field(s) to be queried against. Accepts an `Array`, useful for applying search across multiple fields.
+database field(s) to be queried against, useful for applying search across multiple fields.
+It accepts the following formats:
+- `string`
+- `DataField`
+- `Array<string|DataField>`
 
-| Type            | Applicable on query of type | Required |
-| --------------- | --------------------------- | -------- |
-| `Array<string>` | `all`                       | true     |
+The `DataField` type has the following shape:
+
+```ts
+type DataField = {
+    field: string;
+    weight: float;
+};
+```
+For examples,
+
+1. `dataField` without field weights
+```js
+    dataField: ['title', 'title.search']
+```
+
+2. `dataField` with field weights
+
+```js
+    dataField: [
+        {
+            "field": "title",
+            "weight": 1
+        },
+        {
+            "field": "title.search",
+            "weight": 3
+        }
+    ]
+```
+
+3. `dataField` with and without field weights
+
+```js
+    dataField: [
+        {
+            "field": "title",
+            "weight": 1
+        },
+        {
+            "field": "title.search",
+            "weight": 3
+        },
+        "description"
+    ]
+```
+
+
+| Type                                       | Applicable on query of type | Required |
+| ------------------------------------------ | --------------------------- | -------- |
+| `string | DataField | Array` | `all`                       | true     |
 
 > Note:
 > Multiple `dataFields` are not applicable for `term` and `geo` queries.
 
-### fieldWeights
+### fieldWeights [deprecated]
 
 To set the search weight for the database fields, useful when you are using more than one [dataField](/docs/search/reactivesearch-api/reference/#datafield). This prop accepts an array of `floats`. A higher number implies a higher relevance weight for the corresponding field in the search results.
 
@@ -71,6 +122,7 @@ For example, the below query has two data fields defined and each field has a di
 | ------------ | --------------------------- | -------- |
 | `Array<int>` | `search`                    | false    |
 
+> Note: The `fieldWeights` property has been marked as deprecated in <b>v7.47.0</b> and would be removed in the next major version of appbase.io. We recommend you to use the [dataField](/docs/search/reactivesearch-api/reference/#datafield) property to define the weights.
 ### type
 
 This property represents the type of the query which is defaults to `search`, valid values are `search`, `term`, `range` & `geo`. You can read more [here](/docs/search/reactivesearch-api/implement/#type-of-queries).

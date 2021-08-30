@@ -77,7 +77,6 @@ Check the API docs for `React SearchBox` over [here](https://docs.appbase.io/doc
 	app="good-books-ds"
 	credentials="nY6NNTZZ6:27b76b9f-18ea-456c-bc5e-3a5263ebc63d"
 	dataField={['original_title', 'original_title.search']}
-	dataField
 	onValueChange={(next, prev) => {
 		if (prev !== next) {
 			window.ga('set', 'page', `/?query=${next}`);
