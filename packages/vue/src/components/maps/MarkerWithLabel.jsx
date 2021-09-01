@@ -227,9 +227,7 @@ const MarkerWithLabel = {
 					opacity: this.opacity,
 				}}
 				onmouseover={this.handleMouseOver}
-				onfocus={this.handleFocus}
 				onmouseout={this.handleMouseOut}
-				onblur={this.handleBlur}
 				onclick={this.handleClick}
 			>
 				{this.renderMarker()}

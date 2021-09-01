@@ -14,25 +14,33 @@ const GoogleMapMarker = {
 		index: VueTypes.number,
 		marker: VueTypes.object.isRequired,
 		getPosition: VueTypes.func.isRequired,
-		markerOnTop: VueTypes.string,
 		defaultPin: VueTypes.string,
 		renderItem: VueTypes.func,
-		setMarkerOnTop: VueTypes.func.isRequired,
 		setOpenMarkers: VueTypes.func.isRequired,
 		handlePreserveCenter: VueTypes.func.isRequired,
 		autoClosePopover: VueTypes.bool,
 		openMarkers: VueTypes.object,
 		renderPopover: VueTypes.func,
+		highlightMarkerOnHover: VueTypes.bool,
+	},
+	data() {
+		return {
+			zIndex: 0,
+		}
 	},
 	methods: {
 		increaseMarkerZIndex() {
-			const { setMarkerOnTop: handleTopMarker, handlePreserveCenter, marker } = this.$props;
-			handleTopMarker(marker._id);
+			const { handlePreserveCenter } = this.$props;
+			if(this.highlightMarkerOnHover) {
+				this.zIndex += 1;
+			}
 			handlePreserveCenter(true);
 		},
 		removeMarkerZIndex() {
-			const { setMarkerOnTop: handleTopMarker, handlePreserveCenter } = this.$props;
-			handleTopMarker(null);
+			const { handlePreserveCenter } = this.$props;
+			if(this.highlightMarkerOnHover) {
+				this.zIndex -= 1;
+			}
 			handlePreserveCenter(true);
 		},
 		openMarker() {
@@ -119,17 +127,13 @@ const GoogleMapMarker = {
 			getPosition,
 			renderItem,
 			defaultPin,
-			autoClosePopover,
-			handlePreserveCenter,
 			renderPopover,
 			markerProps: customMarkerProps,
 			marker,
-			markerOnTop,
 		} = this.$props;
-
 		const markerProps = {};
-		if (markerOnTop === marker._id) {
-			markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
+		if (this.zIndex) {
+			markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + this.zIndex;
 		}
 
 		if (renderItem) {
@@ -142,9 +146,7 @@ const GoogleMapMarker = {
 						marker={getPosition(marker)}
 						labelAnchor={new window.google.maps.Point(0, 30)}
 						handleMouseOver={this.increaseMarkerZIndex}
-						handleFocus={this.increaseMarkerZIndex}
 						handleMouseOut={this.removeMarkerZIndex}
-						handleBlur={this.removeMarkerZIndex}
 						handleClick={this.openMarker}
 						zIndex={markerProps.zIndex}
 						{...{ props: customMarkerProps }}
@@ -168,9 +170,7 @@ const GoogleMapMarker = {
 						marker={getPosition(marker)}
 						handleClick={this.openMarker}
 						handleMouseOver={this.increaseMarkerZIndex}
-						handleFocus={this.increaseMarkerZIndex}
 						handleMouseOut={this.removeMarkerZIndex}
-						handleBlur={this.removeMarkerZIndex}
 						zIndex={markerProps.zIndex}
 						{...{ props: customMarkerProps }}
 						renderMarker={() => (
@@ -195,12 +195,10 @@ const GoogleMapMarker = {
 				icon={markerProps.icon}
 				zIndex={markerProps.zIndex}
 				onclick={() =>
-					this.openMarker(marker._id, autoClosePopover || false, handlePreserveCenter)
+					this.openMarker()
 				}
 				onmouseover={this.increaseMarkerZIndex}
-				onfocus={this.increaseMarkerZIndex}
 				onmouseout={this.removeMarkerZIndex}
-				onblur={this.removeMarkerZIndex}
 				{...{ props: customMarkerProps }}
 				position={getPosition(marker)}
 				options={{

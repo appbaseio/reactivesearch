@@ -38,6 +38,7 @@ const ReactiveGoogleMap = {
 		unit: types.string,
 		pages: VueTypes.number.def(5),
 		calculateMarkers: VueTypes.func,
+		highlightMarkerOnHover: VueTypes.bool.def(true),
 	},
 	methods: {
 		renderMap({
@@ -83,6 +84,7 @@ const ReactiveGoogleMap = {
 								markerProps={this.markerProps}
 								clusterProps={this.clusterProps}
 								handlePreserveCenter={handlePreserveCenter}
+								highlightMarkerOnHover={this.highlightMarkerOnHover}
 								renderItem={
 									this.$scopedSlots.renderItem
 										? () => ({

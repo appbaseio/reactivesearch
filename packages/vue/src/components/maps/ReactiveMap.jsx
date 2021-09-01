@@ -135,6 +135,7 @@ const ReactiveMap = {
 		calculateMarkers: VueTypes.func,
 		searchAsMoveLabel: VueTypes.string.def('Search as I move the map')
 	},
+	preserveCenter: false,
 	data() {
 		const props = this.$props;
 		let currentPageState = 0;
@@ -147,7 +148,6 @@ const ReactiveMap = {
 			zoom: props.defaultZoom,
 			searchAsMove: props.defaultSearchAsMove,
 			currentPageState,
-			preserveCenter: false,
 			mapBoxBounds: null,
 			markersData: null
 		};
@@ -377,10 +377,10 @@ const ReactiveMap = {
 				return this.parseLocation(this.center);
 			}
 			const mapRef = this.getMapRef();
-			if (mapRef && typeof mapRef.getCenter === 'function' && this.preserveCenter) {
+			if (mapRef && typeof mapRef.getCenter === 'function' && this.$options.preserveCenter) {
 				const currentCenter = mapRef.getCenter();
 				setTimeout(() => {
-					this.preserveCenter = false;
+					this.$options.preserveCenter = false;
 				}, 100);
 				return this.parseLocation({
 					lat: currentCenter.lat(),
@@ -403,7 +403,7 @@ const ReactiveMap = {
 				const prevZoom = this.zoom;
 				if (this.searchAsMove) {
 					this.zoom = zoom;
-					this.preserveCenter = true;
+					this.$options.preserveCenter = true;
 					this.setGeoQuery(true);
 				} else {
 					this.zoom = zoom;
@@ -415,13 +415,13 @@ const ReactiveMap = {
 		},
 		handleOnDragEnd() {
 			if (this.searchAsMove) {
-				this.preserveCenter = true;
+				this.$options.preserveCenter = true;
 				this.setGeoQuery(true);
 			}
 			this.$emit('drag-end')
 		},
 		handlePreserveCenter(preserveCenter) {
-			this.preserveCenter = preserveCenter;
+			this.$options.preserveCenter = preserveCenter;
 		},
 		handleOnIdle() {
 			// only make the geo_bounding query if we have hits data
@@ -475,7 +475,7 @@ const ReactiveMap = {
 				autoClosePopover,
 				renderSearchAsMove: this.renderSearchAsMove,
 				handlePreserveCenter: this.handlePreserveCenter,
-				preserveCenter: this.preserveCenter,
+				preserveCenter: this.$options.preserveCenter,
 				handleOnDragEnd: this.handleOnDragEnd,
 				handleOnIdle: this.handleOnIdle,
 				handleZoomChange: this.handleZoomChange,

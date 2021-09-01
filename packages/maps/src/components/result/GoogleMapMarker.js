@@ -119,8 +119,6 @@ class GoogleMapMarker extends React.Component {
 			getPosition,
 			renderData,
 			defaultPin,
-			autoClosePopover,
-			handlePreserveCenter,
 			onPopoverClick,
 			markerProps: customMarkerProps,
 			marker,
@@ -189,7 +187,7 @@ class GoogleMapMarker extends React.Component {
 			<Marker
 				key={marker._id}
 				onClick={() =>
-					this.openMarker(marker._id, autoClosePopover || false, handlePreserveCenter)
+					this.openMarker()
 				}
 				onMouseOver={this.increaseMarkerZIndex}
 				onFocus={this.increaseMarkerZIndex}

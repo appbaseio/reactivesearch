@@ -17,19 +17,16 @@ const GoogleMapMarkers = {
 		markerProps: VueTypes.object,
 		clusterProps: VueTypes.object,
 		showMarkerClusters: VueTypes.bool,
+		highlightMarkerOnHover: VueTypes.bool,
 	},
 	data() {
 		return {
-			markerOnTop: null,
 			openMarkers: {},
 			clickedCluster: null,
 			clusterMarkers: [],
 		};
 	},
 	methods: {
-		setMarkerOnTop(markerOnTop) {
-			this.markerOnTop = markerOnTop;
-		},
 		setOpenMarkers(openMarkers) {
 			this.openMarkers = openMarkers;
 		},
@@ -58,9 +55,8 @@ const GoogleMapMarkers = {
 	},
 	render() {
 		const { resultsToRender } = this.$props;
-		const { markerOnTop, openMarkers } = this;
+		const { openMarkers } = this;
 		const markerProps = {
-			markerOnTop,
 			openMarkers,
 			setMarkerOnTop: this.setMarkerOnTop,
 			setOpenMarkers: this.setOpenMarkers,
@@ -72,6 +68,7 @@ const GoogleMapMarkers = {
 			renderPopover: this.renderPopover,
 			markerProps: this.markerProps,
 			showMarkerClusters: this.showMarkerClusters,
+			highlightMarkerOnHover: this.highlightMarkerOnHover,
 		};
 		if (this.showMarkerClusters) {
 			return (
