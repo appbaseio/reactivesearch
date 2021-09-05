@@ -26,11 +26,11 @@ You can watch this 5-mins video to follow along the process of creating a storef
 
 ### E-Commerce Platform
 
-![Choose Platform](https://i.imgur.com/tjFux2H.png)
+![Choose Platform](https://imgur.com/DWhvlhp.png)
 
 You can choose the `E-Commerce Platform` for which you are building the search UI for. The Shopify option comes with presets specific to Shopify's schema. You can also import data from a Shopify store into appbase.io via the `Develop > Import` tab. However, you can use UI Builder to build a site search for other platforms such as Magento, Wordpress, Webflow, Wix and it can even be integrated into your own site.
 
-![Store Info](https://i.imgur.com/kh8g8v3.png)
+![Store Info](https://imgur.com/l96LvJU.png)
 
 Next, in the `Store info` tab, you can set the default currency for your store.
 
@@ -47,15 +47,15 @@ You can read more about the different preferences and how it works over [here](/
 
 The options in the `Layout and Design` tab will let you style and create a design for your search results and search results page.
 
-![Search Layout](https://i.imgur.com/a20AJwK.png)
+![Search Layout](https://imgur.com/fgxvpxh.png)
 
 Starting with the `Search Layout` tab, you can select the overall look for your search page. Currently, you can select `Classic`, which has clearly defined boxes for filters and facets making it a great fit for multi-category stores, or `Minimal` which delivers a streamlined view preferred by fashion and jewelery retailers.
 
-![Style Presets](https://i.imgur.com/5RGirFh.png)
+![Style Presets](https://imgur.com/VZpKmjp.png)
 
 The next tab, `Style Presets`, will let you set the font family and color preferences for the storefront search.
 
-![Custom CSS](https://i.imgur.com/9HP9iTc.png)
+![Custom CSS](https://imgur.com/BhhZUr9.png)
 
 In `Custom CSS`, you will be able to set your CSS to control the look and feel of the search results page on a more granular level by adding various classes. We've also given some examples you copy-paste in the editor. All these changes will be updated in realtime and you can have a look at them in the preview.
 
@@ -63,24 +63,26 @@ In `Custom CSS`, you will be able to set your CSS to control the look and feel o
 
 In the `Search Settings` tab, you will be able to define the behavior for search, filters, and results.
 
-![Search Tab](https://i.imgur.com/gzwNLhy.png)
+![Search Tab](https://imgur.com/yJPp5sj.png)
 
-In the `Search` tab, you can configure the search settings such as fields to search on, field weights to apply, typo tolerance and synonyms settings. You can read more about the available options over [here](/docs/search/relevancy/#search-settings).
+In the `Search` tab, you can configure the preferences and search settings. Here the preferences are related to suggestions and enabling of voice search and the search settings are regarding the fields to search on, field weights to apply, typo tolerance and synonyms settings. You can read more about the available options over [here](/docs/search/relevancy/#search-settings).
 
-![Filters](https://i.imgur.com/Q8zhrsA.png)
+![Filters](https://imgur.com/5AxRfYG.png)
 
 In the `Filters` tab, you can set the filters that should appear as facets in the storefront search.
 
-![Adding a custom filter](https://i.imgur.com/mhfwjGc.png)
+![Adding a custom filter](https://imgur.com/UXwKxmh.png)
 
 You can also add custom filters in this view. Click on the **Add Filter** button. In the **Data Field** dropdown, select one of the fields from your index. Give it a title and save. The filter options will be populated by data present in the attributes.
 
-![Results Tab](https://i.imgur.com/BRIaOor.png)
+![Results Tab](https://imgur.com/39icKEZ.png)
 
 The `Results` tab gives you control over the search UI for your store. It supports the following options:
 
 - Enable or Disable **Popular Suggestions** along with the search dropdown,
 - Show **Active Filters** on top of the search results page,
+- **Show Results as** allows choosing whether to show the results in grid or list view,
+- Enable **Results View Switcher** to allow end users to pick between grid and list view in the search UI,
 - Toggle **Infinite Scroll** or **Pagination** on your search result pages,
 - Select what fields appear on the Product Cards in the search results. You will be able to set data for **Product Title**, **Product Description**, **Product Price**, **Product Image**, and **Redirect URL**.
 
