@@ -13,7 +13,8 @@
 			"tab",
 			{
 				"SwitchCase": 1,
-				"VariableDeclarator": 1
+				"VariableDeclarator": 1,
+				"ignoredNodes": ["TemplateLiteral"]
 			}
 		],
 		"no-tabs": 0,

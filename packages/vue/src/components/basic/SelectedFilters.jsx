@@ -6,7 +6,7 @@ import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import { connect } from '../../utils/index';
 
-const { setValue, clearValues } = Actions;
+const { setValue, clearValues, resetValuesToDefault } = Actions;
 const { getClassName, handleA11yAction } = helper;
 
 const SelectedFilters = {
@@ -17,6 +17,7 @@ const SelectedFilters = {
 		innerClass: types.style,
 		showClearAll: VueTypes.bool.def(true),
 		title: types.title,
+		resetToDefault: VueTypes.bool.def(false),
 	},
 	inject: {
 		theme: {
@@ -30,6 +31,7 @@ const SelectedFilters = {
 				selectedValues: this.selectedValues,
 				clearValues: this.clearValues,
 				setValue: this.setValue,
+				resetValuesToDefault: this.resetValuesToDefault,
 			});
 		}
 		const filtersToRender = this.renderFilters();
@@ -67,10 +69,14 @@ const SelectedFilters = {
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
-			this.clearValuesAction();
+			const { resetToDefault } = this;
+			if (resetToDefault) {
+				this.resetValuesToDefault();
+			} else {
+				this.clearValuesAction();
+			}
 			this.$emit('clear', null);
 		},
-
 		renderValue(value, isArray) {
 			if (isArray && value.length) {
 				const arrayToRender = value.map(item => this.renderValue(item));
@@ -147,6 +153,7 @@ const mapStateToProps = state => ({
 const mapDispatchtoProps = {
 	clearValuesAction: clearValues,
 	setValue,
+	resetValuesToDefault,
 };
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);

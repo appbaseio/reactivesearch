@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
-logs
+/logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -77,8 +77,14 @@ dist
 # Serverless directories
 .serverless
 
-# IDE
+# IDE / Editor
 .idea
 
 # Service worker
 sw.*
+
+# macOS
+.DS_Store
+
+# Vim swap files
+*.swp

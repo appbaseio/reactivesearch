@@ -29,6 +29,7 @@ const ToggleButton = {
 		URLParams: VueTypes.bool,
 		renderItem: types.func,
 		index: VueTypes.string,
+		enableStrictSelection: VueTypes.bool,
 	},
 	data() {
 		this.__state = {
@@ -181,19 +182,30 @@ const ToggleButton = {
 		},
 
 		handleClick(item) {
+			const { enableStrictSelection, multiSelect } = this.$props;
+			if (
+				enableStrictSelection
+				&& !multiSelect
+				&& this.$data.currentValue.find(stateItem => isEqual(item, stateItem))
+			) {
+				return false;
+			}
 			const { value } = this.$props;
 			if (value === undefined) {
 				this.handleToggle(item);
 			} else {
 				this.$emit('change', item.value);
 			}
+			return true;
 		},
 
 		renderButton(item) {
 			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
 			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
 
-			return renderItem ? renderItem({ item, isSelected, handleClick: () => this.handleClick(item) }) : (
+			return renderItem ? (
+				renderItem({ item, isSelected, handleClick: () => this.handleClick(item) })
+			) : (
 				<Button
 					class={`${getClassName(this.$props.innerClass, 'button')} ${
 						isSelected ? 'active' : ''
@@ -207,7 +219,7 @@ const ToggleButton = {
 				>
 					{item.label}
 				</Button>
-			)
+			);
 		},
 	},
 

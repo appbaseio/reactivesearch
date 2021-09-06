@@ -262,7 +262,7 @@ RangeSlider.defaultQuery = (values, props) => {
 
 RangeSlider.parseValue = (value, props) => {
 	if (value) {
-		return [value.start, value.end];
+		return Array.isArray(value) ? value : [value.start, value.end];
 	}
 	if (props.range) {
 		return [props.range.start, props.range.end];
@@ -288,9 +288,12 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-export const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(RangeSlider), {
-	componentType: componentTypes.rangeSlider,
-});
+export const RangeConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(RangeSlider),
+	{
+		componentType: componentTypes.rangeSlider,
+	},
+);
 
 RangeSlider.install = function(Vue) {
 	Vue.component(RangeSlider.name, RangeConnected);

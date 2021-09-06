@@ -56,6 +56,7 @@ const {
 	getResultStats,
 	handleOnSuggestions,
 	getTopSuggestions,
+	normalizeDataField
 } = helper;
 
 const DataSearch = {
@@ -197,7 +198,16 @@ const DataSearch = {
 		customHighlight: types.func,
 		customQuery: types.func,
 		defaultQuery: types.func,
-		dataField: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)]),
+		dataField: VueTypes.oneOfType(
+			[
+				VueTypes.string, VueTypes.shape({
+					field: VueTypes.string,
+					weight: VueTypes.number,
+				}), VueTypes.arrayOf(VueTypes.string), VueTypes.arrayOf({
+					field: VueTypes.string,
+					weight: VueTypes.number,
+				})
+			]),
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,
 		size: VueTypes.number.def(10),
@@ -358,7 +368,7 @@ const DataSearch = {
 					console.error(requiredError);
 					return;
 				}
-				if (typeof propValue !== 'string' && !Array.isArray(propValue)) {
+				if (typeof propValue !== 'string' && typeof propValue !== 'object' && !Array.isArray(propValue)) {
 					console.error(
 						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
 					);
@@ -551,16 +561,13 @@ const DataSearch = {
 			) {
 				this.isPending = false;
 				this.setValue(results[0][0].transcript.trim(), true);
-				if (this.$props.autosuggest) {
-					this.isOpen = true;
-				}
 			}
 		},
-		triggerQuery() {
+		triggerQuery({ isOpen = false } = false) {
 			const { value } = this.$props;
 			if (value !== undefined) {
 				this.isPending = false;
-				this.setValue(this.$props.value, true);
+				this.setValue(this.$props.value, !isOpen);
 			}
 		},
 		triggerClickAnalytics(searchPosition, documentId) {
@@ -623,6 +630,7 @@ const DataSearch = {
 			if (value === undefined) {
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
 			} else {
+				this.isPending = false;
 				this.$emit('change', suggestion.value, this.triggerQuery);
 			}
 			this.onValueSelectedHandler(
@@ -1181,14 +1189,9 @@ const DataSearch = {
 
 DataSearch.defaultQuery = (value, props) => {
 	let finalQuery = null;
-	let fields = [];
 
 	if (value) {
-		if (Array.isArray(props.dataField)) {
-			fields = props.dataField;
-		} else if (props.dataField) {
-			fields = [props.dataField];
-		}
+		const fields = normalizeDataField(props.dataField, props.fieldWeights)
 		finalQuery = {
 			bool: {
 				should: DataSearch.shouldQuery(value, fields, props),
@@ -1217,17 +1220,15 @@ DataSearch.defaultQuery = (value, props) => {
 DataSearch.shouldQuery = (value, dataFields, props) => {
 	const finalQuery = [];
 	const phrasePrefixFields = [];
-	const fields = (dataFields || []).map((field, index) => {
-		const queryField = `${field}${
-			Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-				? `^${props.fieldWeights[index]}`
-				: ''
+	const fields = dataFields.map((dataField) => {
+		const queryField = `${dataField.field}${
+			dataField.weight ? `^${dataField.weight}` : ''
 		}`;
 		if (
 			!(
-				field.endsWith('.keyword')
-				|| field.endsWith('.autosuggest')
-				|| field.endsWith('.search')
+				dataField.field.endsWith('.keyword')
+				|| dataField.field.endsWith('.autosuggest')
+				|| dataField.field.endsWith('.search')
 			)
 		) {
 			phrasePrefixFields.push(queryField);

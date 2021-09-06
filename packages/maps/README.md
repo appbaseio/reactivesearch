@@ -55,7 +55,6 @@ A set of live demos inspired by real world apps, built with Reactivemaps.
 - [Airbeds](https://opensource.appbase.io/reactivesearch/demos/airbeds/) - An airbnb-like booking search experience.
 - [Datalayers](https://opensource.appbase.io/reactivesearch/demos/datalayer/) - Demo combining the dark forces of datalayer and Reactivemaps.
 - [Meetup Blast](https://opensource.appbase.io/reactivesearch/demos/meetup/) - A kickass meetup inspired search app built with Reactivemaps.
-- [Board the bus](https://opensource.appbase.io/reactivesearch/demos/transport/) - Catch realtime bus transportation demo in action with Reactivemaps.
 
 ## Documentation
 

@@ -30,6 +30,7 @@ import {
 	updateDefaultQuery,
 	getTopSuggestions,
 	getQueryOptions,
+	normalizeDataField,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -64,7 +65,7 @@ import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../../lib/styles/IconWrapper';
+import IconWrapper from '../../styles/IconWrapper';
 
 class DataSearch extends Component {
 	constructor(props) {
@@ -275,7 +276,10 @@ class DataSearch extends Component {
 			return null;
 		}
 		const fields = {};
-		const highlightField = props.highlightField ? props.highlightField : props.dataField;
+		const normalizedDataField = normalizeDataField(props.dataField).map(
+			dataField => dataField.field,
+		);
+		const highlightField = props.highlightField ? props.highlightField : normalizedDataField;
 
 		if (typeof highlightField === 'string') {
 			fields[highlightField] = {};
@@ -297,14 +301,9 @@ class DataSearch extends Component {
 
 	static defaultQuery = (value, props) => {
 		let finalQuery = null;
-		let fields = [];
 
 		if (value) {
-			if (Array.isArray(props.dataField)) {
-				fields = props.dataField;
-			} else if (props.dataField) {
-				fields = [props.dataField];
-			}
+			const fields = normalizeDataField(props.dataField, props.fieldWeights);
 
 			if (props.queryString) {
 				finalQuery = {
@@ -342,17 +341,15 @@ class DataSearch extends Component {
 	static shouldQuery = (value, dataFields, props) => {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
-		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
+		const fields = dataFields.map((dataField) => {
+			const queryField = `${dataField.field}${
+				dataField.weight ? `^${dataField.weight}` : ''
 			}`;
 			if (
 				!(
-					field.endsWith('.keyword')
-					|| field.endsWith('.autosuggest')
-					|| field.endsWith('.search')
+					dataField.field.endsWith('.keyword')
+					|| dataField.field.endsWith('.autosuggest')
+					|| dataField.field.endsWith('.search')
 				)
 			) {
 				phrasePrefixFields.push(queryField);
@@ -638,9 +635,11 @@ class DataSearch extends Component {
 		}
 	};
 
-	triggerQuery = () => {
+	triggerQuery = ({
+		isOpen = false,
+	} = {}) => {
 		this.isPending = false;
-		this.setValue(this.props.value, true, this.props);
+		this.setValue(this.props.value, !isOpen, this.props);
 	};
 
 	onSuggestionSelected = (suggestion) => {
@@ -696,7 +695,6 @@ class DataSearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
-		const { autosuggest } = this.props;
 		if (
 			results
 			&& results[0]
@@ -706,13 +704,7 @@ class DataSearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), !autosuggest);
-			if (autosuggest) {
-				this._inputRef.focus();
-				this.setState({
-					isOpen: true,
-				});
-			}
+			this.setValue(results[0][0].transcript.trim(), true);
 		}
 	};
 
@@ -875,13 +867,9 @@ class DataSearch extends Component {
 
 	getComponent = (downshiftProps = {}, isPopularSuggestionsRender = false) => {
 		const {
-			error,
-			isLoading,
-			aggregationData,
-			promotedResults,
-			customData,
-			rawData,
-		} = this.props;
+			error, isLoading, aggregationData, promotedResults, customData, rawData,
+		}
+			= this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
@@ -952,11 +940,8 @@ class DataSearch extends Component {
 	}
 
 	get normalizedPopularSuggestions() {
-		const {
-			popularSuggestions,
-			showDistinctSuggestions,
-			defaultPopularSuggestions,
-		} = this.props;
+		const { popularSuggestions, showDistinctSuggestions, defaultPopularSuggestions }
+			= this.props;
 		const { currentValue } = this.state;
 		return getTopSuggestions(
 			// use default popular suggestions if value is empty
@@ -1138,12 +1123,15 @@ class DataSearch extends Component {
 											{this.defaultSuggestions.map((sugg, index) => (
 												<li
 													{...getItemProps({ item: sugg })}
-													key={`${index + 1}-${sugg.value}`}
+													key={`${
+															suggestionsList.length + index + 1
+														}-${sugg.value}`}
 													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex,
-															index,
-														),
+														backgroundColor:
+																this.getBackgroundColor(
+																	highlightedIndex,
+																	suggestionsList.length + index,
+																),
 														justifyContent: 'flex-start',
 													}}
 												>

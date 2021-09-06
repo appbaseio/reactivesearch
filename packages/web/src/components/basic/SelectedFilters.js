@@ -2,8 +2,7 @@
 import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import { withTheme } from 'emotion-theming';
-
-import { setValue, clearValues } from '@appbaseio/reactivecore/lib/actions';
+import { setValue, clearValues, resetValuesToDefault } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -42,8 +41,12 @@ class SelectedFilters extends Component {
 	};
 
 	clearValues = () => {
-		const { onClear } = this.props;
-		this.props.clearValues();
+		const { onClear, resetToDefault } = this.props;
+		if (resetToDefault) {
+			this.props.resetValuesToDefault();
+		} else {
+			this.props.clearValues();
+		}
 		if (onClear) {
 			onClear(null);
 		}
@@ -103,19 +106,19 @@ class SelectedFilters extends Component {
 	};
 
 	// determines whether any filter has been applied regardless of `showFilter=false`
-	hasFilters = () =>
-		Object.keys(this.props.selectedValues)
-			.filter(id => this.props.components.includes(id))
+	hasFilters = () => {
+		const { componentProps, selectedValues, components } = this.props;
+		return Object.keys(selectedValues)
+			.filter(id => components.includes(id))
 			.some((component) => {
-				const { value } = this.props.selectedValues[component];
+				const { value } = selectedValues[component];
 				const isResultComponent
-					= this.props.componentProps[component]
-					&& this.props.componentProps[component].componentType
-						=== componentTypes.reactiveList;
+					= componentProps[component]
+					&& componentProps[component].componentType === componentTypes.reactiveList;
 				const isArray = Array.isArray(value);
 				return ((isArray && value.length) || (!isArray && value)) && !isResultComponent;
 			});
-
+	};
 	render() {
 		if (this.props.render) {
 			return this.props.render(this.props);
@@ -162,6 +165,7 @@ SelectedFilters.propTypes = {
 	clearValues: types.func,
 	setValue: types.func,
 	components: types.components,
+	componentProps: types.props,
 	selectedValues: types.selectedValues,
 	className: types.string,
 	clearAllLabel: types.title,
@@ -173,7 +177,8 @@ SelectedFilters.propTypes = {
 	render: types.func,
 	title: types.title,
 	onChange: types.func,
-	componentProps: types.props,
+	resetToDefault: types.bool,
+	resetValuesToDefault: types.func,
 };
 
 SelectedFilters.defaultProps = {
@@ -182,6 +187,7 @@ SelectedFilters.defaultProps = {
 	showClearAll: true,
 	style: {},
 	componentProps: {},
+	resetToDefault: false,
 };
 
 const mapStateToProps = state => ({
@@ -193,6 +199,7 @@ const mapStateToProps = state => ({
 const mapDispatchtoProps = dispatch => ({
 	clearValues: () => dispatch(clearValues()),
 	setValue: (component, value) => dispatch(setValue(component, value)),
+	resetValuesToDefault: () => dispatch(resetValuesToDefault()),
 });
 
 const ConnectedComponent = connect(

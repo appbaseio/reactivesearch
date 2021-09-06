@@ -84,9 +84,7 @@ class Main extends Component {
 													<div>${item.price}</div>
 													<span
 														style={{
-															backgroundImage: `url(${
-																item.host_image
-															})`,
+															backgroundImage: `url(${item.host_image})`,
 														}}
 													/>
 													<p>

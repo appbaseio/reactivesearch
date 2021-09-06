@@ -31,6 +31,7 @@ import {
 	updateDefaultQuery,
 	getTopSuggestions,
 	getQueryOptions,
+	normalizeDataField,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -338,7 +339,10 @@ class CategorySearch extends Component {
 			return null;
 		}
 		const fields = {};
-		const highlightField = props.highlightField ? props.highlightField : props.dataField;
+		const normalizedDataField = normalizeDataField(props.dataField).map(
+			dataField => dataField.field,
+		);
+		const highlightField = props.highlightField ? props.highlightField : normalizedDataField;
 
 		if (typeof highlightField === 'string') {
 			fields[highlightField] = {};
@@ -360,14 +364,9 @@ class CategorySearch extends Component {
 
 	static defaultQuery = (value, props, category) => {
 		let finalQuery = null;
-		let fields = [];
 
 		if (value) {
-			if (Array.isArray(props.dataField)) {
-				fields = props.dataField;
-			} else if (props.dataField) {
-				fields = [props.dataField];
-			}
+			const fields = normalizeDataField(props.dataField, props.fieldWeights);
 
 			if (props.queryString) {
 				finalQuery = {
@@ -414,20 +413,18 @@ class CategorySearch extends Component {
 		return finalQuery;
 	};
 
-	static shouldQuery = (value, dataFields, props) => {
+	static shouldQuery = (value, dataFields = [], props) => {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
-		const fields = (dataFields || []).map((field, index) => {
-			const queryField = `${field}${
-				Array.isArray(props.fieldWeights) && props.fieldWeights[index]
-					? `^${props.fieldWeights[index]}`
-					: ''
+		const fields = dataFields.map((dataField) => {
+			const queryField = `${dataField.field}${
+				dataField.weight ? `^${dataField.weight}` : ''
 			}`;
 			if (
 				!(
-					field.endsWith('.keyword')
-					|| field.endsWith('.autosuggest')
-					|| field.endsWith('.search')
+					dataField.field.endsWith('.keyword')
+					|| dataField.field.endsWith('.autosuggest')
+					|| dataField.field.endsWith('.search')
 				)
 			) {
 				phrasePrefixFields.push(queryField);
@@ -699,9 +696,9 @@ class CategorySearch extends Component {
 	};
 
 	triggerQuery = (value) => {
-		const { term: currentValue, category: currentCategory = null } = value;
+		const { term: currentValue, category: currentCategory = null, isOpen = false } = value;
 		this.isPending = false;
-		this.setValue(currentValue, true, this.props, currentCategory);
+		this.setValue(currentValue, !isOpen, this.props, currentCategory);
 	};
 
 	onSuggestionSelected = (suggestion) => {
@@ -767,7 +764,6 @@ class CategorySearch extends Component {
 	};
 
 	handleVoiceResults = ({ results }) => {
-		const { autosuggest } = this.props;
 		if (
 			results
 			&& results[0]
@@ -777,13 +773,7 @@ class CategorySearch extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), !autosuggest);
-			if (autosuggest) {
-				this._inputRef.focus();
-				this.setState({
-					isOpen: true,
-				});
-			}
+			this.setValue(results[0][0].transcript.trim(), true);
 		}
 	};
 
@@ -947,13 +937,9 @@ class CategorySearch extends Component {
 
 	getComponent = (downshiftProps = {}, isQuerySuggestionsRender = false) => {
 		const {
-			error,
-			isLoading,
-			aggregationData,
-			promotedResults,
-			customData,
-			rawData,
-		} = this.props;
+			error, isLoading, aggregationData, promotedResults, customData, rawData,
+		}
+			= this.props;
 		const { currentValue } = this.state;
 		const data = {
 			error,
@@ -1071,11 +1057,8 @@ class CategorySearch extends Component {
 	}
 
 	get normalizedPopularSuggestions() {
-		const {
-			popularSuggestions,
-			showDistinctSuggestions,
-			defaultPopularSuggestions,
-		} = this.props;
+		const { popularSuggestions, showDistinctSuggestions, defaultPopularSuggestions }
+			= this.props;
 		const { currentValue } = this.state;
 		return getTopSuggestions(
 			// use default popular suggestions if value is empty
@@ -1260,12 +1243,16 @@ class CategorySearch extends Component {
 											{this.defaultSuggestions.map((sugg, index) => (
 												<li
 													{...getItemProps({ item: sugg })}
-													key={`${index + 1}-${sugg.value}`}
+													key={`${
+															finalSuggestionsList.length + index + 1
+														}-${sugg.value}`}
 													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex,
-															finalSuggestionsList.length + index,
-														),
+														backgroundColor:
+																this.getBackgroundColor(
+																	highlightedIndex,
+																	finalSuggestionsList.length
+																		+ index,
+																),
 														justifyContent: 'flex-start',
 													}}
 												>
