@@ -2,9 +2,9 @@ import styled from '@appbaseio/vue-emotion';
 
 const InputGroup = styled('div')`
   display: flex;
-  align-items: center;
-  height: 42px;
+  align-items: stretch;
   width: 100%;
+
 `;
 
 InputGroup.defaultProps = { className: 'input-group' };

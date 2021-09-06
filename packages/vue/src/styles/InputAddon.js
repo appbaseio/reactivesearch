@@ -1,17 +1,16 @@
 import styled from '@appbaseio/vue-emotion';
 
-const InputAddon = styled('div')`
+const InputAddon = styled('span')`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   background-color: #fafafa;
   border: 1px solid #ccc;
   border-radius: 2px;
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
   font-weight: 400;
-  padding: 2px 11px;
+  padding: 0 11px;
   position: relative;
   transition: all 0.3s;
   box-sizing: border-box;
