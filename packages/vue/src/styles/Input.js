@@ -162,11 +162,11 @@ const noSuggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
+	border-top:none;
 	background-color: #fff;
 	font-size: 0.9rem;
 	z-index: 3;
 	position: absolute;
-	top: 41px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
