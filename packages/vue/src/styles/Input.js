@@ -7,14 +7,14 @@ const alertBorder = ({ theme }) => css`
 
 const input = css`
 	width: 100%;
-	line-height:1.5;
+	line-height: 1.5;
+	min-height: 42px;
 	padding: 8px 12px;
 	border: 1px solid #ccc;
 	background-color: #fafafa;
 	font-size: 0.9rem;
 	outline: none;
 	height: 100%;
-
 
 	&:focus {
 		background-color: #fff;
@@ -37,8 +37,7 @@ const darkInput = ({ theme }) => css`
 
 const Input = styled('input')`
 	${input};
-	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })
-};
+	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
 
 	${props =>
 		props.showIcon
@@ -163,7 +162,7 @@ const noSuggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
-	border-top:none;
+	border-top: none;
 	background-color: #fff;
 	font-size: 0.9rem;
 	z-index: 3;
