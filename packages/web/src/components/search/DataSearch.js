@@ -34,6 +34,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import hotkeys from 'hotkeys-js';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
@@ -52,11 +53,17 @@ import {
 	hasCustomRenderer,
 	hasPopularSuggestionsRenderer,
 	isQueryIdentical,
+	isEmpty,
+	parseFocusShortcuts,
+	extractModifierKeysFromFocusShortcuts,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import InputGroup from '../../styles/InputGroup';
+import InputWrapper from '../../styles/InputWrapper';
+import InputAddon from '../../styles/InputAddon';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 
@@ -103,6 +110,8 @@ class DataSearch extends Component {
 	}
 
 	componentDidMount() {
+		// register hotkeys for listening to focusShortcuts' key presses
+		this.listenForFocusShortcuts();
 		const {
 			enableQuerySuggestions,
 			renderQuerySuggestions,
@@ -238,6 +247,10 @@ class DataSearch extends Component {
 				this.setValue(this.state.currentValue, true, this.props);
 			}
 		}
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('keydown', this.onKeyDown);
 	}
 
 	// returns size and aggs property
@@ -695,6 +708,24 @@ class DataSearch extends Component {
 		}
 	};
 
+	renderInputAddonBefore = () => {
+		const { addonBefore } = this.props;
+		if (addonBefore) {
+			return <InputAddon>{addonBefore}</InputAddon>;
+		}
+
+		return null;
+	};
+
+	renderInputAddonAfter = () => {
+		const { addonAfter } = this.props;
+		if (addonAfter) {
+			return <InputAddon>{addonAfter}</InputAddon>;
+		}
+
+		return null;
+	};
+
 	renderIcon = () => {
 		if (this.props.showIcon) {
 			return this.props.icon || <SearchSvg />;
@@ -970,6 +1001,58 @@ class DataSearch extends Component {
 		return undefined;
 	};
 
+	focusSearchBox = (event) => {
+		const elt = event.target || event.srcElement;
+		const tagName = elt.tagName;
+		if (
+			elt.isContentEditable
+      || tagName === 'INPUT'
+      || tagName === 'SELECT'
+      || tagName === 'TEXTAREA'
+		) {
+			// already in an input
+			return;
+		}
+
+		if (this._inputRef) {
+			this._inputRef.focus();
+		}
+	};
+
+	listenForFocusShortcuts = () => {
+		const { focusShortcuts } = this.props;
+		if (isEmpty(focusShortcuts)) {
+			return;
+		}
+
+		// for single press keys (a-z, A-Z) &, hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc
+		hotkeys(
+			parseFocusShortcuts(focusShortcuts).join(','),
+			/* eslint-disable no-shadow */
+			// eslint-disable-next-line no-unused-vars
+			(event, handler) => {
+				// Prevent the default refresh event under WINDOWS system
+				event.preventDefault();
+				this.focusSearchBox(event);
+			},
+		);
+
+		// if one of modifier keys are used, they are handled below
+		hotkeys('*', (event) => {
+			const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
+
+			if (modifierKeys.length === 0) return;
+
+			for (let index = 0; index < modifierKeys.length; index += 1) {
+				const element = modifierKeys[index];
+				if (hotkeys[element]) {
+					this.focusSearchBox(event);
+					break;
+				}
+			}
+		});
+	};
+
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
@@ -1001,137 +1084,43 @@ class DataSearch extends Component {
 							highlightedIndex,
 							setHighlightedIndex,
 							...rest
-						}) => (
-							<div
-								{...getRootProps(
-									{ css: suggestionsContainer },
-									{ suppressRefError: true },
-								)}
-							>
-								<Input
-									aria-label={this.props.componentId}
-									id={`${this.props.componentId}-input`}
-									showIcon={this.props.showIcon}
-									showClear={this.props.showClear}
-									showVoiceSearch={this.props.showVoiceSearch}
-									iconPosition={this.props.iconPosition}
-									ref={(c) => {
-										this._inputRef = c;
-									}}
-									{...getInputProps({
-										className: getClassName(this.props.innerClass, 'input'),
-										placeholder: this.props.placeholder,
-										value:
-											this.state.currentValue === null
-												? ''
-												: this.state.currentValue,
-										onChange: this.onInputChange,
-										onBlur: this.withTriggerQuery(this.props.onBlur),
-										onFocus: this.handleFocus,
-										onClick: () => {
-											// clear highlighted index
-											setHighlightedIndex(null);
-										},
-										onKeyPress: this.withTriggerQuery(this.props.onKeyPress),
-										onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
-										onKeyUp: this.withTriggerQuery(this.props.onKeyUp),
-									})}
-									themePreset={themePreset}
-									type={this.props.type}
-								/>
-								{this.renderIcons()}
-								{this.hasCustomRenderer
-									&& this.getComponent({
-										getInputProps,
-										getItemProps,
-										isOpen,
-										highlightedIndex,
-										setHighlightedIndex,
-										...rest,
-									})}
-								{isOpen && this.renderLoader()}
-								{isOpen && this.renderError()}
-								{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
-									<ul
-										css={suggestions(themePreset, theme)}
-										className={getClassName(this.props.innerClass, 'list')}
-									>
-										{suggestionsList.slice(0, size).map((item, index) => (
-											<li
-												{...getItemProps({ item })}
-												key={`${index + 1}-${item.value}`}
-												style={{
-													backgroundColor: this.getBackgroundColor(
-														highlightedIndex,
-														index,
-													),
-												}}
-											>
-												<SuggestionItem
-													currentValue={currentValue}
-													suggestion={item}
-												/>
-											</li>
-										))}
-										{this.defaultSuggestions.map((sugg, index) => (
-											<li
-												{...getItemProps({ item: sugg })}
-												key={`${index + 1}-${sugg.value}`}
-												style={{
-													backgroundColor: this.getBackgroundColor(
-														highlightedIndex,
-														index,
-													),
-													justifyContent: 'flex-start',
-												}}
-											>
-												<div style={{ padding: '0 10px 0 0' }}>
-													{sugg.source && sugg.source._recent_search && (
-														<CustomSvg
-															iconId={`${sugg.label}-icon`}
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	'recent-search-icon',
-																) || null
-															}
-															icon={recentSearchesIcon}
-															type="recent-search-icon"
-														/>
-													)}
-													{sugg.source
-														&& sugg.source._popular_suggestion && (
-														<CustomSvg
-															iconId={`${sugg.label}-icon`}
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	'popular-search-icon',
-																) || null
-															}
-															icon={popularSearchesIcon}
-															type="popular-search-icon"
-														/>
-													)}
-												</div>
-												<SuggestionItem
-													currentValue={currentValue}
-													suggestion={sugg}
-												/>
-											</li>
-										))}
-										{hasPopularSuggestionsRenderer(this.props)
-											? this.getComponent(
-												{
-													getInputProps,
-													getItemProps,
-													isOpen,
-													highlightedIndex,
-													...rest,
-												},
-												true,
-											)
-											: this.topSuggestions.map((sugg, index) => (
+						}) => {
+							const renderSuggestionsDropdown = () => (
+								<React.Fragment>
+									{this.hasCustomRenderer
+										&& this.getComponent({
+											getInputProps,
+											getItemProps,
+											isOpen,
+											highlightedIndex,
+											setHighlightedIndex,
+											...rest,
+										})}
+									{isOpen && this.renderLoader()}
+									{isOpen && this.renderError()}
+									{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
+										<ul
+											css={suggestions(themePreset, theme)}
+											className={getClassName(this.props.innerClass, 'list')}
+										>
+											{suggestionsList.slice(0, size).map((item, index) => (
+												<li
+													{...getItemProps({ item })}
+													key={`${index + 1}-${item.value}`}
+													style={{
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex,
+															index,
+														),
+													}}
+												>
+													<SuggestionItem
+														currentValue={currentValue}
+														suggestion={item}
+													/>
+												</li>
+											))}
+											{this.defaultSuggestions.map((sugg, index) => (
 												<li
 													{...getItemProps({ item: sugg })}
 													key={`${
@@ -1147,17 +1136,34 @@ class DataSearch extends Component {
 													}}
 												>
 													<div style={{ padding: '0 10px 0 0' }}>
-														<CustomSvg
-															iconId={`${sugg.label}-icon`}
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	'popular-search-icon',
-																) || null
-															}
-															icon={popularSearchesIcon}
-															type="popular-search-icon"
-														/>
+														{sugg.source
+															&& sugg.source._recent_search && (
+															<CustomSvg
+																iconId={`${sugg.label}-icon`}
+																className={
+																	getClassName(
+																		this.props.innerClass,
+																		'recent-search-icon',
+																	) || null
+																}
+																icon={recentSearchesIcon}
+																type="recent-search-icon"
+															/>
+														)}
+														{sugg.source
+															&& sugg.source._popular_suggestion && (
+															<CustomSvg
+																iconId={`${sugg.label}-icon`}
+																className={
+																	getClassName(
+																		this.props.innerClass,
+																		'popular-search-icon',
+																	) || null
+																}
+																icon={popularSearchesIcon}
+																type="popular-search-icon"
+															/>
+														)}
 													</div>
 													<SuggestionItem
 														currentValue={currentValue}
@@ -1165,35 +1171,163 @@ class DataSearch extends Component {
 													/>
 												</li>
 											))}
-									</ul>
-								) : (
-									this.renderNoSuggestion(suggestionsList)
-								)}
-							</div>
-						)}
+											{hasPopularSuggestionsRenderer(this.props)
+												? this.getComponent(
+													{
+														getInputProps,
+														getItemProps,
+														isOpen,
+														highlightedIndex,
+														...rest,
+													},
+													true,
+												)
+												: this.topSuggestions.map((sugg, index) => (
+													<li
+														{...getItemProps({ item: sugg })}
+														key={`${suggestionsList.length
+																+ index
+																+ 1}-${sugg.value}`}
+														style={{
+															backgroundColor: this.getBackgroundColor(
+																highlightedIndex,
+																suggestionsList.length + index,
+															),
+															justifyContent: 'flex-start',
+														}}
+													>
+														<div style={{ padding: '0 10px 0 0' }}>
+															<CustomSvg
+																iconId={`${sugg.label}-icon`}
+																className={
+																	getClassName(
+																		this.props.innerClass,
+																		'popular-search-icon',
+																	) || null
+																}
+																icon={popularSearchesIcon}
+																type="popular-search-icon"
+															/>
+														</div>
+														<SuggestionItem
+															currentValue={currentValue}
+															suggestion={sugg}
+														/>
+													</li>
+												))}
+										</ul>
+									) : (
+										this.renderNoSuggestion(suggestionsList)
+									)}
+								</React.Fragment>
+							);
+
+							return (
+								<div
+									{...getRootProps(
+										{ css: suggestionsContainer },
+										{ suppressRefError: true },
+									)}
+								>
+									<InputGroup>
+										{this.renderInputAddonBefore()}
+										<InputWrapper>
+											<Input
+												aria-label={this.props.componentId}
+												id={`${this.props.componentId}-input`}
+												showIcon={this.props.showIcon}
+												showClear={this.props.showClear}
+												iconPosition={this.props.iconPosition}
+												ref={(c) => {
+													this._inputRef = c;
+												}}
+												{...getInputProps({
+													className: getClassName(
+														this.props.innerClass,
+														'input',
+													),
+													placeholder: this.props.placeholder,
+													value:
+														this.state.currentValue === null
+															? ''
+															: this.state.currentValue,
+													onChange: this.onInputChange,
+													onBlur: this.withTriggerQuery(
+														this.props.onBlur,
+													),
+													onFocus: this.handleFocus,
+													onClick: () => {
+														// clear highlighted index
+														setHighlightedIndex(null);
+													},
+													onKeyPress: this.withTriggerQuery(
+														this.props.onKeyPress,
+													),
+													onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+													onKeyUp: this.withTriggerQuery(
+														this.props.onKeyUp,
+													),
+													autoFocus: this.props.autoFocus,
+												})}
+												themePreset={themePreset}
+												type={this.props.type}
+											/>
+											{this.renderIcons()}
+											{!this.props.expandSuggestionsContainer
+												&& renderSuggestionsDropdown(
+													getRootProps,
+													getInputProps,
+													getItemProps,
+													isOpen,
+													highlightedIndex,
+													setHighlightedIndex,
+													...rest,
+												)}
+										</InputWrapper>
+										{this.renderInputAddonAfter()}
+									</InputGroup>
+
+									{this.props.expandSuggestionsContainer
+										&& renderSuggestionsDropdown(
+											getRootProps,
+											getInputProps,
+											getItemProps,
+											isOpen,
+											highlightedIndex,
+											setHighlightedIndex,
+											...rest,
+										)}
+								</div>
+							);
+						}}
 						{...this.props.downShiftProps}
 					/>
 				) : (
 					<div css={suggestionsContainer}>
-						<Input
-							aria-label={this.props.componentId}
-							className={getClassName(this.props.innerClass, 'input') || null}
-							placeholder={this.props.placeholder}
-							value={this.state.currentValue ? this.state.currentValue : ''}
-							onChange={this.onInputChange}
-							onBlur={this.withTriggerQuery(this.props.onBlur)}
-							onFocus={this.withTriggerQuery(this.props.onFocus)}
-							onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
-							onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
-							onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
-							autoFocus={this.props.autoFocus}
-							iconPosition={this.props.iconPosition}
-							showIcon={this.props.showIcon}
-							showClear={this.props.showClear}
-							themePreset={themePreset}
-							showVoiceSearch={this.props.showVoiceSearch}
-						/>
-						{this.renderIcons()}
+						<InputGroup>
+							{this.renderInputAddonBefore()}
+							<InputWrapper>
+								<Input
+									aria-label={this.props.componentId}
+									className={getClassName(this.props.innerClass, 'input') || null}
+									placeholder={this.props.placeholder}
+									value={this.state.currentValue ? this.state.currentValue : ''}
+									onChange={this.onInputChange}
+									onBlur={this.withTriggerQuery(this.props.onBlur)}
+									onFocus={this.withTriggerQuery(this.props.onFocus)}
+									onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
+									onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
+									onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
+									autoFocus={this.props.autoFocus}
+									iconPosition={this.props.iconPosition}
+									showIcon={this.props.showIcon}
+									showClear={this.props.showClear}
+									themePreset={themePreset}
+								/>
+								{this.renderIcons()}
+							</InputWrapper>
+							{this.renderInputAddonAfter()}
+						</InputGroup>
 					</div>
 				)}
 			</Container>
@@ -1307,6 +1441,11 @@ DataSearch.propTypes = {
 	// Mic props
 	getMicInstance: types.func,
 	renderMic: types.func,
+	//
+	focusShortcuts: types.focusShortcuts,
+	addonBefore: types.children,
+	addonAfter: types.children,
+	expandSuggestionsContainer: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -1335,6 +1474,10 @@ DataSearch.defaultProps = {
 	recentSearches: [],
 	defaultPopularSuggestions: [],
 	time: 0,
+	focusShortcuts: ['/'],
+	addonBefore: undefined,
+	addonAfter: undefined,
+	expandSuggestionsContainer: true,
 };
 
 // Add componentType for SSR
@@ -1364,15 +1507,15 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setCustomHighlightOptions: (component, options) =>
-		dispatch(setCustomHighlightOptions(component, options)),
+	setCustomHighlightOptions: (component, options) => dispatch(
+		setCustomHighlightOptions(component, options)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	triggerAnalytics: (searchPosition, documentId) =>
-		dispatch(recordSuggestionClick(searchPosition, documentId)),
+	triggerAnalytics: (searchPosition, documentId) => dispatch(
+		recordSuggestionClick(searchPosition, documentId)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 });
