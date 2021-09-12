@@ -43,7 +43,7 @@ var appbaseRef = Appbase({
 
 **Returns**
 
-`Object` **appbaseRef** _Appbase reference object_ - has `index()`, `update()`, `delete()`, `bulk()`, `search()`, `get()` and `getTypes()` methods.
+`Object` **appbaseRef** _Appbase reference object_ - has `index()`, `update()`, `delete()`, `bulk()`, `search()` and `get()` methods.
 
 ## WRITING DATA
 
@@ -218,27 +218,6 @@ appbaseRef
     -   **type** `String` <br>Document Type - **id** `String` <br>Unique ID of the JSON document
 
 Returns the document at the given `type` and `id`.
-
-### getTypes()
-
-Get all the `types` of an app.
-
-```js
-appbaseRef
-	.getTypes()
-	.then(function(res) {
-		console.log('All app types: ', res);
-	})
-	.catch(function(err) {
-		console.log('getTypes() failed: ', err);
-	});
-```
-
-**Usage**
-
-`appbaseRef.getTypes()`
-
-Returns all the `types` as an array.
 
 ### getMappings()
 
