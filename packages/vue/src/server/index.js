@@ -30,18 +30,26 @@ const componentsWithoutFilters = [componentTypes.numberBox, componentTypes.ratin
 const resultComponents = [componentTypes.reactiveList, componentTypes.reactiveMap];
 
 function getValue(state, id, defaultValue) {
-	if (!state) return defaultValue;
-	if (state[id]) {
+	if (state && state[id]) {
 		try {
 			// parsing for next.js - since it uses extra set of quotes to wrap params
 			const parsedValue = JSON.parse(state[id]);
-			return parsedValue;
+			return {
+				value: parsedValue,
+				reference: 'URL'
+			};
 		} catch (error) {
 			// using react-dom-server for ssr
-			return state[id] || defaultValue;
+			return {
+				value: state[id],
+				reference: 'URL'
+			};
 		}
 	}
-	return defaultValue;
+	return {
+		value: defaultValue,
+		reference: 'DEFAULT'
+	};
 }
 
 function parseValue(value, component) {
@@ -128,7 +136,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
-			const value = getValue(
+			const { value, reference } = getValue(
 				searchState,
 				component.componentId,
 				component.value || component.defaultValue,
@@ -145,6 +153,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component: component.componentId,
 				label,
 				value,
+				reference,
 				showFilter,
 				URLParams: component.URLParams || false,
 			});
@@ -252,6 +261,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			compProps.componentType = componentType;
 			componentProps[component.componentId] = compProps;
 		});
+
 
 		state = {
 			components,

@@ -7,13 +7,14 @@ const alertBorder = ({ theme }) => css`
 
 const input = css`
 	width: 100%;
-	height: 42px;
-	line-height: 42px;
+	line-height: 1.5;
+	min-height: 42px;
 	padding: 8px 12px;
 	border: 1px solid #ccc;
 	background-color: #fafafa;
 	font-size: 0.9rem;
 	outline: none;
+	height: 100%;
 
 	&:focus {
 		background-color: #fff;
@@ -103,11 +104,11 @@ const noSuggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
+	border-top: none;
 	background-color: #fff;
 	font-size: 0.9rem;
 	z-index: 3;
 	position: absolute;
-	top: 41px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -144,11 +145,11 @@ const suggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;
+	border-top: none;
 	background-color: #fff;
 	font-size: 0.9rem;
 	z-index: 3;
 	position: absolute;
-	top: 41px;
 	margin: 0;
 	padding: 0;
 	list-style: none;
