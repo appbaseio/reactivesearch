@@ -71,6 +71,8 @@ This is the first component you will need to add when using `ReactiveSearch`.
     Read more about it over [here](/docs/reactivesearch/vue/advanced/analytics/#configure-the-analytics-experience).
     > Note:
     > This prop has been marked as deprecated. Please use the `appbaseConfig` prop instead.
+-	**initialQueriesSyncTime** `Number` [optional]
+	allows you to define a wait time in milliseconds. We wait for `initialQueriesSyncTime` time to combine the individual component queries to a single network request at initial load. This prop is helpful to optimize the performance when you have a lot of filters on the search page, using a wait time of `100-200` milliseconds would merge the multiple requests into a single request.
 -   **as** `String` [optional]
     allows to use a custom html element tag, defaults to `div`.
 -   **getSearchParams** `Function` [optional]
