@@ -116,6 +116,7 @@ class ReactiveBase extends Component {
 
 		const params = new URLSearchParams(queryParams);
 		let selectedValues = {};
+		let urlValues = {};
 
 		Array.from(params.keys()).forEach((key) => {
 			try {
@@ -127,9 +128,14 @@ class ReactiveBase extends Component {
 					selectedValue.value = parsedParams;
 				}
 				if (parsedParams.category) selectedValue.category = parsedParams.category;
+				selectedValue.reference = 'URL';
 				selectedValues = {
 					...selectedValues,
 					[key]: selectedValue,
+				};
+				urlValues = {
+					...urlValues,
+					[key]: selectedValue.value,
 				};
 			} catch (e) {
 				// Do not add to selectedValues if JSON parsing fails.
@@ -143,9 +149,16 @@ class ReactiveBase extends Component {
 		}
 
 		const initialState = {
-			config: { ...config, mapKey: props.mapKey, themePreset },
+			config: {
+				...config,
+				mapKey: props.mapKey,
+				themePreset,
+				initialQueriesSyncTime: props.initialQueriesSyncTime,
+				initialTimestamp: new Date().getTime(),
+			},
 			appbaseRef,
 			selectedValues,
+			urlValues,
 			headers,
 			...this.props.initialState,
 		};
@@ -195,6 +208,7 @@ ReactiveBase.propTypes = {
 	type: types.string,
 	url: types.string,
 	transformRequest: types.func,
+	initialQueriesSyncTime: types.number,
 	mapKey: types.string,
 	style: types.style,
 	className: types.string,

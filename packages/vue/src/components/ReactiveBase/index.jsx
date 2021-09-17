@@ -45,6 +45,7 @@ const ReactiveBase = {
 		type: types.string,
 		url: types.string,
 		mapKey: types.string,
+		initialQueriesSyncTime: types.number,
 		className: types.string,
 		initialState: VueTypes.object.def({}),
 		transformRequest: types.func,
@@ -134,6 +135,7 @@ const ReactiveBase = {
 
 			const params = new URLSearchParams(queryParams);
 			let selectedValues = {};
+			let urlValues = {};
 
 			Array.from(params.keys()).forEach(key => {
 				try {
@@ -145,10 +147,15 @@ const ReactiveBase = {
 						selectedValue.value = parsedParams;
 					}
 					if (parsedParams.category) selectedValue.category = parsedParams.category;
+					selectedValue.reference = 'URL';
 					selectedValues = {
 						...selectedValues,
 						[key]: selectedValue,
 					};
+					urlValues = {
+						...urlValues,
+						[key]: selectedValue.value
+					}
 				} catch (e) {
 					// Do not add to selectedValues if JSON parsing fails.
 				}
@@ -168,11 +175,14 @@ const ReactiveBase = {
 			const initialState = {
 				config: {
 					...config,
+					initialQueriesSyncTime: props.initialQueriesSyncTime,
+					initialTimestamp: new Date().getTime(),
 					mapKey: props.mapKey,
 					themePreset,
 				},
 				appbaseRef,
 				selectedValues,
+				urlValues,
 				headers,
 				...this.$props.initialState,
 			};

@@ -48,7 +48,9 @@ const ReactiveList = {
 	data() {
 		const props = this.$props;
 		let currentPageState = 0;
-		if (props.currentPage) {
+		if (props.defaultPage >= 0) {
+			currentPageState = props.defaultPage;
+		} else if (props.currentPage) {
 			currentPageState = Math.max(props.currentPage - 1, 0);
 		}
 
@@ -405,7 +407,7 @@ const ReactiveList = {
 					{this.$props.sortOptions ? this.renderSortOptions() : null}
 					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
-				{!this.isLoading && results.length === 0 
+				{!this.isLoading && results.length === 0
 					? this.renderNoResult()
 					: null}
 				{this.shouldRenderPagination
