@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.12.1":
-  version "9.12.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.1.tgz#e209459dfbb48ad65987d75fc0eb61c82edf0961"
-  integrity sha512-ZLb24K8RLwry4as/rk5PwDR7VPAQYYhdP9n7sZDWLjPO1HzQXckyz7CnzYgzdxt7NbLkarhCcYFYzpEZB6i7NA==
+"@appbaseio/reactivecore@9.12.2":
+  version "9.12.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.2.tgz#eebc325553edee969fb467e2e5444108e038e966"
+  integrity sha512-2Ohnxbng3o30kH9HbYmjy+lAGMPaKLjqCwOm5s5Qit+vPYaUPeW5qyVgrkjKWnBvi9K87RCMAmSGxqkc5IqHiQ==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -13,12 +13,12 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch@3.23.1":
-  version "3.23.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.23.1.tgz#988ff312b99826aba0602f72133f4ee4ffcc6bb4"
-  integrity sha512-QhCA1XsIkErax6R1tpjEdlablJ79TRw1MB/GaAsoyz7/UtulqNAEwv+FhbTNY2uTwygM7a1CdM4UDjNazLZZtA==
+"@appbaseio/reactivesearch@3.24.0":
+  version "3.24.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.24.0.tgz#043bde08ad640279661dd44fecfa8481ba510422"
+  integrity sha512-aDdp4hsa04/HDCUKLa/ItEDSKJfVvnoRZVfjomSFDoUUBN/1YrRjaGUGQ+z1VvjKdcBPmt1SsRSdGGWwK1Fo3w==
   dependencies:
-    "@appbaseio/reactivecore" "9.12.1"
+    "@appbaseio/reactivecore" "9.12.2"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
     appbase-js "^4.1.5"
@@ -26,6 +26,7 @@
     downshift "^1.31.2"
     emotion-theming "^10.0.27"
     hoist-non-react-statics "^3.2.1"
+    hotkeys-js "^3.8.7"
     polished "^1.9.3"
     prop-types "^15.6.0"
     react-day-picker "^7.0.5"
@@ -5070,6 +5071,11 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
   integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
+hotkeys-js@^3.8.7:
+  version "3.8.7"
+  resolved "https://registry.yarnpkg.com/hotkeys-js/-/hotkeys-js-3.8.7.tgz#c16cab978b53d7242f860ca3932e976b92399981"
+  integrity sha512-ckAx3EkUr5XjDwjEHDorHxRO2Kb7z6Z2Sxul4MbBkN8Nho7XDslQsgMJT+CiJ5Z4TgRxxvKHEpuLE3imzqy4Lg==
+
 hpack.js@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/hpack.js/-/hpack.js-2.1.6.tgz#87774c0949e513f42e84575b3c45681fade2a0b2"
@@ -10035,9 +10041,9 @@ tmp@^0.0.33:
     os-tmpdir "~1.0.2"
 
 tmpl@1.0.x:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
-  integrity sha1-I2QN17QtAEM5ERQIIOXPRA5SHdE=
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
+  integrity sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"
