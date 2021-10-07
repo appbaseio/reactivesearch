@@ -545,10 +545,7 @@ const DataSearch = {
 		// need to review
 		handleFocus(event) {
 			this.isOpen = true;
-
-			if (this.$props.onFocus) {
-				this.$emit('focus', event);
-			}
+			this.$emit('focus', event);
 		},
 		handleVoiceResults({ results }) {
 			if (
@@ -600,11 +597,8 @@ const DataSearch = {
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
 			// Need to review
-			if (this.$props.onKeyDown) {
-				// TODO: Remove camelCase events in 2.0
-				this.$emit('keyDown', event, this.triggerQuery);
-				this.$emit('key-down', event, this.triggerQuery);
-			}
+			this.$emit('keyDown', event, this.triggerQuery);
+			this.$emit('key-down', event, this.triggerQuery);
 		},
 
 		onInputChange(e) {
@@ -768,7 +762,7 @@ const DataSearch = {
 						)}
 						{iconPosition === 'right' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
-								{this.renderIcon()} 
+								{this.renderIcon()}
 							</IconWrapper>
 						)}
 					</IconGroup>
