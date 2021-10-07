@@ -596,7 +596,7 @@ const DataSearch = {
 				this.setValue(event.target.value, true);
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
-			// TODO: Remove camelCase events in 2.0
+			// Need to review
 			this.$emit('keyDown', event, this.triggerQuery);
 			this.$emit('key-down', event, this.triggerQuery);
 		},
@@ -762,7 +762,7 @@ const DataSearch = {
 						)}
 						{iconPosition === 'right' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
-								{this.renderIcon()} 
+								{this.renderIcon()}
 							</IconWrapper>
 						)}
 					</IconGroup>
