@@ -26,6 +26,7 @@
 		"typescript": "tsc -p tsconfig.json"
 	},
 	"jest": {
+		"rootDir": "src",
 		"testURL": "http://localhost/"
 	},
 	"repository": {
