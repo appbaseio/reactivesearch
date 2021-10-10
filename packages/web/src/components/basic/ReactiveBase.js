@@ -100,6 +100,7 @@ class ReactiveBase extends Component {
 			credentials,
 			type: this.type,
 			transformRequest: props.transformRequest,
+			onError: props.onError,
 			analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : !!props.analytics,
 			enableAppbase: props.enableAppbase,
 			analyticsConfig: appbaseConfig,
@@ -146,6 +147,9 @@ class ReactiveBase extends Component {
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
 			appbaseRef.transformRequest = this.props.transformRequest;
+		}
+		if (this.props.onError) {
+			appbaseRef.onError = this.props.onError;
 		}
 
 		const initialState = {
@@ -208,6 +212,7 @@ ReactiveBase.propTypes = {
 	type: types.string,
 	url: types.string,
 	transformRequest: types.func,
+	onError: types.func,
 	initialQueriesSyncTime: types.number,
 	mapKey: types.string,
 	style: types.style,
