@@ -25,6 +25,9 @@
 		"test": "jest --watch",
 		"typescript": "tsc -p tsconfig.json"
 	},
+	"jest": {
+		"testURL": "http://localhost/"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/appbaseio/reactivesearch.git"
