@@ -13,6 +13,8 @@ const SuggestionItem = ({ currentValue, suggestion }) => {
 		return typeof label === 'string' ? (
 			<div className="trim">
 				<Highlight
+					categoryLabel={suggestion._category
+						? `in ${suggestion._category}` : ''}
 					autoEscape
 					searchWords={currentValue.split(' ')}
 					textToHighlight={label}

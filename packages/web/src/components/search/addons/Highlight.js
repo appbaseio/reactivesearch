@@ -18,10 +18,10 @@ const highlightedStyling = css`
 
 const Highlight = (props) => {
 	const {
-		textToHighlight, searchWords, autoEscape, hasPredictiveSuggestion,
+		textToHighlight, searchWords, autoEscape, hasPredictiveSuggestion, categoryLabel,
 	} = props;
 	const modSearchWords = searchWords.map(word => (autoEscape ? escapeRegExp(word) : word));
-	const stringToReplace = modSearchWords.join('|');
+	const stringToReplace = categoryLabel || modSearchWords.join('|');
 	return (
 		<div
 			css={highlightedStyling}
@@ -40,6 +40,7 @@ Highlight.propTypes = {
 	textToHighlight: PropTypes.string,
 	autoEscape: PropTypes.bool,
 	hasPredictiveSuggestion: PropTypes.bool,
+	categoryLabel: PropTypes.string,
 };
 
 Highlight.defaultProps = {
