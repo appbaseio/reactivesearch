@@ -1,10 +1,19 @@
 /** @jsx jsx */
-import { componentTypes, queryTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { jsx } from '@emotion/core';
 import { withTheme } from 'emotion-theming';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
-import { debounce, checkValueChange, getClassName, getResultStats, withClickIds } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	debounce,
+	checkValueChange,
+	getClassName,
+	getResultStats,
+	withClickIds,
+	checkSomePropChange,
+	updateCustomQuery,
+	updateDefaultQuery,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { Component } from 'react';
@@ -13,7 +22,10 @@ import {
 	updateQuery,
 	recordSuggestionClick,
 	fetchSuggestions,
+	setCustomQuery, setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
+import hotkeys from 'hotkeys-js';
+
 import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
@@ -25,27 +37,37 @@ import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import Input, { suggestions, suggestionsContainer } from '../../styles/Input';
 import SuggestionItem from './addons/SuggestionItem';
-import { connect, getComponent, handleCaretPosition, isFunction, suggestionTypes } from '../../utils';
+import {
+	connect,
+	extractModifierKeysFromFocusShortcuts,
+	getComponent,
+	handleCaretPosition,
+	hasCustomRenderer,
+	isEmpty,
+	isFunction,
+	parseFocusShortcuts,
+	suggestionTypes,
+} from '../../utils';
 import Mic from './addons/Mic';
 import CancelSvg from '../shared/CancelSvg';
 import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
-
+import AutofillSvg from '../shared/AutofillSvg';
 
 class SearchBox extends Component {
 	constructor(props) {
 		super(props);
-		const { value, defaultValue } = props;
-		const currentValue = value || defaultValue || '';
+		const { value, defaultValue, selectedValue } = props;
+		const currentValue = selectedValue || value || defaultValue || '';
 		this.state = {
 			currentValue, // decide whether to keep it or not
 			isOpen: false,
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
 		/**
-		 * To regulate the query execution based on the input handler,
-		 * the component query will only get executed when it sets to `true`.
-		 * */
+							 * To regulate the query execution based on the input handler,
+							 * the component query will only get executed when it sets to `true`.
+							 * */
 		this.isPending = false;
 		const hasMounted = false;
 		const cause = null;
@@ -55,9 +77,64 @@ class SearchBox extends Component {
 			}
 		}
 		this.setValue(currentValue, true, props, cause, hasMounted);
+
+		// Set custom and default queries in store
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(props.componentId, props, currentValue);
 	}
 
-	componentDidMount() {}
+	componentDidMount() {
+		// register hotkeys for listening to focusShortcuts' key presses
+		this.listenForFocusShortcuts();
+	}
+
+	componentDidUpdate(prevProps) {
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['suggestions', 'rawData', 'aggregationData', 'isLoading', 'error'],
+			() => {
+				if (this.props.onData) {
+					this.props.onData({
+						data: this.props.suggestions,
+						rawData: this.props.rawData,
+						aggregationData: this.props.aggregationData,
+						loading: this.props.isLoading,
+						error: this.props.error,
+					});
+				}
+			},
+		);
+		if (this.props.value !== prevProps.value) {
+			this.setValue(this.props.value, true, this.props, undefined, undefined, false);
+		} else if (
+			// since, selectedValue will be updated when currentValue changes,
+			// we must only check for the changes introduced by
+			// clear action from SelectedFilters component in which case,
+			// the currentValue will never match the updated selectedValue
+			this.props.selectedValue !== prevProps.selectedValue
+			&& this.state.currentValue !== this.props.selectedValue
+		) {
+			const { value, onChange } = this.props;
+			if (!this.props.selectedValue && this.state.currentValue) {
+				// selected value is cleared, call onValueSelected
+				this.onValueSelected('', causes.CLEAR_VALUE, null);
+			}
+			if (value === undefined) {
+				this.setValue(this.props.selectedValue || '', true, this.props);
+			} else if (onChange) {
+				// value prop exists
+				onChange(this.props.selectedValue || '', this.triggerQuery);
+			} else {
+				// value prop exists and onChange is not defined:
+				// we need to put the current value back into the store
+				// if the clear action was triggered by interacting with
+				// selected-filters component
+				this.isPending = false;
+				this.setValue(this.state.currentValue, true, this.props, undefined, true, false);
+			}
+		}
+	}
 
 	get stats() {
 		return getResultStats(this.props);
@@ -66,6 +143,62 @@ class SearchBox extends Component {
 	get parsedSuggestions() {
 		return withClickIds(this.props.suggestions);
 	}
+
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
+	focusSearchBox = (event) => {
+		const elt = event.target || event.srcElement;
+		const tagName = elt.tagName;
+		if (
+			elt.isContentEditable
+			|| tagName === 'INPUT'
+			|| tagName === 'SELECT'
+			|| tagName === 'TEXTAREA'
+		) {
+			// already in an input
+			return;
+		}
+
+		if (this._inputRef) {
+			this._inputRef.focus();
+		}
+	};
+
+	listenForFocusShortcuts = () => {
+		const { focusShortcuts } = this.props;
+		if (isEmpty(focusShortcuts)) {
+			return;
+		}
+
+		// for single press keys (a-z, A-Z) &, hotkeys' combinations such as 'cmd+k', 'ctrl+shft+a', etc
+		hotkeys(
+			parseFocusShortcuts(focusShortcuts).join(','),
+			/* eslint-disable no-shadow */
+			// eslint-disable-next-line no-unused-vars
+			(event, handler) => {
+				// Prevent the default refresh event under WINDOWS system
+				event.preventDefault();
+				this.focusSearchBox(event);
+			},
+		);
+
+		// if one of modifier keys are used, they are handled below
+		hotkeys('*', (event) => {
+			const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
+
+			if (modifierKeys.length === 0) return;
+
+			for (let index = 0; index < modifierKeys.length; index += 1) {
+				const element = modifierKeys[index];
+				if (hotkeys[element]) {
+					this.focusSearchBox(event);
+					break;
+				}
+			}
+		});
+	};
 
 	triggerClickAnalytics = (searchPosition, documentId) => {
 		let docId = documentId;
@@ -85,26 +218,27 @@ class SearchBox extends Component {
 		return undefined;
 	};
 
-	triggerDefaultQuery = () => {
-		this.props.fetchSuggestions(this.internalComponent, this.state.currentValue);
-	};
+    triggerDefaultQuery = () => {
+    	const { currentValue: value } = this.state;
+    	this.props.updateQuery({
+    		componentId: this.internalComponent,
+    		value,
+    		componentType: componentTypes.searchBox,
+    	});
+    };
 
 	triggerCustomQuery = () => {
 		const {
 			componentId, filterLabel, showFilter, URLParams,
 		} = this.props;
 		const { currentValue: value } = this.state;
-		console.log('triggered custom query');
 		this.props.updateQuery({
 			componentId,
-			query: {
-				query: {},
-			},
 			value,
 			label: filterLabel,
 			showFilter,
 			URLParams,
-			componentType: componentTypes.dataSearch,
+			componentType: componentTypes.searchBox,
 		});
 	};
 
@@ -127,18 +261,19 @@ class SearchBox extends Component {
 		this.setState({
 			isOpen: false,
 		});
+		const suggestionValue = suggestion._category ? suggestion.label : suggestion.value;
 		if (value === undefined) {
-			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
+			this.setValue(suggestionValue, true, this.props, causes.SUGGESTION_SELECT, true, false);
 		} else if (onChange) {
 			this.isPending = false;
-			onChange(suggestion.value, this.triggerQuery);
+			onChange(suggestionValue, this.triggerQuery);
 		}
 		// Record analytics for selected suggestions
 		this.triggerClickAnalytics(suggestion._click_id);
 		// onValueSelected is user interaction driven:
 		// it should be triggered irrespective of controlled (or)
 		// uncontrolled component behavior
-		this.onValueSelected(suggestion.value, causes.SUGGESTION_SELECT, suggestion.source);
+		this.onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion.source);
 	};
 
 	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
@@ -194,7 +329,7 @@ class SearchBox extends Component {
 	clearValue = () => {
 		this.isPending = false;
 		const { onChange } = this.props;
-		this.setValue('', true);
+		this.setValue('', true, this.props, undefined, true, false);
 		if (onChange) {
 			onChange('', this.triggerQuery);
 		}
@@ -211,15 +346,10 @@ class SearchBox extends Component {
 	) => {
 		const performUpdate = () => {
 			if (hasMounted) {
-				// if (!value && autosuggest) {
-				// 	this.triggerQuery({
-				// 		isOpen: toggleIsOpen ? !this.state.isOpen : this.state.isOpen,
-				// 		defaultQuery: true,
-				// 	});
-				// }
 				this.setState(
 					{
 						currentValue: value,
+						...(toggleIsOpen && { isOpen: !this.state.isOpen }),
 					},
 					() => {
 						if (isDefaultValue) {
@@ -299,7 +429,7 @@ class SearchBox extends Component {
 			&& results[0][0].transcript.trim()
 		) {
 			this.isPending = false;
-			this.setValue(results[0][0].transcript.trim(), true);
+			this.setValue(results[0][0].transcript.trim(), true, this.props, undefined, true, this.state.isOpen);
 		}
 	};
 	renderNoSuggestion = (finalSuggestionsList = []) => {
@@ -475,9 +605,20 @@ class SearchBox extends Component {
 			this.props.onFocus(event, this.triggerQuery);
 		}
 	};
+
+	onAutofillClick = (suggestion) => {
+		this.setState(
+			{
+				isOpen: true,
+				currentValue: suggestion._category ? suggestion.label : suggestion.value,
+			},
+			this.triggerDefaultQuery,
+		);
+	};
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
+
 		const {
 			theme,
 			themePreset,
@@ -486,7 +627,6 @@ class SearchBox extends Component {
 			innerClass,
 		} = this.props;
 		const hasSuggestions = !!this.props.defaultSuggestions || !!suggestionsList;
-
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -555,37 +695,49 @@ class SearchBox extends Component {
 															alignItems: 'center',
 														}}
 													>
-														{/* eslint-disable */}
-														{item._suggestion_type !==
-														suggestionTypes.Index ? (
-															<div
-																style={{
-																	padding: '0 10px 0 0',
-																	display: 'flex',
-																}}
-															>
-																<CustomSvg
-																	iconId={`${index + 1}-${
-																		item.value
-																	}-icon`}
-																	className={
-																		getClassName(
-																			innerClass,
-																			`${item._suggestion_type}-search-icon`,
-																		) || null
-																	}
-																	icon={getIcon(
-																		item._suggestion_type,
-																	)}
-																	type={`${item._suggestion_type}-search-icon`}
+														{this.props.renderItem ? (
+															this.props.renderItem(item)
+														) : (
+															<React.Fragment>
+																{/* eslint-disable */}
+																{item._suggestion_type !==
+																suggestionTypes.Index ? (
+																	<div
+																		style={{
+																			padding: '0 10px 0 0',
+																			display: 'flex',
+																		}}
+																	>
+																		<CustomSvg
+																			iconId={`${index + 1}-${
+																				item.value
+																			}-icon`}
+																			className={
+																				getClassName(
+																					innerClass,
+																					`${item._suggestion_type}-search-icon`,
+																				) || null
+																			}
+																			icon={getIcon(
+																				item._suggestion_type,
+																			)}
+																			type={`${item._suggestion_type}-search-icon`}
+																		/>
+																	</div>
+																) : null}
+																{/* eslint-enable */}
+																<SuggestionItem
+																	currentValue={currentValue}
+																	suggestion={item}
 																/>
-															</div>
-														) : null}
-														{/* eslint-enable */}
-														<SuggestionItem
-															currentValue={currentValue}
-															suggestion={item}
-														/>
+																<AutofillSvg
+																	onClick={(e) => {
+																		e.stopPropagation();
+																		this.onAutofillClick(item);
+																	}}
+																/>
+															</React.Fragment>
+														)}
 													</li>
 												))}
 											</ul>
@@ -720,6 +872,7 @@ SearchBox.propTypes = {
 	time: types.number,
 	enableAppbase: types.bool,
 	rawData: types.rawData,
+	aggregationData: types.aggregationData,
 	// component props
 	autoFocus: types.bool,
 	autosuggest: types.bool,
@@ -805,6 +958,7 @@ SearchBox.propTypes = {
 	applyStopwords: types.bool,
 	customStopwords: types.stringArray,
 	onData: types.func,
+	renderItem: types.func,
 	fetchSuggestions: types.func.isRequired,
 };
 
@@ -830,7 +984,6 @@ SearchBox.defaultProps = {
 	strictSelection: false,
 	searchOperators: false,
 	size: 10,
-	enablePredictiveSuggestions: false,
 	time: 0,
 	focusShortcuts: ['/'],
 	addonBefore: undefined,
@@ -857,10 +1010,12 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	fetchSuggestions: (componentId, value) => dispatch(fetchSuggestions(componentId, value)),
+	fetchSuggestions: componentId => dispatch(fetchSuggestions(componentId)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
+	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
+	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 });
 
 const ConnectedComponent = connect(
@@ -873,7 +1028,6 @@ const ConnectedComponent = connect(
 		</ComponentWrapper>
 	)),
 );
-
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
