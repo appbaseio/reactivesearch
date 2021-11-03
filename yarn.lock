@@ -62,22 +62,6 @@
     react-responsive-modal "^4.0.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivemaps@3.0.0-beta.12":
-  version "3.0.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.12.tgz#991823cddd9955a9716ac0bf820f5f9afe3adc1d"
-  integrity sha512-inOkxcuMvLzpTMHw8M8UHI/r3cnRcOaZaBiDTuczNNZTeUc1nX7iBeSyUzLKOZIkzgtsCQ/a3vWDLp6Dkqus7Q==
-  dependencies:
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    downshift "^1.31.2"
-    emotion-theming "^10.0.27"
-    leaflet "^1.3.4"
-    ngeohash "^0.6.3"
-    prop-types "^15.6.0"
-    react-google-maps "^9.4.5"
-    react-leaflet "^2.1.3"
-    rheostat "^2.1.1"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
@@ -6029,6 +6013,15 @@ appbase-js@^4.0.2-beta.11, appbase-js@^4.1.5:
     stream "^0.0.2"
     url-parser-lite "^0.1.0"
     ws "^6.1.2"
+
+appbase-js@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.4.0.tgz#630509847482d1fd22203bb3c3b9c13eca4daf2a"
+  integrity sha512-Lokhs1Y0XFYwfU6dst6PHqAZdiGjbugmdFxueeO83wxlU2zCTxLaYATcdq75YSomHqNXL+IrY6Qslj5I3DSZ3w==
+  dependencies:
+    cross-fetch "^2.2.2"
+    querystring "^0.2.0"
+    url-parser-lite "^0.1.0"
 
 append-transform@^0.4.0:
   version "0.4.0"
