@@ -98,18 +98,16 @@ const ReactiveBase = {
 		},
 	},
 	computed: {
-		getHeaders: {
-			get() {
-				const { enableAppbase, headers, appbaseConfig } = this.$props;
-				const { enableTelemetry } = appbaseConfig || {};
-				return {
-					...(enableAppbase && {
-						'X-Search-Client': X_SEARCH_CLIENT,
-						...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-					}),
-					...headers,
-				};
-			},
+		getHeaders() {
+			const { enableAppbase, headers, appbaseConfig } = this.$props;
+			const { enableTelemetry } = appbaseConfig || {};
+			return {
+				...(enableAppbase && {
+					'X-Search-Client': X_SEARCH_CLIENT,
+					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+				}),
+				...headers,
+			}
 		},
 	},
 	methods: {

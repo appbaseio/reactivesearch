@@ -13,7 +13,8 @@ import {
 	getDependentQueries,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
-import { X_SEARCH_CLIENT } from '../utils';
+
+const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
 
 const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
 

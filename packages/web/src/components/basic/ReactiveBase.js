@@ -209,9 +209,6 @@ ReactiveBase.defaultProps = {
 	graphQLUrl: '',
 	as: 'div',
 	enableAppbase: false,
-	appbaseConfig: {
-		enableTelemetry: true,
-	},
 };
 
 ReactiveBase.propTypes = {

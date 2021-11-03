@@ -6014,10 +6014,10 @@ appbase-js@^4.0.2-beta.11, appbase-js@^4.1.5:
     url-parser-lite "^0.1.0"
     ws "^6.1.2"
 
-appbase-js@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.4.0.tgz#630509847482d1fd22203bb3c3b9c13eca4daf2a"
-  integrity sha512-Lokhs1Y0XFYwfU6dst6PHqAZdiGjbugmdFxueeO83wxlU2zCTxLaYATcdq75YSomHqNXL+IrY6Qslj5I3DSZ3w==
+appbase-js@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.4.1.tgz#fd25bce54049229384b45686a74509ea87283c90"
+  integrity sha512-NisyYnH83+4EYaP0uGENebGAKTLUp1G7wucQs+2ojOJdb5ElnTU7/DV+Ts7oyVRjat259CuJz0xsuT1tZ5pk1g==
   dependencies:
     cross-fetch "^2.2.2"
     querystring "^0.2.0"
