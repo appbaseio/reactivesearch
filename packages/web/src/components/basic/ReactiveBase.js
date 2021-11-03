@@ -13,7 +13,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
 import getTheme from '../../styles/theme';
-import { composeThemeObject, ReactReduxContext } from '../../utils';
+import { composeThemeObject, ReactReduxContext, X_SEARCH_CLIENT } from '../../utils';
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -78,8 +78,22 @@ class ReactiveBase extends Component {
 			`${process.env.VERSION || require('../../../package.json').version}.`,
 			'If you think this is a problem with Reactivesearch, please try updating',
 			"to the latest version. If you're already at the latest version, please open",
-			'an issue at https://github.com/appbaseio/reactivesearch/issues', error, errorInfo,
+			'an issue at https://github.com/appbaseio/reactivesearch/issues',
+			error,
+			errorInfo,
 		);
+	}
+
+	get headers() {
+		const { enableAppbase, headers, appbaseConfig } = this.props;
+		const { enableTelemetry } = appbaseConfig || {};
+		return {
+			...(enableAppbase && {
+				'X-Search-Client': X_SEARCH_CLIENT,
+				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+			}),
+			...headers,
+		};
 	}
 
 	setStore = (props) => {
@@ -92,7 +106,6 @@ class ReactiveBase extends Component {
 			searchStateHeader: props.searchStateHeader, // for backward compatibility
 			...props.analyticsConfig, // TODO: remove in 4.0
 			...props.appbaseConfig,
-
 		};
 		const config = {
 			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
@@ -100,7 +113,9 @@ class ReactiveBase extends Component {
 			credentials,
 			type: this.type,
 			transformRequest: props.transformRequest,
-			analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : !!props.analytics,
+			analytics: props.appbaseConfig
+				? props.appbaseConfig.recordAnalytics
+				: !!props.analytics,
 			enableAppbase: props.enableAppbase,
 			analyticsConfig: appbaseConfig,
 			graphQLUrl: props.graphQLUrl,
@@ -142,7 +157,8 @@ class ReactiveBase extends Component {
 			}
 		});
 
-		const { headers = {}, themePreset } = props;
+		const { themePreset } = props;
+
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
 			appbaseRef.transformRequest = this.props.transformRequest;
@@ -159,7 +175,7 @@ class ReactiveBase extends Component {
 			appbaseRef,
 			selectedValues,
 			urlValues,
-			headers,
+			headers: this.headers,
 			...this.props.initialState,
 		};
 		this.store = configureStore(initialState);
@@ -171,7 +187,7 @@ class ReactiveBase extends Component {
 			<ThemeProvider theme={theme} key={this.state.key}>
 				<Provider context={ReactReduxContext} store={this.store}>
 					<URLParamsProvider
-						headers={this.props.headers}
+						headers={this.headers}
 						style={this.props.style}
 						as={this.props.as}
 						className={this.props.className}
@@ -193,6 +209,9 @@ ReactiveBase.defaultProps = {
 	graphQLUrl: '',
 	as: 'div',
 	enableAppbase: false,
+	appbaseConfig: {
+		enableTelemetry: true,
+	},
 };
 
 ReactiveBase.propTypes = {
