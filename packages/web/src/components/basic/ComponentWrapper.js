@@ -17,7 +17,13 @@ import {
 	updateComponentProps,
 } from '@appbaseio/reactivecore/lib/actions';
 
-import { connect, getValidPropsKeys, hasCustomRenderer, getComponent } from '../../utils';
+import {
+	connect,
+	ReactReduxContext,
+	getValidPropsKeys,
+	hasCustomRenderer,
+	getComponent,
+} from '../../utils';
 
 /**
  * ComponentWrapper component is a wrapper component for each ReactiveSearch component
@@ -30,20 +36,32 @@ import { connect, getValidPropsKeys, hasCustomRenderer, getComponent } from '../
  * 6. Unregister the component on un-mount
  */
 class ComponentWrapper extends React.Component {
-	constructor(props) {
-		super(props);
-		// Register  component
-		props.addComponent(props.componentId);
-		props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
-		// Update props in store
-		props.setComponentProps(props.componentId, props);
+	static contextType = ReactReduxContext;
+
+	constructor(props, context) {
+		super(props, context);
+		// Register a component only when `destroyOnUnmount` is `true`
+		// or component is not present in store
+		let components = [];
+		if (context.store) {
+			({ components } = context.store.getState());
+		}
+		if (props.destroyOnUnmount || components.indexOf(props.componentId) === -1) {
+			// Register  component
+			props.addComponent(props.componentId);
+			props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
+			// Update props in store
+			props.setComponentProps(props.componentId, props);
+		}
+
 
 		if (props.internalComponent) {
 			this.internalComponent = getInternalComponentID(props.componentId);
 		}
 
 		// Register internal component
-		if (this.internalComponent) {
+		if (this.internalComponent && (props.destroyOnUnmount
+			|| components.indexOf(this.internalComponent) === -1)) {
 			props.addComponent(this.internalComponent);
 			props.setComponentProps(this.internalComponent, props);
 		}
@@ -71,15 +89,9 @@ class ComponentWrapper extends React.Component {
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
-			this.props.updateComponentProps(
-				this.props.componentId,
-				this.props,
-			);
+			this.props.updateComponentProps(this.props.componentId, this.props);
 			if (this.internalComponent) {
-				this.props.updateComponentProps(
-					this.internalComponent,
-					this.props,
-				);
+				this.props.updateComponentProps(this.internalComponent, this.props);
 			}
 		});
 		checkPropChange(this.props.react, prevProps.react, () => this.setReact(this.props));
@@ -87,10 +99,12 @@ class ComponentWrapper extends React.Component {
 
 	componentWillUnmount() {
 		// Unregister components
-		const { componentId } = this.props;
-		this.props.removeComponent(componentId);
-		if (this.internalComponent) {
-			this.props.removeComponent(this.internalComponent);
+		const { componentId, destroyOnUnmount } = this.props;
+		if (destroyOnUnmount) {
+			this.props.removeComponent(componentId);
+			if (this.internalComponent) {
+				this.props.removeComponent(this.internalComponent);
+			}
 		}
 	}
 
@@ -119,6 +133,7 @@ ComponentWrapper.propTypes = {
 	watchComponent: types.funcRequired,
 	// component props
 	children: types.func,
+	destroyOnUnmount: types.bool,
 	componentId: types.string.isRequired,
 	componentType: types.componentType,
 	internalComponent: types.bool,
@@ -127,7 +142,6 @@ ComponentWrapper.propTypes = {
 	react: types.react,
 	render: types.func,
 };
-
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	setComponentProps: (component, options) =>

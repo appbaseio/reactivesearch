@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.12.2":
-  version "9.12.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.2.tgz#eebc325553edee969fb467e2e5444108e038e966"
-  integrity sha512-2Ohnxbng3o30kH9HbYmjy+lAGMPaKLjqCwOm5s5Qit+vPYaUPeW5qyVgrkjKWnBvi9K87RCMAmSGxqkc5IqHiQ==
+"@appbaseio/reactivecore@9.12.4":
+  version "9.12.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.4.tgz#814036b2a5122375bdb1edfa986626e5070d14ea"
+  integrity sha512-2/SMIPAunBDYyU2z1JFz5Z24U8lxidJdlj38gTobqQhF/fUiTUqW1/B2swFC/+7i8EjArrXt6aut6kYfG1kc8A==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -13,12 +13,12 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch@3.24.0":
-  version "3.24.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.24.0.tgz#043bde08ad640279661dd44fecfa8481ba510422"
-  integrity sha512-aDdp4hsa04/HDCUKLa/ItEDSKJfVvnoRZVfjomSFDoUUBN/1YrRjaGUGQ+z1VvjKdcBPmt1SsRSdGGWwK1Fo3w==
+"@appbaseio/reactivesearch@3.24.2":
+  version "3.24.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.24.2.tgz#8df29e6016369d3813053d5405a4a6ab063d34ed"
+  integrity sha512-nQ5a6VaLS0OKWoR8zLUGSH3RIbs1gW7DqCUUT2Ys8CLTKTFei8rSUtgamqU010scjWNUzsf7MXEKSwUItuv1Xw==
   dependencies:
-    "@appbaseio/reactivecore" "9.12.2"
+    "@appbaseio/reactivecore" "9.12.4"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
     appbase-js "^4.1.5"
@@ -10328,9 +10328,9 @@ url-loader@1.1.2:
     schema-utils "^1.0.0"
 
 url-parse@^1.4.3:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
-  integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.3.tgz#71c1303d38fb6639ade183c2992c8cc0686df862"
+  integrity sha512-IIORyIQD9rvj0A4CLWsHkBBJuNqWpFQe224b6j9t/ABmquIS0qDU2pY6kl6AuOrL5OkCXHMCFNe1jBcuAggjvQ==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
