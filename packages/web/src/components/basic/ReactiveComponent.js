@@ -52,12 +52,20 @@ class ReactiveComponent extends Component {
 
 			// Update customQuery field for RS API
 			if ((obj && obj.query) || options) {
-				const customQuery = { ...options };
+				let customQuery = { ...options };
 				if (obj && obj.query) {
-					customQuery.query = queryToBeSet;
+					if (obj.query.id) {
+						customQuery = queryToBeSet;
+					} else {
+						customQuery.query = queryToBeSet;
+					}
 				}
 				props.setCustomQuery(props.componentId, customQuery);
 			}
+			if (!queryToBeSet && data && data.id) {
+				queryToBeSet = data;
+			}
+
 			this.props.updateQuery({
 				...obj,
 				query: queryToBeSet,
@@ -76,6 +84,7 @@ class ReactiveComponent extends Component {
 		updateCustomQuery(props.componentId, props, undefined);
 		updateDefaultQuery(props.componentId, props, undefined);
 
+
 		if (this.internalComponent && props.defaultQuery) {
 			this.defaultQuery = props.defaultQuery();
 			const { query } = this.defaultQuery || {};
@@ -91,9 +100,13 @@ class ReactiveComponent extends Component {
 				);
 			} else this.props.setQueryOptions(this.internalComponent, this.getAggsQuery());
 
+			let queryToSet = query || null;
+			if (!queryToSet && this.defaultQuery && this.defaultQuery.id) {
+				queryToSet = this.defaultQuery;
+			}
 			props.updateQuery({
 				componentId: this.internalComponent,
-				query: query || null,
+				query: queryToSet,
 			});
 		}
 	}
@@ -183,7 +196,6 @@ class ReactiveComponent extends Component {
 				});
 			}
 		});
-
 		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
 			this.defaultQuery = this.props.defaultQuery();
 			const { query, ...queryOptions } = this.defaultQuery || {};
@@ -196,9 +208,13 @@ class ReactiveComponent extends Component {
 				);
 			} else this.props.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 			updateDefaultQuery(this.props.componentId, this.props, undefined);
+			let queryToSet = query || null;
+			if (!queryToSet && this.defaultQuery && this.defaultQuery.id) {
+				queryToSet = this.defaultQuery;
+			}
 			this.props.updateQuery({
 				componentId: this.internalComponent,
-				query: query || null,
+				query: queryToSet,
 			});
 		}
 
@@ -216,9 +232,13 @@ class ReactiveComponent extends Component {
 				);
 			} else this.props.setQueryOptions(this.props.componentId, this.getAggsQuery(), false);
 			updateCustomQuery(this.props.componentId, this.props, undefined);
+			let queryToSet = query || null;
+			if (!queryToSet && queryOptions && queryOptions.id) {
+				queryToSet = queryOptions;
+			}
 			this.props.updateQuery({
 				componentId: this.props.componentId,
-				query: query || null,
+				query: queryToSet,
 				URLParams: this.props.URLParams,
 			});
 		}

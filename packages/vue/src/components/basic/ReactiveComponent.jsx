@@ -7,7 +7,7 @@ import {
 	updateDefaultQuery,
 	isQueryIdentical,
 } from '../../utils/index';
-import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import ComponentWrapper from './ComponentWrapper.jsx';
 import types from '../../utils/vueTypes';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
@@ -67,9 +67,14 @@ const ReactiveComponent = {
 					false,
 				);
 			} else this.setQueryOptions(componentId, this.getAggsQuery(), false);
+
+			let queryToSet = query || null
+			if (calcCustomQuery && calcCustomQuery.id) {
+				queryToSet = calcCustomQuery
+			}
 			this.updateQuery({
 				componentId,
-				query,
+				queryToSet,
 				value: this.selectedValue || null,
 				label: filterLabel,
 				showFilter,
@@ -85,12 +90,24 @@ const ReactiveComponent = {
 					false,
 				);
 			}
+			let queryToBeSet = obj.query;
+
+			// when enableAppbase is true, Backend throws error because of repeated query in request body
+			if (obj && obj.query && obj.query.query) {
+				queryToBeSet = obj.query.query;
+			}
 			// Update customQuery field for RS API
 			if ((obj && obj.query) || options) {
-				const customQueryCalc = { ...options };
+				let customQueryCalc = { ...options };
 				if (obj && obj.query) {
-					customQueryCalc.query = obj.query;
+					if (obj.query.id) {
+						customQueryCalc = queryToBeSet;
+					} else {
+						customQueryCalc.query = obj.query;
+					}
+
 				}
+
 				this.setCustomQuery(props.componentId, customQueryCalc);
 			}
 			this.updateQuery({
@@ -120,9 +137,14 @@ const ReactiveComponent = {
 				);
 			} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 
+			let queryToSet = query || null;
+			if (!queryToSet && this.$defaultQuery && this.$defaultQuery.id) {
+				queryToSet = this.$defaultQuery;
+			}
+
 			this.updateQuery({
 				componentId: this.internalComponent,
-				query: query || null,
+				query: queryToSet,
 			});
 		}
 	},
@@ -181,9 +203,15 @@ const ReactiveComponent = {
 				} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 				// Update default query for RS API
 				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, undefined);
+
+				let queryToSet = query || null;
+				if (!queryToSet && this.$defaultQuery && this.$defaultQuery.id) {
+					queryToSet = this.$defaultQuery;
+				}
+
 				this.updateQuery({
 					componentId: this.internalComponent,
-					query: query || null,
+					query: queryToSet,
 				});
 			}
 		},
@@ -203,10 +231,13 @@ const ReactiveComponent = {
 
 				// Update custom query for RS API
 				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, undefined);
-
+				let queryToSet = query || null
+				if (this.$customQuery && this.$customQuery.id) {
+					queryToSet = this.$customQuery
+				}
 				this.updateQuery({
 					componentId,
-					query: query || null,
+					query: queryToSet,
 				});
 			}
 		},
