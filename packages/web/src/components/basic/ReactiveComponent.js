@@ -179,6 +179,7 @@ class ReactiveComponent extends Component {
 				this.props.updateQuery({
 					componentId: this.props.componentId,
 					query: null,
+					URLParams: this.props.URLParams,
 				});
 			}
 		});
@@ -218,6 +219,7 @@ class ReactiveComponent extends Component {
 			this.props.updateQuery({
 				componentId: this.props.componentId,
 				query: query || null,
+				URLParams: this.props.URLParams,
 			});
 		}
 	}
