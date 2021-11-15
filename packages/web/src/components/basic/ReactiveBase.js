@@ -120,6 +120,7 @@ class ReactiveBase extends Component {
 			analyticsConfig: appbaseConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
+			mongodb: props.mongodb,
 		};
 
 		let queryParams = '';
@@ -212,7 +213,7 @@ ReactiveBase.defaultProps = {
 };
 
 ReactiveBase.propTypes = {
-	app: types.stringRequired,
+	app: types.string,
 	searchStateHeader: types.bool,
 	as: types.string,
 	children: types.children,
@@ -237,6 +238,7 @@ ReactiveBase.propTypes = {
 	transformResponse: types.func,
 	getSearchParams: types.func,
 	setSearchParams: types.func,
+	mongodb: types.mongodb,
 };
 
 export default ReactiveBase;
