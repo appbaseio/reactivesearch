@@ -22,7 +22,8 @@ import {
 	updateQuery,
 	recordSuggestionClick,
 	fetchSuggestions,
-	setCustomQuery, setDefaultQuery,
+	setCustomQuery,
+	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import hotkeys from 'hotkeys-js';
 
@@ -222,6 +223,7 @@ class SearchBox extends Component {
     	const { currentValue: value } = this.state;
     	this.props.updateQuery({
     		componentId: this.internalComponent,
+    		query: { match_all: {} },
     		value,
     		componentType: componentTypes.searchBox,
     	});
@@ -235,6 +237,7 @@ class SearchBox extends Component {
 		this.props.updateQuery({
 			componentId,
 			value,
+			query: { match_all: {} },
 			label: filterLabel,
 			showFilter,
 			URLParams,
@@ -997,7 +1000,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	suggestions: state.suggestions[`${props.componentId}__internal`],
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
