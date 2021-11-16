@@ -13,17 +13,12 @@ import './index.css';
 
 const Main = () => (
 	<ReactiveBase
-		// app="default"
-		// url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+		app="good-books-ds"
+		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 		enableAppbase
 		appbaseConfig={{
 			recordAnalytics: true,
 		}}
-		url="https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/public-demo-skxjb/service/http_endpoint/incoming_webhook/reactivesearch"
-		// mongodb={{
-		// 	db: 'sample_airbnb',
-		// 	collection: 'listingsAndReviews',
-		// }}
 	>
 		<div className="row">
 			<div className="col">
@@ -74,17 +69,16 @@ const Main = () => (
 												</div>
 												<div className="ratings-list flex align-center">
 													<span className="stars">
-														{
-															/* eslint-disable */
-															Array(item.average_rating_rounded)
-																.fill('x')
-																.map((_, index) => (
-																	<i
-																		className="fas fa-star"
-																		key={index}
-																	/>
-																))
-															/* eslint-enable */
+														{/* eslint-disable */
+														Array(item.average_rating_rounded)
+															.fill('x')
+															.map((_, index) => (
+																<i
+																	className="fas fa-star"
+																	key={index}
+																/>
+															))
+														/* eslint-enable */
 														}
 													</span>
 													<span className="avg-rating">
