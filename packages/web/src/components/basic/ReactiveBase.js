@@ -85,10 +85,12 @@ class ReactiveBase extends Component {
 	}
 
 	get headers() {
-		const { enableAppbase, headers, appbaseConfig } = this.props;
+		const {
+			enableAppbase, headers, appbaseConfig, mongodb,
+		} = this.props;
 		const { enableTelemetry } = appbaseConfig || {};
 		return {
-			...(enableAppbase && {
+			...(enableAppbase && !mongodb && {
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
@@ -108,7 +110,7 @@ class ReactiveBase extends Component {
 			...props.appbaseConfig,
 		};
 		const config = {
-			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
+			url: props.url,
 			app: props.app,
 			credentials,
 			type: this.type,
