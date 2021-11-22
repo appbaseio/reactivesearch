@@ -32,7 +32,7 @@ const ReactiveBase = {
 		}
 	},
 	props: {
-		app: types.stringRequired,
+		app: types.string,
 		analytics: VueTypes.bool,
 		analyticsConfig: types.analyticsConfig,
 		appbaseConfig: types.appbaseConfig,
@@ -53,6 +53,7 @@ const ReactiveBase = {
 		as: VueTypes.string.def('div'),
 		getSearchParams: types.func,
 		setSearchParams: types.func,
+		mongodb: types.mongodb,
 	},
 	provide() {
 		return {
@@ -107,7 +108,7 @@ const ReactiveBase = {
 					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 				}),
 				...headers,
-			}
+			};
 		},
 	},
 	methods: {
@@ -169,8 +170,8 @@ const ReactiveBase = {
 					};
 					urlValues = {
 						...urlValues,
-						[key]: selectedValue.value
-					}
+						[key]: selectedValue.value,
+					};
 				} catch (e) {
 					// Do not add to selectedValues if JSON parsing fails.
 				}

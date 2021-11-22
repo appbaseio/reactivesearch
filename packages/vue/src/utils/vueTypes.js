@@ -151,6 +151,10 @@ const types = {
 		customEvents: VueTypes.object,
 		enableTelemetry: VueTypes.bool.def(true),
 	}).def({}),
+	mongodb: VueTypes.shape({
+		db: VueTypes.string,
+		collection: VueTypes.string,
+	}),
 };
 
 export default types;
