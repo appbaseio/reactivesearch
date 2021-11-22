@@ -90,7 +90,8 @@ class ReactiveBase extends Component {
 		} = this.props;
 		const { enableTelemetry } = appbaseConfig || {};
 		return {
-			...(enableAppbase && !mongodb && {
+			...(enableAppbase
+				&& !mongodb && {
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
@@ -110,7 +111,7 @@ class ReactiveBase extends Component {
 			...props.appbaseConfig,
 		};
 		const config = {
-			url: props.url,
+			url: props.url && props.url.trim() !== '' ? props.url : '',
 			app: props.app,
 			credentials,
 			type: this.type,
