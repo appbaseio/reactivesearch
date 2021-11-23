@@ -62,10 +62,10 @@
     react-responsive-modal "^4.0.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivesearch-vue@1.16.0-alpha.22":
-  version "1.16.0-alpha.22"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.22.tgz#f5423c1d3224c99bcf9a7437e0bc3df5ff1b8141"
-  integrity sha512-HY2wKKvpCYYXgKM2WljMOXdxipiw1uUUbonXRRb3ScqMZ2jU7i55pQTmGIE47OACtQXpijYlXp89VpP41VAEVA==
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.23":
+  version "1.16.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.23.tgz#8acb9278b994910e7bf564625501efd37d10c2af"
+  integrity sha512-FHHuXqPI/FWmy/EvE6KoAi9KOdGGITbbw12aF42iyq5lYCdkGYdeBm9AN4F1wG35dqDK/9uEPXr+ZTGvTj2DSw==
   dependencies:
     "@appbaseio/reactivecore" "9.12.7"
     "@appbaseio/vue-emotion" "0.4.4"

@@ -46,17 +46,16 @@ const ReactiveList = {
 		ResultCardsWrapper,
 	},
 	data() {
-		const props = this.$props;
 		let currentPageState = 0;
-		if (props.defaultPage >= 0) {
-			currentPageState = props.defaultPage;
-		} else if (props.currentPage) {
-			currentPageState = Math.max(props.currentPage - 1, 0);
+		const defaultPage = this.defaultPage || -1
+		if (defaultPage >= 0) {
+			currentPageState = defaultPage;
+		} else if (this.currentPage) {
+			currentPageState = Math.max(this.currentPage - 1, 0);
 		}
 
 		this.__state = {
-			from: currentPageState * props.size,
-			isLoading: true,
+			from: currentPageState * this.size,
 			currentPageState,
 		};
 		return this.__state;
@@ -84,9 +83,9 @@ const ReactiveList = {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-
-		if (this.defaultPage >= 0) {
-			this.currentPageState = this.defaultPage;
+		const defaultPage = this.defaultPage || -1
+		if (defaultPage >= 0) {
+			this.currentPageState = defaultPage;
 			this.from = this.currentPageState * this.$props.size;
 		}
 		this.internalComponent = `${this.$props.componentId}__internal`;
@@ -300,7 +299,6 @@ const ReactiveList = {
 		},
 	},
 	mounted() {
-
 		if (this.defaultPage < 0 && this.currentPage > 0) {
 			this.setPageURL(
 				this.$props.componentId,
@@ -626,7 +624,7 @@ const ReactiveList = {
 							'resultStats',
 						)}`}
 					>
-						{this.stats.numberOfResults} results found in {this.stats.time}
+						{this.stats.numberOfResults} results found in {this.stats.time || 0}
 						ms
 					</p>
 				);
@@ -748,7 +746,7 @@ const ReactiveList = {
 			return {
 				data: this.withClickIds(filteredResults),
 				aggregationData: this.withClickIds(aggregationData || []),
-				promotedData: this.withClickIds(promotedResults),
+				promotedData: this.withClickIds(promotedResults || []),
 				rawData: this.rawData,
 				resultStats: this.stats,
 				customData,
@@ -758,7 +756,7 @@ const ReactiveList = {
 			const { error, isLoading } = this;
 			const data = {
 				error,
-				loading: isLoading,
+				loading: isLoading || false,
 				loadMore: this.loadMore,
 				// TODO: Remove in v2
 				triggerAnalytics: this.triggerClickAnalytics,
@@ -773,14 +771,13 @@ const ReactiveList = {
 const mapStateToProps = (state, props) => ({
 	defaultPage:
 		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value - 1)
-		|| -1,
+			&& state.selectedValues[props.componentId].value - 1),
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
-	aggregationData: state.compositeAggregations[props.componentId] || [],
-	promotedResults: state.promotedResults[props.componentId] || [],
+	aggregationData: state.compositeAggregations[props.componentId],
+	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time),
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.config && state.config.analytics,
@@ -792,7 +789,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.aggregationField]
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
-	isLoading: state.isLoading[props.componentId] || false,
+	isLoading: state.isLoading[props.componentId],
 });
 const mapDispatchtoProps = {
 	loadMoreAction: loadMore,
