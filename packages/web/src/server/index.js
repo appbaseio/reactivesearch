@@ -346,10 +346,12 @@ export default function initReactivesearch(componentCollection, searchState, set
 						};
 					}
 				} else {
+					const preference = config && config.analyticsConfig && config.analyticsConfig.userId
+						? `${config.analyticsConfig.userId}_${component}` : component;
 					finalQuery = [
 						...finalQuery,
 						{
-							preference: component.componentId,
+							preference,
 						},
 						currentQuery,
 					];
