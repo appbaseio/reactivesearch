@@ -6055,6 +6055,15 @@ app-root-dir@^1.0.2:
   resolved "https://registry.yarnpkg.com/app-root-dir/-/app-root-dir-1.0.2.tgz#38187ec2dea7577fff033ffcb12172692ff6e118"
   integrity sha1-OBh+wt6nV3//Az/8sSFyaS/24Rg=
 
+appbase-js@4.4.22-alpha:
+  version "4.4.22-alpha"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.4.22-alpha.tgz#07cd128d3f5472d0673e8373b8d4f40d5a6e13d8"
+  integrity sha512-qiLlHL+6cw9b8n5ftBnqDrLnJOETpKLlXqbYEY0yDSeLKaFuv/syiUfxSoS5ymYRd71gHTcTEdtfisAlOLWNMw==
+  dependencies:
+    cross-fetch "^2.2.2"
+    querystring "^0.2.0"
+    url-parser-lite "^0.1.0"
+
 appbase-js@^4.0.2-beta.11, appbase-js@^4.1.5:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.1.5.tgz#d5ff9389762d07ed598a5ebcedff63de0fbb8d23"
@@ -6071,15 +6080,6 @@ appbase-js@^4.4.1:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.4.1.tgz#fd25bce54049229384b45686a74509ea87283c90"
   integrity sha512-NisyYnH83+4EYaP0uGENebGAKTLUp1G7wucQs+2ojOJdb5ElnTU7/DV+Ts7oyVRjat259CuJz0xsuT1tZ5pk1g==
-  dependencies:
-    cross-fetch "^2.2.2"
-    querystring "^0.2.0"
-    url-parser-lite "^0.1.0"
-
-appbase-js@^4.4.6-alpha:
-  version "4.4.6-alpha"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.4.6-alpha.tgz#5ee49bf083f2bd9ba6fcd06d1593ed05e0f824a1"
-  integrity sha512-xdJtLNJ+0M+hbcaiQNQsLL4hInzFjVbbVjqaAg2wlQjrT5WmVJ9k4R+6WjpsFNzC2WGKtLubedUOUPtwQ2xY3A==
   dependencies:
     cross-fetch "^2.2.2"
     querystring "^0.2.0"
