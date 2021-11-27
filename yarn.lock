@@ -62,10 +62,10 @@
     react-responsive-modal "^4.0.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivesearch-vue@1.16.0-alpha.23":
-  version "1.16.0-alpha.23"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.23.tgz#8acb9278b994910e7bf564625501efd37d10c2af"
-  integrity sha512-FHHuXqPI/FWmy/EvE6KoAi9KOdGGITbbw12aF42iyq5lYCdkGYdeBm9AN4F1wG35dqDK/9uEPXr+ZTGvTj2DSw==
+"@appbaseio/reactivecore@9.12.5":
+  version "9.12.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.5.tgz#b7c75028f0b0956b90a6a813e40e6e2b2b336815"
+  integrity sha512-vEskPndbDynVwvMlLnTggkMx9IEGyrDqfQLRzqlrV6+17NGVyDsncIKKqqxtPMopqURoxSt3u1oRkyvzpSViRA==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -92,28 +92,6 @@
     vue-no-ssr "^1.1.0"
     vue-slider-component "^2.8.16"
     vue-types "^1.3.3"
-
-"@appbaseio/reactivesearch@3.24.3":
-  version "3.24.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.24.3.tgz#8b484e94ca0e74b43dd61661478760e406471fd6"
-  integrity sha512-ro5+kNfQU3t+4KSmaMq9ZbhSHfMpV3SwXns3Z/f2dybutUFWJ8tQ0cK6XBWM1CcoecUgI9Wu1hk9Jad1/+kGIg==
-  dependencies:
-    "@appbaseio/reactivecore" "9.12.5"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^4.1.5"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    rheostat "^2.1.1"
-    url-search-params-polyfill "^7.0.0"
-    xdate "^0.8.2"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
