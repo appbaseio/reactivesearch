@@ -5,7 +5,7 @@ export const hasGoogleMap = () =>
 // You can use a deep access function based on a string for the path.
 // Note that you can't have any periods in the property names.
 
-export function getPropByString(refObj, propString) {
+export function traverseNestedObject(refObj, propString) {
 	if (!propString) {
 		return refObj;
 	}
