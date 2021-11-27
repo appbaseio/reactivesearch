@@ -121,9 +121,9 @@ class ReactiveMap extends Component {
 			{ label: 'Unsaturated Browns', value: UnsaturatedBrowns },
 		];
 
-		const currentMapStyle =
-			this.mapStyles.find((style) => style.label === props.defaultMapStyle) ||
-			this.mapStyles[0];
+		const currentMapStyle
+			= this.mapStyles.find(style => style.label === props.defaultMapStyle)
+			|| this.mapStyles[0];
 
 		this.state = {
 			currentMapStyle,
@@ -239,9 +239,9 @@ class ReactiveMap extends Component {
 
 		const updatedState = {};
 		if (
-			this.props.sortBy !== prevProps.sortBy ||
-			this.props.size !== prevProps.size ||
-			!isEqual(this.props.dataField, prevProps.dataField)
+			this.props.sortBy !== prevProps.sortBy
+			|| this.props.size !== prevProps.size
+			|| !isEqual(this.props.dataField, prevProps.dataField)
 		) {
 			const options = getQueryOptions(this.props);
 			options.from = 0;
@@ -321,10 +321,10 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			!this.props.pagination &&
-			this.props.hits &&
-			prevProps.hits &&
-			this.props.hits.length < prevProps.hits.length
+			!this.props.pagination
+			&& this.props.hits
+			&& prevProps.hits
+			&& this.props.hits.length < prevProps.hits.length
 		) {
 			if (this.props.onPageChange) {
 				this.props.onPageChange();
@@ -342,17 +342,17 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			this.props.defaultZoom !== prevProps.defaultZoom &&
-			!isNaN(this.props.defaultZoom) && // eslint-disable-line
+			this.props.defaultZoom !== prevProps.defaultZoom
+			&& !isNaN(this.props.defaultZoom) && // eslint-disable-line
 			this.props.defaultZoom
 		) {
 			updatedState.zoom = this.props.defaultZoom;
 		}
 
 		if (this.props.defaultMapStyle !== prevProps.defaultMapStyle) {
-			updatedState.currentMapStyle =
-				this.mapStyles.find((style) => style.label === this.props.defaultMapStyle) ||
-				this.mapStyles[0];
+			updatedState.currentMapStyle
+				= this.mapStyles.find(style => style.label === this.props.defaultMapStyle)
+				|| this.mapStyles[0];
 		}
 
 		this.updateState(updatedState);
@@ -360,16 +360,16 @@ class ReactiveMap extends Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (
-			this.props.showSearchAsMove !== nextProps.showSearchAsMove ||
-			this.state.searchAsMove !== nextState.searchAsMove ||
-			this.props.showMapStyles !== nextProps.showMapStyles ||
-			this.props.autoCenter !== nextProps.autoCenter ||
-			this.props.isLoading !== nextProps.isLoading ||
-			this.props.error !== nextProps.error ||
-			this.props.defaultZoom !== nextProps.defaultZoom ||
-			this.props.showMarkerClusters !== nextProps.showMarkerClusters ||
-			!isEqual(this.state.currentMapStyle, nextState.currentMapStyle) ||
-			this.props.updaterKey !== nextProps.updaterKey
+			this.props.showSearchAsMove !== nextProps.showSearchAsMove
+			|| this.state.searchAsMove !== nextState.searchAsMove
+			|| this.props.showMapStyles !== nextProps.showMapStyles
+			|| this.props.autoCenter !== nextProps.autoCenter
+			|| this.props.isLoading !== nextProps.isLoading
+			|| this.props.error !== nextProps.error
+			|| this.props.defaultZoom !== nextProps.defaultZoom
+			|| this.props.showMarkerClusters !== nextProps.showMarkerClusters
+			|| !isEqual(this.state.currentMapStyle, nextState.currentMapStyle)
+			|| this.props.updaterKey !== nextProps.updaterKey
 		) {
 			return true;
 		}
@@ -400,9 +400,9 @@ class ReactiveMap extends Component {
 		const base = currentPage * size;
 
 		if (parsedPromotedResults.length) {
-			const ids = parsedPromotedResults.map((item) => item._id).filter(Boolean);
+			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
 			if (ids) {
-				filteredResults = filteredResults.filter((item) => !ids.includes(item._id));
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
 			filteredResults = [...parsedPromotedResults, ...filteredResults];
@@ -466,7 +466,7 @@ class ReactiveMap extends Component {
 	};
 
 	getHitsCenter = (hits) => {
-		const data = hits.map((hit) => hit[this.props.dataField]);
+		const data = hits.map(hit => hit[this.props.dataField]);
 
 		if (data.length) {
 			const numCoords = data.length;
@@ -482,10 +482,10 @@ class ReactiveMap extends Component {
 
 					const locationObj = getLocationObject(location);
 					lat = (locationObj.lat * Math.PI) / 180;
-					lng =
-						((locationObj.lng !== undefined ? locationObj.lng : locationObj.lon) *
-							Math.PI) /
-						180;
+					lng
+						= ((locationObj.lng !== undefined ? locationObj.lng : locationObj.lon)
+							* Math.PI)
+						/ 180;
 
 					const a = Math.cos(lat) * Math.cos(lng);
 					const b = Math.cos(lat) * Math.sin(lng);
@@ -518,7 +518,7 @@ class ReactiveMap extends Component {
 	};
 
 	// getArrPosition = location => [location.lat, location.lon || location.lng];
-	getArrPosition = (location) => ({ lat: location.lat, lon: location.lon || location.lng });
+	getArrPosition = location => ({ lat: location.lat, lon: location.lon || location.lng });
 
 	getGeoDistanceQuery = () => {
 		const center = this.props.center || this.props.defaultCenter;
@@ -538,8 +538,8 @@ class ReactiveMap extends Component {
 	getGeoQuery = (props = this.props) => {
 		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
 
-		const mapBounds =
-			this.props.mapRef && typeof this.props.mapRef.getBounds === 'function'
+		const mapBounds
+			= this.props.mapRef && typeof this.props.mapRef.getBounds === 'function'
 				? this.props.mapRef.getBounds()
 				: false;
 
@@ -628,9 +628,9 @@ class ReactiveMap extends Component {
 
 	loadMore = () => {
 		if (
-			this.props.hits &&
-			!this.props.pagination &&
-			this.props.total !== this.props.hits.length
+			this.props.hits
+			&& !this.props.pagination
+			&& this.props.total !== this.props.hits.length
 		) {
 			const value = this.state.from + this.props.size;
 			const options = getQueryOptions(this.props);
@@ -707,9 +707,9 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			this.props.mapRef &&
-			typeof this.props.mapRef.getCenter === 'function' &&
-			this.state.preserveCenter
+			this.props.mapRef
+			&& typeof this.props.mapRef.getCenter === 'function'
+			&& this.state.preserveCenter
 		) {
 			const currentCenter = this.props.mapRef.getCenter();
 			setTimeout(() => {
@@ -831,9 +831,9 @@ class ReactiveMap extends Component {
 	getResultsToRender = () => {
 		const results = parseHits(this.props.hits) || [];
 		let filteredResults = results.filter(
-			(item) => !!traverseNestedObject(item, this.props.dataField),
+			item => !!traverseNestedObject(item, this.props.dataField),
 		);
-		filteredResults = [...filteredResults].map((item) => ({
+		filteredResults = [...filteredResults].map(item => ({
 			...item,
 			[this.props.dataField]: getLocationObject(item[this.props.dataField]),
 		}));
@@ -874,8 +874,8 @@ class ReactiveMap extends Component {
 	};
 
 	handleZoomChange = () => {
-		const zoom =
-			this.props.mapRef && typeof this.props.mapRef.getZoom === 'function'
+		const zoom
+			= this.props.mapRef && typeof this.props.mapRef.getZoom === 'function'
 				? this.props.mapRef.getZoom()
 				: false;
 		if (zoom) {
@@ -907,7 +907,7 @@ class ReactiveMap extends Component {
 		let docId = documentId;
 		if (!docId) {
 			const { data } = this.getData();
-			const hitData = data.find((hit) => hit._click_id === searchPosition);
+			const hitData = data.find(hit => hit._click_id === searchPosition);
 			if (hitData && hitData._id) {
 				docId = hitData._id;
 			}
@@ -969,8 +969,8 @@ class ReactiveMap extends Component {
 			<div style={{ ...style, ...this.props.style }} className={this.props.className}>
 				{this.renderError()}
 				{this.shouldRenderLoader ? this.props.loader : null}
-				{!this.shouldRenderLoader &&
-					(this.props.renderAllData
+				{!this.shouldRenderLoader
+					&& (this.props.renderAllData
 						? this.props.renderAllData(
 							this.withClickIds(parseHits(this.props.hits)),
 							this.loadMore,
@@ -1064,9 +1064,9 @@ const mapStateToProps = (state, props) => ({
 	mapKey: state.config.mapKey,
 	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
 	currentPage:
-		(state.selectedValues[`${props.componentId}-page`] &&
-			state.selectedValues[`${props.componentId}-page`].value - 1) ||
-		0,
+		(state.selectedValues[`${props.componentId}-page`]
+			&& state.selectedValues[`${props.componentId}-page`].value - 1)
+		|| 0,
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
@@ -1080,15 +1080,15 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
-const mapDispatchtoProps = (dispatch) => ({
-	addComponent: (component) => dispatch(addComponent(component)),
-	removeComponent: (component) => dispatch(removeComponent(component)),
+const mapDispatchtoProps = dispatch => ({
+	addComponent: component => dispatch(addComponent(component)),
+	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	loadMore: (component, options, append) => dispatch(loadMore(component, options, append)),
 	setMapData: (component, geoQuery, persistMapQuery, forceExecute = false, meta = {}) =>
 		dispatch(setMapData(component, geoQuery, persistMapQuery, forceExecute, meta)),
