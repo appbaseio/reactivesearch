@@ -39,11 +39,15 @@ class App extends React.Component {
 			defaultMapStyle: 'Light Monochrome',
 			title: 'Reactive Maps',
 			searchAsMove: true,
+			defaultCenter: {
+				lat: '-22.984339360067814',
+				lng: '-43.190849194463404',
+			},
 			defaultZoom: 3,
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',
@@ -67,7 +71,7 @@ class App extends React.Component {
 				</div>
 			),
 			showMapStyles: true,
-			renderData: (result) => ({
+			renderData: result => ({
 				custom: (
 					<div
 						style={{
