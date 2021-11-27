@@ -43,7 +43,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: item => (
+			onPopoverClick: (item) => (
 				<div
 					style={{
 						display: 'flex',
@@ -67,7 +67,7 @@ class App extends React.Component {
 				</div>
 			),
 			showMapStyles: true,
-			renderData: result => ({
+			renderData: (result) => ({
 				custom: (
 					<div
 						style={{
@@ -95,42 +95,39 @@ class App extends React.Component {
 				}}
 				enableAppbase
 			>
-				<div className="row">
+				<div>
 					<h3>Search Properties</h3>
-					<div className="col">
-						<div
-							style={{
-								marginTop: '20px',
-								marginBottom: '5px',
-								fontSize: '1 rem',
-							}}
-						>
-							<b>Select Map Provider</b>
-						</div>
-						<Dropdown
-							items={providers}
-							onChange={this.setProvider}
-							selectedItem={this.state.mapProvider}
-							keyField="label"
-							returnsObject
-						/>
-					</div>
 
-					<div className="col">
-						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap
-								style={{ height: '90vh' }}
-								componentId="googleMap"
-								{...mapProps}
-							/>
-						) : (
-							<ReactiveOpenStreetMap
-								style={{ height: '90vh' }}
-								componentId="openstreetMap"
-								{...mapProps}
-							/>
-						)}
+					<div
+						style={{
+							marginTop: '20px',
+							marginBottom: '5px',
+							fontSize: '1 rem',
+							padding: '1rem',
+						}}
+					>
+						<b>Select Map Provider</b>
 					</div>
+					<Dropdown
+						items={providers}
+						onChange={this.setProvider}
+						selectedItem={this.state.mapProvider}
+						keyField="label"
+						returnsObject
+					/>
+					{this.state.mapProvider.value === 'googleMap' ? (
+						<ReactiveGoogleMap
+							style={{ height: '90vh', marginTop: '5px', padding: '1rem' }}
+							componentId="googleMap"
+							{...mapProps}
+						/>
+					) : (
+						<ReactiveOpenStreetMap
+							style={{ height: '90vh', marginTop: '5px', padding: '1rem' }}
+							componentId="openstreetMap"
+							{...mapProps}
+						/>
+					)}
 				</div>
 			</ReactiveBase>
 		);
