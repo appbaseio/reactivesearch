@@ -4,8 +4,6 @@ import { ReactiveBase } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
-import './index.css';
-
 const providers = [
 	{
 		label: 'Google Map',
@@ -47,7 +45,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: item => (
+			onPopoverClick: (item) => (
 				<div
 					style={{
 						display: 'flex',
@@ -71,7 +69,7 @@ class App extends React.Component {
 				</div>
 			),
 			showMapStyles: true,
-			renderData: result => ({
+			renderData: (result) => ({
 				custom: (
 					<div
 						style={{
@@ -100,7 +98,7 @@ class App extends React.Component {
 				enableAppbase
 			>
 				<div>
-					<h3>Search Properties</h3>
+					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>
 
 					<div
 						style={{
