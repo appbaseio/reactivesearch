@@ -15,6 +15,7 @@
 	"workspaces": [
 		"packages/*",
 		"packages/web/examples/*",
+		"packages/web/examples/mongo-examples/*",
 		"packages/vue/examples/*",
 		"packages/vue/demos/*",
 		"packages/maps/examples/*",
