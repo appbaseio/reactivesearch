@@ -78,7 +78,7 @@ class Main extends Component {
 											}
 										</span>
 										<span className="avg-rating">
-											({data.review_scores.review_scores_value || 'NA'} avg)
+											({data.review_scores.review_scores_value} avg)
 										</span>
 									</React.Fragment>
 								) : (
