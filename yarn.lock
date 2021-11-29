@@ -73,6 +73,33 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+"@appbaseio/reactivecore@9.12.8":
+  version "9.12.8"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.12.8.tgz#8206ba9bdd82e37ba789e615e32f55c9477c692c"
+  integrity sha512-PeCPNeqSeUlbQ0CapMP8wOctrveoOgnHahh/6Xf6ASjLqP0x9C67Xi/NSZb9v1iNUflhXzylABC0TrVHQgBqXQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivemaps@3.0.0-beta.15":
+  version "3.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.15.tgz#479acdac9de63fb9763e7008845a5178a12b3d35"
+  integrity sha512-3k+cRlfwlEHosfyRbjW2ipVL0a0lpLsINEuTK8yVjrLDkUigLsepuRgF6AdvwsEImnFR9za7LumERBf+Qk8rrg==
+  dependencies:
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    downshift "^1.31.2"
+    emotion-theming "^10.0.27"
+    leaflet "^1.3.4"
+    ngeohash "^0.6.3"
+    prop-types "^15.6.0"
+    react-google-maps "^9.4.5"
+    react-leaflet "^2.1.3"
+    rheostat "^2.1.1"
+
 "@appbaseio/reactivesearch-vue@1.22.3":
   version "1.22.3"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.22.3.tgz#092074a2ad52518fb8866384f1e6854698b6e6b6"
@@ -92,6 +119,28 @@
     vue-no-ssr "^1.1.0"
     vue-slider-component "^2.8.16"
     vue-types "^1.3.3"
+
+"@appbaseio/reactivesearch@3.25.1-alpha":
+  version "3.25.1-alpha"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.25.1-alpha.tgz#70f69816ce3cd0154262171b4134ef1ca99107cd"
+  integrity sha512-v+lsKSvGgKca8Ty2ZMN1ZPtTSAnDKXWjt2r4bCCeO16WDn9ictnft2qc6AstdJKfkh1FkINLvVKG9eUydf+59w==
+  dependencies:
+    "@appbaseio/reactivecore" "9.12.8-alpha"
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    appbase-js "4.4.22-alpha"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    emotion-theming "^10.0.27"
+    hoist-non-react-statics "^3.2.1"
+    hotkeys-js "^3.8.7"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"

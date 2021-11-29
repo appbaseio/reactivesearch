@@ -45,7 +45,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',
@@ -54,6 +54,13 @@ class App extends React.Component {
 						alignItems: 'flex-start',
 					}}
 				>
+					<div style={{ margin: '3px 0', height: '100px', width: '100%' }}>
+						<img
+							style={{ margin: '3px 0', height: '100%', width: '100%' }}
+							src={item.images.picture_url}
+							alt={item.name}
+						/>
+					</div>
 					<div style={{ margin: '3px 0' }}>
 						<b>Name: </b>
 						{item.name}
@@ -69,7 +76,7 @@ class App extends React.Component {
 				</div>
 			),
 			showMapStyles: true,
-			renderData: (result) => ({
+			renderData: () => ({
 				custom: (
 					<div
 						style={{
@@ -81,8 +88,7 @@ class App extends React.Component {
 							padding: 10,
 						}}
 					>
-						<i className="fas fa-user-friends" />
-						&nbsp;{result.accommodates}
+						<i className="fa fa-home" />
 					</div>
 				),
 			}),
