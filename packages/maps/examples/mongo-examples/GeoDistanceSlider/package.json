@@ -1,7 +1,7 @@
 {
-	"name": "geodropdown-mongodb",
+	"name": "geodistanceslider-mongodb",
 	"version": "1.0.0",
-	"description": "GeoDropdown example for ReactiveSearch using mongodb backend",
+	"description": "GeoDistanceSlider example for ReactiveSearch using mongodb backend",
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
