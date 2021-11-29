@@ -21,8 +21,8 @@ const Main = () => (
 			collection: 'listingsAndReviews',
 		}}
 	>
-		<div className="row">
-			<div className="col">
+		<div>
+			<div>
 				<DataSearch
 					title="DataSearch"
 					dataField={[
@@ -43,7 +43,7 @@ const Main = () => (
 				/>
 			</div>
 
-			<div className="col">
+			<div>
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
@@ -58,33 +58,24 @@ const Main = () => (
 						<ReactiveList.ResultCardsWrapper>
 							{data.map(item => (
 								<ResultCard id={item._id} key={item._id}>
-									<ResultCard.Image src={item.image} />
+									<ResultCard.Image src={item.images.picture_url} />
 									<ResultCard.Title>
 										<div
-											className="book-title"
+											className="title"
 											dangerouslySetInnerHTML={{
-												__html: item.original_title,
+												__html: item.name,
 											}}
 										/>
 									</ResultCard.Title>
 
 									<ResultCard.Description>
 										<div className="flex column justify-space-between">
-											<div>
-												<div>
-													<span className="authors-list">
-														{item.name}
-													</span>
-												</div>
-												<div className="ratings-list flex align-center">
-													<span className="avg-rating">
-														({item.description} avg)
-													</span>
-												</div>
+											<div title={item.description} className="description">
+												({item.description} )
 											</div>
-											<span className="pub-year">
-												Accomodates {item.accomodates}
-											</span>
+											<div className="tag">
+												Accomodates <span>{item.accommodates}</span>
+											</div>
 										</div>
 									</ResultCard.Description>
 								</ResultCard>
