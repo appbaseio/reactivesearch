@@ -46,7 +46,7 @@ class App extends React.Component {
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',
@@ -128,8 +128,8 @@ class App extends React.Component {
 								{ distance: 300, label: 'Under 300 miles' },
 							]}
 							defaultValue={{
-								location: ' New York, NY, USA',
-								label: 'Within 300 miles',
+								location: 'Rio De Janeiro',
+								label: 'Under 300 miles',
 							}}
 						/>
 					</div>
