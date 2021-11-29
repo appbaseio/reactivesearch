@@ -45,7 +45,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',
