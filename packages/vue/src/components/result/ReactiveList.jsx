@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { withClickIds } from '@appbaseio/reactivecore/lib/utils/helper';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -155,11 +156,10 @@ const ReactiveList = {
 			return this.$listeners && this.$listeners.resultStats;
 		},
 		stats() {
-			const { filteredResults } = this.getAllData();
 			return {
 				...getResultStats(this),
 				currentPage: this.currentPageState,
-				displayedResults: filteredResults.length,
+				displayedResults: this.data.length,
 			};
 		},
 		hasCustomRender() {
@@ -169,6 +169,21 @@ const ReactiveList = {
 			// Pagination has higher priority then infinite scroll
 			return this.infiniteScroll && !this.shouldRenderPagination;
 		},
+		data() {
+			const results = parseHits(this.hits) || [];
+			const parsedPromotedResults = parseHits(this.promotedResults) || [];
+			let filteredResults = results;
+
+			if (parsedPromotedResults.length) {
+				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
+				if (ids) {
+					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+				}
+
+				filteredResults = [...parsedPromotedResults, ...filteredResults];
+			}
+			return withClickIds(filteredResults);
+		}
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -250,7 +265,7 @@ const ReactiveList = {
 			}
 		},
 		hits(newVal, oldVal) {
-			this.$emit('data', this.getAllData());
+			this.$emit('data', this.getData());
 			if (this.shouldRenderPagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
@@ -469,9 +484,6 @@ const ReactiveList = {
 		},
 		renderResults() {
 			const { size } = this.$props;
-			const { hits } = this.$data;
-			const results = parseHits(hits) || [];
-			const filteredResults = results;
 
 			const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
 
@@ -484,7 +496,7 @@ const ReactiveList = {
 						'list',
 					)}`}
 				>
-					{[...filteredResults].map((item, index) =>
+					{this.data.map((item, index) =>
 						renderItem({
 							item,
 							triggerClickAnalytics: () =>
@@ -495,7 +507,7 @@ const ReactiveList = {
 			);
 			// If analytics is set to true then render with impression tracker
 			return this.analytics ? (
-				<ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker>
+				<ImpressionTracker hits={this.data}>{element}</ImpressionTracker>
 			) : (
 				element
 			);
@@ -714,20 +726,9 @@ const ReactiveList = {
 			} = this;
 			const results = parseHits(hits) || [];
 			const parsedPromotedResults = parseHits(promotedResults) || [];
-			let filteredResults = results;
 			const base = currentPage * size;
-
-			if (parsedPromotedResults.length) {
-				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
-				if (ids) {
-					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-				}
-
-				filteredResults = [...parsedPromotedResults, ...filteredResults];
-			}
 			return {
 				results,
-				filteredResults,
 				customData: customData || {},
 				promotedResults: parsedPromotedResults,
 				aggregationData,
@@ -738,13 +739,12 @@ const ReactiveList = {
 		},
 		getData() {
 			const {
-				filteredResults,
 				promotedResults,
 				aggregationData,
 				customData,
 			} = this.getAllData();
 			return {
-				data: this.withClickIds(filteredResults),
+				data: this.data,
 				aggregationData: this.withClickIds(aggregationData || []),
 				promotedData: this.withClickIds(promotedResults || []),
 				rawData: this.rawData,
