@@ -20,6 +20,7 @@
 		"packages/vue/examples/mongo-examples/*",
 		"packages/vue/demos/*",
 		"packages/maps/examples/*",
+		"packages/maps/examples/mongo-examples/*",
 		"site",
 		"site/demos/*"
 	],

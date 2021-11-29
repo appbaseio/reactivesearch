@@ -44,7 +44,7 @@ class ReactiveOpenStreetMap extends Component {
 		onPopoverClick,
 		resultsToRender,
 		getPosition,
-		triggerClickAnalytics
+		triggerClickAnalytics,
 	}) => {
 		if (showMarkers) {
 			const markers = resultsToRender.map((item, index) => {
@@ -161,7 +161,7 @@ class ReactiveOpenStreetMap extends Component {
 		return null;
 	};
 
-	renderMap = params => {
+	renderMap = (params) => {
 		// we check for `OpenStreetMap` here instead of `window`
 		// because leaflet and react-leaflet are incompatible with SSR setup
 		// hence the leaflet modules are imported on mount and the component
@@ -253,6 +253,7 @@ ReactiveOpenStreetMap.propTypes = {
 	config: types.props,
 	analytics: types.props,
 	headers: types.headers,
+	index: types.string,
 };
 
 ReactiveOpenStreetMap.defaultProps = {
@@ -275,13 +276,10 @@ ReactiveOpenStreetMap.defaultProps = {
 	defaultRadius: 100,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	config: state.config,
 	headers: state.appbaseRef.headers,
 	analytics: state.analytics,
 });
 
-export default connect(
-	mapStateToProps,
-	null,
-)(ReactiveOpenStreetMap);
+export default connect(mapStateToProps, null)(ReactiveOpenStreetMap);

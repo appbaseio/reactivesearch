@@ -84,6 +84,22 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+"@appbaseio/reactivemaps@3.0.0-beta.15":
+  version "3.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.0-beta.15.tgz#479acdac9de63fb9763e7008845a5178a12b3d35"
+  integrity sha512-3k+cRlfwlEHosfyRbjW2ipVL0a0lpLsINEuTK8yVjrLDkUigLsepuRgF6AdvwsEImnFR9za7LumERBf+Qk8rrg==
+  dependencies:
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    downshift "^1.31.2"
+    emotion-theming "^10.0.27"
+    leaflet "^1.3.4"
+    ngeohash "^0.6.3"
+    prop-types "^15.6.0"
+    react-google-maps "^9.4.5"
+    react-leaflet "^2.1.3"
+    rheostat "^2.1.1"
+
 "@appbaseio/reactivesearch-vue@1.22.3":
   version "1.22.3"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.22.3.tgz#092074a2ad52518fb8866384f1e6854698b6e6b6"

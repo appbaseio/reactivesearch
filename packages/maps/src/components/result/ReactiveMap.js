@@ -24,10 +24,16 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { connect, isFunction, ReactReduxContext, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
+import {
+	connect,
+	isFunction,
+	ReactReduxContext,
+	getValidPropsKeys,
+} from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 import geohash from 'ngeohash';
+import { traverseNestedObject } from '../utils';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -199,7 +205,13 @@ class ReactiveMap extends Component {
 					distance: this.props.defaultRadius,
 					coordinates: `${coordinatesObject.lat}, ${coordinatesObject.lon}`,
 				};
-				this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute, meta);
+				this.props.setMapData(
+					this.props.componentId,
+					query,
+					persistMapQuery,
+					forceExecute,
+					meta,
+				);
 			}
 		}
 
@@ -252,15 +264,7 @@ class ReactiveMap extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				[
-					'hits',
-					'promotedResults',
-					'customData',
-					'total',
-					'size',
-					'time',
-					'hidden',
-				],
+				['hits', 'promotedResults', 'customData', 'total', 'size', 'time', 'hidden'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -304,7 +308,6 @@ class ReactiveMap extends Component {
 			this.setDefaultQueryForRSAPI();
 			this.props.setMapData(this.props.componentId, query, persistMapQuery, forceExecute);
 		}
-
 
 		if (!isEqual(prevProps.react, this.props.react)) {
 			this.setReact(this.props);
@@ -371,9 +374,7 @@ class ReactiveMap extends Component {
 			return true;
 		}
 
-		if (
-			isEqual(this.props.hits, nextProps.hits)
-		) {
+		if (isEqual(this.props.hits, nextProps.hits)) {
 			return false;
 		}
 		return true;
@@ -391,9 +392,7 @@ class ReactiveMap extends Component {
 	};
 
 	getAllData = () => {
-		const {
-			size, promotedResults, customData,
-		} = this.props;
+		const { size, promotedResults, customData } = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const parsedPromotedResults = parseHits(promotedResults) || [];
@@ -420,11 +419,7 @@ class ReactiveMap extends Component {
 	};
 
 	getData = () => {
-		const {
-			filteredResults,
-			promotedResults,
-			customData,
-		} = this.getAllData();
+		const { filteredResults, promotedResults, customData } = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
 			promotedData: this.withClickIds(promotedResults),
@@ -468,7 +463,7 @@ class ReactiveMap extends Component {
 			}
 			this.props.setDefaultQuery(this.props.componentId, defaultQuery);
 		}
-	}
+	};
 
 	getHitsCenter = (hits) => {
 		const data = hits.map(hit => hit[this.props.dataField]);
@@ -543,7 +538,10 @@ class ReactiveMap extends Component {
 	getGeoQuery = (props = this.props) => {
 		this.defaultQuery = props.defaultQuery ? props.defaultQuery() : null;
 
-		const mapBounds = this.props.mapRef && typeof this.props.mapRef.getBounds === 'function' ? this.props.mapRef.getBounds() : false;
+		const mapBounds
+			= this.props.mapRef && typeof this.props.mapRef.getBounds === 'function'
+				? this.props.mapRef.getBounds()
+				: false;
 
 		let north;
 		let south;
@@ -687,10 +685,12 @@ class ReactiveMap extends Component {
 	};
 
 	parseLocation(location) {
+		const latIndex = this.props.config.mongodb ? 1 : 0;
+		const lngIndex = this.props.config.mongodb ? 0 : 1;
 		if (Array.isArray(location)) {
 			return {
-				lat: Number(location[0]),
-				lng: Number(location[1]),
+				lat: Number(location[latIndex]),
+				lng: Number(location[lngIndex]),
 			};
 		}
 		return {
@@ -707,7 +707,9 @@ class ReactiveMap extends Component {
 		}
 
 		if (
-			(this.props.mapRef && typeof this.props.mapRef.getCenter === 'function' && this.state.preserveCenter)
+			this.props.mapRef
+			&& typeof this.props.mapRef.getCenter === 'function'
+			&& this.state.preserveCenter
 		) {
 			const currentCenter = this.props.mapRef.getCenter();
 			setTimeout(() => {
@@ -721,7 +723,6 @@ class ReactiveMap extends Component {
 					lng: currentCenter.lng(),
 				});
 			}
-
 			return this.parseLocation({
 				lat: currentCenter.lat,
 				lng: currentCenter.lng,
@@ -801,7 +802,11 @@ class ReactiveMap extends Component {
 
 		hits.forEach((item) => {
 			const updatedItem = { ...item };
-			const location = this.parseLocation(item[this.props.dataField]);
+			const location = this.parseLocation(
+				this.props.config.mongodb
+					? traverseNestedObject(item, `${this.props.dataField}.coordinates`)
+					: item[this.props.dataField],
+			);
 			const key = JSON.stringify(location);
 			const count = hitMap[key] || 0;
 
@@ -825,8 +830,9 @@ class ReactiveMap extends Component {
 
 	getResultsToRender = () => {
 		const results = parseHits(this.props.hits) || [];
-		let filteredResults = results.filter(item => !!item[this.props.dataField]);
-
+		let filteredResults = results.filter(
+			item => !!traverseNestedObject(item, this.props.dataField),
+		);
 		filteredResults = [...filteredResults].map(item => ({
 			...item,
 			[this.props.dataField]: getLocationObject(item[this.props.dataField]),
@@ -868,7 +874,10 @@ class ReactiveMap extends Component {
 	};
 
 	handleZoomChange = () => {
-		const zoom = (this.props.mapRef && typeof this.props.mapRef.getZoom === 'function' ? this.props.mapRef.getZoom() : false);
+		const zoom
+			= this.props.mapRef && typeof this.props.mapRef.getZoom === 'function'
+				? this.props.mapRef.getZoom()
+				: false;
 		if (zoom) {
 			if (this.state.searchAsMove) {
 				this.setState(
@@ -1048,6 +1057,7 @@ ReactiveMap.propTypes = {
 	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
+	index: types.string,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1090,7 +1100,4 @@ const mapDispatchtoProps = dispatch => ({
 	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
 });
 
-export default connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(ReactiveMap);
+export default connect(mapStateToProps, mapDispatchtoProps)(ReactiveMap);
