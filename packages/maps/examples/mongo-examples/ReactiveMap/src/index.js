@@ -45,7 +45,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: item => (
+			onPopoverClick: (item) => (
 				<div
 					style={{
 						display: 'flex',
@@ -105,24 +105,25 @@ class App extends React.Component {
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>
-
-					<div
-						style={{
-							marginTop: '20px',
-							marginBottom: '5px',
-							fontSize: '1 rem',
-							padding: '1rem',
-						}}
-					>
-						<b>Select Map Provider</b>
+					<div>
+						<div
+							style={{
+								position: 'relative',
+								zIndex: 9999999999,
+							}}
+						>
+							<b>Select Map Provider</b>
+						</div>
+						<Dropdown
+							className="dropdown"
+							items={providers}
+							onChange={this.setProvider}
+							selectedItem={this.state.mapProvider}
+							keyField="label"
+							returnsObject
+						/>
 					</div>
-					<Dropdown
-						items={providers}
-						onChange={this.setProvider}
-						selectedItem={this.state.mapProvider}
-						keyField="label"
-						returnsObject
-					/>
+
 					{this.state.mapProvider.value === 'googleMap' ? (
 						<ReactiveGoogleMap
 							style={{ height: '90vh', marginTop: '5px', padding: '1rem' }}
