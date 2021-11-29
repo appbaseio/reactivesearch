@@ -37,8 +37,6 @@ const Main = () => (
 					]}
 					componentId="search-component"
 					URLParams
-					enableRecentSearches
-					enablePopularSuggestions
 					size={5}
 				/>
 			</div>
