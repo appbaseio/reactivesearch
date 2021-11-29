@@ -45,7 +45,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: item => (
+			onPopoverClick: (item) => (
 				<div
 					style={{
 						display: 'flex',
@@ -105,13 +105,13 @@ class App extends React.Component {
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>
-					<div>
-						<div
-							style={{
-								position: 'relative',
-								zIndex: 9999999999,
-							}}
-						>
+					<div
+						style={{
+							position: 'relative',
+							zIndex: 9999999999,
+						}}
+					>
+						<div>
 							<b>Select Map Provider</b>
 						</div>
 						<Dropdown
