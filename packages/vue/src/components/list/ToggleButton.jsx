@@ -17,7 +17,7 @@ const ToggleButton = {
 		componentId: types.stringRequired,
 		data: types.data,
 		dataField: types.stringRequired,
-		defaultValue: types.stringOrArray,
+		defaultValue: types.any,
 		value: types.stringOrArray,
 		filterLabel: types.string,
 		nestedField: types.string,
