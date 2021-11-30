@@ -45,7 +45,7 @@ class App extends React.Component {
 			index: 'custom',
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',
@@ -102,6 +102,7 @@ class App extends React.Component {
 					collection: 'listingsAndReviews',
 				}}
 				enableAppbase
+				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>
