@@ -1,13 +1,13 @@
 {
-	"name": "graphql",
+	"name": "searchbox",
 	"version": "1.0.0",
-	"description": "GraphQl example for ReactiveSearch",
+	"description": "SearchBox example for ReactiveSearch",
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
 		"@appbaseio/reactivesearch": "3.26.1-alpha.1",
-		"react": "^16.2.0",
-		"react-dom": "^16.2.0"
+		"react": "^16.7.0-alpha.2",
+		"react-dom": "^16.7.0-alpha.2"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
