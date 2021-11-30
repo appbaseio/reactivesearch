@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ReactiveBase } from '@appbaseio/reactivesearch';
+import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
@@ -36,16 +36,14 @@ class App extends React.Component {
 			dataField: 'address.location',
 			defaultMapStyle: 'Light Monochrome',
 			title: 'Reactive Maps',
-			searchAsMove: true,
-			defaultCenter: {
-				lat: '-22.984339360067814',
-				lng: '-43.190849194463404',
-			},
 			defaultZoom: 3,
 			index: 'custom',
+			react: {
+				and: 'places-filter',
+			},
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',
@@ -95,11 +93,11 @@ class App extends React.Component {
 		};
 		return (
 			<ReactiveBase
-				app="custom"
 				url="https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/public-demo-skxjb/service/http_endpoint/incoming_webhook/reactivesearch"
 				mongodb={{
 					db: 'sample_airbnb',
 					collection: 'listingsAndReviews',
+					index: 'custom',
 				}}
 				enableAppbase
 			>
@@ -108,7 +106,20 @@ class App extends React.Component {
 					<div
 						style={{
 							position: 'relative',
-							zIndex: 9999999999,
+							zIndex: 2147483640,
+							marginBottom: '1rem',
+						}}
+					>
+						<DataSearch
+							dataField={[{ field: 'description', weight: 3 }]}
+							componentId="places-filter"
+							title="DataSearch: Search for properties"
+						/>
+					</div>
+					<div
+						style={{
+							position: 'relative',
+							zIndex: 2147483630,
 						}}
 					>
 						<div>
