@@ -46,7 +46,7 @@ class App extends React.Component {
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			onPopoverClick: (item) => (
+			onPopoverClick: item => (
 				<div
 					style={{
 						display: 'flex',

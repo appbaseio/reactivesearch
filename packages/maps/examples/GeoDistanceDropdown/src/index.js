@@ -8,8 +8,6 @@ import {
 } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
-import './index.css';
-
 const providers = [
 	{
 		label: 'Google Map',
@@ -58,8 +56,15 @@ class App extends React.Component {
 				type="meetupdata1"
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			>
-				<div className="row">
-					<div className="col">
+				<div>
+					<h3 style={{ textAlign: 'center' }}>Search Locations</h3>
+					<div
+						style={{
+							position: 'relative',
+							zIndex: 9999999999,
+							marginBottom: '2rem',
+						}}
+					>
 						<GeoDistanceDropdown
 							title="Location"
 							componentId="GeoDistanceDropdown"
@@ -78,13 +83,16 @@ class App extends React.Component {
 								label: 'Within 10 miles',
 							}}
 						/>
-						<div
-							style={{
-								marginTop: '20px',
-								marginBottom: '5px',
-								fontSize: '1 rem',
-							}}
-						>
+					</div>
+					<div
+						style={{
+							position: 'relative',
+							zIndex: 2147483646,
+							marginBottom: '5px',
+							fontSize: '1 rem',
+						}}
+					>
+						<div>
 							<b>Select Map Provider</b>
 						</div>
 						<Dropdown
@@ -96,7 +104,7 @@ class App extends React.Component {
 						/>
 					</div>
 
-					<div className="col">
+					<div style={{ padding: '2rem' }}>
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
 							<ReactiveGoogleMap
