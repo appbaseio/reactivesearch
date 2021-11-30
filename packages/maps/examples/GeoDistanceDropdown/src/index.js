@@ -45,7 +45,7 @@ class App extends React.Component {
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			onPopoverClick: (item) => <div>{item.venue.venue_name}</div>,
+			onPopoverClick: item => <div>{item.venue.venue_name}</div>,
 			showMapStyles: true,
 		};
 		return (
