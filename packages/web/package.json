@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.26.0",
+	"version": "3.26.1",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -35,7 +35,7 @@
 		"@appbaseio/reactivecore": "9.13.0",
 		"@emotion/core": "^10.0.28",
 		"@emotion/styled": "^10.0.27",
-		"appbase-js": "4.5.0",
+		"appbase-js": "4.5.1",
 		"cross-env": "^5.2.0",
 		"downshift": "^1.31.2",
 		"emotion-theming": "^10.0.27",
