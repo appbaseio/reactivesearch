@@ -167,7 +167,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
 				customQueries[component.componentId] = component.customQuery(
-					component.value || selectedValues[component.componentId].value,
+					selectedValues[component.componentId].value,
 					compProps,
 				);
 			}
@@ -516,7 +516,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 					? config.analyticsConfig.customEvents
 					: undefined;
 			}
-			console.log('finalQuery', finalQuery);
 			appbaseRef
 				.reactiveSearchv3(finalQuery, rsAPISettings)
 				.then((res) => {
