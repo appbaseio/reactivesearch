@@ -8,8 +8,6 @@ import {
 } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
-import './index.css';
-
 const providers = [
 	{
 		label: 'Google Map',
@@ -56,10 +54,17 @@ class App extends React.Component {
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				enableAppbase
 				type="meetupdata1"
-				mapKey="AIzaSyAKz3UhgSuP872fb-Aw27oPRI7M0eXkA9U"
+				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			>
-				<div className="row">
-					<div className="col">
+				<div>
+					<h3 style={{ textAlign: 'center' }}>Search locations</h3>
+					<div
+						style={{
+							position: 'relative',
+							zIndex: 9999999999,
+							marginBottom: '2rem',
+						}}
+					>
 						<GeoDistanceSlider
 							title="Location"
 							componentId="GeoDistanceSlider"
@@ -80,13 +85,16 @@ class App extends React.Component {
 								distance: 10,
 							}}
 						/>
-						<div
-							style={{
-								marginTop: '3rem',
-								marginBottom: '5px',
-								fontSize: '1 rem',
-							}}
-						>
+					</div>
+					<div
+						style={{
+							position: 'relative',
+							zIndex: 2147483646,
+							marginBottom: '5px',
+							fontSize: '1 rem',
+						}}
+					>
+						<div>
 							<b>Select Map Provider</b>
 						</div>
 						<Dropdown
@@ -98,12 +106,20 @@ class App extends React.Component {
 						/>
 					</div>
 
-					<div className="col">
+					<div style={{ padding: '2rem' }}>
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap style={{ height: '90vh' }} componentId="googleMap" {...mapProps} />
+							<ReactiveGoogleMap
+								style={{ height: '90vh' }}
+								componentId="googleMap"
+								{...mapProps}
+							/>
 						) : (
-							<ReactiveOpenStreetMap style={{ height: '90vh' }} componentId="openstreetMap" {...mapProps} />
+							<ReactiveOpenStreetMap
+								style={{ height: '90vh' }}
+								componentId="openstreetMap"
+								{...mapProps}
+							/>
 						)}
 					</div>
 				</div>

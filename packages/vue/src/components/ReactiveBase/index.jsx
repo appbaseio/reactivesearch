@@ -32,7 +32,7 @@ const ReactiveBase = {
 		}
 	},
 	props: {
-		app: types.stringRequired,
+		app: types.string,
 		analytics: VueTypes.bool,
 		analyticsConfig: types.analyticsConfig,
 		appbaseConfig: types.appbaseConfig,
@@ -53,6 +53,7 @@ const ReactiveBase = {
 		as: VueTypes.string.def('div'),
 		getSearchParams: types.func,
 		setSearchParams: types.func,
+		mongodb: types.mongodb,
 	},
 	provide() {
 		return {
@@ -96,18 +97,22 @@ const ReactiveBase = {
 				}
 			}
 		},
+		mongodb() {
+			this.updateState(this.$props);
+		},
 	},
 	computed: {
 		getHeaders() {
-			const { enableAppbase, headers, appbaseConfig } = this.$props;
+			const { enableAppbase, headers, appbaseConfig, mongodb } = this.$props;
 			const { enableTelemetry } = appbaseConfig || {};
 			return {
-				...(enableAppbase && {
+				...(enableAppbase
+					&& !mongodb && {
 					'X-Search-Client': X_SEARCH_CLIENT,
 					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 				}),
 				...headers,
-			}
+			};
 		},
 	},
 	methods: {
@@ -125,10 +130,7 @@ const ReactiveBase = {
 				...props.appbaseConfig,
 			};
 			const config = {
-				url:
-					props.url && props.url.trim() !== ''
-						? props.url
-						: 'https://scalr.api.appbase.io',
+				url: props.url && props.url.trim() !== '' ? props.url : '',
 				app: props.app,
 				credentials,
 				type: props.type ? props.type : '*',
@@ -139,6 +141,7 @@ const ReactiveBase = {
 					? props.appbaseConfig.recordAnalytics
 					: props.analytics,
 				analyticsConfig: appbaseConfig,
+				mongodb: props.mongodb,
 			};
 			let queryParams = '';
 
@@ -169,8 +172,8 @@ const ReactiveBase = {
 					};
 					urlValues = {
 						...urlValues,
-						[key]: selectedValue.value
-					}
+						[key]: selectedValue.value,
+					};
 				} catch (e) {
 					// Do not add to selectedValues if JSON parsing fails.
 				}

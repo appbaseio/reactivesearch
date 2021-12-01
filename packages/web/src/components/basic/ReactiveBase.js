@@ -85,10 +85,13 @@ class ReactiveBase extends Component {
 	}
 
 	get headers() {
-		const { enableAppbase, headers, appbaseConfig } = this.props;
+		const {
+			enableAppbase, headers, appbaseConfig, mongodb,
+		} = this.props;
 		const { enableTelemetry } = appbaseConfig || {};
 		return {
-			...(enableAppbase && {
+			...(enableAppbase
+				&& !mongodb && {
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
@@ -108,7 +111,7 @@ class ReactiveBase extends Component {
 			...props.appbaseConfig,
 		};
 		const config = {
-			url: props.url && props.url.trim() !== '' ? props.url : 'https://scalr.api.appbase.io',
+			url: props.url && props.url.trim() !== '' ? props.url : '',
 			app: props.app,
 			credentials,
 			type: this.type,
@@ -120,6 +123,7 @@ class ReactiveBase extends Component {
 			analyticsConfig: appbaseConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
+			mongodb: props.mongodb,
 		};
 
 		let queryParams = '';
@@ -212,7 +216,7 @@ ReactiveBase.defaultProps = {
 };
 
 ReactiveBase.propTypes = {
-	app: types.stringRequired,
+	app: types.string,
 	searchStateHeader: types.bool,
 	as: types.string,
 	children: types.children,
@@ -237,6 +241,7 @@ ReactiveBase.propTypes = {
 	transformResponse: types.func,
 	getSearchParams: types.func,
 	setSearchParams: types.func,
+	mongodb: types.mongodb,
 };
 
 export default ReactiveBase;

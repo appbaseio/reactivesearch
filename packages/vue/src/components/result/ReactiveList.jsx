@@ -647,6 +647,9 @@ const ReactiveList = {
 		renderNoResult() {
 			const renderNoResults
 				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			if (this.$scopedSlots.renderNoResults) {
+				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults
+			}
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
