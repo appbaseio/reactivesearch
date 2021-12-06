@@ -81,12 +81,12 @@ class ReactiveComponent extends Component {
 		}
 
 		// Set custom and default queries in store
-		updateCustomQuery(props.componentId, props, undefined);
-		updateDefaultQuery(props.componentId, props, undefined);
+		updateCustomQuery(props.componentId, props, this.props.selectedValue);
+		updateDefaultQuery(props.componentId, props, this.props.selectedValue);
 
 
 		if (this.internalComponent && props.defaultQuery) {
-			this.defaultQuery = props.defaultQuery();
+			this.defaultQuery = props.defaultQuery(this.props.selectedValue, this.props);
 			const { query } = this.defaultQuery || {};
 			const defaultQueryOptions = this.defaultQuery
 				? getOptionsFromQuery(this.defaultQuery)
@@ -147,7 +147,7 @@ class ReactiveComponent extends Component {
 		}
 
 		if (customQuery) {
-			const calcCustomQuery = customQuery(this.props);
+			const calcCustomQuery = customQuery(this.props.selectedValue, this.props);
 			const { query } = calcCustomQuery || {};
 			const customQueryOptions = calcCustomQuery
 				? getOptionsFromQuery(calcCustomQuery)
@@ -196,8 +196,10 @@ class ReactiveComponent extends Component {
 				});
 			}
 		});
-		if (this.props.defaultQuery && !isEqual(this.props.defaultQuery(), this.defaultQuery)) {
-			this.defaultQuery = this.props.defaultQuery();
+		if (this.props.defaultQuery
+			&& !isEqual(this.props.defaultQuery(this.props.selectedValue, this.props),
+				this.defaultQuery)) {
+			this.defaultQuery = this.props.defaultQuery(this.props.selectedValue, this.props);
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
 			if (queryOptions) {
@@ -207,7 +209,7 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			} else this.props.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
-			updateDefaultQuery(this.props.componentId, this.props, undefined);
+			updateDefaultQuery(this.props.componentId, this.props, this.props.selectedValue);
 			let queryToSet = query || null;
 			if (!queryToSet && this.defaultQuery && this.defaultQuery.id) {
 				queryToSet = this.defaultQuery;
@@ -220,10 +222,11 @@ class ReactiveComponent extends Component {
 
 		if (
 			this.props.customQuery
-			&& !isEqual(this.props.customQuery(this.props), prevProps.customQuery(this.props))
+			&& !isEqual(this.props.customQuery(this.props.selectedValue, this.props),
+				prevProps.customQuery(this.props.selectedValue, this.props))
 		) {
-			const { query, ...queryOptions } = this.props.customQuery(this.props) || {};
-
+			const { query, ...queryOptions }
+				= this.props.customQuery(this.props.selectedValue, this.props) || {};
 			if (queryOptions) {
 				this.props.setQueryOptions(
 					this.props.componentId,
@@ -231,7 +234,7 @@ class ReactiveComponent extends Component {
 					false,
 				);
 			} else this.props.setQueryOptions(this.props.componentId, this.getAggsQuery(), false);
-			updateCustomQuery(this.props.componentId, this.props, undefined);
+			updateCustomQuery(this.props.componentId, this.props, this.props.selectedValue);
 			let queryToSet = query || null;
 			if (!queryToSet && queryOptions && queryOptions.id) {
 				queryToSet = queryOptions;

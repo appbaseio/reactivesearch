@@ -139,19 +139,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				}
 			});
 			let isInternalComponentPresent = false;
-			// Set custom and default queries
-			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					component.value,
-					compProps,
-				);
-			}
-			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					component.value,
-					compProps,
-				);
-			}
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
@@ -160,6 +147,20 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component.componentId,
 				component.value || component.defaultValue,
 			);
+
+			// Set custom and default queries
+			if (component.customQuery && typeof component.customQuery === 'function') {
+				customQueries[component.componentId] = component.customQuery(
+					value,
+					compProps,
+				);
+			}
+			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
+				defaultQueries[component.componentId] = component.defaultQuery(
+					value,
+					compProps,
+				);
+			}
 
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
@@ -263,7 +264,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// [4] set query list
 			if (isResultComponent) {
-				const { query } = getQuery(component, null, componentType);
+				const { query } = getQuery(component, value, componentType);
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: internalComponent,
