@@ -34,8 +34,14 @@ const Main = () => (
 						minChars: 2,
 						index: 'good-books-ds',
 					}}
+					enableRecentSuggestions
+					recentSuggestionsConfig={{
+						size: 3,
+						index: 'good-books-ds',
+					}}
 					size={5}
-					enablePredictiveSuggestions={false}
+					enablePredictiveSuggestions
+					index="good-books-ds"
 				/>
 			</div>
 
