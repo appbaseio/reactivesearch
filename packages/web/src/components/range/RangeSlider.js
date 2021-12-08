@@ -16,19 +16,26 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
+import { oneOf } from 'prop-types';
+import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
 import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
-import { connect, getRangeQueryWithNullValues } from '../../utils';
+import {
+	connect,
+	formatDateStringToStandard,
+	getNumericRangeValue,
+	getRangeQueryWithNullValues,
+	getRangeValueString,
+} from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
-
 		const { selectedValue, defaultValue, value } = props;
 		const valueToParse = selectedValue || value || defaultValue;
 		let currentValue = RangeSlider.parseValue(valueToParse, props);
@@ -141,17 +148,18 @@ class RangeSlider extends Component {
 	getSnapPoints = () => {
 		let snapPoints = [];
 		let { stepValue } = this.props;
-
+		const startPoint = getNumericRangeValue(this.props.range.start, this.props);
+		const endPoint = getNumericRangeValue(this.props.range.end, this.props);
 		// limit the number of steps to prevent generating a large number of snapPoints
-		if ((this.props.range.end - this.props.range.start) / stepValue > 100) {
-			stepValue = (this.props.range.end - this.props.range.start) / 100;
+		if ((endPoint - startPoint) / stepValue > 100) {
+			stepValue = (endPoint - startPoint) / 100;
 		}
 
-		for (let i = this.props.range.start; i <= this.props.range.end; i += stepValue) {
+		for (let i = startPoint; i <= endPoint; i += stepValue) {
 			snapPoints = snapPoints.concat(i);
 		}
-		if (snapPoints[snapPoints.length - 1] !== this.props.range.end) {
-			snapPoints = snapPoints.concat(this.props.range.end);
+		if (snapPoints[snapPoints.length - 1] !== endPoint) {
+			snapPoints = snapPoints.concat(endPoint);
 		}
 		return snapPoints;
 	};
@@ -193,24 +201,39 @@ class RangeSlider extends Component {
 	};
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
+		const [start, end] = currentValue;
+		const processedStart
+			= typeof start !== 'object' ? formatDateStringToStandard(start, props) : start;
+		const processedEnd = typeof end !== 'object' ? formatDateStringToStandard(end, props) : end;
+
 		const performUpdate = () => {
 			const handleUpdates = () => {
-				const [start, end] = currentValue;
-				this.updateQuery([start, end], props);
+				this.updateQuery(
+					[
+						getRangeValueString(processedStart, this.props),
+						getRangeValueString(processedEnd, this.props),
+					],
+					props,
+				);
 				if (props.onValueChange) {
 					props.onValueChange({
-						start,
-						end,
+						start: getRangeValueString(processedStart, this.props),
+						end: getRangeValueString(processedEnd, this.props),
 					});
 				}
 			};
 
-			const [start, end] = currentValue;
 			const { range } = props;
-			if (hasMounted && start <= end && start >= range.start && end <= range.end) {
+			if (
+				hasMounted
+				&& getNumericRangeValue(start, this.props) <= getNumericRangeValue(end, this.props)
+				&& getNumericRangeValue(start, this.props)
+					>= getNumericRangeValue(range.start, this.props)
+				&& getNumericRangeValue(end, this.props) <= getNumericRangeValue(range.end, this.props)
+			) {
 				this.setState(
 					{
-						currentValue,
+						currentValue: [processedStart, processedEnd],
 					},
 					handleUpdates,
 				);
@@ -221,8 +244,8 @@ class RangeSlider extends Component {
 		checkValueChange(
 			props.componentId,
 			{
-				start: currentValue[0],
-				end: currentValue[1],
+				start: processedStart,
+				end: processedEnd,
 			},
 			props.beforeValueChange,
 			performUpdate,
@@ -231,7 +254,12 @@ class RangeSlider extends Component {
 
 	handleSlider = ({ values }) => {
 		if (this.shouldUpdate(values)) {
-			if (!isEqual(values, this.state.currentValue)) {
+			if (
+				!isEqual(
+					values.map(val => getNumericRangeValue(val, this.props)),
+					this.state.currentValue.map(val => getNumericRangeValue(val, this.props)),
+				)
+			) {
 				const { value, onChange } = this.props;
 
 				if (value === undefined) {
@@ -324,7 +352,7 @@ class RangeSlider extends Component {
 			return validateRange(value);
 		}
 		return true;
-	}
+	};
 
 	render() {
 		return (
@@ -343,9 +371,11 @@ class RangeSlider extends Component {
 				) : null}
 				{this.props.showSlider && (
 					<Rheostat
-						min={this.props.range.start}
-						max={this.props.range.end}
-						values={this.state.currentValue}
+						min={getNumericRangeValue(this.props.range.start, this.props)}
+						max={getNumericRangeValue(this.props.range.end, this.props)}
+						values={this.state.currentValue.map(val =>
+							getNumericRangeValue(val, this.props),
+						)}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
@@ -423,6 +453,8 @@ RangeSlider.propTypes = {
 	includeNullValues: types.bool,
 	validateRange: types.func,
 	index: types.string,
+	queryFormat: oneOf([...Object.keys(dateFormats), 'or', 'and']),
+	calendarInterval: types.calendarInterval,
 };
 
 RangeSlider.defaultProps = {
@@ -440,6 +472,7 @@ RangeSlider.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
+	queryFormat: 'or',
 };
 
 // Add componentType for SSR
