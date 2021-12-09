@@ -30,7 +30,7 @@ export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
  * To determine wether an element is a function
  * @param {any} element
  */
-export const isFunction = (element) => typeof element === 'function';
+export const isFunction = element => typeof element === 'function';
 
 /**
  * Extracts the render prop from props and returns a valid React element
@@ -58,7 +58,7 @@ export const hasCustomRenderer = (props = {}) => {
 	return isFunction(children) || isFunction(render);
 };
 
-export const isEvent = (candidate) =>
+export const isEvent = candidate =>
 	!!(candidate && candidate.stopPropagation && candidate.preventDefault);
 /**
  * To check if two functions are identical
@@ -74,7 +74,7 @@ export const isIdentical = (a, b) => {
 	return false;
 };
 export const getValidPropsKeys = (props = {}) =>
-	Object.keys(props).filter((i) => validProps.includes(i));
+	Object.keys(props).filter(i => validProps.includes(i));
 /**
  * Handles the caret position for input components
  * @param {HTMLInputElement} e
@@ -90,7 +90,7 @@ export const handleCaretPosition = (e) => {
 	}
 };
 // elastic search query for including null values
-export const getNullValuesQuery = (fieldName) => ({
+export const getNullValuesQuery = fieldName => ({
 	bool: {
 		must_not: {
 			exists: {
@@ -174,7 +174,7 @@ export const getPopularSuggestionsComponent = (data = {}, props = {}) => {
 	return null;
 };
 
-export const isEmpty = (val) => !(val && val.length && Object.keys(val).length);
+export const isEmpty = val => !(val && val.length && Object.keys(val).length);
 
 export function isNumeric(value) {
 	return /^-?\d+$/.test(value);
@@ -193,7 +193,7 @@ export function isHotkeyCombination(hotkey) {
 // stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
-	const chrCode = which - 48 * Math.floor(which / 48);
+	const chrCode = which - (48 * Math.floor(which / 48));
 	return String.fromCharCode(which >= 96 ? chrCode : which);
 }
 
@@ -238,15 +238,23 @@ export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd'
 
 // filter out modifierkeys such as ctrl, alt, command, shift from focusShortcuts prop
 export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
-	return focusShortcutsArray.filter((shortcutKey) => MODIFIER_KEYS.includes(shortcutKey));
+	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
+}
+export function isValidDateRangeQueryFormat(queryFormat) {
+	return Object.keys(dateFormats).includes(queryFormat);
 }
 
 export function getNumericRangeValue(value, props) {
-	if (typeof value === 'object') {
+	// eslint-disable-next-line
+	if (
+		typeof value !== 'number'
+		&& isValidDateRangeQueryFormat(props.queryFormat)
+		&& new XDate(value, true).valid()
+	) {
 		if (props.queryFormat === 'epoch_second') {
-			return Math.floor(new XDate(value).getTime() / 1000);
+			return Math.floor(new XDate(value, true).getTime() / 1000);
 		}
-		return new XDate(value).getTime();
+		return new XDate(value, true).getTime();
 	}
 	return parseFloat(value);
 }
@@ -255,19 +263,19 @@ export function getRangeValueString(value, props) {
 	if (typeof value !== 'string') {
 		switch (props.queryFormat) {
 			case 'epoch_millis':
-				return new XDate(value).getTime();
+				return new XDate(value, true).getTime();
 			case 'epoch_second':
-				return Math.floor(new XDate(value).getTime() / 1000);
+				return Math.floor(new XDate(value, true).getTime() / 1000);
 			// we fallback to `date` format since, only-time is lossy for converting back to date object
 			// we would need to convert back from rangestring to date object for feeding to rangeslider
 			// post numeric conversion of date object
 			case 'basic_time_no_millis':
-				return new XDate(value).toString(dateFormats.date);
+				return new XDate(value, true).toString(dateFormats.date);
 			case 'basic_time':
-				return new XDate(value).toString(dateFormats.date);
+				return new XDate(value, true).toString(dateFormats.date);
 			default: {
 				if (dateFormats[props.queryFormat]) {
-					return new XDate(value).toString(dateFormats[props.queryFormat]);
+					return new XDate(value, true).toString(dateFormats[props.queryFormat]);
 				}
 				return value.toString();
 			}
@@ -287,8 +295,8 @@ export function formatDateStringToStandard(value, props) {
 			formattedValue.indexOf('+') != -1
 				? '+'
 				: formattedValue.indexOf('-') !== -1
-				? '-'
-				: null;
+					? '-'
+					: null;
 
 		const offsetComponent = offSetSign ? offSetSign + formattedValue.split(offSetSign)[1] : '';
 		switch (queryFormat) {

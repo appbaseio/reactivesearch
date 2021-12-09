@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
+import XDate from 'xdate';
 import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -30,6 +31,7 @@ import {
 	getNumericRangeValue,
 	getRangeQueryWithNullValues,
 	getRangeValueString,
+	isValidDateRangeQueryFormat,
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -40,7 +42,10 @@ class RangeSlider extends Component {
 		const valueToParse = selectedValue || value || defaultValue;
 		let currentValue = RangeSlider.parseValue(valueToParse, props);
 		if (!this.shouldUpdate(currentValue)) {
-			currentValue = [props.range.start, props.range.end];
+			currentValue = [
+				getNumericRangeValue(props.range.start, props),
+				getNumericRangeValue(props.range.end, props),
+			];
 		}
 		this.state = {
 			currentValue,
@@ -53,7 +58,6 @@ class RangeSlider extends Component {
 
 		this.updateQueryOptions(props);
 		const hasMounted = false;
-
 		if (currentValue) {
 			this.handleChange(currentValue, props, hasMounted);
 		}
@@ -69,8 +73,11 @@ class RangeSlider extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval'], () =>
-			this.updateQueryOptions(this.props),
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['showHistogram', 'interval', 'range', 'calendarInterval'],
+			() => this.updateQueryOptions(this.props),
 		);
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { options } = this.props;
@@ -95,8 +102,20 @@ class RangeSlider extends Component {
 			const value = RangeSlider.parseValue(this.props.value, this.props);
 			this.handleChange(value, this.props);
 		} else if (
-			!isEqual(this.state.currentValue, this.props.selectedValue)
-			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+			!isEqual(
+				this.state.currentValue.map(val => getNumericRangeValue(val, this.props)),
+				Array.isArray(this.props.selectedValue)
+					? this.props.selectedValue.map(val => getNumericRangeValue(val, this.props))
+					: null,
+			)
+			&& !isEqual(
+				Array.isArray(this.props.selectedValue)
+					? this.props.selectedValue.map(val => getNumericRangeValue(val, this.props))
+					: null,
+				Array.isArray(prevProps.selectedValue)
+					? prevProps.selectedValue.map(val => getNumericRangeValue(val, this.props))
+					: null,
+			)
 		) {
 			const { value, onChange } = this.props;
 
@@ -119,12 +138,29 @@ class RangeSlider extends Component {
 			);
 			return false;
 		}
+		checkSomePropChange(nextProps, this.props, ['queryFormat'], () => {
+			this.setState(
+				{
+					currentValue: RangeSlider.parseValue(null, nextProps),
+				},
+				() => {
+					this.updateQueryOptions(nextProps);
+					this.handleChange(this.state.currentValue, nextProps);
+				},
+			);
+			return false;
+		});
 		return true;
 	}
 
 	static parseValue = (value, props) => {
 		if (Array.isArray(value)) return value;
-		return value ? [value.start, value.end] : [props.range.start, props.range.end];
+		return value
+			? [value.start, value.end]
+			: [
+				getNumericRangeValue(props.range.start, props),
+				getNumericRangeValue(props.range.end, props),
+			];
 	};
 
 	static defaultQuery = (value, props) => {
@@ -165,7 +201,12 @@ class RangeSlider extends Component {
 	};
 
 	getValidInterval = (props) => {
-		const min = Math.ceil((props.range.end - props.range.start) / 100) || 1;
+		const min
+			= Math.ceil(
+				(getNumericRangeValue(props.range.end, props)
+					- getNumericRangeValue(props.range.start, props))
+					/ 100,
+			) || 1;
 		if (!props.interval) {
 			return min;
 		} else if (props.interval < min) {
@@ -183,7 +224,7 @@ class RangeSlider extends Component {
 				histogram: {
 					field: props.dataField,
 					interval: this.getValidInterval(props),
-					offset: props.range.start,
+					offset: getNumericRangeValue(props.range.start, props),
 				},
 			},
 		};
@@ -202,16 +243,35 @@ class RangeSlider extends Component {
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		const [start, end] = currentValue;
-		const processedStart
-			= typeof start !== 'object' ? formatDateStringToStandard(start, props) : start;
-		const processedEnd = typeof end !== 'object' ? formatDateStringToStandard(end, props) : end;
+		const processedStart = getNumericRangeValue(
+			isValidDateRangeQueryFormat(props.queryFormat)
+				&& !XDate(start).valid()
+				&& props.queryFormat !== dateFormats.epoch_second
+				? formatDateStringToStandard(start, props)
+				: start,
+			props,
+		);
+		const processedEnd = getNumericRangeValue(
+			isValidDateRangeQueryFormat(props.queryFormat)
+				&& !XDate(end).valid()
+				&& props.queryFormat !== dateFormats.epoch_second
+				? formatDateStringToStandard(end, props)
+				: end,
+			props,
+		);
 
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(
 					[
-						getRangeValueString(processedStart, this.props),
-						getRangeValueString(processedEnd, this.props),
+						isValidDateRangeQueryFormat(props.queryFormat)
+						&& props.queryFormat !== dateFormats.epoch_second
+							? getRangeValueString(processedStart, this.props)
+							: processedStart,
+						isValidDateRangeQueryFormat(props.queryFormat)
+						&& props.queryFormat !== dateFormats.epoch_second
+							? getRangeValueString(processedEnd, this.props)
+							: processedEnd,
 					],
 					props,
 				);
