@@ -16,6 +16,9 @@ const Main = () => (
 		app="meetup_app"
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 		enableAppbase
+		appbaseConfig={{
+			enableQueryRules: false,
+		}}
 	>
 		<div className="row">
 			<div className="col">
@@ -29,6 +32,18 @@ const Main = () => (
 						{ label: 'Adventure', value: 'Adventure' },
 						{ label: 'Music', value: 'Music' },
 					]}
+					renderItem={(label, count, isSelected) => (
+						<div>
+							<span
+								style={{
+									marginLeft: 5,
+									color: isSelected ? 'red' : 'dodgerblue',
+								}}
+							>
+								{label}
+							</span>
+						</div>
+					)}
 				/>
 			</div>
 			<div className="col">
@@ -51,8 +66,14 @@ const Main = () => (
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
 							{data.map(item => (
-								<ResultList href={item.event.event_url} key={item._id}>
-									<ResultList.Image small src={item.member.photo} />
+								<ResultList
+									href={item.event ? item.event.event_url : ''}
+									key={item._id}
+								>
+									<ResultList.Image
+										small
+										src={item.member ? item.member.photo : ''}
+									/>
 									<ResultList.Content>
 										<ResultList.Title>
 											<div className="meetup-title">
@@ -69,16 +90,19 @@ const Main = () => (
 													{item.group ? item.group.group_city : ''}
 												</div>
 												<div className="flex wrap meetup-topics">
-													{item.group.group_topics
-														.slice(0, 4)
-														.map(tag => (
-															<div
-																className="meetup-topic"
-																key={tag.topic_name}
-															>
-																{tag.topic_name}
-															</div>
-														))}
+													{item.group
+													&& Array.isArray(item.group.group_topics)
+														? item.group.group_topics
+															.slice(0, 4)
+															.map(tag => (
+																<div
+																	className="meetup-topic"
+																	key={tag.topic_name}
+																>
+																	{tag.topic_name}
+																</div>
+															))
+														: null}
 												</div>
 											</div>
 										</ResultList.Description>

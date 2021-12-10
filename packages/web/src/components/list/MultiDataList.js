@@ -505,7 +505,7 @@ class MultiDataList extends Component {
 											htmlFor={`${this.props.componentId}-${item.label}`}
 										>
 											{renderItem ? (
-												renderItem(item.label, item.count, this.state.currentValue === item.label)
+												renderItem(item.label, item.count, isChecked)
 											) : (
 												<span>
 													<span>{item.label}</span>
