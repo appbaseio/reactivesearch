@@ -39,8 +39,8 @@ const inputChunks = {
 	ToggleButton: 'src/components/list/ToggleButton.jsx',
 	StateProvider: 'src/components/basic/StateProvider.jsx',
 	initReactivesearch: 'src/server/index.js',
-	RangeInput: 'src/components/range/RangeInput.jsx'
-}
+	RangeInput: 'src/components/range/RangeInput.jsx',
+};
 
 if (es) {
 	output = {
@@ -139,7 +139,7 @@ export default {
 				'process.env.NODE_ENV': JSON.stringify(minify ? 'production' : 'development'),
 				"components['vue-slider-component'] = require('vue-slider-component');": `
 					var s = document.createElement("script");
-					s.setAttribute("src","https://cdn.jsdelivr.net/npm/vue-slider-component@2.8.2/dist/index.js");
+					s.setAttribute("src","https://cdn.jsdelivr.net/npm/vue-slider-component@3.2.15/dist/index.js");
 					s.onload = function(){
 						var VueSlider = global['vue-slider-component'];
 						components['vue-slider-component'] = VueSlider;

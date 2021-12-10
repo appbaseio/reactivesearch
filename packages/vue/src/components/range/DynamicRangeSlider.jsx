@@ -21,13 +21,8 @@ const {
 	updateComponentProps,
 } = Actions;
 
-const {
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	isEqual,
-	checkSomePropChange,
-} = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery, isEqual, checkSomePropChange }
+	= helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -170,15 +165,15 @@ const DynamicRangeSlider = {
 			this.setQueryOptions(this.internalRangeComponent, { aggs });
 		},
 
-		handleSlider(values) {
-			this.handleChange(values.currentValue);
+		handleSlider(value) {
+			this.handleChange(value);
 		},
 
 		handleChange(currentValue) {
 			// Always keep the values within range
 			const normalizedValue = [
-				this.range ? Math.max(this.range.start, currentValue[0]) : currentValue[0],
-				this.range ? Math.min(this.range.end, currentValue[1]) : currentValue[1],
+				this.range ? Math.max(this.range.start, currentValue?.[0]) : currentValue[0],
+				this.range ? Math.min(this.range.end, currentValue?.[1]) : currentValue[1],
 			];
 
 			const performUpdate = () => {
@@ -309,7 +304,7 @@ const DynamicRangeSlider = {
 							]}
 							min={Math.min(start, this.currentValue[0])}
 							max={Math.max(end, this.currentValue[1])}
-							onDrag-end={this.handleSlider}
+							onChange={this.handleSlider}
 							dotSize={20}
 							height={4}
 							enable-cross={false}
@@ -372,7 +367,7 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = value => [value.start, value.end];
+DynamicRangeSlider.parseValue = (value) => [value.start, value.end];
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];
@@ -431,7 +426,7 @@ const mapDispatchtoProps = {
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
 
-DynamicRangeSlider.install = function(Vue) {
+DynamicRangeSlider.install = function (Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);
 };
 

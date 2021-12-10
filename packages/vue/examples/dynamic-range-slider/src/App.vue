@@ -7,7 +7,18 @@
 		>
 			<div class="row">
 				<div class="col">
-					<DynamicRangeSlider dataField="ratings_count" componentId="BookSensor" />
+					<DynamicRangeSlider
+						dataField="books_count"
+						componentId="BookSensor"
+						:rangeLabels="
+							(min, max) => {
+								return {
+									start: min + ' Books',
+									end: max + ' Books',
+								};
+							}
+						"
+					/>
 				</div>
 				<div class="col">
 					<SelectedFilters />
