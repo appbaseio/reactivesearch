@@ -199,12 +199,8 @@ const RangeSlider = {
 								dotSize={20}
 								height={4}
 								enable-cross={false}
+								onChange={this.handleSlider}
 								{...{ props: this.$props.sliderOptions }}
-								{...{
-									on: {
-										input: this.handleSlider,
-									},
-								}}
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">
@@ -295,7 +291,7 @@ export const RangeConnected = ComponentWrapper(
 	},
 );
 
-RangeSlider.install = function(Vue) {
+RangeSlider.install = function (Vue) {
 	Vue.component(RangeSlider.name, RangeConnected);
 };
 
