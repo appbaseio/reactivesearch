@@ -248,6 +248,7 @@ class SingleDataList extends Component {
 				(obj, item) => ({
 					...obj,
 					[item.key]: item.doc_count,
+					[item.key_as_string]: item.doc_count,
 				}),
 				{},
 			);
