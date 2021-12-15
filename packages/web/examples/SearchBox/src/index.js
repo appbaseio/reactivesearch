@@ -26,7 +26,7 @@ const Main = () => (
 					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
-					highlight={false}
+					highlight
 					URLParams
 					enablePopularSuggestions
 					popularSuggestionsConfig={{
@@ -42,6 +42,9 @@ const Main = () => (
 					size={5}
 					enablePredictiveSuggestions
 					index="good-books-ds"
+					onData={(props) => {
+						console.log(props);
+					}}
 				/>
 			</div>
 
