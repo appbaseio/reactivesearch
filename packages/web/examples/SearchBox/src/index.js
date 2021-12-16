@@ -47,7 +47,7 @@ const Main = () => (
 					index="good-books-ds"
 					onData={(props) => {
 						// eslint-disable-next-line
-						// console.log(props);
+						console.log(props);
 					}}
 					showClear
 				/>
@@ -66,7 +66,7 @@ const Main = () => (
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map((item) => (
+							{data.map(item => (
 								<ResultCard id={item._id} key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
