@@ -15,9 +15,12 @@
 	"workspaces": [
 		"packages/*",
 		"packages/web/examples/*",
+		"packages/web/examples/mongo-examples/*",
 		"packages/vue/examples/*",
+		"packages/vue/examples/mongo-examples/*",
 		"packages/vue/demos/*",
 		"packages/maps/examples/*",
+		"packages/maps/examples/mongo-examples/*",
 		"site",
 		"site/demos/*"
 	],
@@ -45,9 +48,11 @@
 		"lint-staged": "^11.0.0",
 		"nps": "^5.9.5",
 		"nps-utils": "^1.7.0",
-		"prettier": "^2.3.2"
+		"prettier": "^2.3.2",
+		"babel-core": "^6.26.3",
+		"babel-loader": "^8.2.3"
 	},
 	"engines": {
-        "node": ">=10.16"
-    }
+		"node": ">=10.16"
+	}
 }

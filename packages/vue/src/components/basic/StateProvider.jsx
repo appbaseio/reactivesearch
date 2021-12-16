@@ -81,7 +81,7 @@ const StateProvider = {
 	watch: {
 		searchState(newVal, oldVal) {
 			if (this.isStateChanged(newVal, oldVal)) {
-				this.$emit('change', newVal, oldVal);
+				this.$emit('change', oldVal, newVal);
 			}
 		},
 		selectedValues(newVal, oldVal) {

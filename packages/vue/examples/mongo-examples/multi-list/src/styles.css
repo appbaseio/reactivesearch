@@ -1,0 +1,104 @@
+/* layout */
+
+body {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-top: 15px;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.col {
+	flex: 1;
+	padding: 15px;
+}
+
+.row > .col:first-child {
+	border-right: 1px solid #ccc;
+	max-width: 400px;
+}
+
+.row > .col:last-child {
+	background: #fafafa;
+}
+
+.flex {
+	display: flex;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-space-between {
+	justify-content: space-between;
+}
+
+.text-center {
+	text-align: center;
+}
+
+@media all and (max-width: 767px) {
+	.row {
+		flex-direction: column;
+	}
+
+	.row > .col:first-child {
+		border-right: none;
+		max-width: none;
+	}
+}
+
+/* apps */
+
+.property-type {
+	color: #9d9d9d;
+	font-weight: bold;
+}
+
+.ratings-list {
+	padding: 10px 0;
+}
+
+.avg-rating {
+	color: #6b6b6b;
+	margin-left: 5px;
+}
+
+.stars {
+	color: gold;
+}
+
+.property-image {
+	height: 150px;
+	width: 40%;
+	background-size: cover;
+	margin-right: 1rem;
+}
+
+.property-header {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.property-content {
+	background: white;
+	margin: 10px 0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}

@@ -221,6 +221,7 @@ ReactiveGoogleMap.propTypes = {
 	renderMap: types.func,
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
+	index: types.string,
 };
 
 ReactiveGoogleMap.defaultProps = {

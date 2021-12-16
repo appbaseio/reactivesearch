@@ -1,0 +1,109 @@
+/* layout */
+
+body {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-top: 15px;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.col {
+	flex: 1;
+	padding: 15px;
+}
+
+.row > .col:first-child {
+	border-right: 1px solid #ccc;
+	max-width: 400px;
+}
+
+.row > .col:last-child {
+	background: #fafafa;
+}
+
+.flex {
+	display: flex;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-space-between {
+	justify-content: space-between;
+}
+
+.text-center {
+	text-align: center;
+}
+
+@media all and (max-width: 767px) {
+	.row {
+		flex-direction: column;
+	}
+
+	.row > .col:first-child {
+		border-right: none;
+		max-width: none;
+	}
+}
+
+.title {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.description {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+
+	@supports (-webkit-line-clamp: 2) {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: initial;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
+}
+
+.tag {
+	margin-top: 4px;
+	padding: 6px;
+	background: #daebe6;
+	width: fit-content;
+	border-radius: 4px;
+}
+
+.tag span {
+	font-weight: 600;
+}
+
+.cards-wrapper > div {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.card {
+	min-width: 250px !important;
+}
