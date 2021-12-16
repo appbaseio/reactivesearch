@@ -10,14 +10,13 @@ import {
 	getClassName,
 	getResultStats,
 	withClickIds,
-	checkSomePropChange,
 	updateCustomQuery,
 	updateDefaultQuery,
 	normalizeDataField,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
 	updateQuery,
@@ -41,7 +40,7 @@ import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
 	extractModifierKeysFromFocusShortcuts,
-	getComponent,
+	getComponent as getComponentUtilFunc,
 	handleCaretPosition,
 	hasCustomRenderer,
 	isEmpty,
@@ -55,120 +54,59 @@ import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
 
-class SearchBox extends Component {
-	constructor(props) {
-		super(props);
-		const { value, defaultValue, selectedValue } = props;
-		const currentValue = selectedValue || value || defaultValue || '';
-		this.state = {
-			currentValue, // decide whether to keep it or not
-			isOpen: false,
-		};
-		this.internalComponent = getInternalComponentID(props.componentId);
-		/**
-		 * To regulate the query execution based on the input handler,
-		 * the component query will only get executed when it sets to `true`.
-		 * */
-		this.isPending = false;
-		const hasMounted = false;
-		const cause = null;
-		if (currentValue) {
-			if (props.onChange) {
-				props.onChange(currentValue, this.triggerQuery);
-			}
-		}
-		this.setValue(currentValue, true, props, cause, hasMounted);
+const useConstructor = (callBack = () => {}) => {
+	const [hasBeenCalled, setHasBeenCalled] = useState(false);
+	if (hasBeenCalled) return;
+	callBack();
+	setHasBeenCalled(true);
+};
 
-		// Set custom and default queries in store
-		this.triggerCustomQuery();
-		this.triggerDefaultQuery();
-	}
+const SearchBox = (props) => {
+	const {
+		selectedValue,
+		value,
+		defaultValue,
+		componentId,
+		rawData,
+		aggregationData,
+		isLoading,
+		error,
+		onData,
+		onChange,
+		focusShortcuts,
+		defaultQuery,
+		filterLabel,
+		showFilter,
+		URLParams,
+		customQuery,
+	} = props;
 
-	componentDidMount() {
-		// register hotkeys for listening to focusShortcuts' key presses
-		this.listenForFocusShortcuts();
-	}
+	const internalComponent = getInternalComponentID(componentId);
+	const [currentValue, setCurrentValue] = useState(selectedValue || value || defaultValue || '');
+	const [isOpen, setIsOpen] = useState(false);
+	const _inputRef = useRef(null);
+	const stats = () => getResultStats(props);
 
-	componentDidUpdate(prevProps) {
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['suggestions', 'rawData', 'aggregationData', 'isLoading', 'error'],
-			() => {
-				if (this.props.onData) {
-					this.props.onData({
-						data: this.props.suggestions,
-						rawData: this.props.rawData,
-						aggregationData: this.props.aggregationData,
-						loading: this.props.isLoading,
-						error: this.props.error,
-					});
-				}
-			},
-		);
-		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value, true, this.props, undefined, undefined, false);
-		} else if (
-			// since, selectedValue will be updated when currentValue changes,
-			// we must only check for the changes introduced by
-			// clear action from SelectedFilters component in which case,
-			// the currentValue will never match the updated selectedValue
-			this.props.selectedValue !== prevProps.selectedValue
-			&& this.state.currentValue !== this.props.selectedValue
-		) {
-			const { value, onChange } = this.props;
-			if (!this.props.selectedValue && this.state.currentValue) {
-				// selected value is cleared, call onValueSelected
-				this.onValueSelected('', causes.CLEAR_VALUE, null);
-			}
-			if (value === undefined) {
-				this.setValue(this.props.selectedValue || '', true, this.props);
-			} else if (onChange) {
-				// value prop exists
-				onChange(this.props.selectedValue || '', this.triggerQuery);
-			} else {
-				// value prop exists and onChange is not defined:
-				// we need to put the current value back into the store
-				// if the clear action was triggered by interacting with
-				// selected-filters component
-				this.isPending = false;
-				this.setValue(this.state.currentValue, true, this.props, undefined, true, false);
-			}
-		}
-	}
-
-	get stats() {
-		return getResultStats(this.props);
-	}
-
-	get parsedSuggestions() {
-		return withClickIds(this.props.suggestions);
-	}
-
-	get hasCustomRenderer() {
-		return hasCustomRenderer(this.props);
-	}
-
-	focusSearchBox = (event) => {
+	const parsedSuggestions = () =>
+		Array.isArray(props.suggestions) ? withClickIds(props.suggestions) : [];
+	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
 		const tagName = elt.tagName;
 		if (
-			elt.isContentEditable
-			|| tagName === 'INPUT'
-			|| tagName === 'SELECT'
-			|| tagName === 'TEXTAREA'
+			elt.isContentEditable ||
+			tagName === 'INPUT' ||
+			tagName === 'SELECT' ||
+			tagName === 'TEXTAREA'
 		) {
 			// already in an input
 			return;
 		}
 
-		if (this._inputRef) {
-			this._inputRef.focus();
+		if (_inputRef.current) {
+			_inputRef.current.focus();
 		}
 	};
-
-	listenForFocusShortcuts = () => {
-		const { focusShortcuts } = this.props;
+	const listenForFocusShortcuts = () => {
 		if (isEmpty(focusShortcuts)) {
 			return;
 		}
@@ -181,7 +119,7 @@ class SearchBox extends Component {
 			(event, handler) => {
 				// Prevent the default refresh event under WINDOWS system
 				event.preventDefault();
-				this.focusSearchBox(event);
+				focusSearchBox(event);
 			},
 		);
 
@@ -194,32 +132,24 @@ class SearchBox extends Component {
 			for (let index = 0; index < modifierKeys.length; index += 1) {
 				const element = modifierKeys[index];
 				if (hotkeys[element]) {
-					this.focusSearchBox(event);
+					focusSearchBox(event);
 					break;
 				}
 			}
 		});
 	};
-
-	triggerClickAnalytics = (searchPosition, documentId) => {
+	const triggerClickAnalytics = (searchPosition, documentId) => {
 		let docId = documentId;
 		if (!docId) {
-			const hitData = this.parsedSuggestions.find(hit => hit._click_id === searchPosition);
+			const hitData = parsedSuggestions().find((hit) => hit._click_id === searchPosition);
 			if (hitData && hitData.source && hitData.source._id) {
 				docId = hitData.source._id;
 			}
 		}
-		this.props.triggerAnalytics(searchPosition, docId);
+		props.triggerAnalytics(searchPosition, docId);
 	};
 
-	withTriggerQuery = (func) => {
-		if (func) {
-			return e => func(e, this.triggerQuery);
-		}
-		return undefined;
-	};
-
-	static shouldQuery = (value = 'm', dataFields, props) => {
+	const shouldQuery = (value, dataFields, props) => {
 		const finalQuery = [];
 		const phrasePrefixFields = [];
 		const fields = dataFields.map((dataField) => {
@@ -228,9 +158,9 @@ class SearchBox extends Component {
 			}`;
 			if (
 				!(
-					dataField.field.endsWith('.keyword')
-					|| dataField.field.endsWith('.autosuggest')
-					|| dataField.field.endsWith('.search')
+					dataField.field.endsWith('.keyword') ||
+					dataField.field.endsWith('.autosuggest') ||
+					dataField.field.endsWith('.search')
 				)
 			) {
 				phrasePrefixFields.push(queryField);
@@ -308,23 +238,23 @@ class SearchBox extends Component {
 		return finalQuery;
 	};
 
-	static defaultQuery = (value, props) => {
+	const searchBoxDefaultQuery = (value, props) => {
 		let finalQuery = null;
 
 		const fields = normalizeDataField(props.dataField, props.fieldWeights);
 		if (value) {
 			if (props.queryString) {
 				finalQuery = {
-					query_string: SearchBox.shouldQuery(value, fields, props),
+					query_string: shouldQuery(value, fields, props),
 				};
 			} else if (props.searchOperators) {
 				finalQuery = {
-					simple_query_string: SearchBox.shouldQuery(value, fields, props),
+					simple_query_string: shouldQuery(value, fields, props),
 				};
 			} else {
 				finalQuery = {
 					bool: {
-						should: SearchBox.shouldQuery(value, fields, props),
+						should: shouldQuery(value, fields, props),
 						minimum_should_match: '1',
 					},
 				};
@@ -334,7 +264,7 @@ class SearchBox extends Component {
 		if (value === '') {
 			finalQuery = {
 				bool: {
-					should: SearchBox.shouldQuery(value, fields, props),
+					should: shouldQuery(value, fields, props),
 					minimum_should_match: '1',
 				},
 			};
@@ -351,41 +281,37 @@ class SearchBox extends Component {
 		return finalQuery;
 	};
 
-	triggerDefaultQuery = () => {
-		const { currentValue: value } = this.state;
-		const { defaultQuery, componentId } = this.props;
-		let query = SearchBox.defaultQuery(value, this.props);
+	const triggerDefaultQuery = (paramValue) => {
+		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
+		let query = searchBoxDefaultQuery(value, props);
 		if (defaultQuery) {
-			const defaultQueryTobeSet = defaultQuery(value, this.props) || {};
+			const defaultQueryTobeSet = defaultQuery(value, props) || {};
 			if (defaultQueryTobeSet.query) {
 				({ query } = defaultQueryTobeSet);
 			}
 			// Update calculated default query in store
-			updateDefaultQuery(componentId, this.props, value);
+			updateDefaultQuery(componentId, props, value);
 		}
-		this.props.updateQuery({
-			componentId: this.internalComponent,
+		props.updateQuery({
+			componentId: internalComponent,
 			query,
 			value,
 			componentType: componentTypes.searchBox,
 		});
 	};
 
-	triggerCustomQuery = () => {
-		const {
-			componentId, filterLabel, showFilter, URLParams, customQuery,
-		} = this.props;
-		const { currentValue: value } = this.state;
-		let query = SearchBox.defaultQuery(value, this.props);
+	const triggerCustomQuery = (paramValue) => {
+		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
+		let query = searchBoxDefaultQuery(value, props);
 		if (customQuery) {
-			const customQueryTobeSet = customQuery(value, this.props) || {};
+			const customQueryTobeSet = customQuery(value, props) || {};
 			const queryTobeSet = customQueryTobeSet.query;
 			if (queryTobeSet) {
 				query = queryTobeSet;
 			}
-			updateCustomQuery(componentId, this.props, value);
+			updateCustomQuery(componentId, props, value);
 		}
-		this.props.updateQuery({
+		props.updateQuery({
 			componentId,
 			value,
 			query,
@@ -396,204 +322,193 @@ class SearchBox extends Component {
 		});
 	};
 
-	triggerQuery = ({ isOpen = false, customQuery = false, defaultQuery = false }) => {
-		this.isPending = false;
+	const triggerQuery = ({
+		isOpen = false,
+		customQuery = false,
+		defaultQuery = false,
+		value = undefined,
+	}) => {
 		if (isOpen) {
-			this.setState({ isOpen });
+			setIsOpen(isOpen);
 		}
 		if (defaultQuery) {
-			this.triggerDefaultQuery();
+			triggerDefaultQuery(value);
 		}
 
 		if (customQuery) {
-			this.triggerCustomQuery();
+			triggerCustomQuery(value);
 		}
 	};
-
-	onSuggestionSelected = (suggestion) => {
-		const { value, onChange } = this.props;
-		this.setState({
-			isOpen: false,
-		});
-		const suggestionValue = suggestion._category ? suggestion.label : suggestion.value;
-		if (value === undefined) {
-			this.setValue(suggestionValue, true, this.props, causes.SUGGESTION_SELECT, true, false);
-		} else if (onChange) {
-			this.isPending = false;
-			onChange(suggestionValue, this.triggerQuery);
+	const withTriggerQuery = (func) => {
+		if (func) {
+			return (e) => func(e, triggerQuery);
 		}
-		// Record analytics for selected suggestions
-		this.triggerClickAnalytics(suggestion._click_id);
-		// onValueSelected is user interaction driven:
-		// it should be triggered irrespective of controlled (or)
-		// uncontrolled component behavior
-		this.onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion.source);
+		return undefined;
 	};
-
-	onValueSelected = (currentValue = this.state.currentValue, ...cause) => {
-		const { onValueSelected } = this.props;
+	const onValueSelected = (valueSelected = currentValue, ...cause) => {
+		const { onValueSelected } = props;
 		if (onValueSelected) {
-			onValueSelected(currentValue, ...cause);
+			onValueSelected(valueSelected, ...cause);
 		}
 	};
-
-	onInputChange = (e) => {
-		const { value: inputValue } = e.target;
-		if (!this.state.isOpen) {
-			this.setState({
-				isOpen: true,
-			});
-		}
-
-		const { value, onChange } = this.props;
-		if (value === undefined) {
-			this.setValue(inputValue, false, this.props, undefined, true, false);
-		} else if (onChange) {
-			this.isPending = true;
-			// handle caret position in controlled components
-			handleCaretPosition(e);
-			onChange(inputValue, this.triggerQuery, e);
-		}
-	};
-
-	handleTextChange = debounce(() => {
-		if (this.props.autosuggest) {
-			this.triggerDefaultQuery();
+	const handleTextChange = debounce((valueParam = undefined) => {
+		console.log('props.autosuggest', props.autosuggest);
+		if (props.autosuggest) {
+			triggerDefaultQuery(valueParam);
 		} else {
-			this.triggerCustomQuery();
+			triggerCustomQuery(valueParam);
 		}
-	}, this.props.debounce);
-
-	handleKeyDown = (event, highlightedIndex) => {
-		const { value, onChange } = this.props;
-		if (value !== undefined && onChange) {
-			this.isPending = true;
-		}
-		// if a suggestion was selected, delegate the handling
-		// to suggestion handler
-		if (event.key === 'Enter' && highlightedIndex === null) {
-			this.setValue(event.target.value, true);
-			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
-		}
-		if (this.props.onKeyDown) {
-			this.props.onKeyDown(event, this.triggerQuery);
-		}
-	};
-
-	clearValue = () => {
-		this.isPending = false;
-		const { onChange } = this.props;
-		this.setValue('', true, this.props, undefined, true, false);
-		if (onChange) {
-			onChange('', this.triggerQuery);
-		}
-		this.onValueSelected('', causes.CLEAR_VALUE, null);
-	};
-
-	setValue = (
+	}, props.debounce);
+	function setValue(
 		value,
 		isDefaultValue = false,
-		props = this.props,
+		setValueProps = props,
 		cause,
 		hasMounted = true,
 		toggleIsOpen = true,
-	) => {
+	) {
 		const performUpdate = () => {
 			if (hasMounted) {
-				this.setState(
-					{
-						currentValue: value,
-						...(toggleIsOpen && { isOpen: !this.state.isOpen }),
-					},
-					() => {
-						if (isDefaultValue) {
-							if (this.props.autosuggest) {
-								this.triggerQuery({
-									...(toggleIsOpen && { isOpen: !this.state.isOpen }),
-									defaultQuery: true,
-								});
-							}
-							// in case of strict selection only SUGGESTION_SELECT should be able
-							// to set the query otherwise the value should reset
-							if (props.strictSelection) {
-								if (cause === causes.SUGGESTION_SELECT || value === '') {
-									this.triggerCustomQuery();
-								} else {
-									this.setValue('', true);
-								}
-							} else {
-								this.triggerCustomQuery();
-							}
+				console.log('Searchbox-- value', value);
+				console.log('Searchbox-- isDefaultValue', isDefaultValue);
+				console.log('Searchbox-- toggleIsOpen', toggleIsOpen);
+
+				if (toggleIsOpen) setIsOpen(!isOpen);
+				setCurrentValue(value);
+
+				if (isDefaultValue) {
+					if (props.autosuggest) {
+						console.log('Searchbox--props.autosuggest', props.autosuggest);
+						triggerQuery({
+							...(toggleIsOpen && { isOpen: !isOpen }),
+							defaultQuery: true,
+							value,
+						});
+					}
+					// in case of strict selection only SUGGESTION_SELECT should be able
+					// to set the query otherwise the value should reset
+					if (setValueProps.strictSelection) {
+						if (cause === causes.SUGGESTION_SELECT || value === '') {
+							triggerCustomQuery(value);
 						} else {
-							// debounce for handling text while typing
-							this.handleTextChange();
+							setValue('', true);
 						}
-						if (props.onValueChange) props.onValueChange(value);
-					},
-				);
+					} else {
+						triggerCustomQuery(value);
+					}
+				} else {
+					// debounce for handling text while typing
+					handleTextChange(value);
+				}
+				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
-				this.triggerQuery({
-					defaultQuery: this.props.autosuggest,
+				triggerQuery({
+					defaultQuery: props.autosuggest,
 					customQuery: true,
 				});
-				if (props.onValueChange) props.onValueChange(value);
+				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
 		};
-		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
+		checkValueChange(
+			setValueProps.componentId,
+			value,
+			setValueProps.beforeValueChange,
+			performUpdate,
+		);
+	}
+	const onSuggestionSelected = (suggestion) => {
+		setIsOpen(false);
+		const suggestionValue = suggestion._category ? suggestion.label : suggestion.value;
+		if (value === undefined) {
+			setValue(suggestionValue, true, props, causes.SUGGESTION_SELECT, true, false);
+		} else if (onChange) {
+			onChange(suggestionValue, triggerQuery);
+		}
+		// Record analytics for selected suggestions
+		triggerClickAnalytics(suggestion._click_id);
+		// onValueSelected is user interaction driven:
+		// it should be triggered irrespective of controlled (or)
+		// uncontrolled component behavior
+		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion.source);
 	};
 
-	shouldMicRender(showVoiceSearch) {
+	const onInputChange = (e) => {
+		const { value: inputValue } = e.target;
+		if (!isOpen) {
+			setIsOpen(true);
+		}
+
+		if (value === undefined) {
+			setValue(inputValue, false, props, undefined, true, false);
+		} else if (onChange) {
+			// handle caret position in controlled components
+			handleCaretPosition(e);
+			onChange(inputValue, triggerQuery, e);
+		}
+	};
+
+	const handleKeyDown = (event, highlightedIndex) => {
+		// if a suggestion was selected, delegate the handling
+		// to suggestion handler
+		if (event.key === 'Enter' && highlightedIndex === null) {
+			setValue(event.target.value, true);
+			onValueSelected(event.target.value, causes.ENTER_PRESS);
+		}
+		if (props.onKeyDown) {
+			props.onKeyDown(event, this.triggerQuery);
+		}
+	};
+
+	const clearValue = () => {
+		setValue('', true, props, undefined, true, false);
+		if (onChange) {
+			onChange('', triggerQuery);
+		}
+		onValueSelected('', causes.CLEAR_VALUE, null);
+	};
+
+	function shouldMicRender(showVoiceSearch) {
 		// checks for SSR
 		if (typeof window === 'undefined') return false;
 		return showVoiceSearch && (window.webkitSpeechRecognition || window.SpeechRecognition);
 	}
-	handleStateChange = (changes) => {
+
+	const handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
 		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
-			this.setState({
-				isOpen,
-			});
+			setIsOpen(isOpen);
 		}
 	};
 
-	getBackgroundColor = (highlightedIndex, index) => {
-		const isDark = this.props.themePreset === 'dark';
+	const getBackgroundColor = (highlightedIndex, index) => {
+		const isDark = props.themePreset === 'dark';
 		if (isDark) {
 			return highlightedIndex === index ? '#555' : '#424242';
 		}
 		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
-	handleSearchIconClick = () => {
-		const { currentValue } = this.state;
+	const handleSearchIconClick = () => {
 		if (currentValue.trim()) {
-			this.isPending = false;
-			this.setValue(currentValue, true);
-			this.onValueSelected(currentValue, causes.SEARCH_ICON_CLICK);
+			setValue(currentValue, true);
+			onValueSelected(currentValue, causes.SEARCH_ICON_CLICK);
 		}
 	};
 
-	handleVoiceResults = ({ results }) => {
+	const handleVoiceResults = ({ results }) => {
 		if (
-			results
-			&& results[0]
-			&& results[0].isFinal
-			&& results[0][0]
-			&& results[0][0].transcript
-			&& results[0][0].transcript.trim()
+			results &&
+			results[0] &&
+			results[0].isFinal &&
+			results[0][0] &&
+			results[0][0].transcript &&
+			results[0][0].transcript.trim()
 		) {
-			this.isPending = false;
-			this.setValue(
-				results[0][0].transcript.trim(),
-				true,
-				this.props,
-				undefined,
-				true,
-				this.state.isOpen,
-			);
+			setValue(results[0][0].transcript.trim(), true, props, undefined, true, isOpen);
 		}
 	};
-	renderNoSuggestion = (finalSuggestionsList = []) => {
+
+	const renderNoSuggestion = (finalSuggestionsList = []) => {
 		const {
 			themePreset,
 			theme,
@@ -602,15 +517,14 @@ class SearchBox extends Component {
 			innerClass,
 			error,
 			renderError,
-		} = this.props;
-		const { isOpen, currentValue } = this.state;
+		} = props;
 		if (
-			renderNoSuggestion
-			&& isOpen
-			&& !finalSuggestionsList.length
-			&& !isLoading
-			&& currentValue
-			&& !(renderError && error)
+			renderNoSuggestion &&
+			isOpen &&
+			!finalSuggestionsList.length &&
+			!isLoading &&
+			currentValue &&
+			!(renderError && error)
 		) {
 			return (
 				<SuggestionWrapper
@@ -628,11 +542,8 @@ class SearchBox extends Component {
 		return null;
 	};
 
-	renderLoader = () => {
-		const {
-			loader, isLoading, themePreset, theme, innerClass,
-		} = this.props;
-		const { currentValue } = this.state;
+	const renderLoader = () => {
+		const { loader, isLoading, themePreset, theme, innerClass } = props;
 		if (isLoading && loader && currentValue) {
 			return (
 				<SuggestionWrapper
@@ -648,11 +559,8 @@ class SearchBox extends Component {
 		return null;
 	};
 
-	renderError = () => {
-		const {
-			error, renderError, themePreset, theme, isLoading, innerClass,
-		} = this.props;
-		const { currentValue } = this.state;
+	const renderError = () => {
+		const { error, renderError, themePreset, theme, isLoading, innerClass } = props;
 		if (error && renderError && currentValue && !isLoading) {
 			return (
 				<SuggestionWrapper
@@ -668,33 +576,31 @@ class SearchBox extends Component {
 		return null;
 	};
 
-	getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, rawData } = this.props;
-		const { currentValue } = this.state;
+	const getComponent = (downshiftProps = {}) => {
+		const { error, isLoading, rawData } = props;
+
 		const data = {
 			error,
 			loading: isLoading,
 			downshiftProps,
-			data: this.props.suggestions,
+			data: props.suggestions,
 			value: currentValue,
-			triggerClickAnalytics: this.triggerClickAnalytics,
-			resultStats: this.stats,
+			triggerClickAnalytics,
+			resultStats: stats(),
 			rawData,
 		};
-		return getComponent(data, this.props);
+		return getComponentUtilFunc(data, props);
 	};
-
-	renderInputAddonBefore = () => {
-		const { addonBefore } = this.props;
+	const renderInputAddonBefore = () => {
+		const { addonBefore } = props;
 		if (addonBefore) {
 			return <InputAddon>{addonBefore}</InputAddon>;
 		}
 
 		return null;
 	};
-
-	renderInputAddonAfter = () => {
-		const { addonAfter } = this.props;
+	const renderInputAddonAfter = () => {
+		const { addonAfter } = props;
 		if (addonAfter) {
 			return <InputAddon>{addonAfter}</InputAddon>;
 		}
@@ -702,20 +608,21 @@ class SearchBox extends Component {
 		return null;
 	};
 
-	renderIcon = () => {
-		if (this.props.showIcon) {
-			return this.props.icon || <SearchSvg />;
-		}
-		return null;
-	};
-	renderCancelIcon = () => {
-		if (this.props.showClear) {
-			return this.props.clearIcon || <CancelSvg />;
+	const renderIcon = () => {
+		if (props.showIcon) {
+			return props.icon || <SearchSvg />;
 		}
 		return null;
 	};
 
-	renderIcons = () => {
+	const renderCancelIcon = () => {
+		if (props.showClear) {
+			return props.clearIcon || <CancelSvg />;
+		}
+		return null;
+	};
+
+	const renderIcons = () => {
 		const {
 			showIcon,
 			showClear,
@@ -724,303 +631,333 @@ class SearchBox extends Component {
 			showVoiceSearch,
 			iconPosition,
 			innerClass,
-		} = this.props;
+		} = props;
 		return (
 			<div>
 				<IconGroup groupPosition="right" positionType="absolute">
-					{this.state.currentValue && showClear && (
-						<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
-							{this.renderCancelIcon()}
+					{currentValue && showClear && (
+						<IconWrapper onClick={clearValue} showIcon={showIcon} isClearIcon>
+							{renderCancelIcon()}
 						</IconWrapper>
 					)}
-					{this.shouldMicRender(showVoiceSearch) && (
+					{shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
 							render={renderMic}
-							onResult={this.handleVoiceResults}
+							onResult={handleVoiceResults}
 							className={getClassName(innerClass, 'mic') || null}
 						/>
 					)}
 					{iconPosition === 'right' && (
-						<IconWrapper onClick={this.handleSearchIconClick}>
-							{this.renderIcon()}
-						</IconWrapper>
+						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
 					)}
 				</IconGroup>
 
 				<IconGroup groupPosition="left" positionType="absolute">
 					{iconPosition === 'left' && (
-						<IconWrapper onClick={this.handleSearchIconClick}>
-							{this.renderIcon()}
-						</IconWrapper>
+						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
 					)}
 				</IconGroup>
 			</div>
 		);
 	};
-	handleFocus = (event) => {
-		this.setState({
-			isOpen: true,
-		});
-		if (this.props.onFocus) {
-			this.props.onFocus(event, this.triggerQuery);
+
+	const handleFocus = (event) => {
+		setIsOpen(true);
+		if (props.onFocus) {
+			props.onFocus(event, triggerQuery);
 		}
 	};
 
-	onAutofillClick = (suggestion) => {
-		this.setState(
-			{
-				isOpen: true,
-				currentValue: suggestion._category ? suggestion.label : suggestion.value,
-			},
-			this.triggerDefaultQuery,
-		);
+	const onAutofillClick = (suggestion) => {
+		const value = suggestion._category ? suggestion.label : suggestion.value;
+		setIsOpen(true);
+		setCurrentValue(value);
+		triggerDefaultQuery(value);
 	};
-	render() {
-		const { currentValue } = this.state;
-		const suggestionsList = this.parsedSuggestions;
 
-		const {
-			theme, themePreset, recentSearchesIcon, popularSearchesIcon, innerClass,
+	useConstructor(() => {
+		const currentLocalValue = currentValue;
+		const hasMounted = false;
+		const cause = null;
+		if (currentLocalValue) {
+			if (props.onChange) {
+				props.onChange(currentLocalValue, triggerQuery);
+			}
 		}
-			= this.props;
-		const hasSuggestions = !!this.props.defaultSuggestions || !!suggestionsList;
-		return (
-			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
-						{this.props.title}
-					</Title>
-				)}
-				{hasSuggestions || this.props.autosuggest ? (
-					<Downshift
-						id={`${this.props.componentId}-downshift`}
-						onChange={this.onSuggestionSelected}
-						onStateChange={this.handleStateChange}
-						isOpen={this.state.isOpen}
-						itemToString={i => i}
-						render={({
-							getRootProps,
-							getInputProps,
-							getItemProps,
-							isOpen,
-							highlightedIndex,
-							setHighlightedIndex,
-							...rest
-						}) => {
-							const renderSuggestionsDropdown = () => {
-								const getIcon = (iconType) => {
-									switch (iconType) {
-										case suggestionTypes.Recent:
-											return recentSearchesIcon;
-										case suggestionTypes.Popular:
-											return popularSearchesIcon;
-										default:
-											return null;
-									}
-								};
-								return (
-									<React.Fragment>
-										{this.hasCustomRenderer
-											&& this.getComponent({
-												getInputProps,
-												getItemProps,
-												isOpen,
-												highlightedIndex,
-												setHighlightedIndex,
-												...rest,
-											})}
-										{isOpen && this.renderLoader()}
-										{isOpen && this.renderError()}
-										{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
-											<ul
-												css={suggestions(themePreset, theme)}
-												className={getClassName(
-													this.props.innerClass,
-													'list',
-												)}
-											>
-												{suggestionsList.map((item, index) => (
-													<li
-														{...getItemProps({ item })}
-														key={`${index + 1}-${item.value}`}
-														style={{
-															backgroundColor:
-																this.getBackgroundColor(
-																	highlightedIndex,
-																	index,
-																),
-															justifyContent: 'flex-start',
-															alignItems: 'center',
-														}}
-													>
-														{this.props.renderItem ? (
-															this.props.renderItem(item)
-														) : (
-															<React.Fragment>
-																{/* eslint-disable */}
-																{item._suggestion_type !==
-																suggestionTypes.Index ? (
-																	<div
-																		style={{
-																			padding: '0 10px 0 0',
-																			display: 'flex',
-																		}}
-																	>
-																		<CustomSvg
-																			iconId={`${index + 1}-${
-																				item.value
-																			}-icon`}
-																			className={
-																				getClassName(
-																					innerClass,
-																					`${item._suggestion_type}-search-icon`,
-																				) || null
-																			}
-																			icon={getIcon(
-																				item._suggestion_type,
-																			)}
-																			type={`${item._suggestion_type}-search-icon`}
-																		/>
-																	</div>
-																) : null}
-																{/* eslint-enable */}
-																<SuggestionItem
-																	currentValue={currentValue}
-																	suggestion={item}
-																/>
-																<AutofillSvg
-																	onClick={(e) => {
-																		e.stopPropagation();
-																		this.onAutofillClick(item);
-																	}}
-																/>
-															</React.Fragment>
-														)}
-													</li>
-												))}
-											</ul>
-										) : (
-											this.renderNoSuggestion(suggestionsList)
-										)}
-									</React.Fragment>
-								);
+		setValue(currentLocalValue, true, props, cause, hasMounted, false);
+
+		// Set custom and default queries in store
+		triggerCustomQuery();
+		triggerDefaultQuery();
+	});
+	useEffect(() => {
+		// register hotkeys for listening to focusShortcuts' key presses
+		listenForFocusShortcuts();
+	}, []);
+
+	useEffect(() => {
+		if (onData) {
+			onData({
+				data: suggestions,
+				rawData,
+				aggregationData,
+				loading: isLoading,
+				error,
+			});
+		}
+	}, [suggestions, rawData, aggregationData, isLoading, error]);
+
+	useEffect(() => {
+		setValue(value, true, props, undefined, undefined, false);
+	}, [value]);
+
+	useEffect(() => {
+		console.log('SearchBox', currentValue);
+		if (
+			// since, selectedValue will be updated when currentValue changes,
+			// we must only check for the changes introduced by
+			// clear action from SelectedFilters component in which case,
+			// the currentValue will never match the updated selectedValue
+			currentValue !== selectedValue &&
+			!(!currentValue && !selectedValue)
+		) {
+			if (!selectedValue && currentValue) {
+				// selected value is cleared, call onValueSelected
+				onValueSelected('', causes.CLEAR_VALUE, null);
+			}
+			if (value === undefined) {
+				setValue(selectedValue || '', true, props);
+			} else if (onChange) {
+				// value prop exists
+				onChange(selectedValue || '', triggerQuery);
+			} else {
+				// value prop exists and onChange is not defined:
+				// we need to put the current value back into the store
+				// if the clear action was triggered by interacting with
+				// selected-filters component
+				setValue(currentValue, true, props, undefined, true, false);
+			}
+		}
+	}, [selectedValue]);
+
+	const hasSuggestions = () => !!props.defaultSuggestions || !!parsedSuggestions();
+	return (
+		<Container style={props.style} className={props.className}>
+			{props.title && (
+				<Title className={getClassName(props.innerClass, 'title') || null}>
+					{props.title}
+				</Title>
+			)}
+			{hasSuggestions() && props.autosuggest ? (
+				<Downshift
+					id={`${props.componentId}-downshift`}
+					onChange={onSuggestionSelected}
+					onStateChange={handleStateChange}
+					isOpen={isOpen}
+					itemToString={(i) => i}
+					render={({
+						getRootProps,
+						getInputProps,
+						getItemProps,
+						isOpen,
+						highlightedIndex,
+						setHighlightedIndex,
+						...rest
+					}) => {
+						const renderSuggestionsDropdown = () => {
+							const getIcon = (iconType) => {
+								switch (iconType) {
+									case suggestionTypes.Recent:
+										return props.recentSearchesIcon;
+									case suggestionTypes.Popular:
+										return props.popularSearchesIcon;
+									default:
+										return null;
+								}
 							};
-
 							return (
-								<div
-									{...getRootProps(
-										{ css: suggestionsContainer },
-										{ suppressRefError: true },
-									)}
-								>
-									<InputGroup>
-										{this.renderInputAddonBefore()}
-										<InputWrapper>
-											<Input
-												aria-label={this.props.componentId}
-												id={`${this.props.componentId}-input`}
-												showIcon={this.props.showIcon}
-												showClear={this.props.showClear}
-												iconPosition={this.props.iconPosition}
-												ref={(c) => {
-													this._inputRef = c;
-												}}
-												{...getInputProps({
-													className: getClassName(
-														this.props.innerClass,
-														'input',
-													),
-													placeholder: this.props.placeholder,
-													value:
-														this.state.currentValue === null
-															? ''
-															: this.state.currentValue,
-													onChange: this.onInputChange,
-													onBlur: this.withTriggerQuery(
-														this.props.onBlur,
-													),
-													onFocus: this.handleFocus,
-													onClick: () => {
-														// clear highlighted index
-														setHighlightedIndex(null);
-													},
-													onKeyPress: this.withTriggerQuery(
-														this.props.onKeyPress,
-													),
-													onKeyDown: e =>
-														this.handleKeyDown(e, highlightedIndex),
-													onKeyUp: this.withTriggerQuery(
-														this.props.onKeyUp,
-													),
-													autoFocus: this.props.autoFocus,
-												})}
-												themePreset={themePreset}
-												type={this.props.type}
-											/>
-											{this.renderIcons()}
-											{!this.props.expandSuggestionsContainer
-												&& renderSuggestionsDropdown(
-													getRootProps,
-													getInputProps,
-													getItemProps,
-													isOpen,
-													highlightedIndex,
-													setHighlightedIndex,
-													...rest,
-												)}
-										</InputWrapper>
-										{this.renderInputAddonAfter()}
-									</InputGroup>
-
-									{this.props.expandSuggestionsContainer
-										&& renderSuggestionsDropdown(
-											getRootProps,
+								<React.Fragment>
+									{hasCustomRenderer(props) &&
+										getComponent({
 											getInputProps,
 											getItemProps,
 											isOpen,
 											highlightedIndex,
 											setHighlightedIndex,
 											...rest,
-										)}
-								</div>
+										})}
+									{isOpen && renderLoader()}
+									{isOpen && renderError()}
+									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
+										<ul
+											css={suggestions(props.themePreset, props.theme)}
+											className={getClassName(props.innerClass, 'list')}
+										>
+											{parsedSuggestions().map((item, index) => (
+												<li
+													{...getItemProps({ item })}
+													key={`${index + 1}-${item.value}`}
+													style={{
+														backgroundColor: getBackgroundColor(
+															highlightedIndex,
+															index,
+														),
+														justifyContent: 'flex-start',
+														alignItems: 'center',
+													}}
+												>
+													{props.renderItem ? (
+														props.renderItem(item)
+													) : (
+														<React.Fragment>
+															{/* eslint-disable */}
+															{item._suggestion_type !==
+															suggestionTypes.Index ? (
+																<div
+																	style={{
+																		padding: '0 10px 0 0',
+																		display: 'flex',
+																	}}
+																>
+																	<CustomSvg
+																		iconId={`${index + 1}-${
+																			item.value
+																		}-icon`}
+																		className={
+																			getClassName(
+																				props.innerClass,
+																				`${item._suggestion_type}-search-icon`,
+																			) || null
+																		}
+																		icon={getIcon(
+																			item._suggestion_type,
+																		)}
+																		type={`${item._suggestion_type}-search-icon`}
+																	/>
+																</div>
+															) : null}
+															{/* eslint-enable */}
+															<SuggestionItem
+																currentValue={currentValue || ''}
+																suggestion={item}
+															/>
+															<AutofillSvg
+																onClick={(e) => {
+																	e.stopPropagation();
+																	onAutofillClick(item);
+																}}
+															/>
+														</React.Fragment>
+													)}
+												</li>
+											))}
+										</ul>
+									) : (
+										renderNoSuggestion(parsedSuggestions())
+									)}
+								</React.Fragment>
 							);
-						}}
-						{...this.props.downShiftProps}
-					/>
-				) : (
-					<div css={suggestionsContainer}>
-						<InputGroup>
-							{this.renderInputAddonBefore()}
-							<InputWrapper>
-								<Input
-									aria-label={this.props.componentId}
-									className={getClassName(this.props.innerClass, 'input') || null}
-									placeholder={this.props.placeholder}
-									value={this.state.currentValue ? this.state.currentValue : ''}
-									onChange={this.onInputChange}
-									onBlur={this.withTriggerQuery(this.props.onBlur)}
-									onFocus={this.withTriggerQuery(this.props.onFocus)}
-									onKeyPress={this.withTriggerQuery(this.props.onKeyPress)}
-									onKeyDown={this.withTriggerQuery(this.props.onKeyDown)}
-									onKeyUp={this.withTriggerQuery(this.props.onKeyUp)}
-									autoFocus={this.props.autoFocus}
-									iconPosition={this.props.iconPosition}
-									showIcon={this.props.showIcon}
-									showClear={this.props.showClear}
-									themePreset={themePreset}
-								/>
-								{this.renderIcons()}
-							</InputWrapper>
-							{this.renderInputAddonAfter()}
-						</InputGroup>
-					</div>
-				)}
-			</Container>
-		);
-	}
-}
+						};
 
+						return (
+							<div
+								{...getRootProps(
+									{ css: suggestionsContainer },
+									{ suppressRefError: true },
+								)}
+							>
+								<InputGroup>
+									{renderInputAddonBefore()}
+									<InputWrapper>
+										<Input
+											aria-label={props.componentId}
+											id={`${props.componentId}-input`}
+											showIcon={props.showIcon}
+											showClear={props.showClear}
+											iconPosition={props.iconPosition}
+											ref={_inputRef}
+											{...getInputProps({
+												className: getClassName(props.innerClass, 'input'),
+												placeholder: props.placeholder,
+												value: currentValue === null ? '' : currentValue,
+												onChange: onInputChange,
+												onBlur: withTriggerQuery(props.onBlur),
+												onFocus: handleFocus,
+												onClick: () => {
+													// clear highlighted index
+													setHighlightedIndex(null);
+												},
+												onKeyPress: withTriggerQuery(props.onKeyPress),
+												onKeyDown: (e) =>
+													handleKeyDown(e, highlightedIndex),
+												onKeyUp: withTriggerQuery(props.onKeyUp),
+												autoFocus: props.autoFocus,
+											})}
+											themePreset={props.themePreset}
+											type={props.type}
+										/>
+										{renderIcons()}
+										{!props.expandSuggestionsContainer &&
+											renderSuggestionsDropdown(
+												getRootProps,
+												getInputProps,
+												getItemProps,
+												isOpen,
+												highlightedIndex,
+												setHighlightedIndex,
+												...rest,
+											)}
+									</InputWrapper>
+									{renderInputAddonAfter()}
+								</InputGroup>
+
+								{props.expandSuggestionsContainer &&
+									renderSuggestionsDropdown(
+										getRootProps,
+										getInputProps,
+										getItemProps,
+										isOpen,
+										highlightedIndex,
+										setHighlightedIndex,
+										...rest,
+									)}
+							</div>
+						);
+					}}
+					{...props.downShiftProps}
+				/>
+			) : (
+				<div css={suggestionsContainer}>
+					<InputGroup>
+						{renderInputAddonBefore()}
+						<InputWrapper>
+							<Input
+								aria-label={props.componentId}
+								className={getClassName(props.innerClass, 'input') || null}
+								placeholder={props.placeholder}
+								value={currentValue || ''}
+								onChange={onInputChange}
+								onBlur={withTriggerQuery(props.onBlur)}
+								onFocus={withTriggerQuery(props.onFocus)}
+								onKeyPress={withTriggerQuery(props.onKeyPress)}
+								onKeyDown={withTriggerQuery(props.onKeyDown)}
+								onKeyUp={withTriggerQuery(props.onKeyUp)}
+								autoFocus={props.autoFocus}
+								iconPosition={props.iconPosition}
+								showIcon={props.showIcon}
+								showClear={props.showClear}
+								themePreset={props.themePreset}
+							/>
+							{renderIcons()}
+						</InputWrapper>
+						{renderInputAddonAfter()}
+					</InputGroup>
+				</div>
+			)}
+		</Container>
+	);
+};
 SearchBox.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
@@ -1152,9 +1089,9 @@ SearchBox.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
@@ -1167,8 +1104,8 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
-const mapDispatchtoProps = dispatch => ({
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+const mapDispatchtoProps = (dispatch) => ({
+	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
@@ -1179,7 +1116,7 @@ const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(
-	withTheme(props => (
+	withTheme((props) => (
 		<ComponentWrapper {...props} internalComponent componentType={componentTypes.searchBox}>
 			{() => <SearchBox ref={props.myForwardedRef} {...props} />}
 		</ComponentWrapper>
