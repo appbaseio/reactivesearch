@@ -15,15 +15,17 @@ const Main = () => (
 	<ReactiveBase
 		app="good-books-ds"
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-		enableAppbase
+		enableAppbase={false}
 		appbaseConfig={{
 			recordAnalytics: true,
+			userId: 'jon',
 		}}
 	>
 		<div className="row">
 			<div className="col">
 				<SearchBox
 					title="SearchBox"
+					defaultValue="Harry Potter"
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
 					highlight
@@ -38,13 +40,16 @@ const Main = () => (
 					recentSuggestionsConfig={{
 						size: 3,
 						index: 'good-books-ds',
+						minChars: 4,
 					}}
 					size={5}
 					enablePredictiveSuggestions
 					index="good-books-ds"
 					onData={(props) => {
-						console.log(props);
+						// eslint-disable-next-line
+						// console.log(props);
 					}}
+					showClear
 				/>
 			</div>
 
@@ -61,7 +66,7 @@ const Main = () => (
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map(item => (
+							{data.map((item) => (
 								<ResultCard id={item._id} key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
