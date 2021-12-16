@@ -716,6 +716,9 @@ const SearchBox = (props) => {
 
 	const hasMounted = useRef();
 	useConstructor(() => {
+		if (!props.enableAppbase) {
+			throw new Error('enableAppbase is required to be true when using SearchBox component.');
+		}
 		const currentLocalValue = currentValue;
 		hasMounted.current = false;
 		const cause = null;
