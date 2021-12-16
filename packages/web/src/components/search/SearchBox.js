@@ -357,8 +357,11 @@ const SearchBox = (props) => {
 			onValueSelected(valueSelected, ...cause);
 		}
 	};
-	const handleTextChange = debounce((valueParam = undefined) => {
-		if (props.autosuggest) {
+	const handleTextChange = debounce((valueParam = undefined, cause = undefined) => {
+		if (cause === causes.CLEAR_VALUE) {
+			triggerCustomQuery(valueParam);
+			triggerDefaultQuery(valueParam);
+		} else if (props.autosuggest) {
 			triggerDefaultQuery(valueParam);
 		} else {
 			triggerCustomQuery(valueParam);
@@ -398,7 +401,7 @@ const SearchBox = (props) => {
 					}
 				} else {
 					// debounce for handling text while typing
-					handleTextChange(value);
+					handleTextChange(value, cause);
 				}
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
@@ -439,7 +442,14 @@ const SearchBox = (props) => {
 		}
 
 		if (value === undefined) {
-			setValue(inputValue, false, props, undefined, true, false);
+			setValue(
+				inputValue,
+				false,
+				props,
+				inputValue === '' ? causes.CLEAR_VALUE : undefined,
+				true,
+				false,
+			);
 		} else if (onChange) {
 			// handle caret position in controlled components
 			handleCaretPosition(e);
@@ -680,25 +690,22 @@ const SearchBox = (props) => {
 		triggerDefaultQuery(value);
 	};
 
+	const hasMounted = useRef();
 	useConstructor(() => {
 		const currentLocalValue = currentValue;
-		const hasMounted = false;
+		hasMounted.current = false;
 		const cause = null;
 		if (currentLocalValue) {
 			if (props.onChange) {
 				props.onChange(currentLocalValue, triggerQuery);
 			}
 		}
-		setValue(currentLocalValue, true, props, cause, hasMounted, false);
+		setValue(currentLocalValue, true, props, cause, hasMounted.current, false);
 
 		// Set custom and default queries in store
 		triggerCustomQuery();
 		triggerDefaultQuery();
 	});
-	useEffect(() => {
-		// register hotkeys for listening to focusShortcuts' key presses
-		listenForFocusShortcuts();
-	}, []);
 
 	useEffect(() => {
 		if (onData) {
@@ -722,16 +729,17 @@ const SearchBox = (props) => {
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			currentValue !== props.defaultValue
+			// currentValue !== props.defaultValue &&
+			hasMounted.current
 			&& currentValue !== selectedValue
 			&& !(!currentValue && !selectedValue)
 		) {
-			if (!selectedValue && currentValue && !props.defaultValue) {
+			if (!selectedValue && currentValue) {
 				// selected value is cleared, call onValueSelected
 				onValueSelected('', causes.CLEAR_VALUE, null);
 			}
 			if (value === undefined) {
-				setValue(selectedValue || '', true, props);
+				setValue(selectedValue || '', true, props, undefined, hasMounted.current, false);
 			} else if (onChange) {
 				// value prop exists
 				onChange(selectedValue || '', triggerQuery);
@@ -744,6 +752,12 @@ const SearchBox = (props) => {
 			}
 		}
 	}, [selectedValue]);
+
+	useEffect(() => {
+		hasMounted.current = true;
+		// register hotkeys for listening to focusShortcuts' key presses
+		listenForFocusShortcuts();
+	}, []);
 
 	const hasSuggestions = () => !!props.defaultSuggestions || !!parsedSuggestions();
 	return (
