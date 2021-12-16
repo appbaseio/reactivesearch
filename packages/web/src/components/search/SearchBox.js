@@ -87,16 +87,22 @@ const SearchBox = (props) => {
 	const _inputRef = useRef(null);
 	const stats = () => getResultStats(props);
 
+	/* eslint-disable */
 	const parsedSuggestions = () =>
-		Array.isArray(props.suggestions) ? withClickIds(props.suggestions) : [];
+		Array.isArray(props.suggestions)
+			? withClickIds(props.suggestions)
+			: Array.isArray(props.defaultSuggestions)
+			? withClickIds(props.defaultSuggestions)
+			: [];
+	/* eslint-enable */
 	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
 		const tagName = elt.tagName;
 		if (
-			elt.isContentEditable ||
-			tagName === 'INPUT' ||
-			tagName === 'SELECT' ||
-			tagName === 'TEXTAREA'
+			elt.isContentEditable
+			|| tagName === 'INPUT'
+			|| tagName === 'SELECT'
+			|| tagName === 'TEXTAREA'
 		) {
 			// already in an input
 			return;
@@ -141,7 +147,7 @@ const SearchBox = (props) => {
 	const triggerClickAnalytics = (searchPosition, documentId) => {
 		let docId = documentId;
 		if (!docId) {
-			const hitData = parsedSuggestions().find((hit) => hit._click_id === searchPosition);
+			const hitData = parsedSuggestions().find(hit => hit._click_id === searchPosition);
 			if (hitData && hitData.source && hitData.source._id) {
 				docId = hitData.source._id;
 			}
@@ -158,9 +164,9 @@ const SearchBox = (props) => {
 			}`;
 			if (
 				!(
-					dataField.field.endsWith('.keyword') ||
-					dataField.field.endsWith('.autosuggest') ||
-					dataField.field.endsWith('.search')
+					dataField.field.endsWith('.keyword')
+					|| dataField.field.endsWith('.autosuggest')
+					|| dataField.field.endsWith('.search')
 				)
 			) {
 				phrasePrefixFields.push(queryField);
@@ -341,7 +347,7 @@ const SearchBox = (props) => {
 	};
 	const withTriggerQuery = (func) => {
 		if (func) {
-			return (e) => func(e, triggerQuery);
+			return e => func(e, triggerQuery);
 		}
 		return undefined;
 	};
@@ -352,7 +358,6 @@ const SearchBox = (props) => {
 		}
 	};
 	const handleTextChange = debounce((valueParam = undefined) => {
-		console.log('props.autosuggest', props.autosuggest);
 		if (props.autosuggest) {
 			triggerDefaultQuery(valueParam);
 		} else {
@@ -369,16 +374,11 @@ const SearchBox = (props) => {
 	) {
 		const performUpdate = () => {
 			if (hasMounted) {
-				console.log('Searchbox-- value', value);
-				console.log('Searchbox-- isDefaultValue', isDefaultValue);
-				console.log('Searchbox-- toggleIsOpen', toggleIsOpen);
-
 				if (toggleIsOpen) setIsOpen(!isOpen);
 				setCurrentValue(value);
 
 				if (isDefaultValue) {
 					if (props.autosuggest) {
-						console.log('Searchbox--props.autosuggest', props.autosuggest);
 						triggerQuery({
 							...(toggleIsOpen && { isOpen: !isOpen }),
 							defaultQuery: true,
@@ -497,12 +497,12 @@ const SearchBox = (props) => {
 
 	const handleVoiceResults = ({ results }) => {
 		if (
-			results &&
-			results[0] &&
-			results[0].isFinal &&
-			results[0][0] &&
-			results[0][0].transcript &&
-			results[0][0].transcript.trim()
+			results
+			&& results[0]
+			&& results[0].isFinal
+			&& results[0][0]
+			&& results[0][0].transcript
+			&& results[0][0].transcript.trim()
 		) {
 			setValue(results[0][0].transcript.trim(), true, props, undefined, true, isOpen);
 		}
@@ -519,12 +519,12 @@ const SearchBox = (props) => {
 			renderError,
 		} = props;
 		if (
-			renderNoSuggestion &&
-			isOpen &&
-			!finalSuggestionsList.length &&
-			!isLoading &&
-			currentValue &&
-			!(renderError && error)
+			renderNoSuggestion
+			&& isOpen
+			&& !finalSuggestionsList.length
+			&& !isLoading
+			&& currentValue
+			&& !(renderError && error)
 		) {
 			return (
 				<SuggestionWrapper
@@ -543,7 +543,9 @@ const SearchBox = (props) => {
 	};
 
 	const renderLoader = () => {
-		const { loader, isLoading, themePreset, theme, innerClass } = props;
+		const {
+			loader, isLoading, themePreset, theme, innerClass,
+		} = props;
 		if (isLoading && loader && currentValue) {
 			return (
 				<SuggestionWrapper
@@ -560,7 +562,9 @@ const SearchBox = (props) => {
 	};
 
 	const renderError = () => {
-		const { error, renderError, themePreset, theme, isLoading, innerClass } = props;
+		const {
+			error, renderError, themePreset, theme, isLoading, innerClass,
+		} = props;
 		if (error && renderError && currentValue && !isLoading) {
 			return (
 				<SuggestionWrapper
@@ -713,16 +717,16 @@ const SearchBox = (props) => {
 	}, [value]);
 
 	useEffect(() => {
-		console.log('SearchBox', currentValue);
 		if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			currentValue !== selectedValue &&
-			!(!currentValue && !selectedValue)
+			currentValue !== props.defaultValue
+			&& currentValue !== selectedValue
+			&& !(!currentValue && !selectedValue)
 		) {
-			if (!selectedValue && currentValue) {
+			if (!selectedValue && currentValue && !props.defaultValue) {
 				// selected value is cleared, call onValueSelected
 				onValueSelected('', causes.CLEAR_VALUE, null);
 			}
@@ -755,7 +759,7 @@ const SearchBox = (props) => {
 					onChange={onSuggestionSelected}
 					onStateChange={handleStateChange}
 					isOpen={isOpen}
-					itemToString={(i) => i}
+					itemToString={i => i}
 					render={({
 						getRootProps,
 						getInputProps,
@@ -778,8 +782,8 @@ const SearchBox = (props) => {
 							};
 							return (
 								<React.Fragment>
-									{hasCustomRenderer(props) &&
-										getComponent({
+									{hasCustomRenderer(props)
+										&& getComponent({
 											getInputProps,
 											getItemProps,
 											isOpen,
@@ -889,7 +893,7 @@ const SearchBox = (props) => {
 													setHighlightedIndex(null);
 												},
 												onKeyPress: withTriggerQuery(props.onKeyPress),
-												onKeyDown: (e) =>
+												onKeyDown: e =>
 													handleKeyDown(e, highlightedIndex),
 												onKeyUp: withTriggerQuery(props.onKeyUp),
 												autoFocus: props.autoFocus,
@@ -898,8 +902,8 @@ const SearchBox = (props) => {
 											type={props.type}
 										/>
 										{renderIcons()}
-										{!props.expandSuggestionsContainer &&
-											renderSuggestionsDropdown(
+										{!props.expandSuggestionsContainer
+											&& renderSuggestionsDropdown(
 												getRootProps,
 												getInputProps,
 												getItemProps,
@@ -912,8 +916,8 @@ const SearchBox = (props) => {
 									{renderInputAddonAfter()}
 								</InputGroup>
 
-								{props.expandSuggestionsContainer &&
-									renderSuggestionsDropdown(
+								{props.expandSuggestionsContainer
+									&& renderSuggestionsDropdown(
 										getRootProps,
 										getInputProps,
 										getItemProps,
@@ -1089,9 +1093,9 @@ SearchBox.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
@@ -1104,8 +1108,8 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 });
 
-const mapDispatchtoProps = (dispatch) => ({
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+const mapDispatchtoProps = dispatch => ({
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
@@ -1116,7 +1120,7 @@ const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(
-	withTheme((props) => (
+	withTheme(props => (
 		<ComponentWrapper {...props} internalComponent componentType={componentTypes.searchBox}>
 			{() => <SearchBox ref={props.myForwardedRef} {...props} />}
 		</ComponentWrapper>
