@@ -4,21 +4,21 @@ import { jsx } from '@emotion/core';
 import Flex from '../../../styles/Flex';
 import Highlight from './Highlight';
 
-const SuggestionItem = ({ currentValue, suggestion }) => {
-	const {
-		label, value, title, description, image, isPredictiveSuggestion,
-	} = suggestion;
+const SuggestionItem = ({ currentValue = '', suggestion }) => {
+	const { label, value, title, description, image, isPredictiveSuggestion } = suggestion;
+
 	if (label) {
 		// label has highest precedence
 		return typeof label === 'string' ? (
 			<div className="trim">
 				<Highlight
-					categoryLabel={suggestion._category
-						? `in ${suggestion._category}` : ''}
+					categoryLabel={suggestion._category ? `in ${suggestion._category}` : ''}
 					autoEscape
 					searchWords={currentValue.split(' ')}
 					textToHighlight={label}
-					hasPredictiveSuggestion={Boolean(isPredictiveSuggestion)}
+					hasPredictiveSuggestion={
+						Boolean(isPredictiveSuggestion) || !!suggestion._suggestion_type
+					}
 				/>
 			</div>
 		) : (
