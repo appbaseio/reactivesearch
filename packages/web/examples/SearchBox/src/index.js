@@ -50,6 +50,11 @@ const Main = () => (
 						console.log(props);
 					}}
 					showClear
+					onValueSelected={(value, cause) => {
+						// eslint-disable-next-line
+						console.log(value, cause);
+					}}
+					renderNoSuggestion="No suggestions found."
 				/>
 			</div>
 
@@ -66,7 +71,7 @@ const Main = () => (
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map(item => (
+							{data.map((item) => (
 								<ResultCard id={item._id} key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
