@@ -337,12 +337,12 @@ const SearchBox = (props) => {
 		if (isOpen) {
 			setIsOpen(isOpen);
 		}
-		if (defaultQuery) {
-			triggerDefaultQuery(value);
-		}
 
 		if (customQuery) {
 			triggerCustomQuery(value);
+		}
+		if (defaultQuery) {
+			triggerDefaultQuery(value);
 		}
 	};
 	const withTriggerQuery = (func) => {
@@ -379,7 +379,6 @@ const SearchBox = (props) => {
 			if (hasMounted) {
 				if (toggleIsOpen) setIsOpen(!isOpen);
 				setCurrentValue(value);
-
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery({
@@ -408,6 +407,7 @@ const SearchBox = (props) => {
 				triggerQuery({
 					defaultQuery: props.autosuggest,
 					customQuery: true,
+					value,
 				});
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
@@ -425,7 +425,14 @@ const SearchBox = (props) => {
 		if (value === undefined) {
 			setValue(suggestionValue, true, props, causes.SUGGESTION_SELECT, true, false);
 		} else if (onChange) {
-			onChange(suggestionValue, triggerQuery);
+			onChange(suggestionValue, ({ isOpen = false } = { isOpen: false }) =>
+				triggerQuery({
+					defaultQuery: true,
+					customQuery: true,
+					value,
+					isOpen,
+				}),
+			);
 		}
 		// Record analytics for selected suggestions
 		triggerClickAnalytics(suggestion._click_id);
@@ -453,7 +460,17 @@ const SearchBox = (props) => {
 		} else if (onChange) {
 			// handle caret position in controlled components
 			handleCaretPosition(e);
-			onChange(inputValue, triggerQuery, e);
+			onChange(
+				inputValue,
+				({ isOpen = false } = { isOpen: false }) =>
+					triggerQuery({
+						defaultQuery: true,
+						customQuery: true,
+						value: inputValue,
+						isOpen,
+					}),
+				e,
+			);
 		}
 	};
 
@@ -472,7 +489,14 @@ const SearchBox = (props) => {
 	const clearValue = () => {
 		setValue('', true, props, undefined, true, false);
 		if (onChange) {
-			onChange('', triggerQuery);
+			onChange('', ({ isOpen = false } = { isOpen: false }) =>
+				triggerQuery({
+					defaultQuery: true,
+					customQuery: true,
+					value,
+					isOpen,
+				}),
+			);
 		}
 		onValueSelected('', causes.CLEAR_VALUE, null);
 	};
@@ -697,7 +721,14 @@ const SearchBox = (props) => {
 		const cause = null;
 		if (currentLocalValue) {
 			if (props.onChange) {
-				props.onChange(currentLocalValue, triggerQuery);
+				props.onChange(currentLocalValue, ({ isOpen = false } = { isOpen: false }) =>
+					triggerQuery({
+						defaultQuery: true,
+						customQuery: true,
+						value,
+						isOpen,
+					}),
+				);
 			}
 		}
 		setValue(currentLocalValue, true, props, cause, hasMounted.current, false);
@@ -732,7 +763,7 @@ const SearchBox = (props) => {
 			// currentValue !== props.defaultValue &&
 			hasMounted.current
 			&& currentValue !== selectedValue
-			&& !(!currentValue && !selectedValue)
+			&& !(typeof currentValue !== 'string' && !selectedValue)
 		) {
 			if (!selectedValue && currentValue) {
 				// selected value is cleared, call onValueSelected
@@ -742,7 +773,14 @@ const SearchBox = (props) => {
 				setValue(selectedValue || '', true, props, undefined, hasMounted.current, false);
 			} else if (onChange) {
 				// value prop exists
-				onChange(selectedValue || '', triggerQuery);
+				onChange(selectedValue || '', ({ isOpen = false } = { isOpen: false }) =>
+					triggerQuery({
+						defaultQuery: true,
+						customQuery: true,
+						value,
+						isOpen,
+					}),
+				);
 			} else {
 				// value prop exists and onChange is not defined:
 				// we need to put the current value back into the store
