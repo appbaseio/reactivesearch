@@ -1,13 +1,14 @@
 {
 	"name": "multilist-example-mongo",
 	"version": "1.0.0",
-	"description": "MultiList example for ReactiveSearch-mongodb",
+	"description": "DataSearch example for ReactiveSearch-mongodb",
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
 		"@appbaseio/reactivesearch": "3.26.1",
 		"react": "^16.7.0-alpha.2",
-		"react-dom": "^16.7.0-alpha.2"
+		"react-dom": "^16.7.0-alpha.2",
+		"react-scripts": "^1.1.4"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
@@ -22,7 +23,9 @@
 		"webpack-dev-server": "^3.1.14"
 	},
 	"scripts": {
-		"build": "webpack -p --progress",
-		"start": "webpack-dev-server --hot --inline --progress --colors --port 8001"
-	}
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
 }
