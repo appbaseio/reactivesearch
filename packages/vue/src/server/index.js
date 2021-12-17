@@ -38,19 +38,19 @@ function getValue(state, id, defaultValue) {
 			const parsedValue = JSON.parse(state[id]);
 			return {
 				value: parsedValue,
-				reference: 'URL',
+				reference: 'URL'
 			};
 		} catch (error) {
 			// using react-dom-server for ssr
 			return {
 				value: state[id],
-				reference: 'URL',
+				reference: 'URL'
 			};
 		}
 	}
 	return {
 		value: defaultValue,
-		reference: 'DEFAULT',
+		reference: 'DEFAULT'
 	};
 }
 
@@ -80,12 +80,12 @@ function getQuery(component, value, componentType) {
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
 	return new Promise((resolve, reject) => {
-		const credentials =
-			settings.url && settings.url.trim() !== '' && !settings.credentials
+		const credentials
+			= settings.url && settings.url.trim() !== '' && !settings.credentials
 				? null
 				: settings.credentials;
-		const enableTelemetry =
-			settings.appbaseConfig && settings.appbaseConfig.enableTelemetry !== undefined
+		const enableTelemetry
+			= settings.appbaseConfig && settings.appbaseConfig.enableTelemetry !== undefined
 				? settings.appbaseConfig.enableTelemetry
 				: true;
 		const headers = {
@@ -147,6 +147,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component.value || component.defaultValue,
 			);
 
+
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
 			if (componentsWithoutFilters.includes(componentType)) {
@@ -165,10 +166,16 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(value, compProps);
+				customQueries[component.componentId] = component.customQuery(
+					value,
+					compProps,
+				);
 			}
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(value, compProps);
+				defaultQueries[component.componentId] = component.defaultQuery(
+					value,
+					compProps,
+				);
 			}
 
 			// [2] set query options - main component query (valid for result components)
@@ -183,8 +190,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 				}
 
 				if (
-					(options && Object.keys(options).length) ||
-					(highlightQuery && Object.keys(highlightQuery).length)
+					(options && Object.keys(options).length)
+					|| (highlightQuery && Object.keys(highlightQuery).length)
 				) {
 					// eslint-disable-next-line
 					let { aggs, size, ...otherQueryOptions } = options || {};
@@ -203,8 +210,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 					// sort, highlight, size, from - query should be applied on the main component
 					if (
-						(otherQueryOptions && Object.keys(otherQueryOptions).length) ||
-						(highlightQuery && Object.keys(highlightQuery).length)
+						(otherQueryOptions && Object.keys(otherQueryOptions).length)
+						|| (highlightQuery && Object.keys(highlightQuery).length)
 					) {
 						if (!otherQueryOptions) otherQueryOptions = {};
 						if (!highlightQuery) highlightQuery = {};
@@ -216,8 +223,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 						if (isResultComponent) {
 							let currentPage = component.currentPage ? component.currentPage - 1 : 0;
 							if (
-								selectedValues[component.componentId] &&
-								selectedValues[component.componentId].value
+								selectedValues[component.componentId]
+								&& selectedValues[component.componentId].value
 							) {
 								currentPage = selectedValues[component.componentId].value - 1 || 0;
 							}
@@ -275,6 +282,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			componentProps[component.componentId] = compProps;
 		});
 
+
 		state = {
 			components,
 			dependencyTree,
@@ -300,8 +308,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const validOptions = ['aggs', 'from', 'sort'];
 			// check if query or options are valid - non-empty
 			if (
-				(queryObj && !!Object.keys(queryObj).length) ||
-				(options && Object.keys(options).some((item) => validOptions.includes(item)))
+				(queryObj && !!Object.keys(queryObj).length)
+				|| (options && Object.keys(options).some((item) => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -340,10 +348,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 						};
 					}
 				} else {
-					const preference =
-						config && config.analyticsConfig && config.analyticsConfig.userId
-							? `${config.analyticsConfig.userId}_${component}`
-							: component;
+					const preference = config && config.analyticsConfig && config.analyticsConfig.userId
+						? `${config.analyticsConfig.userId}_${component}` : component;
 					finalQuery = [
 						...finalQuery,
 						{
