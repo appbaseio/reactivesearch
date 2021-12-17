@@ -147,7 +147,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component.value || component.defaultValue,
 			);
 
-
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
 			if (componentsWithoutFilters.includes(componentType)) {
@@ -163,32 +162,13 @@ export default function initReactivesearch(componentCollection, searchState, set
 				showFilter,
 				URLParams: component.URLParams || false,
 			});
-			// Set custom and default queries
-			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					component.value || selectedValues[component.componentId].value,
-					compProps,
-				);
-			}
-			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					component.value,
-					compProps,
-				);
-			}
 
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					value,
-					compProps,
-				);
+				customQueries[component.componentId] = component.customQuery(value, compProps);
 			}
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					value,
-					compProps,
-				);
+				defaultQueries[component.componentId] = component.defaultQuery(value, compProps);
 			}
 
 			// [2] set query options - main component query (valid for result components)
@@ -306,6 +286,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			customQueries,
 			defaultQueries,
 		};
+
 		// [5] Generate finalQuery for search
 		componentCollection.forEach((component) => {
 			// eslint-disable-next-line
@@ -315,6 +296,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList,
 				queryOptions,
 			);
+
 			const validOptions = ['aggs', 'from', 'sort'];
 			// check if query or options are valid - non-empty
 			if (
@@ -529,7 +511,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 					? config.analyticsConfig.customEvents
 					: undefined;
 			}
-			console.log('finalQuery', finalQuery);
 			appbaseRef
 				.reactiveSearchv3(finalQuery, rsAPISettings)
 				.then((res) => {
