@@ -65,6 +65,10 @@ import {
 
  3. isValidDateRangeQueryFormat() checks if the queryFormat is one of the dateFormats
 	accepted by the elasticsearch or not.
+
+ 4. getRangeValueString() returns a string from a date-(object, string, numeric) in
+	the queryFormat passed by the user. All for representational purpose, this value is the one
+	getting stored in reduc to be used by the selectedFilters, query-generation, urlparams, etc.
 */
 
 // the formatRange() function formats the range value received from props
