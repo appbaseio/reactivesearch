@@ -191,7 +191,7 @@ class RangeSlider extends Component {
 	static parseValue = (value, props) => {
 		if (Array.isArray(value)) return value;
 		return value
-			? [value.start, value.end]
+			? [getNumericRangeValue(value.start, props), getNumericRangeValue(value.end, props)]
 			: [
 				// considering the standard convention of storing only numerics
 				// in the local state, range values' conversion to numerics is required
