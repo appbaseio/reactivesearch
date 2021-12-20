@@ -35,29 +35,6 @@ import {
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
-/*
- 1. getNumericRangeValue() function is used to retrieve a numeric value that can be compared
- using comparison operators, when dealing with dates it is highly probable that we
- would be getting date objects and sometimes date-strings that can't be compared directly
-
- 2. formatDateStringToStandard() returns a date-string that is acceptable by the XDate().
-	For Xdate() to prase date-strings, Date-strings must either be in ISO8601 format
-	or IETF format (like "Mon Sep 05 2011 12:30:00 GMT-0700 (PDT)")
-	Ref: https://arshaw.com/xdate/#Parsing
-
-	We need it when we are getting value from the Redux store, since we are storing values in
-	redux store that get used by the SelectedFilters and URLParams also,
-	these values are in the format passed by the user through queryFormat prop,
-	for example, a date string would be stored as HHmmss.fffzzz
-	when queryFormat === 'basic_time' but this can't be parsed by the Xdate constructor.
-
- 3. isValidDateRangeQueryFormat() checks if the queryFormat is one of the dateFormats
-	accepted by the elasticsearch or not.
-
- 4. getRangeValueString() returns a string from a date-(object, string, numeric) in
-	the queryFormat passed by the user. All for representational purpose, this value is the one
-	getting stored in reduc to be used by the selectedFilters, query-generation, urlparams, etc.
-*/
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
