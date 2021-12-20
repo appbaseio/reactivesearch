@@ -6,6 +6,7 @@ import {
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import {
 	isEqual,
 	checkValueChange,
@@ -412,7 +413,9 @@ class MultiDataList extends Component {
 
 		const listItems = options.filter((item) => {
 			if (this.props.showSearch && this.state.searchTerm) {
-				return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+				return replaceDiacritics(item.label)
+					.toLowerCase()
+					.includes(replaceDiacritics(this.state.searchTerm).toLowerCase());
 			}
 			return true;
 		});

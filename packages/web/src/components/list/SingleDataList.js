@@ -19,6 +19,7 @@ import {
 	updateDefaultQuery,
 	updateInternalQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -27,13 +28,7 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import {
-	connect,
-	getComponent,
-	hasCustomRenderer,
-	isEvent,
-	isQueryIdentical,
-} from '../../utils';
+import { connect, getComponent, hasCustomRenderer, isEvent, isQueryIdentical } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class SingleDataList extends Component {
@@ -335,7 +330,9 @@ class SingleDataList extends Component {
 
 		const listItems = options.filter((item) => {
 			if (this.props.showSearch && this.state.searchTerm) {
-				return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+				return replaceDiacritics(item.label)
+					.toLowerCase()
+					.includes(replaceDiacritics(this.state.searchTerm).toLowerCase());
 			}
 			return true;
 		});
@@ -343,9 +340,7 @@ class SingleDataList extends Component {
 	}
 
 	render() {
-		const {
-			selectAllLabel, showCount, renderItem,
-		} = this.props;
+		const { selectAllLabel, showCount, renderItem } = this.props;
 		const { options } = this.state;
 
 		if (!this.hasCustomRenderer && options.length === 0) {
@@ -508,7 +503,6 @@ SingleDataList.defaultProps = {
 	showCount: false,
 	enableStrictSelection: false,
 };
-
 
 // Add componentType for SSR
 SingleDataList.componentType = componentTypes.singleDataList;

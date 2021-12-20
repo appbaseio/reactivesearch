@@ -1,4 +1,5 @@
 import { helper } from '@appbaseio/reactivecore';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import VueTypes from 'vue-types';
 import Downshift from '../basic/DownShift.jsx';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
@@ -71,10 +72,10 @@ const Dropdown = {
 					this.$props.showSearch
 					&& this.$data.searchTerm
 				) {
-					return String(item[labelField])
+					return replaceDiacritics(String(item[labelField]))
 						.toLowerCase()
 						.includes(
-							this.$data.searchTerm.toLowerCase(),
+							replaceDiacritics(this.$data.searchTerm.toLowerCase()),
 						);
 				}
 
