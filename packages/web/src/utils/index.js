@@ -244,6 +244,7 @@ export function isValidDateRangeQueryFormat(queryFormat) {
 	return Object.keys(dateFormats).includes(queryFormat);
 }
 
+// converts a date type, if used, to a comparable numeric format
 export function getNumericRangeValue(value, props, avoidEpochSecondDivision = false) {
 	// eslint-disable-next-line
 	if (
@@ -252,6 +253,7 @@ export function getNumericRangeValue(value, props, avoidEpochSecondDivision = fa
 		&& new XDate(value, true).valid()
 	) {
 		if (props.queryFormat === 'epoch_second' && avoidEpochSecondDivision === false) {
+			// epoch_second format requires a division by 1000 to convert millisecs to secs
 			return Math.floor(new XDate(value, true).getTime() / 1000);
 		}
 		return new XDate(value, true).getTime();
@@ -259,6 +261,9 @@ export function getNumericRangeValue(value, props, avoidEpochSecondDivision = fa
 	return parseFloat(value);
 }
 
+// converts a value type to a representational string format
+// based on the queryFormat if passed
+// else returns as is.
 export function getRangeValueString(value, props) {
 	if (typeof value !== 'string') {
 		switch (props.queryFormat) {
@@ -285,6 +290,8 @@ export function getRangeValueString(value, props) {
 	return value;
 }
 
+// converts a string to a standard format which can be
+// parsed by the XDate constructor
 export function formatDateStringToStandard(value, props) {
 	const queryFormat = dateFormats[props.queryFormat];
 	let formattedValue = value;
