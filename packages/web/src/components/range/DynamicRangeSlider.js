@@ -374,7 +374,7 @@ class DynamicRangeSlider extends Component {
 				processedStartValue
 				< props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
 					? props.range.start
-					  / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
+					/ (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
 					: processedStartValue,
 				processedEndValue
 				> props.range.end / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
@@ -395,7 +395,7 @@ class DynamicRangeSlider extends Component {
 					&& props.queryFormat !== dateFormats.epoch_second
 					? getRangeValueString(normalizedValue[1], props)
 					: normalizedValue[1],
-			  ]
+			]
 			: null;
 		const performUpdate = () => {
 			this.setState(
