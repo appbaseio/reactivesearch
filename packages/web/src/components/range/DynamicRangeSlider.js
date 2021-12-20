@@ -372,10 +372,9 @@ class DynamicRangeSlider extends Component {
 			// always keep the values within range
 			normalizedValue = [
 				processedStartValue
-					< props.range.start
-					/ (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
+				< props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
 					? props.range.start
-					/ (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
+					  / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
 					: processedStartValue,
 				processedEndValue
 				> props.range.end / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
@@ -396,7 +395,7 @@ class DynamicRangeSlider extends Component {
 					&& props.queryFormat !== dateFormats.epoch_second
 					? getRangeValueString(normalizedValue[1], props)
 					: normalizedValue[1],
-			]
+			  ]
 			: null;
 		const performUpdate = () => {
 			this.setState(
@@ -546,8 +545,23 @@ class DynamicRangeSlider extends Component {
 			return (
 				<HistogramContainer
 					stats={this.state.stats}
-					range={this.state.range}
-					interval={this.getValidInterval(this.props, this.state.range)}
+					range={
+						this.props.queryFormat === dateFormats.epoch_second
+							? {
+								start: this.state.range.start * 1000,
+								end: this.state.range.end * 1000,
+							}
+							: this.state.range
+					}
+					interval={this.getValidInterval(
+						this.props,
+						this.props.queryFormat === dateFormats.epoch_second
+							? {
+								start: this.state.range.start * 1000,
+								end: this.state.range.end * 1000,
+							}
+							: this.state.range,
+					)}
 				/>
 			);
 		}
