@@ -35,6 +35,29 @@ import {
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
+/*
+ 1. getNumericRangeValue() function is used to retrieve a numeric value that can be compared
+ using comparison operators, when dealing with dates it is highly probable that we
+ would be getting date objects and sometimes date-strings that can't be compared directly
+
+ 2. formatDateStringToStandard() returns a date-string that is acceptable by the XDate().
+	For Xdate() to prase date-strings, Date-strings must either be in ISO8601 format
+	or IETF format (like "Mon Sep 05 2011 12:30:00 GMT-0700 (PDT)")
+	Ref: https://arshaw.com/xdate/#Parsing
+
+	We need it when we are getting value from the Redux store, since we are storing values in
+	redux store that get used by the SelectedFilters and URLParams also,
+	these values are in the format passed by the user through queryFormat prop,
+	for example, a date string would be stored as HHmmss.fffzzz
+	when queryFormat === 'basic_time' but this can't be parsed by the Xdate constructor.
+
+ 3. isValidDateRangeQueryFormat() checks if the queryFormat is one of the dateFormats
+	accepted by the elasticsearch or not.
+
+ 4. getRangeValueString() returns a string from a date-(object, string, numeric) in
+	the queryFormat passed by the user. All for representational purpose, this value is the one
+	getting stored in reduc to be used by the selectedFilters, query-generation, urlparams, etc.
+*/
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
@@ -42,6 +65,9 @@ class RangeSlider extends Component {
 		const valueToParse = selectedValue || value || defaultValue;
 		let currentValue = RangeSlider.parseValue(valueToParse, props);
 		if (!this.shouldUpdate(currentValue)) {
+			// the standard way to deal with internal state is using numerics
+			// to  avoid complications as date type can be an object, string, numeric, etc.
+			// thus we convert it to numeric as a standard
 			currentValue = [
 				getNumericRangeValue(props.range.start, props),
 				getNumericRangeValue(props.range.end, props),
@@ -104,6 +130,9 @@ class RangeSlider extends Component {
 			const value = RangeSlider.parseValue(this.props.value, this.props);
 			this.handleChange(value, this.props);
 		} else if (
+			// cautionary conversion of state and selectedValues from state to numerics
+			// in order to make comparison meaningful
+			// since support of date-types might use date-object, string or numerics.
 			!isEqual(
 				this.state.currentValue.map(val => getNumericRangeValue(val, this.props)),
 				Array.isArray(this.props.selectedValue)
@@ -141,6 +170,9 @@ class RangeSlider extends Component {
 			return false;
 		}
 		checkSomePropChange(nextProps, this.props, ['queryFormat'], () => {
+			// when testing with playround, the queryformat knob changed the queryFormat prop
+			// which changed the value incase of date types but the local state didn't update
+			// this block of code takes care of updating the local value with optimized rerendering
 			this.setState(
 				{
 					currentValue: RangeSlider.parseValue(null, nextProps),
@@ -150,6 +182,7 @@ class RangeSlider extends Component {
 					this.handleChange(this.state.currentValue, nextProps);
 				},
 			);
+			// stopping the rerender since setState call above would rerender anyway.
 			return false;
 		});
 		return true;
@@ -160,6 +193,8 @@ class RangeSlider extends Component {
 		return value
 			? [value.start, value.end]
 			: [
+				// considering the standard convention of storing only numerics
+				// in the local state, range values' conversion to numerics is required
 				getNumericRangeValue(props.range.start, props),
 				getNumericRangeValue(props.range.end, props),
 			];
@@ -205,6 +240,9 @@ class RangeSlider extends Component {
 	getValidInterval = (props) => {
 		const min
 			= Math.ceil(
+				// passed the third argument in getNumericRangeValue as true to avoid
+				// unneccessary manipulation for queryFormat===epoch_second
+				// we're just concerned with the range difference here
 				(getNumericRangeValue(props.range.end, props, true)
 					- getNumericRangeValue(props.range.start, props, true))
 					/ 100,
@@ -245,7 +283,22 @@ class RangeSlider extends Component {
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		const [start, end] = currentValue;
+		// handleChange might be called from within the component when the slider handle
+		// is invoked or from the redux store when the selectedValues is changed
+		// which doesn't guarantee a value format to be string, numeric or object.
+		// thus we first process the passed currentValue parameter to get a numeric value
+		// that can be easily compared
 		const processedStart = getNumericRangeValue(
+			// the conditional is used to make sure we are passing in a
+			// parsable date string or a numeric in case not dealing with dates
+			//
+			// isValidDateRangeQueryFormat(props.queryFormat) && !XDate(start).valid() --->
+			// this condition deals with checking if the queryformat prop is valid dateformat or not
+			// and also checks if it is a parsable date-string/ object or not
+			//
+			// last part of the condition props.queryFormat !== dateFormats.epoch_second makes sure the
+			// passed queryFormat isn't "epoch_second" which doesn't requires formatDateStringToStandard
+			// to come into action
 			isValidDateRangeQueryFormat(props.queryFormat)
 				&& !XDate(start).valid()
 				&& props.queryFormat !== dateFormats.epoch_second
@@ -264,6 +317,14 @@ class RangeSlider extends Component {
 
 		const performUpdate = () => {
 			const handleUpdates = () => {
+				// isValidDateRangeQueryFormat(props.queryFormat)
+				//    checks if date type is used
+				// props.queryFormat !== dateFormats.epoch_second
+				//    to avoid further division by 1000
+				// getRangeValueString(normalizedValue[0], props)
+				//    we store this string in redux store for representational purpose
+				// normalizedValue[0],
+				// default behaviour for numerics and dateFormats.epoch_second
 				this.updateQuery(
 					[
 						isValidDateRangeQueryFormat(props.queryFormat)
