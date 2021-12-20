@@ -6,7 +6,7 @@ import { withTheme } from 'emotion-theming';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
@@ -127,9 +127,9 @@ class Dropdown extends Component {
 		const dropdownItems = itemsToRender.filter((item) => {
 			if (String(item[labelField]).length) {
 				if (this.props.showSearch && this.state.searchTerm) {
-					return String(item[labelField])
+					return replaceDiacritics(String(item[labelField]))
 						.toLowerCase()
-						.includes(this.state.searchTerm.toLowerCase());
+						.includes(replaceDiacritics(this.state.searchTerm).toLowerCase());
 				}
 				return true;
 			}

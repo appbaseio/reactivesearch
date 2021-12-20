@@ -1,5 +1,6 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -163,9 +164,9 @@ const SingleList = {
 		const filteredItemsToRender = itemsToRender.filter(item => {
 			if (String(item.key).length) {
 				if (this.$props.showSearch && this.$data.searchTerm) {
-					return String(item.key)
+					return replaceDiacritics(String(item.key))
 						.toLowerCase()
-						.includes(this.$data.searchTerm.toLowerCase());
+						.includes(replaceDiacritics(this.$data.searchTerm.toLowerCase()));
 				}
 				return true;
 			}
