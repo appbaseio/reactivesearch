@@ -24,6 +24,10 @@ import {
 	pushToAndClause,
 	updateCustomQuery,
 	getOptionsFromQuery,
+	formatDateStringToStandard,
+	getNumericRangeValue,
+	getRangeValueString,
+	isValidDateRangeQueryFormat,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
@@ -39,12 +43,8 @@ import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
-	formatDateStringToStandard,
-	getNumericRangeValue,
 	getRangeQueryWithNullValues,
-	getRangeValueString,
 	getValidPropsKeys,
-	isValidDateRangeQueryFormat,
 } from '../../utils';
 
 /*
