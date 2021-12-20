@@ -73,11 +73,8 @@ class RangeSlider extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['showHistogram', 'interval', 'range', 'calendarInterval'],
-			() => this.updateQueryOptions(this.props),
+		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval', 'range'], () =>
+			this.updateQueryOptions(this.props),
 		);
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { options } = this.props;
@@ -93,10 +90,15 @@ class RangeSlider extends Component {
 			});
 		});
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
-			this.updateQueryOptions(this.props);
-			this.handleChange(this.state.currentValue, this.props);
-		});
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField', 'calendarInterval'],
+			() => {
+				this.updateQueryOptions(this.props);
+				this.handleChange(this.state.currentValue, this.props);
+			},
+		);
 
 		if (!isEqual(this.props.value, prevProps.value)) {
 			const value = RangeSlider.parseValue(this.props.value, this.props);
@@ -203,8 +205,8 @@ class RangeSlider extends Component {
 	getValidInterval = (props) => {
 		const min
 			= Math.ceil(
-				(getNumericRangeValue(props.range.end, props)
-					- getNumericRangeValue(props.range.start, props))
+				(getNumericRangeValue(props.range.end, props, true)
+					- getNumericRangeValue(props.range.start, props, true))
 					/ 100,
 			) || 1;
 		if (!props.interval) {
@@ -224,7 +226,7 @@ class RangeSlider extends Component {
 				histogram: {
 					field: props.dataField,
 					interval: this.getValidInterval(props),
-					offset: getNumericRangeValue(props.range.start, props),
+					offset: getNumericRangeValue(props.range.start, props, true),
 				},
 			},
 		};
@@ -425,7 +427,10 @@ class RangeSlider extends Component {
 				{this.state.stats.length && this.props.showHistogram && this.props.showSlider ? (
 					<HistogramContainer
 						stats={this.state.stats}
-						range={this.props.range}
+						range={{
+							start: getNumericRangeValue(this.props.range.start, this.props, true),
+							end: getNumericRangeValue(this.props.range.end, this.props, true),
+						}}
 						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}

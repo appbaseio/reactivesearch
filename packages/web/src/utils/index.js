@@ -244,14 +244,14 @@ export function isValidDateRangeQueryFormat(queryFormat) {
 	return Object.keys(dateFormats).includes(queryFormat);
 }
 
-export function getNumericRangeValue(value, props) {
+export function getNumericRangeValue(value, props, avoidEpochSecondDivision = false) {
 	// eslint-disable-next-line
 	if (
 		typeof value !== 'number'
 		&& isValidDateRangeQueryFormat(props.queryFormat)
 		&& new XDate(value, true).valid()
 	) {
-		if (props.queryFormat === 'epoch_second') {
+		if (props.queryFormat === 'epoch_second' && avoidEpochSecondDivision === false) {
 			return Math.floor(new XDate(value, true).getTime() / 1000);
 		}
 		return new XDate(value, true).getTime();
