@@ -40,7 +40,7 @@ import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
 	formatDateString,
-	getNumericRangeValue,
+	getNumericRangeArray,
 	getRangeQueryWithNullValues,
 	getValidPropsKeys,
 } from '../../utils';
@@ -48,10 +48,13 @@ import {
 // the formatRange() function formats the range value received from props
 // when dealing with dates we are always storing
 // milliseconds value in the local state
-const formatRange = (range = {}, props = {}) => ({
-	start: getNumericRangeValue(range.start, isValidDateRangeQueryFormat(props.queryFormat)),
-	end: getNumericRangeValue(range.end, isValidDateRangeQueryFormat(props.queryFormat)),
-});
+const formatRange = (range = {}, props = {}) => {
+	const rangeArray = getNumericRangeArray(range, props.queryFormat);
+	return {
+		start: rangeArray[0],
+		end: rangeArray[1],
+	};
+};
 
 class DynamicRangeSlider extends Component {
 	constructor(props) {
@@ -97,19 +100,17 @@ class DynamicRangeSlider extends Component {
 			const range = formatRange(props.range, props);
 			if (props.selectedValue) {
 				// selected value must be in limit
-				// we are using getNumericRangeValue() util method to get a numeric
+				// we are using getNumericRangeArray() util method to get a numeric range array
 				// since the value from redux store can be a string
 				// as we have started using dateFormats
+				const selectedValueNumericArray = getNumericRangeArray({
+					start: props.selectedValue[0],
+					end: props.selectedValue[1],
+				});
 
 				if (
-					getNumericRangeValue(
-						props.selectedValue[0],
-						isValidDateRangeQueryFormat(props.queryFormat),
-					) >= range.start
-					&& getNumericRangeValue(
-						props.selectedValue[1],
-						isValidDateRangeQueryFormat(props.queryFormat),
-					) <= range.end
+					selectedValueNumericArray[0] >= range.start
+					&& selectedValueNumericArray[1] <= range.end
 				) {
 					return {
 						currentValue: null,
@@ -282,10 +283,7 @@ class DynamicRangeSlider extends Component {
 	static parseValue = (value, props) => {
 		if (Array.isArray(value)) return value;
 		return value
-			? [
-				getNumericRangeValue(value().start, props.queryFormat),
-				getNumericRangeValue(value().end, props.queryFormat),
-			]
+			? getNumericRangeArray({ start: value().start, end: value().end }, props.queryFormat)
 			: null;
 	};
 
@@ -373,13 +371,9 @@ class DynamicRangeSlider extends Component {
 			const [start, end] = currentValue;
 			// converting the received value params to numeric equivalent
 			// incase of date type, we convert them to milliseconds value always
-			const processedStart = getNumericRangeValue(
-				start,
-				isValidDateRangeQueryFormat(props.queryFormat),
-			);
-			const processedEnd = getNumericRangeValue(
-				end,
-				isValidDateRangeQueryFormat(props.queryFormat),
+			const [processedStart, processedEnd] = getNumericRangeArray(
+				{ start, end },
+				props.queryFormat,
 			);
 			// always keep the values within range
 			// props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000) is required
