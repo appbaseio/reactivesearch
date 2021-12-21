@@ -2,6 +2,7 @@ import React from 'react';
 import { connect as connectToStore } from 'react-redux';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
+import XDate from 'xdate';
 
 export const ReactReduxContext = React.createContext(null);
 
@@ -238,3 +239,20 @@ export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd'
 export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }
+
+// returns the milliseconds value for RangeSlider/ DynamicRangeSlider for date types
+// returns the value as is, if the simple numerics are used
+// this pertains to the convention that internally our components uses numerics for local state
+export function getNumericRangeValue(value, isDateType) {
+	try {
+		if (isDateType && value !== undefined && value !== null) {
+			return new XDate(value).getTime();
+		}
+		return value;
+	} catch (e) {
+		console.error(e);
+		return value;
+	}
+}
+
+export const formatDateString = date => new XDate(date).toString('yyyy-MM-dd');
