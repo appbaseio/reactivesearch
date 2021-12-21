@@ -12,9 +12,6 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 	updateCustomQuery,
-	formatDateStringToStandard,
-	getNumericRangeValue,
-	getRangeValueString,
 	isValidDateRangeQueryFormat,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -31,6 +28,8 @@ import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
+	formatDateString,
+	getNumericRangeValue,
 	getRangeQueryWithNullValues,
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
@@ -46,8 +45,14 @@ class RangeSlider extends Component {
 			// to  avoid complications as date type can be an object, string, numeric, etc.
 			// thus we convert it to numeric as a standard
 			currentValue = [
-				getNumericRangeValue(props.range.start, props),
-				getNumericRangeValue(props.range.end, props),
+				getNumericRangeValue(
+					props.range.start,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
+				getNumericRangeValue(
+					props.range.end,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
 			];
 		}
 		this.state = {
@@ -65,7 +70,6 @@ class RangeSlider extends Component {
 			this.handleChange(currentValue, props, hasMounted);
 		}
 	}
-
 	componentDidMount() {
 		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
@@ -102,8 +106,18 @@ class RangeSlider extends Component {
 				this.handleChange(this.state.currentValue, this.props);
 			},
 		);
-
-		if (!isEqual(this.props.value, prevProps.value)) {
+		if (
+			!isEqual(
+				getNumericRangeValue(
+					this.props.value,
+					isValidDateRangeQueryFormat(this.props.queryFormat),
+				),
+				getNumericRangeValue(
+					prevProps.value,
+					isValidDateRangeQueryFormat(this.props.queryFormat),
+				),
+			)
+		) {
 			const value = RangeSlider.parseValue(this.props.value, this.props);
 			this.handleChange(value, this.props);
 		} else if (
@@ -111,18 +125,12 @@ class RangeSlider extends Component {
 			// in order to make comparison meaningful
 			// since support of date-types might use date-object, string or numerics.
 			!isEqual(
-				this.state.currentValue.map(val => getNumericRangeValue(val, this.props)),
-				Array.isArray(this.props.selectedValue)
-					? this.props.selectedValue.map(val => getNumericRangeValue(val, this.props))
-					: null,
+				this.state.currentValue.map(val => formatDateString(new XDate(val))),
+				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
 			)
 			&& !isEqual(
-				Array.isArray(this.props.selectedValue)
-					? this.props.selectedValue.map(val => getNumericRangeValue(val, this.props))
-					: null,
-				Array.isArray(prevProps.selectedValue)
-					? prevProps.selectedValue.map(val => getNumericRangeValue(val, this.props))
-					: null,
+				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
+				Array.isArray(prevProps.selectedValue) ? prevProps.selectedValue : null,
 			)
 		) {
 			const { value, onChange } = this.props;
@@ -152,7 +160,7 @@ class RangeSlider extends Component {
 			// this block of code takes care of updating the local value with optimized rerendering
 			this.setState(
 				{
-					currentValue: RangeSlider.parseValue(null, nextProps),
+					currentValue: RangeSlider.parseValue(nextProps.range, nextProps),
 				},
 				() => {
 					this.updateQueryOptions(nextProps);
@@ -168,12 +176,24 @@ class RangeSlider extends Component {
 	static parseValue = (value, props) => {
 		if (Array.isArray(value)) return value;
 		return value
-			? [getNumericRangeValue(value.start, props), getNumericRangeValue(value.end, props)]
+			? [
+				getNumericRangeValue(
+					value.start,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
+				getNumericRangeValue(value.end, isValidDateRangeQueryFormat(props.queryFormat)),
+			]
 			: [
 				// considering the standard convention of storing only numerics
 				// in the local state, range values' conversion to numerics is required
-				getNumericRangeValue(props.range.start, props),
-				getNumericRangeValue(props.range.end, props),
+				getNumericRangeValue(
+					props.range.start,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
+				getNumericRangeValue(
+					props.range.end,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
 			];
 	};
 
@@ -198,8 +218,14 @@ class RangeSlider extends Component {
 	getSnapPoints = () => {
 		let snapPoints = [];
 		let { stepValue } = this.props;
-		const startPoint = getNumericRangeValue(this.props.range.start, this.props);
-		const endPoint = getNumericRangeValue(this.props.range.end, this.props);
+		const startPoint = getNumericRangeValue(
+			this.props.range.start,
+			isValidDateRangeQueryFormat(this.props.queryFormat),
+		);
+		const endPoint = getNumericRangeValue(
+			this.props.range.end,
+			isValidDateRangeQueryFormat(this.props.queryFormat),
+		);
 		// limit the number of steps to prevent generating a large number of snapPoints
 		if ((endPoint - startPoint) / stepValue > 100) {
 			stepValue = (endPoint - startPoint) / 100;
@@ -220,8 +246,14 @@ class RangeSlider extends Component {
 				// passed the third argument in getNumericRangeValue as true to avoid
 				// unneccessary manipulation for queryFormat===epoch_second
 				// we're just concerned with the range difference here
-				(getNumericRangeValue(props.range.end, props, true)
-					- getNumericRangeValue(props.range.start, props, true))
+				(getNumericRangeValue(
+					props.range.end,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				)
+					- getNumericRangeValue(
+						props.range.start,
+						isValidDateRangeQueryFormat(props.queryFormat),
+					))
 					/ 100,
 			) || 1;
 		if (!props.interval) {
@@ -241,7 +273,10 @@ class RangeSlider extends Component {
 				histogram: {
 					field: props.dataField,
 					interval: this.getValidInterval(props),
-					offset: getNumericRangeValue(props.range.start, props, true),
+					offset: getNumericRangeValue(
+						props.range.start,
+						isValidDateRangeQueryFormat(props.queryFormat),
+					),
 				},
 			},
 		};
@@ -260,65 +295,35 @@ class RangeSlider extends Component {
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		const [start, end] = currentValue;
-		// handleChange might be called from within the component when the slider handle
-		// is invoked or from the redux store when the selectedValues is changed
-		// which doesn't guarantee a value format to be string, numeric or object.
-		// thus we first process the passed currentValue parameter to get a numeric value
-		// that can be easily compared
 		const processedStart = getNumericRangeValue(
-			// the conditional is used to make sure we are passing in a
-			// parsable date string or a numeric in case not dealing with dates
-			//
-			// isValidDateRangeQueryFormat(props.queryFormat) && !XDate(start).valid() --->
-			// this condition deals with checking if the queryformat prop is valid dateformat or not
-			// and also checks if it is a parsable date-string/ object or not
-			//
-			// last part of the condition props.queryFormat !== dateFormats.epoch_second makes sure the
-			// passed queryFormat isn't "epoch_second" which doesn't requires formatDateStringToStandard
-			// to come into action
-			isValidDateRangeQueryFormat(props.queryFormat)
-				&& !XDate(start).valid()
-				&& props.queryFormat !== dateFormats.epoch_second
-				? formatDateStringToStandard(start, props)
-				: start,
-			props,
+			start,
+			isValidDateRangeQueryFormat(props.queryFormat),
 		);
 		const processedEnd = getNumericRangeValue(
-			isValidDateRangeQueryFormat(props.queryFormat)
-				&& !XDate(end).valid()
-				&& props.queryFormat !== dateFormats.epoch_second
-				? formatDateStringToStandard(end, props)
-				: end,
-			props,
+			end,
+			isValidDateRangeQueryFormat(props.queryFormat),
 		);
-
 		const performUpdate = () => {
 			const handleUpdates = () => {
-				// isValidDateRangeQueryFormat(props.queryFormat)
-				//    checks if date type is used
-				// props.queryFormat !== dateFormats.epoch_second
-				//    to avoid further division by 1000
-				// getRangeValueString(normalizedValue[0], props)
-				//    we store this string in redux store for representational purpose
-				// normalizedValue[0],
-				// default behaviour for numerics and dateFormats.epoch_second
 				this.updateQuery(
 					[
 						isValidDateRangeQueryFormat(props.queryFormat)
-						&& props.queryFormat !== dateFormats.epoch_second
-							? getRangeValueString(processedStart, this.props)
+							? formatDateString(processedStart)
 							: processedStart,
 						isValidDateRangeQueryFormat(props.queryFormat)
-						&& props.queryFormat !== dateFormats.epoch_second
-							? getRangeValueString(processedEnd, this.props)
+							? formatDateString(processedEnd)
 							: processedEnd,
 					],
 					props,
 				);
 				if (props.onValueChange) {
 					props.onValueChange({
-						start: getRangeValueString(processedStart, this.props),
-						end: getRangeValueString(processedEnd, this.props),
+						start: isValidDateRangeQueryFormat(props.queryFormat)
+							? formatDateString(processedStart)
+							: processedStart,
+						end: isValidDateRangeQueryFormat(props.queryFormat)
+							? formatDateString(processedEnd)
+							: processedEnd,
 					});
 				}
 			};
@@ -326,10 +331,15 @@ class RangeSlider extends Component {
 			const { range } = props;
 			if (
 				hasMounted
-				&& getNumericRangeValue(start, this.props) <= getNumericRangeValue(end, this.props)
-				&& getNumericRangeValue(start, this.props)
-					>= getNumericRangeValue(range.start, this.props)
-				&& getNumericRangeValue(end, this.props) <= getNumericRangeValue(range.end, this.props)
+				&& getNumericRangeValue(start, isValidDateRangeQueryFormat(props.queryFormat))
+					<= getNumericRangeValue(end, isValidDateRangeQueryFormat(props.queryFormat))
+				&& getNumericRangeValue(start, isValidDateRangeQueryFormat(props.queryFormat))
+					>= getNumericRangeValue(
+						range.start,
+						isValidDateRangeQueryFormat(props.queryFormat),
+					)
+				&& getNumericRangeValue(end, isValidDateRangeQueryFormat(props.queryFormat))
+					<= getNumericRangeValue(range.end, isValidDateRangeQueryFormat(props.queryFormat))
 			) {
 				this.setState(
 					{
@@ -344,8 +354,12 @@ class RangeSlider extends Component {
 		checkValueChange(
 			props.componentId,
 			{
-				start: processedStart,
-				end: processedEnd,
+				start: isValidDateRangeQueryFormat(props.queryFormat)
+					? formatDateString(processedStart)
+					: processedStart,
+				end: isValidDateRangeQueryFormat(props.queryFormat)
+					? formatDateString(processedEnd)
+					: processedEnd,
 			},
 			props.beforeValueChange,
 			performUpdate,
@@ -354,12 +368,7 @@ class RangeSlider extends Component {
 
 	handleSlider = ({ values }) => {
 		if (this.shouldUpdate(values)) {
-			if (
-				!isEqual(
-					values.map(val => getNumericRangeValue(val, this.props)),
-					this.state.currentValue.map(val => getNumericRangeValue(val, this.props)),
-				)
-			) {
+			if (!isEqual(values, this.state.currentValue)) {
 				const { value, onChange } = this.props;
 
 				if (value === undefined) {
@@ -424,7 +433,16 @@ class RangeSlider extends Component {
 				size: 0,
 				aggs: (props.histogramQuery || this.histogramQuery)(props),
 			};
-			const value = [props.range.start, props.range.end];
+			const value = [
+				getNumericRangeValue(
+					props.range.start,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
+				getNumericRangeValue(
+					props.range.end,
+					isValidDateRangeQueryFormat(props.queryFormat),
+				),
+			];
 			const query = customQuery || RangeSlider.defaultQuery;
 
 			const customQueryOptions = customQuery
@@ -466,19 +484,29 @@ class RangeSlider extends Component {
 					<HistogramContainer
 						stats={this.state.stats}
 						range={{
-							start: getNumericRangeValue(this.props.range.start, this.props, true),
-							end: getNumericRangeValue(this.props.range.end, this.props, true),
+							start: getNumericRangeValue(
+								this.props.range.start,
+								isValidDateRangeQueryFormat(this.props.queryFormat),
+							),
+							end: getNumericRangeValue(
+								this.props.range.end,
+								isValidDateRangeQueryFormat(this.props.queryFormat),
+							),
 						}}
 						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}
 				{this.props.showSlider && (
 					<Rheostat
-						min={getNumericRangeValue(this.props.range.start, this.props)}
-						max={getNumericRangeValue(this.props.range.end, this.props)}
-						values={this.state.currentValue.map(val =>
-							getNumericRangeValue(val, this.props),
+						min={getNumericRangeValue(
+							this.props.range.start,
+							isValidDateRangeQueryFormat(this.props.queryFormat),
 						)}
+						max={getNumericRangeValue(
+							this.props.range.end,
+							isValidDateRangeQueryFormat(this.props.queryFormat),
+						)}
+						values={this.state.currentValue}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
