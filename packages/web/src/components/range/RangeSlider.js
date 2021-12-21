@@ -186,6 +186,7 @@ class RangeSlider extends Component {
 			: [
 				// considering the standard convention of storing only numerics
 				// in the local state, range values' conversion to numerics is required
+				// milliseconds value specifically stored incase of date-type
 				getNumericRangeValue(
 					props.range.start,
 					isValidDateRangeQueryFormat(props.queryFormat),
