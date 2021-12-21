@@ -30,6 +30,7 @@ import {
 	connect,
 	formatDateString,
 	getNumericRangeValue,
+	getNumericRangeArray,
 	getRangeQueryWithNullValues,
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
@@ -167,26 +168,8 @@ class RangeSlider extends Component {
 	static parseValue = (value, props) => {
 		if (Array.isArray(value)) return value;
 		return value
-			? [
-				getNumericRangeValue(
-					value.start,
-					isValidDateRangeQueryFormat(props.queryFormat),
-				),
-				getNumericRangeValue(value.end, isValidDateRangeQueryFormat(props.queryFormat)),
-			]
-			: [
-				// considering the standard convention of storing only numerics
-				// in the local state, range values' conversion to numerics is required
-				// milliseconds value specifically stored incase of date-type
-				getNumericRangeValue(
-					props.range.start,
-					isValidDateRangeQueryFormat(props.queryFormat),
-				),
-				getNumericRangeValue(
-					props.range.end,
-					isValidDateRangeQueryFormat(props.queryFormat),
-				),
-			];
+			? getNumericRangeArray(value, props.queryFormat)
+			: getNumericRangeArray(props.range, props.queryFormat);
 	};
 
 	static defaultQuery = (value, props) => {
@@ -207,19 +190,6 @@ class RangeSlider extends Component {
 		return query;
 	};
 
-	get getParsedRangeArray() {
-		return [
-			getNumericRangeValue(
-				this.props.range.start,
-				isValidDateRangeQueryFormat(this.props.queryFormat),
-			),
-			getNumericRangeValue(
-				this.props.range.end,
-				isValidDateRangeQueryFormat(this.props.queryFormat),
-			),
-		];
-	}
-
 	getSnapPoints = () => {
 		let snapPoints = [];
 		let { stepValue } = this.props;
@@ -239,7 +209,7 @@ class RangeSlider extends Component {
 	};
 
 	getValidInterval = (props) => {
-		const [start, end] = this.getParsedRangeArray;
+		const [start, end] = getNumericRangeArray(props.range, props.queryFormat);
 		const min
 			= Math.ceil(
 				// passed the third argument in getNumericRangeValue as true to avoid
@@ -283,14 +253,7 @@ class RangeSlider extends Component {
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		const [start, end] = currentValue;
-		const processedStart = getNumericRangeValue(
-			start,
-			isValidDateRangeQueryFormat(props.queryFormat),
-		);
-		const processedEnd = getNumericRangeValue(
-			end,
-			isValidDateRangeQueryFormat(props.queryFormat),
-		);
+		const [processedStart, processedEnd] = getNumericRangeArray({ start, end }, props.queryFormat);
 
 		const normalizedValueArray = [
 			isValidDateRangeQueryFormat(props.queryFormat)
@@ -313,17 +276,12 @@ class RangeSlider extends Component {
 			};
 
 			const { range } = props;
+			const [rangeStart, rangeEnd] = getNumericRangeArray(range, props.queryFormat);
 			if (
 				hasMounted
-				&& getNumericRangeValue(start, isValidDateRangeQueryFormat(props.queryFormat))
-					<= getNumericRangeValue(end, isValidDateRangeQueryFormat(props.queryFormat))
-				&& getNumericRangeValue(start, isValidDateRangeQueryFormat(props.queryFormat))
-					>= getNumericRangeValue(
-						range.start,
-						isValidDateRangeQueryFormat(props.queryFormat),
-					)
-				&& getNumericRangeValue(end, isValidDateRangeQueryFormat(props.queryFormat))
-					<= getNumericRangeValue(range.end, isValidDateRangeQueryFormat(props.queryFormat))
+				&& processedStart <= processedEnd
+				&& processedStart >= rangeStart
+				&& processedEnd <= rangeEnd
 			) {
 				this.setState(
 					{
