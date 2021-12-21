@@ -547,8 +547,12 @@ class DynamicRangeSlider extends Component {
 
 		return {
 			// formatDateString gives value as string in the format 'yyyy-MM-dd'
-			startLabel: formatDateString(startLabel),
-			endLabel: formatDateString(endLabel),
+			startLabel: isValidDateRangeQueryFormat(this.props.queryFormat)
+				? formatDateString(startLabel)
+				: startLabel,
+			endLabel: isValidDateRangeQueryFormat(this.props.queryFormat)
+				? formatDateString(endLabel)
+				: endLabel,
 		};
 	};
 
