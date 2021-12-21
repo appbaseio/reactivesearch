@@ -48,7 +48,7 @@ import {
 // the formatRange() function formats the range value received from props
 // when dealing with dates we are always storing
 // milliseconds value in the local state
-const formatRange = (range = {}, props) => ({
+const formatRange = (range = {}, props = {}) => ({
 	start: getNumericRangeValue(range.start, isValidDateRangeQueryFormat(props.queryFormat)),
 	end: getNumericRangeValue(range.end, isValidDateRangeQueryFormat(props.queryFormat)),
 });
@@ -726,7 +726,7 @@ const mapStateToProps = (state, props) => {
 				: null;
 	}
 	if (range) {
-		range = formatRange(range, {});
+		range = formatRange(range);
 	}
 	return {
 		options,
