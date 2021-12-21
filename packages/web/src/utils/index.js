@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect as connectToStore } from 'react-redux';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, isValidDateRangeQueryFormat } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import XDate from 'xdate';
 
@@ -256,3 +256,8 @@ export function getNumericRangeValue(value, isDateType) {
 }
 
 export const formatDateString = date => new XDate(date).toString('yyyy-MM-dd');
+
+export const getNumericRangeArray = (valueObj, queryFormat) => [
+	getNumericRangeValue(valueObj.start, isValidDateRangeQueryFormat(queryFormat)),
+	getNumericRangeValue(valueObj.end, isValidDateRangeQueryFormat(queryFormat)),
+];
