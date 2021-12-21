@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import XDate from 'xdate';
 import React, { Component } from 'react';
 import {
 	addComponent,
@@ -24,9 +23,6 @@ import {
 	pushToAndClause,
 	updateCustomQuery,
 	getOptionsFromQuery,
-	formatDateStringToStandard,
-	getNumericRangeValue,
-	getRangeValueString,
 	isValidDateRangeQueryFormat,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -43,17 +39,18 @@ import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
+	formatDateString,
+	getNumericRangeValue,
 	getRangeQueryWithNullValues,
 	getValidPropsKeys,
 } from '../../utils';
 
 // the formatRange() function formats the range value received from props
-// when dealing with dates and specifically queryFormat = 'epoch_second' we
-// need to divide the value by a factor of 1000 since we are always storing
+// when dealing with dates we are always storing
 // milliseconds value in the local state
 const formatRange = (range = {}, props) => ({
-	start: Math.floor(range.start / (props.queryFormat === dateFormats.epoch_second ? 1000 : 1)),
-	end: Math.floor(range.end / (props.queryFormat === dateFormats.epoch_second ? 1000 : 1)),
+	start: getNumericRangeValue(range.start, isValidDateRangeQueryFormat(props.queryFormat)),
+	end: getNumericRangeValue(range.end, isValidDateRangeQueryFormat(props.queryFormat)),
 });
 
 class DynamicRangeSlider extends Component {
@@ -105,8 +102,14 @@ class DynamicRangeSlider extends Component {
 				// as we have started using dateFormats
 
 				if (
-					getNumericRangeValue(props.selectedValue[0], props) >= range.start
-					&& getNumericRangeValue(props.selectedValue[1], props) <= range.end
+					getNumericRangeValue(
+						props.selectedValue[0],
+						isValidDateRangeQueryFormat(props.queryFormat),
+					) >= range.start
+					&& getNumericRangeValue(
+						props.selectedValue[1],
+						isValidDateRangeQueryFormat(props.queryFormat),
+					) <= range.end
 				) {
 					return {
 						currentValue: null,
@@ -276,9 +279,14 @@ class DynamicRangeSlider extends Component {
 	};
 
 	// value parser for SSR
-	static parseValue = (value) => {
+	static parseValue = (value, props) => {
 		if (Array.isArray(value)) return value;
-		return value ? [value().start, value().end] : null;
+		return value
+			? [
+				getNumericRangeValue(value().start, props.queryFormat),
+				getNumericRangeValue(value().end, props.queryFormat),
+			]
+			: null;
 	};
 
 	static defaultQuery = (value, props) => {
@@ -363,54 +371,25 @@ class DynamicRangeSlider extends Component {
 		let normalizedValue = null;
 		if (currentValue) {
 			const [start, end] = currentValue;
-
-			// handleChange might be called from within the component when the slider handle
-			// is invoked or from the redux store when the selectedValues is changed
-			// which doesn't guarantee a value format to be string, numeric or object.
-			// thus we first process the passed currentValue parameter to get a numeric value
-			// that can be easily compared
-			const processedStartValue = getNumericRangeValue(
-				// the conditional is used to make sure we are passing in a
-				// parsable date string or a numeric in case not dealing with dates
-				//
-				// isValidDateRangeQueryFormat(props.queryFormat) && !XDate(start).valid() --->
-				// this condition deals with checking if the queryformat prop is valid dateformat or not
-				// and also checks if it is a parsable date-string/ object or not
-				//
-				// last part of the condition props.queryFormat !== dateFormats.epoch_second makes sure the
-				// passed queryFormat isn't "epoch_second" which doesn't requires formatDateStringToStandard
-				// to come into action
-				isValidDateRangeQueryFormat(props.queryFormat)
-					&& !XDate(start).valid()
-					&& props.queryFormat !== dateFormats.epoch_second
-					? formatDateStringToStandard(start, props)
-					: start,
-				props,
+			// converting the received value params to numeric equivalent
+			// incase of date type, we convert them to milliseconds value always
+			const processedStart = getNumericRangeValue(
+				start,
+				isValidDateRangeQueryFormat(props.queryFormat),
 			);
-			const processedEndValue = getNumericRangeValue(
-				isValidDateRangeQueryFormat(props.queryFormat)
-					&& !XDate(end).valid()
-					&& props.queryFormat !== dateFormats.epoch_second
-					? formatDateStringToStandard(end, props)
-					: end,
-				props,
+			const processedEnd = getNumericRangeValue(
+				end,
+				isValidDateRangeQueryFormat(props.queryFormat),
 			);
 			// always keep the values within range
 			// props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000) is required
 			// since we need to convert the milliseconds value into seconds in case of epoch_second
 			normalizedValue = [
-				processedStartValue
-				< props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
-					? props.range.start
-					/ (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
-					: processedStartValue,
-				processedEndValue
-				> props.range.end / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
-					? props.range.end / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000)
-					: processedEndValue,
+				processedStart < props.range.start ? props.range.start : processedStart,
+				processedEnd > props.range.end ? props.range.end : processedEnd,
 			];
 			if (props.range.start === null) {
-				normalizedValue = [processedStartValue, processedEndValue];
+				normalizedValue = [processedStart, processedEnd];
 			}
 		}
 
@@ -425,12 +404,10 @@ class DynamicRangeSlider extends Component {
 		const normalizedValues = normalizedValue
 			? [
 				isValidDateRangeQueryFormat(props.queryFormat)
-					&& props.queryFormat !== dateFormats.epoch_second
-					? getRangeValueString(normalizedValue[0], props)
+					? formatDateString(normalizedValue[0])
 					: normalizedValue[0],
 				isValidDateRangeQueryFormat(props.queryFormat)
-					&& props.queryFormat !== dateFormats.epoch_second
-					? getRangeValueString(normalizedValue[1], props)
+					? formatDateString(normalizedValue[1])
 					: normalizedValue[1],
 			]
 			: null;
@@ -569,10 +546,9 @@ class DynamicRangeSlider extends Component {
 		}
 
 		return {
-			// getRangeValueString gives value as string in the format
-			// same as the queryFormat passed by the user
-			startLabel: getRangeValueString(startLabel, this.props),
-			endLabel: getRangeValueString(endLabel, this.props),
+			// formatDateString gives value as string in the format 'yyyy-MM-dd'
+			startLabel: formatDateString(startLabel),
+			endLabel: formatDateString(endLabel),
 		};
 	};
 
@@ -581,16 +557,7 @@ class DynamicRangeSlider extends Component {
 			return this.props.loader;
 		}
 		if (this.state.stats.length && this.props.showHistogram) {
-			// handling the case of queryFormat === dateFormats.epoch_second
-			// since we divided the ranges on mount of component
-			// by a factor of thousand we need to rebuild the range by multiplying to by 1000
-			const rangeValue
-				= this.props.queryFormat === dateFormats.epoch_second
-					? {
-						start: this.state.range.start * 1000,
-						end: this.state.range.end * 1000,
-					}
-					: this.state.range;
+			const rangeValue = this.state.range;
 			return (
 				<HistogramContainer
 					stats={this.state.stats}
