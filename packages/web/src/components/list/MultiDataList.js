@@ -483,16 +483,15 @@ class MultiDataList extends Component {
 								return (
 									<li
 										key={item.label}
-										className={`${
-											isChecked ? 'active' : ''
-										}`}
+										className={`${isChecked ? 'active' : ''}`}
 										role="option"
 										aria-checked={isChecked}
 										aria-selected={isChecked}
 									>
 										<Checkbox
 											className={
-												getClassName(this.props.innerClass, 'checkbox') || null
+												getClassName(this.props.innerClass, 'checkbox')
+												|| null
 											}
 											id={`${this.props.componentId}-${item.label}`}
 											name={`${this.props.componentId}-${item.label}`}
@@ -508,7 +507,7 @@ class MultiDataList extends Component {
 											htmlFor={`${this.props.componentId}-${item.label}`}
 										>
 											{renderItem ? (
-												renderItem(item.label, item.count, this.state.currentValue === item.label)
+												renderItem(item.label, item.count, isChecked)
 											) : (
 												<span>
 													<span>{item.label}</span>
