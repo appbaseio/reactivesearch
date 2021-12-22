@@ -37,6 +37,7 @@ import ComponentWrapper from '../basic/ComponentWrapper';
 
 class RangeSlider extends Component {
 	constructor(props) {
+		window.console.log('hey');
 		super(props);
 		const { selectedValue, defaultValue, value } = props;
 		const valueToParse = selectedValue || value || defaultValue;
@@ -45,7 +46,7 @@ class RangeSlider extends Component {
 			// the standard way to deal with internal state is using numerics
 			// to  avoid complications as date type can be an object, string, numeric, etc.
 			// thus we convert it to numeric as a standard
-			currentValue = this.getParsedRangeArray;
+			currentValue = getNumericRangeArray(props.range, props.queryFormat);
 		}
 		this.state = {
 			currentValue,
@@ -193,7 +194,7 @@ class RangeSlider extends Component {
 	getSnapPoints = () => {
 		let snapPoints = [];
 		let { stepValue } = this.props;
-		const [startPoint, endPoint] = this.getParsedRangeArray;
+		const [startPoint, endPoint] = getNumericRangeArray(this.props.range, this.props.queryFormat);
 		// limit the number of steps to prevent generating a large number of snapPoints
 		if ((endPoint - startPoint) / stepValue > 100) {
 			stepValue = (endPoint - startPoint) / 100;
@@ -234,7 +235,7 @@ class RangeSlider extends Component {
 				histogram: {
 					field: props.dataField,
 					interval: this.getValidInterval(props),
-					offset: this.getParsedRangeArray[0],
+					offset: getNumericRangeArray(props.range, props.queryFormat),
 				},
 			},
 		};
@@ -253,7 +254,10 @@ class RangeSlider extends Component {
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
 		const [start, end] = currentValue;
-		const [processedStart, processedEnd] = getNumericRangeArray({ start, end }, props.queryFormat);
+		const [processedStart, processedEnd] = getNumericRangeArray(
+			{ start, end },
+			props.queryFormat,
+		);
 
 		const normalizedValueArray = [
 			isValidDateRangeQueryFormat(props.queryFormat)
@@ -371,7 +375,7 @@ class RangeSlider extends Component {
 				size: 0,
 				aggs: (props.histogramQuery || this.histogramQuery)(props),
 			};
-			const value = this.getParsedRangeArray;
+			const value = getNumericRangeArray(props.range, props.queryFormat);
 			const query = customQuery || RangeSlider.defaultQuery;
 
 			const customQueryOptions = customQuery
@@ -402,6 +406,10 @@ class RangeSlider extends Component {
 	};
 
 	render() {
+		const [startRangeValue, endRangeValue] = getNumericRangeArray(
+			this.props.range,
+			this.props.queryFormat,
+		);
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -413,16 +421,16 @@ class RangeSlider extends Component {
 					<HistogramContainer
 						stats={this.state.stats}
 						range={{
-							start: this.getParsedRangeArray[0],
-							end: this.getParsedRangeArray[1],
+							start: startRangeValue,
+							end: endRangeValue,
 						}}
 						interval={this.getValidInterval(this.props)}
 					/>
 				) : null}
 				{this.props.showSlider && (
 					<Rheostat
-						min={this.getParsedRangeArray[0]}
-						max={this.getParsedRangeArray[1]}
+						min={startRangeValue}
+						max={endRangeValue}
 						values={this.state.currentValue}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
