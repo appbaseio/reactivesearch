@@ -38,19 +38,19 @@ function getValue(state, id, defaultValue) {
 			const parsedValue = JSON.parse(state[id]);
 			return {
 				value: parsedValue,
-				reference: 'URL',
+				reference: 'URL'
 			};
 		} catch (error) {
 			// using react-dom-server for ssr
 			return {
 				value: state[id],
-				reference: 'URL',
+				reference: 'URL'
 			};
 		}
 	}
 	return {
 		value: defaultValue,
-		reference: 'DEFAULT',
+		reference: 'DEFAULT'
 	};
 }
 
@@ -163,19 +163,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				showFilter,
 				URLParams: component.URLParams || false,
 			});
-			// Set custom and default queries
-			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					component.value || selectedValues[component.componentId].value,
-					compProps,
-				);
-			}
-			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					component.value,
-					compProps,
-				);
-			}
 
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
@@ -295,6 +282,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			componentProps[component.componentId] = compProps;
 		});
 
+
 		state = {
 			components,
 			dependencyTree,
@@ -306,6 +294,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			customQueries,
 			defaultQueries,
 		};
+
 		// [5] Generate finalQuery for search
 		componentCollection.forEach((component) => {
 			// eslint-disable-next-line
@@ -315,6 +304,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList,
 				queryOptions,
 			);
+
 			const validOptions = ['aggs', 'from', 'sort'];
 			// check if query or options are valid - non-empty
 			if (
@@ -358,10 +348,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 						};
 					}
 				} else {
-					const preference
-						= config && config.analyticsConfig && config.analyticsConfig.userId
-							? `${config.analyticsConfig.userId}_${component}`
-							: component;
+					const preference = config && config.analyticsConfig && config.analyticsConfig.userId
+						? `${config.analyticsConfig.userId}_${component}` : component;
 					finalQuery = [
 						...finalQuery,
 						{
@@ -529,7 +517,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 					? config.analyticsConfig.customEvents
 					: undefined;
 			}
-			console.log('finalQuery', finalQuery);
 			appbaseRef
 				.reactiveSearchv3(finalQuery, rsAPISettings)
 				.then((res) => {

@@ -6,6 +6,7 @@ import {
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import {
 	isEqual,
 	checkValueChange,
@@ -412,7 +413,9 @@ class MultiDataList extends Component {
 
 		const listItems = options.filter((item) => {
 			if (this.props.showSearch && this.state.searchTerm) {
-				return item.label.toLowerCase().includes(this.state.searchTerm.toLowerCase());
+				return replaceDiacritics(item.label)
+					.toLowerCase()
+					.includes(replaceDiacritics(this.state.searchTerm).toLowerCase());
 			}
 			return true;
 		});
@@ -480,16 +483,15 @@ class MultiDataList extends Component {
 								return (
 									<li
 										key={item.label}
-										className={`${
-											isChecked ? 'active' : ''
-										}`}
+										className={`${isChecked ? 'active' : ''}`}
 										role="option"
 										aria-checked={isChecked}
 										aria-selected={isChecked}
 									>
 										<Checkbox
 											className={
-												getClassName(this.props.innerClass, 'checkbox') || null
+												getClassName(this.props.innerClass, 'checkbox')
+												|| null
 											}
 											id={`${this.props.componentId}-${item.label}`}
 											name={`${this.props.componentId}-${item.label}`}
@@ -505,7 +507,7 @@ class MultiDataList extends Component {
 											htmlFor={`${this.props.componentId}-${item.label}`}
 										>
 											{renderItem ? (
-												renderItem(item.label, item.count, this.state.currentValue === item.label)
+												renderItem(item.label, item.count, isChecked)
 											) : (
 												<span>
 													<span>{item.label}</span>

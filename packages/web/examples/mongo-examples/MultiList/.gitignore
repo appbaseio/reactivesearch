@@ -1,6 +1,6 @@
 # Build
 dist
-
+build
 # Packages
 node_modules
 
