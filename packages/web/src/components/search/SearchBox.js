@@ -306,7 +306,7 @@ const SearchBox = (props) => {
 		});
 	};
 
-	const triggerCustomQuery = (paramValue) => {
+	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		let query = searchBoxDefaultQuery(value, props);
 		if (customQuery) {
@@ -325,6 +325,7 @@ const SearchBox = (props) => {
 			showFilter,
 			URLParams,
 			componentType: componentTypes.searchBox,
+			category: categoryValue,
 		});
 	};
 
@@ -333,13 +334,14 @@ const SearchBox = (props) => {
 		customQuery = false,
 		defaultQuery = false,
 		value = undefined,
+		categoryValue = undefined,
 	}) => {
 		if (isOpen) {
 			setIsOpen(isOpen);
 		}
 
 		if (customQuery) {
-			triggerCustomQuery(value);
+			triggerCustomQuery(value, categoryValue);
 		}
 		if (defaultQuery) {
 			triggerDefaultQuery(value);
@@ -374,6 +376,7 @@ const SearchBox = (props) => {
 		cause,
 		hasMounted = true,
 		toggleIsOpen = true,
+		categoryValue = undefined,
 	) {
 		const performUpdate = () => {
 			if (hasMounted) {
@@ -391,12 +394,12 @@ const SearchBox = (props) => {
 					// to set the query otherwise the value should reset
 					if (setValueProps.strictSelection) {
 						if (cause === causes.SUGGESTION_SELECT || value === '') {
-							triggerCustomQuery(value);
+							triggerCustomQuery(value, categoryValue);
 						} else {
 							setValue('', true);
 						}
 					} else {
-						triggerCustomQuery(value);
+						triggerCustomQuery(value, categoryValue);
 					}
 				} else {
 					// debounce for handling text while typing
@@ -408,6 +411,7 @@ const SearchBox = (props) => {
 					defaultQuery: props.autosuggest,
 					customQuery: true,
 					value,
+					categoryValue,
 				});
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
@@ -421,9 +425,18 @@ const SearchBox = (props) => {
 	}
 	const onSuggestionSelected = (suggestion) => {
 		setIsOpen(false);
-		const suggestionValue = suggestion._category ? suggestion.label : suggestion.value;
+		const suggestionValue = suggestion.value;
+
 		if (value === undefined) {
-			setValue(suggestionValue, true, props, causes.SUGGESTION_SELECT, true, false);
+			setValue(
+				suggestionValue,
+				true,
+				props,
+				causes.SUGGESTION_SELECT,
+				true,
+				false,
+				suggestion._category,
+			);
 		} else if (onChange) {
 			onChange(suggestionValue, ({ isOpen = false } = { isOpen: false }) =>
 				triggerQuery({
@@ -431,6 +444,7 @@ const SearchBox = (props) => {
 					customQuery: true,
 					value,
 					isOpen,
+					categoryValue: suggestion._category,
 				}),
 			);
 		}
