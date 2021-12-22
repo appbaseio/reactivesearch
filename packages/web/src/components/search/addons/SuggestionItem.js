@@ -5,7 +5,9 @@ import Flex from '../../../styles/Flex';
 import Highlight from './Highlight';
 
 const SuggestionItem = ({ currentValue = '', suggestion }) => {
-	const { label, value, title, description, image, isPredictiveSuggestion } = suggestion;
+	const {
+		label, value, title, description, image, isPredictiveSuggestion,
+	} = suggestion;
 
 	if (label) {
 		// label has highest precedence
@@ -17,7 +19,9 @@ const SuggestionItem = ({ currentValue = '', suggestion }) => {
 					searchWords={currentValue.split(' ')}
 					textToHighlight={label}
 					hasPredictiveSuggestion={
-						Boolean(isPredictiveSuggestion) || !!suggestion._suggestion_type
+						suggestion._category
+							? false
+							: Boolean(isPredictiveSuggestion) || !!suggestion._suggestion_type
 					}
 				/>
 			</div>
