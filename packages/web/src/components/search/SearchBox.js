@@ -64,6 +64,7 @@ const useConstructor = (callBack = () => {}) => {
 const SearchBox = (props) => {
 	const {
 		selectedValue,
+		selectedCategory,
 		value,
 		defaultValue,
 		componentId,
@@ -748,11 +749,19 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-		setValue(currentLocalValue, true, props, cause, hasMounted.current, false);
+		setValue(
+			currentLocalValue,
+			true,
+			props,
+			cause,
+			hasMounted.current,
+			false,
+			selectedCategory,
+		);
 
 		// Set custom and default queries in store
-		triggerCustomQuery();
-		triggerDefaultQuery();
+		triggerCustomQuery(undefined, selectedCategory);
+		triggerDefaultQuery(undefined, selectedCategory);
 	});
 
 	useEffect(() => {
@@ -1035,6 +1044,7 @@ const SearchBox = (props) => {
 SearchBox.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
+	selectedCategory: types.string,
 	suggestions: types.suggestions,
 	triggerAnalytics: types.funcRequired,
 	error: types.title,
@@ -1165,6 +1175,10 @@ const mapStateToProps = (state, props) => ({
 	selectedValue:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
+		|| null,
+	selectedCategory:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
 		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
