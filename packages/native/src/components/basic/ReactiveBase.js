@@ -31,6 +31,7 @@ class ReactiveBase extends Component {
 			app: props.app,
 			credentials,
 			type: this.type,
+			transformResponse: props.transformResponse
 		};
 
 		const { headers = {} } = props;
