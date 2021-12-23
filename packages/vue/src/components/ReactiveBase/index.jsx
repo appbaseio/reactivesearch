@@ -6,7 +6,7 @@ import Appbase from 'appbase-js';
 import 'url-search-params-polyfill';
 
 import Provider from '../Provider';
-import { composeThemeObject } from '../../utils/index';
+import { composeThemeObject, X_SEARCH_CLIENT } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
@@ -32,7 +32,7 @@ const ReactiveBase = {
 		}
 	},
 	props: {
-		app: types.stringRequired,
+		app: types.string,
 		analytics: VueTypes.bool,
 		analyticsConfig: types.analyticsConfig,
 		appbaseConfig: types.appbaseConfig,
@@ -53,6 +53,7 @@ const ReactiveBase = {
 		as: VueTypes.string.def('div'),
 		getSearchParams: types.func,
 		setSearchParams: types.func,
+		mongodb: types.mongodb,
 	},
 	provide() {
 		return {
@@ -95,7 +96,24 @@ const ReactiveBase = {
 					this.store.dispatch(updateAnalyticsConfig(newVal));
 				}
 			}
-		}
+		},
+		mongodb() {
+			this.updateState(this.$props);
+		},
+	},
+	computed: {
+		getHeaders() {
+			const { enableAppbase, headers, appbaseConfig, mongodb } = this.$props;
+			const { enableTelemetry } = appbaseConfig || {};
+			return {
+				...(enableAppbase
+					&& !mongodb && {
+					'X-Search-Client': X_SEARCH_CLIENT,
+					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+				}),
+				...headers,
+			};
+		},
 	},
 	methods: {
 		updateState(props) {
@@ -110,20 +128,20 @@ const ReactiveBase = {
 			const appbaseConfig = {
 				...props.analyticsConfig,
 				...props.appbaseConfig,
-			}
+			};
 			const config = {
-				url:
-					props.url && props.url.trim() !== ''
-						? props.url
-						: 'https://scalr.api.appbase.io',
+				url: props.url && props.url.trim() !== '' ? props.url : '',
 				app: props.app,
 				credentials,
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
 				transformResponse: props.transformResponse,
 				enableAppbase: props.enableAppbase,
-				analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : props.analytics,
+				analytics: props.appbaseConfig
+					? props.appbaseConfig.recordAnalytics
+					: props.analytics,
 				analyticsConfig: appbaseConfig,
+				mongodb: props.mongodb,
 			};
 			let queryParams = '';
 
@@ -137,7 +155,7 @@ const ReactiveBase = {
 			let selectedValues = {};
 			let urlValues = {};
 
-			Array.from(params.keys()).forEach(key => {
+			Array.from(params.keys()).forEach((key) => {
 				try {
 					const parsedParams = JSON.parse(params.get(key));
 					const selectedValue = {};
@@ -154,14 +172,15 @@ const ReactiveBase = {
 					};
 					urlValues = {
 						...urlValues,
-						[key]: selectedValue.value
-					}
+						[key]: selectedValue.value,
+					};
 				} catch (e) {
 					// Do not add to selectedValues if JSON parsing fails.
 				}
 			});
 
-			const { headers = {}, themePreset } = props;
+			const { themePreset } = props;
+
 			const appbaseRef = Appbase(config);
 
 			if (this.$props.transformRequest) {
@@ -183,7 +202,7 @@ const ReactiveBase = {
 				appbaseRef,
 				selectedValues,
 				urlValues,
-				headers,
+				headers: this.getHeaders,
 				...this.$props.initialState,
 			};
 			this.store = configureStore(initialState);
@@ -191,12 +210,12 @@ const ReactiveBase = {
 	},
 	render() {
 		const children = this.$slots.default;
-		const { headers, style, className } = this.$props;
+		const { style, className } = this.$props;
 		return (
 			<Provider store={this.store}>
 				<URLParamsProvider
 					as={this.$props.as}
-					headers={headers}
+					headers={this.getHeaders}
 					style={style}
 					className={className}
 					getSearchParams={this.getSearchParams}
@@ -208,7 +227,7 @@ const ReactiveBase = {
 		);
 	},
 };
-ReactiveBase.install = function(Vue) {
+ReactiveBase.install = function (Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);
 };
 

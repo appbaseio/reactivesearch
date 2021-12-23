@@ -16,6 +16,8 @@ export const connect = (...args) => connectToStore(...args);
 //   storeKey,
 // });
 
+export const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
+
 export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 	typography: {
 		...ownTheme.typography,

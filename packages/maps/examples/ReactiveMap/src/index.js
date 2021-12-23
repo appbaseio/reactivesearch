@@ -4,8 +4,6 @@ import { ReactiveBase, SingleList, SelectedFilters } from '@appbaseio/reactivese
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
-import './index.css';
-
 const providers = [
 	{
 		label: 'Google Map',
@@ -69,8 +67,8 @@ class App extends React.Component {
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				enableAppbase
 			>
-				<div className="row">
-					<div className="col">
+				<div>
+					<div>
 						<SingleList
 							title="Places"
 							componentId="places"
@@ -78,30 +76,47 @@ class App extends React.Component {
 							size={50}
 							showSearch
 						/>
+						<hr />
 						<div
 							style={{
-								marginTop: '20px',
-								marginBottom: '5px',
-								fontSize: '1 rem',
+								position: 'relative',
+								zIndex: 9999999,
+								marginBottom: '1rem',
 							}}
 						>
-							<b>Select Map Provider</b>
+							<div
+								style={{
+									marginTop: '20px',
+									marginBottom: '5px',
+									fontSize: '1 rem',
+								}}
+							>
+								<b>Select Map Provider</b>
+							</div>
+							<Dropdown
+								items={providers}
+								onChange={this.setProvider}
+								selectedItem={this.state.mapProvider}
+								keyField="label"
+								returnsObject
+							/>
 						</div>
-						<Dropdown
-							items={providers}
-							onChange={this.setProvider}
-							selectedItem={this.state.mapProvider}
-							keyField="label"
-							returnsObject
-						/>
 					</div>
 
-					<div className="col">
+					<div>
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap style={{ height: '90vh' }} componentId="googleMap" {...mapProps} />
+							<ReactiveGoogleMap
+								style={{ height: '90vh' }}
+								componentId="googleMap"
+								{...mapProps}
+							/>
 						) : (
-							<ReactiveOpenStreetMap style={{ height: '90vh' }} componentId="openstreetMap" {...mapProps} />
+							<ReactiveOpenStreetMap
+								style={{ height: '90vh' }}
+								componentId="openstreetMap"
+								{...mapProps}
+							/>
 						)}
 					</div>
 				</div>

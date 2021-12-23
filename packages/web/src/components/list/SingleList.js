@@ -21,7 +21,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -369,9 +369,9 @@ class SingleList extends Component {
 		const listItems = itemsToRender.filter((item) => {
 			if (String(item.key).length) {
 				if (this.props.showSearch && this.state.searchTerm) {
-					return String(item.key)
+					return replaceDiacritics(String(item.key))
 						.toLowerCase()
-						.includes(this.state.searchTerm.toLowerCase());
+						.includes(replaceDiacritics(this.state.searchTerm.toLowerCase()));
 				}
 				return true;
 			}

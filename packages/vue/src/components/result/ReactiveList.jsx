@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { withClickIds } from '@appbaseio/reactivecore/lib/utils/helper';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -46,17 +47,16 @@ const ReactiveList = {
 		ResultCardsWrapper,
 	},
 	data() {
-		const props = this.$props;
 		let currentPageState = 0;
-		if (props.defaultPage >= 0) {
-			currentPageState = props.defaultPage;
-		} else if (props.currentPage) {
-			currentPageState = Math.max(props.currentPage - 1, 0);
+		const defaultPage = this.defaultPage || -1
+		if (defaultPage >= 0) {
+			currentPageState = defaultPage;
+		} else if (this.currentPage) {
+			currentPageState = Math.max(this.currentPage - 1, 0);
 		}
 
 		this.__state = {
-			from: currentPageState * props.size,
-			isLoading: true,
+			from: currentPageState * this.size,
 			currentPageState,
 		};
 		return this.__state;
@@ -84,9 +84,9 @@ const ReactiveList = {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-
-		if (this.defaultPage >= 0) {
-			this.currentPageState = this.defaultPage;
+		const defaultPage = this.defaultPage || -1
+		if (defaultPage >= 0) {
+			this.currentPageState = defaultPage;
 			this.from = this.currentPageState * this.$props.size;
 		}
 		this.internalComponent = `${this.$props.componentId}__internal`;
@@ -156,11 +156,10 @@ const ReactiveList = {
 			return this.$listeners && this.$listeners.resultStats;
 		},
 		stats() {
-			const { filteredResults } = this.getAllData();
 			return {
 				...getResultStats(this),
 				currentPage: this.currentPageState,
-				displayedResults: filteredResults.length,
+				displayedResults: this.data.length,
 			};
 		},
 		hasCustomRender() {
@@ -170,6 +169,21 @@ const ReactiveList = {
 			// Pagination has higher priority then infinite scroll
 			return this.infiniteScroll && !this.shouldRenderPagination;
 		},
+		data() {
+			const results = parseHits(this.hits) || [];
+			const parsedPromotedResults = parseHits(this.promotedResults) || [];
+			let filteredResults = results;
+
+			if (parsedPromotedResults.length) {
+				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
+				if (ids) {
+					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+				}
+
+				filteredResults = [...parsedPromotedResults, ...filteredResults];
+			}
+			return withClickIds(filteredResults);
+		}
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -251,7 +265,7 @@ const ReactiveList = {
 			}
 		},
 		hits(newVal, oldVal) {
-			this.$emit('data', this.getAllData());
+			this.$emit('data', this.getData());
 			if (this.shouldRenderPagination) {
 				// called when page is changed
 				if (this.isLoading && (oldVal || newVal)) {
@@ -300,7 +314,6 @@ const ReactiveList = {
 		},
 	},
 	mounted() {
-
 		if (this.defaultPage < 0 && this.currentPage > 0) {
 			this.setPageURL(
 				this.$props.componentId,
@@ -471,9 +484,6 @@ const ReactiveList = {
 		},
 		renderResults() {
 			const { size } = this.$props;
-			const { hits } = this.$data;
-			const results = parseHits(hits) || [];
-			const filteredResults = results;
 
 			const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
 
@@ -486,7 +496,7 @@ const ReactiveList = {
 						'list',
 					)}`}
 				>
-					{[...filteredResults].map((item, index) =>
+					{this.data.map((item, index) =>
 						renderItem({
 							item,
 							triggerClickAnalytics: () =>
@@ -497,7 +507,7 @@ const ReactiveList = {
 			);
 			// If analytics is set to true then render with impression tracker
 			return this.analytics ? (
-				<ImpressionTracker hits={filteredResults}>{element}</ImpressionTracker>
+				<ImpressionTracker hits={this.data}>{element}</ImpressionTracker>
 			) : (
 				element
 			);
@@ -626,7 +636,7 @@ const ReactiveList = {
 							'resultStats',
 						)}`}
 					>
-						{this.stats.numberOfResults} results found in {this.stats.time}
+						{this.stats.numberOfResults} results found in {this.stats.time || 0}
 						ms
 					</p>
 				);
@@ -637,6 +647,9 @@ const ReactiveList = {
 		renderNoResult() {
 			const renderNoResults
 				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			if (this.$scopedSlots.renderNoResults) {
+				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults
+			}
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -716,20 +729,9 @@ const ReactiveList = {
 			} = this;
 			const results = parseHits(hits) || [];
 			const parsedPromotedResults = parseHits(promotedResults) || [];
-			let filteredResults = results;
 			const base = currentPage * size;
-
-			if (parsedPromotedResults.length) {
-				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
-				if (ids) {
-					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
-				}
-
-				filteredResults = [...parsedPromotedResults, ...filteredResults];
-			}
 			return {
 				results,
-				filteredResults,
 				customData: customData || {},
 				promotedResults: parsedPromotedResults,
 				aggregationData,
@@ -740,15 +742,14 @@ const ReactiveList = {
 		},
 		getData() {
 			const {
-				filteredResults,
 				promotedResults,
 				aggregationData,
 				customData,
 			} = this.getAllData();
 			return {
-				data: this.withClickIds(filteredResults),
+				data: this.data,
 				aggregationData: this.withClickIds(aggregationData || []),
-				promotedData: this.withClickIds(promotedResults),
+				promotedData: this.withClickIds(promotedResults || []),
 				rawData: this.rawData,
 				resultStats: this.stats,
 				customData,
@@ -758,7 +759,7 @@ const ReactiveList = {
 			const { error, isLoading } = this;
 			const data = {
 				error,
-				loading: isLoading,
+				loading: isLoading || false,
 				loadMore: this.loadMore,
 				// TODO: Remove in v2
 				triggerAnalytics: this.triggerClickAnalytics,
@@ -773,14 +774,13 @@ const ReactiveList = {
 const mapStateToProps = (state, props) => ({
 	defaultPage:
 		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value - 1)
-		|| -1,
+			&& state.selectedValues[props.componentId].value - 1),
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
-	aggregationData: state.compositeAggregations[props.componentId] || [],
-	promotedResults: state.promotedResults[props.componentId] || [],
+	aggregationData: state.compositeAggregations[props.componentId],
+	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time),
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.config && state.config.analytics,
@@ -792,7 +792,7 @@ const mapStateToProps = (state, props) => ({
 		&& state.aggregations[props.componentId][props.aggregationField]
 		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
-	isLoading: state.isLoading[props.componentId] || false,
+	isLoading: state.isLoading[props.componentId],
 });
 const mapDispatchtoProps = {
 	loadMoreAction: loadMore,
