@@ -42,18 +42,15 @@ class RangeSlider extends Component {
 			selectedValue, defaultValue, value, range, queryFormat,
 		} = props;
 
-		let shouldThrowDateTypeError = false;
 		if (queryFormat) {
-			if (!(range.start instanceof Date) || !(range.end instanceof Date)) {
-				shouldThrowDateTypeError = true;
+			if (!XDate(range.start).valid() || !XDate(range.end).valid()) {
+				throw new Error(
+					'`reactivesearch` uses XDate for processing date-types, Try passing valid value(s) accepted by the XDate constructor. XDate ref: https://arshaw.com/xdate/#Parsing',
+				);
 			}
-		} else if (range.start instanceof Date || range.end instanceof Date) {
-			shouldThrowDateTypeError = true;
-		}
-
-		if (shouldThrowDateTypeError) {
+		} else if (typeof range.start !== 'number' || typeof range.end !== 'number') {
 			throw new Error(
-				"`queryFormat` prop and range prop(with date objects as values) work in conjunction, passing any of them exclusively isn't valid.",
+				'`RangeSlider` expects numerics, strings/ objects(date) are exception when dealing with date-types. Provide a valid queryFormat if you intend to use date-types.',
 			);
 		}
 		const valueToParse = selectedValue || value || defaultValue;
