@@ -37,9 +37,25 @@ import ComponentWrapper from '../basic/ComponentWrapper';
 
 class RangeSlider extends Component {
 	constructor(props) {
-		window.console.log('hey');
 		super(props);
-		const { selectedValue, defaultValue, value } = props;
+		const {
+			selectedValue, defaultValue, value, range, queryFormat,
+		} = props;
+
+		let shouldThrowDateTypeError = false;
+		if (queryFormat) {
+			if (!(range.start instanceof Date) || !(range.end instanceof Date)) {
+				shouldThrowDateTypeError = true;
+			}
+		} else if (range.start instanceof Date || range.end instanceof Date) {
+			shouldThrowDateTypeError = true;
+		}
+
+		if (shouldThrowDateTypeError) {
+			throw new Error(
+				"`queryFormat` prop and range prop(with date objects as values) work in conjunction, passing any of them exclusively isn't valid.",
+			);
+		}
 		const valueToParse = selectedValue || value || defaultValue;
 		let currentValue = RangeSlider.parseValue(valueToParse, props);
 		if (!this.shouldUpdate(currentValue)) {
@@ -194,7 +210,10 @@ class RangeSlider extends Component {
 	getSnapPoints = () => {
 		let snapPoints = [];
 		let { stepValue } = this.props;
-		const [startPoint, endPoint] = getNumericRangeArray(this.props.range, this.props.queryFormat);
+		const [startPoint, endPoint] = getNumericRangeArray(
+			this.props.range,
+			this.props.queryFormat,
+		);
 		// limit the number of steps to prevent generating a large number of snapPoints
 		if ((endPoint - startPoint) / stepValue > 100) {
 			stepValue = (endPoint - startPoint) / 100;
@@ -528,7 +547,6 @@ RangeSlider.defaultProps = {
 	style: {},
 	URLParams: false,
 	includeNullValues: false,
-	queryFormat: 'or',
 };
 
 // Add componentType for SSR
