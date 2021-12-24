@@ -126,7 +126,13 @@ class RangeSlider extends Component {
 			)
 		) {
 			const value = RangeSlider.parseValue(this.props.value, this.props);
-			this.handleChange(value, this.props);
+			this.handleChange(
+				getValueArrayWithinLimits(
+					value,
+					getNumericRangeArray(this.props.range, this.props.queryFormat),
+				),
+				this.props,
+			);
 		} else if (
 			// cautionary conversion of state and selectedValues from state to numerics
 			// in order to make comparison meaningful

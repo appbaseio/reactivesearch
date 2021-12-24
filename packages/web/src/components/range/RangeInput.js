@@ -129,14 +129,13 @@ class RangeInput extends Component {
 
 		const currentValue = {
 			...this.value,
-			...(typeof parsedValue === 'number' && { [name]: parsedValue }),
+			[name]: parsedValue,
 		};
-
 		const { value: valueProp, onChange } = this.props;
 		if (this.shouldUpdate(currentValue)) {
 			if (valueProp === undefined) {
 				this.setState({
-					...(typeof parsedValue === 'number' && { [name]: parsedValue }),
+					[name]: parsedValue,
 				});
 			} else if (onChange) {
 				onChange(currentValue);
@@ -223,7 +222,7 @@ class RangeInput extends Component {
 						value={this.value.end}
 						step={this.props.stepValue}
 						min={this.value.start}
-						alert={!this.state.isStartValid}
+						alert={!this.state.isEndValid}
 						onChange={this.handleInputChange}
 						className={getClassName(this.props.innerClass, 'input') || null}
 						themePreset={this.props.themePreset}
@@ -256,7 +255,6 @@ class RangeInput extends Component {
 					start: getValueArrayWithinLimits(
 						[XDate(date).getTime(), currentDateEnd],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
-						true,
 					)[0],
 				}));
 				// focus the end date DayPicker if its empty
@@ -270,7 +268,6 @@ class RangeInput extends Component {
 					start: getValueArrayWithinLimits(
 						[XDate(date).getTime(), currentDateEnd],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
-						true,
 					)[0],
 					...(end && XDate(end).valid() ? { end: new Date(end) } : {}),
 				});
@@ -306,7 +303,6 @@ class RangeInput extends Component {
 					end: getValueArrayWithinLimits(
 						[currentDateStart, XDate(selectedDay).getTime()],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
-						false,
 					)[1],
 				}));
 			}
@@ -317,7 +313,6 @@ class RangeInput extends Component {
 					end: getValueArrayWithinLimits(
 						[currentDateStart, XDate(selectedDay).getTime()],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
-						false,
 					)[1],
 				});
 			}

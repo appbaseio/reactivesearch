@@ -248,10 +248,10 @@ export function getNumericRangeValue(value, isDateType) {
 		if (isDateType && value !== undefined && value !== null && new XDate(value).valid()) {
 			return new XDate(value).getTime();
 		}
-		return value;
+		return parseFloat(value);
 	} catch (e) {
 		console.error(e);
-		return value;
+		return parseFloat(value);
 	}
 }
 
@@ -279,17 +279,16 @@ export const getNumericRangeArray = (valueObj, queryFormat) => {
 
 // isFirstValueChanging tells which of the two values in array is undergoing change
 export const getValueArrayWithinLimits
-	= (currentValueArray, rangeArray, isFirstValueChanging = true) => {
+	= (currentValueArray, rangeArray) => {
 		try {
 			const [currentStart, currentEnd] = currentValueArray;
 			const [limitedStart, limitedEnd] = rangeArray;
 			let [newStart, newEnd] = [...currentValueArray];
 			newStart = currentStart < limitedStart ? limitedStart : currentStart;
 			newEnd = currentEnd > limitedEnd ? limitedEnd : currentEnd;
-			if (isFirstValueChanging) {
-				newStart = newStart > newEnd ? newEnd : newStart;
-			} else {
-				newEnd = newEnd > newStart ? newEnd : newStart;
+
+			if (newStart > newEnd) {
+				return rangeArray; // we reset the values
 			}
 			return [newStart, newEnd];
 		} catch (e) {
