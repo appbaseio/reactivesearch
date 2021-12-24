@@ -240,9 +240,9 @@ const DateContainer = styled.div`
 		z-index: 1;
 		position: absolute;
 		background: ${({ theme: { colors } }) =>
-		(colors.backgroundColor
-			? lighten(0.15, colors.backgroundColor)
-			: '#fff')};
+	(colors.backgroundColor
+		? lighten(0.15, colors.backgroundColor)
+		: '#fff')};
 		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 	}
 
