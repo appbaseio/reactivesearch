@@ -245,7 +245,7 @@ export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 // this pertains to the convention that internally our components uses numerics for local state
 export function getNumericRangeValue(value, isDateType) {
 	try {
-		if (isDateType && value !== undefined && value !== null) {
+		if (isDateType && value !== undefined && value !== null && new XDate(value).valid()) {
 			return new XDate(value).getTime();
 		}
 		return value;
@@ -255,9 +255,41 @@ export function getNumericRangeValue(value, isDateType) {
 	}
 }
 
-export const formatDateString = date => new XDate(date).toString('yyyy-MM-dd');
+export const formatDateString = (date) => {
+	try {
+		return new XDate(date).toString('yyyy-MM-dd');
+	} catch (e) {
+		return date;
+	}
+};
 
-export const getNumericRangeArray = (valueObj, queryFormat) => [
-	getNumericRangeValue(valueObj.start, isValidDateRangeQueryFormat(queryFormat)),
-	getNumericRangeValue(valueObj.end, isValidDateRangeQueryFormat(queryFormat)),
-];
+export const getNumericRangeArray = (valueObj, queryFormat) =>
+	[
+		getNumericRangeValue(valueObj.start, isValidDateRangeQueryFormat(queryFormat)),
+		getNumericRangeValue(valueObj.end, isValidDateRangeQueryFormat(queryFormat)),
+	].filter(val => typeof val === 'number');
+
+// takes in arrays of length 2
+// returns inrange value array
+// where the 2nd argument is the reference of rangelimits
+
+// isFirstValueChanging tells which of the two values in array is undergoing change
+export const getValueArrayWithinLimits
+	= (currentValueArray, rangeArray, isFirstValueChanging = true) => {
+		try {
+			const [currentStart, currentEnd] = currentValueArray;
+			const [limitedStart, limitedEnd] = rangeArray;
+			let [newStart, newEnd] = [...currentValueArray];
+			newStart = currentStart < limitedStart ? limitedStart : currentStart;
+			newEnd = currentEnd > limitedEnd ? limitedEnd : currentEnd;
+			if (isFirstValueChanging) {
+				newStart = newStart > newEnd ? newEnd : newStart;
+			} else {
+				newEnd = newEnd > newStart ? newEnd : newStart;
+			}
+			return [newStart, newEnd];
+		} catch (e) {
+			console.error(e);
+			return currentValueArray;
+		}
+	};
