@@ -29,9 +29,9 @@ import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
 	formatDateString,
-	getNumericRangeValue,
 	getNumericRangeArray,
 	getRangeQueryWithNullValues,
+	getValueArrayWithinLimits,
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -43,6 +43,9 @@ class RangeSlider extends Component {
 		} = props;
 
 		if (queryFormat) {
+			if (!isValidDateRangeQueryFormat(queryFormat)) {
+				throw new Error('queryFormat is not supported. Try with a valid queryFormat.');
+			}
 			if (!XDate(range.start).valid() || !XDate(range.end).valid()) {
 				throw new Error(
 					'`reactivesearch` uses XDate for processing date-types, Try passing valid value(s) accepted by the XDate constructor. XDate ref: https://arshaw.com/xdate/#Parsing',
@@ -61,8 +64,12 @@ class RangeSlider extends Component {
 			// thus we convert it to numeric as a standard
 			currentValue = getNumericRangeArray(props.range, props.queryFormat);
 		}
-		this.state = {
+		const inRangeValueArray = getValueArrayWithinLimits(
 			currentValue,
+			getNumericRangeArray(props.range, props.queryFormat),
+		);
+		this.state = {
+			currentValue: inRangeValueArray,
 			stats: [],
 		};
 
@@ -73,7 +80,7 @@ class RangeSlider extends Component {
 		this.updateQueryOptions(props);
 		const hasMounted = false;
 		if (currentValue) {
-			this.handleChange(currentValue, props, hasMounted);
+			this.handleChange(inRangeValueArray, props, hasMounted);
 		}
 	}
 	componentDidMount() {
@@ -114,14 +121,8 @@ class RangeSlider extends Component {
 		);
 		if (
 			!isEqual(
-				getNumericRangeValue(
-					this.props.value,
-					isValidDateRangeQueryFormat(this.props.queryFormat),
-				),
-				getNumericRangeValue(
-					prevProps.value,
-					isValidDateRangeQueryFormat(this.props.queryFormat),
-				),
+				getNumericRangeArray(this.props.value, this.props.queryFormat),
+				getNumericRangeArray(prevProps.value, this.props.queryFormat),
 			)
 		) {
 			const value = RangeSlider.parseValue(this.props.value, this.props);
@@ -180,7 +181,12 @@ class RangeSlider extends Component {
 	}
 
 	static parseValue = (value, props) => {
-		if (Array.isArray(value)) return value;
+		if (Array.isArray(value)) {
+			return getNumericRangeArray(
+				{ start: value[0], end: value[1] },
+				props.queryFormat,
+			).filter(val => typeof val === 'number');
+		}
 		return value
 			? getNumericRangeArray(value, props.queryFormat)
 			: getNumericRangeArray(props.range, props.queryFormat);
