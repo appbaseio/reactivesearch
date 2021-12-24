@@ -263,11 +263,15 @@ export const formatDateString = (date) => {
 	}
 };
 
-export const getNumericRangeArray = (valueObj, queryFormat) =>
-	[
+export const getNumericRangeArray = (valueObj, queryFormat) => {
+	if (!valueObj) {
+		return null;
+	}
+	return [
 		getNumericRangeValue(valueObj.start, isValidDateRangeQueryFormat(queryFormat)),
 		getNumericRangeValue(valueObj.end, isValidDateRangeQueryFormat(queryFormat)),
 	].filter(val => typeof val === 'number');
+};
 
 // takes in arrays of length 2
 // returns inrange value array
