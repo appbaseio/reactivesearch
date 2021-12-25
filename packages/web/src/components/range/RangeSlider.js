@@ -96,8 +96,11 @@ class RangeSlider extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['showHistogram', 'interval', 'range'], () =>
-			this.updateQueryOptions(this.props),
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['showHistogram', 'interval', 'range', 'calendarInterval'],
+			() => this.updateQueryOptions(this.props),
 		);
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { options } = this.props;
@@ -116,7 +119,7 @@ class RangeSlider extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['dataField', 'nestedField', 'calendarInterval'],
+			['dataField', 'nestedField'],
 			() => {
 				this.updateQueryOptions(this.props);
 				this.handleChange(this.state.currentValue, this.props);
