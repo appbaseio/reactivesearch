@@ -40,9 +40,11 @@ import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
 	formatDateString,
+	getCalendarIntervalErrorMessage,
 	getNumericRangeArray,
 	getRangeQueryWithNullValues,
 	getValidPropsKeys,
+	queryFormatMillisecondsMap,
 } from '../../utils';
 
 // the formatRange() function formats the range value received from props
@@ -325,6 +327,21 @@ class DynamicRangeSlider extends Component {
 	};
 
 	getValidInterval = (props, range) => {
+		if (isValidDateRangeQueryFormat(props.queryFormat)) {
+			const numberOfIntervals = Math.ceil(
+				(range.end - range.start) / queryFormatMillisecondsMap[props.calendarInterval],
+			);
+			if (numberOfIntervals > 100) {
+				console.error(
+					`${props.componentId}: ${getCalendarIntervalErrorMessage(
+						range.end - range.start,
+						props.calendarInterval,
+					)}`,
+				);
+			}
+			return queryFormatMillisecondsMap[props.calendarInterval];
+		}
+
 		const min = Math.ceil((range.end - range.start) / 100) || 1;
 		if (!props.interval) {
 			return min;
