@@ -255,9 +255,9 @@ export function getNumericRangeValue(value, isDateType) {
 	}
 }
 
-export const formatDateString = (date) => {
+export const formatDateString = (date, format) => {
 	try {
-		return new XDate(date).toString('yyyy-MM-dd');
+		return new XDate(date).toString(format || 'yyyy-MM-dd\'T\'HH:mm:ss');
 	} catch (e) {
 		return date;
 	}

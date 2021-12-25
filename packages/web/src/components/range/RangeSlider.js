@@ -40,7 +40,9 @@ import ComponentWrapper from '../basic/ComponentWrapper';
 class RangeSlider extends Component {
 	constructor(props) {
 		super(props);
-		const { selectedValue, defaultValue, value, range, queryFormat } = props;
+		const {
+			selectedValue, defaultValue, value, range, queryFormat,
+		} = props;
 
 		if (queryFormat) {
 			if (!isValidDateRangeQueryFormat(queryFormat)) {
@@ -71,6 +73,7 @@ class RangeSlider extends Component {
 		this.state = {
 			currentValue: inRangeValueArray,
 			stats: [],
+			dateFormat: props._dateFormat || "yyyy-MM-dd'T'HH:mm:ss",
 		};
 
 		this.internalComponent = getInternalComponentID(props.componentId);
@@ -138,10 +141,10 @@ class RangeSlider extends Component {
 			// in order to make comparison meaningful
 			// since support of date-types might use date-object, string or numerics.
 			!isEqual(
-				this.state.currentValue.map((val) => formatDateString(new XDate(val))),
+				this.state.currentValue.map(val => formatDateString(new XDate(val), this.state.dateFormat)),
 				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
-			) &&
-			!isEqual(
+			)
+			&& !isEqual(
 				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
 				Array.isArray(prevProps.selectedValue) ? prevProps.selectedValue : null,
 			)
@@ -191,7 +194,7 @@ class RangeSlider extends Component {
 			return getNumericRangeArray(
 				{ start: value[0], end: value[1] },
 				props.queryFormat,
-			).filter((val) => typeof val === 'number');
+			).filter(val => typeof val === 'number');
 		}
 		return value
 			? getNumericRangeArray(value, props.queryFormat)
@@ -299,10 +302,10 @@ class RangeSlider extends Component {
 
 		const normalizedValueArray = [
 			isValidDateRangeQueryFormat(props.queryFormat)
-				? formatDateString(processedStart)
+				? formatDateString(processedStart, this.state.dateFormat)
 				: processedStart,
 			isValidDateRangeQueryFormat(props.queryFormat)
-				? formatDateString(processedEnd)
+				? formatDateString(processedEnd, this.state.dateFormat)
 				: processedEnd,
 		];
 
@@ -320,10 +323,10 @@ class RangeSlider extends Component {
 			const { range } = props;
 			const [rangeStart, rangeEnd] = getNumericRangeArray(range, props.queryFormat);
 			if (
-				hasMounted &&
-				processedStart <= processedEnd &&
-				processedStart >= rangeStart &&
-				processedEnd <= rangeEnd
+				hasMounted
+				&& processedStart <= processedEnd
+				&& processedStart >= rangeStart
+				&& processedEnd <= rangeEnd
 			) {
 				this.setState(
 					{
@@ -549,6 +552,13 @@ RangeSlider.propTypes = {
 	index: types.string,
 	queryFormat: oneOf([...Object.keys(dateFormats), 'or', 'and']),
 	calendarInterval: types.calendarInterval,
+	// for internal purpose only
+	// introduced specifically to control the
+	// dateformat for the RS-components using RangeSlider
+	// ex: RangeInput
+	// RangeSlider bydefault supports yyyy-MM-dd'T'HH:mm:ss
+	// but this is not required for RangeInput
+	_dateFormat: types.string,
 };
 
 RangeSlider.defaultProps = {
@@ -572,8 +582,8 @@ RangeSlider.defaultProps = {
 RangeSlider.componentType = componentTypes.rangeSlider;
 
 const mapStateToProps = (state, props) => {
-	const aggregation =
-		props.nestedField && state.aggregations[props.componentId]
+	const aggregation
+		= props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].inner
 			: state.aggregations[props.componentId];
 
@@ -588,17 +598,17 @@ const mapStateToProps = (state, props) => {
 	};
 };
 
-const mapDispatchtoProps = (dispatch) => ({
+const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
-	updateQuery: (updateQueryObject) => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)((props) => (
+)(props => (
 	<ComponentWrapper {...props} internalComponent componentType={componentTypes.rangeSlider}>
 		{() => <RangeSlider ref={props.myForwardedRef} {...props} />}
 	</ComponentWrapper>

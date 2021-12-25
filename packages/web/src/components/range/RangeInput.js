@@ -453,6 +453,7 @@ class RangeInput extends Component {
 					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 					range={computeSliderRangeValues}
+					_dateFormat="yyyy-MM-dd"
 				/>
 				{this.props.queryFormat ? this.displayDateInputs() : this.displayNumericInputs()}
 			</Container>
