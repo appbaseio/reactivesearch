@@ -38,6 +38,9 @@ class Dropdown extends Component {
 			this.props.onChange(item);
 		} else {
 			this.props.onChange(item[this.props.keyField]);
+			this.setState({
+				searchTerm: '',
+			});
 		}
 
 		if (!this.props.multi) {
