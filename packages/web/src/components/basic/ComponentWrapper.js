@@ -7,7 +7,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-
+import { string } from 'prop-types';
 import {
 	addComponent,
 	removeComponent,
@@ -15,6 +15,8 @@ import {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	updateHits,
+	mockDataForTesting,
 } from '@appbaseio/reactivecore/lib/actions';
 
 import {
@@ -65,6 +67,9 @@ class ComponentWrapper extends React.Component {
 			props.addComponent(this.internalComponent);
 			props.setComponentProps(this.internalComponent, props);
 		}
+		if (props.mockData) {
+			props.setTestData(props.componentId, props.mockData);
+		}
 	}
 
 	get hasCustomRenderer() {
@@ -111,8 +116,10 @@ class ComponentWrapper extends React.Component {
 	componentDidMount() {
 		// Register internal component
 		if (this.internalComponent) {
-			// Watch component after rendering the component to avoid the un-necessary calls
-			this.setReact(this.props);
+			if (this.props.mode !== 'test') {
+				// Watch component after rendering the component to avoid the un-necessary calls
+				this.setReact(this.props);
+			}
 		}
 	}
 
@@ -131,6 +138,7 @@ ComponentWrapper.propTypes = {
 	setQueryListener: types.funcRequired,
 	updateComponentProps: types.funcRequired,
 	watchComponent: types.funcRequired,
+	setTestData: types.funcRequired,
 	// component props
 	children: types.func,
 	destroyOnUnmount: types.bool,
@@ -141,9 +149,14 @@ ComponentWrapper.propTypes = {
 	onQueryChange: types.func,
 	react: types.react,
 	render: types.func,
+	// props to test the components
+	mockData: types.any, // eslint-disable-line
+	mode: string,
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	setTestData: (component, data) => dispatch(mockDataForTesting(component, data)),
+	setAggregations: () => dispatch(updateHits()),
 	setComponentProps: (component, options) =>
 		dispatch(setComponentProps(component, options, ownProps.componentType)),
 	updateComponentProps: (component, options) =>
