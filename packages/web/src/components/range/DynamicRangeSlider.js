@@ -62,6 +62,15 @@ class DynamicRangeSlider extends Component {
 	constructor(props) {
 		super(props);
 
+		const { queryFormat } = props;
+		if (queryFormat) {
+			if (!isValidDateRangeQueryFormat(queryFormat)) {
+				throw new Error(
+					'queryFormat is not supported. Try with a valid queryFormat.',
+				);
+			}
+		}
+
 		this.state = {
 			currentValue: null,
 			range: null,
