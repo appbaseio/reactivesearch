@@ -760,19 +760,23 @@ const SearchBox = (props) => {
 			false,
 			selectedCategory,
 		);
+
+		// Set custom and default queries in store
+		triggerCustomQuery(currentLocalValue, selectedCategory);
+		triggerDefaultQuery(currentLocalValue, selectedCategory);
 	});
 
 	useEffect(() => {
 		if (onData) {
 			onData({
-				data: suggestions,
+				data: parsedSuggestions(),
 				rawData,
 				aggregationData,
 				loading: isLoading,
 				error,
 			});
 		}
-	}, [suggestions, rawData, aggregationData, isLoading, error]);
+	}, [rawData, aggregationData, isLoading, error]);
 
 	useEffect(() => {
 		if (value !== undefined) {
