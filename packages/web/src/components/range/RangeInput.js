@@ -357,7 +357,7 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getStartDateRef}
 							formatDate={formatDateString}
-							value={formatDateString(startDate)}
+							value={formatDateString(startDate, 'yyyy-MM-dd')}
 							key={this.state.startKey}
 							placeholder="yyyy-MM-dd"
 							dayPickerProps={{
@@ -366,8 +366,8 @@ class RangeInput extends Component {
 								onDayMouseEnter: this.handleDayMouseEnter,
 								disabledDays: {
 									before:
-										(this.props.range.start && XDate(this.props.range.start))
-										|| '',
+										(this.props.range.start && XDate(this.props.range.start)) ||
+										'',
 									after: (this.state.end && XDate(this.state.end)) || '',
 								},
 								selectedDays,
@@ -398,7 +398,7 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getEndDateRef}
 							formatDate={formatDateString}
-							value={formatDateString(endDate)}
+							value={formatDateString(endDate, 'yyyy-MM-dd')}
 							key={this.state.endKey}
 							placeholder="yyyy-MM-dd"
 							dayPickerProps={{
