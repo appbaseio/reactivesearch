@@ -25,6 +25,7 @@ import {
 } from '../../utils';
 import DateContainer from '../../styles/DateContainer';
 
+const DATE_FORMAT = 'yyyy-MM-dd';
 class RangeInput extends Component {
 	constructor(props) {
 		super(props);
@@ -356,8 +357,8 @@ class RangeInput extends Component {
 					>
 						<DayPickerInput
 							ref={this.getStartDateRef}
-							formatDate={formatDateString}
-							value={formatDateString(startDate, 'yyyy-MM-dd')}
+							formatDate={date => formatDateString(date, DATE_FORMAT)}
+							value={formatDateString(startDate, DATE_FORMAT)}
 							key={this.state.startKey}
 							placeholder="yyyy-MM-dd"
 							dayPickerProps={{
@@ -366,8 +367,8 @@ class RangeInput extends Component {
 								onDayMouseEnter: this.handleDayMouseEnter,
 								disabledDays: {
 									before:
-										(this.props.range.start && XDate(this.props.range.start)) ||
-										'',
+										(this.props.range.start && XDate(this.props.range.start))
+										|| '',
 									after: (this.state.end && XDate(this.state.end)) || '',
 								},
 								selectedDays,
@@ -397,8 +398,8 @@ class RangeInput extends Component {
 					>
 						<DayPickerInput
 							ref={this.getEndDateRef}
-							formatDate={formatDateString}
-							value={formatDateString(endDate, 'yyyy-MM-dd')}
+							formatDate={date => formatDateString(date, DATE_FORMAT)}
+							value={formatDateString(endDate, DATE_FORMAT)}
 							key={this.state.endKey}
 							placeholder="yyyy-MM-dd"
 							dayPickerProps={{
@@ -453,7 +454,7 @@ class RangeInput extends Component {
 					onChange={this.handleSliderChange}
 					className={getClassName(this.props.innerClass, 'slider-container') || null}
 					range={computeSliderRangeValues}
-					_dateFormat="yyyy-MM-dd"
+					_dateFormat={DATE_FORMAT}
 				/>
 				{isValidDateRangeQueryFormat(this.props.queryFormat)
 					? this.displayDateInputs()
