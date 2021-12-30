@@ -192,7 +192,7 @@ export function isHotkeyCombination(hotkey) {
 // stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
-	const chrCode = which - 48 * Math.floor(which / 48);
+	const chrCode = which - (48 * Math.floor(which / 48));
 	return String.fromCharCode(which >= 96 ? chrCode : which);
 }
 
@@ -333,4 +333,6 @@ export const getCalendarIntervalErrorMessage = (totalRange, calendarInterval) =>
 			return `Please pass calendarInterval prop with value greater than or equal to a \`${queryFormatMillisecondsMapKeys[index]}\` for a meaningful resolution of histogram.`;
 		}
 	}
+
+	return 'Try using a shorter range of values.';
 };
