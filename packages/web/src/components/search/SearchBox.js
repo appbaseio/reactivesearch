@@ -371,7 +371,7 @@ const SearchBox = (props) => {
 		}
 	}, props.debounce);
 
-	function setValue(
+	const setValue = (
 		value,
 		isDefaultValue = false,
 		setValueProps = props,
@@ -379,7 +379,7 @@ const SearchBox = (props) => {
 		hasMounted = true,
 		toggleIsOpen = true,
 		categoryValue = undefined,
-	) {
+	) => {
 		const performUpdate = () => {
 			if (hasMounted) {
 				if (toggleIsOpen) setIsOpen(!isOpen);
@@ -424,7 +424,7 @@ const SearchBox = (props) => {
 			setValueProps.beforeValueChange,
 			performUpdate,
 		);
-	}
+	};
 	const onSuggestionSelected = (suggestion) => {
 		setIsOpen(false);
 		const suggestionValue = suggestion.value;
@@ -516,11 +516,11 @@ const SearchBox = (props) => {
 		onValueSelected('', causes.CLEAR_VALUE, null);
 	};
 
-	function shouldMicRender(showVoiceSearch) {
+	const shouldMicRender = (showVoiceSearch) => {
 		// checks for SSR
 		if (typeof window === 'undefined') return false;
 		return showVoiceSearch && (window.webkitSpeechRecognition || window.SpeechRecognition);
-	}
+	};
 
 	const handleStateChange = (changes) => {
 		const { isOpen, type } = changes;
@@ -831,7 +831,6 @@ const SearchBox = (props) => {
 	const hasSuggestions = () =>
 		(Array.isArray(props.defaultSuggestions) && props.defaultSuggestions.length)
 		|| (Array.isArray(parsedSuggestions()) && parsedSuggestions().length);
-
 
 	return (
 		<Container style={props.style} className={props.className}>
