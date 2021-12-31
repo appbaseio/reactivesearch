@@ -373,6 +373,7 @@ class SingleDropdownList extends Component {
 					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
+					showClear={this.props.showClear}
 					transformData={this.props.transformData}
 					footer={
 						showLoadMore
@@ -442,6 +443,7 @@ SingleDropdownList.propTypes = {
 	loadMoreLabel: types.title,
 	nestedField: types.string,
 	index: types.string,
+	showClear: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -456,6 +458,7 @@ SingleDropdownList.defaultProps = {
 	showMissing: false,
 	missingLabel: 'N/A',
 	showSearch: false,
+	showClear: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
 };

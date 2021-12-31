@@ -47,6 +47,7 @@ class Dropdown extends Component {
 		if (!this.props.multi) {
 			this.setState({
 				isOpen: false,
+				searchTerm: '',
 			});
 		}
 	};
@@ -124,6 +125,7 @@ class Dropdown extends Component {
 			footer,
 			hasCustomRenderer,
 			customRenderer,
+			showClear,
 		} = this.props;
 
 		let itemsToRender = items;
@@ -143,8 +145,6 @@ class Dropdown extends Component {
 			}
 			return false;
 		});
-
-		const showClear = this.state.searchTerm;
 
 		return (
 			<Downshift
@@ -202,7 +202,7 @@ class Dropdown extends Component {
 												onChange={this.handleInputChange}
 												themePreset={themePreset}
 											/>
-											{showClear && (
+											{this.state.searchTerm && showClear && (
 												<IconGroup
 													groupPosition="right"
 													positionType="absolute"
@@ -329,6 +329,7 @@ Dropdown.propTypes = {
 	showSearch: types.bool,
 	footer: types.children,
 	componentId: types.string,
+	showClear: types.bool,
 };
 
 export default withTheme(Dropdown);
