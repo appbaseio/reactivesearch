@@ -88,14 +88,15 @@ const SearchBox = (props) => {
 	const _inputRef = useRef(null);
 	const stats = () => getResultStats(props);
 
-	/* eslint-disable */
-	const parsedSuggestions = () =>
-		Array.isArray(props.suggestions) && props.suggestions.length
-			? withClickIds(props.suggestions)
-			: Array.isArray(props.defaultSuggestions) && props.defaultSuggestions.length
-			? withClickIds(props.defaultSuggestions)
-			: [];
-	/* eslint-enable */
+	const parsedSuggestions = () => {
+		let suggestionsArray = [];
+		if (Array.isArray(props.suggestions) && props.suggestions.length) {
+			suggestionsArray = [...withClickIds(props.suggestions)];
+		} else if (Array.isArray(props.defaultSuggestions) && props.defaultSuggestions.length) {
+			suggestionsArray = [...withClickIds(props.defaultSuggestions)];
+		}
+		return suggestionsArray;
+	};
 	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
 		const tagName = elt.tagName;
