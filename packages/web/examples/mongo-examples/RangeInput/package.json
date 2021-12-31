@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "3.26.1",
+		"@appbaseio/reactivesearch": "3.27.0",
 		"react": "^16.7.0-alpha.2",
 		"react-dom": "^16.7.0-alpha.2",
 		"react-scripts": "^1.1.4"
@@ -23,9 +23,9 @@
 		"webpack-dev-server": "^3.1.14"
 	},
 	"scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test --env=jsdom",
-        "eject": "react-scripts eject"
-    }
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	}
 }
