@@ -1,12 +1,17 @@
 import React from 'react';
 
-const SearchSvg = () => (
+const SearchSvg = (props = {}) => (
 	<svg
 		alt="Search"
 		className="search-icon"
 		height="12"
 		xmlns="http://www.w3.org/2000/svg"
 		viewBox="0 0 15 15"
+		style={{
+			transform: 'scale(1.35)',
+			position: 'relative',
+			...(props.style ? props.style : {}),
+		}}
 	>
 		<title>Search</title>
 		<path
