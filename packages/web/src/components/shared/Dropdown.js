@@ -10,6 +10,10 @@ import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
+import InputWrapper from '../../styles/InputWrapper';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../styles/IconWrapper';
+import CancelSvg from './CancelSvg';
 
 class Dropdown extends Component {
 	constructor(props) {
@@ -38,9 +42,6 @@ class Dropdown extends Component {
 			this.props.onChange(item);
 		} else {
 			this.props.onChange(item[this.props.keyField]);
-			this.setState({
-				searchTerm: '',
-			});
 		}
 
 		if (!this.props.multi) {
@@ -105,6 +106,10 @@ class Dropdown extends Component {
 		return value;
 	};
 
+	clearSearchTerm = () => {
+		this.setState({ searchTerm: '' });
+	}
+
 	render() {
 		const {
 			items,
@@ -138,6 +143,8 @@ class Dropdown extends Component {
 			}
 			return false;
 		});
+
+		const showClear = this.state.searchTerm;
 
 		return (
 			<Downshift
@@ -180,19 +187,35 @@ class Dropdown extends Component {
 									} ${getClassName(this.props.innerClass, 'list')}`}
 								>
 									{this.props.showSearch ? (
-										<Input
-											id={`${this.props.componentId}-input`}
-											style={{
-												border: 0,
-												borderBottom: '1px solid #ddd',
-											}}
-											showIcon={false}
-											className={getClassName(this.props.innerClass, 'input')}
-											placeholder={this.props.searchPlaceholder}
-											value={this.state.searchTerm}
-											onChange={this.handleInputChange}
-											themePreset={themePreset}
-										/>
+										<InputWrapper>
+											<Input
+												id={`${this.props.componentId}-input`}
+												style={{
+													border: 0,
+													borderBottom: '1px solid #ddd',
+												}}
+												showIcon={false}
+												showClear={showClear}
+												className={getClassName(this.props.innerClass, 'input')}
+												placeholder={this.props.searchPlaceholder}
+												value={this.state.searchTerm}
+												onChange={this.handleInputChange}
+												themePreset={themePreset}
+											/>
+											{showClear && (
+												<IconGroup
+													groupPosition="right"
+													positionType="absolute"
+												>
+													<IconWrapper
+														onClick={this.clearSearchTerm}
+														isClearIcon
+													>
+														<CancelSvg />
+													</IconWrapper>
+												</IconGroup>
+											)}
+										</InputWrapper>
 									) : null}
 									{
 										dropdownItems.length ? dropdownItems.map((item, index) => {
