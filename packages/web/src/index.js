@@ -29,6 +29,7 @@ import RatingsFilter from './components/range/RatingsFilter';
 
 import DataSearch from './components/search/DataSearch';
 import CategorySearch from './components/search/CategorySearch';
+import SearchBox from './components/search/SearchBox';
 
 import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
@@ -65,6 +66,7 @@ export {
 	// search
 	DataSearch,
 	CategorySearch,
+	SearchBox,
 	// result
 	ReactiveList,
 	ResultCard,
