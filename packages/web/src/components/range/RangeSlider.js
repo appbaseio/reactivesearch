@@ -553,7 +553,7 @@ RangeSlider.propTypes = {
 	includeNullValues: types.bool,
 	validateRange: types.func,
 	index: types.string,
-	queryFormat: oneOf([...Object.keys(dateFormats), 'or', 'and']),
+	queryFormat: oneOf([...Object.keys(dateFormats)]),
 	calendarInterval: types.calendarInterval,
 	// for internal purpose only
 	// introduced specifically to control the

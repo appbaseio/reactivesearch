@@ -691,7 +691,7 @@ DynamicRangeSlider.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	index: types.string,
-	queryFormat: oneOf([...Object.keys(dateFormats), 'or', 'and']),
+	queryFormat: oneOf([...Object.keys(dateFormats)]),
 	calendarInterval: types.calendarInterval,
 };
 
