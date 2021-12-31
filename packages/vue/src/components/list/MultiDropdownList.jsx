@@ -82,6 +82,7 @@ const MultiDropdownList = {
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
+		showClear: VueTypes.bool.def(false),
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -90,9 +91,10 @@ const MultiDropdownList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions = this.options && this.options[props.dataField]
-			? this.options[props.dataField].buckets
-			: []
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
+				? this.options[props.dataField].buckets
+				: [];
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -112,7 +114,7 @@ const MultiDropdownList = {
 		selectedValue(newVal) {
 			let selectedValue = Object.keys(this.$data.currentValue);
 			if (this.$props.selectAllLabel) {
-				selectedValue = selectedValue.filter(val => val !== this.$props.selectAllLabel);
+				selectedValue = selectedValue.filter((val) => val !== this.$props.selectAllLabel);
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
 				}
@@ -122,7 +124,7 @@ const MultiDropdownList = {
 			}
 		},
 		options(newVal, oldVal) {
-			if(newVal) {
+			if (newVal) {
 				checkPropChange(oldVal, newVal, () => {
 					const { showLoadMore, dataField } = this.$props;
 					const { modifiedOptions } = this.$data;
@@ -131,7 +133,7 @@ const MultiDropdownList = {
 						const { buckets } = newVal[dataField];
 						const nextOptions = [
 							...modifiedOptions,
-							...buckets.map(bucket => ({
+							...buckets.map((bucket) => ({
 								key: bucket.key[dataField],
 								doc_count: bucket.doc_count,
 							})),
@@ -150,7 +152,6 @@ const MultiDropdownList = {
 					}
 				});
 			}
-
 		},
 		size() {
 			this.updateQueryOptions(this.$props);
@@ -196,13 +197,12 @@ const MultiDropdownList = {
 		}
 
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
-			if(renderNoResults && isFunction(renderNoResults)) {
-				return (<div>{renderNoResults()}</div>);
-			} else if (renderNoResults && !isFunction(renderNoResults)) {
+			if (renderNoResults && isFunction(renderNoResults)) {
+				return <div>{renderNoResults()}</div>;
+			} if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
 			}
 			return null;
-
 		}
 
 		if (this.$props.selectAllLabel) {
@@ -225,8 +225,8 @@ const MultiDropdownList = {
 					items={[
 						...selectAll,
 						...this.$data.modifiedOptions
-							.filter(item => String(item.key).trim().length)
-							.map(item => ({
+							.filter((item) => String(item.key).trim().length)
+							.map((item) => ({
 								...item,
 								key: String(item.key),
 							})),
@@ -241,8 +241,11 @@ const MultiDropdownList = {
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
 					renderItem={renderItemCalc}
-					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
+					renderNoResults={
+						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+					}
 					showSearch={this.$props.showSearch}
+					showClear={this.$props.showClear}
 					transformData={this.$props.transformData}
 					footer={
 						showLoadMore
@@ -259,7 +262,6 @@ const MultiDropdownList = {
 	},
 
 	methods: {
-
 		handleChange(item) {
 			const { value } = this.$props;
 			if (value === undefined) {
@@ -280,7 +282,7 @@ const MultiDropdownList = {
 					currentValue = {};
 					finalValues = [];
 				} else {
-					this.$data.modifiedOptions.forEach(item => {
+					this.$data.modifiedOptions.forEach((item) => {
 						currentValue[item.key] = true;
 					});
 					currentValue[selectAllLabel] = true;
@@ -290,7 +292,7 @@ const MultiDropdownList = {
 				finalValues = value;
 				currentValue = {};
 				if (Array.isArray(value)) {
-					value.forEach(item => {
+					value.forEach((item) => {
 						currentValue[item] = true;
 					});
 				}
@@ -385,7 +387,7 @@ const MultiDropdownList = {
 					query: queryOptions,
 					props,
 					after,
-				})
+				  })
 				: getAggsQuery(queryOptions, props);
 		},
 

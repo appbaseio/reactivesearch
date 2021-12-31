@@ -80,6 +80,7 @@ const SingleDropdownList = {
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
+		showClear: VueTypes.bool.def(false),
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -88,9 +89,10 @@ const SingleDropdownList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions = this.options && this.options[props.dataField]
-			? this.options[props.dataField].buckets
-			: []
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
+				? this.options[props.dataField].buckets
+				: [];
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -108,7 +110,7 @@ const SingleDropdownList = {
 	},
 	watch: {
 		options(newVal, oldVal) {
-			if(newVal) {
+			if (newVal) {
 				checkPropChange(oldVal, newVal, () => {
 					const { showLoadMore, dataField } = this.$props;
 					const { modifiedOptions } = this.$data;
@@ -117,7 +119,7 @@ const SingleDropdownList = {
 						const { buckets } = newVal[dataField];
 						const nextOptions = [
 							...modifiedOptions,
-							...buckets.map(bucket => ({
+							...buckets.map((bucket) => ({
 								key: bucket.key[dataField],
 								doc_count: bucket.doc_count,
 							})),
@@ -136,7 +138,6 @@ const SingleDropdownList = {
 					}
 				});
 			}
-
 		},
 		size() {
 			this.updateQueryOptions(this.$props);
@@ -187,13 +188,13 @@ const SingleDropdownList = {
 		}
 
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
-			if(renderNoResults && isFunction(renderNoResults)) {
-				return (<div>{renderNoResults()}</div>);
-			} else if (renderNoResults && !isFunction(renderNoResults)) {
+			if (renderNoResults && isFunction(renderNoResults)) {
+				return <div>{renderNoResults()}</div>;
+			}
+			if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
 			}
 			return null;
-
 		}
 
 		if (this.$props.selectAllLabel) {
@@ -216,8 +217,8 @@ const SingleDropdownList = {
 					items={[
 						...selectAll,
 						...this.$data.modifiedOptions
-							.filter(item => String(item.key).trim().length)
-							.map(item => ({
+							.filter((item) => String(item.key).trim().length)
+							.map((item) => ({
 								...item,
 								key: String(item.key),
 							})),
@@ -230,9 +231,12 @@ const SingleDropdownList = {
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
-					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
+					renderNoResults={
+						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+					}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
+					showClear={this.$props.showClear}
 					transformData={this.$props.transformData}
 					footer={
 						showLoadMore
@@ -315,8 +319,10 @@ const SingleDropdownList = {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
 				? getCompositeAggsQuery({
-					query: queryOptions, props, after
-				})
+					query: queryOptions,
+					props,
+					after,
+				  })
 				: getAggsQuery(queryOptions, props);
 		},
 
