@@ -254,9 +254,10 @@ class RangeInput extends Component {
 				this.setState(state => ({
 					startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
 					start: getValueArrayWithinLimits(
-						[XDate(date).getTime(), currentDateEnd],
+						[XDate(date).getTime(), end],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
 					)[0],
+					end,
 				}));
 				// focus the end date DayPicker if its empty
 				if (autoFocus) {
@@ -301,8 +302,9 @@ class RangeInput extends Component {
 				this.handleDayMouseEnter(selectedDay);
 				this.setState(state => ({
 					endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
+					start,
 					end: getValueArrayWithinLimits(
-						[currentDateStart, XDate(selectedDay).getTime()],
+						[start, XDate(selectedDay).getTime()],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
 					)[1],
 				}));
@@ -342,10 +344,10 @@ class RangeInput extends Component {
 		const startDate = XDate(start) || '';
 		const endDate = XDate(end) || '';
 		const endDay = start && end ? dateHovered : '';
-		const selectedDays = [startDate, { from: startDate, to: endDate }];
-		const modifiers = { startDate, end: endDay };
+		const selectedDays = [startDate, { from: startDate, to: endDay }];
+		const modifiers = { start: startDate, end: endDay };
 		return (
-			<DateContainer>
+			<DateContainer range>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
 					<Flex
 						flex={2}
@@ -356,6 +358,7 @@ class RangeInput extends Component {
 						}}
 					>
 						<DayPickerInput
+							showOverlay
 							ref={this.getStartDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
 							value={formatDateString(startDate, DATE_FORMAT)}
@@ -364,12 +367,12 @@ class RangeInput extends Component {
 							dayPickerProps={{
 								initialMonth: new XDate(this.state.start || ''),
 								numberOfMonths: 2,
-								onDayMouseEnter: this.handleDayMouseEnter,
 								disabledDays: {
 									before:
 										(this.props.range.start && XDate(this.props.range.start))
 										|| '',
-									after: (this.state.end && XDate(this.state.end)) || '',
+									after:
+										(this.props.range.end && XDate(this.props.range.end)) || '',
 								},
 								selectedDays,
 								modifiers,
@@ -409,7 +412,9 @@ class RangeInput extends Component {
 								disabledDays: {
 									after:
 										(this.props.range.end && XDate(this.props.range.end)) || '',
-									before: (this.state.start && XDate(this.state.start)) || '',
+									before:
+										(this.props.range.start && XDate(this.props.range.start))
+										|| '',
 								},
 								selectedDays,
 								modifiers,
@@ -481,7 +486,7 @@ RangeInput.propTypes = {
 	includeNullValues: types.bool,
 	enableAppbase: types.bool,
 	index: types.string,
-	queryFormat: oneOf([...Object.keys(dateFormats), 'or', 'and']),
+	queryFormat: oneOf([...Object.keys(dateFormats)]),
 	calendarInterval: types.calendarInterval,
 };
 
