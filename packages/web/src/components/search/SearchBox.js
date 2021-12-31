@@ -502,7 +502,7 @@ const SearchBox = (props) => {
 	};
 
 	const clearValue = () => {
-		setValue('', true, props, undefined, true, false);
+		setValue('', false, props, causes.CLEAR_VALUE, true, false);
 		if (onChange) {
 			onChange('', ({ isOpen = false } = { isOpen: false }) =>
 				triggerQuery({
