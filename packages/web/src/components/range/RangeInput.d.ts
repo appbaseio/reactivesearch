@@ -18,6 +18,8 @@ export interface RangeInputProps extends CommonProps {
 	selectedValue?: types.selectedValue;
 	includeNullValues?: boolean;
 	index?: string;
+	queryFormat: types.queryFormatDate;
+	calendarInterval: types.calendarInterval;
 }
 
 declare const RangeInput: React.ComponentClass<RangeInputProps>;

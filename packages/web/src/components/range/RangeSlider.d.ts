@@ -30,6 +30,8 @@ export interface RangeSliderProps extends CommonProps {
 	renderTooltipData?: (...args: any[]) => any;
 	includeNullValues?: boolean;
 	index?: string;
+	queryFormat: types.queryFormatDate;
+	calendarInterval: types.calendarInterval;
 }
 
 declare const RangeSlider: React.ComponentClass<RangeSliderProps>;
