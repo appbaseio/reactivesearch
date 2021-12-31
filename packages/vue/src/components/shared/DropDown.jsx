@@ -7,6 +7,10 @@ import types from '../../utils/vueTypes';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
 import { isFunction } from '../../utils/index';
+import InputWrapper from '../../styles/InputWrapper';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../styles/IconWrapper';
+import CancelSvg from './CancelSvg';
 
 const { getClassName } = helper;
 const Dropdown = {
@@ -43,6 +47,7 @@ const Dropdown = {
 		small: VueTypes.bool.def(false),
 		themePreset: types.themePreset,
 		showSearch: VueTypes.bool,
+		showClear: VueTypes.bool,
 	},
 
 	render() {
@@ -84,7 +89,6 @@ const Dropdown = {
 
 			return false;
 		})
-
 		return (
 			<Downshift
 				isOpen={this.$data.isOpen}
@@ -142,19 +146,38 @@ const Dropdown = {
 									} ${getClassName(this.$props.innerClass, 'list')}`}
 								>
 									{this.$props.showSearch ? (
-										<Input
-											id={`${this.$props.componentId}-input`}
-											style={{
-												border: 0,
-												borderBottom: '1px solid #ddd',
-											}}
-											showIcon={false}
-											class={getClassName(this.$props.innerClass, 'input')}
-											placeholder="Type here to search..."
-											value={this.$data.searchTerm}
-											onChange={this.handleInputChange}
-											themePreset={themePreset}
-										/>
+										<InputWrapper>
+											<Input
+												id={`${this.$props.componentId}-input`}
+												style={{
+													border: 0,
+													borderBottom: '1px solid #ddd',
+												}}
+												showIcon={false}
+												showClear={this.$props.showClear}
+												class={getClassName(
+													this.$props.innerClass,
+													'input',
+												)}
+												placeholder="Type here to search..."
+												value={this.$data.searchTerm}
+												onChange={this.handleInputChange}
+												themePreset={themePreset}
+											/>
+											{this.$data.searchTerm && this.$props.showClear && (
+												<IconGroup
+													groupPosition="right"
+													positionType="absolute"
+												>
+													<IconWrapper
+														onClick={this.clearSearchTerm}
+														isClearIcon
+													>
+														<CancelSvg />
+													</IconWrapper>
+												</IconGroup>
+											)}
+										</InputWrapper>
 									) : null}
 									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
 										? this.renderNoResult()
@@ -266,6 +289,7 @@ const Dropdown = {
 
 			if (!this.$props.multi) {
 				this.isOpen = false;
+				this.searchTerm = '';
 			}
 		},
 		handleStateChange({ isOpen }) {
@@ -288,6 +312,10 @@ const Dropdown = {
 		handleInputChange(e) {
 			const { value } = e.target;
 			this.searchTerm = value;
+		},
+
+		clearSearchTerm() {
+			this.searchTerm = '';
 		},
 
 		renderToString(value) {
