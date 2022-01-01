@@ -48,6 +48,7 @@ const Dropdown = {
 		themePreset: types.themePreset,
 		showSearch: VueTypes.bool,
 		showClear: VueTypes.bool,
+		searchPlaceholder: VueTypes.string.def('Type here to search...'),
 	},
 
 	render() {
@@ -146,38 +147,7 @@ const Dropdown = {
 									} ${getClassName(this.$props.innerClass, 'list')}`}
 								>
 									{this.$props.showSearch ? (
-										<InputWrapper>
-											<Input
-												id={`${this.$props.componentId}-input`}
-												style={{
-													border: 0,
-													borderBottom: '1px solid #ddd',
-												}}
-												showIcon={false}
-												showClear={this.$props.showClear}
-												class={getClassName(
-													this.$props.innerClass,
-													'input',
-												)}
-												placeholder="Type here to search..."
-												value={this.$data.searchTerm}
-												onChange={this.handleInputChange}
-												themePreset={themePreset}
-											/>
-											{this.$data.searchTerm && this.$props.showClear && (
-												<IconGroup
-													groupPosition="right"
-													positionType="absolute"
-												>
-													<IconWrapper
-														onClick={this.clearSearchTerm}
-														isClearIcon
-													>
-														<CancelSvg />
-													</IconWrapper>
-												</IconGroup>
-											)}
-										</InputWrapper>
+										this.renderSearchbox()
 									) : null}
 									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
 										? this.renderNoResult()
@@ -352,6 +322,45 @@ const Dropdown = {
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
 				</p>
 			);
+		},
+
+		renderSearchbox() {
+			const { componentId, searchPlaceholder, showClear, themePreset, innerClass }
+				= this.$props;
+			
+			const InputComponent = (
+				<Input
+					id={`${componentId}-input`}
+					style={{
+						border: 0,
+						borderBottom: '1px solid #ddd',
+					}}
+					showIcon={false}
+					showClear={showClear}
+					class={getClassName(innerClass, 'input')}
+					placeholder={searchPlaceholder}
+					value={this.$data.searchTerm}
+					onChange={this.handleInputChange}
+					themePreset={themePreset}
+				/>
+			);
+			
+			if (showClear) {
+				return (
+					<InputWrapper>
+						{InputComponent}
+						{this.searchTerm && (
+							<IconGroup groupPosition="right" positionType="absolute">
+								<IconWrapper onClick={this.clearSearchTerm} isClearIcon>
+									<CancelSvg />
+								</IconWrapper>
+							</IconGroup>
+						)}
+					</InputWrapper>
+				);
+			}
+
+			return InputComponent;
 		},
 	},
 };
