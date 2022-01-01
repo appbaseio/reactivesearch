@@ -111,6 +111,46 @@ class Dropdown extends Component {
 		this.setState({ searchTerm: '' });
 	}
 
+	renderSearchbox = (props) => {
+		const {
+			componentId, searchPlaceholder, showClear, themePreset, innerClass,
+		} = props;
+
+		const InputComponent = (
+			<Input
+				id={`${componentId}-input`}
+				style={{
+					border: 0,
+					borderBottom: '1px solid #ddd',
+				}}
+				showIcon={false}
+				showClear={showClear}
+				className={getClassName(innerClass, 'input')}
+				placeholder={searchPlaceholder}
+				value={this.state.searchTerm}
+				onChange={this.handleInputChange}
+				themePreset={themePreset}
+			/>
+		);
+
+		if (showClear) {
+			return (
+				<InputWrapper>
+					{InputComponent}
+					{this.state.searchTerm && (
+						<IconGroup groupPosition="right" positionType="absolute">
+							<IconWrapper onClick={this.clearSearchTerm} isClearIcon>
+								<CancelSvg />
+							</IconWrapper>
+						</IconGroup>
+					)}
+				</InputWrapper>
+			);
+		}
+
+		return InputComponent;
+	}
+
 	render() {
 		const {
 			items,
@@ -125,7 +165,6 @@ class Dropdown extends Component {
 			footer,
 			hasCustomRenderer,
 			customRenderer,
-			showClear,
 		} = this.props;
 
 		let itemsToRender = items;
@@ -187,35 +226,7 @@ class Dropdown extends Component {
 									} ${getClassName(this.props.innerClass, 'list')}`}
 								>
 									{this.props.showSearch ? (
-										<InputWrapper>
-											<Input
-												id={`${this.props.componentId}-input`}
-												style={{
-													border: 0,
-													borderBottom: '1px solid #ddd',
-												}}
-												showIcon={false}
-												showClear={showClear}
-												className={getClassName(this.props.innerClass, 'input')}
-												placeholder={this.props.searchPlaceholder}
-												value={this.state.searchTerm}
-												onChange={this.handleInputChange}
-												themePreset={themePreset}
-											/>
-											{this.state.searchTerm && showClear && (
-												<IconGroup
-													groupPosition="right"
-													positionType="absolute"
-												>
-													<IconWrapper
-														onClick={this.clearSearchTerm}
-														isClearIcon
-													>
-														<CancelSvg />
-													</IconWrapper>
-												</IconGroup>
-											)}
-										</InputWrapper>
+										this.renderSearchbox(this.props)
 									) : null}
 									{
 										dropdownItems.length ? dropdownItems.map((item, index) => {
