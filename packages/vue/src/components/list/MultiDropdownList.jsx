@@ -83,6 +83,7 @@ const MultiDropdownList = {
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
+		searchPlaceholder: VueTypes.string.def('Type here to search...'),
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -245,6 +246,7 @@ const MultiDropdownList = {
 					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
 					showSearch={this.$props.showSearch}
 					showClear={this.$props.showClear}
+					searchPlaceholder={this.$props.searchPlaceholder}
 					transformData={this.$props.transformData}
 					footer={
 						showLoadMore
