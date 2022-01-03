@@ -24,7 +24,7 @@ it('should render no results message', () => {
 	expect(elem).toMatchSnapshot();
 });
 
-it('should render list of authors', () => {
+it('should render list of items', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
