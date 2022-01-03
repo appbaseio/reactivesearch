@@ -71,7 +71,7 @@ exports[`should not render search/count/checkbox when showSearch/showCount/showC
 </div>
 `;
 
-exports[`should render list of authors 1`] = `
+exports[`should render list of items 1`] = `
 <div
   className="css-15g0dol-Base eay43c90"
   style={Object {}}
@@ -290,11 +290,11 @@ exports[`should use render prop to render the list item 1`] = `
     <ul>
       <li>
         J. K. Rowling
-         
+
       </li>
       <li>
         Nora Roberts
-         
+
       </li>
     </ul>
   </div>
@@ -350,7 +350,7 @@ exports[`should use renderItem to render the list item 1`] = `
             className="checked"
           >
             J. K. Rowling
-             - 
+             -
             10
           </div>
         </label>
@@ -376,7 +376,7 @@ exports[`should use renderItem to render the list item 1`] = `
         >
           <div>
             Nora Roberts
-             - 
+             -
             7
           </div>
         </label>
