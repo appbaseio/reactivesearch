@@ -12,6 +12,11 @@ it('should render no results message', () => {
 					componentId="authors"
 					dataField="authors.keyword"
 					renderNoResults={() => 'No authors found'}
+					mockData={{
+						'authors.keyword': {
+							buckets: [],
+						},
+					}}
 				/>
 			</ReactiveBase>,
 		)
@@ -189,6 +194,37 @@ it('should use render prop to render the list item', () => {
 							))}
 						</ul>
 					)}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should select default value', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+				<MultiList
+					mode="test"
+					componentId="authors"
+					dataField="authors.keyword"
+					renderNoResults={() => 'No authors found'}
+					mockData={{
+						'authors.keyword': {
+							buckets: [
+								{
+									key: 'J. K. Rowling',
+									doc_count: 10,
+								},
+								{
+									key: 'Nora Roberts',
+									doc_count: 7,
+								},
+							],
+						},
+					}}
+					defaultValue={['J. K. Rowling']}
 				/>
 			</ReactiveBase>,
 		)
