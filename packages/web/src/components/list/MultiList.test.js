@@ -209,7 +209,6 @@ it('should select default value', () => {
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
-					renderNoResults={() => 'No authors found'}
 					mockData={{
 						'authors.keyword': {
 							buckets: [
