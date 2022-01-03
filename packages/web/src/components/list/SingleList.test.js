@@ -128,8 +128,6 @@ it('should use renderItem to render the list item', () => {
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
-					renderNoResults={() => 'No authors found'}
-					defaultValue={['J. K. Rowling']}
 					renderItem={(key, docCount, isChecked) =>
 						(isChecked ? (
 							<div className="checked">
