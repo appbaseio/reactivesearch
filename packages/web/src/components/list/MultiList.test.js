@@ -3,6 +3,21 @@ import renderer from 'react-test-renderer';
 import MultiList from './MultiList';
 import ReactiveBase from '../basic/ReactiveBase';
 
+const MOCK_AGGREGATIONS_DATA = {
+	'authors.keyword': {
+		buckets: [
+			{
+				key: 'J. K. Rowling',
+				doc_count: 10,
+			},
+			{
+				key: 'Nora Roberts',
+				doc_count: 7,
+			},
+		],
+	},
+};
+
 it('should render no results message', () => {
 	const elem = renderer
 		.create(
@@ -34,18 +49,7 @@ it('should render list of items', () => {
 					dataField="authors.keyword"
 					renderNoResults={() => 'No authors found'}
 					mockData={{
-						'authors.keyword': {
-							buckets: [
-								{
-									key: 'J. K. Rowling',
-									doc_count: 10,
-								},
-								{
-									key: 'Nora Roberts',
-									doc_count: 7,
-								},
-							],
-						},
+						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
 				/>
 			</ReactiveBase>,
@@ -67,18 +71,7 @@ it('should render search/count/checkbox when showSearch/showCount/showCheckbox a
 					showCheckbox
 					renderNoResults={() => 'No authors found'}
 					mockData={{
-						'authors.keyword': {
-							buckets: [
-								{
-									key: 'J. K. Rowling',
-									doc_count: 10,
-								},
-								{
-									key: 'Nora Roberts',
-									doc_count: 7,
-								},
-							],
-						},
+						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
 				/>
 			</ReactiveBase>,
@@ -100,18 +93,7 @@ it('should not render search/count/checkbox when showSearch/showCount/showCheckb
 					showCheckbox={false}
 					renderNoResults={() => 'No authors found'}
 					mockData={{
-						'authors.keyword': {
-							buckets: [
-								{
-									key: 'J. K. Rowling',
-									doc_count: 10,
-								},
-								{
-									key: 'Nora Roberts',
-									doc_count: 7,
-								},
-							],
-						},
+						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
 				/>
 			</ReactiveBase>,
@@ -142,18 +124,7 @@ it('should use renderItem to render the list item', () => {
 						))
 					}
 					mockData={{
-						'authors.keyword': {
-							buckets: [
-								{
-									key: 'J. K. Rowling',
-									doc_count: 10,
-								},
-								{
-									key: 'Nora Roberts',
-									doc_count: 7,
-								},
-							],
-						},
+						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
 				/>
 			</ReactiveBase>,
@@ -172,18 +143,7 @@ it('should use render prop to render the list item', () => {
 					dataField="authors.keyword"
 					renderNoResults={() => 'No authors found'}
 					mockData={{
-						'authors.keyword': {
-							buckets: [
-								{
-									key: 'J. K. Rowling',
-									doc_count: 10,
-								},
-								{
-									key: 'Nora Roberts',
-									doc_count: 7,
-								},
-							],
-						},
+						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
 					render={({ data = [] }) => (
 						<ul>
@@ -210,18 +170,7 @@ it('should select default value', () => {
 					componentId="authors"
 					dataField="authors.keyword"
 					mockData={{
-						'authors.keyword': {
-							buckets: [
-								{
-									key: 'J. K. Rowling',
-									doc_count: 10,
-								},
-								{
-									key: 'Nora Roberts',
-									doc_count: 7,
-								},
-							],
-						},
+						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
 					defaultValue={['J. K. Rowling']}
 				/>
