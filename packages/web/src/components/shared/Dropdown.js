@@ -16,7 +16,7 @@ class Dropdown extends Component {
 		super(props);
 
 		this.state = {
-			isOpen: false,
+			isOpen: props.isOpen,
 			searchTerm: '',
 		};
 	}
@@ -276,6 +276,7 @@ Dropdown.defaultProps = {
 	labelField: 'label',
 	small: false,
 	searchPlaceholder: 'Type here to search...',
+	isOpen: false,
 };
 
 Dropdown.propTypes = {
@@ -303,6 +304,7 @@ Dropdown.propTypes = {
 	showSearch: types.bool,
 	footer: types.children,
 	componentId: types.string,
+	isOpen: types.bool,
 };
 
 export default withTheme(Dropdown);
