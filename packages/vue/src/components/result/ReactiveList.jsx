@@ -48,7 +48,7 @@ const ReactiveList = {
 	},
 	data() {
 		let currentPageState = 0;
-		const defaultPage = this.defaultPage || -1
+		const defaultPage = this.defaultPage || -1;
 		if (defaultPage >= 0) {
 			currentPageState = defaultPage;
 		} else if (this.currentPage) {
@@ -84,15 +84,20 @@ const ReactiveList = {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		const defaultPage = this.defaultPage || -1
+		const defaultPage = this.defaultPage || -1;
 		if (defaultPage >= 0) {
 			this.currentPageState = defaultPage;
 			this.from = this.currentPageState * this.$props.size;
 		}
 		this.internalComponent = `${this.$props.componentId}__internal`;
-		this.sortOptionIndex = this.defaultSortOption
-			? this.sortOptions.findIndex(s => s.label === this.defaultSortOption)
-			: 0;
+
+		this.sortOptionIndex = 0;
+		if (this.defaultSortOption && this.sortOptions && Array.isArray(this.sortOptions)) {
+			this.sortOptionIndex = this.sortOptions.findIndex(
+				(s) => s.label === this.defaultSortOption,
+			);
+		}
+
 		this.updateComponentProps(
 			this.componentId,
 			{ from: this.from },
@@ -175,15 +180,15 @@ const ReactiveList = {
 			let filteredResults = results;
 
 			if (parsedPromotedResults.length) {
-				const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
+				const ids = parsedPromotedResults.map((item) => item._id).filter(Boolean);
 				if (ids) {
-					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+					filteredResults = filteredResults.filter((item) => !ids.includes(item._id));
 				}
 
 				filteredResults = [...parsedPromotedResults, ...filteredResults];
 			}
 			return withClickIds(filteredResults);
-		}
+		},
 	},
 	watch: {
 		sortOptions(newVal, oldVal) {
@@ -326,9 +331,9 @@ const ReactiveList = {
 		let options = getQueryOptions(this.$props);
 		options.from = this.$data.from;
 
-		if (this.$props.sortOptions) {
-			const sortField = this.$props.sortOptions[this.sortOptionIndex].dataField;
-			const { sortBy } = this.$props.sortOptions[this.sortOptionIndex];
+		if (this.sortOptions && this.sortOptions[this.sortOptionIndex]) {
+			const sortField = this.sortOptions[this.sortOptionIndex].dataField;
+			const { sortBy } = this.sortOptions[this.sortOptionIndex];
 			options.sort = [
 				{
 					[sortField]: {
@@ -414,15 +419,13 @@ const ReactiveList = {
 					&& (this.$scopedSlots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
-					labelPosition={this.$props.sortOptions ? 'right' : 'left'}
+					labelPosition={this.sortOptions ? 'right' : 'left'}
 					class={getClassName(this.$props.innerClass, 'resultsInfo')}
 				>
-					{this.$props.sortOptions ? this.renderSortOptions() : null}
+					{this.sortOptions ? this.renderSortOptions() : null}
 					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
-				{!this.isLoading && results.length === 0
-					? this.renderNoResult()
-					: null}
+				{!this.isLoading && results.length === 0 ? this.renderNoResult() : null}
 				{this.shouldRenderPagination
 				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
 						<Pagination
@@ -437,7 +440,8 @@ const ReactiveList = {
 					) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
-					? (this.$scopedSlots.loader || this.$props.loader) || (
+					? this.$scopedSlots.loader
+					  || this.$props.loader || (
 						<div
 							style={{
 								textAlign: 'center',
@@ -516,17 +520,19 @@ const ReactiveList = {
 			const options = getQueryOptions(props);
 			options.from = this.$data.from;
 
-			if (props.sortOptions) {
+			if (props.sortOptions && Array.isArray(props.sortOptions)) {
 				const sortOptionIndex = props.defaultSortOption
-					? props.sortOptions.findIndex(s => s.label === props.defaultSortOption)
+					? props.sortOptions.findIndex((s) => s.label === props.defaultSortOption)
 					: 0;
-				options.sort = [
-					{
-						[props.sortOptions[sortOptionIndex].dataField]: {
-							order: props.sortOptions[sortOptionIndex].sortBy,
+				if(props.sortOptions[sortOptionIndex]) {
+					options.sort = [
+						{
+							[props.sortOptions[sortOptionIndex].dataField]: {
+								order: props.sortOptions[sortOptionIndex].sortBy,
+							},
 						},
-					},
-				];
+					];
+				}
 			} else if (props.sortBy) {
 				options.sort = [
 					{
@@ -628,7 +634,8 @@ const ReactiveList = {
 				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
-			} if (this.stats.numberOfResults) {
+			}
+			if (this.stats.numberOfResults) {
 				return (
 					<p
 						class={`${resultStats} ${getClassName(
@@ -648,7 +655,7 @@ const ReactiveList = {
 			const renderNoResults
 				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			if (this.$scopedSlots.renderNoResults) {
-				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults
+				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults;
 			}
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
@@ -659,34 +666,36 @@ const ReactiveList = {
 
 		handleSortChange(e) {
 			const index = e.target.value;
-			// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
-			const options = getQueryOptions(this.$props);
-			options.from = 0;
-			const sortField = this.$props.sortOptions[index].dataField;
-			const { sortBy } = this.$props.sortOptions[index];
-			options.sort = [
-				{
-					[sortField]: {
-						order: sortBy,
+			if (this.sortOptions && this.sortOptions[index]) {
+				// This fixes issue #371 (where sorting a multi-result page with infinite loader breaks)
+				const options = getQueryOptions(this.$props);
+				options.from = 0;
+				const sortField = this.sortOptions[index].dataField;
+				const { sortBy } = this.sortOptions[index];
+				options.sort = [
+					{
+						[sortField]: {
+							order: sortBy,
+						},
 					},
-				},
-			];
-			this.sortOptionIndex = index;
-			// To handle sort options for RS API
-			this.updateComponentProps(
-				this.componentId,
-				{ dataField: sortField, sortBy },
-				componentTypes.reactiveList,
-			);
-			this.setQueryOptions(this.$props.componentId, options, true);
-			this.currentPageState = 0;
-			this.from = 0;
+				];
+				this.sortOptionIndex = index;
+				// To handle sort options for RS API
+				this.updateComponentProps(
+					this.componentId,
+					{ dataField: sortField, sortBy },
+					componentTypes.reactiveList,
+				);
+				this.setQueryOptions(this.$props.componentId, options, true);
+				this.currentPageState = 0;
+				this.from = 0;
+			}
 		},
 		triggerClickAnalytics(searchPosition, documentId) {
 			let docId = documentId;
 			if (!docId) {
 				const { data } = this.getData();
-				const hitData = data.find(hit => hit._click_id === searchPosition);
+				const hitData = data.find((hit) => hit._click_id === searchPosition);
 				if (hitData && hitData._id) {
 					docId = hitData._id;
 				}
@@ -702,7 +711,7 @@ const ReactiveList = {
 					onChange={this.handleSortChange}
 					value={this.sortOptionIndex}
 				>
-					{this.$props.sortOptions.map((sort, index) => (
+					{this.sortOptions.map((sort, index) => (
 						<option key={sort.label} value={index}>
 							{sort.label}
 						</option>
@@ -719,14 +728,7 @@ const ReactiveList = {
 		},
 		// Shape of the object to be returned in onData & render
 		getAllData() {
-			const {
-				size,
-				promotedResults,
-				aggregationData,
-				customData,
-				currentPage,
-				hits
-			} = this;
+			const { size, promotedResults, aggregationData, customData, currentPage, hits } = this;
 			const results = parseHits(hits) || [];
 			const parsedPromotedResults = parseHits(promotedResults) || [];
 			const base = currentPage * size;
@@ -741,11 +743,7 @@ const ReactiveList = {
 			};
 		},
 		getData() {
-			const {
-				promotedResults,
-				aggregationData,
-				customData,
-			} = this.getAllData();
+			const { promotedResults, aggregationData, customData } = this.getAllData();
 			return {
 				data: this.data,
 				aggregationData: this.withClickIds(aggregationData || []),
@@ -773,14 +771,14 @@ const ReactiveList = {
 };
 const mapStateToProps = (state, props) => ({
 	defaultPage:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value - 1),
+		state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value - 1,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time),
+	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.config && state.config.analytics,
@@ -804,7 +802,7 @@ const mapDispatchtoProps = {
 	recordResultClick,
 };
 // Only used for SSR
-ReactiveList.generateQueryOptions = props => {
+ReactiveList.generateQueryOptions = (props) => {
 	// simulate default (includeFields and excludeFields) props to generate consistent query
 	const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
 	const {
@@ -820,7 +818,7 @@ ReactiveList.generateQueryOptions = props => {
 
 	const getSortOption = () => {
 		if (defaultSortOption) {
-			const sortOption = sortOptionsNew.find(option => option.label === defaultSortOption);
+			const sortOption = sortOptionsNew.find((option) => option.label === defaultSortOption);
 			if (sortOption) {
 				return {
 					[sortOption.dataField]: {
@@ -859,7 +857,7 @@ export const RLConnected = ComponentWrapper(
 	},
 );
 
-ReactiveList.install = function(Vue) {
+ReactiveList.install = function (Vue) {
 	Vue.component(ReactiveList.name, RLConnected);
 	Vue.component(ResultListWrapper.name, ResultListWrapper);
 	Vue.component(ResultCardsWrapper.name, ResultCardsWrapper);

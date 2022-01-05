@@ -238,3 +238,10 @@ export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd'
 export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }
+
+export const suggestionTypes = {
+	Popular: 'popular',
+	Index: 'index',
+	Recent: 'recent',
+	Promoted: 'promoted',
+};
