@@ -65,7 +65,7 @@ const MOCK_HITS_DATA = [
 		value: 'night harry potter film wizardry boxed set',
 		label: 'night harry potter film wizardry boxed set',
 		url: null,
-		_suggestion_type: 'recent',
+		_suggestion_type: 'promoted',
 		_category: null,
 		_count: 3,
 		_rs_score: 0,
@@ -167,7 +167,7 @@ it('should render SearchBox', () => {
 					mode="test"
 					componentId="MockSearchBox"
 					dataField="original_title"
-					mockData={{ hits: MOCK_HITS_DATA }}
+					mockData={{ hits: [] }}
 				/>
 			</ReactiveBase>,
 		)
@@ -183,7 +183,7 @@ it('should render SearchBox with title', () => {
 					mode="test"
 					componentId="MockSearchBox"
 					dataField="original_title"
-					mockData={{ hits: MOCK_HITS_DATA }}
+					mockData={{ hits: [] }}
 					title="Mock SearchBox"
 				/>
 			</ReactiveBase>,
@@ -200,8 +200,9 @@ it('should render search icon on the right', () => {
 					mode="test"
 					componentId="MockSearchBox"
 					dataField="original_title"
-					mockData={{ hits: MOCK_HITS_DATA }}
+					mockData={{ hits: [] }}
 					iconPosition="right"
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -217,7 +218,7 @@ it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props a
 					mode="test"
 					componentId="MockSearchBox"
 					dataField="original_title"
-					mockData={{ hits: MOCK_HITS_DATA }}
+					mockData={{ hits: [] }}
 					showIcon={false}
 					showClear
 					defaultValue="test"
@@ -238,7 +239,7 @@ it('should render custom (search/ clear icon/ recent search icon/ popular search
 					dataField="original_title"
 					mockData={{ hits: MOCK_HITS_DATA }}
 					defaultValue="harry test"
-					autoFocus
+					isOpen
 					showClear
 					showIcon
 					icon={
@@ -272,7 +273,7 @@ it('should show voice search when showVoiceSearch prop is set', () => {
 					mode="test"
 					componentId="MockSearchBox"
 					dataField="original_title"
-					mockData={{ hits: MOCK_HITS_DATA }}
+					mockData={{ hits: [] }}
 					showVoiceSearch
 				/>
 			</ReactiveBase>,
@@ -290,7 +291,7 @@ it('should render custom dropdown UI when render prop is set', () => {
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: MOCK_HITS_DATA }}
-					autoFocus
+					isOpen
 					render={({
 						value,
 						data,
@@ -358,7 +359,7 @@ it('should render with a default value when defaultValue prop is set', () => {
 					mode="test"
 					componentId="MockSearchBox"
 					dataField="original_title"
-					mockData={{ hits: MOCK_HITS_DATA }}
+					mockData={{ hits: [] }}
 					defaultValue="test"
 				/>
 			</ReactiveBase>,
@@ -380,7 +381,7 @@ it('should render default suggestions when defaultSuggestions prop is set', () =
 						{ label: 'Sherlock Holmes', value: 'Sherlock Holmes' },
 						{ label: 'The Lord of the Rings', value: 'The Lord of the Rings' },
 					]}
-					autoFocus
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -416,11 +417,8 @@ it('should not render expanded dropdown when expandSuggestionsContainer prop is 
 					addonBefore={<h3> Before</h3>}
 					addonAfter={<h3> After</h3>}
 					expandSuggestionsContainer={false}
-					autoFocus
-					defaultSuggestions={[
-						{ label: 'Sherlock Holmes', value: 'Sherlock Holmes' },
-						{ label: 'The Lord of the Rings', value: 'The Lord of the Rings' },
-					]}
+					isOpen
+					mockData={{ hits: MOCK_HITS_DATA }}
 				/>
 			</ReactiveBase>,
 		)
