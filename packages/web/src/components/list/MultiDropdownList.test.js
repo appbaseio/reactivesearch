@@ -53,6 +53,7 @@ it('should render list of items', () => {
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -74,6 +75,7 @@ it('should render search/count when showSearch/showCount are true', () => {
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -96,6 +98,7 @@ it('should not render search/ count when showSearch/ showCount are false', () =>
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -127,6 +130,7 @@ it('should use renderItem to render the list item', () => {
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -176,6 +180,7 @@ it('should use render prop to render the list item', () => {
 							</div>
 						);
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -192,7 +197,7 @@ it('should select default value', () => {
 					componentId="authors"
 					dataField="authors.keyword"
 					mockData={{
-						aggregations: MOCK_AGGREGATIONS_DATA,
+						aggregations: {},
 					}}
 					defaultValue={['J. K. Rowling']}
 				/>
