@@ -158,8 +158,9 @@ const booksReactiveList = data => (
 								Array(data.average_rating_rounded)
 									.fill('x')
 									// eslint-disable-next-line
-									.map((_) => (
-										<span role="img" aria-label="start">
+									.map((_, index) => (
+										// eslint-disable-next-line
+										<span key={index} role="img" aria-label="start">
 											⭐
 										</span>
 									)) // eslint-disable-line
@@ -245,7 +246,7 @@ it('should render items in a card layout', () => {
 					{({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
 							{data.map(item => (
-								<BooksCard {...item} />
+								<BooksCard key={item._id} {...item} />
 							))}
 						</ReactiveList.ResultCardsWrapper>
 					)}
