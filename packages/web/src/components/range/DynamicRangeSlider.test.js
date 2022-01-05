@@ -422,6 +422,7 @@ it('should render slider', () => {
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
+					dataField="ratings_count"
 					mockData={{
 						DynamicRangeMock: { aggregations: HISTOGRAM_DATA },
 						DynamicRangeMock__range__internal: { aggregations: MOCK_RANGE_DATA },
@@ -440,6 +441,7 @@ it('should render histogram when showHistogram is set to true', () => {
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
+					dataField="ratings_count"
 					mockData={{
 						DynamicRangeMock: { aggregations: HISTOGRAM_DATA },
 						DynamicRangeMock__range__internal: { aggregations: MOCK_RANGE_DATA },
@@ -459,6 +461,7 @@ it('should not render histogram when showHistogram is set to true', () => {
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
+					dataField="ratings_count"
 					mockData={{
 						DynamicRangeMock: { aggregations: HISTOGRAM_DATA },
 						DynamicRangeMock__range__internal: { aggregations: MOCK_RANGE_DATA },
@@ -478,6 +481,7 @@ it('should render title', () => {
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
+					dataField="ratings_count"
 					mockData={{
 						DynamicRangeMock: { aggregations: HISTOGRAM_DATA },
 						DynamicRangeMock__range__internal: { aggregations: MOCK_RANGE_DATA },
@@ -497,6 +501,7 @@ it('should render range labels', () => {
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
+					dataField="ratings_count"
 					mockData={{
 						DynamicRangeMock: { aggregations: HISTOGRAM_DATA },
 						DynamicRangeMock__range__internal: { aggregations: MOCK_RANGE_DATA },
@@ -519,6 +524,7 @@ it('should display tooltip', () => {
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
+					dataField="ratings_count"
 					mockData={{
 						DynamicRangeMock: { aggregations: HISTOGRAM_DATA },
 						DynamicRangeMock__range__internal: { aggregations: MOCK_RANGE_DATA },

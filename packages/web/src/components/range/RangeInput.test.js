@@ -417,6 +417,7 @@ it('should render range with slider', () => {
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
+					dataField="ratings_count"
 					range={{
 						start: 30000,
 						end: 50000,
@@ -439,6 +440,7 @@ it('should not render slider when ShowSlider is false', () => {
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
+					dataField="ratings_count"
 					range={{
 						start: 30000,
 						end: 50000,
