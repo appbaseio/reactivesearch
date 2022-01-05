@@ -1,0 +1,479 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not render search/ count when showSearch/ showCount are false 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <div
+      className="css-3cr1qg-suggestionsContainer"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="css-ee3byn-Select e1eez11q0"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="css-ed145z-Chevron-open e1bddj530"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  css-avkrty"
+      >
+        <li
+          className=""
+          id="downshift-2-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "J. K. Rowling",
+                }
+              }
+            />
+          </div>
+        </li>
+        <li
+          className=""
+          id="downshift-2-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Nora Roberts",
+                }
+              }
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render list of items 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <div
+      className="css-3cr1qg-suggestionsContainer"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="css-ee3byn-Select e1eez11q0"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="css-ed145z-Chevron-open e1bddj530"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  css-avkrty"
+      >
+        <li
+          className=""
+          id="downshift-0-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "J. K. Rowling",
+                }
+              }
+            />
+            <span
+              className={null}
+            >
+               (
+              10
+              )
+            </span>
+          </div>
+        </li>
+        <li
+          className=""
+          id="downshift-0-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Nora Roberts",
+                }
+              }
+            />
+            <span
+              className={null}
+            >
+               (
+              7
+              )
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render no results message 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  No authors found
+</div>
+`;
+
+exports[`should render search/count when showSearch/showCount are true 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <div
+      className="css-3cr1qg-suggestionsContainer"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="css-ee3byn-Select e1eez11q0"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="css-ed145z-Chevron-open e1bddj530"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  css-avkrty"
+      >
+        <input
+          className=" css-1f0ma1s-Input-input enqjda90"
+          id="undefined-input"
+          onChange={[Function]}
+          placeholder="Type here to search..."
+          style={
+            Object {
+              "border": 0,
+              "borderBottom": "1px solid #ddd",
+            }
+          }
+          value=""
+        />
+        <li
+          className=""
+          id="downshift-1-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "J. K. Rowling",
+                }
+              }
+            />
+            <span
+              className={null}
+            >
+               (
+              10
+              )
+            </span>
+          </div>
+        </li>
+        <li
+          className=""
+          id="downshift-1-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Nora Roberts",
+                }
+              }
+            />
+            <span
+              className={null}
+            >
+               (
+              7
+              )
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should select default value 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+/>
+`;
+
+exports[`should use render prop to render the list item 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <div
+      className="css-3cr1qg-suggestionsContainer"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="css-ee3byn-Select e1eez11q0"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="css-ed145z-Chevron-open e1bddj530"
+          open={true}
+        />
+      </button>
+      <div>
+        <span
+          onClick={[Function]}
+          role="menuitem"
+          style={
+            Object {
+              "boxShadow": "1px 1px #c3c3c3",
+              "padding": "5px",
+            }
+          }
+          tabIndex="0"
+        >
+          <span>
+            J. K. Rowling
+          </span>
+            (
+          <span>
+            10
+          </span>
+          )
+        </span>
+        <span
+          onClick={[Function]}
+          role="menuitem"
+          style={
+            Object {
+              "boxShadow": "1px 1px #c3c3c3",
+              "padding": "5px",
+            }
+          }
+          tabIndex="0"
+        >
+          <span>
+            Nora Roberts
+          </span>
+            (
+          <span>
+            7
+          </span>
+          )
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should use renderItem to render the list item 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <div
+      className="css-3cr1qg-suggestionsContainer"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="css-ee3byn-Select e1eez11q0"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="J. K. Rowling"
+        type="button"
+      >
+        <div>
+          J. K. Rowling
+        </div>
+        <span
+          className="css-ed145z-Chevron-open e1bddj530"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  css-avkrty"
+      >
+        <li
+          className="active"
+          id="downshift-3-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fafafa",
+            }
+          }
+        >
+          <div
+            className="checked"
+          >
+            J. K. Rowling
+             - 
+            10
+          </div>
+          <span
+            className="css-1yjrvfv-Tick e1eez11q1"
+          />
+        </li>
+        <li
+          className=""
+          id="downshift-3-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            Nora Roberts
+             - 
+            7
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

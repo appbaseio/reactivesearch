@@ -1,0 +1,6004 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display result stats when showResultStats is set 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    >
+      <p
+        className=" css-1kfwsuu-resultStats"
+      >
+        9418
+         results found in 
+        10
+        ms
+      </p>
+    </div>
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should hide result stats when showResultStats is set 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    />
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render custom result stats message 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    >
+      <span>
+        <h3
+          style={
+            Object {
+              "color": "green",
+            }
+          }
+        >
+          9418
+           found in 
+          10
+          .
+        </h3>
+         
+        <h4>
+          Page 
+          1
+          /
+          3140
+        </h4>
+      </span>
+    </div>
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render item as defined in renderItem 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    />
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render items in a card layout 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    />
+    <div
+      className="css-12v9vzr-container"
+    >
+      <a
+        className="css-y5rags-Card ezq05fq1"
+        href={undefined}
+        id={undefined}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          className="css-197a8cc-Image ezq05fq0"
+          style={
+            Object {
+              "backgroundImage": "url(https://images.gr-assets.com/books/1455618673l/15997.jpg)",
+            }
+          }
+        />
+        <h2
+          className="css-1dd55xt-Title e1u1u4gy0"
+        >
+          <div
+            className="book-title-card text-center"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Paradise Lost",
+              }
+            }
+          />
+        </h2>
+        <article>
+          <div
+            className="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  className="authors-list"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                className="ratings-list flex align-center justify-center"
+              >
+                <span
+                  className="stars"
+                >
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                </span>
+                <span
+                  className="avg-rating"
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span
+              className="pub-year"
+            >
+              Pub 
+              1667
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        className="css-y5rags-Card ezq05fq1"
+        href={undefined}
+        id={undefined}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          className="css-197a8cc-Image ezq05fq0"
+          style={
+            Object {
+              "backgroundImage": "url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png)",
+            }
+          }
+        />
+        <h2
+          className="css-1dd55xt-Title e1u1u4gy0"
+        >
+          <div
+            className="book-title-card text-center"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Antigone",
+              }
+            }
+          />
+        </h2>
+        <article>
+          <div
+            className="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  className="authors-list"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                className="ratings-list flex align-center justify-center"
+              >
+                <span
+                  className="stars"
+                >
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                </span>
+                <span
+                  className="avg-rating"
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span
+              className="pub-year"
+            >
+              Pub 
+              1944
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        className="css-y5rags-Card ezq05fq1"
+        href={undefined}
+        id={undefined}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          className="css-197a8cc-Image ezq05fq0"
+          style={
+            Object {
+              "backgroundImage": "url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png)",
+            }
+          }
+        />
+        <h2
+          className="css-1dd55xt-Title e1u1u4gy0"
+        >
+          <div
+            className="book-title-card text-center"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion",
+              }
+            }
+          />
+        </h2>
+        <article>
+          <div
+            className="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  className="authors-list"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                className="ratings-list flex align-center justify-center"
+              >
+                <span
+                  className="stars"
+                >
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                </span>
+                <span
+                  className="avg-rating"
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span
+              className="pub-year"
+            >
+              Pub 
+              2005
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        className="css-y5rags-Card ezq05fq1"
+        href={undefined}
+        id={undefined}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          className="css-197a8cc-Image ezq05fq0"
+          style={
+            Object {
+              "backgroundImage": "url(https://images.gr-assets.com/books/1373059909l/18079719.jpg)",
+            }
+          }
+        />
+        <h2
+          className="css-1dd55xt-Title e1u1u4gy0"
+        >
+          <div
+            className="book-title-card text-center"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Grasshopper Jungle",
+              }
+            }
+          />
+        </h2>
+        <article>
+          <div
+            className="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  className="authors-list"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                className="ratings-list flex align-center justify-center"
+              >
+                <span
+                  className="stars"
+                >
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                </span>
+                <span
+                  className="avg-rating"
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span
+              className="pub-year"
+            >
+              Pub 
+              2014
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        className="css-y5rags-Card ezq05fq1"
+        href={undefined}
+        id={undefined}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          className="css-197a8cc-Image ezq05fq0"
+          style={
+            Object {
+              "backgroundImage": "url(https://images.gr-assets.com/books/1367533032l/72855.jpg)",
+            }
+          }
+        />
+        <h2
+          className="css-1dd55xt-Title e1u1u4gy0"
+        >
+          <div
+            className="book-title-card text-center"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Lake in the Clouds",
+              }
+            }
+          />
+        </h2>
+        <article>
+          <div
+            className="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  className="authors-list"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                className="ratings-list flex align-center justify-center"
+              >
+                <span
+                  className="stars"
+                >
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                  <i
+                    className="fas fa-star"
+                  />
+                </span>
+                <span
+                  className="avg-rating"
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span
+              className="pub-year"
+            >
+              Pub 
+              2002
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render items in a list layout 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    />
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render no results message 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    />
+    <div
+      className={null}
+    >
+      <p>
+        No Results Found!
+      </p>
+    </div>
+    <div
+      className=" "
+    />
+  </div>
+</div>
+`;
+
+exports[`should render pagination at both 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    >
+      <p
+        className=" css-1kfwsuu-resultStats"
+      >
+        9418
+         results found in 
+        0
+        ms
+      </p>
+    </div>
+    <div
+      className=" css-x2306x-pagination"
+    >
+      <a
+        className="css-6z8jow-Button e10k3y5u0"
+        disabled={true}
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="-1"
+      >
+        Prev
+      </a>
+      <a
+        alt="Page 1"
+        className=" active css-qz60te-Button e10k3y5u0"
+        href="?MockSearchResult=1"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        1
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        2
+      </a>
+      <a
+        alt="Page 3"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=3"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        3
+      </a>
+      <a
+        alt="Page 4"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=4"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        4
+      </a>
+      <a
+        alt="Page 5"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=5"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        5
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        disabled={false}
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        rel="next"
+        tabIndex="0"
+      >
+        Next
+      </a>
+    </div>
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className=" css-x2306x-pagination"
+    >
+      <a
+        className="css-6z8jow-Button e10k3y5u0"
+        disabled={true}
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="-1"
+      >
+        Prev
+      </a>
+      <a
+        alt="Page 1"
+        className=" active css-qz60te-Button e10k3y5u0"
+        href="?MockSearchResult=1"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        1
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        2
+      </a>
+      <a
+        alt="Page 3"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=3"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        3
+      </a>
+      <a
+        alt="Page 4"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=4"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        4
+      </a>
+      <a
+        alt="Page 5"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=5"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        5
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        disabled={false}
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        rel="next"
+        tabIndex="0"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render pagination at bottom 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    >
+      <p
+        className=" css-1kfwsuu-resultStats"
+      >
+        9418
+         results found in 
+        0
+        ms
+      </p>
+    </div>
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className=" css-x2306x-pagination"
+    >
+      <a
+        className="css-6z8jow-Button e10k3y5u0"
+        disabled={true}
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="-1"
+      >
+        Prev
+      </a>
+      <a
+        alt="Page 1"
+        className=" active css-qz60te-Button e10k3y5u0"
+        href="?MockSearchResult=1"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        1
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        2
+      </a>
+      <a
+        alt="Page 3"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=3"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        3
+      </a>
+      <a
+        alt="Page 4"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=4"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        4
+      </a>
+      <a
+        alt="Page 5"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=5"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        5
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        disabled={false}
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        rel="next"
+        tabIndex="0"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render pagination at top 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    >
+      <p
+        className=" css-1kfwsuu-resultStats"
+      >
+        9418
+         results found in 
+        0
+        ms
+      </p>
+    </div>
+    <div
+      className=" css-x2306x-pagination"
+    >
+      <a
+        className="css-6z8jow-Button e10k3y5u0"
+        disabled={true}
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="-1"
+      >
+        Prev
+      </a>
+      <a
+        alt="Page 1"
+        className=" active css-qz60te-Button e10k3y5u0"
+        href="?MockSearchResult=1"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        1
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        2
+      </a>
+      <a
+        alt="Page 3"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=3"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        3
+      </a>
+      <a
+        alt="Page 4"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=4"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        4
+      </a>
+      <a
+        alt="Page 5"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=5"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        5
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        disabled={false}
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        rel="next"
+        tabIndex="0"
+      >
+        Next
+      </a>
+    </div>
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render pagination when pagination is set to true 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="result-list-container"
+    style={Object {}}
+  >
+    <div
+      className=" css-cj194d-Flex-leftLabel e53ab4s0"
+    >
+      <p
+        className=" css-1kfwsuu-resultStats"
+      >
+        9418
+         results found in 
+        0
+        ms
+      </p>
+    </div>
+    <div
+      className=" "
+    >
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Paradise Lost
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Antigone
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.8
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.48
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  3.66
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style={
+          Object {
+            "background": "white",
+            "boxShadow": "0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%)",
+            "display": "flex",
+            "flexDirection": "column",
+            "margin": "5px",
+            "padding": "1rem",
+            "width": "250px",
+          }
+        }
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style={
+            Object {
+              "height": "220px",
+              "marginBottom": ".5rem",
+              "objectFit": "cover",
+              "width": "100%",
+            }
+          }
+        />
+        <div
+          style={Object {}}
+        >
+          <h3
+            className="book-header"
+            style={
+              Object {
+                "margin": "0",
+              }
+            }
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            className="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style={
+                    Object {
+                      "color": "#9d9d9d",
+                    }
+                  }
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style={
+                  Object {
+                    "padding": "10px 0",
+                  }
+                }
+              >
+                <span
+                  className="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style={
+                    Object {
+                      "color": "#6b6b6b",
+                      "marginLeft": "5px",
+                    }
+                  }
+                >
+                  (
+                  4.31
+                   avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 
+              2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className=" css-x2306x-pagination"
+    >
+      <a
+        className="css-6z8jow-Button e10k3y5u0"
+        disabled={true}
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="-1"
+      >
+        Prev
+      </a>
+      <a
+        alt="Page 1"
+        className=" active css-qz60te-Button e10k3y5u0"
+        href="?MockSearchResult=1"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        1
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        2
+      </a>
+      <a
+        alt="Page 3"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=3"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        3
+      </a>
+      <a
+        alt="Page 4"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=4"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        4
+      </a>
+      <a
+        alt="Page 5"
+        className="css-iioxla-Button e10k3y5u0"
+        href="?MockSearchResult=5"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+      >
+        5
+      </a>
+      <a
+        alt="Page 2"
+        className="css-iioxla-Button e10k3y5u0"
+        disabled={false}
+        href="?MockSearchResult=2"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        rel="next"
+        tabIndex="0"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
+`;
