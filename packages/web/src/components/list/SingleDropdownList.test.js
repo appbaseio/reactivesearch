@@ -112,7 +112,7 @@ it('should use renderItem to render the list item', () => {
 					renderNoResults={() => 'No authors found'}
 					defaultValue="J. K. Rowling"
 					renderItem={(key, docCount, isChecked) =>
-						isChecked ? (
+						(isChecked ? (
 							<div className="checked">
 								{key} - {docCount}
 							</div>
@@ -120,7 +120,7 @@ it('should use renderItem to render the list item', () => {
 							<div>
 								{key} - {docCount}
 							</div>
-						)
+						))
 					}
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
@@ -143,7 +143,9 @@ it('should use render prop to render the list item', () => {
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
-					render={({ loading, error, data, handleChange }) => {
+					render={({
+						loading, error, data, handleChange,
+					}) => {
 						if (loading) {
 							return <div>Fetching Results.</div>;
 						}
@@ -156,7 +158,7 @@ it('should use render prop to render the list item', () => {
 						}
 						return (
 							<div>
-								{data.map((item) => (
+								{data.map(item => (
 									/* eslint-disable jsx-a11y/click-events-have-key-events */
 									<span
 										role="menuitem"
