@@ -162,7 +162,7 @@ const CustomPopularIcon = () => (
 it('should render SearchBox', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -178,7 +178,7 @@ it('should render SearchBox', () => {
 it('should render SearchBox with title', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -195,7 +195,7 @@ it('should render SearchBox with title', () => {
 it('should render search icon on the right', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -212,7 +212,7 @@ it('should render search icon on the right', () => {
 it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props are set to (false/ true)', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -231,7 +231,7 @@ it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props a
 it('should render custom (search/ clear icon/ recent search icon/ popular search icon) when (icon/ clearIcon/ recentSearchesIcon/ popularSearchesIcon )props are set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -267,7 +267,7 @@ it('should render custom (search/ clear icon/ recent search icon/ popular search
 it('should show voice search when showVoiceSearch prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -284,7 +284,7 @@ it('should show voice search when showVoiceSearch prop is set', () => {
 it('should render custom dropdown UI when render prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -353,7 +353,7 @@ it('should render custom dropdown UI when render prop is set', () => {
 it('should render with a default value when defaultValue prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -370,7 +370,7 @@ it('should render with a default value when defaultValue prop is set', () => {
 it('should render default suggestions when defaultSuggestions prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -391,7 +391,7 @@ it('should render default suggestions when defaultSuggestions prop is set', () =
 it('should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore/ addonAfter) prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
@@ -408,7 +408,7 @@ it('should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore
 it('should not render expanded dropdown when expandSuggestionsContainer prop is set to false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
 					mode="test"
 					componentId="MockSearchBox"
