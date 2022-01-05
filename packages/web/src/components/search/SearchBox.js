@@ -84,7 +84,7 @@ const SearchBox = (props) => {
 
 	const internalComponent = getInternalComponentID(componentId);
 	const [currentValue, setCurrentValue] = useState('');
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
 	const stats = () => getResultStats(props);
 
@@ -1148,6 +1148,7 @@ SearchBox.propTypes = {
 	customStopwords: types.stringArray,
 	onData: types.func,
 	renderItem: types.func,
+	isOpen: types.bool,
 };
 
 SearchBox.defaultProps = {
@@ -1178,6 +1179,7 @@ SearchBox.defaultProps = {
 	addonAfter: undefined,
 	expandSuggestionsContainer: true,
 	suggestions: [],
+	isOpen: false,
 };
 
 const mapStateToProps = (state, props) => ({
