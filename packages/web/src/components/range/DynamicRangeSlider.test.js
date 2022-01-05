@@ -454,7 +454,7 @@ it('should render histogram when showHistogram is set to true', () => {
 	expect(elem).toMatchSnapshot();
 });
 
-it('should not render histogram when showHistogram is set to true', () => {
+it('should not render histogram when showHistogram is set to false', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
