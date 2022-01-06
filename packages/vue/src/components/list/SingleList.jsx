@@ -27,7 +27,7 @@ const SingleList = {
 	name: 'SingleList',
 	props: {
 		beforeValueChange: types.func,
-		className: types.string.def(''),
+		className: VueTypes.string.def(''),
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,
@@ -47,7 +47,7 @@ const SingleList = {
 		showFilter: VueTypes.bool.def(true),
 		showRadio: VueTypes.bool.def(true),
 		showSearch: VueTypes.bool.def(true),
-		size: VueTypes.number.def(100),
+		size: VueTypes.number,
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
