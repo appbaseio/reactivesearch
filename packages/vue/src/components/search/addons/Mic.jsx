@@ -18,8 +18,8 @@ const Mic = {
 	name: 'Mic',
 	props: {
 		children: types.title,
-		lang: types.string.def('en-US'),
-		iconPosition: types.string.def('left'),
+		lang: VueTypes.string.def('en-US'),
+		iconPosition: VueTypes.string.def('left'),
 		handleResult: types.func,
 		onNoMatch: types.func,
 		onError: types.func,

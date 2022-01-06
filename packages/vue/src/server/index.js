@@ -3,6 +3,8 @@ import Appbase from 'appbase-js';
 import valueReducer from '@appbaseio/reactivecore/lib/reducers/valueReducer';
 import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
+import compositeAggsReducer  from '@appbaseio/reactivecore/lib/reducers/compositeAggsReducer';
+import { UPDATE_COMPOSITE_AGGS } from '@appbaseio/reactivecore/lib/constants';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
@@ -38,19 +40,19 @@ function getValue(state, id, defaultValue) {
 			const parsedValue = JSON.parse(state[id]);
 			return {
 				value: parsedValue,
-				reference: 'URL'
+				reference: 'URL',
 			};
 		} catch (error) {
 			// using react-dom-server for ssr
 			return {
 				value: state[id],
-				reference: 'URL'
+				reference: 'URL',
 			};
 		}
 	}
 	return {
 		value: defaultValue,
-		reference: 'DEFAULT'
+		reference: 'DEFAULT',
 	};
 }
 
@@ -123,6 +125,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 		let orderOfQueries = [];
 		let hits = {};
 		let aggregations = {};
+		let compositeAggregations = {};
 		let state = {};
 		const customQueries = {};
 		const defaultQueries = {};
@@ -147,7 +150,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component.value || component.defaultValue,
 			);
 
-
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
 			if (componentsWithoutFilters.includes(componentType)) {
@@ -166,16 +168,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					value,
-					compProps,
-				);
+				customQueries[component.componentId] = component.customQuery(value, compProps);
 			}
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					value,
-					compProps,
-				);
+				defaultQueries[component.componentId] = component.defaultQuery(value, compProps);
 			}
 
 			// [2] set query options - main component query (valid for result components)
@@ -282,7 +278,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 			componentProps[component.componentId] = compProps;
 		});
 
-
 		state = {
 			components,
 			dependencyTree,
@@ -348,8 +343,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 						};
 					}
 				} else {
-					const preference = config && config.analyticsConfig && config.analyticsConfig.userId
-						? `${config.analyticsConfig.userId}_${component}` : component;
+					const preference
+						= config && config.analyticsConfig && config.analyticsConfig.userId
+							? `${config.analyticsConfig.userId}_${component}`
+							: component;
 					finalQuery = [
 						...finalQuery,
 						{
@@ -381,6 +378,11 @@ export default function initReactivesearch(componentCollection, searchState, set
 										...aggregations,
 										[component]: response.aggregations,
 									};
+									compositeAggregations = compositeAggsReducer(compositeAggregations, {
+										type: UPDATE_COMPOSITE_AGGS,
+										aggregations: response.aggregations,
+										append: false
+									})
 								}
 								hits = {
 									...hits,
@@ -413,6 +415,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const promotedResults = {};
 			const rawData = {};
 			const customData = {};
+			const settingsResponse = {};
+			const timestamp = {};
 			const allPromises = orderOfQueries.map(
 				(component) =>
 					new Promise((responseResolve, responseReject) => {
@@ -433,12 +437,18 @@ export default function initReactivesearch(componentCollection, searchState, set
 										customData[component] = response.customData;
 									}
 
+									// Update settings
+									if (response.settings) {
+										settingsResponse[component] = response.settings;
+									}
+
 									if (response.aggregations) {
 										aggregations = {
 											...aggregations,
 											[component]: response.aggregations,
 										};
 									}
+									timestamp[component] = res._timestamp;
 									hits = {
 										...hits,
 										[component]: {
@@ -461,8 +471,11 @@ export default function initReactivesearch(componentCollection, searchState, set
 				state = {
 					...state,
 					hits,
+					timestamp,
 					aggregations,
+					compositeAggregations,
 					promotedResults,
+					settings: settingsResponse,
 					customData,
 					rawData,
 				};
