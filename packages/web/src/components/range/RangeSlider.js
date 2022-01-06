@@ -245,20 +245,23 @@ class RangeSlider extends Component {
 
 	getValidInterval = (props) => {
 		const [start, end] = getNumericRangeArray(props.range, props.queryFormat);
-
 		if (isValidDateRangeQueryFormat(props.queryFormat)) {
+			const calendarInterval
+				= props.calendarInterval
+				|| getCalendarIntervalErrorMessage(end - start)
+					.calculatedCalendarInterval;
 			const numberOfIntervals = Math.ceil(
-				(end - start) / queryFormatMillisecondsMap[props.calendarInterval],
+				(end - start) / queryFormatMillisecondsMap[calendarInterval],
 			);
 			if (numberOfIntervals > 100) {
 				console.error(
 					`${props.componentId}: ${getCalendarIntervalErrorMessage(
 						end - start,
-						props.calendarInterval,
-					)}`,
+						calendarInterval,
+					).errorMessage}`,
 				);
 			}
-			return queryFormatMillisecondsMap[props.calendarInterval];
+			return queryFormatMillisecondsMap[calendarInterval];
 		}
 
 		const min = Math.ceil((end - start) / 100) || 1;

@@ -337,18 +337,21 @@ class DynamicRangeSlider extends Component {
 
 	getValidInterval = (props, range) => {
 		if (isValidDateRangeQueryFormat(props.queryFormat)) {
+			const calendarInterval
+				= props.calendarInterval
+				|| getCalendarIntervalErrorMessage(range.end - range.start).calculatedCalendarInterval;
 			const numberOfIntervals = Math.ceil(
-				(range.end - range.start) / queryFormatMillisecondsMap[props.calendarInterval],
+				(range.end - range.start) / queryFormatMillisecondsMap[calendarInterval],
 			);
 			if (numberOfIntervals > 100) {
 				console.error(
 					`${props.componentId}: ${getCalendarIntervalErrorMessage(
 						range.end - range.start,
-						props.calendarInterval,
-					)}`,
+						calendarInterval,
+					).errorMessage}`,
 				);
 			}
-			return queryFormatMillisecondsMap[props.calendarInterval];
+			return queryFormatMillisecondsMap[calendarInterval];
 		}
 
 		const min = Math.ceil((range.end - range.start) / 100) || 1;

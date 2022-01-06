@@ -313,7 +313,7 @@ export const queryFormatMillisecondsMap = {
 // this function checks for subsequent calendarIntervals that would
 // yield intervals well within a max cap of 100
 // since displaying more than 100 bars on histogram isn't diserable
-export const getCalendarIntervalErrorMessage = (totalRange, calendarInterval) => {
+export const getCalendarIntervalErrorMessage = (totalRange, calendarInterval = 'minute') => {
 	const queryFormatMillisecondsMapKeys = Object.keys(queryFormatMillisecondsMap);
 	const indexOfCurrentCalendarInterval = queryFormatMillisecondsMapKeys.indexOf(calendarInterval);
 	if (indexOfCurrentCalendarInterval === -1) {
@@ -330,9 +330,13 @@ export const getCalendarIntervalErrorMessage = (totalRange, calendarInterval) =>
 		index += 1
 	) {
 		if (totalRange / Object.values(queryFormatMillisecondsMap)[index] <= 100) {
-			return `Please pass calendarInterval prop with value greater than or equal to a \`${queryFormatMillisecondsMapKeys[index]}\` for a meaningful resolution of histogram.`;
+			const calendarIntervalKey = queryFormatMillisecondsMapKeys[index];
+			return {
+				errorMessage: `Please pass calendarInterval prop with value greater than or equal to a \`${calendarIntervalKey}\` for a meaningful resolution of histogram.`,
+				calculatedCalendarInterval: calendarIntervalKey,
+			};
 		}
 	}
 
-	return 'Try using a shorter range of values.';
+	return { errorMessage: 'Try using a shorter range of values.', calculatedCalendarInterval: 'year' }; // we return the highest possible interval to shorten then interval value
 };
