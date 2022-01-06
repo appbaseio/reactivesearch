@@ -1,22 +1,167 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )props are set to (false/ true) 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-right: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-13 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -25,7 +170,7 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1ja162e-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -41,10 +186,10 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-13 emotion-14"
                 onClick={[Function]}
               >
                 <svg
@@ -70,10 +215,10 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
               </div>
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-15 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-13 emotion-14"
                 onClick={[Function]}
               />
             </div>
@@ -86,29 +231,295 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
 `;
 
 exports[`should not render expanded dropdown when expandSuggestionsContainer prop is set to false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: rgba(0,0,0,0.85);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 11px;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.emotion-7:first-of-type {
+  border-right: none;
+}
+
+.emotion-7:last-of-type {
+  border-left: none;
+}
+
+.emotion-9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-11 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-11:focus {
+  background-color: #fff;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-19 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-19.small {
+  top: 30px;
+}
+
+.emotion-19 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-19 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-20 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-20 .highlight {
+  font-weight: 600;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+}
+
+.emotion-21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-21 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 20px;
+}
+
+.emotion-21:hover svg {
+  fill: #1c1a1a;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="input-addon css-spn60n-InputAddon e17q0a5m0"
+          className="input-addon emotion-7 emotion-8"
         >
           <h3>
              Before
           </h3>
         </div>
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-9 emotion-10"
         >
           <input
             aria-activedescendant={null}
@@ -117,7 +528,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-11 emotion-12"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -133,15 +544,15 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-14"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-15 emotion-14"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -168,7 +579,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
             </div>
           </div>
           <ul
-            className=" css-avkrty"
+            className=" emotion-19"
           >
             <li
               id="MockSearchBox-downshift-item-0"
@@ -193,7 +604,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
               >
                 <svg
                   alt="Recent Search"
-                  className={null}
                   height="20"
                   style={
                     Object {
@@ -217,7 +627,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 className="trim"
               >
                 <div
-                  className="css-12fugvv-highlightedStyling"
+                  className="emotion-20"
                   dangerouslySetInnerHTML={
                     Object {
                       "__html": "harry potter",
@@ -226,7 +636,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 />
               </div>
               <button
-                className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+                className="emotion-21 emotion-22"
                 onClick={[Function]}
               >
                 <svg
@@ -261,7 +671,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
               >
                 <svg
                   alt="Recent Search"
-                  className={null}
                   height="20"
                   style={
                     Object {
@@ -285,7 +694,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 className="trim"
               >
                 <div
-                  className="css-12fugvv-highlightedStyling"
+                  className="emotion-20"
                   dangerouslySetInnerHTML={
                     Object {
                       "__html": "complete night harry potter film wizardry boxed set",
@@ -294,7 +703,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 />
               </div>
               <button
-                className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+                className="emotion-21 emotion-22"
                 onClick={[Function]}
               >
                 <svg
@@ -329,7 +738,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
               >
                 <svg
                   alt="Popular Search"
-                  className={null}
                   height="20"
                   style={
                     Object {
@@ -353,7 +761,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 className="trim"
               >
                 <div
-                  className="css-12fugvv-highlightedStyling"
+                  className="emotion-20"
                   dangerouslySetInnerHTML={
                     Object {
                       "__html": "harry potter <b class=\\"highlight\\">complete series</b>",
@@ -362,7 +770,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 />
               </div>
               <button
-                className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+                className="emotion-21 emotion-22"
                 onClick={[Function]}
               >
                 <svg
@@ -397,7 +805,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
               >
                 <svg
                   alt="promoted search"
-                  className={null}
                   height="20"
                   style={
                     Object {
@@ -417,7 +824,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 className="trim"
               >
                 <div
-                  className="css-12fugvv-highlightedStyling"
+                  className="emotion-20"
                   dangerouslySetInnerHTML={
                     Object {
                       "__html": "night harry potter film wizardry boxed set",
@@ -426,7 +833,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 />
               </div>
               <button
-                className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+                className="emotion-21 emotion-22"
                 onClick={[Function]}
               >
                 <svg
@@ -487,7 +894,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 className="trim"
               >
                 <div
-                  className="css-12fugvv-highlightedStyling"
+                  className="emotion-20"
                   dangerouslySetInnerHTML={
                     Object {
                       "__html": "harry potter <b class=\\"highlight\\">film wizardry</b>",
@@ -496,7 +903,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 />
               </div>
               <button
-                className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+                className="emotion-21 emotion-22"
                 onClick={[Function]}
               >
                 <svg
@@ -557,7 +964,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 className="trim"
               >
                 <div
-                  className="css-12fugvv-highlightedStyling"
+                  className="emotion-20"
                   dangerouslySetInnerHTML={
                     Object {
                       "__html": "harry potter <b class=\\"highlight\\">boxed set</b>",
@@ -566,7 +973,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 />
               </div>
               <button
-                className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+                className="emotion-21 emotion-22"
                 onClick={[Function]}
               >
                 <svg
@@ -581,7 +988,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
           </ul>
         </div>
         <div
-          className="input-addon css-spn60n-InputAddon e17q0a5m0"
+          className="input-addon emotion-7 emotion-8"
         >
           <h3>
              After
@@ -594,29 +1001,209 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 `;
 
 exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore/ addonAfter) prop is set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  color: rgba(0,0,0,0.85);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 11px;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.emotion-7:first-of-type {
+  border-right: none;
+}
+
+.emotion-7:last-of-type {
+  border-left: none;
+}
+
+.emotion-9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-11 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-11:focus {
+  background-color: #fff;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="input-addon css-spn60n-InputAddon e17q0a5m0"
+          className="input-addon emotion-7 emotion-8"
         >
           <h3>
              Before
           </h3>
         </div>
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-9 emotion-10"
         >
           <input
             aria-activedescendant={null}
@@ -625,7 +1212,7 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-11 emotion-12"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -641,15 +1228,15 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-14"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-15 emotion-14"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -677,7 +1264,7 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
           </div>
         </div>
         <div
-          className="input-addon css-spn60n-InputAddon e17q0a5m0"
+          className="input-addon emotion-7 emotion-8"
         >
           <h3>
              After
@@ -690,22 +1277,167 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
 `;
 
 exports[`should render SearchBox 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -714,7 +1446,7 @@ exports[`should render SearchBox 1`] = `
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -730,15 +1462,15 @@ exports[`should render SearchBox 1`] = `
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-15 emotion-16"
                 onClick={[Function]}
               >
                 <svg
@@ -772,27 +1504,178 @@ exports[`should render SearchBox 1`] = `
 `;
 
 exports[`should render SearchBox with title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #424242;
+}
+
+.emotion-6 {
+  position: relative;
+}
+
+.emotion-6 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-11 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-11:focus {
+  background-color: #fff;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <h2
-      className="css-1dd55xt-Title e1u1u4gy0"
+      className="emotion-4 emotion-5"
     >
       Mock SearchBox
     </h2>
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-6"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-7 emotion-8"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-9 emotion-10"
         >
           <input
             aria-activedescendant={null}
@@ -801,7 +1684,7 @@ exports[`should render SearchBox with title 1`] = `
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-11 emotion-12"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -817,15 +1700,15 @@ exports[`should render SearchBox with title 1`] = `
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-14"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-15 emotion-14"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -859,22 +1742,254 @@ exports[`should render SearchBox with title 1`] = `
 `;
 
 exports[`should render custom (search/ clear icon/ recent search icon/ popular search icon) when (icon/ clearIcon/ recentSearchesIcon/ popularSearchesIcon )props are set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-13 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-19 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-19.small {
+  top: 30px;
+}
+
+.emotion-19 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-19 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-20 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-20 .highlight {
+  font-weight: 600;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+}
+
+.emotion-21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-21 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 20px;
+}
+
+.emotion-21:hover svg {
+  fill: #1c1a1a;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -883,7 +1998,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-tvunh4-Input-input-Input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -899,10 +2014,10 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-13 emotion-14"
                 onClick={[Function]}
               >
                 <span
@@ -914,10 +2029,10 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
               </div>
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-15 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-13 emotion-14"
                 onClick={[Function]}
               >
                 <span
@@ -932,7 +2047,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
         </div>
       </div>
       <ul
-        className=" css-avkrty"
+        className=" emotion-19"
       >
         <li
           id="MockSearchBox-downshift-item-0"
@@ -975,7 +2090,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-20"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter",
@@ -984,7 +2099,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-21 emotion-22"
             onClick={[Function]}
           >
             <svg
@@ -1037,7 +2152,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-20"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "complete night harry potter film wizardry boxed set",
@@ -1046,7 +2161,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-21 emotion-22"
             onClick={[Function]}
           >
             <svg
@@ -1099,7 +2214,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-20"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter <b class=\\"highlight\\">complete series</b>",
@@ -1108,7 +2223,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-21 emotion-22"
             onClick={[Function]}
           >
             <svg
@@ -1143,7 +2258,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
           >
             <svg
               alt="promoted search"
-              className={null}
               height="20"
               style={
                 Object {
@@ -1163,7 +2277,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-20"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "night harry potter film wizardry boxed set",
@@ -1172,7 +2286,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-21 emotion-22"
             onClick={[Function]}
           >
             <svg
@@ -1233,7 +2347,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-20"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter <b class=\\"highlight\\">film wizardry</b>",
@@ -1242,7 +2356,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-21 emotion-22"
             onClick={[Function]}
           >
             <svg
@@ -1303,7 +2417,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-20"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter <b class=\\"highlight\\">boxed set</b>",
@@ -1312,7 +2426,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-21 emotion-22"
             onClick={[Function]}
           >
             <svg
@@ -1331,22 +2445,167 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
 `;
 
 exports[`should render custom dropdown UI when render prop is set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -1355,7 +2614,7 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -1371,15 +2630,15 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-15 emotion-16"
                 onClick={[Function]}
               >
                 <svg
@@ -1500,22 +2759,253 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
 `;
 
 exports[`should render default suggestions when defaultSuggestions prop is set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-17.small {
+  top: 30px;
+}
+
+.emotion-17 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-17 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-17 li:hover,
+.emotion-17 li:focus {
+  background-color: #eee;
+}
+
+.emotion-18 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-18 .highlight {
+  font-weight: 600;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-19 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 20px;
+}
+
+.emotion-19:hover svg {
+  fill: #1c1a1a;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -1524,7 +3014,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -1540,15 +3030,15 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-15 emotion-16"
                 onClick={[Function]}
               >
                 <svg
@@ -1577,7 +3067,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
         </div>
       </div>
       <ul
-        className=" css-avkrty"
+        className=" emotion-17"
       >
         <li
           id="MockSearchBox-downshift-item-0"
@@ -1628,7 +3118,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-18"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "<mark class=\\"highlight\\"></mark>S<mark class=\\"highlight\\"></mark>h<mark class=\\"highlight\\"></mark>e<mark class=\\"highlight\\"></mark>r<mark class=\\"highlight\\"></mark>l<mark class=\\"highlight\\"></mark>o<mark class=\\"highlight\\"></mark>c<mark class=\\"highlight\\"></mark>k<mark class=\\"highlight\\"></mark> <mark class=\\"highlight\\"></mark>H<mark class=\\"highlight\\"></mark>o<mark class=\\"highlight\\"></mark>l<mark class=\\"highlight\\"></mark>m<mark class=\\"highlight\\"></mark>e<mark class=\\"highlight\\"></mark>s<mark class=\\"highlight\\"></mark>",
@@ -1637,7 +3127,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-19 emotion-20"
             onClick={[Function]}
           >
             <svg
@@ -1698,7 +3188,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
             className="trim"
           >
             <div
-              className="css-12fugvv-highlightedStyling"
+              className="emotion-18"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "<mark class=\\"highlight\\"></mark>T<mark class=\\"highlight\\"></mark>h<mark class=\\"highlight\\"></mark>e<mark class=\\"highlight\\"></mark> <mark class=\\"highlight\\"></mark>L<mark class=\\"highlight\\"></mark>o<mark class=\\"highlight\\"></mark>r<mark class=\\"highlight\\"></mark>d<mark class=\\"highlight\\"></mark> <mark class=\\"highlight\\"></mark>o<mark class=\\"highlight\\"></mark>f<mark class=\\"highlight\\"></mark> <mark class=\\"highlight\\"></mark>t<mark class=\\"highlight\\"></mark>h<mark class=\\"highlight\\"></mark>e<mark class=\\"highlight\\"></mark> <mark class=\\"highlight\\"></mark>R<mark class=\\"highlight\\"></mark>i<mark class=\\"highlight\\"></mark>n<mark class=\\"highlight\\"></mark>g<mark class=\\"highlight\\"></mark>s<mark class=\\"highlight\\"></mark>",
@@ -1707,7 +3197,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
             />
           </div>
           <button
-            className="css-1v5irkf-AutofillSvgIcon ei74nfu0"
+            className="emotion-19 emotion-20"
             onClick={[Function]}
           >
             <svg
@@ -1726,22 +3216,167 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
 `;
 
 exports[`should render search icon on the right 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-right: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-13 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -1750,7 +3385,7 @@ exports[`should render search icon on the right 1`] = `
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-vbr4rg-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -1766,11 +3401,11 @@ exports[`should render search icon on the right 1`] = `
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-13 emotion-14"
                 onClick={[Function]}
               >
                 <svg
@@ -1796,7 +3431,7 @@ exports[`should render search icon on the right 1`] = `
               </div>
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-15 emotion-12"
             />
           </div>
         </div>
@@ -1807,22 +3442,167 @@ exports[`should render search icon on the right 1`] = `
 `;
 
 exports[`should render with a default value when defaultValue prop is set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -1831,7 +3611,7 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -1847,13 +3627,13 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             />
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-15 emotion-16"
                 onClick={[Function]}
               >
                 <svg
@@ -1887,22 +3667,167 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
 `;
 
 exports[`should show voice search when showVoiceSearch prop is set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <div
-      className="css-3cr1qg-suggestionsContainer"
+      className="emotion-4"
     >
       <div
-        className="input-group css-115oy78-InputGroup er4s8x50"
+        className="input-group emotion-5 emotion-6"
       >
         <div
-          className="css-cfyl0p-InputWrapper egum9cz0"
+          className="emotion-7 emotion-8"
         >
           <input
             aria-activedescendant={null}
@@ -1911,7 +3836,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
             aria-label="MockSearchBox"
             autoComplete="off"
             autoFocus={undefined}
-            className=" css-1q50ph4-Input-input-Input enqjda90"
+            className=" emotion-9 emotion-10"
             id="MockSearchBox-downshift-input"
             onBlur={[Function]}
             onChange={[Function]}
@@ -1927,15 +3852,15 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
           />
           <div>
             <div
-              className="css-1lopc3h-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-11 emotion-12"
             >
               
             </div>
             <div
-              className="css-cvkjd4-IconGroup-IconGroup-IconGroup e11erhna0"
+              className="emotion-13 emotion-12"
             >
               <div
-                className="css-1k0hmue-IconWrapper ekh9j6r0"
+                className="emotion-15 emotion-16"
                 onClick={[Function]}
               >
                 <svg

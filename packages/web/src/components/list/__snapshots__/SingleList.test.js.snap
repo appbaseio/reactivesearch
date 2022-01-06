@@ -1,172 +1,86 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should not render search/count/checkbox when showSearch/showCount/showCheckbox are false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
-  <div
-    className="css-a9jdxq-Container efy4jxw0"
-    style={Object {}}
-  >
-    <ul
-      aria-label="authors-items"
-      className="css-1w1pnf0-UL e1y92esg2"
-      role="radiogroup"
-    >
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-J. K. Rowling"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="J. K. Rowling"
-        />
-        <label
-          className={null}
-          htmlFor="authors-J. K. Rowling"
-        >
-          <span>
-            <span>
-              J. K. Rowling
-            </span>
-          </span>
-        </label>
-      </li>
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-Nora Roberts"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="Nora Roberts"
-        />
-        <label
-          className={null}
-          htmlFor="authors-Nora Roberts"
-        >
-          <span>
-            <span>
-              Nora Roberts
-            </span>
-          </span>
-        </label>
-      </li>
-    </ul>
-  </div>
+  No authors found
 </div>
 `;
 
 exports[`should render list of items 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
-  <div
-    className="css-a9jdxq-Container efy4jxw0"
-    style={Object {}}
-  >
-    <input
-      aria-label="authors-search"
-      className="css-1f0ma1s-Input-input enqjda90"
-      onChange={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "margin": "0 0 8px",
-        }
-      }
-      value=""
-    />
-    <ul
-      aria-label="authors-items"
-      className="css-1w1pnf0-UL e1y92esg2"
-      role="radiogroup"
-    >
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-J. K. Rowling"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="J. K. Rowling"
-        />
-        <label
-          className={null}
-          htmlFor="authors-J. K. Rowling"
-        >
-          <span>
-            <span>
-              J. K. Rowling
-            </span>
-            <span
-              className={null}
-            >
-              10
-            </span>
-          </span>
-        </label>
-      </li>
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-Nora Roberts"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="Nora Roberts"
-        />
-        <label
-          className={null}
-          htmlFor="authors-Nora Roberts"
-        >
-          <span>
-            <span>
-              Nora Roberts
-            </span>
-            <span
-              className={null}
-            >
-              7
-            </span>
-          </span>
-        </label>
-      </li>
-    </ul>
-  </div>
+  No authors found
 </div>
 `;
 
 exports[`should render no results message 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   No authors found
@@ -174,203 +88,109 @@ exports[`should render no results message 1`] = `
 `;
 
 exports[`should render search/count/checkbox when showSearch/showCount/showCheckbox are true 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
-  <div
-    className="css-a9jdxq-Container efy4jxw0"
-    style={Object {}}
-  >
-    <input
-      aria-label="authors-search"
-      className="css-1f0ma1s-Input-input enqjda90"
-      onChange={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "margin": "0 0 8px",
-        }
-      }
-      value=""
-    />
-    <ul
-      aria-label="authors-items"
-      className="css-1w1pnf0-UL e1y92esg2"
-      role="radiogroup"
-    >
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-J. K. Rowling"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="J. K. Rowling"
-        />
-        <label
-          className={null}
-          htmlFor="authors-J. K. Rowling"
-        >
-          <span>
-            <span>
-              J. K. Rowling
-            </span>
-            <span
-              className={null}
-            >
-              10
-            </span>
-          </span>
-        </label>
-      </li>
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-Nora Roberts"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="Nora Roberts"
-        />
-        <label
-          className={null}
-          htmlFor="authors-Nora Roberts"
-        >
-          <span>
-            <span>
-              Nora Roberts
-            </span>
-            <span
-              className={null}
-            >
-              7
-            </span>
-          </span>
-        </label>
-      </li>
-    </ul>
-  </div>
+  No authors found
 </div>
 `;
 
 exports[`should select default value 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
->
-  <div
-    className="css-a9jdxq-Container efy4jxw0"
-    style={Object {}}
-  >
-    <input
-      aria-label="authors-search"
-      className="css-1f0ma1s-Input-input enqjda90"
-      onChange={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "margin": "0 0 8px",
-        }
-      }
-      value=""
-    />
-    <ul
-      aria-label="authors-items"
-      className="css-1w1pnf0-UL e1y92esg2"
-      role="radiogroup"
-    >
-      <li
-        aria-checked={true}
-        className="active"
-        role="radio"
-      >
-        <input
-          checked={true}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-J. K. Rowling"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="-1"
-          type="radio"
-          value="J. K. Rowling"
-        />
-        <label
-          className={null}
-          htmlFor="authors-J. K. Rowling"
-        >
-          <span>
-            <span>
-              J. K. Rowling
-            </span>
-            <span
-              className={null}
-            >
-              10
-            </span>
-          </span>
-        </label>
-      </li>
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-Nora Roberts"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="Nora Roberts"
-        />
-        <label
-          className={null}
-          htmlFor="authors-Nora Roberts"
-        >
-          <span>
-            <span>
-              Nora Roberts
-            </span>
-            <span
-              className={null}
-            >
-              7
-            </span>
-          </span>
-        </label>
-      </li>
-    </ul>
-  </div>
-</div>
+/>
 `;
 
 exports[`should use render prop to render the list item 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-4:focus {
+  background-color: #fff;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
 >
   <div
-    className="css-a9jdxq-Container efy4jxw0"
+    className="emotion-2 emotion-3"
     style={Object {}}
   >
     <input
       aria-label="authors-search"
-      className="css-1f0ma1s-Input-input enqjda90"
+      className="emotion-4 emotion-5"
       onChange={[Function]}
       placeholder="Search"
       style={
@@ -380,101 +200,34 @@ exports[`should use render prop to render the list item 1`] = `
       }
       value=""
     />
-    <ul>
-      <li>
-        J. K. Rowling
-         
-        10
-      </li>
-      <li>
-        Nora Roberts
-         
-        7
-      </li>
-    </ul>
+    <ul />
   </div>
 </div>
 `;
 
 exports[`should use renderItem to render the list item 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
 <div
-  className="css-15g0dol-Base eay43c90"
+  className="emotion-0 emotion-1"
   style={Object {}}
->
-  <div
-    className="css-a9jdxq-Container efy4jxw0"
-    style={Object {}}
-  >
-    <input
-      aria-label="authors-search"
-      className="css-1f0ma1s-Input-input enqjda90"
-      onChange={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "margin": "0 0 8px",
-        }
-      }
-      value=""
-    />
-    <ul
-      aria-label="authors-items"
-      className="css-1w1pnf0-UL e1y92esg2"
-      role="radiogroup"
-    >
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-J. K. Rowling"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="J. K. Rowling"
-        />
-        <label
-          className={null}
-          htmlFor="authors-J. K. Rowling"
-        >
-          <div>
-            J. K. Rowling
-             - 
-            10
-          </div>
-        </label>
-      </li>
-      <li
-        aria-checked={false}
-        className=""
-        role="radio"
-      >
-        <input
-          checked={false}
-          className=" css-158dwx7-Radio-vh e1y92esg0"
-          id="authors-Nora Roberts"
-          onClick={[Function]}
-          readOnly={true}
-          tabIndex="0"
-          type="radio"
-          value="Nora Roberts"
-        />
-        <label
-          className={null}
-          htmlFor="authors-Nora Roberts"
-        >
-          <div>
-            Nora Roberts
-             - 
-            7
-          </div>
-        </label>
-      </li>
-    </ul>
-  </div>
-</div>
+/>
 `;
