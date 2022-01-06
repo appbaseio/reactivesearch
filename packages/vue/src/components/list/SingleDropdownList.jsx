@@ -189,7 +189,7 @@ const SingleDropdownList = {
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
 			if(renderNoResults && isFunction(renderNoResults)) {
 				return (<div>{renderNoResults()}</div>);
-			} else if (renderNoResults && !isFunction(renderNoResults)) {
+			} if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
 			}
 			return null;

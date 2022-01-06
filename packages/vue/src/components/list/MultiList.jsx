@@ -37,7 +37,7 @@ const MultiList = {
 		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
 		showCheckbox: VueTypes.bool.def(true),
 		beforeValueChange: types.func,
-		className: types.string.def(''),
+		className: VueTypes.string.def(''),
 		componentId: types.stringRequired,
 		customQuery: types.func,
 		dataField: types.stringRequired,

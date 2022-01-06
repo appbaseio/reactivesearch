@@ -111,7 +111,7 @@ const ReactiveList = {
 	},
 	props: {
 		currentPage: VueTypes.number.def(0),
-		includeFields: types.includeFields.def(['*']),
+		includeFields: types.includeFields,
 		// component props
 		className: types.string,
 		componentId: types.stringRequired,
@@ -120,7 +120,7 @@ const ReactiveList = {
 		aggregationSize: VueTypes.number,
 		defaultQuery: types.func,
 		defaultSortOption: types.string,
-		excludeFields: types.excludeFields.def([]),
+		excludeFields: types.excludeFields,
 		innerClass: types.style,
 		listClass: VueTypes.string.def(''),
 		loader: types.title,
@@ -132,7 +132,7 @@ const ReactiveList = {
 		pages: VueTypes.number.def(5),
 		pagination: VueTypes.bool.def(false),
 		infiniteScroll: VueTypes.bool.def(true),
-		paginationAt: types.paginationAt.def('bottom'),
+		paginationAt: VueTypes.oneOf(['top', 'bottom', 'both']).def('bottom'),
 		react: types.react,
 		scrollOnChange: VueTypes.bool.def(true),
 		showResultStats: VueTypes.bool.def(true),
@@ -803,8 +803,7 @@ const mapDispatchtoProps = {
 };
 // Only used for SSR
 ReactiveList.generateQueryOptions = (props) => {
-	// simulate default (includeFields and excludeFields) props to generate consistent query
-	const options = getQueryOptions({ includeFields: ['*'], excludeFields: [], ...props });
+	const options = getQueryOptions(props);
 	const {
 		size,
 		dataField,
