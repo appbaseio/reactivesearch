@@ -116,15 +116,10 @@ class RangeSlider extends Component {
 			});
 		});
 
-		checkSomePropChange(
-			this.props,
-			prevProps,
-			['dataField', 'nestedField'],
-			() => {
-				this.updateQueryOptions(this.props);
-				this.handleChange(this.state.currentValue, this.props);
-			},
-		);
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+			this.updateQueryOptions(this.props);
+			this.handleChange(this.state.currentValue, this.props);
+		});
 		if (
 			!isEqual(
 				getNumericRangeArray(this.props.value, this.props.queryFormat),
@@ -144,7 +139,11 @@ class RangeSlider extends Component {
 			// in order to make comparison meaningful
 			// since support of date-types might use date-object, string or numerics.
 			!isEqual(
-				this.state.currentValue.map(val => formatDateString(new XDate(val), this.state.dateFormat)),
+				this.state.currentValue
+					? this.state.currentValue.map(val =>
+						formatDateString(new XDate(val), this.state.dateFormat),
+					)
+					: null,
 				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
 			)
 			&& !isEqual(
@@ -154,8 +153,12 @@ class RangeSlider extends Component {
 		) {
 			const { value, onChange } = this.props;
 
+
 			if (value === undefined) {
-				const selectedValue = RangeSlider.parseValue(this.props.selectedValue, this.props);
+				const selectedValue = this.props.selectedValue
+					? RangeSlider.parseValue(this.props.selectedValue, this.props)
+					: null;
+
 				this.handleChange(selectedValue, this.props);
 			} else if (onChange) {
 				onChange(this.props.selectedValue || null);
@@ -248,17 +251,15 @@ class RangeSlider extends Component {
 		if (isValidDateRangeQueryFormat(props.queryFormat)) {
 			const calendarInterval
 				= props.calendarInterval
-				|| getCalendarIntervalErrorMessage(end - start)
-					.calculatedCalendarInterval;
+				|| getCalendarIntervalErrorMessage(end - start).calculatedCalendarInterval;
 			const numberOfIntervals = Math.ceil(
 				(end - start) / queryFormatMillisecondsMap[calendarInterval],
 			);
 			if (numberOfIntervals > 100) {
 				console.error(
-					`${props.componentId}: ${getCalendarIntervalErrorMessage(
-						end - start,
-						calendarInterval,
-					).errorMessage}`,
+					`${props.componentId}: ${
+						getCalendarIntervalErrorMessage(end - start, calendarInterval).errorMessage
+					}`,
 				);
 			}
 			return queryFormatMillisecondsMap[calendarInterval];
@@ -300,43 +301,46 @@ class RangeSlider extends Component {
 	};
 
 	handleChange = (currentValue, props = this.props, hasMounted = true) => {
-		const [start, end] = currentValue;
-		const [processedStart, processedEnd] = getNumericRangeArray(
-			{ start, end },
-			props.queryFormat,
-		);
+		let normalizedValueArray = null;
+		let processedStart;
+		let processedEnd;
+		if (currentValue) {
+			const [start, end] = currentValue;
+			processedStart = getNumericRangeArray({ start, end }, props.queryFormat)[0];
+			processedEnd = getNumericRangeArray({ start, end }, props.queryFormat)[1];
 
-		const normalizedValueArray = [
-			isValidDateRangeQueryFormat(props.queryFormat)
-				? formatDateString(processedStart, this.state.dateFormat)
-				: processedStart,
-			isValidDateRangeQueryFormat(props.queryFormat)
-				? formatDateString(processedEnd, this.state.dateFormat)
-				: processedEnd,
-		];
-
+			normalizedValueArray = [
+				isValidDateRangeQueryFormat(props.queryFormat)
+					? formatDateString(processedStart, this.state.dateFormat)
+					: processedStart,
+				isValidDateRangeQueryFormat(props.queryFormat)
+					? formatDateString(processedEnd, this.state.dateFormat)
+					: processedEnd,
+			];
+		}
 		const performUpdate = () => {
+			const { range } = props;
+			const [rangeStart, rangeEnd] = getNumericRangeArray(range, props.queryFormat);
 			const handleUpdates = () => {
-				this.updateQuery(normalizedValueArray, props);
+				if (!isEqual(currentValue, [rangeStart, rangeEnd])) {
+					this.updateQuery(normalizedValueArray, props);
+				}
 				if (props.onValueChange) {
-					props.onValueChange({
-						start: normalizedValueArray[0],
-						end: normalizedValueArray[1],
-					});
+					props.onValueChange(normalizedValueArray);
 				}
 			};
 
-			const { range } = props;
-			const [rangeStart, rangeEnd] = getNumericRangeArray(range, props.queryFormat);
 			if (
 				hasMounted
-				&& processedStart <= processedEnd
-				&& processedStart >= rangeStart
-				&& processedEnd <= rangeEnd
+				&& (currentValue
+					? processedStart <= processedEnd
+					&& processedStart >= rangeStart
+					&& processedEnd <= rangeEnd
+					: true)
 			) {
 				this.setState(
 					{
-						currentValue: [processedStart, processedEnd],
+						currentValue: currentValue ? [processedStart, processedEnd] : null,
 					},
 					handleUpdates,
 				);
@@ -346,10 +350,7 @@ class RangeSlider extends Component {
 		};
 		checkValueChange(
 			props.componentId,
-			{
-				start: normalizedValueArray[0],
-				end: normalizedValueArray[1],
-			},
+			normalizedValueArray,
 			props.beforeValueChange,
 			performUpdate,
 		);
@@ -359,7 +360,6 @@ class RangeSlider extends Component {
 		if (this.shouldUpdate(values)) {
 			if (!isEqual(values, this.state.currentValue)) {
 				const { value, onChange } = this.props;
-
 				if (value === undefined) {
 					this.handleChange(values);
 				} else if (onChange) {
@@ -373,7 +373,9 @@ class RangeSlider extends Component {
 					// we need to reset the slider position
 					// to the original 'value' prop
 					this.setState({
-						currentValue: this.state.currentValue,
+						currentValue:
+							this.state.currentValue
+							|| getNumericRangeArray(this.props.range, this.props.queryFormat),
 					});
 				}
 			}
@@ -396,20 +398,15 @@ class RangeSlider extends Component {
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
-		const {
-			showFilter,
-			range: { start, end },
-		} = props;
-		const [currentStart, currentEnd] = value;
-		// check if the slider is at its initial position
-		const isInitialValue = currentStart === start && currentEnd === end;
+		const { showFilter } = props;
+
 		props.setQueryOptions(props.componentId, customQueryOptions);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
 			value,
 			label: props.filterLabel,
-			showFilter: showFilter && !isInitialValue,
+			showFilter,
 			URLParams: props.URLParams,
 			componentType: componentTypes.rangeSlider,
 		});
@@ -478,7 +475,7 @@ class RangeSlider extends Component {
 					<Rheostat
 						min={startRangeValue}
 						max={endRangeValue}
-						values={this.state.currentValue}
+						values={this.state.currentValue || [startRangeValue, endRangeValue]}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
