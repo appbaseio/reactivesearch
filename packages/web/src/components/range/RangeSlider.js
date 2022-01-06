@@ -324,9 +324,9 @@ class RangeSlider extends Component {
 			const handleUpdates = () => {
 				if (!isEqual(currentValue, [rangeStart, rangeEnd])) {
 					this.updateQuery(normalizedValueArray, props);
-				}
-				if (props.onValueChange) {
-					props.onValueChange(normalizedValueArray);
+					if (props.onValueChange) {
+						props.onValueChange(normalizedValueArray);
+					}
 				}
 			};
 
