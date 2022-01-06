@@ -1,0 +1,387 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not render search/count/checkbox when showSearch/showCount/showCheckbox are false 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <ul
+      aria-label="authors-items"
+      className="css-1w1pnf0-UL e1y92esg2"
+      role="listbox"
+    >
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-12bsp2d-Checkbox-vh-hideInputControl e1y92esg1"
+          id="authors-J. K. Rowling"
+          name="authors-J. K. Rowling"
+          onChange={[Function]}
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          className={null}
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span>
+            <span>
+              J. K. Rowling
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-12bsp2d-Checkbox-vh-hideInputControl e1y92esg1"
+          id="authors-Nora Roberts"
+          name="authors-Nora Roberts"
+          onChange={[Function]}
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          className={null}
+          htmlFor="authors-Nora Roberts"
+        >
+          <span>
+            <span>
+              Nora Roberts
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render list of authors 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="css-1f0ma1s-Input-input enqjda90"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="css-1w1pnf0-UL e1y92esg2"
+      role="listbox"
+    >
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-t8nngi-Checkbox-vh e1y92esg1"
+          id="authors-J. K. Rowling"
+          name="authors-J. K. Rowling"
+          onChange={[Function]}
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          className={null}
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span>
+            <span>
+              J. K. Rowling
+            </span>
+            <span
+              className={null}
+            >
+              10
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-t8nngi-Checkbox-vh e1y92esg1"
+          id="authors-Nora Roberts"
+          name="authors-Nora Roberts"
+          onChange={[Function]}
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          className={null}
+          htmlFor="authors-Nora Roberts"
+        >
+          <span>
+            <span>
+              Nora Roberts
+            </span>
+            <span
+              className={null}
+            >
+              7
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render no results message 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  No authors found
+</div>
+`;
+
+exports[`should render search/count/checkbox when showSearch/showCount/showCheckbox are true 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="css-1f0ma1s-Input-input enqjda90"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="css-1w1pnf0-UL e1y92esg2"
+      role="listbox"
+    >
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-t8nngi-Checkbox-vh e1y92esg1"
+          id="authors-J. K. Rowling"
+          name="authors-J. K. Rowling"
+          onChange={[Function]}
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          className={null}
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span>
+            <span>
+              J. K. Rowling
+            </span>
+            <span
+              className={null}
+            >
+              10
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-t8nngi-Checkbox-vh e1y92esg1"
+          id="authors-Nora Roberts"
+          name="authors-Nora Roberts"
+          onChange={[Function]}
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          className={null}
+          htmlFor="authors-Nora Roberts"
+        >
+          <span>
+            <span>
+              Nora Roberts
+            </span>
+            <span
+              className={null}
+            >
+              7
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should use render prop to render the list item 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="css-1f0ma1s-Input-input enqjda90"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul>
+      <li>
+        J. K. Rowling
+         
+      </li>
+      <li>
+        Nora Roberts
+         
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should use renderItem to render the list item 1`] = `
+<div
+  className="css-15g0dol-Base eay43c90"
+  style={Object {}}
+>
+  <div
+    className="css-a9jdxq-Container efy4jxw0"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="css-1f0ma1s-Input-input enqjda90"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="css-1w1pnf0-UL e1y92esg2"
+      role="listbox"
+    >
+      <li
+        aria-checked={true}
+        aria-selected={true}
+        className="active"
+        role="option"
+      >
+        <input
+          checked={true}
+          className="css-t8nngi-Checkbox-vh e1y92esg1"
+          id="authors-J. K. Rowling"
+          name="authors-J. K. Rowling"
+          onChange={[Function]}
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          className={null}
+          htmlFor="authors-J. K. Rowling"
+        >
+          <div
+            className="checked"
+          >
+            J. K. Rowling
+             - 
+            10
+          </div>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        aria-selected={false}
+        className=""
+        role="option"
+      >
+        <input
+          checked={false}
+          className="css-t8nngi-Checkbox-vh e1y92esg1"
+          id="authors-Nora Roberts"
+          name="authors-Nora Roberts"
+          onChange={[Function]}
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          className={null}
+          htmlFor="authors-Nora Roberts"
+        >
+          <div>
+            Nora Roberts
+             - 
+            7
+          </div>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

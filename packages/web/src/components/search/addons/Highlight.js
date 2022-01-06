@@ -18,18 +18,23 @@ const highlightedStyling = css`
 
 const Highlight = (props) => {
 	const {
-		textToHighlight, searchWords, autoEscape, hasPredictiveSuggestion,
-	} = props;
-	const modSearchWords = searchWords.map(word => (autoEscape ? escapeRegExp(word) : word));
-	const stringToReplace = modSearchWords.join('|');
+		textToHighlight, searchWords, autoEscape, hasPredictiveSuggestion, categoryLabel,
+	}
+		= props;
+	const modSearchWords = searchWords
+		.map(word => (autoEscape ? escapeRegExp(word) : word))
+		.filter(word => word);
+	const stringToReplace = categoryLabel || modSearchWords.join('|');
 	return (
 		<div
 			css={highlightedStyling}
 			dangerouslySetInnerHTML={{
-				__html: hasPredictiveSuggestion ? textToHighlight : textToHighlight.replace(
-					new RegExp(stringToReplace, 'ig'),
-					matched => `<mark class="highlight">${matched}</mark>`,
-				),
+				__html: hasPredictiveSuggestion
+					? textToHighlight
+					: textToHighlight.replace(
+						new RegExp(stringToReplace, 'ig'),
+						matched => `<mark class="highlight">${matched}</mark>`,
+					),
 			}}
 		/>
 	);
@@ -40,6 +45,7 @@ Highlight.propTypes = {
 	textToHighlight: PropTypes.string,
 	autoEscape: PropTypes.bool,
 	hasPredictiveSuggestion: PropTypes.bool,
+	categoryLabel: PropTypes.string,
 };
 
 Highlight.defaultProps = {
