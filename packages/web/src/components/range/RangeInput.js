@@ -344,8 +344,8 @@ class RangeInput extends Component {
 		const startDate = XDate(start) || '';
 		const endDate = XDate(end) || '';
 		const endDay = start && end ? dateHovered : '';
-		const selectedDays = [startDate, { from: startDate, to: endDay }];
-		const modifiers = { start: startDate, end: endDay };
+		const selectedDays = { from: startDate, to: endDay };
+		const modifiers = { start: new Date(start), end: endDay };
 		return (
 			<DateContainer range>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
@@ -358,7 +358,6 @@ class RangeInput extends Component {
 						}}
 					>
 						<DayPickerInput
-							showOverlay
 							ref={this.getStartDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
 							value={formatDateString(startDate, DATE_FORMAT)}
