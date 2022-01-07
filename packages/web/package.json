@@ -22,7 +22,7 @@
 		"version-upgrade": "nps upgrade -c ../../package-scripts.js",
 		"prepublish": "yarn run build",
 		"postpublish": "yarn run version-upgrade",
-		"test": "jest --watchAll",
+		"test": "jest",
 		"typescript": "tsc -p tsconfig.json"
 	},
 	"jest": {
