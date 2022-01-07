@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should not render search/count/checkbox when showSearch/showCount/showCheckbox are false 1`] = `
+exports[`should not render search/ count when showSearch/ showCount are false 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
   font-size: 16px;
@@ -87,7 +87,7 @@ exports[`should render no results message 1`] = `
 </div>
 `;
 
-exports[`should render search/count/checkbox when showSearch/showCount/showCheckbox are true 1`] = `
+exports[`should render search/count when showSearch/showCount are true 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
   font-size: 16px;
@@ -165,19 +165,76 @@ exports[`should use render prop to render the list item 1`] = `
 }
 
 .emotion-4 {
-  width: 100%;
-  line-height: 1.5;
-  min-height: 42px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-  font-size: 0.9rem;
-  outline: none;
-  height: 100%;
+  position: relative;
 }
 
-.emotion-4:focus {
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 0;
+  outline: none;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
   background-color: #fff;
+  border: 1px solid #ccc;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.emotion-5>div {
+  width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.emotion-5:hover,
+.emotion-5:focus {
+  background-color: #fcfcfc;
+}
+
+.emotion-7::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  position: relative;
+  top: 0.35em;
+  left: 0;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 0.45em;
+  top: 0.55em;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
 }
 
 <div
@@ -188,19 +245,32 @@ exports[`should use render prop to render the list item 1`] = `
     className="emotion-2 emotion-3"
     style={Object {}}
   >
-    <input
-      aria-label="authors-search"
-      className="emotion-4 emotion-5"
-      onChange={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "margin": "0 0 8px",
-        }
-      }
-      value=""
-    />
-    <ul />
+    <div
+      className="emotion-4"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="emotion-5 emotion-6"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="emotion-7 emotion-8"
+          open={true}
+        />
+      </button>
+      <div />
+    </div>
   </div>
 </div>
 `;

@@ -1,122 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should not render search/count/checkbox when showSearch/showCount/showCheckbox are false 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  No authors found
-</div>
-`;
-
-exports[`should render list of items 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  No authors found
-</div>
-`;
-
-exports[`should render no results message 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  No authors found
-</div>
-`;
-
-exports[`should render search/count/checkbox when showSearch/showCount/showCheckbox are true 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  No authors found
-</div>
-`;
-
-exports[`should select default value 1`] = `
+exports[`should display tooltip 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
   font-size: 16px;
@@ -143,7 +27,7 @@ exports[`should select default value 1`] = `
 />
 `;
 
-exports[`should use render prop to render the list item 1`] = `
+exports[`should not render histogram when showHistogram is set to false 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
   font-size: 16px;
@@ -164,48 +48,13 @@ exports[`should use render prop to render the list item 1`] = `
   box-sizing: border-box;
 }
 
-.emotion-4 {
-  width: 100%;
-  line-height: 1.5;
-  min-height: 42px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-  font-size: 0.9rem;
-  outline: none;
-  height: 100%;
-}
-
-.emotion-4:focus {
-  background-color: #fff;
-}
-
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
->
-  <div
-    className="emotion-2 emotion-3"
-    style={Object {}}
-  >
-    <input
-      aria-label="authors-search"
-      className="emotion-4 emotion-5"
-      onChange={[Function]}
-      placeholder="Search"
-      style={
-        Object {
-          "margin": "0 0 8px",
-        }
-      }
-      value=""
-    />
-    <ul />
-  </div>
-</div>
+/>
 `;
 
-exports[`should use renderItem to render the list item 1`] = `
+exports[`should render histogram when showHistogram is set to true 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
   font-size: 16px;
@@ -229,7 +78,86 @@ exports[`should use renderItem to render the list item 1`] = `
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
->
-  No authors found
-</div>
+/>
+`;
+
+exports[`should render range labels 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+/>
+`;
+
+exports[`should render slider 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+/>
+`;
+
+exports[`should render title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+/>
 `;
