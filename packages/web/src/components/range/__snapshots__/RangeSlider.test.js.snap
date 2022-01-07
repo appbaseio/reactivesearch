@@ -1,0 +1,1514 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display tooltip 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-5 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={30000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      >
+        <span
+          className="slider-tooltip-visible"
+        >
+          30000
+        </span>
+      </button>
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={50000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      >
+        <span
+          className="slider-tooltip-visible"
+        >
+          50000
+        </span>
+      </button>
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+      >
+        30K
+      </div>
+      <div
+        className="emotion-7 emotion-6"
+      >
+        50K
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should not render histogram when showHistogram is set to false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-5 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={30000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={50000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+      >
+        30K
+      </div>
+      <div
+        className="emotion-7 emotion-6"
+      >
+        50K
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render histogram when showHistogram is set to true 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-5 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={30000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={50000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+      >
+        30K
+      </div>
+      <div
+        className="emotion-7 emotion-6"
+      >
+        50K
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render range labels 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-5 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={30000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={50000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+      >
+        30K
+      </div>
+      <div
+        className="emotion-7 emotion-6"
+      >
+        50K
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render slider 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={30000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={50000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <h2
+      className="emotion-4 emotion-5"
+    >
+      Mock RangeSlider
+    </h2>
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={30000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={30000}
+        aria-valuenow={50000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should select default value 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-5 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={48000}
+        aria-valuemin={30000}
+        aria-valuenow={32000}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "10%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={50000}
+        aria-valuemin={32000}
+        aria-valuenow={48000}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "90%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "10%",
+            "width": "80%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+      >
+        30K
+      </div>
+      <div
+        className="emotion-7 emotion-6"
+      >
+        50K
+      </div>
+    </div>
+  </div>
+</div>
+`;

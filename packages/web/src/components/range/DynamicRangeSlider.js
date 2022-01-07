@@ -11,6 +11,7 @@ import {
 	setComponentProps,
 	setCustomQuery,
 	updateComponentProps,
+	mockDataForTesting,
 } from '@appbaseio/reactivecore/lib/actions';
 
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -75,8 +76,16 @@ class DynamicRangeSlider extends Component {
 		);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, this.state.currentValue);
-		// get range before executing other queries
-		this.updateRangeQueryOptions(props);
+		if (props.mockData) {
+			props.setTestData(
+				this.internalRangeComponent,
+				props.mockData[this.internalRangeComponent],
+			);
+			props.setTestData(props.componentId, props.mockData[props.componentId]);
+		} else {
+			// get range before executing other queries
+			this.updateRangeQueryOptions(props);
+		}
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -85,10 +94,7 @@ class DynamicRangeSlider extends Component {
 			const range = formatRange(props.range);
 			if (props.selectedValue) {
 				// selected value must be in limit
-				if (
-					props.selectedValue[0] >= range.start
-					&& props.selectedValue[1] <= range.end
-				) {
+				if (props.selectedValue[0] >= range.start && props.selectedValue[1] <= range.end) {
 					return {
 						currentValue: null,
 					};
@@ -135,7 +141,6 @@ class DynamicRangeSlider extends Component {
 			this.updateQueryOptions(this.props, this.props.range);
 			// floor and ceil to take edge cases into account
 			this.updateRange(formatRange(this.props.range));
-
 
 			// only listen to selectedValue initially, after the
 			// component has mounted and range is received
@@ -190,13 +195,15 @@ class DynamicRangeSlider extends Component {
 	}
 
 	componentDidMount() {
-		const { enableAppbase, index } = this.props;
+		const { enableAppbase, index, mode } = this.props;
 		if (!enableAppbase && index) {
 			console.warn(
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		this.setReact(this.props);
+		if (mode !== 'test') {
+			this.setReact(this.props);
+		}
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -390,22 +397,18 @@ class DynamicRangeSlider extends Component {
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
-		const {
-			showFilter,
-		} = props;
+		const { showFilter } = props;
 		props.setQueryOptions(props.componentId, customQueryOptions);
 
-		props.updateQuery(
-			{
-				componentId: props.componentId,
-				query,
-				value,
-				label: props.filterLabel,
-				showFilter,
-				URLParams: props.URLParams,
-				componentType: componentTypes.dynamicRangeSlider,
-			},
-		);
+		props.updateQuery({
+			componentId: props.componentId,
+			query,
+			value,
+			label: props.filterLabel,
+			showFilter,
+			URLParams: props.URLParams,
+			componentType: componentTypes.dynamicRangeSlider,
+		});
 	};
 
 	updateQueryOptions = (props, range) => {
@@ -564,6 +567,7 @@ DynamicRangeSlider.propTypes = {
 	isLoading: types.bool,
 	setCustomQuery: types.funcRequired,
 	enableAppbase: types.bool,
+	setTestData: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -594,6 +598,8 @@ DynamicRangeSlider.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	index: types.string,
+	mockData: types.any, // eslint-disable-line
+	mode: types.string,
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -660,6 +666,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchtoProps = dispatch => ({
+	setTestData: (component, data) => dispatch(mockDataForTesting(component, data)),
 	setComponentProps: (component, options, componentType) =>
 		dispatch(setComponentProps(component, options, componentType)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),

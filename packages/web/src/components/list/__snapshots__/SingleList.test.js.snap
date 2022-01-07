@@ -229,7 +229,5 @@ exports[`should use renderItem to render the list item 1`] = `
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
->
-  No authors found
-</div>
+/>
 `;

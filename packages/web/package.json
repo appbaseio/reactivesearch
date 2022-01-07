@@ -22,7 +22,7 @@
 		"version-upgrade": "nps upgrade -c ../../package-scripts.js",
 		"prepublish": "yarn run build",
 		"postpublish": "yarn run version-upgrade",
-		"test": "jest --watch",
+		"test": "jest --watchAll",
 		"typescript": "tsc -p tsconfig.json"
 	},
 	"jest": {
@@ -75,6 +75,7 @@
 		"fs-extra": "^7.0.0",
 		"glob": "^7.1.2",
 		"jest": "^22.4.2",
+		"@emotion/jest": "11.7.1",
 		"nps": "^5.9.5",
 		"path": "^0.12.7",
 		"react": "^16.7.0-alpha.2",

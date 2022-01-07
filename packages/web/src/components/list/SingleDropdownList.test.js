@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MultiList from './MultiList';
+import SingleDropdownList from './SingleDropdownList';
 import ReactiveBase from '../basic/ReactiveBase';
 
 const MOCK_AGGREGATIONS_DATA = {
@@ -22,7 +22,7 @@ it('should render no results message', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -43,7 +43,7 @@ it('should render list of items', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -51,6 +51,7 @@ it('should render list of items', () => {
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -58,21 +59,21 @@ it('should render list of items', () => {
 	expect(elem).toMatchSnapshot();
 });
 
-it('should render search/count/checkbox when showSearch/showCount/showCheckbox are true', () => {
+it('should render search/count when showSearch/showCount are true', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
 					showSearch
 					showCount
-					showCheckbox
 					renderNoResults={() => 'No authors found'}
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -80,11 +81,11 @@ it('should render search/count/checkbox when showSearch/showCount/showCheckbox a
 	expect(elem).toMatchSnapshot();
 });
 
-it('should not render search/count/checkbox when showSearch/showCount/showCheckbox are false', () => {
+it('should not render search/ count when showSearch/ showCount are false', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -95,6 +96,7 @@ it('should not render search/count/checkbox when showSearch/showCount/showCheckb
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -106,12 +108,12 @@ it('should use renderItem to render the list item', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
 					renderNoResults={() => 'No authors found'}
-					defaultValue={['J. K. Rowling']}
+					defaultValue="J. K. Rowling"
 					renderItem={(key, docCount, isChecked) =>
 						(isChecked ? (
 							<div className="checked">
@@ -126,6 +128,7 @@ it('should use renderItem to render the list item', () => {
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -137,23 +140,45 @@ it('should use render prop to render the list item', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
-					renderNoResults={() => 'No authors found'}
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
-					render={({ data = [] }) => (
-						<ul>
-							{data.map(list => (
-								<li key={list.key}>
-									{list.key} {list.count}
-								</li>
-							))}
-						</ul>
-					)}
+					render={({
+						loading, error, data, handleChange,
+					}) => {
+						if (loading) {
+							return <div>Fetching Results.</div>;
+						}
+						if (error) {
+							return (
+								<div>
+									Something went wrong! Error details {JSON.stringify(error)}
+								</div>
+							);
+						}
+						return (
+							<div>
+								{data.map(item => (
+									/* eslint-disable jsx-a11y/click-events-have-key-events */
+									<span
+										role="menuitem"
+										style={{ padding: '5px', boxShadow: '1px 1px #c3c3c3' }}
+										onClick={() => handleChange(item.key)}
+										key={item.key}
+										tabIndex="0"
+									>
+										<span>{item.key}</span>&nbsp; (<span>{item.doc_count}</span>
+										)
+									</span>
+								))}
+							</div>
+						);
+					}}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
@@ -165,14 +190,14 @@ it('should select default value', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleDropdownList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
 					mockData={{
-						aggregations: MOCK_AGGREGATIONS_DATA,
+						aggregations: {},
 					}}
-					defaultValue={['J. K. Rowling']}
+					defaultValue="Nora Roberts"
 				/>
 			</ReactiveBase>,
 		)
