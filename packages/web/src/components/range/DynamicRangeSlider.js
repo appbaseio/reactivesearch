@@ -564,7 +564,7 @@ class DynamicRangeSlider extends Component {
 
 	getRangeLabels = () => {
 		let { start: startLabel, end: endLabel } = this.state.range;
-
+		window.console.log('this.props.rangeLabels', this.props.rangeLabels);
 		if (this.props.rangeLabels) {
 			const rangeLabels = this.props.rangeLabels(
 				this.props.range.start,
@@ -722,7 +722,6 @@ DynamicRangeSlider.defaultProps = {
 	URLParams: false,
 	showFilter: true,
 	includeNullValues: false,
-	queryFormat: 'or',
 };
 
 // Add componentType for SSR
