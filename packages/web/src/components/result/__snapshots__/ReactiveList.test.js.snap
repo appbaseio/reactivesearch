@@ -71,7 +71,7 @@ exports[`should display result stats when showResultStats is set 1`] = `
       >
         9418
          results found in 
-        0
+        10
         ms
       </p>
     </div>
@@ -1317,7 +1317,7 @@ exports[`should render custom result stats message 1`] = `
         >
           9418
            found in 
-          0
+          10
           .
         </h3>
          

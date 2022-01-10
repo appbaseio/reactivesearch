@@ -88,17 +88,6 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivecore@9.13.2":
-  version "9.13.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.13.2.tgz#8ff87c239d8a645d001ca123af46f509211fff95"
-  integrity sha512-vF02cQq5FruG/1ss05P3ITYWWYBF80MRshVQCGV99Cc9pU6BIbICEw8onp7KeVBzP9fAkxdYvIBzMvFTaP4+NA==
-  dependencies:
-    cross-fetch "^3.0.4"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    xdate "^0.8.2"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
