@@ -112,7 +112,9 @@ class MultiDropdownList extends Component {
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue).filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(
+							item => currentValue[item],
+						);
 						if (value.length) this.setValue(value, true);
 					},
 				);
@@ -129,7 +131,9 @@ class MultiDropdownList extends Component {
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue).filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(
+							item => currentValue[item],
+						);
 						if (value.length) this.setValue(value, true);
 					},
 				);
