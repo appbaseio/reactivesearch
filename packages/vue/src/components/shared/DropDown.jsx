@@ -7,7 +7,7 @@ import types from '../../utils/vueTypes';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
 import { isFunction } from '../../utils/index';
-import InputWrapper from '../../styles/InputWrapper'
+import InputWrapper from '../../styles/InputWrapper';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import CancelSvg from './CancelSvg';
