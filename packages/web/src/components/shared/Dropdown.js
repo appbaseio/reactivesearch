@@ -10,6 +10,10 @@ import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions
 import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
+import InputWrapper from '../../styles/InputWrapper';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../styles/IconWrapper';
+import CancelSvg from './CancelSvg';
 
 class Dropdown extends Component {
 	constructor(props) {
@@ -43,6 +47,7 @@ class Dropdown extends Component {
 		if (!this.props.multi) {
 			this.setState({
 				isOpen: false,
+				searchTerm: '',
 			});
 		}
 	};
@@ -101,6 +106,50 @@ class Dropdown extends Component {
 		}
 		return value;
 	};
+
+	clearSearchTerm = () => {
+		this.setState({ searchTerm: '' });
+	}
+
+	renderSearchbox = (props) => {
+		const {
+			componentId, searchPlaceholder, showClear, themePreset, innerClass,
+		} = props;
+
+		const InputComponent = (
+			<Input
+				id={`${componentId}-input`}
+				style={{
+					border: 0,
+					borderBottom: '1px solid #ddd',
+				}}
+				showIcon={false}
+				showClear={showClear}
+				className={getClassName(innerClass, 'input')}
+				placeholder={searchPlaceholder}
+				value={this.state.searchTerm}
+				onChange={this.handleInputChange}
+				themePreset={themePreset}
+			/>
+		);
+
+		if (showClear) {
+			return (
+				<InputWrapper>
+					{InputComponent}
+					{this.state.searchTerm && (
+						<IconGroup groupPosition="right" positionType="absolute">
+							<IconWrapper onClick={this.clearSearchTerm} isClearIcon>
+								<CancelSvg />
+							</IconWrapper>
+						</IconGroup>
+					)}
+				</InputWrapper>
+			);
+		}
+
+		return InputComponent;
+	}
 
 	render() {
 		const {
@@ -177,19 +226,7 @@ class Dropdown extends Component {
 									} ${getClassName(this.props.innerClass, 'list')}`}
 								>
 									{this.props.showSearch ? (
-										<Input
-											id={`${this.props.componentId}-input`}
-											style={{
-												border: 0,
-												borderBottom: '1px solid #ddd',
-											}}
-											showIcon={false}
-											className={getClassName(this.props.innerClass, 'input')}
-											placeholder={this.props.searchPlaceholder}
-											value={this.state.searchTerm}
-											onChange={this.handleInputChange}
-											themePreset={themePreset}
-										/>
+										this.renderSearchbox(this.props)
 									) : null}
 									{
 										dropdownItems.length ? dropdownItems.map((item, index) => {
@@ -304,6 +341,7 @@ Dropdown.propTypes = {
 	showSearch: types.bool,
 	footer: types.children,
 	componentId: types.string,
+	showClear: types.bool,
 	isOpen: types.bool,
 };
 
