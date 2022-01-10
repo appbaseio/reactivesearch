@@ -240,6 +240,13 @@ export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }
 
+export const suggestionTypes = {
+	Popular: 'popular',
+	Index: 'index',
+	Recent: 'recent',
+	Promoted: 'promoted',
+};
+
 // returns the milliseconds value for RangeSlider/ DynamicRangeSlider for date types
 // returns the value as is, if the simple numerics are used
 // this pertains to the convention that internally our components uses numerics for local state
@@ -257,7 +264,7 @@ export function getNumericRangeValue(value, isDateType) {
 
 export const formatDateString = (date, format) => {
 	try {
-		return new XDate(date).toString(format || 'yyyy-MM-dd\'T\'HH:mm:ss');
+		return new XDate(date).toString(format || "yyyy-MM-dd'T'HH:mm:ss");
 	} catch (e) {
 		return date;
 	}
@@ -338,5 +345,8 @@ export const getCalendarIntervalErrorMessage = (totalRange, calendarInterval = '
 		}
 	}
 
-	return { errorMessage: 'Try using a shorter range of values.', calculatedCalendarInterval: 'year' }; // we return the highest possible interval to shorten then interval value
+	return {
+		errorMessage: 'Try using a shorter range of values.',
+		calculatedCalendarInterval: 'year',
+	}; // we return the highest possible interval to shorten then interval value
 };
