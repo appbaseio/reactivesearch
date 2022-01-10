@@ -29,7 +29,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import ComponentWrapper from '../basic/ComponentWrapper'
+import ComponentWrapper from '../basic/ComponentWrapper';
 import {
 	connect,
 	isFunction,
