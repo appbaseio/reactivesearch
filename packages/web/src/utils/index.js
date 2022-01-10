@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect as connectToStore } from 'react-redux';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, isValidDateRangeQueryFormat } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
+import XDate from 'xdate';
 
 export const ReactReduxContext = React.createContext(null);
 
@@ -244,4 +245,108 @@ export const suggestionTypes = {
 	Index: 'index',
 	Recent: 'recent',
 	Promoted: 'promoted',
+};
+
+// returns the milliseconds value for RangeSlider/ DynamicRangeSlider for date types
+// returns the value as is, if the simple numerics are used
+// this pertains to the convention that internally our components uses numerics for local state
+export function getNumericRangeValue(value, isDateType) {
+	try {
+		if (isDateType && value !== undefined && value !== null && new XDate(value).valid()) {
+			return new XDate(value).getTime();
+		}
+		return parseFloat(value);
+	} catch (e) {
+		console.error(e);
+		return parseFloat(value);
+	}
+}
+
+export const formatDateString = (date, format) => {
+	try {
+		return new XDate(date).toString(format || "yyyy-MM-dd'T'HH:mm:ss");
+	} catch (e) {
+		return date;
+	}
+};
+
+export const getNumericRangeArray = (valueObj, queryFormat) => {
+	if (!valueObj) {
+		return null;
+	}
+	return [
+		getNumericRangeValue(valueObj.start, isValidDateRangeQueryFormat(queryFormat)),
+		getNumericRangeValue(valueObj.end, isValidDateRangeQueryFormat(queryFormat)),
+	].filter(val => typeof val === 'number');
+};
+
+// takes in arrays of length 2
+// returns inrange value array
+// where the 2nd argument is the reference of rangelimits
+
+// isFirstValueChanging tells which of the two values in array is undergoing change
+export const getValueArrayWithinLimits = (currentValueArray, rangeArray) => {
+	try {
+		const [currentStart, currentEnd] = currentValueArray;
+		const [limitedStart, limitedEnd] = rangeArray;
+		let [newStart, newEnd] = [...currentValueArray];
+		newStart = currentStart < limitedStart ? limitedStart : currentStart;
+		newEnd = currentEnd > limitedEnd ? limitedEnd : currentEnd;
+
+		if (newStart > newEnd) {
+			return rangeArray; // we reset the values
+		}
+		return [newStart, newEnd];
+	} catch (e) {
+		console.error(e);
+		return currentValueArray;
+	}
+};
+
+// this map helps to get the interval divider
+// for histogram, since the calendarinterval prop leaves
+export const queryFormatMillisecondsMap = {
+	// the below are arranged in asscending order
+	// please maintain the order if adding/ removing property(s)
+	minute: 60000,
+	hour: 3600000,
+	day: 86400000,
+	week: 604800000,
+	month: 2629746000,
+	quarter: 7889238000,
+	year: 31556952000,
+};
+
+// this function checks for subsequent calendarIntervals that would
+// yield intervals well within a max cap of 100
+// since displaying more than 100 bars on histogram isn't diserable
+export const getCalendarIntervalErrorMessage = (totalRange, calendarInterval = 'minute') => {
+	const queryFormatMillisecondsMapKeys = Object.keys(queryFormatMillisecondsMap);
+	const indexOfCurrentCalendarInterval = queryFormatMillisecondsMapKeys.indexOf(calendarInterval);
+	if (indexOfCurrentCalendarInterval === -1) {
+		console.error('Invalid calendarInterval Passed');
+	}
+
+	if (calendarInterval === 'year') {
+		return 'Try using a shorter range of values.';
+	}
+
+	for (
+		let index = indexOfCurrentCalendarInterval + 1;
+		index < queryFormatMillisecondsMapKeys.length;
+		index += 1
+	) {
+		if (totalRange / Object.values(queryFormatMillisecondsMap)[index] <= 100) {
+			const calendarIntervalKey = queryFormatMillisecondsMapKeys[index];
+			return {
+				errorMessage: `Please pass calendarInterval prop with value greater than or equal to a \`${calendarIntervalKey}\` for a meaningful resolution of histogram.`,
+				calculatedCalendarInterval: calendarIntervalKey,
+			};
+		}
+	}
+
+	return {
+		errorMessage: 'Try using a shorter range of values.',
+		calculatedCalendarInterval: 'year',
+	}; // we return the highest possible interval to shorten then interval value
 };

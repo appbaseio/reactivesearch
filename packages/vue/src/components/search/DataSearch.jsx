@@ -210,10 +210,10 @@ const DataSearch = {
 			]),
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,
-		size: VueTypes.number.def(10),
+		size: VueTypes.number,
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,
-		excludeFields: types.excludeFields.def([]),
+		excludeFields: types.excludeFields,
 		value: types.value,
 		defaultSuggestions: types.suggestions,
 		enableSynonyms: VueTypes.bool.def(true),
@@ -227,9 +227,9 @@ const DataSearch = {
 		highlightField: types.stringOrArray,
 		icon: types.children,
 		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
-		includeFields: types.includeFields.def(['*']),
+		includeFields: types.includeFields,
 		innerClass: types.style,
-		innerRef: types.string.def('searchInputField'),
+		innerRef: VueTypes.string.def('searchInputField'),
 		render: types.func,
 		renderQuerySuggestions: types.func,
 		renderPopularSuggestions: types.func,
@@ -263,7 +263,7 @@ const DataSearch = {
 		).def(['/']),
 		addonBefore: VueTypes.any,
 		addonAfter: VueTypes.any,
-		expandSuggestionsContainer: types.bool.def(true),
+		expandSuggestionsContainer: VueTypes.bool.def(true),
 		index: VueTypes.string,
 	},
 	beforeMount() {
@@ -875,7 +875,7 @@ const DataSearch = {
 												)} ${getClassName(this.$props.innerClass, 'list')}`}
 											>
 												{this.suggestionsList
-													.slice(0, size)
+													.slice(0, size || 10)
 													.map((item, index) => (
 														<li
 															{...{

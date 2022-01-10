@@ -1,4 +1,5 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+import VueTypes from 'vue-types';
 import { connect } from '../utils/index';
 import types from '../utils/vueTypes';
 import Base from '../styles/Base';
@@ -13,7 +14,7 @@ const URLParamsProvider = {
 		headers: types.headers,
 		getSearchParams: types.func,
 		setSearchParams: types.func,
-		as: types.string.def('div'),
+		as: VueTypes.string.def('div'),
 	},
 	mounted() {
 		this.init();
@@ -162,7 +163,7 @@ const URLParamsProvider = {
 		getValue(value) {
 			if (Array.isArray(value) && value.length) {
 				return value.map(item => this.getValue(item));
-			} else if (value && typeof value === 'object') {
+			} if (value && typeof value === 'object') {
 				// TODO: support for NestedList
 				if (value.location) return value;
 				if (value.category) return value;

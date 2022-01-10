@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import MultiList from './MultiList';
+import SingleList from './SingleList';
 import ReactiveBase from '../basic/ReactiveBase';
 
 const MOCK_AGGREGATIONS_DATA = {
@@ -17,12 +17,11 @@ const MOCK_AGGREGATIONS_DATA = {
 		],
 	},
 };
-
 it('should render no results message', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -43,7 +42,7 @@ it('should render list of items', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -62,7 +61,7 @@ it('should render search/count/checkbox when showSearch/showCount/showCheckbox a
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -84,7 +83,7 @@ it('should not render search/count/checkbox when showSearch/showCount/showCheckb
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -106,12 +105,10 @@ it('should use renderItem to render the list item', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
-					renderNoResults={() => 'No authors found'}
-					defaultValue={['J. K. Rowling']}
 					renderItem={(key, docCount, isChecked) =>
 						(isChecked ? (
 							<div className="checked">
@@ -137,7 +134,7 @@ it('should use render prop to render the list item', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -149,7 +146,7 @@ it('should use render prop to render the list item', () => {
 						<ul>
 							{data.map(list => (
 								<li key={list.key}>
-									{list.key} {list.count}
+									{list.key} {list.doc_count}
 								</li>
 							))}
 						</ul>
@@ -165,14 +162,14 @@ it('should select default value', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<MultiList
+				<SingleList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
 					mockData={{
 						aggregations: MOCK_AGGREGATIONS_DATA,
 					}}
-					defaultValue={['J. K. Rowling']}
+					defaultValue="J. K. Rowling"
 				/>
 			</ReactiveBase>,
 		)

@@ -159,60 +159,37 @@ exports[`should not render search/count/checkbox when showSearch/showCount/showC
   transition: transform 200ms ease-out;
 }
 
-.emotion-6+label {
-  padding-left: 0;
-}
-
 .emotion-6+label::before,
 .emotion-6+label::after {
-  width: 0;
-  height: 0;
-  border: 0;
-  margin: 0;
-  visibility: hidden;
+  border-radius: 50%;
 }
 
-.emotion-6:checked+label {
-  font-weight: bold;
+.emotion-6:checked:active+label,
+.emotion-6:checked:focus+label {
+  color: #0B6AFF;
 }
 
-.emotion-6+label::before,
-.emotion-6+label::after {
-  border-radius: 2px;
-}
-
-.emotion-6+label::after {
-  background-color: transparent;
-  top: 10px;
-  left: calc(1px + 16px / 5);
-  width: calc(16px / 2);
-  height: calc(16px / 5);
-  margin-top: calc(16px / -2 / 2 * 0.8);
-  border-style: solid;
-  border-color: #fff;
-  border-width: 0 0 2px 2px;
-  border-radius: 0;
-  border-image: none;
-  -webkit-transform: rotate(-45deg) scale(0);
-  -ms-transform: rotate(-45deg) scale(0);
-  transform: rotate(-45deg) scale(0);
+.emotion-6:checked:active+label::before,
+.emotion-6:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
   -webkit-transition: none;
   transition: none;
 }
 
 .emotion-6:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
   border-color: #0B6AFF;
-  background-color: #0B6AFF;
 }
 
 .emotion-6:checked+label::after {
-  content: '';
-  -webkit-transform: rotate(-45deg) scale(1);
-  -ms-transform: rotate(-45deg) scale(1);
-  transform: rotate(-45deg) scale(1);
-  -webkit-transition: -webkit-transform 200ms ease-out;
-  -webkit-transition: transform 200ms ease-out;
-  transition: transform 200ms ease-out;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 <div
@@ -226,20 +203,20 @@ exports[`should not render search/count/checkbox when showSearch/showCount/showC
     <ul
       aria-label="authors-items"
       className="emotion-4 emotion-5"
-      role="listbox"
+      role="radiogroup"
     >
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-6 emotion-7"
+          className=" emotion-6 emotion-7"
           id="authors-J. K. Rowling"
-          name="authors-J. K. Rowling"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="J. K. Rowling"
         />
         <label
@@ -254,16 +231,16 @@ exports[`should not render search/count/checkbox when showSearch/showCount/showC
       </li>
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-6 emotion-7"
+          className=" emotion-6 emotion-7"
           id="authors-Nora Roberts"
-          name="authors-Nora Roberts"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="Nora Roberts"
         />
         <label
@@ -458,41 +435,35 @@ exports[`should render list of items 1`] = `
 
 .emotion-8+label::before,
 .emotion-8+label::after {
-  border-radius: 2px;
+  border-radius: 50%;
 }
 
-.emotion-8+label::after {
-  background-color: transparent;
-  top: 10px;
-  left: calc(1px + 16px / 5);
-  width: calc(16px / 2);
-  height: calc(16px / 5);
-  margin-top: calc(16px / -2 / 2 * 0.8);
-  border-style: solid;
-  border-color: #fff;
-  border-width: 0 0 2px 2px;
-  border-radius: 0;
-  border-image: none;
-  -webkit-transform: rotate(-45deg) scale(0);
-  -ms-transform: rotate(-45deg) scale(0);
-  transform: rotate(-45deg) scale(0);
+.emotion-8:checked:active+label,
+.emotion-8:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-8:checked:active+label::before,
+.emotion-8:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
   -webkit-transition: none;
   transition: none;
 }
 
 .emotion-8:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
   border-color: #0B6AFF;
-  background-color: #0B6AFF;
 }
 
 .emotion-8:checked+label::after {
-  content: '';
-  -webkit-transform: rotate(-45deg) scale(1);
-  -ms-transform: rotate(-45deg) scale(1);
-  transform: rotate(-45deg) scale(1);
-  -webkit-transition: -webkit-transform 200ms ease-out;
-  -webkit-transition: transform 200ms ease-out;
-  transition: transform 200ms ease-out;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 <div
@@ -518,20 +489,20 @@ exports[`should render list of items 1`] = `
     <ul
       aria-label="authors-items"
       className="emotion-6 emotion-7"
-      role="listbox"
+      role="radiogroup"
     >
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-J. K. Rowling"
-          name="authors-J. K. Rowling"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="J. K. Rowling"
         />
         <label
@@ -549,16 +520,16 @@ exports[`should render list of items 1`] = `
       </li>
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-Nora Roberts"
-          name="authors-Nora Roberts"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="Nora Roberts"
         />
         <label
@@ -785,41 +756,35 @@ exports[`should render search/count/checkbox when showSearch/showCount/showCheck
 
 .emotion-8+label::before,
 .emotion-8+label::after {
-  border-radius: 2px;
+  border-radius: 50%;
 }
 
-.emotion-8+label::after {
-  background-color: transparent;
-  top: 10px;
-  left: calc(1px + 16px / 5);
-  width: calc(16px / 2);
-  height: calc(16px / 5);
-  margin-top: calc(16px / -2 / 2 * 0.8);
-  border-style: solid;
-  border-color: #fff;
-  border-width: 0 0 2px 2px;
-  border-radius: 0;
-  border-image: none;
-  -webkit-transform: rotate(-45deg) scale(0);
-  -ms-transform: rotate(-45deg) scale(0);
-  transform: rotate(-45deg) scale(0);
+.emotion-8:checked:active+label,
+.emotion-8:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-8:checked:active+label::before,
+.emotion-8:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
   -webkit-transition: none;
   transition: none;
 }
 
 .emotion-8:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
   border-color: #0B6AFF;
-  background-color: #0B6AFF;
 }
 
 .emotion-8:checked+label::after {
-  content: '';
-  -webkit-transform: rotate(-45deg) scale(1);
-  -ms-transform: rotate(-45deg) scale(1);
-  transform: rotate(-45deg) scale(1);
-  -webkit-transition: -webkit-transform 200ms ease-out;
-  -webkit-transition: transform 200ms ease-out;
-  transition: transform 200ms ease-out;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 <div
@@ -845,20 +810,20 @@ exports[`should render search/count/checkbox when showSearch/showCount/showCheck
     <ul
       aria-label="authors-items"
       className="emotion-6 emotion-7"
-      role="listbox"
+      role="radiogroup"
     >
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-J. K. Rowling"
-          name="authors-J. K. Rowling"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="J. K. Rowling"
         />
         <label
@@ -876,16 +841,16 @@ exports[`should render search/count/checkbox when showSearch/showCount/showCheck
       </li>
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-Nora Roberts"
-          name="authors-Nora Roberts"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="Nora Roberts"
         />
         <label
@@ -1083,41 +1048,35 @@ exports[`should select default value 1`] = `
 
 .emotion-8+label::before,
 .emotion-8+label::after {
-  border-radius: 2px;
+  border-radius: 50%;
 }
 
-.emotion-8+label::after {
-  background-color: transparent;
-  top: 10px;
-  left: calc(1px + 16px / 5);
-  width: calc(16px / 2);
-  height: calc(16px / 5);
-  margin-top: calc(16px / -2 / 2 * 0.8);
-  border-style: solid;
-  border-color: #fff;
-  border-width: 0 0 2px 2px;
-  border-radius: 0;
-  border-image: none;
-  -webkit-transform: rotate(-45deg) scale(0);
-  -ms-transform: rotate(-45deg) scale(0);
-  transform: rotate(-45deg) scale(0);
+.emotion-8:checked:active+label,
+.emotion-8:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-8:checked:active+label::before,
+.emotion-8:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
   -webkit-transition: none;
   transition: none;
 }
 
 .emotion-8:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
   border-color: #0B6AFF;
-  background-color: #0B6AFF;
 }
 
 .emotion-8:checked+label::after {
-  content: '';
-  -webkit-transform: rotate(-45deg) scale(1);
-  -ms-transform: rotate(-45deg) scale(1);
-  transform: rotate(-45deg) scale(1);
-  -webkit-transition: -webkit-transform 200ms ease-out;
-  -webkit-transition: transform 200ms ease-out;
-  transition: transform 200ms ease-out;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 <div
@@ -1143,21 +1102,21 @@ exports[`should select default value 1`] = `
     <ul
       aria-label="authors-items"
       className="emotion-6 emotion-7"
-      role="listbox"
+      role="radiogroup"
     >
       <li
         aria-checked={true}
-        aria-selected={true}
         className="active"
-        role="option"
+        role="radio"
       >
         <input
           checked={true}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-J. K. Rowling"
-          name="authors-J. K. Rowling"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="-1"
+          type="radio"
           value="J. K. Rowling"
         />
         <label
@@ -1175,16 +1134,16 @@ exports[`should select default value 1`] = `
       </li>
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-Nora Roberts"
-          name="authors-Nora Roberts"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="Nora Roberts"
         />
         <label
@@ -1266,10 +1225,12 @@ exports[`should use render prop to render the list item 1`] = `
       <li>
         J. K. Rowling
          
+        10
       </li>
       <li>
         Nora Roberts
          
+        7
       </li>
     </ul>
   </div>
@@ -1453,41 +1414,35 @@ exports[`should use renderItem to render the list item 1`] = `
 
 .emotion-8+label::before,
 .emotion-8+label::after {
-  border-radius: 2px;
+  border-radius: 50%;
 }
 
-.emotion-8+label::after {
-  background-color: transparent;
-  top: 10px;
-  left: calc(1px + 16px / 5);
-  width: calc(16px / 2);
-  height: calc(16px / 5);
-  margin-top: calc(16px / -2 / 2 * 0.8);
-  border-style: solid;
-  border-color: #fff;
-  border-width: 0 0 2px 2px;
-  border-radius: 0;
-  border-image: none;
-  -webkit-transform: rotate(-45deg) scale(0);
-  -ms-transform: rotate(-45deg) scale(0);
-  transform: rotate(-45deg) scale(0);
+.emotion-8:checked:active+label,
+.emotion-8:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-8:checked:active+label::before,
+.emotion-8:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
   -webkit-transition: none;
   transition: none;
 }
 
 .emotion-8:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
   border-color: #0B6AFF;
-  background-color: #0B6AFF;
 }
 
 .emotion-8:checked+label::after {
-  content: '';
-  -webkit-transform: rotate(-45deg) scale(1);
-  -ms-transform: rotate(-45deg) scale(1);
-  transform: rotate(-45deg) scale(1);
-  -webkit-transition: -webkit-transform 200ms ease-out;
-  -webkit-transition: transform 200ms ease-out;
-  transition: transform 200ms ease-out;
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
 }
 
 <div
@@ -1513,29 +1468,26 @@ exports[`should use renderItem to render the list item 1`] = `
     <ul
       aria-label="authors-items"
       className="emotion-6 emotion-7"
-      role="listbox"
+      role="radiogroup"
     >
       <li
-        aria-checked={true}
-        aria-selected={true}
-        className="active"
-        role="option"
+        aria-checked={false}
+        role="radio"
       >
         <input
-          checked={true}
-          className="emotion-8 emotion-9"
+          checked={false}
+          className=" emotion-8 emotion-9"
           id="authors-J. K. Rowling"
-          name="authors-J. K. Rowling"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="J. K. Rowling"
         />
         <label
           htmlFor="authors-J. K. Rowling"
         >
-          <div
-            className="checked"
-          >
+          <div>
             J. K. Rowling
              - 
             10
@@ -1544,16 +1496,16 @@ exports[`should use renderItem to render the list item 1`] = `
       </li>
       <li
         aria-checked={false}
-        aria-selected={false}
-        role="option"
+        role="radio"
       >
         <input
           checked={false}
-          className="emotion-8 emotion-9"
+          className=" emotion-8 emotion-9"
           id="authors-Nora Roberts"
-          name="authors-Nora Roberts"
-          onChange={[Function]}
-          type="checkbox"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
           value="Nora Roberts"
         />
         <label

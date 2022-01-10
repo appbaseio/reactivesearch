@@ -1,0 +1,1214 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not render search/ count when showSearch/ showCount are false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 0;
+  outline: none;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.emotion-5>div {
+  width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.emotion-5:hover,
+.emotion-5:focus {
+  background-color: #fcfcfc;
+}
+
+.emotion-7::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  position: relative;
+  top: 0.35em;
+  left: 0;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 0.45em;
+  top: 0.55em;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.emotion-9 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-9.small {
+  top: 30px;
+}
+
+.emotion-9 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-9 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-9 li:hover,
+.emotion-9 li:focus {
+  background-color: #eee;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="emotion-5 emotion-6"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="emotion-7 emotion-8"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  emotion-9"
+      >
+        <li
+          id="downshift-2-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "J. K. Rowling",
+                }
+              }
+            />
+          </div>
+        </li>
+        <li
+          id="downshift-2-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Nora Roberts",
+                }
+              }
+            />
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render list of items 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 0;
+  outline: none;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.emotion-5>div {
+  width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.emotion-5:hover,
+.emotion-5:focus {
+  background-color: #fcfcfc;
+}
+
+.emotion-7::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  position: relative;
+  top: 0.35em;
+  left: 0;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 0.45em;
+  top: 0.55em;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.emotion-9 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-9.small {
+  top: 30px;
+}
+
+.emotion-9 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-9 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-9 li:hover,
+.emotion-9 li:focus {
+  background-color: #eee;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="emotion-5 emotion-6"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="emotion-7 emotion-8"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  emotion-9"
+      >
+        <li
+          id="downshift-0-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "J. K. Rowling",
+                }
+              }
+            />
+            <span>
+               (
+              10
+              )
+            </span>
+          </div>
+        </li>
+        <li
+          id="downshift-0-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Nora Roberts",
+                }
+              }
+            />
+            <span>
+               (
+              7
+              )
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render no results message 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  No authors found
+</div>
+`;
+
+exports[`should render search/count when showSearch/showCount are true 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 0;
+  outline: none;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.emotion-5>div {
+  width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.emotion-5:hover,
+.emotion-5:focus {
+  background-color: #fcfcfc;
+}
+
+.emotion-7::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  position: relative;
+  top: 0.35em;
+  left: 0;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 0.45em;
+  top: 0.55em;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.emotion-9 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-9.small {
+  top: 30px;
+}
+
+.emotion-9 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-9 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-9 li:hover,
+.emotion-9 li:focus {
+  background-color: #eee;
+}
+
+.emotion-10 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-10:focus {
+  background-color: #fff;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="emotion-5 emotion-6"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="emotion-7 emotion-8"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  emotion-9"
+      >
+        <input
+          className=" emotion-10 emotion-11"
+          id="undefined-input"
+          onChange={[Function]}
+          placeholder="Type here to search..."
+          style={
+            Object {
+              "border": 0,
+              "borderBottom": "1px solid #ddd",
+            }
+          }
+          value=""
+        />
+        <li
+          id="downshift-1-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "J. K. Rowling",
+                }
+              }
+            />
+            <span>
+               (
+              10
+              )
+            </span>
+          </div>
+        </li>
+        <li
+          id="downshift-1-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Nora Roberts",
+                }
+              }
+            />
+            <span>
+               (
+              7
+              )
+            </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should select default value 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+/>
+`;
+
+exports[`should use render prop to render the list item 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 0;
+  outline: none;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.emotion-5>div {
+  width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.emotion-5:hover,
+.emotion-5:focus {
+  background-color: #fcfcfc;
+}
+
+.emotion-7::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  position: relative;
+  top: 0.35em;
+  left: 0;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 0.45em;
+  top: 0.55em;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="emotion-5 emotion-6"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="Select values"
+        type="button"
+      >
+        <div>
+          Select values
+        </div>
+        <span
+          className="emotion-7 emotion-8"
+          open={true}
+        />
+      </button>
+      <div>
+        <span
+          onClick={[Function]}
+          role="menuitem"
+          style={
+            Object {
+              "boxShadow": "1px 1px #c3c3c3",
+              "padding": "5px",
+            }
+          }
+          tabIndex="0"
+        >
+          <span>
+            J. K. Rowling
+          </span>
+            (
+          <span>
+            10
+          </span>
+          )
+        </span>
+        <span
+          onClick={[Function]}
+          role="menuitem"
+          style={
+            Object {
+              "boxShadow": "1px 1px #c3c3c3",
+              "padding": "5px",
+            }
+          }
+          tabIndex="0"
+        >
+          <span>
+            Nora Roberts
+          </span>
+            (
+          <span>
+            7
+          </span>
+          )
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should use renderItem to render the list item 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  min-height: 42px;
+  border-radius: 0;
+  outline: none;
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.emotion-5>div {
+  width: calc(100% - 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.emotion-5:hover,
+.emotion-5:focus {
+  background-color: #fcfcfc;
+}
+
+.emotion-7::before {
+  content: "";
+  border-style: solid;
+  border-width: 0.15em 0.15em 0 0;
+  display: inline-block;
+  height: 0.45em;
+  position: relative;
+  top: 0.35em;
+  left: 0;
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  vertical-align: top;
+  width: 0.45em;
+  top: 0.55em;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.emotion-9 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+}
+
+.emotion-9.small {
+  top: 30px;
+}
+
+.emotion-9 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-9 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-9 li:hover,
+.emotion-9 li:focus {
+  background-color: #eee;
+}
+
+.emotion-10 {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-10::after {
+  box-sizing: content-box;
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 4px;
+  margin-top: -4px;
+  border-style: solid;
+  border-color: #0B6AFF;
+  border-width: 0 0 2px 2px;
+  border-radius: 0;
+  border-image: none;
+  -webkit-transform: rotate(-45deg) scale(1);
+  -ms-transform: rotate(-45deg) scale(1);
+  transform: rotate(-45deg) scale(1);
+  -webkit-transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <button
+        aria-expanded={true}
+        aria-haspopup={true}
+        aria-label="close menu"
+        className="emotion-5 emotion-6"
+        data-toggle={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="button"
+        title="J. K. Rowling"
+        type="button"
+      >
+        <div>
+          J. K. Rowling
+        </div>
+        <span
+          className="emotion-7 emotion-8"
+          open={true}
+        />
+      </button>
+      <ul
+        className="  emotion-9"
+      >
+        <li
+          className="active"
+          id="downshift-3-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fafafa",
+            }
+          }
+        >
+          <div
+            className="checked"
+          >
+            J. K. Rowling
+             - 
+            10
+          </div>
+          <span
+            className="emotion-10 emotion-11"
+          />
+        </li>
+        <li
+          id="downshift-3-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#fff",
+            }
+          }
+        >
+          <div>
+            Nora Roberts
+             - 
+            7
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

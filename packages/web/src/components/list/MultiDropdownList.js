@@ -502,6 +502,7 @@ class MultiDropdownList extends Component {
 							</div>
 						)
 					}
+					isOpen={this.props.isOpen}
 				/>
 			</Container>
 		);
@@ -562,6 +563,7 @@ MultiDropdownList.propTypes = {
 	nestedField: types.string,
 	index: types.string,
 	showClear: types.bool,
+	isOpen: types.bool,
 };
 
 MultiDropdownList.defaultProps = {
@@ -580,6 +582,7 @@ MultiDropdownList.defaultProps = {
 	showClear: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	isOpen: false,
 };
 
 // Add componentType for SSR

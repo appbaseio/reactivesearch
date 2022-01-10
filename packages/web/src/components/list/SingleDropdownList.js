@@ -385,6 +385,7 @@ class SingleDropdownList extends Component {
 							</div>
 						)
 					}
+					isOpen={this.props.isOpen}
 				/>
 			</Container>
 		);
@@ -444,6 +445,7 @@ SingleDropdownList.propTypes = {
 	nestedField: types.string,
 	index: types.string,
 	showClear: types.bool,
+	isOpen: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -461,6 +463,7 @@ SingleDropdownList.defaultProps = {
 	showClear: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	isOpen: false,
 };
 
 // Add componentType for SSR

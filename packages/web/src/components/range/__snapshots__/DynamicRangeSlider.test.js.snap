@@ -1,0 +1,5251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display tooltip 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0 12px -24px 12px;
+}
+
+.emotion-5 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 100%;
+}
+
+.emotion-7 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 82.83811475409836%;
+}
+
+.emotion-9 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 28.688524590163933%;
+}
+
+.emotion-11 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 9.836065573770492%;
+}
+
+.emotion-13 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 3.9959016393442623%;
+}
+
+.emotion-15 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 2.894467213114754%;
+}
+
+.emotion-17 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.5881147540983607%;
+}
+
+.emotion-19 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.4600409836065573%;
+}
+
+.emotion-21 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8709016393442623%;
+}
+
+.emotion-23 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8965163934426229%;
+}
+
+.emotion-25 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.7684426229508197%;
+}
+
+.emotion-27 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.5122950819672131%;
+}
+
+.emotion-29 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.6915983606557377%;
+}
+
+.emotion-33 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.38422131147540983%;
+}
+
+.emotion-35 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.3073770491803279%;
+}
+
+.emotion-37 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.25614754098360654%;
+}
+
+.emotion-39 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.4354508196721312%;
+}
+
+.emotion-43 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.20491803278688525%;
+}
+
+.emotion-53 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.2305327868852459%;
+}
+
+.emotion-55 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.07684426229508197%;
+}
+
+.emotion-57 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.15368852459016394%;
+}
+
+.emotion-59 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.12807377049180327%;
+}
+
+.emotion-63 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.10245901639344263%;
+}
+
+.emotion-69 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.05122950819672131%;
+}
+
+.emotion-71 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-91 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0%;
+}
+
+.emotion-101 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.17930327868852458%;
+}
+
+.emotion-201 {
+  background-color: #efefef;
+  width: 0.6948465547191662%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-203 {
+  position: relative;
+}
+
+.emotion-204 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-206 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+        height="100%"
+        title={3904}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-7 emotion-6"
+        height="82.83811475409836%"
+        title={3234}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-9 emotion-6"
+        height="28.688524590163933%"
+        title={1120}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-11 emotion-6"
+        height="9.836065573770492%"
+        title={384}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-13 emotion-6"
+        height="3.9959016393442623%"
+        title={156}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-15 emotion-6"
+        height="2.894467213114754%"
+        title={113}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-17 emotion-6"
+        height="1.5881147540983607%"
+        title={62}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-19 emotion-6"
+        height="1.4600409836065573%"
+        title={57}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-21 emotion-6"
+        height="0.8709016393442623%"
+        title={34}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-23 emotion-6"
+        height="0.8965163934426229%"
+        title={35}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-25 emotion-6"
+        height="0.7684426229508197%"
+        title={30}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-29 emotion-6"
+        height="0.6915983606557377%"
+        title={27}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-33 emotion-6"
+        height="0.38422131147540983%"
+        title={15}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-35 emotion-6"
+        height="0.3073770491803279%"
+        title={12}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-37 emotion-6"
+        height="0.25614754098360654%"
+        title={10}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-53 emotion-6"
+        height="0.2305327868852459%"
+        title={9}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-6"
+        height="0.15368852459016394%"
+        title={6}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-101 emotion-6"
+        height="0.17930327868852458%"
+        title={7}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-201 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="0.6948465547191662%"
+      />
+    </div>
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={1}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      >
+        <span
+          className="slider-tooltip-visible"
+        >
+          1
+        </span>
+      </button>
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={3455}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      >
+        <span
+          className="slider-tooltip-visible"
+        >
+          3455
+        </span>
+      </button>
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-203"
+    >
+      <div
+        className="emotion-204 emotion-205"
+      >
+        1
+      </div>
+      <div
+        className="emotion-206 emotion-205"
+      >
+        3455
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should not render histogram when showHistogram is set to false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-5 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={1}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={3455}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+      >
+        1
+      </div>
+      <div
+        className="emotion-7 emotion-6"
+      >
+        3455
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render histogram when showHistogram is set to true 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0 12px -24px 12px;
+}
+
+.emotion-5 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 100%;
+}
+
+.emotion-7 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 82.83811475409836%;
+}
+
+.emotion-9 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 28.688524590163933%;
+}
+
+.emotion-11 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 9.836065573770492%;
+}
+
+.emotion-13 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 3.9959016393442623%;
+}
+
+.emotion-15 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 2.894467213114754%;
+}
+
+.emotion-17 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.5881147540983607%;
+}
+
+.emotion-19 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.4600409836065573%;
+}
+
+.emotion-21 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8709016393442623%;
+}
+
+.emotion-23 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8965163934426229%;
+}
+
+.emotion-25 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.7684426229508197%;
+}
+
+.emotion-27 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.5122950819672131%;
+}
+
+.emotion-29 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.6915983606557377%;
+}
+
+.emotion-33 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.38422131147540983%;
+}
+
+.emotion-35 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.3073770491803279%;
+}
+
+.emotion-37 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.25614754098360654%;
+}
+
+.emotion-39 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.4354508196721312%;
+}
+
+.emotion-43 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.20491803278688525%;
+}
+
+.emotion-53 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.2305327868852459%;
+}
+
+.emotion-55 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.07684426229508197%;
+}
+
+.emotion-57 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.15368852459016394%;
+}
+
+.emotion-59 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.12807377049180327%;
+}
+
+.emotion-63 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.10245901639344263%;
+}
+
+.emotion-69 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.05122950819672131%;
+}
+
+.emotion-71 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-91 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0%;
+}
+
+.emotion-101 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.17930327868852458%;
+}
+
+.emotion-201 {
+  background-color: #efefef;
+  width: 0.6948465547191662%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-203 {
+  position: relative;
+}
+
+.emotion-204 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-206 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+        height="100%"
+        title={3904}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-7 emotion-6"
+        height="82.83811475409836%"
+        title={3234}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-9 emotion-6"
+        height="28.688524590163933%"
+        title={1120}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-11 emotion-6"
+        height="9.836065573770492%"
+        title={384}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-13 emotion-6"
+        height="3.9959016393442623%"
+        title={156}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-15 emotion-6"
+        height="2.894467213114754%"
+        title={113}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-17 emotion-6"
+        height="1.5881147540983607%"
+        title={62}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-19 emotion-6"
+        height="1.4600409836065573%"
+        title={57}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-21 emotion-6"
+        height="0.8709016393442623%"
+        title={34}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-23 emotion-6"
+        height="0.8965163934426229%"
+        title={35}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-25 emotion-6"
+        height="0.7684426229508197%"
+        title={30}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-29 emotion-6"
+        height="0.6915983606557377%"
+        title={27}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-33 emotion-6"
+        height="0.38422131147540983%"
+        title={15}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-35 emotion-6"
+        height="0.3073770491803279%"
+        title={12}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-37 emotion-6"
+        height="0.25614754098360654%"
+        title={10}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-53 emotion-6"
+        height="0.2305327868852459%"
+        title={9}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-6"
+        height="0.15368852459016394%"
+        title={6}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-101 emotion-6"
+        height="0.17930327868852458%"
+        title={7}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-201 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="0.6948465547191662%"
+      />
+    </div>
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={1}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={3455}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-203"
+    >
+      <div
+        className="emotion-204 emotion-205"
+      >
+        1
+      </div>
+      <div
+        className="emotion-206 emotion-205"
+      >
+        3455
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render range labels 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0 12px -24px 12px;
+}
+
+.emotion-5 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 100%;
+}
+
+.emotion-7 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 82.83811475409836%;
+}
+
+.emotion-9 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 28.688524590163933%;
+}
+
+.emotion-11 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 9.836065573770492%;
+}
+
+.emotion-13 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 3.9959016393442623%;
+}
+
+.emotion-15 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 2.894467213114754%;
+}
+
+.emotion-17 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.5881147540983607%;
+}
+
+.emotion-19 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.4600409836065573%;
+}
+
+.emotion-21 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8709016393442623%;
+}
+
+.emotion-23 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8965163934426229%;
+}
+
+.emotion-25 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.7684426229508197%;
+}
+
+.emotion-27 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.5122950819672131%;
+}
+
+.emotion-29 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.6915983606557377%;
+}
+
+.emotion-33 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.38422131147540983%;
+}
+
+.emotion-35 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.3073770491803279%;
+}
+
+.emotion-37 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.25614754098360654%;
+}
+
+.emotion-39 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.4354508196721312%;
+}
+
+.emotion-43 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.20491803278688525%;
+}
+
+.emotion-53 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.2305327868852459%;
+}
+
+.emotion-55 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.07684426229508197%;
+}
+
+.emotion-57 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.15368852459016394%;
+}
+
+.emotion-59 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.12807377049180327%;
+}
+
+.emotion-63 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.10245901639344263%;
+}
+
+.emotion-69 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.05122950819672131%;
+}
+
+.emotion-71 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-91 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0%;
+}
+
+.emotion-101 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.17930327868852458%;
+}
+
+.emotion-201 {
+  background-color: #efefef;
+  width: 0.6948465547191662%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-203 {
+  position: relative;
+}
+
+.emotion-204 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-206 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+        height="100%"
+        title={3904}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-7 emotion-6"
+        height="82.83811475409836%"
+        title={3234}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-9 emotion-6"
+        height="28.688524590163933%"
+        title={1120}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-11 emotion-6"
+        height="9.836065573770492%"
+        title={384}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-13 emotion-6"
+        height="3.9959016393442623%"
+        title={156}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-15 emotion-6"
+        height="2.894467213114754%"
+        title={113}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-17 emotion-6"
+        height="1.5881147540983607%"
+        title={62}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-19 emotion-6"
+        height="1.4600409836065573%"
+        title={57}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-21 emotion-6"
+        height="0.8709016393442623%"
+        title={34}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-23 emotion-6"
+        height="0.8965163934426229%"
+        title={35}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-25 emotion-6"
+        height="0.7684426229508197%"
+        title={30}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-29 emotion-6"
+        height="0.6915983606557377%"
+        title={27}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-33 emotion-6"
+        height="0.38422131147540983%"
+        title={15}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-35 emotion-6"
+        height="0.3073770491803279%"
+        title={12}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-37 emotion-6"
+        height="0.25614754098360654%"
+        title={10}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-53 emotion-6"
+        height="0.2305327868852459%"
+        title={9}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-6"
+        height="0.15368852459016394%"
+        title={6}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-101 emotion-6"
+        height="0.17930327868852458%"
+        title={7}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-201 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="0.6948465547191662%"
+      />
+    </div>
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={1}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={3455}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-203"
+    >
+      <div
+        className="emotion-204 emotion-205"
+      >
+        Test 1
+      </div>
+      <div
+        className="emotion-206 emotion-205"
+      >
+        Test 3455
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render slider 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0 12px -24px 12px;
+}
+
+.emotion-5 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 100%;
+}
+
+.emotion-7 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 82.83811475409836%;
+}
+
+.emotion-9 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 28.688524590163933%;
+}
+
+.emotion-11 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 9.836065573770492%;
+}
+
+.emotion-13 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 3.9959016393442623%;
+}
+
+.emotion-15 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 2.894467213114754%;
+}
+
+.emotion-17 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.5881147540983607%;
+}
+
+.emotion-19 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.4600409836065573%;
+}
+
+.emotion-21 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8709016393442623%;
+}
+
+.emotion-23 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8965163934426229%;
+}
+
+.emotion-25 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.7684426229508197%;
+}
+
+.emotion-27 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.5122950819672131%;
+}
+
+.emotion-29 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.6915983606557377%;
+}
+
+.emotion-33 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.38422131147540983%;
+}
+
+.emotion-35 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.3073770491803279%;
+}
+
+.emotion-37 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.25614754098360654%;
+}
+
+.emotion-39 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.4354508196721312%;
+}
+
+.emotion-43 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.20491803278688525%;
+}
+
+.emotion-53 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.2305327868852459%;
+}
+
+.emotion-55 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.07684426229508197%;
+}
+
+.emotion-57 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.15368852459016394%;
+}
+
+.emotion-59 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.12807377049180327%;
+}
+
+.emotion-63 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.10245901639344263%;
+}
+
+.emotion-69 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.05122950819672131%;
+}
+
+.emotion-71 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-91 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0%;
+}
+
+.emotion-101 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.17930327868852458%;
+}
+
+.emotion-201 {
+  background-color: #efefef;
+  width: 0.6948465547191662%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-203 {
+  position: relative;
+}
+
+.emotion-204 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-206 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="emotion-5 emotion-6"
+        height="100%"
+        title={3904}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-7 emotion-6"
+        height="82.83811475409836%"
+        title={3234}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-9 emotion-6"
+        height="28.688524590163933%"
+        title={1120}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-11 emotion-6"
+        height="9.836065573770492%"
+        title={384}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-13 emotion-6"
+        height="3.9959016393442623%"
+        title={156}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-15 emotion-6"
+        height="2.894467213114754%"
+        title={113}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-17 emotion-6"
+        height="1.5881147540983607%"
+        title={62}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-19 emotion-6"
+        height="1.4600409836065573%"
+        title={57}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-21 emotion-6"
+        height="0.8709016393442623%"
+        title={34}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-23 emotion-6"
+        height="0.8965163934426229%"
+        title={35}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-25 emotion-6"
+        height="0.7684426229508197%"
+        title={30}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-29 emotion-6"
+        height="0.6915983606557377%"
+        title={27}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-6"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-33 emotion-6"
+        height="0.38422131147540983%"
+        title={15}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-35 emotion-6"
+        height="0.3073770491803279%"
+        title={12}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-37 emotion-6"
+        height="0.25614754098360654%"
+        title={10}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-6"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-43 emotion-6"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-53 emotion-6"
+        height="0.2305327868852459%"
+        title={9}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-6"
+        height="0.15368852459016394%"
+        title={6}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-6"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-6"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-101 emotion-6"
+        height="0.17930327868852458%"
+        title={7}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-63 emotion-6"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-69 emotion-6"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-91 emotion-6"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-201 emotion-6"
+        height="0.025614754098360656%"
+        title={1}
+        width="0.6948465547191662%"
+      />
+    </div>
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={1}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={3455}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-203"
+    >
+      <div
+        className="emotion-204 emotion-205"
+      >
+        1
+      </div>
+      <div
+        className="emotion-206 emotion-205"
+      >
+        3455
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-2 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-2 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-2 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-2 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-2 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-2 .slider-tooltip,
+.emotion-2 .slider-tooltip-focus,
+.emotion-2 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-2 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-2 .slider-tooltip:after,
+.emotion-2 .slider-tooltip-focus:after,
+.emotion-2 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip,
+.emotion-2 .rheostat-handle:focus .slider-tooltip,
+.emotion-2 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-2 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-2 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-2 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0 12px -24px 12px;
+}
+
+.emotion-7 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 100%;
+}
+
+.emotion-9 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 82.83811475409836%;
+}
+
+.emotion-11 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 28.688524590163933%;
+}
+
+.emotion-13 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 9.836065573770492%;
+}
+
+.emotion-15 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 3.9959016393442623%;
+}
+
+.emotion-17 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 2.894467213114754%;
+}
+
+.emotion-19 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.5881147540983607%;
+}
+
+.emotion-21 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 1.4600409836065573%;
+}
+
+.emotion-23 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8709016393442623%;
+}
+
+.emotion-25 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.8965163934426229%;
+}
+
+.emotion-27 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.7684426229508197%;
+}
+
+.emotion-29 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.5122950819672131%;
+}
+
+.emotion-31 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.6915983606557377%;
+}
+
+.emotion-35 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.38422131147540983%;
+}
+
+.emotion-37 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.3073770491803279%;
+}
+
+.emotion-39 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.25614754098360654%;
+}
+
+.emotion-41 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.4354508196721312%;
+}
+
+.emotion-45 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.20491803278688525%;
+}
+
+.emotion-55 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.2305327868852459%;
+}
+
+.emotion-57 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.07684426229508197%;
+}
+
+.emotion-59 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.15368852459016394%;
+}
+
+.emotion-61 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.12807377049180327%;
+}
+
+.emotion-65 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.10245901639344263%;
+}
+
+.emotion-71 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.05122950819672131%;
+}
+
+.emotion-73 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-93 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0%;
+}
+
+.emotion-103 {
+  background-color: #efefef;
+  width: 1.013317892298784%;
+  height: 0.17930327868852458%;
+}
+
+.emotion-203 {
+  background-color: #efefef;
+  width: 0.6948465547191662%;
+  height: 0.025614754098360656%;
+}
+
+.emotion-205 {
+  position: relative;
+}
+
+.emotion-206 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-208 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <h2
+      className="emotion-4 emotion-5"
+    >
+      Mock Title
+    </h2>
+    <div
+      className="emotion-6"
+    >
+      <div
+        className="emotion-7 emotion-8"
+        height="100%"
+        title={3904}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-9 emotion-8"
+        height="82.83811475409836%"
+        title={3234}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-11 emotion-8"
+        height="28.688524590163933%"
+        title={1120}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-13 emotion-8"
+        height="9.836065573770492%"
+        title={384}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-15 emotion-8"
+        height="3.9959016393442623%"
+        title={156}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-17 emotion-8"
+        height="2.894467213114754%"
+        title={113}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-19 emotion-8"
+        height="1.5881147540983607%"
+        title={62}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-21 emotion-8"
+        height="1.4600409836065573%"
+        title={57}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-23 emotion-8"
+        height="0.8709016393442623%"
+        title={34}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-25 emotion-8"
+        height="0.8965163934426229%"
+        title={35}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-27 emotion-8"
+        height="0.7684426229508197%"
+        title={30}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-29 emotion-8"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-31 emotion-8"
+        height="0.6915983606557377%"
+        title={27}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-29 emotion-8"
+        height="0.5122950819672131%"
+        title={20}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-35 emotion-8"
+        height="0.38422131147540983%"
+        title={15}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-37 emotion-8"
+        height="0.3073770491803279%"
+        title={12}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-39 emotion-8"
+        height="0.25614754098360654%"
+        title={10}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-41 emotion-8"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-41 emotion-8"
+        height="0.4354508196721312%"
+        title={17}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-45 emotion-8"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-45 emotion-8"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-45 emotion-8"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-45 emotion-8"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-45 emotion-8"
+        height="0.20491803278688525%"
+        title={8}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-55 emotion-8"
+        height="0.2305327868852459%"
+        title={9}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-8"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-59 emotion-8"
+        height="0.15368852459016394%"
+        title={6}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-61 emotion-8"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-8"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-65 emotion-8"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-61 emotion-8"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-61 emotion-8"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-8"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-61 emotion-8"
+        height="0.12807377049180327%"
+        title={5}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-65 emotion-8"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-57 emotion-8"
+        height="0.07684426229508197%"
+        title={3}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-103 emotion-8"
+        height="0.17930327868852458%"
+        title={7}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-65 emotion-8"
+        height="0.10245901639344263%"
+        title={4}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-71 emotion-8"
+        height="0.05122950819672131%"
+        title={2}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-73 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-93 emotion-8"
+        height="0%"
+        title={0}
+        width="1.013317892298784%"
+      />
+      <div
+        className="emotion-203 emotion-8"
+        height="0.025614754098360656%"
+        title={1}
+        width="0.6948465547191662%"
+      />
+    </div>
+    <div
+      className="rheostat rheostat-horizontal "
+      onClick={[Function]}
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <div
+        className="rheostat-background"
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={1}
+        className="rheostat-handle"
+        data-handle-key={0}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "0%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <button
+        aria-disabled={false}
+        aria-label="slider-button"
+        aria-valuemax={3455}
+        aria-valuemin={1}
+        aria-valuenow={3455}
+        className="rheostat-handle"
+        data-handle-key={1}
+        onClick={undefined}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        role="slider"
+        style={
+          Object {
+            "left": "100%",
+            "position": "absolute",
+          }
+        }
+        tabIndex={0}
+      />
+      <div
+        className="rheostat-progress"
+        style={
+          Object {
+            "left": "0%",
+            "width": "100%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="emotion-205"
+    >
+      <div
+        className="emotion-206 emotion-207"
+      >
+        1
+      </div>
+      <div
+        className="emotion-208 emotion-207"
+      >
+        3455
+      </div>
+    </div>
+  </div>
+</div>
+`;
