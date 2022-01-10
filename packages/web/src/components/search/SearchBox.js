@@ -13,6 +13,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	normalizeDataField,
+	suggestionTypes
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -46,7 +47,6 @@ import {
 	isEmpty,
 	isFunction,
 	parseFocusShortcuts,
-	suggestionTypes,
 } from '../../utils';
 import Mic from './addons/Mic';
 import CancelSvg from '../shared/CancelSvg';
