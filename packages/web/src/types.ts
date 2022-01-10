@@ -160,3 +160,5 @@ export interface appbaseConfig {
 export type showClearAll = 'never' | 'always' | 'default' | true | false;
 
 export type resetToDefault = boolean;
+
+export type calendarInterval = 'month' | 'day' | 'year' | 'week' | 'quarter' | 'hour' | 'minute';
