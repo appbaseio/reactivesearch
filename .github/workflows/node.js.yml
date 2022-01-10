@@ -27,4 +27,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn install
     - run: cd packages/web
-    - run: yarn test
+    - run: pwd
+    - run: cd packages/web && yarn test
