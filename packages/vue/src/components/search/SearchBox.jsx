@@ -43,7 +43,6 @@ const {
 	getCompositeAggsQuery,
 	withClickIds,
 	getResultStats,
-	getTopSuggestions,
 	normalizeDataField,
 } = helper;
 
@@ -54,7 +53,6 @@ const SearchBox = {
 		this.__state = {
 			currentValue: '',
 			isOpen: false,
-			isPending: false,
 			normalizedSuggestions: [],
 		};
 		this.internalComponent = `${props.componentId}__internal`;
@@ -84,10 +82,19 @@ const SearchBox = {
 			);
 		}
 
-		this.currentValue =
-			this.$props.selectedValue || this.$props.value || this.$props.defaultValue || '';
+		this.currentValue
+			= this.$props.selectedValue || this.$props.value || this.$props.defaultValue || '';
 
 		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
+
+		this.setValue(
+			this.currentValue,
+			true,
+			this.$props,
+			undefined,
+			false,
+			this.$props.selectedCategory,
+		);
 
 		// Set custom and default queries in store
 		this.triggerCustomQuery(this.currentValue, this.$props.selectedCategory);
@@ -186,26 +193,40 @@ const SearchBox = {
 	},
 	beforeMount() {
 		if (this.selectedValue) {
-			this.setValue(this.selectedValue, true);
+			this.setValue(
+				this.selectedValue,
+				true,
+				this.$props,
+				undefined,
+				true,
+				this.selectedCategory,
+			);
 		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
+			this.setValue(
+				this.$props.value,
+				true,
+				this.$props,
+				undefined,
+				true,
+				this.selectedCategory,
+			);
 		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
+			this.setValue(
+				this.$props.defaultValue,
+				true,
+				this.$props,
+				undefined,
+				true,
+				this.selectedCategory,
+			);
 		}
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
 	},
 	watch: {
-		highlight() {
-			this.updateQueryOptions();
-		},
 		dataField() {
-			this.updateQueryOptions();
 			this.triggerCustomQuery(this.$data.currentValue);
-		},
-		highlightField() {
-			this.updateQueryOptions();
 		},
 		fieldWeights() {
 			this.triggerCustomQuery(this.$data.currentValue);
@@ -239,8 +260,8 @@ const SearchBox = {
 			if (Array.isArray(newVal) && newVal.length) {
 				suggestionsList = [...withClickIds(newVal)];
 			} else if (
-				Array.isArray(this.$props.defaultSuggestions) &&
-				this.$props.defaultSuggestions.length
+				Array.isArray(this.$props.defaultSuggestions)
+				&& this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
@@ -296,8 +317,11 @@ const SearchBox = {
 		},
 	},
 	methods: {
-		handleText(value) {
-			if (this.$props.autosuggest) {
+		handleText(value, cause) {
+			if (cause === causes.CLEAR_VALUE) {
+				this.triggerCustomQuery(value);
+				this.triggerDefaultQuery(value);
+			} else if (this.$props.autosuggest) {
 				this.triggerDefaultQuery(value);
 			} else {
 				this.triggerCustomQuery(value);
@@ -315,9 +339,9 @@ const SearchBox = {
 					return;
 				}
 				if (
-					typeof propValue !== 'string' &&
-					typeof propValue !== 'object' &&
-					!Array.isArray(propValue)
+					typeof propValue !== 'string'
+					&& typeof propValue !== 'object'
+					&& !Array.isArray(propValue)
 				) {
 					console.error(
 						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
@@ -328,14 +352,6 @@ const SearchBox = {
 					console.error(requiredError);
 				}
 			}
-		},
-		updateQueryOptions() {
-			if (this.customHighlight && typeof this.customHighlight === 'function') {
-				this.setCustomHighlightOptions(this.componentId, this.customHighlight(this.$props));
-			}
-			const queryOptions = SearchBox.highlightQuery(this.$props) || {};
-			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
-			this.setQueryOptions(this.$props.componentId, this.queryOptions);
 		},
 		getComponent(downshiftProps = {}) {
 			const { currentValue } = this.$data;
@@ -365,7 +381,6 @@ const SearchBox = {
 		handleSearchIconClick() {
 			const { currentValue } = this;
 			if (currentValue.trim()) {
-				this.isPending = false;
 				this.setValue(currentValue, true);
 				this.onValueSelectedHandler(currentValue, causes.SEARCH_ICON_CLICK);
 			}
@@ -378,7 +393,6 @@ const SearchBox = {
 			toggleIsOpen = true,
 			categoryValue = undefined,
 		) {
-			console.log('setvalue called');
 			const performUpdate = () => {
 				this.currentValue = value;
 				if (isDefaultValue) {
@@ -401,7 +415,7 @@ const SearchBox = {
 					}
 				} else {
 					// debounce for handling text while typing
-					this.handleTextChange(value);
+					this.handleTextChange(value, cause);
 				}
 
 				this.$emit('valueChange', value);
@@ -446,19 +460,17 @@ const SearchBox = {
 					query = queryTobeSet;
 				}
 				updateCustomQuery(this.$props.componentId, this.setCustomQuery, this.$props, value);
-			}
-			if (!this.isPending) {
-				this.updateQuery({
-					componentId: this.$props.componentId,
-					query,
-					value,
-					label: filterLabel,
-					showFilter,
-					URLParams,
-					componentType: componentTypes.searchBox,
-					category: categoryValue,
-				});
-			}
+			}			
+			this.updateQuery({
+				componentId: this.$props.componentId,
+				query,
+				value,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+				componentType: componentTypes.searchBox,
+				category: categoryValue,
+			});
 		},
 		// need to review
 		handleFocus(event) {
@@ -467,14 +479,13 @@ const SearchBox = {
 		},
 		handleVoiceResults({ results }) {
 			if (
-				results &&
-				results[0] &&
-				results[0].isFinal &&
-				results[0][0] &&
-				results[0][0].transcript &&
-				results[0][0].transcript.trim()
+				results
+				&& results[0]
+				&& results[0].isFinal
+				&& results[0][0]
+				&& results[0][0].transcript
+				&& results[0][0].transcript.trim()
 			) {
-				this.isPending = false;
 				this.setValue(results[0][0].transcript.trim(), true);
 			}
 		},
@@ -486,7 +497,6 @@ const SearchBox = {
 		) {
 			const { value } = this.$props;
 			if (value !== undefined) {
-				this.isPending = false;
 				this.setValue(
 					this.$props.value,
 					!isOpen,
@@ -512,17 +522,11 @@ const SearchBox = {
 		},
 
 		clearValue() {
-			this.isPending = false;
-			this.setValue('', true);
+			this.setValue('', false, this.$props, causes.CLEAR_VALUE, false);
 			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 		},
 
 		handleKeyDown(event, highlightedIndex) {
-			const { value } = this.$props;
-			if (value !== undefined) {
-				this.isPending = true;
-			}
-
 			// if a suggestion was selected, delegate the handling to suggestion handler
 			if (event.key === 'Enter' && highlightedIndex === null) {
 				this.setValue(event.target.value, true);
@@ -544,12 +548,12 @@ const SearchBox = {
 			if (value === undefined) {
 				this.setValue(inputValue);
 			} else {
-				this.isPending = true;
 				this.$emit('change', inputValue, this.triggerQuery, e);
 			}
 		},
 
 		onSuggestionSelected(suggestion) {
+			this.isOpen = false;
 			const { value } = this.$props;
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
@@ -559,12 +563,10 @@ const SearchBox = {
 					true,
 					this.$props,
 					causes.SUGGESTION_SELECT,
-					true,
 					false,
 					suggestion._category,
 				);
 			} else {
-				this.isPending = false;
 				this.$emit('change', suggestion.value, ({ isOpen = false } = { isOpen: false }) =>
 					this.triggerQuery({ isOpen, categoryValue: suggestion._category }),
 				);
@@ -630,17 +632,17 @@ const SearchBox = {
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
-			const renderNoSuggestion =
-				this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderNoSuggestion
+				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
-				renderNoSuggestion &&
-				isOpen &&
-				!finalSuggestionsList.length &&
-				!this.isLoading &&
-				currentValue &&
-				!(renderError && this.error)
+				renderNoSuggestion
+				&& isOpen
+				&& !finalSuggestionsList.length
+				&& !this.isLoading
+				&& currentValue
+				&& !(renderError && this.error)
 			) {
 				return (
 					<SuggestionWrapper
@@ -723,10 +725,10 @@ const SearchBox = {
 			const elt = event.target || event.srcElement;
 			const { tagName } = elt;
 			if (
-				elt.isContentEditable ||
-				tagName === 'INPUT' ||
-				tagName === 'SELECT' ||
-				tagName === 'TEXTAREA'
+				elt.isContentEditable
+				|| tagName === 'INPUT'
+				|| tagName === 'SELECT'
+				|| tagName === 'TEXTAREA'
 			) {
 				// already in an input
 				return;
@@ -773,13 +775,24 @@ const SearchBox = {
 			this.currentValue = value;
 			this.triggerDefaultQuery(value);
 		},
+		renderAutoFill(suggestion) {
+			/* 👇 avoid showing autofill ifor cateogry suggestions👇 */
+			return suggestion._category ? null : (
+				<AutofillSvg
+					onClick={(e) => {
+						e.stopPropagation();
+						this.onAutofillClick(suggestion);
+					}}
+				/>
+			);
+		},
 	},
 	render() {
 		const { theme, expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
-		const hasSuggestions =
-			Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
-
+		const hasSuggestions
+			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+		const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -814,11 +827,10 @@ const SearchBox = {
 												return null;
 										}
 									};
-
 									return (
 										<div>
-											{this.hasCustomRenderer &&
-												this.getComponent({
+											{this.hasCustomRenderer
+												&& this.getComponent({
 													isOpen,
 													getItemProps,
 													getItemEvents,
@@ -835,8 +847,33 @@ const SearchBox = {
 														'list',
 													)}`}
 												>
-													{this.normalizedSuggestions.map(
-														(item, index) => (
+													{this.normalizedSuggestions.map((item, index) =>
+														renderItem ? (
+															<li
+																{...{
+																	domProps: getItemProps({
+																		item,
+																	}),
+																}}
+																{...{
+																	on: getItemEvents({
+																		item,
+																	}),
+																}}
+																key={`${index + 1}-${item.value}`}
+																style={{
+																	backgroundColor:
+																		this.getBackgroundColor(
+																			highlightedIndex,
+																			index,
+																		),
+																	justifyContent: 'flex-start',
+																	alignItems: 'center',
+																}}
+															>
+																{renderItem(item)}
+															</li>
+														) : (
 															<li
 																{...{
 																	domProps: getItemProps({
@@ -862,6 +899,7 @@ const SearchBox = {
 																<div
 																	style={{
 																		padding: '0 10px 0 0',
+																		display: 'flex',
 																	}}
 																>
 																	<CustomSvg
@@ -882,17 +920,7 @@ const SearchBox = {
 																	currentValue={this.currentValue}
 																	suggestion={item}
 																/>
-																{/* 👇 avoid showing autofill ifor cateogry suggestions👇 */}
-																{item._category ? null : (
-																	<AutofillSvg
-																		handleClick={(e) => {
-																			e.stopPropagation();
-																			this.onAutofillClick(
-																				item,
-																			);
-																		}}
-																	/>
-																)}
+																{this.renderAutoFill(item)}
 															</li>
 														),
 													)}
@@ -977,8 +1005,8 @@ const SearchBox = {
 													autocomplete="off"
 												/>
 												{this.renderIcons()}
-												{!expandSuggestionsContainer &&
-													renderSuggestionsDropdown()}
+												{!expandSuggestionsContainer
+													&& renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
 										</InputGroup>
@@ -1078,9 +1106,9 @@ SearchBox.shouldQuery = (value, dataFields, props) => {
 		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
 		if (
 			!(
-				dataField.field.endsWith('.keyword') ||
-				dataField.field.endsWith('.autosuggest') ||
-				dataField.field.endsWith('.search')
+				dataField.field.endsWith('.keyword')
+				|| dataField.field.endsWith('.autosuggest')
+				|| dataField.field.endsWith('.search')
 			)
 		) {
 			phrasePrefixFields.push(queryField);
@@ -1160,13 +1188,13 @@ SearchBox.shouldQuery = (value, dataFields, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	selectedCategory:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].category) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
