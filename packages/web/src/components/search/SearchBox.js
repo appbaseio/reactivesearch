@@ -13,7 +13,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	normalizeDataField,
-	suggestionTypes
+	suggestionTypes,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -764,7 +764,7 @@ const SearchBox = (props) => {
 
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
-		triggerDefaultQuery(currentLocalValue, selectedCategory);
+		triggerDefaultQuery(currentLocalValue);
 	});
 
 	useEffect(() => {
