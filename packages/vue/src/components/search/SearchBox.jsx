@@ -781,14 +781,13 @@ const SearchBox = {
 			this.triggerDefaultQuery(value);
 		},
 		renderAutoFill(suggestion) {
+			const handleAutoFillClick = (e) => {
+				e.stopPropagation();
+				this.onAutofillClick(suggestion);
+			};
 			/* 👇 avoid showing autofill ifor cateogry suggestions👇 */
 			return suggestion._category ? null : (
-				<AutofillSvg
-					onClick={(e) => {
-						e.stopPropagation();
-						this.onAutofillClick(suggestion);
-					}}
-				/>
+				<AutofillSvg {...{ on: { click: handleAutoFillClick } }} />
 			);
 		},
 	},
