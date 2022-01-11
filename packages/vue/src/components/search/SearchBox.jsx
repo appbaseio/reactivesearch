@@ -1,0 +1,1198 @@
+import { Actions, helper, causes } from '@appbaseio/reactivecore';
+import VueTypes from 'vue-types';
+import hotkeys from 'hotkeys-js';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	connect,
+	getComponent,
+	hasCustomRenderer,
+	isFunction,
+	updateCustomQuery,
+	updateDefaultQuery,
+	isQueryIdentical,
+	isEmpty,
+	parseFocusShortcuts,
+	extractModifierKeysFromFocusShortcuts,
+} from '../../utils/index';
+import Title from '../../styles/Title';
+import InputGroup from '../../styles/InputGroup';
+import InputWrapper from '../../styles/InputWrapper';
+import InputAddon from '../../styles/InputAddon';
+import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../styles/IconWrapper';
+import Downshift from '../basic/DownShift.jsx';
+import Container from '../../styles/Container';
+import types from '../../utils/vueTypes';
+import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
+import SuggestionItem from './addons/SuggestionItem.jsx';
+import SearchSvg from '../shared/SearchSvg';
+import CancelSvg from '../shared/CancelSvg';
+import Mic from './addons/Mic.jsx';
+import CustomSvg from '../shared/CustomSvg';
+import AutofillSvg from '../shared/AutoFillSvg';
+
+const { updateQuery, setCustomQuery, setDefaultQuery, recordSuggestionClick } = Actions;
+const {
+	debounce,
+	checkValueChange,
+	getClassName,
+	isEqual,
+	getCompositeAggsQuery,
+	withClickIds,
+	getResultStats,
+	getTopSuggestions,
+	normalizeDataField,
+} = helper;
+
+const SearchBox = {
+	name: 'SearchBox',
+	data() {
+		const props = this.$props;
+		this.__state = {
+			currentValue: '',
+			isOpen: false,
+			isPending: false,
+			normalizedSuggestions: [],
+		};
+		this.internalComponent = `${props.componentId}__internal`;
+		return this.__state;
+	},
+	inject: {
+		theme: {
+			from: 'theme_reactivesearch',
+		},
+	},
+	created() {
+		const { distinctField, distinctFieldConfig, index } = this.$props;
+
+		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
+			console.warn(
+				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
+			);
+		}
+		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+		if (!this.enableAppbase && index) {
+			console.warn(
+				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
+			);
+		}
+
+		this.currentValue =
+			this.$props.selectedValue || this.$props.value || this.$props.defaultValue || '';
+
+		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
+
+		// Set custom and default queries in store
+		this.triggerCustomQuery(this.currentValue, this.$props.selectedCategory);
+		this.triggerDefaultQuery(this.currentValue);
+	},
+	computed: {
+		hasCustomRenderer() {
+			return hasCustomRenderer(this);
+		},
+		stats() {
+			return getResultStats(this);
+		},
+	},
+	props: {
+		autoFocus: VueTypes.bool,
+		autosuggest: VueTypes.bool.def(true),
+		beforeValueChange: types.func,
+		className: VueTypes.string.def(''),
+		clearIcon: types.children,
+		componentId: types.stringRequired,
+		customHighlight: types.func,
+		customQuery: types.func,
+		defaultQuery: types.func,
+		dataField: VueTypes.oneOfType([
+			VueTypes.string,
+			VueTypes.shape({
+				field: VueTypes.string,
+				weight: VueTypes.number,
+			}),
+			VueTypes.arrayOf(VueTypes.string),
+			VueTypes.arrayOf({
+				field: VueTypes.string,
+				weight: VueTypes.number,
+			}),
+		]),
+		aggregationField: types.string,
+		aggregationSize: VueTypes.number,
+		size: VueTypes.number,
+		debounce: VueTypes.number.def(0),
+		defaultValue: types.string,
+		excludeFields: types.excludeFields,
+		value: types.value,
+		defaultSuggestions: types.suggestions,
+		enableSynonyms: VueTypes.bool.def(true),
+		enableQuerySuggestions: VueTypes.bool.def(false),
+		enablePopularSuggestions: VueTypes.bool.def(false),
+		enableRecentSuggestions: VueTypes.bool.def(false),
+		fieldWeights: types.fieldWeights,
+		filterLabel: types.string,
+		fuzziness: types.fuzziness,
+		highlight: VueTypes.bool,
+		highlightField: types.stringOrArray,
+		icon: types.children,
+		iconPosition: VueTypes.oneOf(['left', 'right']).def('left'),
+		includeFields: types.includeFields,
+		innerClass: types.style,
+		innerRef: VueTypes.string.def('searchInputField'),
+		render: types.func,
+		renderNoSuggestion: types.title,
+		renderError: types.title,
+		placeholder: VueTypes.string.def('Search'),
+		queryFormat: VueTypes.oneOf(['and', 'or']).def('or'),
+		react: types.react,
+		showClear: VueTypes.bool.def(true),
+		showDistinctSuggestions: VueTypes.bool.def(true),
+		showFilter: VueTypes.bool.def(true),
+		showIcon: VueTypes.bool.def(true),
+		title: types.title,
+		theme: types.style,
+		URLParams: VueTypes.bool.def(false),
+		strictSelection: VueTypes.bool.def(false),
+		nestedField: types.string,
+		enablePredictiveSuggestions: VueTypes.bool.def(false),
+		recentSearchesIcon: VueTypes.any,
+		popularSearchesIcon: VueTypes.any,
+		//	mic props
+		showVoiceSearch: VueTypes.bool.def(false),
+		getMicInstance: types.func,
+		renderMic: types.func,
+		distinctField: types.string,
+		distinctFieldConfig: types.props,
+		//
+		focusShortcuts: VueTypes.arrayOf(
+			VueTypes.oneOfType([VueTypes.string, VueTypes.number]),
+		).def(['/']),
+		addonBefore: VueTypes.any,
+		addonAfter: VueTypes.any,
+		expandSuggestionsContainer: VueTypes.bool.def(true),
+		index: VueTypes.string,
+		popularSuggestionsConfig: VueTypes.object,
+		recentSuggestionsConfig: VueTypes.object,
+		applyStopwords: VueTypes.bool,
+		customStopwords: types.stringArray,
+		onData: types.func,
+		renderItem: types.func,
+	},
+	beforeMount() {
+		if (this.selectedValue) {
+			this.setValue(this.selectedValue, true);
+		} else if (this.$props.value) {
+			this.setValue(this.$props.value, true);
+		} else if (this.$props.defaultValue) {
+			this.setValue(this.$props.defaultValue, true);
+		}
+	},
+	mounted() {
+		this.listenForFocusShortcuts();
+	},
+	watch: {
+		highlight() {
+			this.updateQueryOptions();
+		},
+		dataField() {
+			this.updateQueryOptions();
+			this.triggerCustomQuery(this.$data.currentValue);
+		},
+		highlightField() {
+			this.updateQueryOptions();
+		},
+		fieldWeights() {
+			this.triggerCustomQuery(this.$data.currentValue);
+		},
+		fuzziness() {
+			this.triggerCustomQuery(this.$data.currentValue);
+		},
+		queryFormat() {
+			this.triggerCustomQuery(this.$data.currentValue);
+		},
+		defaultValue(newVal) {
+			this.setValue(newVal, true, this.$props);
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.setValue(newVal, true, this.$props, undefined, false);
+			}
+		},
+		defaultQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.triggerDefaultQuery(this.$data.currentValue);
+			}
+		},
+		customQuery(newVal, oldVal) {
+			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
+				this.triggerCustomQuery(this.$data.currentValue);
+			}
+		},
+		suggestions(newVal) {
+			let suggestionsList = [];
+			if (Array.isArray(newVal) && newVal.length) {
+				suggestionsList = [...withClickIds(newVal)];
+			} else if (
+				Array.isArray(this.$props.defaultSuggestions) &&
+				this.$props.defaultSuggestions.length
+			) {
+				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
+			}
+			this.normalizedSuggestions = suggestionsList;
+		},
+		selectedValue(newVal, oldVal) {
+			if (oldVal !== newVal && this.$data.currentValue !== newVal) {
+				if (!newVal && this.$data.currentValue) {
+					// selected value is cleared, call onValueSelected
+					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
+				}
+				this.setValue(newVal || '', true, this.$props);
+			}
+		},
+		focusShortcuts() {
+			this.listenForFocusShortcuts();
+		},
+		rawData(newVal) {
+			this.$emit('on-data', {
+				data: this.normalizedSuggestions,
+				rawData: newVal,
+				aggregationData: this.aggregationData,
+				loading: this.isLoading,
+				error: this.isError,
+			});
+		},
+		aggregationData(newVal) {
+			this.$emit('on-data', {
+				data: this.normalizedSuggestions,
+				rawData: this.rawData,
+				aggregationData: newVal,
+				loading: this.isLoading,
+				error: this.isError,
+			});
+		},
+		loading(newVal) {
+			this.$emit('on-data', {
+				data: this.normalizedSuggestions,
+				rawData: this.rawData,
+				aggregationData: this.aggregationData,
+				loading: newVal,
+				error: this.isError,
+			});
+		},
+		error(newVal) {
+			this.$emit('on-data', {
+				data: this.normalizedSuggestions,
+				rawData: this.rawData,
+				aggregationData: this.aggregationData,
+				loading: this.isLoading,
+				error: newVal,
+			});
+		},
+	},
+	methods: {
+		handleText(value) {
+			if (this.$props.autosuggest) {
+				this.triggerDefaultQuery(value);
+			} else {
+				this.triggerCustomQuery(value);
+			}
+		},
+		validateDataField() {
+			const propName = 'dataField';
+			const componentName = SearchBox.name;
+			const props = this.$props;
+			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
+			const propValue = props[propName];
+			if (!this.enableAppbase) {
+				if (!propValue) {
+					console.error(requiredError);
+					return;
+				}
+				if (
+					typeof propValue !== 'string' &&
+					typeof propValue !== 'object' &&
+					!Array.isArray(propValue)
+				) {
+					console.error(
+						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
+					);
+					return;
+				}
+				if (Array.isArray(propValue) && propValue.length === 0) {
+					console.error(requiredError);
+				}
+			}
+		},
+		updateQueryOptions() {
+			if (this.customHighlight && typeof this.customHighlight === 'function') {
+				this.setCustomHighlightOptions(this.componentId, this.customHighlight(this.$props));
+			}
+			const queryOptions = SearchBox.highlightQuery(this.$props) || {};
+			this.queryOptions = { ...queryOptions, ...this.getBasicQueryOptions() };
+			this.setQueryOptions(this.$props.componentId, this.queryOptions);
+		},
+		getComponent(downshiftProps = {}) {
+			const { currentValue } = this.$data;
+			const data = {
+				error: this.error,
+				loading: this.isLoading,
+				downshiftProps,
+				data: this.normalizedSuggestions,
+				rawData: this.rawData,
+				value: currentValue,
+				resultStats: this.stats,
+			};
+			return getComponent(data, this);
+		},
+		// returns size and aggs property
+		getBasicQueryOptions() {
+			const { aggregationField } = this.$props;
+			const queryOptions = getQueryOptions(this.$props);
+			if (aggregationField) {
+				queryOptions.aggs = getCompositeAggsQuery({
+					props: this.$props,
+					showTopHits: true,
+				}).aggs;
+			}
+			return queryOptions;
+		},
+		handleSearchIconClick() {
+			const { currentValue } = this;
+			if (currentValue.trim()) {
+				this.isPending = false;
+				this.setValue(currentValue, true);
+				this.onValueSelectedHandler(currentValue, causes.SEARCH_ICON_CLICK);
+			}
+		},
+		setValue(
+			value,
+			isDefaultValue = false,
+			props = this.$props,
+			cause,
+			toggleIsOpen = true,
+			categoryValue = undefined,
+		) {
+			console.log('setvalue called');
+			const performUpdate = () => {
+				this.currentValue = value;
+				if (isDefaultValue) {
+					if (this.$props.autosuggest) {
+						if (toggleIsOpen) {
+							this.isOpen = false;
+						}
+						this.triggerDefaultQuery(value);
+					} // in case of strict selection only SUGGESTION_SELECT should be able
+					// to set the query otherwise the value should reset
+
+					if (props.strictSelection) {
+						if (cause === causes.SUGGESTION_SELECT || value === '') {
+							this.triggerCustomQuery(value, categoryValue);
+						} else {
+							this.setValue('', true);
+						}
+					} else {
+						this.triggerCustomQuery(value, categoryValue);
+					}
+				} else {
+					// debounce for handling text while typing
+					this.handleTextChange(value);
+				}
+
+				this.$emit('valueChange', value);
+				this.$emit('value-change', value);
+			};
+
+			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
+		},
+		triggerDefaultQuery(paramValue) {
+			const value = typeof paramValue !== 'string' ? this.currentValue : paramValue;
+			let query = SearchBox.defaultQuery(value, this.$props);
+			if (this.defaultQuery) {
+				const defaultQueryToBeSet = this.defaultQuery(value, this.$props) || {};
+				if (defaultQueryToBeSet.query) {
+					({ query } = defaultQueryToBeSet);
+				}
+
+				// Update calculated default query in store
+				updateDefaultQuery(
+					this.$props.componentId,
+					this.setDefaultQuery,
+					this.$props,
+					value,
+				);
+			}
+			this.updateQuery({
+				componentId: this.internalComponent,
+				query,
+				value,
+				componentType: componentTypes.searchBox,
+			});
+		},
+		triggerCustomQuery(paramValue, categoryValue = undefined) {
+			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
+			const value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
+			const defaultQueryTobeSet = SearchBox.defaultQuery(value, this.$props);
+			let query = defaultQueryTobeSet;
+			if (customQuery) {
+				const customQueryTobeSet = customQuery(value, this.$props);
+				const queryTobeSet = customQueryTobeSet.query;
+				if (queryTobeSet) {
+					query = queryTobeSet;
+				}
+				updateCustomQuery(this.$props.componentId, this.setCustomQuery, this.$props, value);
+			}
+			if (!this.isPending) {
+				this.updateQuery({
+					componentId: this.$props.componentId,
+					query,
+					value,
+					label: filterLabel,
+					showFilter,
+					URLParams,
+					componentType: componentTypes.searchBox,
+					category: categoryValue,
+				});
+			}
+		},
+		// need to review
+		handleFocus(event) {
+			this.isOpen = true;
+			this.$emit('focus', event);
+		},
+		handleVoiceResults({ results }) {
+			if (
+				results &&
+				results[0] &&
+				results[0].isFinal &&
+				results[0][0] &&
+				results[0][0].transcript &&
+				results[0][0].transcript.trim()
+			) {
+				this.isPending = false;
+				this.setValue(results[0][0].transcript.trim(), true);
+			}
+		},
+		triggerQuery(
+			{ isOpen = false, categoryValue } = {
+				isOpen: false,
+				categoryValue: undefined,
+			},
+		) {
+			const { value } = this.$props;
+			if (value !== undefined) {
+				this.isPending = false;
+				this.setValue(
+					this.$props.value,
+					!isOpen,
+					this.$props,
+					undefined,
+					true,
+					categoryValue,
+				);
+			}
+		},
+		triggerClickAnalytics(searchPosition, documentId) {
+			// click analytics would only work client side and after javascript loads
+			let docId = documentId;
+			if (!docId) {
+				const hitData = this.normalizedSuggestions.find(
+					(hit) => hit._click_id === searchPosition,
+				);
+				if (hitData && hitData.source && hitData.source._id) {
+					docId = hitData.source._id;
+				}
+			}
+			this.recordSuggestionClick(searchPosition, docId);
+		},
+
+		clearValue() {
+			this.isPending = false;
+			this.setValue('', true);
+			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
+		},
+
+		handleKeyDown(event, highlightedIndex) {
+			const { value } = this.$props;
+			if (value !== undefined) {
+				this.isPending = true;
+			}
+
+			// if a suggestion was selected, delegate the handling to suggestion handler
+			if (event.key === 'Enter' && highlightedIndex === null) {
+				this.setValue(event.target.value, true);
+				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
+			}
+			// Need to review
+			this.$emit('keyDown', event, this.triggerQuery);
+			this.$emit('key-down', event, this.triggerQuery);
+		},
+
+		onInputChange(e) {
+			const { value: inputValue } = e.target;
+
+			if (!this.$data.isOpen) {
+				this.isOpen = true;
+			}
+
+			const { value } = this.$props;
+			if (value === undefined) {
+				this.setValue(inputValue);
+			} else {
+				this.isPending = true;
+				this.$emit('change', inputValue, this.triggerQuery, e);
+			}
+		},
+
+		onSuggestionSelected(suggestion) {
+			const { value } = this.$props;
+			// Record analytics for selected suggestions
+			this.triggerClickAnalytics(suggestion._click_id);
+			if (value === undefined) {
+				this.setValue(
+					suggestion.value,
+					true,
+					this.$props,
+					causes.SUGGESTION_SELECT,
+					true,
+					false,
+					suggestion._category,
+				);
+			} else {
+				this.isPending = false;
+				this.$emit('change', suggestion.value, ({ isOpen = false } = { isOpen: false }) =>
+					this.triggerQuery({ isOpen, categoryValue: suggestion._category }),
+				);
+			}
+			this.onValueSelectedHandler(
+				suggestion.value,
+				causes.SUGGESTION_SELECT,
+				suggestion.source,
+			);
+		},
+
+		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
+			this.$emit('valueSelected', currentValue, ...cause);
+			this.$emit('value-selected', currentValue, ...cause);
+		},
+
+		handleStateChange(changes) {
+			const { isOpen } = changes;
+			this.isOpen = isOpen;
+		},
+
+		getBackgroundColor(highlightedIndex, index) {
+			const isDark = this.themePreset === 'dark';
+
+			if (isDark) {
+				return highlightedIndex === index ? '#555' : '#424242';
+			}
+
+			return highlightedIndex === index ? '#eee' : '#fff';
+		},
+
+		renderIcon() {
+			if (this.$props.showIcon) {
+				return this.$props.icon || <SearchSvg />;
+			}
+
+			return null;
+		},
+
+		renderErrorComponent() {
+			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
+				return (
+					<SuggestionWrapper
+						innerClass={this.$props.innerClass}
+						innerClassName="error"
+						theme={this.theme}
+						themePreset={this.themePreset}
+					>
+						{isFunction(renderError) ? renderError(this.error) : renderError}
+					</SuggestionWrapper>
+				);
+			}
+			return null;
+		},
+
+		renderCancelIcon() {
+			if (this.$props.showClear) {
+				return this.$props.clearIcon || <CancelSvg />;
+			}
+
+			return null;
+		},
+		renderNoSuggestions(finalSuggestionsList = []) {
+			const { theme, innerClass } = this.$props;
+			const renderNoSuggestion =
+				this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const { isOpen, currentValue } = this.$data;
+			if (
+				renderNoSuggestion &&
+				isOpen &&
+				!finalSuggestionsList.length &&
+				!this.isLoading &&
+				currentValue &&
+				!(renderError && this.error)
+			) {
+				return (
+					<SuggestionWrapper
+						innerClass={innerClass}
+						themePreset={this.themePreset}
+						theme={theme}
+						innerClassName="noSuggestion"
+						scopedSlots={{
+							default: () =>
+								typeof renderNoSuggestion === 'function'
+									? renderNoSuggestion(currentValue)
+									: renderNoSuggestion,
+						}}
+					/>
+				);
+			}
+			return null;
+		},
+		renderInputAddonBefore() {
+			const { addonBefore } = this.$scopedSlots;
+			if (addonBefore) {
+				return <InputAddon>{addonBefore()}</InputAddon>;
+			}
+
+			return null;
+		},
+		renderInputAddonAfter() {
+			const { addonAfter } = this.$scopedSlots;
+			if (addonAfter) {
+				return <InputAddon>{addonAfter()}</InputAddon>;
+			}
+
+			return null;
+		},
+		renderIcons() {
+			const {
+				iconPosition,
+				showClear,
+				innerClass,
+				getMicInstance,
+				showVoiceSearch,
+				showIcon,
+			} = this.$props;
+			const renderMic = this.$scopedSlots.renderMic || this.$props.renderMic;
+			const { currentValue } = this.$data;
+			return (
+				<div>
+					<IconGroup groupPosition="right" positionType="absolute">
+						{currentValue && showClear && (
+							<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
+								{this.renderCancelIcon()}
+							</IconWrapper>
+						)}
+						{showVoiceSearch && (
+							<Mic
+								getInstance={getMicInstance}
+								render={renderMic}
+								handleResult={this.handleVoiceResults}
+								className={getClassName(innerClass, 'mic') || null}
+							/>
+						)}
+						{iconPosition === 'right' && showIcon && (
+							<IconWrapper onClick={this.handleSearchIconClick}>
+								{this.renderIcon()}
+							</IconWrapper>
+						)}
+					</IconGroup>
+
+					<IconGroup groupPosition="left" positionType="absolute">
+						{iconPosition === 'left' && showIcon && (
+							<IconWrapper onClick={this.handleSearchIconClick}>
+								{this.renderIcon()}
+							</IconWrapper>
+						)}
+					</IconGroup>
+				</div>
+			);
+		},
+		focusSearchBox(event) {
+			const elt = event.target || event.srcElement;
+			const { tagName } = elt;
+			if (
+				elt.isContentEditable ||
+				tagName === 'INPUT' ||
+				tagName === 'SELECT' ||
+				tagName === 'TEXTAREA'
+			) {
+				// already in an input
+				return;
+			}
+
+			this.$refs?.[this.$props.innerRef]?.focus(); // eslint-disable-line
+		},
+		listenForFocusShortcuts() {
+			const { focusShortcuts = ['/'] } = this.$props;
+
+			if (isEmpty(focusShortcuts)) {
+				return;
+			}
+			const shortcutsString = parseFocusShortcuts(focusShortcuts).join(',');
+
+			// handler for alphabets and other key combinations
+			hotkeys(
+				shortcutsString, // eslint-disable-next-line no-unused-vars
+				/* eslint-disable no-shadow */ (event, handler) => {
+					// Prevent the default refresh event under WINDOWS system
+					event.preventDefault();
+					this.focusSearchBox(event);
+				},
+			);
+
+			// if one of modifier keys are used, they are handled below
+			hotkeys('*', (event) => {
+				const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
+
+				if (modifierKeys.length === 0) return;
+
+				for (let index = 0; index < modifierKeys.length; index += 1) {
+					const element = modifierKeys[index];
+					if (hotkeys[element]) {
+						this.focusSearchBox(event);
+						break;
+					}
+				}
+			});
+		},
+		onAutofillClick(suggestion) {
+			const { value } = suggestion;
+			this.isOpen = true;
+			this.currentValue = value;
+			this.triggerDefaultQuery(value);
+		},
+	},
+	render() {
+		const { theme, expandSuggestionsContainer } = this.$props;
+		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
+		const hasSuggestions =
+			Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+
+		return (
+			<Container class={this.$props.className}>
+				{this.$props.title && (
+					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
+						{this.$props.title}
+					</Title>
+				)}
+				{hasSuggestions && this.$props.autosuggest ? (
+					<Downshift
+						id={`${this.$props.componentId}-downshift`}
+						handleChange={this.onSuggestionSelected}
+						handleMouseup={this.handleStateChange}
+						isOpen={this.$data.isOpen}
+						scopedSlots={{
+							default: ({
+								getInputEvents,
+								getInputProps,
+								getItemProps,
+								getItemEvents,
+								isOpen,
+								highlightedIndex,
+								setHighlightedIndex,
+							}) => {
+								const renderSuggestionsDropdown = () => {
+									const getIcon = (iconType) => {
+										switch (iconType) {
+											case suggestionTypes.Recent:
+												return recentSearchesIcon;
+											case suggestionTypes.Popular:
+												return popularSearchesIcon;
+											default:
+												return null;
+										}
+									};
+
+									return (
+										<div>
+											{this.hasCustomRenderer &&
+												this.getComponent({
+													isOpen,
+													getItemProps,
+													getItemEvents,
+													highlightedIndex,
+												})}
+											{this.renderErrorComponent()}
+											{!this.hasCustomRenderer && isOpen && hasSuggestions ? (
+												<ul
+													class={`${suggestions(
+														this.themePreset,
+														theme,
+													)} ${getClassName(
+														this.$props.innerClass,
+														'list',
+													)}`}
+												>
+													{this.normalizedSuggestions.map(
+														(item, index) => (
+															<li
+																{...{
+																	domProps: getItemProps({
+																		item,
+																	}),
+																}}
+																{...{
+																	on: getItemEvents({
+																		item,
+																	}),
+																}}
+																key={`${index + 1}-${item.value}`}
+																style={{
+																	backgroundColor:
+																		this.getBackgroundColor(
+																			highlightedIndex,
+																			index,
+																		),
+																	justifyContent: 'flex-start',
+																	alignItems: 'center',
+																}}
+															>
+																<div
+																	style={{
+																		padding: '0 10px 0 0',
+																	}}
+																>
+																	<CustomSvg
+																		className={
+																			getClassName(
+																				this.$props
+																					.innerClass,
+																				`${item._suggestion_type}-search-icon`,
+																			) || null
+																		}
+																		icon={getIcon(
+																			item._suggestion_type,
+																		)}
+																		type={`${item._suggestion_type}-search-icon`}
+																	/>
+																</div>
+																<SuggestionItem
+																	currentValue={this.currentValue}
+																	suggestion={item}
+																/>
+																{/* 👇 avoid showing autofill ifor cateogry suggestions👇 */}
+																{item._category ? null : (
+																	<AutofillSvg
+																		handleClick={(e) => {
+																			e.stopPropagation();
+																			this.onAutofillClick(
+																				item,
+																			);
+																		}}
+																	/>
+																)}
+															</li>
+														),
+													)}
+												</ul>
+											) : (
+												this.renderNoSuggestions(this.normalizedSuggestions)
+											)}
+										</div>
+									);
+								};
+								return (
+									<div class={suggestionsContainer}>
+										<InputGroup>
+											{this.renderInputAddonBefore()}
+											<InputWrapper>
+												<Input
+													id={`${this.$props.componentId}-input`}
+													showIcon={this.$props.showIcon}
+													showClear={this.$props.showClear}
+													iconPosition={this.$props.iconPosition}
+													ref={this.$props.innerRef}
+													class={getClassName(
+														this.$props.innerClass,
+														'input',
+													)}
+													placeholder={this.$props.placeholder}
+													autoFocus={this.$props.autoFocus}
+													{...{
+														on: getInputEvents({
+															onInput: this.onInputChange,
+															onBlur: (e) => {
+																this.$emit(
+																	'blur',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onFocus: this.handleFocus,
+															onKeyPress: (e) => {
+																this.$emit(
+																	'keyPress',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-press',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onKeyDown: (e) =>
+																this.handleKeyDown(
+																	e,
+																	highlightedIndex,
+																),
+															onKeyUp: (e) => {
+																this.$emit(
+																	'keyUp',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-up',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onClick: () => {
+																setHighlightedIndex(null);
+															},
+														}),
+													}}
+													{...{
+														domProps: getInputProps({
+															value:
+																this.$data.currentValue === null
+																	? ''
+																	: this.$data.currentValue,
+														}),
+													}}
+													themePreset={this.themePreset}
+													autocomplete="off"
+												/>
+												{this.renderIcons()}
+												{!expandSuggestionsContainer &&
+													renderSuggestionsDropdown()}
+											</InputWrapper>
+											{this.renderInputAddonAfter()}
+										</InputGroup>
+										{expandSuggestionsContainer && renderSuggestionsDropdown()}
+									</div>
+								);
+							},
+						}}
+					/>
+				) : (
+					<div class={suggestionsContainer}>
+						<InputGroup>
+							{this.renderInputAddonBefore()}
+							<InputWrapper>
+								<Input
+									class={getClassName(this.$props.innerClass, 'input') || ''}
+									placeholder={this.$props.placeholder}
+									{...{
+										on: {
+											blur: (e) => {
+												this.$emit('blur', e, this.triggerQuery);
+											},
+											keypress: (e) => {
+												this.$emit('keyPress', e, this.triggerQuery);
+												this.$emit('key-press', e, this.triggerQuery);
+											},
+											input: this.onInputChange,
+											focus: (e) => {
+												this.$emit('focus', e, this.triggerQuery);
+											},
+											keydown: (e) => {
+												this.$emit('keyDown', e, this.triggerQuery);
+												this.$emit('key-down', e, this.triggerQuery);
+											},
+											keyup: (e) => {
+												this.$emit('keyUp', e, this.triggerQuery);
+												this.$emit('key-up', e, this.triggerQuery);
+											},
+										},
+									}}
+									{...{
+										domProps: {
+											autofocus: this.$props.autoFocus,
+											value: this.$data.currentValue
+												? this.$data.currentValue
+												: '',
+										},
+									}}
+									iconPosition={this.$props.iconPosition}
+									showIcon={this.$props.showIcon}
+									showClear={this.$props.showClear}
+									ref={this.$props.innerRef}
+									themePreset={this.themePreset}
+								/>
+								{this.renderIcons()}
+							</InputWrapper>
+							{this.renderInputAddonAfter()}
+						</InputGroup>
+					</div>
+				)}
+			</Container>
+		);
+	},
+	destroyed() {
+		document.removeEventListener('keydown', this.onKeyDown);
+	},
+};
+
+SearchBox.defaultQuery = (value, props) => {
+	let finalQuery = null;
+
+	const fields = normalizeDataField(props.dataField, props.fieldWeights);
+	finalQuery = {
+		bool: {
+			should: SearchBox.shouldQuery(value, fields, props),
+			minimum_should_match: '1',
+		},
+	};
+
+	if (finalQuery && props.nestedField) {
+		return {
+			query: {
+				nested: {
+					path: props.nestedField,
+					query: finalQuery,
+				},
+			},
+		};
+	}
+
+	return finalQuery;
+};
+SearchBox.shouldQuery = (value, dataFields, props) => {
+	const finalQuery = [];
+	const phrasePrefixFields = [];
+	const fields = dataFields.map((dataField) => {
+		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
+		if (
+			!(
+				dataField.field.endsWith('.keyword') ||
+				dataField.field.endsWith('.autosuggest') ||
+				dataField.field.endsWith('.search')
+			)
+		) {
+			phrasePrefixFields.push(queryField);
+		}
+		return queryField;
+	});
+	if (props.searchOperators || props.queryString) {
+		return {
+			query: value,
+			fields,
+			default_operator: props.queryFormat,
+		};
+	}
+
+	if (props.queryFormat === 'and') {
+		finalQuery.push({
+			multi_match: {
+				query: value,
+				fields,
+				type: 'cross_fields',
+				operator: 'and',
+			},
+		});
+		finalQuery.push({
+			multi_match: {
+				query: value,
+				fields,
+				type: 'phrase',
+				operator: 'and',
+			},
+		});
+		if (phrasePrefixFields.length > 0) {
+			finalQuery.push({
+				multi_match: {
+					query: value,
+					fields: phrasePrefixFields,
+					type: 'phrase_prefix',
+					operator: 'and',
+				},
+			});
+		}
+		return finalQuery;
+	}
+
+	finalQuery.push({
+		multi_match: {
+			query: value,
+			fields,
+			type: 'best_fields',
+			operator: 'or',
+			fuzziness: props.fuzziness ? props.fuzziness : 0,
+		},
+	});
+
+	finalQuery.push({
+		multi_match: {
+			query: value,
+			fields,
+			type: 'phrase',
+			operator: 'or',
+		},
+	});
+
+	if (phrasePrefixFields.length > 0) {
+		finalQuery.push({
+			multi_match: {
+				query: value,
+				fields: phrasePrefixFields,
+				type: 'phrase_prefix',
+				operator: 'or',
+			},
+		});
+	}
+
+	return finalQuery;
+};
+
+const mapStateToProps = (state, props) => ({
+	selectedValue:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
+	selectedCategory:
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].category) ||
+		null,
+	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
+	aggregationData: state.compositeAggregations[props.componentId] || [],
+	themePreset: state.config.themePreset,
+	isLoading: !!state.isLoading[`${props.componentId}_active`],
+	error: state.error[props.componentId],
+	enableAppbase: state.config.enableAppbase,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+});
+const mapDispatchToProps = {
+	updateQuery,
+	setCustomQuery,
+	setDefaultQuery,
+	recordSuggestionClick,
+};
+const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(SearchBox), {
+	componentType: componentTypes.searchBox,
+	internalComponent: true,
+});
+
+SearchBox.install = function (Vue) {
+	Vue.component(SearchBox.name, DSConnected);
+};
+// Add componentType for SSR
+SearchBox.componentType = componentTypes.searchBox;
+
+export default SearchBox;
