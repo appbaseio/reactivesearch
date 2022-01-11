@@ -931,7 +931,7 @@ const SearchBox = (props) => {
 																currentValue={currentValue || ''}
 																suggestion={item}
 															/>
-															{/* 👇 avoid showing autofill ifor cateogry suggestions👇 */}
+															{/* 👇 avoid showing autofill for category suggestions👇 */}
 															{item._category ? null : (
 																<AutofillSvg
 																	onClick={(e) => {
