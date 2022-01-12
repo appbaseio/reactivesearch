@@ -147,6 +147,8 @@ export interface analyticsConfig {
 
 export interface appbaseConfig {
 	recordAnalytics: boolean;
+	emptyQuery: boolean;
+	suggestionAnalytics: boolean;
 	enableQueryRules: boolean;
 	enableSearchRelevancy: boolean;
 	userId: string;

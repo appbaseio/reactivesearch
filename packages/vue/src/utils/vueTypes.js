@@ -142,6 +142,8 @@ const types = {
 	}),
 	appbaseConfig: VueTypes.shape({
 		recordAnalytics: VueTypes.bool,
+		emptyQuery: VueTypes.bool,
+		suggestionAnalytics: VueTypes.bool,
 		enableQueryRules: VueTypes.bool,
 		enableSearchRelevancy: VueTypes.bool,
 		userId: VueTypes.string,
