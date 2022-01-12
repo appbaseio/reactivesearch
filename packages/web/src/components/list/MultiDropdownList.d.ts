@@ -41,6 +41,7 @@ export interface MultiDropdownList extends CommonProps {
 	renderNoResults?: (...args: any[]) => any;
 	showSearch?: boolean;
 	index?: string;
+	showClear?: boolean;
 }
 
 declare const MultiDropdownList: React.ComponentClass<MultiDropdownList>;

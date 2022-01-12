@@ -7,6 +7,10 @@ import types from '../../utils/vueTypes';
 import Select, { Tick } from '../../styles/Select';
 import Chevron from '../../styles/Chevron';
 import { isFunction } from '../../utils/index';
+import InputWrapper from '../../styles/InputWrapper';
+import IconGroup from '../../styles/IconGroup';
+import IconWrapper from '../../styles/IconWrapper';
+import CancelSvg from './CancelSvg';
 
 const { getClassName } = helper;
 const Dropdown = {
@@ -43,6 +47,8 @@ const Dropdown = {
 		small: VueTypes.bool.def(false),
 		themePreset: types.themePreset,
 		showSearch: VueTypes.bool,
+		showClear: VueTypes.bool,
+		searchPlaceholder: VueTypes.string.def('Type here to search...'),
 	},
 
 	render() {
@@ -84,7 +90,6 @@ const Dropdown = {
 
 			return false;
 		})
-
 		return (
 			<Downshift
 				isOpen={this.$data.isOpen}
@@ -142,19 +147,7 @@ const Dropdown = {
 									} ${getClassName(this.$props.innerClass, 'list')}`}
 								>
 									{this.$props.showSearch ? (
-										<Input
-											id={`${this.$props.componentId}-input`}
-											style={{
-												border: 0,
-												borderBottom: '1px solid #ddd',
-											}}
-											showIcon={false}
-											class={getClassName(this.$props.innerClass, 'input')}
-											placeholder="Type here to search..."
-											value={this.$data.searchTerm}
-											onChange={this.handleInputChange}
-											themePreset={themePreset}
-										/>
+										this.renderSearchbox()
 									) : null}
 									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
 										? this.renderNoResult()
@@ -266,6 +259,7 @@ const Dropdown = {
 
 			if (!this.$props.multi) {
 				this.isOpen = false;
+				this.searchTerm = '';
 			}
 		},
 		handleStateChange({ isOpen }) {
@@ -288,6 +282,10 @@ const Dropdown = {
 		handleInputChange(e) {
 			const { value } = e.target;
 			this.searchTerm = value;
+		},
+
+		clearSearchTerm() {
+			this.searchTerm = '';
 		},
 
 		renderToString(value) {
@@ -324,6 +322,45 @@ const Dropdown = {
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
 				</p>
 			);
+		},
+
+		renderSearchbox() {
+			const { componentId, searchPlaceholder, showClear, themePreset, innerClass }
+				= this.$props;
+			
+			const InputComponent = (
+				<Input
+					id={`${componentId}-input`}
+					style={{
+						border: 0,
+						borderBottom: '1px solid #ddd',
+					}}
+					showIcon={false}
+					showClear={showClear}
+					class={getClassName(innerClass, 'input')}
+					placeholder={searchPlaceholder}
+					value={this.$data.searchTerm}
+					onChange={this.handleInputChange}
+					themePreset={themePreset}
+				/>
+			);
+			
+			if (showClear) {
+				return (
+					<InputWrapper>
+						{InputComponent}
+						{this.searchTerm && (
+							<IconGroup groupPosition="right" positionType="absolute">
+								<IconWrapper onClick={this.clearSearchTerm} isClearIcon>
+									<CancelSvg />
+								</IconWrapper>
+							</IconGroup>
+						)}
+					</InputWrapper>
+				);
+			}
+
+			return InputComponent;
 		},
 	},
 };
