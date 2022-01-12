@@ -6,7 +6,7 @@ const { getSearchState } = helper;
 
 const defaultKeys = ['hits', 'value', 'aggregations', 'error'];
 
-const filterProps = props => ({
+const filterProps = (props = {}) => ({
 	...props,
 	props: props.componentProps,
 });
@@ -18,7 +18,7 @@ const filterByComponentIds = (state, props = {}) => {
 			[componentIds]: state[componentIds],
 		};
 	}
-	if (componentIds instanceof Array) {
+	if (Array.isArray(componentIds)) {
 		const filteredState = {};
 		componentIds.forEach(componentId => {
 			filteredState[componentId] = state[componentId];
@@ -52,11 +52,11 @@ const StateProvider = {
 	},
 	data() {
 		this.__state = {
-			searchState: null,
+			searchState: null
 		};
 		return this.__state;
 	},
-	mounted() {
+	created() {
 		this.searchState = filterByKeys(
 			getSearchState(filterProps(this.searchStateProps)),
 			this.includeKeys,
