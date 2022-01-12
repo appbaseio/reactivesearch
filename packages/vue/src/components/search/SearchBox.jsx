@@ -32,7 +32,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
 import CustomSvg from '../shared/CustomSvg';
-import AutofillSvg from '../shared/AutoFillSvg';
+import AutofillSvg from '../shared/AutoFillSvg.jsx';
 
 const { updateQuery, setCustomQuery, setDefaultQuery, recordSuggestionClick } = Actions;
 const {
@@ -82,8 +82,7 @@ const SearchBox = {
 			);
 		}
 
-		this.currentValue =
-			this.$props.selectedValue || this.$props.value || this.$props.defaultValue || '';
+		this.currentValue = this.selectedValue || this.value || this.defaultValue || '';
 
 		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
 
@@ -93,11 +92,11 @@ const SearchBox = {
 			this.$props,
 			undefined,
 			false,
-			this.$props.selectedCategory,
+			this.selectedCategory,
 		);
 
 		// Set custom and default queries in store
-		this.triggerCustomQuery(this.currentValue, this.$props.selectedCategory);
+		this.triggerCustomQuery(this.currentValue, this.selectedCategory);
 		this.triggerDefaultQuery(this.currentValue);
 	},
 	computed: {
@@ -191,42 +190,14 @@ const SearchBox = {
 		onData: types.func,
 		renderItem: types.func,
 	},
-	beforeMount() {
-		if (this.selectedValue) {
-			this.setValue(
-				this.selectedValue,
-				true,
-				this.$props,
-				undefined,
-				true,
-				this.selectedCategory,
-			);
-		} else if (this.$props.value) {
-			this.setValue(
-				this.$props.value,
-				true,
-				this.$props,
-				undefined,
-				true,
-				this.selectedCategory,
-			);
-		} else if (this.$props.defaultValue) {
-			this.setValue(
-				this.$props.defaultValue,
-				true,
-				this.$props,
-				undefined,
-				true,
-				this.selectedCategory,
-			);
-		}
-	},
 	mounted() {
 		this.listenForFocusShortcuts();
 	},
 	watch: {
-		dataField() {
-			this.triggerCustomQuery(this.$data.currentValue);
+		dataField(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.triggerCustomQuery(this.$data.currentValue);
+			}
 		},
 		fieldWeights() {
 			this.triggerCustomQuery(this.$data.currentValue);
@@ -242,7 +213,13 @@ const SearchBox = {
 		},
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.setValue(newVal, true, this.$props, undefined, false);
+				this.setValue(
+					newVal,
+					true,
+					this.$props,
+					newVal === '' ? causes.CLEAR_VALUE : undefined,
+					false,
+				);
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -260,8 +237,8 @@ const SearchBox = {
 			if (Array.isArray(newVal) && newVal.length) {
 				suggestionsList = [...withClickIds(newVal)];
 			} else if (
-				Array.isArray(this.$props.defaultSuggestions) &&
-				this.$props.defaultSuggestions.length
+				Array.isArray(this.$props.defaultSuggestions)
+				&& this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
@@ -273,7 +250,9 @@ const SearchBox = {
 					// selected value is cleared, call onValueSelected
 					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 				}
-				this.setValue(newVal || '', true, this.$props);
+				if (this.$props.value === undefined) {
+					this.setValue(newVal || '', true, this.$props);
+				}
 			}
 		},
 		focusShortcuts() {
@@ -339,9 +318,9 @@ const SearchBox = {
 					return;
 				}
 				if (
-					typeof propValue !== 'string' &&
-					typeof propValue !== 'object' &&
-					!Array.isArray(propValue)
+					typeof propValue !== 'string'
+					&& typeof propValue !== 'object'
+					&& !Array.isArray(propValue)
 				) {
 					console.error(
 						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
@@ -410,7 +389,7 @@ const SearchBox = {
 						} else {
 							this.setValue('', true);
 						}
-					} else {
+					} else if (props.value === undefined) {
 						this.triggerCustomQuery(value, categoryValue);
 					}
 				} else {
@@ -479,32 +458,32 @@ const SearchBox = {
 		},
 		handleVoiceResults({ results }) {
 			if (
-				results &&
-				results[0] &&
-				results[0].isFinal &&
-				results[0][0] &&
-				results[0][0].transcript &&
-				results[0][0].transcript.trim()
+				results
+				&& results[0]
+				&& results[0].isFinal
+				&& results[0][0]
+				&& results[0][0].transcript
+				&& results[0][0].transcript.trim()
 			) {
 				this.setValue(results[0][0].transcript.trim(), true);
 			}
 		},
-		triggerQuery(
-			{ isOpen = false, categoryValue } = {
-				isOpen: false,
-				categoryValue: undefined,
-			},
-		) {
-			const { value } = this.$props;
-			if (value !== undefined) {
-				this.setValue(
-					this.$props.value,
-					!isOpen,
-					this.$props,
-					undefined,
-					true,
-					categoryValue,
-				);
+		triggerQuery({
+			isOpen = false,
+			customQuery = true,
+			defaultQuery = true,
+			value = undefined,
+			categoryValue = undefined,
+		}) {
+			if (isOpen) {
+				this.isOpen = isOpen;
+			}
+
+			if (customQuery) {
+				this.triggerCustomQuery(value, categoryValue);
+			}
+			if (defaultQuery) {
+				this.triggerDefaultQuery(value);
 			}
 		},
 		triggerClickAnalytics(searchPosition, documentId) {
@@ -553,7 +532,18 @@ const SearchBox = {
 					inputValue === '' ? causes.CLEAR_VALUE : undefined,
 				);
 			} else {
-				this.$emit('change', inputValue, this.triggerQuery, e);
+				this.$emit(
+					'change',
+					inputValue,
+					({ isOpen = false } = { isOpen: false }) =>
+						this.triggerQuery({
+							defaultQuery: true,
+							customQuery: true,
+							value: inputValue,
+							isOpen,
+						}),
+					e,
+				);
 			}
 		},
 
@@ -573,7 +563,11 @@ const SearchBox = {
 				);
 			} else {
 				this.$emit('change', suggestion.value, ({ isOpen = false } = { isOpen: false }) =>
-					this.triggerQuery({ isOpen, categoryValue: suggestion._category }),
+					this.triggerQuery({
+						isOpen,
+						value: suggestion.value,
+						categoryValue: suggestion._category,
+					}),
 				);
 			}
 			this.onValueSelectedHandler(
@@ -637,17 +631,17 @@ const SearchBox = {
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
-			const renderNoSuggestion =
-				this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderNoSuggestion
+				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
-				renderNoSuggestion &&
-				isOpen &&
-				!finalSuggestionsList.length &&
-				!this.isLoading &&
-				currentValue &&
-				!(renderError && this.error)
+				renderNoSuggestion
+				&& isOpen
+				&& !finalSuggestionsList.length
+				&& !this.isLoading
+				&& currentValue
+				&& !(renderError && this.error)
 			) {
 				return (
 					<SuggestionWrapper
@@ -730,10 +724,10 @@ const SearchBox = {
 			const elt = event.target || event.srcElement;
 			const { tagName } = elt;
 			if (
-				elt.isContentEditable ||
-				tagName === 'INPUT' ||
-				tagName === 'SELECT' ||
-				tagName === 'TEXTAREA'
+				elt.isContentEditable
+				|| tagName === 'INPUT'
+				|| tagName === 'SELECT'
+				|| tagName === 'TEXTAREA'
 			) {
 				// already in an input
 				return;
@@ -785,17 +779,17 @@ const SearchBox = {
 				e.stopPropagation();
 				this.onAutofillClick(suggestion);
 			};
-			/* 👇 avoid showing autofill ifor cateogry suggestions👇 */
+			/* 👇 avoid showing autofill for category suggestions👇 */
 			return suggestion._category ? null : (
-				<AutofillSvg {...{ on: { click: handleAutoFillClick } }} />
+				<AutofillSvg handleAutoFill={handleAutoFillClick} />
 			);
 		},
 	},
 	render() {
 		const { theme, expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
-		const hasSuggestions =
-			Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+		const hasSuggestions
+			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
 		const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
 		return (
 			<Container class={this.$props.className}>
@@ -833,8 +827,8 @@ const SearchBox = {
 									};
 									return (
 										<div>
-											{this.hasCustomRenderer &&
-												this.getComponent({
+											{this.hasCustomRenderer
+												&& this.getComponent({
 													isOpen,
 													getItemProps,
 													getItemEvents,
@@ -1009,8 +1003,8 @@ const SearchBox = {
 													autocomplete="off"
 												/>
 												{this.renderIcons()}
-												{!expandSuggestionsContainer &&
-													renderSuggestionsDropdown()}
+												{!expandSuggestionsContainer
+													&& renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
 										</InputGroup>
@@ -1110,9 +1104,9 @@ SearchBox.shouldQuery = (value, dataFields, props) => {
 		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
 		if (
 			!(
-				dataField.field.endsWith('.keyword') ||
-				dataField.field.endsWith('.autosuggest') ||
-				dataField.field.endsWith('.search')
+				dataField.field.endsWith('.keyword')
+				|| dataField.field.endsWith('.autosuggest')
+				|| dataField.field.endsWith('.search')
 			)
 		) {
 			phrasePrefixFields.push(queryField);
@@ -1192,13 +1186,13 @@ SearchBox.shouldQuery = (value, dataFields, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	selectedCategory:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].category) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
