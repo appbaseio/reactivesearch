@@ -294,6 +294,11 @@ const SearchBox = {
 				error: newVal,
 			});
 		},
+		debounce(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.handleTextChange = debounce(this.handleText, newVal);
+			}			
+		}
 	},
 	methods: {
 		handleText(value, cause) {
