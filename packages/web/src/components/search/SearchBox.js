@@ -84,7 +84,7 @@ const SearchBox = (props) => {
 
 	const internalComponent = getInternalComponentID(componentId);
 	const [currentValue, setCurrentValue] = useState('');
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
 	const stats = () => getResultStats(props);
 
@@ -829,9 +829,7 @@ const SearchBox = (props) => {
 		listenForFocusShortcuts();
 	}, []);
 
-	const hasSuggestions = () =>
-		(Array.isArray(props.defaultSuggestions) && props.defaultSuggestions.length)
-		|| (Array.isArray(parsedSuggestions()) && parsedSuggestions().length);
+	const hasSuggestions = () => (Array.isArray(parsedSuggestions()) && parsedSuggestions().length);
 
 	return (
 		<Container style={props.style} className={props.className}>
@@ -840,7 +838,7 @@ const SearchBox = (props) => {
 					{props.title}
 				</Title>
 			)}
-			{hasSuggestions() || props.autosuggest ? (
+			{hasSuggestions() && props.autosuggest ? (
 				<Downshift
 					id={`${props.componentId}-downshift`}
 					onChange={onSuggestionSelected}
@@ -1148,6 +1146,7 @@ SearchBox.propTypes = {
 	customStopwords: types.stringArray,
 	onData: types.func,
 	renderItem: types.func,
+	isOpen: types.bool,
 };
 
 SearchBox.defaultProps = {
@@ -1178,6 +1177,7 @@ SearchBox.defaultProps = {
 	addonAfter: undefined,
 	expandSuggestionsContainer: true,
 	suggestions: [],
+	isOpen: false,
 };
 
 const mapStateToProps = (state, props) => ({

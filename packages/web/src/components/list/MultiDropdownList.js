@@ -112,7 +112,9 @@ class MultiDropdownList extends Component {
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue).filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(
+							item => currentValue[item],
+						);
 						if (value.length) this.setValue(value, true);
 					},
 				);
@@ -129,7 +131,9 @@ class MultiDropdownList extends Component {
 						// value gets handled on the initial load and
 						// consecutive loads
 						const { currentValue } = this.state;
-						const value = Object.keys(currentValue).filter(item => currentValue[item]);
+						const value = Object.keys(currentValue).filter(
+							item => currentValue[item],
+						);
 						if (value.length) this.setValue(value, true);
 					},
 				);
@@ -490,6 +494,7 @@ class MultiDropdownList extends Component {
 					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
+					showClear={this.props.showClear}
 					transformData={this.props.transformData}
 					footer={
 						showLoadMore
@@ -501,6 +506,7 @@ class MultiDropdownList extends Component {
 							</div>
 						)
 					}
+					isOpen={this.props.isOpen}
 				/>
 			</Container>
 		);
@@ -560,6 +566,8 @@ MultiDropdownList.propTypes = {
 	loadMoreLabel: types.title,
 	nestedField: types.string,
 	index: types.string,
+	showClear: types.bool,
+	isOpen: types.bool,
 };
 
 MultiDropdownList.defaultProps = {
@@ -575,8 +583,10 @@ MultiDropdownList.defaultProps = {
 	showMissing: false,
 	missingLabel: 'N/A',
 	showSearch: false,
+	showClear: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	isOpen: false,
 };
 
 // Add componentType for SSR

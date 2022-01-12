@@ -73,10 +73,12 @@ const MultiDropdownList = {
 		showMissing: VueTypes.bool.def(false),
 		missingLabel: VueTypes.string.def('N/A'),
 		showSearch: VueTypes.bool.def(false),
+		showClear: VueTypes.bool.def(false),
 		showLoadMore: VueTypes.bool.def(false),
 		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
+		searchPlaceholder: VueTypes.string.def('Type here to search...'),
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -193,7 +195,7 @@ const MultiDropdownList = {
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
 			if(renderNoResults && isFunction(renderNoResults)) {
 				return (<div>{renderNoResults()}</div>);
-			} else if (renderNoResults && !isFunction(renderNoResults)) {
+			} if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
 			}
 			return null;
@@ -240,6 +242,8 @@ const MultiDropdownList = {
 						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
 					}
 					showSearch={this.$props.showSearch}
+					showClear={this.$props.showClear}
+					searchPlaceholder={this.$props.searchPlaceholder}
 					transformData={this.$props.transformData}
 					footer={
 						showLoadMore

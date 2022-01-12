@@ -10,3 +10,4 @@ packages/web/src/types.js
 vue-playground
 .expo/
 packages/reactivecore/coverage/
+__snapshots__

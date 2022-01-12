@@ -1,0 +1,3442 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should not render histogram when showHistogram is set to false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  position: relative;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-9 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-11 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-11 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-13 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-13 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-17 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-17 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    >
+      <div
+        className="rheostat rheostat-horizontal "
+        onClick={[Function]}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="rheostat-background"
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={30000}
+          className="rheostat-handle"
+          data-handle-key={0}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "0%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={50000}
+          className="rheostat-handle"
+          data-handle-key={1}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "100%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <div
+          className="rheostat-progress"
+          style={
+            Object {
+              "left": "0%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          30K
+        </div>
+        <div
+          className="emotion-9 emotion-8"
+        >
+          50K
+        </div>
+      </div>
+    </div>
+    <div
+      className="emotion-11 emotion-12"
+    >
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-15 emotion-16"
+          max={50000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={30000}
+        />
+      </div>
+      <div
+        className="emotion-17 emotion-12"
+      >
+        -
+      </div>
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-15 emotion-16"
+          min={30000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={50000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should not render slider when ShowSlider is false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-6 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-6 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-8 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-8 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-10 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-10:focus {
+  background-color: #fff;
+}
+
+.emotion-12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-12 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-12 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    />
+    <div
+      className="emotion-6 emotion-7"
+    >
+      <div
+        className="emotion-8 emotion-7"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-10 emotion-11"
+          max={50000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={30000}
+        />
+      </div>
+      <div
+        className="emotion-12 emotion-7"
+      >
+        -
+      </div>
+      <div
+        className="emotion-8 emotion-7"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-10 emotion-11"
+          min={30000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={50000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render histogram when showHistogram is set to true 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100px;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  margin: 0 12px -24px 12px;
+}
+
+.emotion-7 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 0.8733624454148472%;
+}
+
+.emotion-9 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 0.4366812227074236%;
+}
+
+.emotion-13 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 2.6200873362445414%;
+}
+
+.emotion-15 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 4.8034934497816595%;
+}
+
+.emotion-17 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 6.11353711790393%;
+}
+
+.emotion-19 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 7.423580786026201%;
+}
+
+.emotion-21 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 3.493449781659389%;
+}
+
+.emotion-23 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 10.91703056768559%;
+}
+
+.emotion-25 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 13.973799126637555%;
+}
+
+.emotion-27 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 29.694323144104803%;
+}
+
+.emotion-29 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 46.724890829694324%;
+}
+
+.emotion-31 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 53.275109170305676%;
+}
+
+.emotion-33 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 66.37554585152839%;
+}
+
+.emotion-35 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 75.54585152838428%;
+}
+
+.emotion-37 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 83.4061135371179%;
+}
+
+.emotion-39 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 93.88646288209607%;
+}
+
+.emotion-41 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 100%;
+}
+
+.emotion-43 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 93.44978165938865%;
+}
+
+.emotion-45 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 78.16593886462883%;
+}
+
+.emotion-47 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 97.37991266375546%;
+}
+
+.emotion-49 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 84.27947598253274%;
+}
+
+.emotion-51 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 88.646288209607%;
+}
+
+.emotion-53 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 76.41921397379913%;
+}
+
+.emotion-55 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 86.46288209606988%;
+}
+
+.emotion-57 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 69.43231441048034%;
+}
+
+.emotion-61 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 56.76855895196506%;
+}
+
+.emotion-63 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 76.85589519650655%;
+}
+
+.emotion-65 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 63.31877729257642%;
+}
+
+.emotion-67 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 72.48908296943232%;
+}
+
+.emotion-69 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 51.96506550218341%;
+}
+
+.emotion-71 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 66.8122270742358%;
+}
+
+.emotion-75 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 58.07860262008734%;
+}
+
+.emotion-77 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 44.97816593886463%;
+}
+
+.emotion-79 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 42.79475982532751%;
+}
+
+.emotion-81 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 43.23144104803494%;
+}
+
+.emotion-85 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 45.414847161572055%;
+}
+
+.emotion-89 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 39.737991266375545%;
+}
+
+.emotion-91 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 39.301310043668124%;
+}
+
+.emotion-93 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 31.004366812227076%;
+}
+
+.emotion-95 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 42.35807860262009%;
+}
+
+.emotion-97 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 38.427947598253276%;
+}
+
+.emotion-99 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 37.99126637554585%;
+}
+
+.emotion-101 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 33.18777292576419%;
+}
+
+.emotion-103 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 27.94759825327511%;
+}
+
+.emotion-105 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 33.624454148471614%;
+}
+
+.emotion-107 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 28.38427947598253%;
+}
+
+.emotion-113 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 23.580786026200872%;
+}
+
+.emotion-115 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 23.14410480349345%;
+}
+
+.emotion-117 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 27.510917030567686%;
+}
+
+.emotion-119 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 26.200873362445414%;
+}
+
+.emotion-123 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 24.45414847161572%;
+}
+
+.emotion-125 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 17.03056768558952%;
+}
+
+.emotion-127 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 18.777292576419214%;
+}
+
+.emotion-129 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 22.270742358078603%;
+}
+
+.emotion-135 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 20.087336244541486%;
+}
+
+.emotion-137 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 18.34061135371179%;
+}
+
+.emotion-139 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 16.157205240174672%;
+}
+
+.emotion-145 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 14.847161572052402%;
+}
+
+.emotion-147 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 14.410480349344978%;
+}
+
+.emotion-149 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 15.720524017467248%;
+}
+
+.emotion-157 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 12.663755458515285%;
+}
+
+.emotion-161 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 13.100436681222707%;
+}
+
+.emotion-167 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 12.22707423580786%;
+}
+
+.emotion-171 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 10.480349344978166%;
+}
+
+.emotion-177 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 9.170305676855895%;
+}
+
+.emotion-183 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 13.537117903930131%;
+}
+
+.emotion-187 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 10.043668122270743%;
+}
+
+.emotion-191 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 11.353711790393014%;
+}
+
+.emotion-193 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 8.733624454148472%;
+}
+
+.emotion-195 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 6.986899563318778%;
+}
+
+.emotion-197 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 11.790393013100436%;
+}
+
+.emotion-203 {
+  background-color: #efefef;
+  width: 2.35%;
+  height: 8.296943231441048%;
+}
+
+.emotion-205 {
+  background-color: #efefef;
+  width: 1%;
+  height: 7.423580786026201%;
+}
+
+.emotion-207 {
+  background-color: #efefef;
+  width: 1.35%;
+  height: 0%;
+}
+
+.emotion-209 {
+  position: relative;
+}
+
+.emotion-210 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-212 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+.emotion-214 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-214 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-214 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-216 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-216 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-216 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-218 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-218:focus {
+  background-color: #fff;
+}
+
+.emotion-220 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-220 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-220 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    >
+      <div
+        className="emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+          height="0.8733624454148472%"
+          title={2}
+          width="2.35%"
+        />
+        <div
+          className="emotion-9 emotion-8"
+          height="0.4366812227074236%"
+          title={1}
+          width="2.35%"
+        />
+        <div
+          className="emotion-7 emotion-8"
+          height="0.8733624454148472%"
+          title={2}
+          width="2.35%"
+        />
+        <div
+          className="emotion-13 emotion-8"
+          height="2.6200873362445414%"
+          title={6}
+          width="2.35%"
+        />
+        <div
+          className="emotion-15 emotion-8"
+          height="4.8034934497816595%"
+          title={11}
+          width="2.35%"
+        />
+        <div
+          className="emotion-17 emotion-8"
+          height="6.11353711790393%"
+          title={14}
+          width="2.35%"
+        />
+        <div
+          className="emotion-19 emotion-8"
+          height="7.423580786026201%"
+          title={17}
+          width="2.35%"
+        />
+        <div
+          className="emotion-21 emotion-8"
+          height="3.493449781659389%"
+          title={8}
+          width="2.35%"
+        />
+        <div
+          className="emotion-23 emotion-8"
+          height="10.91703056768559%"
+          title={25}
+          width="2.35%"
+        />
+        <div
+          className="emotion-25 emotion-8"
+          height="13.973799126637555%"
+          title={32}
+          width="2.35%"
+        />
+        <div
+          className="emotion-27 emotion-8"
+          height="29.694323144104803%"
+          title={68}
+          width="2.35%"
+        />
+        <div
+          className="emotion-29 emotion-8"
+          height="46.724890829694324%"
+          title={107}
+          width="2.35%"
+        />
+        <div
+          className="emotion-31 emotion-8"
+          height="53.275109170305676%"
+          title={122}
+          width="2.35%"
+        />
+        <div
+          className="emotion-33 emotion-8"
+          height="66.37554585152839%"
+          title={152}
+          width="2.35%"
+        />
+        <div
+          className="emotion-35 emotion-8"
+          height="75.54585152838428%"
+          title={173}
+          width="2.35%"
+        />
+        <div
+          className="emotion-37 emotion-8"
+          height="83.4061135371179%"
+          title={191}
+          width="2.35%"
+        />
+        <div
+          className="emotion-39 emotion-8"
+          height="93.88646288209607%"
+          title={215}
+          width="2.35%"
+        />
+        <div
+          className="emotion-41 emotion-8"
+          height="100%"
+          title={229}
+          width="2.35%"
+        />
+        <div
+          className="emotion-43 emotion-8"
+          height="93.44978165938865%"
+          title={214}
+          width="2.35%"
+        />
+        <div
+          className="emotion-45 emotion-8"
+          height="78.16593886462883%"
+          title={179}
+          width="2.35%"
+        />
+        <div
+          className="emotion-47 emotion-8"
+          height="97.37991266375546%"
+          title={223}
+          width="2.35%"
+        />
+        <div
+          className="emotion-49 emotion-8"
+          height="84.27947598253274%"
+          title={193}
+          width="2.35%"
+        />
+        <div
+          className="emotion-51 emotion-8"
+          height="88.646288209607%"
+          title={203}
+          width="2.35%"
+        />
+        <div
+          className="emotion-53 emotion-8"
+          height="76.41921397379913%"
+          title={175}
+          width="2.35%"
+        />
+        <div
+          className="emotion-55 emotion-8"
+          height="86.46288209606988%"
+          title={198}
+          width="2.35%"
+        />
+        <div
+          className="emotion-57 emotion-8"
+          height="69.43231441048034%"
+          title={159}
+          width="2.35%"
+        />
+        <div
+          className="emotion-53 emotion-8"
+          height="76.41921397379913%"
+          title={175}
+          width="2.35%"
+        />
+        <div
+          className="emotion-61 emotion-8"
+          height="56.76855895196506%"
+          title={130}
+          width="2.35%"
+        />
+        <div
+          className="emotion-63 emotion-8"
+          height="76.85589519650655%"
+          title={176}
+          width="2.35%"
+        />
+        <div
+          className="emotion-65 emotion-8"
+          height="63.31877729257642%"
+          title={145}
+          width="2.35%"
+        />
+        <div
+          className="emotion-67 emotion-8"
+          height="72.48908296943232%"
+          title={166}
+          width="2.35%"
+        />
+        <div
+          className="emotion-69 emotion-8"
+          height="51.96506550218341%"
+          title={119}
+          width="2.35%"
+        />
+        <div
+          className="emotion-71 emotion-8"
+          height="66.8122270742358%"
+          title={153}
+          width="2.35%"
+        />
+        <div
+          className="emotion-69 emotion-8"
+          height="51.96506550218341%"
+          title={119}
+          width="2.35%"
+        />
+        <div
+          className="emotion-75 emotion-8"
+          height="58.07860262008734%"
+          title={133}
+          width="2.35%"
+        />
+        <div
+          className="emotion-77 emotion-8"
+          height="44.97816593886463%"
+          title={103}
+          width="2.35%"
+        />
+        <div
+          className="emotion-79 emotion-8"
+          height="42.79475982532751%"
+          title={98}
+          width="2.35%"
+        />
+        <div
+          className="emotion-81 emotion-8"
+          height="43.23144104803494%"
+          title={99}
+          width="2.35%"
+        />
+        <div
+          className="emotion-79 emotion-8"
+          height="42.79475982532751%"
+          title={98}
+          width="2.35%"
+        />
+        <div
+          className="emotion-85 emotion-8"
+          height="45.414847161572055%"
+          title={104}
+          width="2.35%"
+        />
+        <div
+          className="emotion-85 emotion-8"
+          height="45.414847161572055%"
+          title={104}
+          width="2.35%"
+        />
+        <div
+          className="emotion-89 emotion-8"
+          height="39.737991266375545%"
+          title={91}
+          width="2.35%"
+        />
+        <div
+          className="emotion-91 emotion-8"
+          height="39.301310043668124%"
+          title={90}
+          width="2.35%"
+        />
+        <div
+          className="emotion-93 emotion-8"
+          height="31.004366812227076%"
+          title={71}
+          width="2.35%"
+        />
+        <div
+          className="emotion-95 emotion-8"
+          height="42.35807860262009%"
+          title={97}
+          width="2.35%"
+        />
+        <div
+          className="emotion-97 emotion-8"
+          height="38.427947598253276%"
+          title={88}
+          width="2.35%"
+        />
+        <div
+          className="emotion-99 emotion-8"
+          height="37.99126637554585%"
+          title={87}
+          width="2.35%"
+        />
+        <div
+          className="emotion-101 emotion-8"
+          height="33.18777292576419%"
+          title={76}
+          width="2.35%"
+        />
+        <div
+          className="emotion-103 emotion-8"
+          height="27.94759825327511%"
+          title={64}
+          width="2.35%"
+        />
+        <div
+          className="emotion-105 emotion-8"
+          height="33.624454148471614%"
+          title={77}
+          width="2.35%"
+        />
+        <div
+          className="emotion-107 emotion-8"
+          height="28.38427947598253%"
+          title={65}
+          width="2.35%"
+        />
+        <div
+          className="emotion-93 emotion-8"
+          height="31.004366812227076%"
+          title={71}
+          width="2.35%"
+        />
+        <div
+          className="emotion-103 emotion-8"
+          height="27.94759825327511%"
+          title={64}
+          width="2.35%"
+        />
+        <div
+          className="emotion-113 emotion-8"
+          height="23.580786026200872%"
+          title={54}
+          width="2.35%"
+        />
+        <div
+          className="emotion-115 emotion-8"
+          height="23.14410480349345%"
+          title={53}
+          width="2.35%"
+        />
+        <div
+          className="emotion-117 emotion-8"
+          height="27.510917030567686%"
+          title={63}
+          width="2.35%"
+        />
+        <div
+          className="emotion-119 emotion-8"
+          height="26.200873362445414%"
+          title={60}
+          width="2.35%"
+        />
+        <div
+          className="emotion-115 emotion-8"
+          height="23.14410480349345%"
+          title={53}
+          width="2.35%"
+        />
+        <div
+          className="emotion-123 emotion-8"
+          height="24.45414847161572%"
+          title={56}
+          width="2.35%"
+        />
+        <div
+          className="emotion-125 emotion-8"
+          height="17.03056768558952%"
+          title={39}
+          width="2.35%"
+        />
+        <div
+          className="emotion-127 emotion-8"
+          height="18.777292576419214%"
+          title={43}
+          width="2.35%"
+        />
+        <div
+          className="emotion-129 emotion-8"
+          height="22.270742358078603%"
+          title={51}
+          width="2.35%"
+        />
+        <div
+          className="emotion-129 emotion-8"
+          height="22.270742358078603%"
+          title={51}
+          width="2.35%"
+        />
+        <div
+          className="emotion-115 emotion-8"
+          height="23.14410480349345%"
+          title={53}
+          width="2.35%"
+        />
+        <div
+          className="emotion-135 emotion-8"
+          height="20.087336244541486%"
+          title={46}
+          width="2.35%"
+        />
+        <div
+          className="emotion-137 emotion-8"
+          height="18.34061135371179%"
+          title={42}
+          width="2.35%"
+        />
+        <div
+          className="emotion-139 emotion-8"
+          height="16.157205240174672%"
+          title={37}
+          width="2.35%"
+        />
+        <div
+          className="emotion-139 emotion-8"
+          height="16.157205240174672%"
+          title={37}
+          width="2.35%"
+        />
+        <div
+          className="emotion-139 emotion-8"
+          height="16.157205240174672%"
+          title={37}
+          width="2.35%"
+        />
+        <div
+          className="emotion-145 emotion-8"
+          height="14.847161572052402%"
+          title={34}
+          width="2.35%"
+        />
+        <div
+          className="emotion-147 emotion-8"
+          height="14.410480349344978%"
+          title={33}
+          width="2.35%"
+        />
+        <div
+          className="emotion-149 emotion-8"
+          height="15.720524017467248%"
+          title={36}
+          width="2.35%"
+        />
+        <div
+          className="emotion-137 emotion-8"
+          height="18.34061135371179%"
+          title={42}
+          width="2.35%"
+        />
+        <div
+          className="emotion-127 emotion-8"
+          height="18.777292576419214%"
+          title={43}
+          width="2.35%"
+        />
+        <div
+          className="emotion-125 emotion-8"
+          height="17.03056768558952%"
+          title={39}
+          width="2.35%"
+        />
+        <div
+          className="emotion-157 emotion-8"
+          height="12.663755458515285%"
+          title={29}
+          width="2.35%"
+        />
+        <div
+          className="emotion-145 emotion-8"
+          height="14.847161572052402%"
+          title={34}
+          width="2.35%"
+        />
+        <div
+          className="emotion-161 emotion-8"
+          height="13.100436681222707%"
+          title={30}
+          width="2.35%"
+        />
+        <div
+          className="emotion-145 emotion-8"
+          height="14.847161572052402%"
+          title={34}
+          width="2.35%"
+        />
+        <div
+          className="emotion-157 emotion-8"
+          height="12.663755458515285%"
+          title={29}
+          width="2.35%"
+        />
+        <div
+          className="emotion-167 emotion-8"
+          height="12.22707423580786%"
+          title={28}
+          width="2.35%"
+        />
+        <div
+          className="emotion-25 emotion-8"
+          height="13.973799126637555%"
+          title={32}
+          width="2.35%"
+        />
+        <div
+          className="emotion-171 emotion-8"
+          height="10.480349344978166%"
+          title={24}
+          width="2.35%"
+        />
+        <div
+          className="emotion-147 emotion-8"
+          height="14.410480349344978%"
+          title={33}
+          width="2.35%"
+        />
+        <div
+          className="emotion-167 emotion-8"
+          height="12.22707423580786%"
+          title={28}
+          width="2.35%"
+        />
+        <div
+          className="emotion-177 emotion-8"
+          height="9.170305676855895%"
+          title={21}
+          width="2.35%"
+        />
+        <div
+          className="emotion-161 emotion-8"
+          height="13.100436681222707%"
+          title={30}
+          width="2.35%"
+        />
+        <div
+          className="emotion-147 emotion-8"
+          height="14.410480349344978%"
+          title={33}
+          width="2.35%"
+        />
+        <div
+          className="emotion-183 emotion-8"
+          height="13.537117903930131%"
+          title={31}
+          width="2.35%"
+        />
+        <div
+          className="emotion-177 emotion-8"
+          height="9.170305676855895%"
+          title={21}
+          width="2.35%"
+        />
+        <div
+          className="emotion-187 emotion-8"
+          height="10.043668122270743%"
+          title={23}
+          width="2.35%"
+        />
+        <div
+          className="emotion-171 emotion-8"
+          height="10.480349344978166%"
+          title={24}
+          width="2.35%"
+        />
+        <div
+          className="emotion-191 emotion-8"
+          height="11.353711790393014%"
+          title={26}
+          width="2.35%"
+        />
+        <div
+          className="emotion-193 emotion-8"
+          height="8.733624454148472%"
+          title={20}
+          width="2.35%"
+        />
+        <div
+          className="emotion-195 emotion-8"
+          height="6.986899563318778%"
+          title={16}
+          width="2.35%"
+        />
+        <div
+          className="emotion-197 emotion-8"
+          height="11.790393013100436%"
+          title={27}
+          width="2.35%"
+        />
+        <div
+          className="emotion-23 emotion-8"
+          height="10.91703056768559%"
+          title={25}
+          width="2.35%"
+        />
+        <div
+          className="emotion-191 emotion-8"
+          height="11.353711790393014%"
+          title={26}
+          width="2.35%"
+        />
+        <div
+          className="emotion-203 emotion-8"
+          height="8.296943231441048%"
+          title={19}
+          width="2.35%"
+        />
+        <div
+          className="emotion-205 emotion-8"
+          height="7.423580786026201%"
+          title={17}
+          width="1%"
+        />
+        <div
+          className="emotion-207 emotion-8"
+          height="0%"
+          title={0}
+          width="1.35%"
+        />
+      </div>
+      <div
+        className="rheostat rheostat-horizontal "
+        onClick={[Function]}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="rheostat-background"
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={30000}
+          className="rheostat-handle"
+          data-handle-key={0}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "0%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={50000}
+          className="rheostat-handle"
+          data-handle-key={1}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "100%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <div
+          className="rheostat-progress"
+          style={
+            Object {
+              "left": "0%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="emotion-209"
+      >
+        <div
+          className="emotion-210 emotion-211"
+        >
+          30K
+        </div>
+        <div
+          className="emotion-212 emotion-211"
+        >
+          50K
+        </div>
+      </div>
+    </div>
+    <div
+      className="emotion-214 emotion-215"
+    >
+      <div
+        className="emotion-216 emotion-215"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-218 emotion-219"
+          max={50000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={30000}
+        />
+      </div>
+      <div
+        className="emotion-220 emotion-215"
+      >
+        -
+      </div>
+      <div
+        className="emotion-216 emotion-215"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-218 emotion-219"
+          min={30000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={50000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render range labels 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  position: relative;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-9 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-11 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-11 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-13 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-13 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-17 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-17 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    >
+      <div
+        className="rheostat rheostat-horizontal "
+        onClick={[Function]}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="rheostat-background"
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={30000}
+          className="rheostat-handle"
+          data-handle-key={0}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "0%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={50000}
+          className="rheostat-handle"
+          data-handle-key={1}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "100%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <div
+          className="rheostat-progress"
+          style={
+            Object {
+              "left": "0%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          30K
+        </div>
+        <div
+          className="emotion-9 emotion-8"
+        >
+          50K
+        </div>
+      </div>
+    </div>
+    <div
+      className="emotion-11 emotion-12"
+    >
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-15 emotion-16"
+          max={50000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={30000}
+        />
+      </div>
+      <div
+        className="emotion-17 emotion-12"
+      >
+        -
+      </div>
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-15 emotion-16"
+          min={30000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={50000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render range with slider 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  position: relative;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-9 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-11 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-11 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-13 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-13 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-17 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-17 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    >
+      <div
+        className="rheostat rheostat-horizontal "
+        onClick={[Function]}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="rheostat-background"
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={30000}
+          className="rheostat-handle"
+          data-handle-key={0}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "0%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={50000}
+          className="rheostat-handle"
+          data-handle-key={1}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "100%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <div
+          className="rheostat-progress"
+          style={
+            Object {
+              "left": "0%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          30K
+        </div>
+        <div
+          className="emotion-9 emotion-8"
+        >
+          50K
+        </div>
+      </div>
+    </div>
+    <div
+      className="emotion-11 emotion-12"
+    >
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-15 emotion-16"
+          max={50000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={30000}
+        />
+      </div>
+      <div
+        className="emotion-17 emotion-12"
+      >
+        -
+      </div>
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-15 emotion-16"
+          min={30000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={50000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #424242;
+}
+
+.emotion-8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-8 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-8 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-10 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-10 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-12 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-12:focus {
+  background-color: #fff;
+}
+
+.emotion-14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-14 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-14 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    >
+      <h2
+        className="emotion-6 emotion-7"
+      >
+        Mock RangeInput
+      </h2>
+      <div
+        className="rheostat rheostat-horizontal "
+        onClick={[Function]}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="rheostat-background"
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={30000}
+          className="rheostat-handle"
+          data-handle-key={0}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "0%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={30000}
+          aria-valuenow={50000}
+          className="rheostat-handle"
+          data-handle-key={1}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "100%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <div
+          className="rheostat-progress"
+          style={
+            Object {
+              "left": "0%",
+              "width": "100%",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="emotion-8 emotion-9"
+    >
+      <div
+        className="emotion-10 emotion-9"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-12 emotion-13"
+          max={50000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={30000}
+        />
+      </div>
+      <div
+        className="emotion-14 emotion-9"
+      >
+        -
+      </div>
+      <div
+        className="emotion-10 emotion-9"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-12 emotion-13"
+          min={30000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={50000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should select default value 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 .rheostat {
+  overflow: visible;
+  margin: 24px 12px;
+}
+
+.emotion-4 .rheostat-progress {
+  background-color: #d8d8d8;
+  position: absolute;
+  background-color: #0B6AFF;
+}
+
+.emotion-4 .rheostat-handle {
+  border: 1px solid #9a9a9a;
+  background-color: #0B6AFF;
+  background-color: #fff;
+  border-radius: 50%;
+  height: 24px;
+  outline: none;
+  z-index: 2;
+  width: 24px;
+  cursor: pointer;
+}
+
+.emotion-4 .rheostat-horizontal {
+  height: 24px;
+}
+
+.emotion-4 .rheostat-background {
+  height: 4px;
+  background-color: #c7c7c7;
+  top: 0px;
+  width: 100%;
+  position: relative;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-progress {
+  height: 4px;
+  top: 0;
+}
+
+.emotion-4 .rheostat-horizontal .rheostat-handle {
+  margin-left: -12px;
+  top: -10px;
+}
+
+.emotion-4 .slider-tooltip,
+.emotion-4 .slider-tooltip-focus,
+.emotion-4 .slider-tooltip-visible {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  -webkit-transform: translate(-50%,-170%);
+  -ms-transform: translate(-50%,-170%);
+  transform: translate(-50%,-170%);
+}
+
+.emotion-4 .slider-tooltip-visible {
+  visibility: visible;
+}
+
+.emotion-4 .slider-tooltip:after,
+.emotion-4 .slider-tooltip-focus:after,
+.emotion-4 .slider-tooltip-visible:after {
+  content: '';
+  position: absolute;
+  top: 98%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip,
+.emotion-4 .rheostat-handle:focus .slider-tooltip,
+.emotion-4 .rheostat-handle:active .slider-tooltip {
+  visibility: visible;
+}
+
+.emotion-4 .rheostat-handle:hover .slider-tooltip-focus {
+  visibility: hidden;
+}
+
+.emotion-4 .rheostat-handle:focus .slider-tooltip-focus,
+.emotion-4 .rheostat-handle:active .slider-tooltip-focus {
+  visibility: visible;
+}
+
+.emotion-6 {
+  position: relative;
+}
+
+.emotion-7 {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  margin-left: 3px;
+}
+
+.emotion-9 {
+  position: absolute;
+  top: -25px;
+  right: 0;
+  margin-right: 3px;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-11 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-11 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-13 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-13 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.emotion-17 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-17 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={undefined}
+  >
+    <div
+      className="emotion-4 emotion-5"
+      style={Object {}}
+    >
+      <div
+        className="rheostat rheostat-horizontal "
+        onClick={[Function]}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+      >
+        <div
+          className="rheostat-background"
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={48000}
+          aria-valuemin={30000}
+          aria-valuenow={32000}
+          className="rheostat-handle"
+          data-handle-key={0}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "10%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <button
+          aria-disabled={false}
+          aria-label="slider-button"
+          aria-valuemax={50000}
+          aria-valuemin={32000}
+          aria-valuenow={48000}
+          className="rheostat-handle"
+          data-handle-key={1}
+          onClick={undefined}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+          role="slider"
+          style={
+            Object {
+              "left": "90%",
+              "position": "absolute",
+            }
+          }
+          tabIndex={0}
+        />
+        <div
+          className="rheostat-progress"
+          style={
+            Object {
+              "left": "10%",
+              "width": "80%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          30K
+        </div>
+        <div
+          className="emotion-9 emotion-8"
+        >
+          50K
+        </div>
+      </div>
+    </div>
+    <div
+      className="emotion-11 emotion-12"
+    >
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-start-input"
+          className="emotion-15 emotion-16"
+          max={48000}
+          name="start"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={32000}
+        />
+      </div>
+      <div
+        className="emotion-17 emotion-12"
+      >
+        -
+      </div>
+      <div
+        className="emotion-13 emotion-12"
+        direction="column"
+      >
+        <input
+          aria-label="range-input-test-end-input"
+          className="emotion-15 emotion-16"
+          min={32000}
+          name="end"
+          onChange={[Function]}
+          step={1}
+          type="number"
+          value={48000}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

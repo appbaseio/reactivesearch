@@ -238,11 +238,7 @@ class SingleDropdownList extends Component {
 			queryOptions,
 			currentValue,
 			this.props,
-			SingleDropdownList.generateQueryOptions(
-				this.props,
-				this.state.prevAfter,
-				currentValue,
-			),
+			SingleDropdownList.generateQueryOptions(this.props, this.state.prevAfter, currentValue),
 		);
 	};
 
@@ -373,6 +369,7 @@ class SingleDropdownList extends Component {
 					customLabelRenderer={this.props.renderLabel}
 					renderNoResults={this.props.renderNoResults}
 					showSearch={this.props.showSearch}
+					showClear={this.props.showClear}
 					transformData={this.props.transformData}
 					footer={
 						showLoadMore
@@ -384,6 +381,7 @@ class SingleDropdownList extends Component {
 							</div>
 						)
 					}
+					isOpen={this.props.isOpen}
 				/>
 			</Container>
 		);
@@ -442,6 +440,8 @@ SingleDropdownList.propTypes = {
 	loadMoreLabel: types.title,
 	nestedField: types.string,
 	index: types.string,
+	showClear: types.bool,
+	isOpen: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -456,8 +456,10 @@ SingleDropdownList.defaultProps = {
 	showMissing: false,
 	missingLabel: 'N/A',
 	showSearch: false,
+	showClear: false,
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	isOpen: false,
 };
 
 // Add componentType for SSR
