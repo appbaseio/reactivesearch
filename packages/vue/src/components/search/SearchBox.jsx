@@ -798,7 +798,7 @@ const SearchBox = {
 						{this.$props.title}
 					</Title>
 				)}
-				{hasSuggestions && this.$props.autosuggest ? (
+				{this.$props.autosuggest ? (
 					<Downshift
 						id={`${this.$props.componentId}-downshift`}
 						handleChange={this.onSuggestionSelected}
