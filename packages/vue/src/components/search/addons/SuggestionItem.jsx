@@ -18,7 +18,7 @@ const PredictiveSuggestion = styled('span')`
 		font-weight: 600;
 		padding: 0;
 	}
-`
+`;
 
 const SuggestionItem = {
 	name: 'SuggestionItem',
@@ -27,17 +27,29 @@ const SuggestionItem = {
 		suggestion: types.any,
 	},
 	render() {
-		const { label, value, title, description, image, isPredictiveSuggestion } = this.suggestion;
+		const {
+			label,
+			value,
+			title,
+			description,
+			image,
+			isPredictiveSuggestion,
+			// eslint-disable-next-line
+			_suggestion_type,
+			_category,
+		} = this.suggestion;
 
 		if (label) {
 			// label has highest precedence
 			return typeof label === 'string' ? (
 				<div class="trim">
-					{isPredictiveSuggestion ? (
+					{(_category ? false : isPredictiveSuggestion || !!_suggestion_type) ? (
 						<PredictiveSuggestion domPropsInnerHTML={label} />
 					) : (
 						<Highlight
-							searchWords={this.currentValue.split(' ')}
+							searchWords={
+								_category ? ['in', _category] : this.currentValue.split(' ')
+							}
 							textToHighlight={label}
 							autoEscape
 							highlightStyle={highlightStyle}
