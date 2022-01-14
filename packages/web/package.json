@@ -23,6 +23,7 @@
 		"prepublish": "yarn run build",
 		"postpublish": "yarn run version-upgrade",
 		"test": "jest",
+		"clear-cache-test": "jest --clearCache",
 		"typescript": "tsc -p tsconfig.json"
 	},
 	"jest": {
