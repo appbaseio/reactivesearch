@@ -27,4 +27,5 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn install
     - run: cd packages/web && yarn build
+    - run: jest --clearCache
     - run: cd packages/web && yarn test
