@@ -67,11 +67,9 @@ const RangeSlider = {
 				});
 			}
 		},
-		handleSlider(values) {
-			clearTimeout(this.handleSliderChange._tId);
-			this.handleSliderChange._tId = setTimeout(() => {
-				this.handleSliderChange(values);
-			}, 100);
+		handleSlider() {
+			const sliderValues = this.$refs.slider.getValue();			
+			this.handleSliderChange(sliderValues);
 		},
 		handleChange(currentValue, props = this.$props) {
 			const performUpdate = () => {
@@ -200,11 +198,8 @@ const RangeSlider = {
 								height={4}
 								enable-cross={false}
 								{...{ props: this.$props.sliderOptions }}
-								{...{
-									on: {
-										input: this.handleSlider,
-									},
-								}}
+								onDrag-end={this.handleSlider}
+								tooltip="always"
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">
