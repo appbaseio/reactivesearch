@@ -55,7 +55,9 @@ export function parseValueArray(objectValues, currentValue) {
  * @param _ref
  */
 export const getComponent = (data = {}, _ref = {}) => {
-	const { render } = _ref.$scopedSlots || _ref.$props;
+	const { render: renderScope } = _ref.$scopedSlots || {};
+	const { render: renderProp } = _ref.$props || {};
+	const render = renderScope || renderProp;
 	if (render) return render(data);
 	return null;
 };
@@ -64,8 +66,9 @@ export const getComponent = (data = {}, _ref = {}) => {
  * @returns {Boolean}
  */
 export const hasCustomRenderer = (_ref = {}) => {
-	const { render } = _ref.$scopedSlots || _ref.$props;
-	return Boolean(render);
+	const { render: renderScope } = _ref.$scopedSlots || {};
+	const { render: renderProp } = _ref.$props || {};
+	return Boolean(renderScope || renderProp);
 };
 
 export const getValidPropsKeys = (props = {}) =>
