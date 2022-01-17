@@ -11,3 +11,4 @@ vue-playground
 packages/vue
 .expo/
 packages/reactivecore/coverage/
+__snapshots__
