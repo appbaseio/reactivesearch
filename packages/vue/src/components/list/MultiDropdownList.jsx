@@ -84,6 +84,7 @@ const MultiDropdownList = {
 		nestedField: types.string,
 		index: VueTypes.string,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
+		isOpen: VueTypes.bool.def(false),
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -257,6 +258,7 @@ const MultiDropdownList = {
 						)
 					}
 					customLabelRenderer={renderLabelCalc}
+					open={this.$props.isOpen}
 				/>
 			</Container>
 		);
@@ -554,7 +556,7 @@ const mapDispatchtoProps = {
 };
 
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList), {
+export const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList), {
 	componentType: componentTypes.multiDropdownList,
 	internalComponent: true,
 });
