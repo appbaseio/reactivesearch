@@ -1,0 +1,336 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MultiList should not render search/count/checkbox when showSearch/showCount/showCheckbox are set to false 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-1eqynv5"
+          id="authors-J. K. Rowling"
+          name="authors"
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          class=""
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+          </span>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-1eqynv5"
+          id="authors-Nora Roberts"
+          name="authors"
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          class=""
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`MultiList should render list of items 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-J. K. Rowling"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          class=""
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+            <span
+              class=""
+            >
+               (10)
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-Nora Roberts"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          class=""
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+            <span
+              class=""
+            >
+               (7)
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`MultiList should render no results message 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <p>
+        No authors found
+      </p>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`MultiList should render search/count/checkbox when showSearch/showCount/showCheckbox are true 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-J. K. Rowling"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          class=""
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+            <span
+              class=""
+            >
+               (10)
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-Nora Roberts"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          class=""
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+            <span
+              class=""
+            >
+               (7)
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`MultiList should use render prop to render the list 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <div
+      classname="suggestions"
+    >
+      <ul>
+        <li
+          style="background-color: transparent;"
+        >
+          J. K. Rowling --- 10
+        </li>
+        <li
+          style="background-color: transparent;"
+        >
+          Nora Roberts --- 7
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MultiList should use renderItem to render the list item 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-J. K. Rowling"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          class=""
+          for="authors-J. K. Rowling"
+        >
+          <div>
+            J. K. Rowling
+            <span
+              style="color: dodgerblue;"
+            >
+              10
+            </span>
+          </div>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-Nora Roberts"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          class=""
+          for="authors-Nora Roberts"
+        >
+          <div>
+            Nora Roberts
+            <span
+              style="color: dodgerblue;"
+            >
+              7
+            </span>
+          </div>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
