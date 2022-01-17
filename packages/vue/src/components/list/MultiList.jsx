@@ -600,7 +600,7 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
+export const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
 	componentType: componentTypes.multiList,
 	internalComponent: true,
 });
