@@ -227,6 +227,79 @@ exports[`MultiList should render search/count/checkbox when showSearch/showCount
 </div>
 `;
 
+exports[`MultiList should select default value 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-J. K. Rowling"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="J. K. Rowling"
+        />
+        <label
+          class=""
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+            <span
+              class=""
+            >
+               (10)
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="active"
+      >
+        <input
+          class="css-1n01wnu"
+          id="authors-Nora Roberts"
+          name="authors"
+          show="true"
+          type="checkbox"
+          value="Nora Roberts"
+        />
+        <label
+          class=""
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+            <span
+              class=""
+            >
+               (7)
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
 exports[`MultiList should use render prop to render the list 1`] = `
 <div
   class="css-nw180v"

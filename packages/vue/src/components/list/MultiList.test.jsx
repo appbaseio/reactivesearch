@@ -187,4 +187,28 @@ describe('MultiList', () => {
 
 		expect(wrapper.element).toMatchSnapshot();
 	});
+
+	it('should select default value', () => {
+		const wrapper = mount({
+			name: 'TestComponent',
+			render() {
+				return (
+					<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+						<MultiList
+							mode="test"
+							componentId="authors"
+							dataField="authors.keyword"
+							renderNoResults={() => 'No authors found'}
+							mockData={{
+								aggregations: MOCK_AGGREGATIONS_DATA,
+							}}
+							defaultValue={['Nora Roberts']}
+						/>
+					</ReactiveBase>
+				);
+			},
+		});
+
+		expect(wrapper.element).toMatchSnapshot();
+	});
 });
