@@ -505,7 +505,7 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleList), {
+export const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleList), {
 	componentType: componentTypes.singleList,
 	internalComponent: true,
 });
