@@ -82,6 +82,7 @@ const SingleDropdownList = {
 		nestedField: types.string,
 		index: VueTypes.string,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
+		isOpen: VueTypes.bool.def(false),
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -247,6 +248,7 @@ const SingleDropdownList = {
 						)
 					}
 					customLabelRenderer={renderLabelCalc}
+					open={this.$props.isOpen}
 				/>
 			</Container>
 		);
@@ -444,7 +446,7 @@ const mapDispatchtoProps = {
 };
 
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
+export const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
 	componentType: componentTypes.singleDropdownList,
 	internalComponent: true,
 });
