@@ -111,7 +111,7 @@ describe('RangeSlider', () => {
 		expect(wrapper.element).toMatchSnapshot();
 	});
 
-	it('should not display tooltip when sliderOptions had tooltip as none', () => {
+	it('should not display tooltip when sliderOptions has tooltip set to false', () => {
 		const wrapper = mount({
 			name: 'TestComponent',
 			render() {

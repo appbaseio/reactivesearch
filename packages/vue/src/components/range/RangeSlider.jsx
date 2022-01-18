@@ -131,7 +131,7 @@ const RangeSlider = {
 			if (this.$attrs.mode === 'test') {
 				return sliderComponent();
 			}
-			return <NoSSR>sliderComponent()</NoSSR>;
+			return <NoSSR>{sliderComponent()}</NoSSR>;
 		},
 	},
 	watch: {

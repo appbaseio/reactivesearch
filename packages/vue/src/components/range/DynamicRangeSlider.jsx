@@ -244,7 +244,7 @@ const DynamicRangeSlider = {
 			if (this.$props.mode === 'test') {
 				return sliderComponent();
 			}
-			return <NoSSR>sliderComponent()</NoSSR>;
+			return <NoSSR>{sliderComponent()}</NoSSR>;
 		},
 	},
 

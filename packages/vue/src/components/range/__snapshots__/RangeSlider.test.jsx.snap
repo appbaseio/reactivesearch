@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RangeSlider should not display tooltip when sliderOptions had tooltip as none 1`] = `
+exports[`RangeSlider should not display tooltip when sliderOptions has tooltip set to false 1`] = `
 <div
   class="css-nw180v"
 >
@@ -27,18 +27,18 @@ exports[`RangeSlider should not display tooltip when sliderOptions had tooltip a
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <div
             class="vue-slider-dot"
             style="width: 20px; height: 20px; top: -8px;"
@@ -46,22 +46,22 @@ exports[`RangeSlider should not display tooltip when sliderOptions had tooltip a
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <ul
             class="vue-slider-piecewise"
           />
-           
+
           <div
             class="vue-slider-process"
           >
@@ -71,13 +71,13 @@ exports[`RangeSlider should not display tooltip when sliderOptions had tooltip a
               <span
                 class="vue-slider-tooltip"
               >
-                
-            
-          
+
+
+
               </span>
             </div>
           </div>
-           
+
           <!---->
         </div>
       </div>
@@ -127,18 +127,18 @@ exports[`RangeSlider should render range labels 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <div
             class="vue-slider-always vue-slider-dot"
             style="width: 20px; height: 20px; top: -8px;"
@@ -146,22 +146,22 @@ exports[`RangeSlider should render range labels 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <ul
             class="vue-slider-piecewise"
           />
-           
+
           <div
             class="vue-slider-process"
           >
@@ -171,13 +171,13 @@ exports[`RangeSlider should render range labels 1`] = `
               <span
                 class="vue-slider-tooltip"
               >
-                
-            
-          
+
+
+
               </span>
             </div>
           </div>
-           
+
           <!---->
         </div>
       </div>
@@ -227,18 +227,18 @@ exports[`RangeSlider should render range with slider 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <div
             class="vue-slider-always vue-slider-dot"
             style="width: 20px; height: 20px; top: -8px;"
@@ -246,22 +246,22 @@ exports[`RangeSlider should render range with slider 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <ul
             class="vue-slider-piecewise"
           />
-           
+
           <div
             class="vue-slider-process"
           >
@@ -271,13 +271,13 @@ exports[`RangeSlider should render range with slider 1`] = `
               <span
                 class="vue-slider-tooltip"
               >
-                
-            
-          
+
+
+
               </span>
             </div>
           </div>
-           
+
           <!---->
         </div>
       </div>
@@ -318,18 +318,18 @@ exports[`RangeSlider should render title 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <div
             class="vue-slider-always vue-slider-dot"
             style="width: 20px; height: 20px; top: -8px;"
@@ -337,22 +337,22 @@ exports[`RangeSlider should render title 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <ul
             class="vue-slider-piecewise"
           />
-           
+
           <div
             class="vue-slider-process"
           >
@@ -362,13 +362,13 @@ exports[`RangeSlider should render title 1`] = `
               <span
                 class="vue-slider-tooltip"
               >
-                
-            
-          
+
+
+
               </span>
             </div>
           </div>
-           
+
           <!---->
         </div>
       </div>
@@ -404,18 +404,18 @@ exports[`RangeSlider should select default value 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <div
             class="vue-slider-always vue-slider-dot"
             style="width: 20px; height: 20px; top: -8px;"
@@ -423,22 +423,22 @@ exports[`RangeSlider should select default value 1`] = `
             <div
               class="vue-slider-dot-handle"
             />
-             
+
             <div
               class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
             >
               <span
                 class="vue-slider-tooltip"
               >
-                
+
               </span>
             </div>
           </div>
-           
+
           <ul
             class="vue-slider-piecewise"
           />
-           
+
           <div
             class="vue-slider-process"
           >
@@ -448,13 +448,13 @@ exports[`RangeSlider should select default value 1`] = `
               <span
                 class="vue-slider-tooltip"
               >
-                
-            
-          
+
+
+
               </span>
             </div>
           </div>
-           
+
           <!---->
         </div>
       </div>
