@@ -1,0 +1,550 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RangeInput should render range labels 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-m1gst5"
+      mode="test"
+    >
+      <div
+        class="css-15u2m8f"
+      >
+        <div
+          class="vue-slider-component vue-slider-horizontal"
+          style="width: auto; padding: 10px 10px;"
+        >
+          <div
+            aria-hidden="true"
+            class="vue-slider"
+            style="height: 4px;"
+          >
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <ul
+              class="vue-slider-piecewise"
+            />
+             
+            <div
+              class="vue-slider-process"
+            >
+              <div
+                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+            
+          
+                </span>
+              </div>
+            </div>
+             
+            <!---->
+          </div>
+        </div>
+        <div
+          class="label-container"
+        >
+          <label
+            class="range-label-left"
+          >
+            2,000
+          </label>
+          <label
+            class="range-label-right"
+          >
+            50,000
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="css-kgsg89"
+    >
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-start-input"
+          class="css-1n1dm2c"
+          min="20000"
+          name="start"
+          type="number"
+        />
+      </div>
+      <div
+        alignitems="center"
+        class="css-6c29fo"
+        flex="1"
+        justifycontent="center"
+      >
+        -
+      </div>
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-end-input"
+          class="css-1n1dm2c"
+          max="50000"
+          name="end"
+          type="number"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeInput should render range with slider 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-m1gst5"
+      mode="test"
+    >
+      <div
+        class="css-15u2m8f"
+      >
+        <div
+          class="vue-slider-component vue-slider-horizontal"
+          style="width: auto; padding: 10px 10px;"
+        >
+          <div
+            aria-hidden="true"
+            class="vue-slider"
+            style="height: 4px;"
+          >
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <ul
+              class="vue-slider-piecewise"
+            />
+             
+            <div
+              class="vue-slider-process"
+            >
+              <div
+                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+            
+          
+                </span>
+              </div>
+            </div>
+             
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="css-kgsg89"
+    >
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-start-input"
+          class="css-1n1dm2c"
+          min="30000"
+          name="start"
+          type="number"
+        />
+      </div>
+      <div
+        alignitems="center"
+        class="css-6c29fo"
+        flex="1"
+        justifycontent="center"
+      >
+        -
+      </div>
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-end-input"
+          class="css-1n1dm2c"
+          max="50000"
+          name="end"
+          type="number"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeInput should render title 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-m1gst5"
+      mode="test"
+    >
+      <h2
+        class="css-dysiaa"
+      >
+        Test Title
+      </h2>
+      <div
+        class="css-15u2m8f"
+      >
+        <div
+          class="vue-slider-component vue-slider-horizontal"
+          style="width: auto; padding: 10px 10px;"
+        >
+          <div
+            aria-hidden="true"
+            class="vue-slider"
+            style="height: 4px;"
+          >
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <ul
+              class="vue-slider-piecewise"
+            />
+             
+            <div
+              class="vue-slider-process"
+            >
+              <div
+                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+            
+          
+                </span>
+              </div>
+            </div>
+             
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="css-kgsg89"
+    >
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-start-input"
+          class="css-1n1dm2c"
+          min="30000"
+          name="start"
+          type="number"
+        />
+      </div>
+      <div
+        alignitems="center"
+        class="css-6c29fo"
+        flex="1"
+        justifycontent="center"
+      >
+        -
+      </div>
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-end-input"
+          class="css-1n1dm2c"
+          max="50000"
+          name="end"
+          type="number"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeInput should select default value 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-m1gst5"
+      mode="test"
+    >
+      <div
+        class="css-15u2m8f"
+      >
+        <div
+          class="vue-slider-component vue-slider-horizontal"
+          style="width: auto; padding: 10px 10px;"
+        >
+          <div
+            aria-hidden="true"
+            class="vue-slider"
+            style="height: 4px;"
+          >
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <div
+              class="vue-slider-always vue-slider-dot"
+              style="width: 20px; height: 20px; top: -8px;"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+               
+              <div
+                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+                </span>
+              </div>
+            </div>
+             
+            <ul
+              class="vue-slider-piecewise"
+            />
+             
+            <div
+              class="vue-slider-process"
+            >
+              <div
+                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+              >
+                <span
+                  class="vue-slider-tooltip"
+                >
+                  
+            
+          
+                </span>
+              </div>
+            </div>
+             
+            <!---->
+          </div>
+        </div>
+        <div
+          class="label-container"
+        >
+          <label
+            class="range-label-left"
+          >
+            3K
+          </label>
+          <label
+            class="range-label-right"
+          >
+            5.5K
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="css-kgsg89"
+    >
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-start-input"
+          class="css-1n1dm2c"
+          min="3000"
+          name="start"
+          type="number"
+        />
+      </div>
+      <div
+        alignitems="center"
+        class="css-6c29fo"
+        flex="1"
+        justifycontent="center"
+      >
+        -
+      </div>
+      <div
+        class="css-d2gq24"
+        direction="column"
+        flex="2"
+      >
+        <input
+          aria-label="authors-end-input"
+          class="css-1n1dm2c"
+          max="5500"
+          name="end"
+          type="number"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
