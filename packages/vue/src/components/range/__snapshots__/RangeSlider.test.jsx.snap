@@ -1,0 +1,478 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RangeSlider should not display tooltip when sliderOptions had tooltip as none 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-15u2m8f"
+    >
+      <div
+        class="vue-slider-component vue-slider-horizontal"
+        style="width: auto; padding: 10px 10px;"
+      >
+        <div
+          aria-hidden="true"
+          class="vue-slider"
+          style="height: 4px;"
+        >
+          <div
+            class="vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <ul
+            class="vue-slider-piecewise"
+          />
+           
+          <div
+            class="vue-slider-process"
+          >
+            <div
+              class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+            
+          
+              </span>
+            </div>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+      <div
+        class="label-container"
+      >
+        <label
+          class="range-label-left"
+        >
+          3K
+        </label>
+        <label
+          class="range-label-right"
+        >
+          5.5K
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeSlider should render range labels 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-15u2m8f"
+    >
+      <div
+        class="vue-slider-component vue-slider-horizontal"
+        style="width: auto; padding: 10px 10px;"
+      >
+        <div
+          aria-hidden="true"
+          class="vue-slider"
+          style="height: 4px;"
+        >
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <ul
+            class="vue-slider-piecewise"
+          />
+           
+          <div
+            class="vue-slider-process"
+          >
+            <div
+              class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+            
+          
+              </span>
+            </div>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+      <div
+        class="label-container"
+      >
+        <label
+          class="range-label-left"
+        >
+          30K
+        </label>
+        <label
+          class="range-label-right"
+        >
+          50K
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeSlider should render range with slider 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-15u2m8f"
+    >
+      <div
+        class="vue-slider-component vue-slider-horizontal"
+        style="width: auto; padding: 10px 10px;"
+      >
+        <div
+          aria-hidden="true"
+          class="vue-slider"
+          style="height: 4px;"
+        >
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <ul
+            class="vue-slider-piecewise"
+          />
+           
+          <div
+            class="vue-slider-process"
+          >
+            <div
+              class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+            
+          
+              </span>
+            </div>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeSlider should render title 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <h2
+      class="css-dysiaa"
+    >
+      Test Title
+    </h2>
+    <div
+      class="css-15u2m8f"
+    >
+      <div
+        class="vue-slider-component vue-slider-horizontal"
+        style="width: auto; padding: 10px 10px;"
+      >
+        <div
+          aria-hidden="true"
+          class="vue-slider"
+          style="height: 4px;"
+        >
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <ul
+            class="vue-slider-piecewise"
+          />
+           
+          <div
+            class="vue-slider-process"
+          >
+            <div
+              class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+            
+          
+              </span>
+            </div>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`RangeSlider should select default value 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <div
+      class="css-15u2m8f"
+    >
+      <div
+        class="vue-slider-component vue-slider-horizontal"
+        style="width: auto; padding: 10px 10px;"
+      >
+        <div
+          aria-hidden="true"
+          class="vue-slider"
+          style="height: 4px;"
+        >
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <div
+            class="vue-slider-always vue-slider-dot"
+            style="width: 20px; height: 20px; top: -8px;"
+          >
+            <div
+              class="vue-slider-dot-handle"
+            />
+             
+            <div
+              class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+              </span>
+            </div>
+          </div>
+           
+          <ul
+            class="vue-slider-piecewise"
+          />
+           
+          <div
+            class="vue-slider-process"
+          >
+            <div
+              class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+            >
+              <span
+                class="vue-slider-tooltip"
+              >
+                
+            
+          
+              </span>
+            </div>
+          </div>
+           
+          <!---->
+        </div>
+      </div>
+      <div
+        class="label-container"
+      >
+        <label
+          class="range-label-left"
+        >
+          3K
+        </label>
+        <label
+          class="range-label-right"
+        >
+          5.5K
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+`;
