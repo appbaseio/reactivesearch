@@ -1,0 +1,3900 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReactiveList should display result stats when showResultStats is set to false 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    />
+    <div
+      class=" "
+    >
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Paradise Lost
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Antigone
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should display result stats when showResultStats is set to true 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    >
+      <p
+        class="css-1e7votj "
+      >
+        9418 results found in 0ms
+      </p>
+    </div>
+    <div
+      class=" "
+    >
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Paradise Lost
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Antigone
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render custom result stats message 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    >
+      Custom: Showing 5 of total 9418 in 2.5 ms
+    </div>
+    <div
+      class=" "
+    >
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Paradise Lost
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Antigone
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render items as defined in renderItem 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    />
+    <div
+      class=" "
+    >
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Paradise Lost
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Antigone
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render items in a card layout 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    />
+    <div>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1455618673l/15997.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1667
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1944
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2005
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1373059909l/18079719.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2014
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1367533032l/72855.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2002
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render items in a list layout 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    />
+    <div
+      class=" "
+    >
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1455618673l/15997.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Paradise Lost
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1667
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Antigone
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 1944
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            The Chronicles of Narnia - The Lion, the Witch, and the Wardrobe Official Illustrated Movie Companion
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2005
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1373059909l/18079719.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Grasshopper Jungle
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2014
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        style="display: flex; flex-direction: column; width: 250px; padding: 1rem; margin: 5px; box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%); background: white;"
+      >
+        <img
+          alt="Book Cover"
+          src="https://images.gr-assets.com/books/1367533032l/72855.jpg"
+          style="height: 220px; width: 100%; object-fit: cover; margin-bottom: .5rem;"
+        />
+        <div>
+          <h3
+            classname="book-header"
+            style="margin: 0px;"
+          >
+            Lake in the Clouds
+          </h3>
+          <div
+            classname="flex column justify-space-between"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  style="color: rgb(157, 157, 157);"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                style="padding: 10px 0px;"
+              >
+                <span
+                  classname="stars"
+                >
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                  <span
+                    aria-label="start"
+                    role="img"
+                  >
+                    ⭐
+                  </span>
+                </span>
+                <span
+                  style="margin-left: 5px; color: rgb(107, 107, 107);"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span>
+              Pub 2002
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render no results message 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    />
+    <p>
+      Test: No results rendered!
+    </p>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render pagination at both ends 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    >
+      <p
+        class="css-1e7votj "
+      >
+        9418 results found in 0ms
+      </p>
+    </div>
+    <div
+      class="css-1oof9tm "
+    >
+      <a
+        class="css-1t7bu8k"
+        disabled="disabled"
+        tabindex="0"
+      >
+        Prev
+      </a>
+      <a
+        class=" active css-27ht9x"
+        primary="true"
+        tabindex="0"
+      >
+        1
+      </a>
+      <a
+        alt="page-2"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        2
+      </a>
+      <a
+        alt="page-3"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        3
+      </a>
+      <a
+        alt="page-4"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        4
+      </a>
+      <a
+        alt="page-5"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        5
+      </a>
+      <a
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        Next
+      </a>
+    </div>
+    <div>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1455618673l/15997.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1667
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1944
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2005
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1373059909l/18079719.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2014
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1367533032l/72855.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2002
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+    <div
+      class="css-1oof9tm "
+    >
+      <a
+        class="css-1t7bu8k"
+        disabled="disabled"
+        tabindex="0"
+      >
+        Prev
+      </a>
+      <a
+        class=" active css-27ht9x"
+        primary="true"
+        tabindex="0"
+      >
+        1
+      </a>
+      <a
+        alt="page-2"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        2
+      </a>
+      <a
+        alt="page-3"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        3
+      </a>
+      <a
+        alt="page-4"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        4
+      </a>
+      <a
+        alt="page-5"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        5
+      </a>
+      <a
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render pagination at bottom 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    >
+      <p
+        class="css-1e7votj "
+      >
+        9418 results found in 0ms
+      </p>
+    </div>
+    <div>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1455618673l/15997.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1667
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1944
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2005
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1373059909l/18079719.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2014
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1367533032l/72855.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2002
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+    <div
+      class="css-1oof9tm "
+    >
+      <a
+        class="css-1t7bu8k"
+        disabled="disabled"
+        tabindex="0"
+      >
+        Prev
+      </a>
+      <a
+        class=" active css-27ht9x"
+        primary="true"
+        tabindex="0"
+      >
+        1
+      </a>
+      <a
+        alt="page-2"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        2
+      </a>
+      <a
+        alt="page-3"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        3
+      </a>
+      <a
+        alt="page-4"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        4
+      </a>
+      <a
+        alt="page-5"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        5
+      </a>
+      <a
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render pagination at top 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    >
+      <p
+        class="css-1e7votj "
+      >
+        9418 results found in 0ms
+      </p>
+    </div>
+    <div
+      class="css-1oof9tm "
+    >
+      <a
+        class="css-1t7bu8k"
+        disabled="disabled"
+        tabindex="0"
+      >
+        Prev
+      </a>
+      <a
+        class=" active css-27ht9x"
+        primary="true"
+        tabindex="0"
+      >
+        1
+      </a>
+      <a
+        alt="page-2"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        2
+      </a>
+      <a
+        alt="page-3"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        3
+      </a>
+      <a
+        alt="page-4"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        4
+      </a>
+      <a
+        alt="page-5"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        5
+      </a>
+      <a
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        Next
+      </a>
+    </div>
+    <div>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1455618673l/15997.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1667
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1944
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2005
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1373059909l/18079719.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2014
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1367533032l/72855.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2002
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReactiveList should render pagination when set to true 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="result-list-container"
+    from="0"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div
+      class="css-1ml0i7b"
+      labelposition="left"
+    >
+      <p
+        class="css-1e7votj "
+      >
+        9418 results found in 0ms
+      </p>
+    </div>
+    <div>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1455618673l/15997.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  John Milton, John      Leonard
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1667
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Jean Anouilh
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.8 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 1944
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Perry Moore, Andrew Adamson, C.S. Lewis
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.48 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2005
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1373059909l/18079719.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Andrew  Smith
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (3.66 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2014
+            </span>
+          </div>
+        </article>
+      </a>
+      <a
+        class="css-1e6jddt"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <div
+          class="css-lyprc7"
+          style="background-image: url(https://images.gr-assets.com/books/1367533032l/72855.jpg);"
+        />
+        <h2
+          class="css-dysiaa"
+        >
+          <div
+            classname="book-title-card text-center"
+            dangerouslysetinnerhtml="[object Object]"
+          />
+        </h2>
+        <article>
+          <div
+            classname="flex column justify-space-between text-center"
+          >
+            <div>
+              <div>
+                by 
+                <span
+                  classname="authors-list"
+                >
+                  Sara Donati
+                </span>
+              </div>
+              <div
+                classname="ratings-list flex align-center justify-center"
+              >
+                <span
+                  classname="stars"
+                >
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                  <i
+                    classname="fas fa-star"
+                  />
+                </span>
+                <span
+                  classname="avg-rating"
+                >
+                  (4.31 avg)
+                </span>
+              </div>
+            </div>
+            <span
+              classname="pub-year"
+            >
+              Pub 2002
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+    <div
+      class="css-1oof9tm "
+    >
+      <a
+        class="css-1t7bu8k"
+        disabled="disabled"
+        tabindex="0"
+      >
+        Prev
+      </a>
+      <a
+        class=" active css-27ht9x"
+        primary="true"
+        tabindex="0"
+      >
+        1
+      </a>
+      <a
+        alt="page-2"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        2
+      </a>
+      <a
+        alt="page-3"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        3
+      </a>
+      <a
+        alt="page-4"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        4
+      </a>
+      <a
+        alt="page-5"
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        5
+      </a>
+      <a
+        class="css-lxiflv"
+        tabindex="0"
+      >
+        Next
+      </a>
+    </div>
+  </div>
+</div>
+`;
