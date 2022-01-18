@@ -215,6 +215,7 @@ const RangeInput = {
 					nestedField={nestedField}
 					on-change={this.handleOnChange}
 					on-value-change={this.handleValueChange}
+					mode={this.$attrs.mode}
 				/>
 				<Flex class={getClassName(innerClass, 'input-container') || ''}>
 					<Flex direction="column" flex={2}>
@@ -276,7 +277,7 @@ const mapStateToProps = (state) => ({
 	themePreset: state.config.themePreset,
 });
 
-const RangeConnected = ComponentWrapper(connect(mapStateToProps, {})(RangeInput), {
+export const RangeConnected = ComponentWrapper(connect(mapStateToProps, {})(RangeInput), {
 	componentType: componentTypes.rangeInput,
 });
 
