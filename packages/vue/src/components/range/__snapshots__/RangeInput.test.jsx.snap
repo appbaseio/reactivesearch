@@ -115,6 +115,7 @@ exports[`RangeInput should render range labels 1`] = `
           min="20000"
           name="start"
           type="number"
+          value="20000"
         />
       </div>
       <div
@@ -136,6 +137,7 @@ exports[`RangeInput should render range labels 1`] = `
           max="50000"
           name="end"
           type="number"
+          value="50000"
         />
       </div>
     </div>
@@ -244,6 +246,7 @@ exports[`RangeInput should render range with slider 1`] = `
           min="30000"
           name="start"
           type="number"
+          value="30000"
         />
       </div>
       <div
@@ -265,6 +268,7 @@ exports[`RangeInput should render range with slider 1`] = `
           max="50000"
           name="end"
           type="number"
+          value="50000"
         />
       </div>
     </div>
@@ -378,6 +382,7 @@ exports[`RangeInput should render title 1`] = `
           min="30000"
           name="start"
           type="number"
+          value="30000"
         />
       </div>
       <div
@@ -399,6 +404,7 @@ exports[`RangeInput should render title 1`] = `
           max="50000"
           name="end"
           type="number"
+          value="50000"
         />
       </div>
     </div>
@@ -521,6 +527,7 @@ exports[`RangeInput should select default value 1`] = `
           min="3000"
           name="start"
           type="number"
+          value="3200"
         />
       </div>
       <div
@@ -542,6 +549,7 @@ exports[`RangeInput should select default value 1`] = `
           max="5500"
           name="end"
           type="number"
+          value="4500"
         />
       </div>
     </div>
