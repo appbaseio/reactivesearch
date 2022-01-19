@@ -27,13 +27,7 @@ class ReactiveBase extends Component {
 	}
 
 	componentDidMount() {
-		const { searchStateHeader, analyticsConfig, analytics } = this.props;
-		// TODO: Remove in 4.0
-		if (searchStateHeader !== undefined) {
-			console.warn(
-				'Warning(ReactiveSearch): The `searchStateHeader` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
-			);
-		}
+		const { analyticsConfig, analytics } = this.props;
 		// TODO: Remove in 4.0
 		if (analyticsConfig !== undefined) {
 			console.warn(
@@ -106,7 +100,6 @@ class ReactiveBase extends Component {
 			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
 		const appbaseConfig = {
-			searchStateHeader: props.searchStateHeader, // for backward compatibility
 			...props.analyticsConfig, // TODO: remove in 4.0
 			...props.appbaseConfig,
 		};
@@ -217,7 +210,6 @@ ReactiveBase.defaultProps = {
 
 ReactiveBase.propTypes = {
 	app: types.string,
-	searchStateHeader: types.bool,
 	as: types.string,
 	children: types.children,
 	credentials: types.string,

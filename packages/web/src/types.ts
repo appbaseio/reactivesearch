@@ -139,7 +139,6 @@ export type unit =
 	| 'nauticalmiles';
 
 export interface analyticsConfig {
-	searchStateHeader: boolean;
 	emptyQuery: boolean;
 	suggestionAnalytics: boolean;
 	userId: string;
@@ -147,12 +146,13 @@ export interface analyticsConfig {
 }
 
 export interface appbaseConfig {
-	enableQueryRules: boolean;
 	recordAnalytics: boolean;
-	searchStateHeader: boolean;
 	emptyQuery: boolean;
 	suggestionAnalytics: boolean;
+	enableQueryRules: boolean;
+	enableSearchRelevancy: boolean;
 	userId: string;
+	useCache: boolean;
 	customEvents: object;
 	enableTelemetry: boolean;
 }
