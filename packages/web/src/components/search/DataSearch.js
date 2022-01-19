@@ -1059,9 +1059,8 @@ class DataSearch extends Component {
 		const {
 			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
 		} = this.props;
-		const hasSuggestions = currentValue
-			? suggestionsList.length || this.topSuggestions.length
-			: this.defaultSuggestions.length;
+		const hasSuggestions
+			= suggestionsList.length || this.topSuggestions.length || this.defaultSuggestions.length;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
