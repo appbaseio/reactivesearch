@@ -170,8 +170,9 @@ const DynamicRangeSlider = {
 			this.setQueryOptions(this.internalRangeComponent, { aggs });
 		},
 
-		handleSlider(values) {
-			this.handleChange(values.currentValue);
+		handleSlider() {
+			const sliderValues = this.$refs.slider.getValue();			
+			this.handleChange(sliderValues);
 		},
 
 		handleChange(currentValue) {
@@ -303,6 +304,7 @@ const DynamicRangeSlider = {
 				<NoSSR>
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider-component
+							ref="slider"
 							value={[
 								Math.max(start, this.currentValue[0]),
 								Math.min(end, this.currentValue[1]),
@@ -313,6 +315,7 @@ const DynamicRangeSlider = {
 							dotSize={20}
 							height={4}
 							enable-cross={false}
+							tooltip="always"
 							{...{ props: this.$props.sliderOptions }}
 						/>
 
