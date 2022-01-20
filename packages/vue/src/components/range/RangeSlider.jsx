@@ -197,9 +197,9 @@ const RangeSlider = {
 								dotSize={20}
 								height={4}
 								enable-cross={false}
-								{...{ props: this.$props.sliderOptions }}
 								onDrag-end={this.handleSlider}
 								tooltip="always"
+								{...{ props: this.$props.sliderOptions }}
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">

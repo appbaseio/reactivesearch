@@ -315,8 +315,8 @@ const DynamicRangeSlider = {
 							dotSize={20}
 							height={4}
 							enable-cross={false}
-							{...{ props: this.$props.sliderOptions }}
 							tooltip="always"
+							{...{ props: this.$props.sliderOptions }}
 						/>
 
 						{this.labels ? (
