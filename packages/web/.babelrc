@@ -16,6 +16,9 @@
 				"emotion",
 				"transform-class-properties",
 				"transform-object-rest-spread"
+			],
+			"ignore": [
+				"**/*.test.js"
 			]
 		},
 		"test": {
@@ -53,6 +56,9 @@
 				"emotion",
 				"transform-class-properties",
 				"transform-object-rest-spread"
+			],
+			"ignore": [
+				"**/*.test.js"
 			]
 		}
 	}
