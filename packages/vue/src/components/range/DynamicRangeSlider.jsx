@@ -21,13 +21,8 @@ const {
 	updateComponentProps,
 } = Actions;
 
-const {
-	checkValueChange,
-	getClassName,
-	getOptionsFromQuery,
-	isEqual,
-	checkSomePropChange,
-} = helper;
+const { checkValueChange, getClassName, getOptionsFromQuery, isEqual, checkSomePropChange }
+	= helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -215,7 +210,7 @@ const DynamicRangeSlider = {
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(this.$props.componentId, customQueryOptions);
+			this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: this.$props.componentId,
@@ -372,7 +367,7 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = value => [value.start, value.end];
+DynamicRangeSlider.parseValue = (value) => [value.start, value.end];
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];
@@ -431,7 +426,7 @@ const mapDispatchtoProps = {
 
 const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
 
-DynamicRangeSlider.install = function(Vue) {
+DynamicRangeSlider.install = function (Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);
 };
 

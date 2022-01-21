@@ -152,7 +152,7 @@ const SingleRange = {
 					this.currentValue,
 				);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions);
+			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,
