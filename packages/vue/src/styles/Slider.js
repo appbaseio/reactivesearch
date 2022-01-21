@@ -46,7 +46,7 @@ const Slider = styled('div')`
 	}
 
 	/* dot style */
-	.vue-slider-dot{
+	.vue-slider-dot {
 		z-index: 2;
 	}
 
@@ -59,6 +59,7 @@ const Slider = styled('div')`
 		box-sizing: border-box;
 		border: 1px solid #9a9a9a;
 		z-index: 2;
+		box-shadow: 0.5px 0.5px 2px 1px rgb(0 0 0 / 32%);
 	}
 
 	.vue-slider-dot-handle-disabled {
@@ -74,17 +75,17 @@ const Slider = styled('div')`
 		text-align: center;
 		color: #fff;
 		border-radius: 5px;
-		border-color: #000;
-		background-color: #000;
+		border: 1px solid #3498db;
+		background-color: #3498db;
 		box-sizing: content-box;
 	}
 
 	.vue-slider-dot-tooltip-inner::after {
-		content: "";
+		content: '';
 		position: absolute;
 	}
 
-	.vue-slider-dot -tooltip-inner-top::after {
+	.vue-slider-dot-tooltip-inner-top::after {
 		top: 100%;
 		left: 50%;
 		transform: translate(-50%, 0);
