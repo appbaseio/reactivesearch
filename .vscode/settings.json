@@ -7,10 +7,9 @@
 	},
 	// to resolve flow issues - Refer: https://github.com/flowtype/flow-for-vscode#setup
 	"javascript.validate.enable": false,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.tslint": true,
-		"source.fixAll.eslint": true
-	},
+	"editor.formatOnSave": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
 	"eslint.workingDirectories": [
 		{
 			"directory": "packages/vue",
