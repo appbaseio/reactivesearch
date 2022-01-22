@@ -60,7 +60,7 @@ const MultiRange = {
 			} else if (isDefaultValue) {
 				currentValue = MultiRange.parseValue(item, props);
 				const values = {};
-				currentValue.forEach(value => {
+				currentValue.forEach((value) => {
 					values[[value.label]] = true;
 				});
 				if (reset) {
@@ -69,11 +69,11 @@ const MultiRange = {
 					selectedValues = { ...selectedValues, ...values };
 				}
 			} else if (selectedValues[item]) {
-				currentValue = currentValue.filter(value => value.label !== item);
+				currentValue = currentValue.filter((value) => value.label !== item);
 				const { [item]: del, ...selected } = selectedValues;
 				selectedValues = selected;
 			} else {
-				const currentItems = props.data.filter(value => item.indexOf(value.label) !== -1);
+				const currentItems = props.data.filter((value) => item.indexOf(value.label) !== -1);
 				currentValue = [...currentValue, ...currentItems];
 				selectedValues = {
 					...selectedValues,
@@ -112,7 +112,7 @@ const MultiRange = {
 				);
 			}
 
-			this.setQueryOptions(props.componentId, customQueryOptions);
+			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,
@@ -177,7 +177,7 @@ const MultiRange = {
 					</Title>
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
-					{this.$props.data.map(item => {
+					{this.$props.data.map((item) => {
 						const selected
 							= !!this.$data.currentValue
 							&& this.$data.currentValue.label === item.label;
@@ -217,12 +217,12 @@ const MultiRange = {
 };
 
 MultiRange.parseValue = (value, props) =>
-	value ? props.data.filter(item => value.includes(item.label)) : null;
+	value ? props.data.filter((item) => value.includes(item.label)) : null;
 
 MultiRange.defaultQuery = (values, props) => {
 	const generateRangeQuery = (dataField, items) => {
 		if (items.length > 0) {
-			return items.map(value => ({
+			return items.map((value) => ({
 				range: {
 					[dataField]: {
 						gte: value.start,
@@ -277,7 +277,7 @@ const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoPr
 	componentType: componentTypes.multiRange,
 });
 
-MultiRange.install = function(Vue) {
+MultiRange.install = function (Vue) {
 	Vue.component(MultiRange.name, RangeConnected);
 };
 // Add componentType for SSR
