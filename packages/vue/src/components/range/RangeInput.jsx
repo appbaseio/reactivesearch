@@ -113,7 +113,7 @@ const RangeInput = {
 			}
 		},
 		handleOnChange(value) {
-			this.handleChange(value, 'change');
+			this.handleChange(value || this.$props.range, 'change');			
 		},
 		handleValueChange(value) {
 			this.handleChange(value, 'value-change');

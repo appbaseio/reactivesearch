@@ -146,7 +146,7 @@ export default {
 				'process.env.NODE_ENV': JSON.stringify(minify ? 'production' : 'development'),
 				"components['vue-slider-component'] = require('vue-slider-component');": `
 					var s = document.createElement("script");
-					s.setAttribute("src","https://cdn.jsdelivr.net/npm/vue-slider-component@2.8.2/dist/index.js");
+					s.setAttribute("src","https://cdn.jsdelivr.net/npm/vue-slider-component@3.2.15/dist/vue-slider-component.umd.min.js");
 					s.onload = function(){
 						var VueSlider = global['vue-slider-component'];
 						components['vue-slider-component'] = VueSlider;
