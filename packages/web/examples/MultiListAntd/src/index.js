@@ -14,7 +14,12 @@ const Main = () => (
 		enableAppbase
 	>
 		<div className="row">
-			<div className="col">
+			<div
+				className="col"
+				style={{
+					minWidth: 300,
+				}}
+			>
 				<MultiList
 					componentId="BookSensor"
 					dataField="authors.keyword"
