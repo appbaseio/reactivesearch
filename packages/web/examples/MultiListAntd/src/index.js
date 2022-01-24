@@ -30,8 +30,7 @@ const Main = () => (
 						if (error) {
 							return (
 								<div>
-									Something went wrong! Error details{' '}
-									{JSON.stringify(error)}
+									Something went wrong! Error details {JSON.stringify(error)}
 								</div>
 							);
 						}
@@ -77,12 +76,8 @@ const Main = () => (
 									<Col key={item._id} span={8}>
 										<Card
 											hoverable
-											style={{ width: 240 }}
 											cover={
-												<img
-													alt={item.original_title}
-													src={item.image}
-												/>
+												<img alt={item.original_title} src={item.image} />
 											}
 										>
 											<Meta
@@ -91,9 +86,7 @@ const Main = () => (
 											/>
 											<div>
 												by{' '}
-												<span className="authors-list">
-													{item.authors}
-												</span>
+												<span className="authors-list">{item.authors}</span>
 											</div>
 											<div className="ratings-list flex align-center">
 												<span className="stars">
@@ -121,6 +114,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
 
 ReactDOM.render(<Main />, document.getElementById('root'));
