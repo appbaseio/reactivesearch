@@ -43,18 +43,22 @@ const SuggestionItem = {
 			// label has highest precedence
 			return typeof label === 'string' ? (
 				<div class="trim">
-					{(_category ? false : isPredictiveSuggestion || !!_suggestion_type) ? (
-						<PredictiveSuggestion domPropsInnerHTML={label} />
-					) : (
-						<Highlight
-							searchWords={
-								_category ? ['in', _category] : this.currentValue.split(' ')
-							}
-							textToHighlight={label}
-							autoEscape
-							highlightStyle={highlightStyle}
-						/>
-					)}
+					{(
+						_category
+							? false
+							: isPredictiveSuggestion
+							  // eslint-disable-next-line
+							  || !!_suggestion_type
+					) ? (
+							<PredictiveSuggestion domPropsInnerHTML={label} />
+						) : (
+							<Highlight
+								searchWords={_category ? [_category] : this.currentValue.split(' ')}
+								textToHighlight={label}
+								autoEscape
+								highlightStyle={highlightStyle}
+							/>
+						)}
 				</div>
 			) : (
 				label
