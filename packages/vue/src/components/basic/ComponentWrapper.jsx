@@ -4,7 +4,6 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
-
 const {
 	addComponent,
 	removeComponent,
@@ -36,14 +35,14 @@ const ComponentWrapper = (
 ) => ({
 	name: 'ComponentWrapper',
 	props: {
-		destroyOnUnmount: VueTypes.bool.def(false)
+		destroyOnUnmount: VueTypes.bool.def(false),
 	},
 	created() {
 		// clone the props for component it is needed because attrs gets changed on time
 		const componentProps = { ...this.$attrs };
 		// handle kebab case for props
 		const parsedProps = {};
-		Object.keys(componentProps).forEach(key => {
+		Object.keys(componentProps).forEach((key) => {
 			parsedProps[getCamelCase(key)] = componentProps[key];
 		});
 		this.componentProps = parsedProps;
@@ -52,20 +51,19 @@ const ComponentWrapper = (
 	},
 	beforeMount() {
 		let components = [];
-		if(this.$$store) {
-			({components} = this.$$store.getState())
+		if (this.$$store) {
+			({ components } = this.$$store.getState());
 		}
 		// Register a component only when `destroyOnUnmount` is `true`
 		// or component is not present in store
-		if(this.destroyOnUnmount
-			|| components.indexOf(this.componentProps.componentId) === -1) {
+		if (this.destroyOnUnmount || components.indexOf(this.componentProps.componentId) === -1) {
 			// Register  component
 			this.addComponent(this.componentId);
 			const onQueryChange = (...args) => {
 				this.$emit('queryChange', ...args);
 				this.$emit('query-change', ...args);
 			};
-			const onError = e => {
+			const onError = (e) => {
 				this.$emit('error', e);
 			};
 			this.setQueryListener(this.componentId, onQueryChange, onError);
@@ -76,15 +74,16 @@ const ComponentWrapper = (
 		// if default query prop is defined and component is reactive component then register the internal component
 		if (
 			options.internalComponent
-		|| (this.componentProps.defaultQuery
-			&& options.componentType === componentTypes.reactiveComponent)
+			|| (this.componentProps.defaultQuery
+				&& options.componentType === componentTypes.reactiveComponent)
 		) {
 			this.internalComponent = getInternalComponentID(this.componentId);
 		}
 		// Register internal component
-		if (this.internalComponent && (this.destroyOnUnmount
-				|| components.indexOf(this.internalComponent) === -1))
-		{
+		if (
+			this.internalComponent
+			&& (this.destroyOnUnmount || components.indexOf(this.internalComponent) === -1)
+		) {
 			this.addComponent(this.internalComponent);
 			this.setComponentProps(
 				this.internalComponent,
@@ -100,7 +99,7 @@ const ComponentWrapper = (
 		}
 	},
 	beforeDestroy() {
-		if(this.destroyOnUnmount) {
+		if (this.destroyOnUnmount) {
 			// Unregister components
 			this.removeComponent(this.componentId);
 			if (this.internalComponent) {

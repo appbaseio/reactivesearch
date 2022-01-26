@@ -17,6 +17,7 @@
 				"ignoredNodes": ["TemplateLiteral"]
 			}
 		],
+		"no-mixed-spaces-and-tabs": 0, // disable rule
 		"no-tabs": 0,
 		"no-underscore-dangle": 0,
 		"operator-linebreak": ["error", "before"],
