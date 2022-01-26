@@ -20,8 +20,7 @@ export interface ReactiveBaseProps {
 	transformResponse?: (...args: any[]) => any;
 	transformRequest?: (...args: any[]) => any;
 	getSearchParams?: () => string;
-	setSearchParams?: (newURL: string) => void;
-	searchStateHeader?: boolean;
+	setSearchParams?: (newURL: string) => void;	
 	initialQueriesSyncTime?: number;
 	analyticsConfig?: types.analyticsConfig;
 	appbaseConfig?: types.appbaseConfig;

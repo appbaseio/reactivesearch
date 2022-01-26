@@ -18,6 +18,7 @@ const SelectedFilters = {
 		showClearAll: VueTypes.bool.def(true),
 		title: types.title,
 		resetToDefault: VueTypes.bool.def(false),
+		resetToValues: VueTypes.object,
 	},
 	inject: {
 		theme: {
@@ -50,7 +51,7 @@ const SelectedFilters = {
 						{...{
 							on: {
 								click: this.clearValues,
-								keypress: event =>
+								keypress: (event) =>
 									handleA11yAction(event, () => this.clearValues()),
 							},
 						}}
@@ -69,17 +70,17 @@ const SelectedFilters = {
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
-			const { resetToDefault } = this;
+			const { resetToDefault, resetToValues } = this;
 			if (resetToDefault) {
 				this.resetValuesToDefault();
 			} else {
-				this.clearValuesAction();
+				this.clearValuesAction(resetToValues);
 			}
-			this.$emit('clear', null);
+			this.$emit('clear', resetToValues);
 		},
 		renderValue(value, isArray) {
 			if (isArray && value.length) {
-				const arrayToRender = value.map(item => this.renderValue(item));
+				const arrayToRender = value.map((item) => this.renderValue(item));
 				return arrayToRender.join(', ');
 			}
 			if (value && typeof value === 'object') {
@@ -103,7 +104,7 @@ const SelectedFilters = {
 		renderFilters() {
 			const { selectedValues } = this;
 			return Object.keys(selectedValues)
-				.filter(id => this.components.includes(id) && selectedValues[id].showFilter)
+				.filter((id) => this.components.includes(id) && selectedValues[id].showFilter)
 				.map((component, index) => {
 					const { label, value } = selectedValues[component];
 					const isArray = Array.isArray(value);
@@ -117,7 +118,7 @@ const SelectedFilters = {
 								{...{
 									on: {
 										click: () => this.remove(component, value),
-										keypress: event =>
+										keypress: (event) =>
 											handleA11yAction(event, () =>
 												this.remove(component, value),
 											),
@@ -145,7 +146,7 @@ const SelectedFilters = {
 	},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	components: state.components,
 	selectedValues: state.selectedValues,
 });
@@ -158,7 +159,7 @@ const mapDispatchtoProps = {
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
 
-SelectedFilters.install = function(Vue) {
+SelectedFilters.install = function (Vue) {
 	Vue.component(SelectedFilters.name, RcConnected);
 };
 export default SelectedFilters;

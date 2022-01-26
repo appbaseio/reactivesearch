@@ -67,11 +67,9 @@ const RangeSlider = {
 				});
 			}
 		},
-		handleSlider(values) {
-			clearTimeout(this.handleSliderChange._tId);
-			this.handleSliderChange._tId = setTimeout(() => {
-				this.handleSliderChange(values);
-			}, 100);
+		handleSlider() {
+			const sliderValues = this.$refs.slider.getValue();			
+			this.handleSliderChange(sliderValues);
 		},
 		handleChange(currentValue, props = this.$props) {
 			const performUpdate = () => {
@@ -113,7 +111,7 @@ const RangeSlider = {
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(props.componentId, customQueryOptions);
+			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -199,12 +197,9 @@ const RangeSlider = {
 								dotSize={20}
 								height={4}
 								enable-cross={false}
+								onDrag-end={this.handleSlider}
+								tooltip="always"
 								{...{ props: this.$props.sliderOptions }}
-								{...{
-									on: {
-										input: this.handleSlider,
-									},
-								}}
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">
