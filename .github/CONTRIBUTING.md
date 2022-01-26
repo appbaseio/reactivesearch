@@ -32,6 +32,13 @@ git submodule update --remote
 yarn
 ```
 
+## Editor Settings
+
+We recommend to use [Visual Studio](https://marketplace.visualstudio.com/) with the following extensions to make eslint and prettier work together.
+
+-   [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+-   [Format Code Action](https://marketplace.visualstudio.com/items?itemName=rohit-gohri.format-code-action)
+
 ## Web
 
 1. You can run the following command from `reactivesearch` root which will start the babel watchers inside `/reactivecore` and `/web`. This will let you make changes to these projects on the fly and the files will be transpiled and updated instantly:

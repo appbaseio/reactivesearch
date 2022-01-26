@@ -21,7 +21,7 @@ Check out [Searchbox](https://opensource.appbase.io/searchbox/) if you're buildi
 <hr />
 
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/LICENSE)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/appbaseio/reactivesearch)
+[![ReactiveSearch Snapshot Tests](https://github.com/appbaseio/reactivesearch/actions/workflows/test.yml/badge.svg)](https://github.com/appbaseio/reactivesearch/actions/workflows/test.yml)
 [![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/.github/CONTRIBUTING.md)
 [![Mentioned in Awesome React](https://awesome.re/mentioned-badge.svg)](https://github.com/enaqx/awesome-react)
