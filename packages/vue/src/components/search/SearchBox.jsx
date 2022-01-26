@@ -297,8 +297,8 @@ const SearchBox = {
 		debounce(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.handleTextChange = debounce(this.handleText, newVal);
-			}			
-		}
+			}
+		},
 	},
 	methods: {
 		handleText(value, cause) {
@@ -785,9 +785,7 @@ const SearchBox = {
 				this.onAutofillClick(suggestion);
 			};
 			/* 👇 avoid showing autofill for category suggestions👇 */
-			return suggestion._category ? null : (
-				<AutofillSvg handleAutoFill={handleAutoFillClick} />
-			);
+			return suggestion._category ? null : <AutofillSvg onClick={handleAutoFillClick} />;
 		},
 	},
 	render() {
