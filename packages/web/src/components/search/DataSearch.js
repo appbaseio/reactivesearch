@@ -635,9 +635,7 @@ class DataSearch extends Component {
 		}
 	};
 
-	triggerQuery = ({
-		isOpen = false,
-	} = {}) => {
+	triggerQuery = ({ isOpen = false } = {}) => {
 		this.isPending = false;
 		this.setValue(this.props.value, !isOpen, this.props);
 	};
@@ -910,10 +908,7 @@ class DataSearch extends Component {
 	get parsedSuggestions() {
 		let suggestionsList = [];
 		const { currentValue } = this.state;
-		const { defaultSuggestions } = this.props;
-		if (!currentValue && defaultSuggestions && defaultSuggestions.length) {
-			suggestionsList = defaultSuggestions;
-		} else if (currentValue) {
+		if (currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
 		return withClickIds(suggestionsList);
@@ -957,7 +952,9 @@ class DataSearch extends Component {
 			enablePopularSuggestions,
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
+			defaultSuggestions,
 		} = this.props;
+
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
 		if (currentValue) {
@@ -971,16 +968,22 @@ class DataSearch extends Component {
 			...search,
 			_recent_search: true,
 		}));
-		const defaultSuggestions = isPopularSuggestionsEnabled
+		const defaultSuggestionsProcessed = isPopularSuggestionsEnabled
 			? [...customNormalizedRecentSearches, ...customDefaultPopularSuggestions]
 			: customNormalizedRecentSearches;
-
-		return getTopSuggestions(
+		if (defaultSuggestions && Array.isArray(defaultSuggestions)) {
+			defaultSuggestionsProcessed.shift(defaultSuggestions);
+		}
+		const suggestionsList = getTopSuggestions(
 			// use default popular suggestions if value is empty
-			defaultSuggestions,
+			defaultSuggestionsProcessed,
 			currentValue,
 			showDistinctSuggestions,
 		);
+		if (defaultSuggestions && Array.isArray(defaultSuggestions)) {
+			suggestionsList.unshift(...defaultSuggestions);
+		}
+		return suggestionsList;
 	}
 
 	triggerClickAnalytics = (searchPosition, documentId) => {
@@ -1006,9 +1009,9 @@ class DataSearch extends Component {
 		const tagName = elt.tagName;
 		if (
 			elt.isContentEditable
-      || tagName === 'INPUT'
-      || tagName === 'SELECT'
-      || tagName === 'TEXTAREA'
+			|| tagName === 'INPUT'
+			|| tagName === 'SELECT'
+			|| tagName === 'TEXTAREA'
 		) {
 			// already in an input
 			return;
@@ -1059,8 +1062,9 @@ class DataSearch extends Component {
 		const {
 			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
 		} = this.props;
-		const hasSuggestions
-			= suggestionsList.length || this.topSuggestions.length || this.defaultSuggestions.length;
+		const hasSuggestions = currentValue
+			? suggestionsList.length || this.topSuggestions.length
+			: this.defaultSuggestions.length;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1122,15 +1126,14 @@ class DataSearch extends Component {
 											{this.defaultSuggestions.map((sugg, index) => (
 												<li
 													{...getItemProps({ item: sugg })}
-													key={`${
-															suggestionsList.length + index + 1
-														}-${sugg.value}`}
+													key={`${suggestionsList.length + index + 1}-${
+														sugg.value
+													}`}
 													style={{
-														backgroundColor:
-																this.getBackgroundColor(
-																	highlightedIndex,
-																	suggestionsList.length + index,
-																),
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex,
+															suggestionsList.length + index,
+														),
 														justifyContent: 'flex-start',
 													}}
 												>
@@ -1180,18 +1183,20 @@ class DataSearch extends Component {
 														...rest,
 													},
 													true,
-												)
+												  )
 												: this.topSuggestions.map((sugg, index) => (
 													<li
 														{...getItemProps({ item: sugg })}
-														key={`${suggestionsList.length
-																+ index
-																+ 1}-${sugg.value}`}
+														key={`${
+																suggestionsList.length + index + 1
+															}-${sugg.value}`}
 														style={{
-															backgroundColor: this.getBackgroundColor(
-																highlightedIndex,
-																suggestionsList.length + index,
-															),
+															backgroundColor:
+																	this.getBackgroundColor(
+																		highlightedIndex,
+																		suggestionsList.length
+																			+ index,
+																	),
 															justifyContent: 'flex-start',
 														}}
 													>
@@ -1213,7 +1218,7 @@ class DataSearch extends Component {
 															suggestion={sugg}
 														/>
 													</li>
-												))}
+												  ))}
 										</ul>
 									) : (
 										this.renderNoSuggestion(suggestionsList)
@@ -1262,7 +1267,8 @@ class DataSearch extends Component {
 													onKeyPress: this.withTriggerQuery(
 														this.props.onKeyPress,
 													),
-													onKeyDown: e => this.handleKeyDown(e, highlightedIndex),
+													onKeyDown: e =>
+														this.handleKeyDown(e, highlightedIndex),
 													onKeyUp: this.withTriggerQuery(
 														this.props.onKeyUp,
 													),
@@ -1506,15 +1512,15 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setCustomHighlightOptions: (component, options) => dispatch(
-		setCustomHighlightOptions(component, options)),
+	setCustomHighlightOptions: (component, options) =>
+		dispatch(setCustomHighlightOptions(component, options)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	triggerAnalytics: (searchPosition, documentId) => dispatch(
-		recordSuggestionClick(searchPosition, documentId)),
+	triggerAnalytics: (searchPosition, documentId) =>
+		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
 });
