@@ -49,6 +49,7 @@ const DynamicRangeSlider = {
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
 		index: VueTypes.string,
+		value: types.range,
 	},
 
 	data() {
@@ -89,6 +90,7 @@ const DynamicRangeSlider = {
 		if (this.$$store) {
 			({ components } = this.$$store.getState());
 		}
+		const { value } = this.$props;
 		if (this.destroyOnUnmount || components.indexOf(this.componentId) === -1) {
 			this.addComponent(this.componentId);
 			this.addComponent(this.internalRangeComponent);
@@ -96,6 +98,8 @@ const DynamicRangeSlider = {
 				this.handleChange(this.selectedValue);
 			} else if (this.selectedValue) {
 				this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
+			} else if (value) {
+				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 			}
 
 			// get range before executing other queries
@@ -117,6 +121,12 @@ const DynamicRangeSlider = {
 	},
 
 	methods: {
+		isControlled() {
+			if (this.$props.value && this.$listeners) {
+				return true;
+			}
+			return false;
+		},
 		setDefaultValue({ start, end }) {
 			if (this.$props.defaultValue) {
 				const { start: defaultStart, end: defaultEnd } = this.$props.defaultValue(
@@ -124,6 +134,8 @@ const DynamicRangeSlider = {
 					end,
 				);
 				this.handleChange([defaultStart, defaultEnd]);
+			} else if (this.isControlled()) {
+				this.handleChange(DynamicRangeSlider.parseValue(this.$props.value), 'change');
 			} else {
 				this.currentValue = [start, end];
 			}
@@ -166,8 +178,16 @@ const DynamicRangeSlider = {
 		},
 
 		handleSlider() {
-			const sliderValues = this.$refs.slider.getValue();			
-			this.handleChange(sliderValues);
+			const sliderValues = this.$refs.slider.getValue();
+			const { value } = this.$props;
+			if (value === undefined) {
+				this.handleChange(sliderValues);
+			} else {
+				this.$emit('change', {
+					start: sliderValues[0],
+					end: sliderValues[1],
+				});
+			}
 		},
 
 		handleChange(currentValue) {
@@ -262,7 +282,7 @@ const DynamicRangeSlider = {
 				start: this.range.start,
 				end: this.range.end,
 			};
-
+			this.$emit('change', value);
 			this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 		},
 
@@ -280,6 +300,11 @@ const DynamicRangeSlider = {
 		customQuery(newVal, oldVal) {
 			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
 				this.updateQueryHandler(this.$data.currentValue);
+			}
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.handleChange(DynamicRangeSlider.parseValue(newVal, this.$props));
 			}
 		},
 	},
@@ -370,7 +395,12 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = (value) => [value.start, value.end];
+DynamicRangeSlider.parseValue = (value) => {
+	if (value) {
+		return Array.isArray(value) ? value : [value.start, value.end];
+	}
+	return [];
+};
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];
