@@ -86,14 +86,9 @@ const MultiList = {
 	},
 	beforeMount() {
 		this.updateQueryHandlerOptions(this.$props);
-
-		if (this.selectedValue) {
-			this.setValue(this.selectedValue);
-		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
-		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
-		}
+		const value = this.selectedValue || this.$props.value || this.$props.defaultValue;
+		this.setValue(value, !this.selectedValue);
+		this.$emit('change', value || []);
 	},
 	watch: {
 		options(newVal) {
@@ -134,6 +129,7 @@ const MultiList = {
 			}
 			if (!isEqual(selectedValue, newVal)) {
 				this.setValue(newVal || [], true);
+				this.$emit('change', newVal || []);
 			}
 		},
 		defaultQuery(newVal, oldVal) {
