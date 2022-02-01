@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { withTheme } from 'emotion-theming';
 import { setValue, clearValues, resetValuesToDefault } from '@appbaseio/reactivecore/lib/actions';
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -41,11 +42,11 @@ class SelectedFilters extends Component {
 	};
 
 	clearValues = () => {
-		const { onClear, resetToDefault } = this.props;
+		const { onClear, resetToDefault, resetToValues } = this.props;
 		if (resetToDefault) {
 			this.props.resetValuesToDefault();
 		} else {
-			this.props.clearValues();
+			this.props.clearValues(resetToValues);
 		}
 		if (onClear) {
 			onClear(null);
@@ -178,6 +179,7 @@ SelectedFilters.propTypes = {
 	title: types.title,
 	onChange: types.func,
 	resetToDefault: types.bool,
+	resetToValues: object, // eslint-disable-line
 	resetValuesToDefault: types.func,
 };
 
@@ -197,7 +199,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	clearValues: () => dispatch(clearValues()),
+	clearValues: resetToValues => dispatch(clearValues(resetToValues)),
 	setValue: (component, value) => dispatch(setValue(component, value)),
 	resetValuesToDefault: () => dispatch(resetValuesToDefault()),
 });
