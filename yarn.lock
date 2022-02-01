@@ -100,6 +100,28 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.30":
+  version "1.16.0-alpha.30"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.30.tgz#736b4ff75ffe967c8a5078bcffc66dd317f37168"
+  integrity sha512-BF2fB8NtLu7KKZeTE0bMZNxk4IwTtmYwXx8CkgPRPQRYw8BNxbVUgYZ5BGc2lmiTYNUWZrizXmpte22/RhNNsQ==
+  dependencies:
+    "@appbaseio/reactivecore" "9.13.4"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^4.5.1"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    gmap-vue "^1.5.0"
+    hotkeys-js "^3.8.7"
+    ngeohash "^0.6.3"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^3.2.15"
+    vue-types "^1.7.0"
+
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
