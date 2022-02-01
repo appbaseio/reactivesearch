@@ -91,7 +91,7 @@ const MultiList = {
 	},
 	mounted() {
 		const currentValue = Object.keys(this.$data.currentValue);
-		if (this.$props.value !== undefined && !isEqual(this.$props.value, this.selectedValue)) {
+		if (this.$props.value !== undefined && !isEqual(this.$props.value, currentValue)) {
 			this.$emit('change', currentValue);
 		}
 	},
