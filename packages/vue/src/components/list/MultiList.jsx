@@ -90,7 +90,7 @@ const MultiList = {
 		this.setValue(value, !this.selectedValue);
 	},
 	mounted() {
-		if ((this.$props.value !== undefined && this.selectedValue) || this.$props.defaultValue) {
+		if (this.$props.value !== undefined && (this.selectedValue || this.$props.defaultValue)) {
 			this.$emit('change', this.selectedValue || this.$props.defaultValue);
 		}
 	},
