@@ -322,7 +322,7 @@ const MultiDropdownList = {
 			}
 
 			const performUpdate = () => {
-				this.currentValue = currentValue;
+				this.currentValue = {...currentValue};
 				this.updateQueryHandler(finalValues, props);
 				this.$emit('valueChange', finalValues);
 				this.$emit('value-change', finalValues);

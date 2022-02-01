@@ -14,7 +14,13 @@ const Main = () => (
 		enableAppbase
 	>
 		<div className="row">
-			<div className="col">
+			<div
+				className="col"
+				style={{
+					maxWidth: 300,
+					minWidth: 250,
+				}}
+			>
 				<MultiList
 					componentId="BookSensor"
 					dataField="authors.keyword"
@@ -58,7 +64,12 @@ const Main = () => (
 				/>
 			</div>
 
-			<div className="col">
+			<div
+				className="col"
+				style={{
+					maxWidth: '60%',
+				}}
+			>
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
@@ -73,7 +84,7 @@ const Main = () => (
 						<div className="site-card-wrapper">
 							<Row gutter={16}>
 								{data.map(item => (
-									<Col key={item._id} span={8}>
+									<Col key={item._id} span={12}>
 										<Card
 											hoverable
 											cover={
