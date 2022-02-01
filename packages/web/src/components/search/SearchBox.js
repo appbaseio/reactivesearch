@@ -829,8 +829,7 @@ const SearchBox = (props) => {
 		listenForFocusShortcuts();
 	}, []);
 
-	const hasSuggestions = () => (Array.isArray(parsedSuggestions()) && parsedSuggestions().length);
-
+	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
@@ -838,7 +837,7 @@ const SearchBox = (props) => {
 					{props.title}
 				</Title>
 			)}
-			{hasSuggestions() && props.autosuggest ? (
+			{props.autosuggest ? (
 				<Downshift
 					id={`${props.componentId}-downshift`}
 					onChange={onSuggestionSelected}
