@@ -997,13 +997,7 @@ class CategorySearch extends Component {
 		// filter out empty categories
 		const filteredCategories = this.filteredCategories;
 
-		if (
-			!this.state.currentValue
-			&& this.props.defaultSuggestions
-			&& this.props.defaultSuggestions.length
-		) {
-			finalSuggestionsList = this.props.defaultSuggestions;
-		} else if (this.state.currentValue) {
+		if (this.state.currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
 
@@ -1074,6 +1068,7 @@ class CategorySearch extends Component {
 			enablePopularSuggestions,
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
+			defaultSuggestions,
 		} = this.props;
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
@@ -1088,15 +1083,19 @@ class CategorySearch extends Component {
 			...search,
 			_recent_search: true,
 		}));
-		const defaultSuggestions = isPopularSuggestionsEnabled
+		const defaultSuggestionsProcessed = isPopularSuggestionsEnabled
 			? [...customNormalizedRecentSearches, ...customDefaultPopularSuggestions]
 			: customNormalizedRecentSearches;
-		return getTopSuggestions(
-			// use default popular suggestions if value is empty
-			defaultSuggestions,
+		const suggestionsList = getTopSuggestions(
+			defaultSuggestionsProcessed,
 			currentValue,
 			showDistinctSuggestions,
 		);
+
+		if (defaultSuggestions && Array.isArray(defaultSuggestions)) {
+			suggestionsList.unshift(...withClickIds(defaultSuggestions));
+		}
+		return suggestionsList;
 	}
 
 	triggerClickAnalytics = (searchPosition, documentId) => {
