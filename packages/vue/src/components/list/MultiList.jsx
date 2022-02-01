@@ -90,8 +90,9 @@ const MultiList = {
 		this.setValue(value, !this.selectedValue);
 	},
 	mounted() {
-		if (this.$props.value !== undefined && (this.selectedValue || this.$props.defaultValue)) {
-			this.$emit('change', this.selectedValue || this.$props.defaultValue);
+		const currentValue = Object.keys(this.$data.currentValue);
+		if (this.$props.value !== undefined && !isEqual(this.$props.value, this.selectedValue)) {
+			this.$emit('change', currentValue);
 		}
 	},
 	watch: {
