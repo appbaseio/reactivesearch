@@ -88,7 +88,6 @@ const MultiList = {
 		this.updateQueryHandlerOptions(this.$props);
 		const value = this.selectedValue || this.$props.value || this.$props.defaultValue;
 		this.setValue(value, !this.selectedValue);
-		this.$emit('change', value || []);
 	},
 	watch: {
 		options(newVal) {
@@ -127,8 +126,12 @@ const MultiList = {
 					selectedValue = [this.$props.selectAllLabel];
 				}
 			}
-			if (!isEqual(selectedValue, newVal)) {
-				this.setValue(newVal || [], true);
+
+			if (this.value === undefined) {
+				if (!isEqual(selectedValue, newVal)) {
+					this.setValue(newVal || [], true);
+				}
+			} else {
 				this.$emit('change', newVal || []);
 			}
 		},
