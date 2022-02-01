@@ -86,13 +86,13 @@ const MultiList = {
 	},
 	beforeMount() {
 		this.updateQueryHandlerOptions(this.$props);
-
-		if (this.selectedValue) {
-			this.setValue(this.selectedValue);
-		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
-		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
+		const value = this.selectedValue || this.$props.value || this.$props.defaultValue;
+		this.setValue(value, !this.selectedValue);
+	},
+	mounted() {
+		const currentValue = Object.keys(this.$data.currentValue);
+		if (this.$props.value !== undefined && !isEqual(this.$props.value, currentValue)) {
+			this.$emit('change', currentValue);
 		}
 	},
 	watch: {
@@ -132,8 +132,13 @@ const MultiList = {
 					selectedValue = [this.$props.selectAllLabel];
 				}
 			}
+
 			if (!isEqual(selectedValue, newVal)) {
-				this.setValue(newVal || [], true);
+				if (this.value === undefined) {
+					this.setValue(newVal, true);
+				} else {
+					this.$emit('change', newVal);
+				}
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -451,7 +456,7 @@ const MultiList = {
 			if (value === undefined) {
 				this.setValue(currentValue);
 			} else {
-				const values = parseValueArray(value, currentValue);
+				const values = parseValueArray(value || [], currentValue);
 				this.$emit('change', values);
 			}
 		},
