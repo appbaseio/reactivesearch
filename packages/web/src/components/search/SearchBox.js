@@ -504,7 +504,7 @@ const SearchBox = (props) => {
 	const clearValue = () => {
 		setValue('', false, props, causes.CLEAR_VALUE, true, false);
 		if (onChange) {
-			onChange('', ({ isOpen = false } = { isOpen: false }) =>
+			onChange('', ({ isOpen }) =>
 				triggerQuery({
 					customQuery: true,
 					value: '',
@@ -738,7 +738,6 @@ const SearchBox = (props) => {
 		const currentLocalValue = selectedValue || value || defaultValue || '';
 
 		hasMounted.current = false;
-		const cause = null;
 		if (currentLocalValue) {
 			if (props.onChange) {
 				props.onChange(currentLocalValue, ({ isOpen }) =>
