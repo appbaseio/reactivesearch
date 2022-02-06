@@ -290,6 +290,9 @@ const SearchBox = (props) => {
 	};
 
 	const triggerDefaultQuery = (paramValue) => {
+		if (!props.autosuggest) {
+			return;
+		}
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		let query = searchBoxDefaultQuery(value, props);
 		if (defaultQuery) {
