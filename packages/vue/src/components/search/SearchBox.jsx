@@ -409,6 +409,9 @@ const SearchBox = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		triggerDefaultQuery(paramValue) {
+			if (!this.$props.autosuggest) {
+				return;
+			}
 			const value = typeof paramValue !== 'string' ? this.currentValue : paramValue;
 			let query = SearchBox.defaultQuery(value, this.$props);
 			if (this.defaultQuery) {
@@ -456,9 +459,10 @@ const SearchBox = {
 				category: categoryValue,
 			});
 		},
-		// need to review
 		handleFocus(event) {
-			this.isOpen = true;
+			if (this.$props.autosuggest) {
+				this.isOpen = true;
+			}
 			this.$emit('focus', event);
 		},
 		handleVoiceResults({ results }) {
@@ -474,13 +478,13 @@ const SearchBox = {
 			}
 		},
 		triggerQuery({
-			isOpen = false,
+			isOpen = undefined,
 			customQuery = true,
 			defaultQuery = true,
 			value = undefined,
 			categoryValue = undefined,
 		}) {
-			if (isOpen) {
+			if (typeof isOpen === 'boolean') {
 				this.isOpen = isOpen;
 			}
 
@@ -524,7 +528,7 @@ const SearchBox = {
 		onInputChange(e) {
 			const { value: inputValue } = e.target;
 
-			if (!this.$data.isOpen) {
+			if (!this.$data.isOpen && this.$props.autosuggest) {
 				this.isOpen = true;
 			}
 
@@ -540,7 +544,7 @@ const SearchBox = {
 				this.$emit(
 					'change',
 					inputValue,
-					({ isOpen = false } = { isOpen: false }) =>
+					({ isOpen }) =>
 						this.triggerQuery({
 							defaultQuery: true,
 							customQuery: true,
@@ -567,7 +571,7 @@ const SearchBox = {
 					suggestion._category,
 				);
 			} else {
-				this.$emit('change', suggestion.value, ({ isOpen = false } = { isOpen: false }) =>
+				this.$emit('change', suggestion.value, ({ isOpen }) =>
 					this.triggerQuery({
 						isOpen,
 						value: suggestion.value,
