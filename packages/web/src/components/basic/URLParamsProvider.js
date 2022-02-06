@@ -74,14 +74,13 @@ class URLParamsProvider extends Component {
 							} else {
 								const currentValue = this.getValue(selectedValues.value);
 								const prevValue = prevValues && this.getValue(prevValues.value);
-
 								/*
 									Push to history only if values are different because setting url on
 									same value will lead to 2 same entries in URL history which would cause
 									repeatation on pressing back button.
 								*/
 
-								if (prevValue !== currentValue) {
+								if (!isEqual(prevValue, currentValue)) {
 									this.setURL(component, this.getValue(selectedValues.value));
 								}
 							}
@@ -168,6 +167,7 @@ class URLParamsProvider extends Component {
 			// TODO: support for NestedList
 			if (value.location) return value;
 			if (value.category) return value;
+			if (value.sortOption) return value;
 			return value.label || value.key || null;
 		}
 		return value;
