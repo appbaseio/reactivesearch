@@ -74,6 +74,7 @@ class URLParamsProvider extends Component {
 							} else {
 								const currentValue = this.getValue(selectedValues.value);
 								const prevValue = prevValues && this.getValue(prevValues.value);
+
 								/*
 									Push to history only if values are different because setting url on
 									same value will lead to 2 same entries in URL history which would cause
