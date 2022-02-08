@@ -13,76 +13,75 @@ exports[`RangeInput should render range labels 1`] = `
       mode="test"
     >
       <div
-        class="css-15u2m8f"
+        class="css-1sjm8x1"
       >
         <div
-          class="vue-slider-component vue-slider-horizontal"
-          style="width: auto; padding: 10px 10px;"
+          class="vue-slider vue-slider-ltr"
+          style="padding: 10px 0px; width: auto; height: 4px;"
         >
           <div
-            aria-hidden="true"
-            class="vue-slider"
-            style="height: 4px;"
+            class="vue-slider-rail"
           >
             <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <ul
-              class="vue-slider-piecewise"
-            />
-             
-            <div
               class="vue-slider-process"
+              style="height: 100%; top: 0px; left: 0%; width: 100%; transition-property: width,left; transition-duration: 0.5s;"
+            />
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="50000"
+              aria-valuemin="20000"
+              aria-valuenow="20000"
+              aria-valuetext="20000"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 0%; transition: left 0.5s;"
+              tabindex="0"
             >
               <div
-                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
               >
-                <span
-                  class="vue-slider-tooltip"
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                 >
-                  
-            
-          
-                </span>
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    20000
+                  </span>
+                </div>
               </div>
             </div>
-             
-            <!---->
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="50000"
+              aria-valuemin="20000"
+              aria-valuenow="50000"
+              aria-valuetext="50000"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 100%; transition: left 0.5s;"
+              tabindex="0"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
+              >
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                >
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    50000
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
@@ -158,76 +157,75 @@ exports[`RangeInput should render range with slider 1`] = `
       mode="test"
     >
       <div
-        class="css-15u2m8f"
+        class="css-1sjm8x1"
       >
         <div
-          class="vue-slider-component vue-slider-horizontal"
-          style="width: auto; padding: 10px 10px;"
+          class="vue-slider vue-slider-ltr"
+          style="padding: 10px 0px; width: auto; height: 4px;"
         >
           <div
-            aria-hidden="true"
-            class="vue-slider"
-            style="height: 4px;"
+            class="vue-slider-rail"
           >
             <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <ul
-              class="vue-slider-piecewise"
-            />
-             
-            <div
               class="vue-slider-process"
+              style="height: 100%; top: 0px; left: 0%; width: 100%; transition-property: width,left; transition-duration: 0.5s;"
+            />
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="50000"
+              aria-valuemin="30000"
+              aria-valuenow="30000"
+              aria-valuetext="30000"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 0%; transition: left 0.5s;"
+              tabindex="0"
             >
               <div
-                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
               >
-                <span
-                  class="vue-slider-tooltip"
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                 >
-                  
-            
-          
-                </span>
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    30000
+                  </span>
+                </div>
               </div>
             </div>
-             
-            <!---->
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="50000"
+              aria-valuemin="30000"
+              aria-valuenow="50000"
+              aria-valuetext="50000"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 100%; transition: left 0.5s;"
+              tabindex="0"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
+              >
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                >
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    50000
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -294,76 +292,75 @@ exports[`RangeInput should render title 1`] = `
         Test Title
       </h2>
       <div
-        class="css-15u2m8f"
+        class="css-1sjm8x1"
       >
         <div
-          class="vue-slider-component vue-slider-horizontal"
-          style="width: auto; padding: 10px 10px;"
+          class="vue-slider vue-slider-ltr"
+          style="padding: 10px 0px; width: auto; height: 4px;"
         >
           <div
-            aria-hidden="true"
-            class="vue-slider"
-            style="height: 4px;"
+            class="vue-slider-rail"
           >
             <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <ul
-              class="vue-slider-piecewise"
-            />
-             
-            <div
               class="vue-slider-process"
+              style="height: 100%; top: 0px; left: 0%; width: 100%; transition-property: width,left; transition-duration: 0.5s;"
+            />
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="50000"
+              aria-valuemin="30000"
+              aria-valuenow="30000"
+              aria-valuetext="30000"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 0%; transition: left 0.5s;"
+              tabindex="0"
             >
               <div
-                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
               >
-                <span
-                  class="vue-slider-tooltip"
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                 >
-                  
-            
-          
-                </span>
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    30000
+                  </span>
+                </div>
               </div>
             </div>
-             
-            <!---->
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="50000"
+              aria-valuemin="30000"
+              aria-valuenow="50000"
+              aria-valuetext="50000"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 100%; transition: left 0.5s;"
+              tabindex="0"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
+              >
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                >
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    50000
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -425,76 +422,75 @@ exports[`RangeInput should select default value 1`] = `
       mode="test"
     >
       <div
-        class="css-15u2m8f"
+        class="css-1sjm8x1"
       >
         <div
-          class="vue-slider-component vue-slider-horizontal"
-          style="width: auto; padding: 10px 10px;"
+          class="vue-slider vue-slider-ltr"
+          style="padding: 10px 0px; width: auto; height: 4px;"
         >
           <div
-            aria-hidden="true"
-            class="vue-slider"
-            style="height: 4px;"
+            class="vue-slider-rail"
           >
             <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <div
-              class="vue-slider-always vue-slider-dot"
-              style="width: 20px; height: 20px; top: -8px;"
-            >
-              <div
-                class="vue-slider-dot-handle"
-              />
-               
-              <div
-                class="vue-slider-tooltip-top vue-slider-tooltip-wrap"
-              >
-                <span
-                  class="vue-slider-tooltip"
-                >
-                  
-                </span>
-              </div>
-            </div>
-             
-            <ul
-              class="vue-slider-piecewise"
-            />
-             
-            <div
               class="vue-slider-process"
+              style="height: 100%; top: 0px; left: 8%; width: 52%; transition-property: width,left; transition-duration: 0.5s;"
+            />
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="5500"
+              aria-valuemin="3000"
+              aria-valuenow="3200"
+              aria-valuetext="3200"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 8%; transition: left 0.5s;"
+              tabindex="0"
             >
               <div
-                class="vue-merged-tooltip vue-slider-tooltip-top vue-slider-tooltip-wrap"
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
               >
-                <span
-                  class="vue-slider-tooltip"
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
                 >
-                  
-            
-          
-                </span>
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    3200
+                  </span>
+                </div>
               </div>
             </div>
-             
-            <!---->
+            <div
+              aria-orientation="horizontal"
+              aria-valuemax="5500"
+              aria-valuemin="3000"
+              aria-valuenow="4500"
+              aria-valuetext="4500"
+              class="vue-slider-dot"
+              role="slider"
+              style="width: 20px; height: 20px; transform: translate(-50%, -50%); top: 50%; left: 60%; transition: left 0.5s;"
+              tabindex="0"
+            >
+              <div
+                class="vue-slider-dot-handle"
+              />
+              <div
+                class="vue-slider-dot-tooltip vue-slider-dot-tooltip-top vue-slider-dot-tooltip-show"
+              >
+                <div
+                  class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
+                >
+                  <span
+                    class="vue-slider-dot-tooltip-text"
+                  >
+                    4500
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div

@@ -233,9 +233,7 @@
 <a name='L175'></a><a href='#L175'>175</a>
 <a name='L176'></a><a href='#L176'>176</a>
 <a name='L177'></a><a href='#L177'>177</a>
-<a name='L178'></a><a href='#L178'>178</a>
-<a name='L179'></a><a href='#L179'>179</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L178'></a><a href='#L178'>178</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -303,7 +301,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">52x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-yes">48x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -329,6 +326,7 @@
 <span class="cline-any cline-yes">52x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -397,7 +395,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">461x</span>
+<span class="cline-any cline-yes">485x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -417,7 +415,6 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
-&nbsp;
 &nbsp;
 const {
 	addComponent,
@@ -451,14 +448,14 @@ const ComponentWrapper = (
 ) =&gt; ({
 	name: 'ComponentWrapper',
 	props: {
-		destroyOnUnmount: VueTypes.bool.def(false)
+		destroyOnUnmount: VueTypes.bool.def(false),
 	},
 	created() {
 		// clone the props for component it is needed because attrs gets changed on time
 		const componentProps = { ...this.$attrs };
 		// handle kebab case for props
 		const parsedProps = {};
-		Object.keys(componentProps).forEach(key =&gt; {
+		Object.keys(componentProps).forEach((key) =&gt; {
 			parsedProps[getCamelCase(key)] = componentProps[key];
 		});
 		this.componentProps = parsedProps;
@@ -474,20 +471,19 @@ const ComponentWrapper = (
 	},
 	beforeMount() {
 		let components = [];
-		<span class="missing-if-branch" title="else path not taken" >E</span>if(this.$$store) {
-			({components} = this.$$store.getState())
+		<span class="missing-if-branch" title="else path not taken" >E</span>if (this.$$store) {
+			({ components } = this.$$store.getState());
 		}
 		// Register a component only when `destroyOnUnmount` is `true`
 		// or component is not present in store
-		if(this.destroyOnUnmount
-			|| components.indexOf(this.componentProps.componentId) === -1) {
+		if (this.destroyOnUnmount || components.indexOf(this.componentProps.componentId) === -1) {
 			// Register  component
 			this.addComponent(this.componentId);
 			const onQueryChange = <span class="fstat-no" title="function not covered" >(.</span>..args) =&gt; {
 <span class="cstat-no" title="statement not covered" >				this.$emit('queryChange', ...args);</span>
 <span class="cstat-no" title="statement not covered" >				this.$emit('query-change', ...args);</span>
 			};
-			const onError = <span class="fstat-no" title="function not covered" >e </span>=&gt; {
+			const onError = <span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
 <span class="cstat-no" title="statement not covered" >				this.$emit('error', e);</span>
 			};
 			this.setQueryListener(this.componentId, onQueryChange, onError);
@@ -498,15 +494,16 @@ const ComponentWrapper = (
 		// if default query prop is defined and component is reactive component then register the internal component
 		if (
 			options.internalComponent
-		|| (this.componentProps.defaultQuery
-			&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >options.componentType === componentTypes.reactiveComponent)</span>
+			|| (this.componentProps.defaultQuery
+				&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >options.componentType === componentTypes.reactiveComponent)</span>
 		) {
 			this.internalComponent = getInternalComponentID(this.componentId);
 		}
 		// Register internal component
-		if (this.internalComponent &amp;&amp; (this.destroyOnUnmount
-				|| components.indexOf(this.internalComponent) === -1))
-		{
+		if (
+			this.internalComponent
+			&amp;&amp; (this.destroyOnUnmount || components.indexOf(this.internalComponent) === -1)
+		) {
 			this.addComponent(this.internalComponent);
 			this.setComponentProps(
 				this.internalComponent,
@@ -522,7 +519,7 @@ const ComponentWrapper = (
 		}
 	},
 <span class="fstat-no" title="function not covered" >	be</span>foreDestroy() {
-<span class="cstat-no" title="statement not covered" >		if(this.destroyOnUnmount) {</span>
+<span class="cstat-no" title="statement not covered" >		if (this.destroyOnUnmount) {</span>
 			// Unregister components
 <span class="cstat-no" title="statement not covered" >			this.removeComponent(this.componentId);</span>
 <span class="cstat-no" title="statement not covered" >			if (this.internalComponent) {</span>
@@ -597,7 +594,7 @@ export default (component, options = <span class="branch-0 cbranch-no" title="br
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 08 2022 15:32:30 GMT+0530 (India Standard Time)
+                at Tue Feb 08 2022 16:21:50 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

@@ -22,30 +22,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.35% </span>
+                <span class="strong">44.07% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/57</span>
+                <span class='fraction'>26/59</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.72% </span>
+                <span class="strong">36.84% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>25/72</span>
+                <span class='fraction'>28/76</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>7/14</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">39.29% </span>
+                <span class="strong">43.1% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>22/56</span>
+                <span class='fraction'>25/58</span>
             </div>
         
             
@@ -343,7 +343,10 @@
 <a name='L285'></a><a href='#L285'>285</a>
 <a name='L286'></a><a href='#L286'>286</a>
 <a name='L287'></a><a href='#L287'>287</a>
-<a name='L288'></a><a href='#L288'>288</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -428,10 +431,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
@@ -509,6 +512,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -714,11 +720,11 @@ const RangeInput = {
 			}
 <span class="cstat-no" title="statement not covered" >			return false;</span>
 		},
-<span class="fstat-no" title="function not covered" >		is</span>Controlled() {
-<span class="cstat-no" title="statement not covered" >			if (this.$props.value &amp;&amp; this.$listeners) {</span>
+		isControlled() {
+			<span class="missing-if-branch" title="if path not taken" >I</span>if (this.$props.value &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this.$listeners)</span> {
 <span class="cstat-no" title="statement not covered" >				return true;</span>
 			}
-<span class="cstat-no" title="statement not covered" >			return false;</span>
+			return false;
 		},
 		handleChange(value, event) {
 			let currentValue = value;
@@ -745,7 +751,7 @@ const RangeInput = {
 			}
 		},
 <span class="fstat-no" title="function not covered" >		ha</span>ndleOnChange(value) {
-<span class="cstat-no" title="statement not covered" >			this.handleChange(value, 'change');</span>
+<span class="cstat-no" title="statement not covered" >			this.handleChange(value || this.$props.range, 'change');			</span>
 		},
 		handleValueChange(value) {
 			this.handleChange(value, 'value-change');
@@ -796,6 +802,9 @@ const RangeInput = {
 	created() {
 		if (this.$props.defaultValue &amp;&amp; this.$props.defaultValue.start &amp;&amp; this.$props.defaultValue.end) {
 			this.handleChange(this.$props.defaultValue)
+		}
+		<span class="missing-if-branch" title="if path not taken" >I</span>if (this.isControlled()) {
+<span class="cstat-no" title="statement not covered" >			this.handleChange(this.$props.value, 'change');</span>
 		}
 	},
 	render() {
@@ -924,7 +933,7 @@ export default RangeInput;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 08 2022 15:32:30 GMT+0530 (India Standard Time)
+                at Tue Feb 08 2022 16:21:50 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

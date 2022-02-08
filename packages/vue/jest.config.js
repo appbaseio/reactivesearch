@@ -3,6 +3,7 @@ module.exports = {
 	transform: {
 		'^.+\\.(js|jsx)$': 'babel-jest',
 	},
-	snapshotSerializers: ['jest-vue-emotion'],
+	//snapshotSerializers: ['./serialize.js'],
+	snapshotSerializers: ['dfs'],
 	testMatch: ['**/*.test.[jt]s?(x)'],
 };
