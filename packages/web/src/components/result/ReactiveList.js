@@ -59,7 +59,6 @@ class ReactiveList extends Component {
 		}
 
 		let currentPage = 0;
-
 		if (this.props.defaultPage >= 0) {
 			currentPage = this.props.defaultPage;
 		} else if (this.props.currentPage) {
@@ -75,7 +74,6 @@ class ReactiveList extends Component {
 		this.sortOptionIndex = this.props.defaultSortOption
 			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
-
 		if (this.props.urlSortOption) {
 			this.sortOptionIndex
 				= this.props.sortOptions.findIndex(s => s.label === this.props.urlSortOption) || 0;
@@ -616,17 +614,21 @@ class ReactiveList extends Component {
 	};
 
 	updatePageURL = (page) => {
-		let valueToSet = page + 1;
 		if (this.props.sortOptions) {
-			const sortLabel = this.props.sortOptions[this.sortOptionIndex].label;
-			if (sortLabel) {
-				valueToSet = { page: page + 1, sortOption: sortLabel };
-			}
+			const sortOption = this.props.sortOptions[this.sortOptionIndex].label;
+
+			this.props.setPageURL(
+				`${this.props.componentId}sortOption`,
+				sortOption,
+				`${this.props.componentId}sortOption`,
+				false,
+				this.props.URLParams,
+			);
 		}
 
 		this.props.setPageURL(
 			this.props.componentId,
-			valueToSet,
+			page + 1,
 			this.props.componentId,
 			false,
 			this.props.URLParams,
@@ -886,43 +888,33 @@ ReactiveList.defaultProps = {
 // Add componentType for SSR
 ReactiveList.componentType = componentTypes.reactiveList;
 
-const mapStateToProps = (state, props) => {
-	let defaultPage = -1;
-	let urlSortOption = null;
-	const selectedValue
-		= state.selectedValues[props.componentId] && state.selectedValues[props.componentId].value;
-	if (selectedValue) {
-		if (typeof selectedValue === 'object') {
-			defaultPage = selectedValue.page - 1 || -1;
-			urlSortOption = selectedValue.sortOption;
-		} else {
-			defaultPage = selectedValue - 1 || -1;
-		}
-	}
-
-	return {
-		defaultPage,
-		urlSortOption,
-		hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
-		rawData: state.rawData[props.componentId],
-		analytics: state.config && state.config.analytics,
-		aggregationData: state.compositeAggregations[props.componentId],
-		isLoading: state.isLoading[props.componentId] || false,
-		time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
-		total: state.hits[props.componentId] && state.hits[props.componentId].total,
-		hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
-		config: state.config,
-		enableAppbase: state.config.enableAppbase,
-		queryLog: state.queryLog[props.componentId],
-		error: state.error[props.componentId],
-		promotedResults: state.promotedResults[props.componentId] || [],
-		customData: state.customData[props.componentId],
-		afterKey:
-			state.aggregations[props.componentId]
-			&& state.aggregations[props.componentId][props.aggregationField]
-			&& state.aggregations[props.componentId][props.aggregationField].after_key,
-	};
-};
+const mapStateToProps = (state, props) => ({
+	defaultPage:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value - 1)
+		|| -1,
+	urlSortOption:
+		state.selectedValues[`${props.componentId}sortOption`]
+		&& state.selectedValues[`${props.componentId}sortOption`].value,
+	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
+	rawData: state.rawData[props.componentId],
+	analytics: state.config && state.config.analytics,
+	aggregationData: state.compositeAggregations[props.componentId],
+	isLoading: state.isLoading[props.componentId] || false,
+	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
+	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	config: state.config,
+	enableAppbase: state.config.enableAppbase,
+	queryLog: state.queryLog[props.componentId],
+	error: state.error[props.componentId],
+	promotedResults: state.promotedResults[props.componentId] || [],
+	customData: state.customData[props.componentId],
+	afterKey:
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.aggregationField]
+		&& state.aggregations[props.componentId][props.aggregationField].after_key,
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
