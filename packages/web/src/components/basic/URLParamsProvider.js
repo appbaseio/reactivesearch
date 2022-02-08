@@ -80,7 +80,7 @@ class URLParamsProvider extends Component {
 									repeatation on pressing back button.
 								*/
 
-								if (!isEqual(prevValue, currentValue)) {
+								if (prevValue !== currentValue) {
 									this.setURL(component, this.getValue(selectedValues.value));
 								}
 							}
@@ -167,7 +167,6 @@ class URLParamsProvider extends Component {
 			// TODO: support for NestedList
 			if (value.location) return value;
 			if (value.category) return value;
-			if (value.sortOption) return value;
 			return value.label || value.key || null;
 		}
 		return value;
