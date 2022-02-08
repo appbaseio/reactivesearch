@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import * as React from 'react';
 import { CommonProps } from '../../';
 import * as types from '../../types';
@@ -18,6 +19,7 @@ export interface SelectedFiltersProps {
 	onChange?: (...args: any[]) => any;
 	onClear?: (...args: any[]) => any;
 	resetToDefault?: types.resetToDefault;
+	resetToValues?: { [key: string]: any };
 }
 
 declare const SelectedFilters: React.ComponentClass<SelectedFiltersProps>;

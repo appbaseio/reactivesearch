@@ -17,7 +17,6 @@ export default {
 		internal_inputValue: '',
 		internal_selectedItem: null,
 		internal_highlightedIndex: null,
-		internal_eventsCalled: {},
 	}),
 	computed: {
 		mergedState() {
@@ -214,25 +213,12 @@ export default {
 			}
 
 			const vm = this;
-			setTimeout(() => {
-				vm.internal_eventsCalled[index] = false;
-			}, 0);
 			return {
 				mouseenter() {
 					vm.setHighlightedIndex(newIndex);
 				},
 
-				// for browsers not supporting click event (e.g. firefox android)
-				mousedown(event) {
-					if (vm.internal_eventsCalled[index]) return;
-					vm.internal_eventsCalled[index] = true;
-					event.stopPropagation();
-					vm.selectItemAtIndex(newIndex);
-				},
-
 				click(event) {
-					if (vm.internal_eventsCalled[index]) return;
-					vm.internal_eventsCalled[index] = true;
 					event.stopPropagation();
 					vm.selectItemAtIndex(newIndex);
 				},
@@ -253,7 +239,7 @@ export default {
 
 		getButtonProps({ onClick, onKeyDown, onKeyUp, onBlur }) {
 			return {
-				click: event => {
+				click: (event) => {
 					this.setState({
 						isOpen: true,
 						inputValue: event.target.value,
@@ -262,7 +248,7 @@ export default {
 						onClick(event);
 					}
 				},
-				keydown: event => {
+				keydown: (event) => {
 					if (event.key && this[`keyDown${event.key}`]) {
 						this[`keyDown${event.key}`].call(this, event);
 					}
@@ -270,12 +256,12 @@ export default {
 						onKeyDown(event);
 					}
 				},
-				keyup: event => {
+				keyup: (event) => {
 					if (onKeyUp) {
 						onKeyUp(event);
 					}
 				},
-				blur: event => {
+				blur: (event) => {
 					if (onBlur) {
 						onBlur(event);
 					}
@@ -285,7 +271,7 @@ export default {
 
 		getInputEvents({ onInput, onBlur, onFocus, onKeyPress, onKeyDown, onKeyUp, onClick }) {
 			return {
-				input: event => {
+				input: (event) => {
 					this.setState({
 						isOpen: true,
 						inputValue: event.target.value,
@@ -294,12 +280,12 @@ export default {
 						onInput(event);
 					}
 				},
-				focus: event => {
+				focus: (event) => {
 					if (onFocus) {
 						onFocus(event);
 					}
 				},
-				keydown: event => {
+				keydown: (event) => {
 					if (event.key && this[`keyDown${event.key}`]) {
 						this[`keyDown${event.key}`].call(this, event);
 					}
@@ -307,17 +293,17 @@ export default {
 						onKeyDown(event);
 					}
 				},
-				keypress: event => {
+				keypress: (event) => {
 					if (onKeyPress) {
 						onKeyPress(event);
 					}
 				},
-				keyup: event => {
+				keyup: (event) => {
 					if (onKeyUp) {
 						onKeyUp(event);
 					}
 				},
-				blur: event => {
+				blur: (event) => {
 					if (onBlur) {
 						onBlur(event);
 					}
@@ -355,7 +341,7 @@ export default {
 
 		setState(stateToSet) {
 			// eslint-disable-next-line
-			Object.keys(stateToSet).forEach(key => {
+			Object.keys(stateToSet).forEach((key) => {
 				// eslint-disable-next-line
 				if (this.isControlledProp(key)) {
 					this.$emit(`${key}Change`, stateToSet[key]);

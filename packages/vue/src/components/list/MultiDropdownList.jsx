@@ -328,7 +328,7 @@ const MultiDropdownList = {
 			}
 
 			const performUpdate = () => {
-				this.currentValue = currentValue;
+				this.currentValue = {...currentValue};
 				this.updateQueryHandler(finalValues, props);
 				this.$emit('valueChange', finalValues);
 				this.$emit('value-change', finalValues);
@@ -354,7 +354,7 @@ const MultiDropdownList = {
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -372,7 +372,7 @@ const MultiDropdownList = {
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions);
+			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
 				query,

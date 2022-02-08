@@ -503,7 +503,7 @@ const DataSearch = {
 			this.setQueryOptions(this.internalComponent, {
 				...this.queryOptions,
 				...defaultQueryOptions,
-			});
+			}, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -528,7 +528,7 @@ const DataSearch = {
 				this.setQueryOptions(componentId, {
 					...this.queryOptions,
 					...customQueryOptions,
-				});
+				}, false);
 			}
 			if (!this.isPending) {
 				this.updateQuery({

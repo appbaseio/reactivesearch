@@ -113,7 +113,7 @@ const RangeInput = {
 			}
 		},
 		handleOnChange(value) {
-			this.handleChange(value, 'change');
+			this.handleChange(value || this.$props.range, 'change');			
 		},
 		handleValueChange(value) {
 			this.handleChange(value, 'value-change');
@@ -164,6 +164,9 @@ const RangeInput = {
 	created() {
 		if (this.$props.defaultValue && this.$props.defaultValue.start && this.$props.defaultValue.end) {
 			this.handleChange(this.$props.defaultValue)
+		}
+		if (this.isControlled()) {
+			this.handleChange(this.$props.value, 'change');
 		}
 	},
 	render() {

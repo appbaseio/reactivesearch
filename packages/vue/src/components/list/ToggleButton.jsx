@@ -165,6 +165,7 @@ const ToggleButton = {
 				this.setQueryOptions(
 					props.componentId,
 					getOptionsFromQuery(customQuery(value, props)),
+					false
 				);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}

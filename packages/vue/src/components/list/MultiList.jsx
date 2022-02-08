@@ -21,12 +21,7 @@ import types from '../../utils/vueTypes';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
-const {
-	updateQuery,
-	setQueryOptions,
-	setCustomQuery,
-	setDefaultQuery,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const { isEqual, getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery } = helper;
 
 const MultiList = {
@@ -81,27 +76,28 @@ const MultiList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions = this.options && this.options[props.dataField]
-			? this.options[props.dataField].buckets
-			: []
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
+				? this.options[props.dataField].buckets
+				: [];
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 	},
 	beforeMount() {
 		this.updateQueryHandlerOptions(this.$props);
-
-		if (this.selectedValue) {
-			this.setValue(this.selectedValue);
-		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
-		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
+		const value = this.selectedValue || this.$props.value || this.$props.defaultValue;
+		this.setValue(value, !this.selectedValue);
+	},
+	mounted() {
+		const currentValue = Object.keys(this.$data.currentValue);
+		if (this.$props.value !== undefined && !isEqual(this.$props.value, currentValue)) {
+			this.$emit('change', currentValue);
 		}
 	},
 	watch: {
 		options(newVal) {
-			if(newVal) {
+			if (newVal) {
 				this.modifiedOptions = newVal[this.$props.dataField]
 					? newVal[this.$props.dataField].buckets
 					: [];
@@ -129,16 +125,20 @@ const MultiList = {
 		},
 		selectedValue(newVal) {
 			let selectedValue = Object.keys(this.$data.currentValue);
-
 			if (this.$props.selectAllLabel) {
-				selectedValue = selectedValue.filter(val => val !== this.$props.selectAllLabel);
+				selectedValue = selectedValue.filter((val) => val !== this.$props.selectAllLabel);
 
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
 				}
 			}
+
 			if (!isEqual(selectedValue, newVal)) {
-				this.setValue(newVal || [], true);
+				if (this.value === undefined) {
+					this.setValue(newVal, true);
+				} else {
+					this.$emit('change', newVal);
+				}
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -163,7 +163,7 @@ const MultiList = {
 		}
 
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
-			if(this.renderNoResult) {
+			if (this.renderNoResult) {
 				this.renderNoResult();
 			} else {
 				return null;
@@ -176,7 +176,7 @@ const MultiList = {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
 
-		const filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter((item) => {
 			if (String(item.key).length) {
 				if (this.$props.showSearch && this.$data.searchTerm) {
 					return replaceDiacritics(String(item.key))
@@ -227,12 +227,16 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{(!this.hasCustomRenderer && filteredItemsToRender.length === 0
-						&& !this.isLoading ) ? this.renderNoResult()
-							: filteredItemsToRender.map(item => (
+						{!this.hasCustomRenderer
+						&& filteredItemsToRender.length === 0
+						&& !this.isLoading
+							? this.renderNoResult()
+							: filteredItemsToRender.map((item) => (
 								<li
 									key={item.key}
-									class={`${this.$data.currentValue[item.key] ? 'active' : ''}`}
+									class={`${
+										this.$data.currentValue[item.key] ? 'active' : ''
+									}`}
 								>
 									<Checkbox
 										type="checkbox"
@@ -268,7 +272,7 @@ const MultiList = {
 															'count',
 														)}
 													>
-														&nbsp;(
+															&nbsp;(
 														{item.doc_count})
 													</span>
 												)}
@@ -276,7 +280,7 @@ const MultiList = {
 										)}
 									</label>
 								</li>
-							))}
+							  ))}
 					</UL>
 				)}
 			</Container>
@@ -297,7 +301,7 @@ const MultiList = {
 					currentValue = {};
 					finalValues = [];
 				} else {
-					this.$data.modifiedOptions.forEach(item => {
+					this.$data.modifiedOptions.forEach((item) => {
 						currentValue[item.key] = true;
 					});
 					currentValue[selectAllLabel] = true;
@@ -308,7 +312,7 @@ const MultiList = {
 				currentValue = {};
 
 				if (value && value.length) {
-					value.forEach(item => {
+					value.forEach((item) => {
 						currentValue[item] = true;
 					});
 				}
@@ -325,10 +329,9 @@ const MultiList = {
 					currentValue = {
 						...rest,
 					};
-
 				} else if (Array.isArray(value)) {
 					value.forEach((val) => {
-						currentValue[val] = true
+						currentValue[val] = true;
 					});
 				} else {
 					currentValue[value] = true;
@@ -370,7 +373,7 @@ const MultiList = {
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions);
+			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -388,7 +391,7 @@ const MultiList = {
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions);
+			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,
@@ -453,7 +456,7 @@ const MultiList = {
 			if (value === undefined) {
 				this.setValue(currentValue);
 			} else {
-				const values = parseValueArray(value, currentValue);
+				const values = parseValueArray(value || [], currentValue);
 				this.$emit('change', values);
 			}
 		},
@@ -517,7 +520,7 @@ MultiList.defaultQuery = (value, props) => {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(item => item !== props.missingLabel),
+							[props.dataField]: value.filter((item) => item !== props.missingLabel),
 						},
 					},
 				];
@@ -544,7 +547,7 @@ MultiList.defaultQuery = (value, props) => {
 			}
 		} else {
 			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = value.map(item => ({
+			const queryArray = value.map((item) => ({
 				[type]: {
 					[props.dataField]: item,
 				},
@@ -572,7 +575,7 @@ MultiList.defaultQuery = (value, props) => {
 
 	return query;
 };
-MultiList.generateQueryOptions = props => {
+MultiList.generateQueryOptions = (props) => {
 	const queryOptions = getQueryOptions(props);
 	return getAggsQuery(queryOptions, props);
 };
@@ -605,7 +608,7 @@ export const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispat
 	internalComponent: true,
 });
 
-MultiList.install = function(Vue) {
+MultiList.install = function (Vue) {
 	Vue.component(MultiList.name, ListConnected);
 };
 

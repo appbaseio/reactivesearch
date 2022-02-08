@@ -910,10 +910,7 @@ class DataSearch extends Component {
 	get parsedSuggestions() {
 		let suggestionsList = [];
 		const { currentValue } = this.state;
-		const { defaultSuggestions } = this.props;
-		if (!currentValue && defaultSuggestions && defaultSuggestions.length) {
-			suggestionsList = defaultSuggestions;
-		} else if (currentValue) {
+		if (currentValue) {
 			suggestionsList = this.state.suggestions;
 		}
 		return withClickIds(suggestionsList);
@@ -957,6 +954,7 @@ class DataSearch extends Component {
 			enablePopularSuggestions,
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
+			defaultSuggestions,
 		} = this.props;
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
@@ -971,16 +969,20 @@ class DataSearch extends Component {
 			...search,
 			_recent_search: true,
 		}));
-		const defaultSuggestions = isPopularSuggestionsEnabled
+		const defaultSuggestionsProcessed = isPopularSuggestionsEnabled
 			? [...customNormalizedRecentSearches, ...customDefaultPopularSuggestions]
 			: customNormalizedRecentSearches;
 
-		return getTopSuggestions(
-			// use default popular suggestions if value is empty
-			defaultSuggestions,
+		const suggestionsList = getTopSuggestions(
+			defaultSuggestionsProcessed,
 			currentValue,
 			showDistinctSuggestions,
 		);
+
+		if (defaultSuggestions && Array.isArray(defaultSuggestions)) {
+			suggestionsList.unshift(...withClickIds(defaultSuggestions));
+		}
+		return suggestionsList;
 	}
 
 	triggerClickAnalytics = (searchPosition, documentId) => {
