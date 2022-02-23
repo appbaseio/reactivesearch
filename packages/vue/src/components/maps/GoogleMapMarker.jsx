@@ -26,19 +26,20 @@ const GoogleMapMarker = {
 	data() {
 		return {
 			zIndex: 0,
-		}
+			markerIcon: null,
+		};
 	},
 	methods: {
 		increaseMarkerZIndex() {
 			const { handlePreserveCenter } = this.$props;
-			if(this.highlightMarkerOnHover) {
+			if (this.highlightMarkerOnHover) {
 				this.zIndex += 1;
 			}
 			handlePreserveCenter(true);
 		},
 		removeMarkerZIndex() {
 			const { handlePreserveCenter } = this.$props;
-			if(this.highlightMarkerOnHover) {
+			if (this.highlightMarkerOnHover) {
 				this.zIndex -= 1;
 			}
 			handlePreserveCenter(true);
@@ -99,7 +100,7 @@ const GoogleMapMarker = {
 					<InfoWindowWrapper
 						key={`${item._id}-InfoWindow`}
 						id={item._id}
-						renderPopover={handleClose =>
+						renderPopover={(handleClose) =>
 							renderPopover({
 								item,
 								handleClose: () => {
@@ -137,6 +138,9 @@ const GoogleMapMarker = {
 		}
 
 		if (renderItem) {
+			marker.setIcon = (icon) => {
+				this.markerIcon = icon;
+			};
 			const data = renderItem(marker);
 			if ('label' in data) {
 				return (
@@ -192,11 +196,8 @@ const GoogleMapMarker = {
 		return (
 			<Marker
 				key={marker._id}
-				icon={markerProps.icon}
 				zIndex={markerProps.zIndex}
-				onclick={() =>
-					this.openMarker()
-				}
+				onclick={() => this.openMarker()}
 				onmouseover={this.increaseMarkerZIndex}
 				onmouseout={this.removeMarkerZIndex}
 				{...{ props: customMarkerProps }}
@@ -204,6 +205,7 @@ const GoogleMapMarker = {
 				options={{
 					metaData: marker,
 				}}
+				icon={this.markerIcon || markerProps.icon}
 			>
 				{renderPopover ? this.renderPopoverClick(marker) : null}
 			</Marker>
