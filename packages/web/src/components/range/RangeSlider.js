@@ -2,7 +2,12 @@
 import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
 import XDate from 'xdate';
-import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
+import {
+	updateQuery,
+	setQueryOptions,
+	setCustomQuery,
+	updateComponentProps,
+} from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
 	isEqual,
@@ -13,6 +18,8 @@ import {
 	getOptionsFromQuery,
 	updateCustomQuery,
 	isValidDateRangeQueryFormat,
+	queryFormatMillisecondsMap,
+	getCalendarIntervalErrorMessage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
@@ -32,8 +39,6 @@ import {
 	getNumericRangeArray,
 	getRangeQueryWithNullValues,
 	getValueArrayWithinLimits,
-	queryFormatMillisecondsMap,
-	getCalendarIntervalErrorMessage,
 } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -85,6 +90,21 @@ class RangeSlider extends Component {
 		if (currentValue) {
 			this.handleChange(inRangeValueArray, props, hasMounted);
 		}
+
+		props.updateComponentProps(
+			props.componentId,
+			{
+				...props,
+				...(props.range && !props.calendarInterval && props.queryFormat
+					? {
+						calendarInterval: getCalendarIntervalErrorMessage(
+							inRangeValueArray[1] - inRangeValueArray[0],
+						).calculatedCalendarInterval,
+					}
+					: {}),
+			},
+			componentTypes.rangeSlider,
+		);
 	}
 	componentDidMount() {
 		const { enableAppbase, index } = this.props;
@@ -152,7 +172,6 @@ class RangeSlider extends Component {
 			)
 		) {
 			const { value, onChange } = this.props;
-
 
 			if (value === undefined) {
 				const selectedValue = this.props.selectedValue
@@ -555,6 +574,7 @@ RangeSlider.propTypes = {
 	index: types.string,
 	queryFormat: oneOf([...Object.keys(dateFormats)]),
 	calendarInterval: types.calendarInterval,
+	updateComponentProps: types.func,
 	// for internal purpose only
 	// introduced specifically to control the
 	// dateformat for the RS-components using RangeSlider
@@ -606,6 +626,8 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	updateComponentProps: (component, options, componentType) =>
+		dispatch(updateComponentProps(component, options, componentType)),
 });
 
 const ConnectedComponent = connect(

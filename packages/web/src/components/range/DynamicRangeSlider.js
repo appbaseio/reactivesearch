@@ -25,6 +25,8 @@ import {
 	updateCustomQuery,
 	getOptionsFromQuery,
 	isValidDateRangeQueryFormat,
+	queryFormatMillisecondsMap,
+	getCalendarIntervalErrorMessage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from 'rheostat/lib/Slider';
@@ -41,11 +43,9 @@ import { rangeLabelsContainer } from '../../styles/Label';
 import {
 	connect,
 	formatDateString,
-	getCalendarIntervalErrorMessage,
 	getNumericRangeArray,
 	getRangeQueryWithNullValues,
 	getValidPropsKeys,
-	queryFormatMillisecondsMap,
 } from '../../utils';
 
 // the formatRange() function formats the range value received from props
@@ -66,9 +66,7 @@ class DynamicRangeSlider extends Component {
 		const { queryFormat } = props;
 		if (queryFormat) {
 			if (!isValidDateRangeQueryFormat(queryFormat)) {
-				throw new Error(
-					'queryFormat is not supported. Try with a valid queryFormat.',
-				);
+				throw new Error('queryFormat is not supported. Try with a valid queryFormat.');
 			}
 		}
 
@@ -153,7 +151,17 @@ class DynamicRangeSlider extends Component {
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(
 				this.props.componentId,
-				this.props,
+				{
+					...this.props,
+					...(this.props.range && !this.props.calendarInterval && this.props.queryFormat
+						? {
+							calendarInterval: getCalendarIntervalErrorMessage(
+								formatRange(this.props.range, this.props).end
+										- formatRange(this.props.range, this.props).start,
+							).calculatedCalendarInterval,
+						}
+						: {}),
+				},
 				componentTypes.dynamicRangeSlider,
 			);
 			this.props.updateComponentProps(
@@ -356,10 +364,10 @@ class DynamicRangeSlider extends Component {
 			);
 			if (numberOfIntervals > 100) {
 				console.error(
-					`${props.componentId}: ${getCalendarIntervalErrorMessage(
-						range.end - range.start,
-						calendarInterval,
-					).errorMessage}`,
+					`${props.componentId}: ${
+						getCalendarIntervalErrorMessage(range.end - range.start, calendarInterval)
+							.errorMessage
+					}`,
 				);
 			}
 			return queryFormatMillisecondsMap[calendarInterval];
