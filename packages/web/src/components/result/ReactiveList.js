@@ -614,16 +614,21 @@ class ReactiveList extends Component {
 	};
 
 	updatePageURL = (page) => {
-		if (this.props.sortOptions) {
-			const sortOption = this.props.sortOptions[this.sortOptionIndex].label;
+		try {
+			if (this.props.sortOptions && this.props.sortOptions[this.sortOptionIndex]) {
+				const sortOption = this.props.sortOptions[this.sortOptionIndex].label;
 
-			this.props.setPageURL(
-				`${this.props.componentId}sortOption`,
-				sortOption,
-				`${this.props.componentId}sortOption`,
-				false,
-				this.props.URLParams,
-			);
+				this.props.setPageURL(
+					`${this.props.componentId}sortOption`,
+					sortOption,
+					`${this.props.componentId}sortOption`,
+					false,
+					this.props.URLParams,
+				);
+			}
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.log(`error', ${error}`);
 		}
 
 		this.props.setPageURL(
