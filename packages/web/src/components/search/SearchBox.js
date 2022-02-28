@@ -289,6 +289,7 @@ const SearchBox = (props) => {
 		return finalQuery;
 	};
 
+	// fires query to fetch suggestion
 	const triggerDefaultQuery = (paramValue) => {
 		if (!props.autosuggest) {
 			return;
@@ -311,6 +312,7 @@ const SearchBox = (props) => {
 		});
 	};
 
+	// fires query to fetch results(dependent components are affected here)
 	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		let query = searchBoxDefaultQuery(value, props);
@@ -340,7 +342,7 @@ const SearchBox = (props) => {
 		defaultQuery = false,
 		value = undefined,
 		categoryValue = undefined,
-	}) => {
+	} = {}) => {
 		if (typeof isOpen === 'boolean') {
 			setIsOpen(isOpen);
 		}
@@ -481,7 +483,7 @@ const SearchBox = (props) => {
 			handleCaretPosition(e);
 			onChange(
 				inputValue,
-				({ isOpen }) =>
+				({ isOpen } = {}) =>
 					triggerQuery({
 						customQuery: true,
 						value: inputValue,
@@ -507,7 +509,7 @@ const SearchBox = (props) => {
 	const clearValue = () => {
 		setValue('', false, props, causes.CLEAR_VALUE, true, false);
 		if (onChange) {
-			onChange('', ({ isOpen }) =>
+			onChange('', ({ isOpen } = {}) =>
 				triggerQuery({
 					customQuery: true,
 					value: '',
@@ -718,7 +720,7 @@ const SearchBox = (props) => {
 	};
 
 	const handleFocus = (event) => {
-		if (props.autosuggest) {
+		if (props.autosuggest && !onChange) {
 			setIsOpen(true);
 		}
 		if (props.onFocus) {
@@ -743,7 +745,7 @@ const SearchBox = (props) => {
 		hasMounted.current = false;
 		if (currentLocalValue) {
 			if (props.onChange) {
-				props.onChange(currentLocalValue, ({ isOpen }) =>
+				props.onChange(currentLocalValue, ({ isOpen } = {}) =>
 					triggerQuery({
 						customQuery: true,
 						value: currentLocalValue,
@@ -806,7 +808,7 @@ const SearchBox = (props) => {
 			} else if (onChange) {
 				if (value !== selectedValue && selectedValue !== currentValue) {
 					// value prop exists
-					onChange(selectedValue || '', ({ isOpen }) =>
+					onChange(selectedValue || '', ({ isOpen } = {}) =>
 						triggerQuery({
 							customQuery: true,
 							value: selectedValue || '',
