@@ -689,6 +689,7 @@ const ReactiveList = {
 					componentTypes.reactiveList,
 				);
 				this.setQueryOptions(this.$props.componentId, options, true);
+				this.setPage(0);
 				this.currentPageState = 0;
 				this.from = 0;
 				const sortOption = this.$props.sortOptions[this.sortOptionIndex]
