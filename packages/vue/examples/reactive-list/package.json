@@ -9,8 +9,7 @@
 	},
 	"dependencies": {
 		"@appbaseio/reactivesearch-vue": "1.26.0",
-		"vue": "^2.5.17",
-		"vuejs-paginate": "^2.1.0"
+		"vue": "^2.5.17"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "^3.0.4",
