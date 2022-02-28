@@ -326,11 +326,11 @@ const DynamicRangeSlider = {
 						<vue-slider-component
 							ref="slider"
 							value={[
-								Math.max(start, this.currentValue[0]),
-								Math.min(end, this.currentValue[1]),
+								Math.floor(Math.max(start, this.currentValue[0])),
+								Math.ceil(Math.min(end, this.currentValue[1])),
 							]}
-							min={Math.min(start, this.currentValue[0])}
-							max={Math.max(end, this.currentValue[1])}
+							min={Math.floor(Math.min(start, this.currentValue[0]))}
+							max={Math.ceil(Math.max(end, this.currentValue[1]))}
 							onDrag-end={this.handleSlider}
 							dotSize={20}
 							height={4}
