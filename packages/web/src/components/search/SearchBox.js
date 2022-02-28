@@ -353,10 +353,10 @@ const SearchBox = (props) => {
 		}
 	};
 
-	const onValueSelected = (valueSelected = currentValue, ...cause) => {
+	const onValueSelected = (valueSelected = currentValue, cause, suggestion = null) => {
 		const { onValueSelected } = props;
 		if (onValueSelected) {
-			onValueSelected(valueSelected, ...cause);
+			onValueSelected(valueSelected, cause, suggestion);
 		}
 	};
 	const handleTextChange = debounce((valueParam = undefined, cause = undefined) => {
@@ -459,7 +459,7 @@ const SearchBox = (props) => {
 		// onValueSelected is user interaction driven:
 		// it should be triggered irrespective of controlled (or)
 		// uncontrolled component behavior
-		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion.source);
+		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion);
 	};
 
 	const onInputChange = (e) => {
