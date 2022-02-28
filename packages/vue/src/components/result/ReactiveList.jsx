@@ -427,7 +427,7 @@ const ReactiveList = {
 					{this.sortOptions ? this.renderSortOptions() : null}
 					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
-				{!this.isLoading && results.length === 0 ? this.renderNoResult() : null}
+				{!this.isLoading && hits && hits.length === 0 ? this.renderNoResult() : null}
 				{this.shouldRenderPagination
 				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
 						<Pagination
