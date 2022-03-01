@@ -267,7 +267,7 @@ class ReactiveComponent extends Component {
 			hits, aggregations, aggregationData, promotedResults, rawData,
 		} = this.props;
 		let filteredResults = parseHits(hits);
-		if (promotedResults.length) {
+		if (promotedResults && promotedResults.length) {
 			const ids = promotedResults.map(item => item._id).filter(Boolean);
 			if (ids) {
 				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
@@ -350,18 +350,17 @@ ReactiveComponent.propTypes = {
 ReactiveComponent.componentType = componentTypes.reactiveComponent;
 
 const mapStateToProps = (state, props) => ({
-	aggregations:
-		(state.aggregations[props.componentId] && state.aggregations[props.componentId]) || null,
-	aggregationData: state.compositeAggregations[props.componentId] || [],
-	hits: (state.hits[props.componentId] && state.hits[props.componentId].hits) || [],
+	aggregations: state.aggregations[props.componentId],
+	aggregationData: state.compositeAggregations[props.componentId],
+	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
-	promotedResults: state.promotedResults[props.componentId] || [],
+	promotedResults: state.promotedResults[props.componentId],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
