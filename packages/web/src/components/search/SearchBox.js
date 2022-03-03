@@ -289,7 +289,11 @@ const SearchBox = (props) => {
 		return finalQuery;
 	};
 
+	// fires query to fetch suggestion
 	const triggerDefaultQuery = (paramValue) => {
+		if (!props.autosuggest) {
+			return;
+		}
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		let query = searchBoxDefaultQuery(value, props);
 		if (defaultQuery) {
@@ -308,6 +312,7 @@ const SearchBox = (props) => {
 		});
 	};
 
+	// fires query to fetch results(dependent components are affected here)
 	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		let query = searchBoxDefaultQuery(value, props);
@@ -332,13 +337,13 @@ const SearchBox = (props) => {
 	};
 
 	const triggerQuery = ({
-		isOpen = false,
+		isOpen = undefined,
 		customQuery = false,
 		defaultQuery = false,
 		value = undefined,
 		categoryValue = undefined,
-	}) => {
-		if (isOpen) {
+	} = {}) => {
+		if (typeof isOpen === 'boolean') {
 			setIsOpen(isOpen);
 		}
 
@@ -349,16 +354,11 @@ const SearchBox = (props) => {
 			triggerDefaultQuery(value);
 		}
 	};
-	const withTriggerQuery = (func) => {
-		if (func) {
-			return e => func(e, triggerQuery);
-		}
-		return undefined;
-	};
-	const onValueSelected = (valueSelected = currentValue, ...cause) => {
+
+	const onValueSelected = (valueSelected = currentValue, cause, suggestion = null) => {
 		const { onValueSelected } = props;
 		if (onValueSelected) {
-			onValueSelected(valueSelected, ...cause);
+			onValueSelected(valueSelected, cause, suggestion);
 		}
 	};
 	const handleTextChange = debounce((valueParam = undefined, cause = undefined) => {
@@ -367,7 +367,7 @@ const SearchBox = (props) => {
 			triggerDefaultQuery(valueParam);
 		} else if (props.autosuggest) {
 			triggerDefaultQuery(valueParam);
-		} else {
+		} else if (value === undefined && !onChange) {
 			triggerCustomQuery(valueParam);
 		}
 	}, props.debounce);
@@ -426,6 +426,13 @@ const SearchBox = (props) => {
 			performUpdate,
 		);
 	};
+	const withTriggerQuery = (func) => {
+		if (func) {
+			return e =>
+				func(e, ({ isOpen }: { isOpen: false }) => setValue(props.value, !isOpen, props));
+		}
+		return undefined;
+	};
 	const onSuggestionSelected = (suggestion) => {
 		setIsOpen(false);
 		const suggestionValue = suggestion.value;
@@ -441,12 +448,10 @@ const SearchBox = (props) => {
 				suggestion._category,
 			);
 		} else if (onChange) {
-			onChange(suggestionValue, ({ isOpen = false } = { isOpen: false }) =>
+			onChange(suggestionValue, () =>
 				triggerQuery({
-					defaultQuery: true,
 					customQuery: true,
-					value,
-					isOpen,
+					value: suggestionValue,
 					categoryValue: suggestion._category,
 				}),
 			);
@@ -456,12 +461,12 @@ const SearchBox = (props) => {
 		// onValueSelected is user interaction driven:
 		// it should be triggered irrespective of controlled (or)
 		// uncontrolled component behavior
-		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion.source);
+		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion);
 	};
 
 	const onInputChange = (e) => {
 		const { value: inputValue } = e.target;
-		if (!isOpen) {
+		if (!isOpen && props.autosuggest) {
 			setIsOpen(true);
 		}
 		if (value === undefined) {
@@ -478,9 +483,8 @@ const SearchBox = (props) => {
 			handleCaretPosition(e);
 			onChange(
 				inputValue,
-				({ isOpen = false } = { isOpen: false }) =>
+				({ isOpen } = {}) =>
 					triggerQuery({
-						defaultQuery: true,
 						customQuery: true,
 						value: inputValue,
 						isOpen,
@@ -505,11 +509,10 @@ const SearchBox = (props) => {
 	const clearValue = () => {
 		setValue('', false, props, causes.CLEAR_VALUE, true, false);
 		if (onChange) {
-			onChange('', ({ isOpen = false } = { isOpen: false }) =>
+			onChange('', ({ isOpen } = {}) =>
 				triggerQuery({
-					defaultQuery: true,
 					customQuery: true,
-					value,
+					value: '',
 					isOpen,
 				}),
 			);
@@ -717,7 +720,9 @@ const SearchBox = (props) => {
 	};
 
 	const handleFocus = (event) => {
-		setIsOpen(true);
+		if (props.autosuggest && !onChange) {
+			setIsOpen(true);
+		}
 		if (props.onFocus) {
 			props.onFocus(event, triggerQuery);
 		}
@@ -738,29 +743,18 @@ const SearchBox = (props) => {
 		const currentLocalValue = selectedValue || value || defaultValue || '';
 
 		hasMounted.current = false;
-		const cause = null;
 		if (currentLocalValue) {
 			if (props.onChange) {
-				props.onChange(currentLocalValue, ({ isOpen = false } = { isOpen: false }) =>
+				props.onChange(currentLocalValue, ({ isOpen } = {}) =>
 					triggerQuery({
-						defaultQuery: true,
 						customQuery: true,
-						value,
+						value: currentLocalValue,
 						isOpen,
 					}),
 				);
 			}
 		}
 		setCurrentValue(currentLocalValue);
-		setValue(
-			currentLocalValue,
-			true,
-			props,
-			cause,
-			hasMounted.current,
-			false,
-			selectedCategory,
-		);
 
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
@@ -780,8 +774,17 @@ const SearchBox = (props) => {
 	}, [rawData, aggregationData, isLoading, error]);
 
 	useEffect(() => {
-		if (value !== undefined) {
-			setValue(value, true, props, undefined, undefined, false);
+		if (hasMounted.current) {
+			if (value !== undefined && currentValue !== value) {
+				setValue(
+					value,
+					!isOpen && props.autosuggest && !props.strictSelection,
+					props,
+					undefined,
+					undefined,
+					false,
+				);
+			}
 		}
 	}, [value]);
 
@@ -803,15 +806,16 @@ const SearchBox = (props) => {
 			if (value === undefined) {
 				setValue(selectedValue || '', true, props, undefined, hasMounted.current, false);
 			} else if (onChange) {
-				// value prop exists
-				onChange(selectedValue || '', ({ isOpen = false } = { isOpen: false }) =>
-					triggerQuery({
-						defaultQuery: true,
-						customQuery: true,
-						value,
-						isOpen,
-					}),
-				);
+				if (value !== selectedValue && selectedValue !== currentValue) {
+					// value prop exists
+					onChange(selectedValue || '', ({ isOpen } = {}) =>
+						triggerQuery({
+							customQuery: true,
+							value: selectedValue || '',
+							isOpen,
+						}),
+					);
+				}
 			} else {
 				// value prop exists and onChange is not defined:
 				// we need to put the current value back into the store
@@ -829,8 +833,7 @@ const SearchBox = (props) => {
 		listenForFocusShortcuts();
 	}, []);
 
-	const hasSuggestions = () => (Array.isArray(parsedSuggestions()) && parsedSuggestions().length);
-
+	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
@@ -838,7 +841,7 @@ const SearchBox = (props) => {
 					{props.title}
 				</Title>
 			)}
-			{hasSuggestions() && props.autosuggest ? (
+			{props.autosuggest ? (
 				<Downshift
 					id={`${props.componentId}-downshift`}
 					onChange={onSuggestionSelected}
