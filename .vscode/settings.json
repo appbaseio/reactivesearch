@@ -5,7 +5,6 @@
 	"files.exclude": {
 		"node_modules": true
 	},
-	// to resolve flow issues - Refer: https://github.com/flowtype/flow-for-vscode#setup
 	"javascript.validate.enable": false,
 	"editor.formatOnSave": false,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
