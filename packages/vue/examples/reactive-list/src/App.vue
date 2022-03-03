@@ -10,17 +10,17 @@
 				data-field="original_title.keyword"
 				class="result-list-container"
 				:pagination="true"
+				paginationAt="bottom"
 				:from="0"
 				:size="5"
 				:react="{ and: ['BookSensor'] }"
 				:URLParams="true"
-				:inner-class="{
-					pagination: 'rs-pagination'
-				}"
 			>
-				<div slot="render" slot-scope="{ loading, error, data, resultStats, setPage }">
+				<div slot="render" slot-scope="{ loading, error, data }">
 					<div v-if="loading">Fetching Results.</div>
-					<div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
+					<div v-if="Boolean(error)">
+						Something went wrong! Error details {JSON.stringify(error)}
+					</div>
 					<div v-bind:key="item._id" v-for="item in data">
 						<div class="flex book-content" key="item._id">
 							<img :src="item.image" alt="Book Cover" class="book-image" />
@@ -36,28 +36,23 @@
 											<span class="stars">
 												<i
 													v-for="(item, index) in Array(
-													item.average_rating_rounded,
-												).fill('x')"
+														item.average_rating_rounded,
+													).fill('x')"
 													class="fas fa-star"
 													:key="index"
 												/>
 											</span>
-											<span class="avg-rating">({{ item.average_rating }} avg)</span>
+											<span class="avg-rating"
+												>({{ item.average_rating }} avg)</span
+											>
 										</div>
 									</div>
-									<span class="pub-year">Pub {{ item.original_publication_year }}</span>
+									<span class="pub-year"
+										>Pub {{ item.original_publication_year }}</span
+									>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="pagination-wrapper">
-						<paginate
-							:page-count="resultStats.numberOfPages"
-							:click-handler="(page) => setPage(page-1)"
-							:prev-text="'Prev'"
-							:next-text="'Next'"
-							:container-class="'pagination'"
-						></paginate>
 					</div>
 				</div>
 			</ReactiveList>
@@ -66,14 +61,10 @@
 </template>
 
 <script>
-import Paginate from 'vuejs-paginate';
 import './styles.css';
 
 export default {
 	name: 'app',
-	components: {
-		Paginate,
-	},
 };
 </script>
 
@@ -85,10 +76,6 @@ export default {
 	text-align: center;
 	color: #2c3e50;
 	margin-top: 60px;
-}
-
-.rs-pagination {
-	display: none;
 }
 
 .pagination-wrapper {

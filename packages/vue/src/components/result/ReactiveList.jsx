@@ -90,14 +90,16 @@ const ReactiveList = {
 			this.from = this.currentPageState * this.$props.size;
 		}
 		this.internalComponent = `${this.$props.componentId}__internal`;
-
 		this.sortOptionIndex = 0;
 		if (this.defaultSortOption && this.sortOptions && Array.isArray(this.sortOptions)) {
 			this.sortOptionIndex = this.sortOptions.findIndex(
 				(s) => s.label === this.defaultSortOption,
 			);
 		}
-
+		if (this.urlSortOption) {
+			this.sortOptionIndex
+				= this.$props.sortOptions.findIndex((s) => s.label === this.urlSortOption) || 0;
+		}
 		this.updateComponentProps(
 			this.componentId,
 			{ from: this.from },
@@ -687,8 +689,19 @@ const ReactiveList = {
 					componentTypes.reactiveList,
 				);
 				this.setQueryOptions(this.$props.componentId, options, true);
+				this.setPage(0);
 				this.currentPageState = 0;
 				this.from = 0;
+				const sortOption = this.$props.sortOptions[this.sortOptionIndex]
+					? this.$props.sortOptions[this.sortOptionIndex].label
+					: null;
+				this.setPageURL(
+					`${this.$props.componentId}sortOption`,
+					sortOption,
+					`${this.$props.componentId}sortOption`,
+					false,
+					this.$props.URLParams,
+				);
 			}
 		},
 		triggerClickAnalytics(searchPosition, documentId) {
@@ -773,6 +786,9 @@ const mapStateToProps = (state, props) => ({
 	defaultPage:
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value - 1,
+	urlSortOption:
+		state.selectedValues[`${props.componentId}sortOption`]
+		&& state.selectedValues[`${props.componentId}sortOption`].value,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
