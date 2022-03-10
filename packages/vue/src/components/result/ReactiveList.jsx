@@ -35,9 +35,10 @@ const {
 	getQueryOptions,
 	getClassName,
 	parseHits,
-	getOptionsFromQuery,
 	getCompositeAggsQuery,
 	getResultStats,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
 } = helper;
 
 const ReactiveList = {
@@ -90,14 +91,16 @@ const ReactiveList = {
 			this.from = this.currentPageState * this.$props.size;
 		}
 		this.internalComponent = `${this.$props.componentId}__internal`;
-
 		this.sortOptionIndex = 0;
 		if (this.defaultSortOption && this.sortOptions && Array.isArray(this.sortOptions)) {
 			this.sortOptionIndex = this.sortOptions.findIndex(
 				(s) => s.label === this.defaultSortOption,
 			);
 		}
-
+		if (this.urlSortOption) {
+			this.sortOptionIndex
+				= this.$props.sortOptions.findIndex((s) => s.label === this.urlSortOption) || 0;
+		}
 		this.updateComponentProps(
 			this.componentId,
 			{ from: this.from },
@@ -225,15 +228,15 @@ const ReactiveList = {
 			if (!isQueryIdentical(newVal, oldVal, null, this.$props)) {
 				let options = getQueryOptions(this.$props);
 				options.from = 0;
-				this.$defaultQuery = newVal(null, this.$props);
-				const { sort, query } = this.$defaultQuery || {};
 
-				if (sort) {
-					options.sort = this.$defaultQuery.sort;
-				}
-				const queryOptions = getOptionsFromQuery(this.$defaultQuery);
+				this.$defaultQuery = newVal(null, this.$props);
+
+				const query = extractQueryFromCustomQuery(this.$defaultQuery);
+
+				const queryOptions = getOptionsForCustomQuery(this.$defaultQuery);
+
 				if (queryOptions) {
-					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
+					options = { ...options, ...queryOptions };
 				}
 				// Update calculated default query in store
 				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
@@ -361,16 +364,13 @@ const ReactiveList = {
 
 		if (this.$props.defaultQuery) {
 			this.$defaultQuery = this.$props.defaultQuery();
-			options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
+			options = { ...options, ...getOptionsForCustomQuery(this.$defaultQuery) };
 
-			if (this.$defaultQuery.sort) {
-				options.sort = this.$defaultQuery.sort;
-			}
 			// Update calculated default query in store
 			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props);
 		}
 		// execute is set to false at the time of mount
-		const { query } = this.$defaultQuery || {};
+		const query = extractQueryFromCustomQuery(this.$defaultQuery);
 
 		const execute = false;
 		this.setQueryOptions(
@@ -687,8 +687,19 @@ const ReactiveList = {
 					componentTypes.reactiveList,
 				);
 				this.setQueryOptions(this.$props.componentId, options, true);
+				this.setPage(0);
 				this.currentPageState = 0;
 				this.from = 0;
+				const sortOption = this.$props.sortOptions[this.sortOptionIndex]
+					? this.$props.sortOptions[this.sortOptionIndex].label
+					: null;
+				this.setPageURL(
+					`${this.$props.componentId}sortOption`,
+					sortOption,
+					`${this.$props.componentId}sortOption`,
+					false,
+					this.$props.URLParams,
+				);
 			}
 		},
 		triggerClickAnalytics(searchPosition, documentId) {
@@ -773,6 +784,9 @@ const mapStateToProps = (state, props) => ({
 	defaultPage:
 		state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].value - 1,
+	urlSortOption:
+		state.selectedValues[`${props.componentId}sortOption`]
+		&& state.selectedValues[`${props.componentId}sortOption`].value,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
@@ -848,11 +862,13 @@ ReactiveList.generateQueryOptions = (props) => {
 	return options;
 };
 
+ReactiveList.hasInternalComponent = () => true;
+
 export const RLConnected = ComponentWrapper(
 	connect(mapStateToProps, mapDispatchtoProps)(ReactiveList),
 	{
 		componentType: componentTypes.reactiveList,
-		internalComponent: true,
+		internalComponent: ReactiveList.hasInternalComponent(),
 	},
 );
 

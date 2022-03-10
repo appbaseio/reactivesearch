@@ -26,8 +26,9 @@ const {
 	checkValueChange,
 	checkPropChange,
 	getClassName,
-	getOptionsFromQuery,
 	getCompositeAggsQuery,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
 } = helper;
 const MultiDropdownList = {
 	name: 'MultiDropdownList',
@@ -87,9 +88,10 @@ const MultiDropdownList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions = this.options && this.options[props.dataField]
-			? this.options[props.dataField].buckets
-			: []
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
+				? this.options[props.dataField].buckets
+				: [];
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -109,7 +111,7 @@ const MultiDropdownList = {
 		selectedValue(newVal) {
 			let selectedValue = Object.keys(this.$data.currentValue);
 			if (this.$props.selectAllLabel) {
-				selectedValue = selectedValue.filter(val => val !== this.$props.selectAllLabel);
+				selectedValue = selectedValue.filter((val) => val !== this.$props.selectAllLabel);
 				if (this.$data.currentValue[this.$props.selectAllLabel]) {
 					selectedValue = [this.$props.selectAllLabel];
 				}
@@ -119,7 +121,7 @@ const MultiDropdownList = {
 			}
 		},
 		options(newVal, oldVal) {
-			if(newVal) {
+			if (newVal) {
 				checkPropChange(oldVal, newVal, () => {
 					const { showLoadMore, dataField } = this.$props;
 					const { modifiedOptions } = this.$data;
@@ -128,7 +130,7 @@ const MultiDropdownList = {
 						const { buckets } = newVal[dataField];
 						const nextOptions = [
 							...modifiedOptions,
-							...buckets.map(bucket => ({
+							...buckets.map((bucket) => ({
 								key: bucket.key[dataField],
 								doc_count: bucket.doc_count,
 							})),
@@ -147,7 +149,6 @@ const MultiDropdownList = {
 					}
 				});
 			}
-
 		},
 		size() {
 			this.updateQueryOptions(this.$props);
@@ -193,13 +194,13 @@ const MultiDropdownList = {
 		}
 
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
-			if(renderNoResults && isFunction(renderNoResults)) {
-				return (<div>{renderNoResults()}</div>);
-			} if (renderNoResults && !isFunction(renderNoResults)) {
+			if (renderNoResults && isFunction(renderNoResults)) {
+				return <div>{renderNoResults()}</div>;
+			}
+			if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
 			}
 			return null;
-
 		}
 
 		if (this.$props.selectAllLabel) {
@@ -222,8 +223,8 @@ const MultiDropdownList = {
 					items={[
 						...selectAll,
 						...this.$data.modifiedOptions
-							.filter(item => String(item.key).trim().length)
-							.map(item => ({
+							.filter((item) => String(item.key).trim().length)
+							.map((item) => ({
 								...item,
 								key: String(item.key),
 							})),
@@ -280,7 +281,7 @@ const MultiDropdownList = {
 					currentValue = {};
 					finalValues = [];
 				} else {
-					this.$data.modifiedOptions.forEach(item => {
+					this.$data.modifiedOptions.forEach((item) => {
 						currentValue[item.key] = true;
 					});
 					currentValue[selectAllLabel] = true;
@@ -290,7 +291,7 @@ const MultiDropdownList = {
 				finalValues = value;
 				currentValue = {};
 				if (Array.isArray(value)) {
-					value.forEach(item => {
+					value.forEach((item) => {
 						currentValue[item] = true;
 					});
 				}
@@ -322,7 +323,7 @@ const MultiDropdownList = {
 			}
 
 			const performUpdate = () => {
-				this.currentValue = {...currentValue};
+				this.currentValue = { ...currentValue };
 				this.updateQueryHandler(finalValues, props);
 				this.$emit('valueChange', finalValues);
 				this.$emit('value-change', finalValues);
@@ -341,10 +342,12 @@ const MultiDropdownList = {
 			let query = MultiDropdownList.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
@@ -362,10 +365,12 @@ const MultiDropdownList = {
 			let query = MultiDropdownList.defaultQuery(value, props);
 			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryCalc = customQuery(value, props);
+				query = extractQueryFromCustomQuery(customQueryCalc);
+				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
+
 			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
@@ -401,7 +406,9 @@ const MultiDropdownList = {
 			);
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
-				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				const defaultQueryOptions = getOptionsForCustomQuery(
+					props.defaultQuery(value, props),
+				);
 				this.setQueryOptions(this.internalComponent, {
 					...queryOptions,
 					...defaultQueryOptions,
@@ -462,7 +469,7 @@ MultiDropdownList.defaultQuery = (value, props) => {
 				let should = [
 					{
 						[type]: {
-							[props.dataField]: value.filter(item => item !== props.missingLabel),
+							[props.dataField]: value.filter((item) => item !== props.missingLabel),
 						},
 					},
 				];
@@ -489,7 +496,7 @@ MultiDropdownList.defaultQuery = (value, props) => {
 			}
 		} else {
 			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = value.map(item => ({
+			const queryArray = value.map((item) => ({
 				[type]: {
 					[props.dataField]: item,
 				},
@@ -527,6 +534,8 @@ MultiDropdownList.generateQueryOptions = (props, after) => {
 		  })
 		: getAggsQuery(queryOptions, props);
 };
+MultiDropdownList.hasInternalComponent = () => true;
+
 const mapStateToProps = (state, props) => ({
 	options:
 		props.nestedField && state.aggregations[props.componentId]
@@ -555,11 +564,11 @@ const ListConnected = ComponentWrapper(
 	connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList),
 	{
 		componentType: componentTypes.multiDropdownList,
-		internalComponent: true,
+		internalComponent: MultiDropdownList.hasInternalComponent(),
 	},
 );
 
-MultiDropdownList.install = function(Vue) {
+MultiDropdownList.install = function (Vue) {
 	Vue.component(MultiDropdownList.name, ListConnected);
 };
 
