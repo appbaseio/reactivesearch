@@ -18,6 +18,7 @@ import {
 	getRSQuery,
 	extractPropsFromState,
 	getDependentQueries,
+	isSearchComponent,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
 
@@ -255,18 +256,22 @@ export default function initReactivesearch(componentCollection, searchState, set
 				});
 			}
 			// [4] set query list
-			const { query: defaultQuery, ...defaultQueryOptions }
-				= getDefaultQuery(component, value) || {};
-			queryList = queryReducer(queryList, {
-				type: 'SET_QUERY',
-				component: internalComponent,
-				query: defaultQuery,
-			});
-			queryOptions = queryOptionsReducer(queryOptions, {
-				type: 'SET_QUERY_OPTIONS',
-				component: internalComponent,
-				options: { ...componentQueryOptions, ...defaultQueryOptions },
-			});
+			// Do not set default query for suggestions
+			if (isInternalComponentPresent && !isSearchComponent(component.componentType)) {
+				const { query: defaultQuery, ...defaultQueryOptions }
+					= getDefaultQuery(component, value) || {};
+				queryList = queryReducer(queryList, {
+					type: 'SET_QUERY',
+					component: internalComponent,
+					query: defaultQuery,
+				});
+				queryOptions = queryOptionsReducer(queryOptions, {
+					type: 'SET_QUERY_OPTIONS',
+					component: internalComponent,
+					options: { ...componentQueryOptions, ...defaultQueryOptions },
+				});
+			}
+
 			const customQuery = getCustomQuery(component, value);
 			// set custom query for main component
 			queryList = queryReducer(queryList, {
