@@ -21,7 +21,14 @@ import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
-const { getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery, isEqual } = helper;
+const {
+	getQueryOptions,
+	checkValueChange,
+	getClassName,
+	isEqual,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const SingleList = {
 	name: 'SingleList',
@@ -74,9 +81,10 @@ const SingleList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions = this.options && this.options[props.dataField]
-			? this.options[props.dataField].buckets
-			: []
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
+				? this.options[props.dataField].buckets
+				: [];
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -94,7 +102,7 @@ const SingleList = {
 	},
 	watch: {
 		options(newVal) {
-			if(newVal) {
+			if (newVal) {
 				this.modifiedOptions = newVal[this.$props.dataField]
 					? newVal[this.$props.dataField].buckets
 					: [];
@@ -135,11 +143,7 @@ const SingleList = {
 		},
 	},
 	render() {
-		const {
-			selectAllLabel,
-			renderItem,
-			renderError,
-		} = this.$props;
+		const { selectAllLabel, renderItem, renderError } = this.$props;
 		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
 		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
 
@@ -148,7 +152,7 @@ const SingleList = {
 		}
 
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
-			if(this.renderNoResult) {
+			if (this.renderNoResult) {
 				this.renderNoResult();
 			} else {
 				return null;
@@ -161,7 +165,7 @@ const SingleList = {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}
 
-		const filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter((item) => {
 			if (String(item.key).length) {
 				if (this.$props.showSearch && this.$data.searchTerm) {
 					return replaceDiacritics(String(item.key))
@@ -218,7 +222,7 @@ const SingleList = {
 						&& filteredItemsToRender.length === 0
 						&& !this.isLoading
 							? this.renderNoResult()
-							: filteredItemsToRender.map(item => (
+							: filteredItemsToRender.map((item) => (
 								<li
 									key={item.key}
 									class={`${
@@ -301,12 +305,15 @@ const SingleList = {
 		updateDefaultQueryHandler(value, props) {
 			let defaultQueryOptions;
 			let query = SingleList.defaultQuery(value, props);
+
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+
+				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
@@ -324,8 +331,9 @@ const SingleList = {
 			let query = SingleList.defaultQuery(value, props);
 			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryCalc = customQuery(value, props);
+				query = extractQueryFromCustomQuery(customQueryCalc);
+				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
 			this.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -349,7 +357,9 @@ const SingleList = {
 			const queryOptions = SingleList.generateQueryOptions(props);
 			if (props.defaultQuery) {
 				const value = this.$data.currentValue;
-				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				const defaultQueryOptions = getOptionsForCustomQuery(
+					props.defaultQuery(value, props),
+				);
 				this.setQueryOptions(this.internalComponent, {
 					...queryOptions,
 					...defaultQueryOptions,
@@ -406,8 +416,8 @@ const SingleList = {
 			if (isEvent(e)) {
 				currentValue = e.target.value;
 			}
-			if(this.enableStrictSelection && currentValue === this.currentValue) {
-				return false
+			if (this.enableStrictSelection && currentValue === this.currentValue) {
+				return false;
 			}
 			const { value } = this.$props;
 			if (value === undefined) {
@@ -415,7 +425,7 @@ const SingleList = {
 			} else {
 				this.$emit('change', currentValue);
 			}
-			return true
+			return true;
 		},
 
 		renderNoResult() {
@@ -435,7 +445,7 @@ const SingleList = {
 	},
 };
 
-SingleList.generateQueryOptions = props => {
+SingleList.generateQueryOptions = (props) => {
 	const queryOptions = getQueryOptions(props);
 	return getAggsQuery(queryOptions, props);
 };
@@ -481,6 +491,8 @@ SingleList.defaultQuery = (value, props) => {
 
 	return query;
 };
+SingleList.hasInternalComponent = () => true;
+
 const mapStateToProps = (state, props) => ({
 	options:
 		props.nestedField && state.aggregations[props.componentId]
@@ -507,10 +519,10 @@ const mapDispatchtoProps = {
 
 const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleList), {
 	componentType: componentTypes.singleList,
-	internalComponent: true,
+	internalComponent: SingleList.hasInternalComponent(),
 });
 
-SingleList.install = function(Vue) {
+SingleList.install = function (Vue) {
 	Vue.component(SingleList.name, ListConnected);
 };
 

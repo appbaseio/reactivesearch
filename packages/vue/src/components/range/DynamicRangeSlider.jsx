@@ -21,8 +21,14 @@ const {
 	updateComponentProps,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual, checkSomePropChange }
-	= helper;
+const {
+	checkValueChange,
+	getClassName,
+	isEqual,
+	checkSomePropChange,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -220,10 +226,12 @@ const DynamicRangeSlider = {
 			let customQueryOptions;
 
 			if (this.$props.customQuery) {
-				({ query } = this.$props.customQuery(value, this.$props) || {});
-				customQueryOptions = getOptionsFromQuery(
-					this.$props.customQuery(value, this.$props),
-				);
+				const customQueryTobeSet = this.$props.customQuery(value, this.$props);
+				const queryTobeSet = extractQueryFromCustomQuery(customQueryTobeSet);
+				if (queryTobeSet) {
+					query = queryTobeSet;
+				}
+				customQueryOptions = getOptionsForCustomQuery(customQueryTobeSet);
 				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, value);
 			}
 
@@ -401,6 +409,8 @@ DynamicRangeSlider.parseValue = (value) => {
 	}
 	return [];
 };
+
+DynamicRangeSlider.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];

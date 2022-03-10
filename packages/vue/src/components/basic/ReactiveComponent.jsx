@@ -11,7 +11,14 @@ import ComponentWrapper from './ComponentWrapper.jsx';
 import types from '../../utils/vueTypes';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
-const { parseHits, isEqual, getCompositeAggsQuery, getOptionsFromQuery, getResultStats } = helper;
+const {
+	parseHits,
+	isEqual,
+	getCompositeAggsQuery,
+	getResultStats,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 const ReactiveComponent = {
 	name: 'ReactiveComponent',
 	props: {
@@ -36,7 +43,16 @@ const ReactiveComponent = {
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.selectedValue);
 
-		const { customQuery, componentId, filterLabel, showFilter, URLParams, distinctField, distinctFieldConfig, index } = props;
+		const {
+			customQuery,
+			componentId,
+			filterLabel,
+			showFilter,
+			URLParams,
+			distinctField,
+			distinctFieldConfig,
+			index,
+		} = props;
 
 		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
 			console.warn(
@@ -56,9 +72,10 @@ const ReactiveComponent = {
 
 		if (customQuery) {
 			const calcCustomQuery = customQuery(this.selectedValue, props);
-			const { query } = calcCustomQuery || {};
+
+			const query = extractQueryFromCustomQuery(calcCustomQuery);
 			const customQueryOptions = calcCustomQuery
-				? getOptionsFromQuery(calcCustomQuery)
+				? getOptionsForCustomQuery(calcCustomQuery)
 				: null;
 			if (customQueryOptions) {
 				this.setQueryOptions(
@@ -68,13 +85,9 @@ const ReactiveComponent = {
 				);
 			} else this.setQueryOptions(componentId, this.getAggsQuery(), false);
 
-			let queryToSet = query || null
-			if (calcCustomQuery && calcCustomQuery.id) {
-				queryToSet = calcCustomQuery
-			}
 			this.updateQuery({
 				componentId,
-				query: queryToSet,
+				query,
 				value: this.selectedValue || null,
 				label: filterLabel,
 				showFilter,
@@ -96,22 +109,21 @@ const ReactiveComponent = {
 			if (obj && obj.query && obj.query.query) {
 				queryToBeSet = obj.query.query;
 			}
+			let customQueryCalc = { ...options };
 			// Update customQuery field for RS API
-			if ((obj && obj.query) || options) {
-				let customQueryCalc = { ...options };
-				if (obj && obj.query) {
-					if (obj.query.id) {
+			if (queryToBeSet || options) {
+				if (queryToBeSet.query) {
+					if (queryToBeSet.id) {
 						customQueryCalc = queryToBeSet;
 					} else {
-						customQueryCalc.query = obj.query;
+						customQueryCalc.query = queryToBeSet;
 					}
-
 				}
-
 				this.setCustomQuery(props.componentId, customQueryCalc);
 			}
 			this.updateQuery({
 				...obj,
+				query: customQueryCalc,
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
@@ -125,10 +137,15 @@ const ReactiveComponent = {
 	},
 	beforeMount() {
 		if (this.internalComponent && this.$props.defaultQuery) {
-			updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.selectedValue);
+			updateDefaultQuery(
+				this.componentId,
+				this.setDefaultQuery,
+				this.$props,
+				this.selectedValue,
+			);
 			this.$defaultQuery = this.$props.defaultQuery(this.selectedValue, this.$props);
-			const { query, ...queryOptions } = this.$defaultQuery || {};
-
+			const query = extractQueryFromCustomQuery(this.$defaultQuery);
+			const queryOptions = getOptionsForCustomQuery(this.$defaultQuery);
 			if (queryOptions) {
 				this.setQueryOptions(
 					this.internalComponent,
@@ -137,14 +154,9 @@ const ReactiveComponent = {
 				);
 			} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 
-			let queryToSet = query || null;
-			if (!queryToSet && this.$defaultQuery && this.$defaultQuery.id) {
-				queryToSet = this.$defaultQuery;
-			}
-
 			this.updateQuery({
 				componentId: this.internalComponent,
-				query: queryToSet,
+				query,
 			});
 		}
 	},
@@ -192,8 +204,8 @@ const ReactiveComponent = {
 		defaultQuery(newVal, oldVal) {
 			if (newVal && !isQueryIdentical(newVal, oldVal, this.selectedValue, this.$props)) {
 				this.$defaultQuery = newVal(this.selectedValue, this.$props);
-				const { query, ...queryOptions } = this.$defaultQuery || {};
-
+				const query = extractQueryFromCustomQuery(this.$defaultQuery);
+				const queryOptions = getOptionsForCustomQuery(this.$defaultQuery);
 				if (queryOptions) {
 					this.setQueryOptions(
 						this.internalComponent,
@@ -202,16 +214,16 @@ const ReactiveComponent = {
 					);
 				} else this.setQueryOptions(this.internalComponent, this.getAggsQuery(), false);
 				// Update default query for RS API
-				updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.selectedValue);
-
-				let queryToSet = query || null;
-				if (!queryToSet && this.$defaultQuery && this.$defaultQuery.id) {
-					queryToSet = this.$defaultQuery;
-				}
+				updateDefaultQuery(
+					this.componentId,
+					this.setDefaultQuery,
+					this.$props,
+					this.selectedValue,
+				);
 
 				this.updateQuery({
 					componentId: this.internalComponent,
-					query: queryToSet,
+					query,
 				});
 			}
 		},
@@ -219,8 +231,8 @@ const ReactiveComponent = {
 			if (newVal && !isQueryIdentical(newVal, oldVal, this.selectedValue, this.$props)) {
 				const { componentId } = this.$props;
 				this.$customQuery = newVal(this.selectedValue, this.$props);
-				const { query, ...queryOptions } = this.$customQuery || {};
-
+				const query = extractQueryFromCustomQuery(this.$customQuery);
+				const queryOptions = getOptionsForCustomQuery(this.$customQuery);
 				if (queryOptions) {
 					this.setQueryOptions(
 						componentId,
@@ -230,14 +242,16 @@ const ReactiveComponent = {
 				} else this.setQueryOptions(componentId, this.getAggsQuery(), false);
 
 				// Update custom query for RS API
-				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.selectedValue);
-				let queryToSet = query || null
-				if (this.$customQuery && this.$customQuery.id) {
-					queryToSet = this.$customQuery
-				}
+				updateCustomQuery(
+					this.componentId,
+					this.setCustomQuery,
+					this.$props,
+					this.selectedValue,
+				);
+
 				this.updateQuery({
 					componentId,
-					query: queryToSet,
+					query,
 				});
 			}
 		},
@@ -263,13 +277,13 @@ const ReactiveComponent = {
 	methods: {
 		getAggsQuery() {
 			if (this.aggregationField) {
-				return { aggs: getCompositeAggsQuery(
-					{
-						props:this.$props,
+				return {
+					aggs: getCompositeAggsQuery({
+						props: this.$props,
 						showTopHits: true,
 						value: this.selectedValue,
-					}
-				).aggs };
+					}).aggs,
+				};
 			}
 			return {};
 		},
@@ -277,9 +291,9 @@ const ReactiveComponent = {
 			const { hits, aggregations, aggregationData, promotedResults, rawData } = this;
 			let filteredResults = parseHits(hits);
 			if (promotedResults.length) {
-				const ids = promotedResults.map(item => item._id).filter(Boolean);
+				const ids = promotedResults.map((item) => item._id).filter(Boolean);
 				if (ids) {
-					filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+					filteredResults = filteredResults.filter((item) => !ids.includes(item._id));
 				}
 				filteredResults = [...promotedResults, ...filteredResults];
 			}
@@ -299,6 +313,8 @@ const ReactiveComponent = {
 		},
 	},
 };
+
+ReactiveComponent.hasInternalComponent = (props) => !!props.defaultQuery;
 
 const mapStateToProps = (state, props) => ({
 	aggregations:
@@ -334,7 +350,7 @@ const RcConnected = ComponentWrapper(
 	},
 );
 
-ReactiveComponent.install = function(Vue) {
+ReactiveComponent.install = function (Vue) {
 	Vue.component(ReactiveComponent.name, RcConnected);
 };
 

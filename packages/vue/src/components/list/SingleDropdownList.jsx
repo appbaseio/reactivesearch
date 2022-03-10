@@ -18,20 +18,16 @@ import {
 	isQueryIdentical,
 } from '../../utils/index';
 
-const {
-	updateQuery,
-	setQueryOptions,
-	setCustomQuery,
-	setDefaultQuery,
-} = Actions;
+const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const {
 	getQueryOptions,
 	checkValueChange,
 	checkPropChange,
 	getClassName,
-	getOptionsFromQuery,
 	isEqual,
-	getCompositeAggsQuery
+	getCompositeAggsQuery,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
 } = helper;
 const SingleDropdownList = {
 	name: 'SingleDropdownList',
@@ -90,9 +86,10 @@ const SingleDropdownList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions = this.options && this.options[props.dataField]
-			? this.options[props.dataField].buckets
-			: []
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
+				? this.options[props.dataField].buckets
+				: [];
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -110,7 +107,7 @@ const SingleDropdownList = {
 	},
 	watch: {
 		options(newVal, oldVal) {
-			if(newVal) {
+			if (newVal) {
 				checkPropChange(oldVal, newVal, () => {
 					const { showLoadMore, dataField } = this.$props;
 					const { modifiedOptions } = this.$data;
@@ -119,7 +116,7 @@ const SingleDropdownList = {
 						const { buckets } = newVal[dataField];
 						const nextOptions = [
 							...modifiedOptions,
-							...buckets.map(bucket => ({
+							...buckets.map((bucket) => ({
 								key: bucket.key[dataField],
 								doc_count: bucket.doc_count,
 							})),
@@ -138,7 +135,6 @@ const SingleDropdownList = {
 					}
 				});
 			}
-
 		},
 		size() {
 			this.updateQueryOptions(this.$props);
@@ -189,13 +185,13 @@ const SingleDropdownList = {
 		}
 
 		if (!this.hasCustomRenderer && this.$data.modifiedOptions.length === 0 && !this.isLoading) {
-			if(renderNoResults && isFunction(renderNoResults)) {
-				return (<div>{renderNoResults()}</div>);
-			} if (renderNoResults && !isFunction(renderNoResults)) {
+			if (renderNoResults && isFunction(renderNoResults)) {
+				return <div>{renderNoResults()}</div>;
+			}
+			if (renderNoResults && !isFunction(renderNoResults)) {
 				return renderNoResults;
 			}
 			return null;
-
 		}
 
 		if (this.$props.selectAllLabel) {
@@ -218,8 +214,8 @@ const SingleDropdownList = {
 					items={[
 						...selectAll,
 						...this.$data.modifiedOptions
-							.filter(item => String(item.key).trim().length)
-							.map(item => ({
+							.filter((item) => String(item.key).trim().length)
+							.map((item) => ({
 								...item,
 								key: String(item.key),
 							})),
@@ -232,7 +228,9 @@ const SingleDropdownList = {
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
-					renderNoResults={this.$scopedSlots.renderNoResults || this.$props.renderNoResults}
+					renderNoResults={
+						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+					}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
 					showClear={this.$props.showClear}
@@ -276,12 +274,14 @@ const SingleDropdownList = {
 		updateDefaultQueryHandler(value, props) {
 			let defaultQueryOptions;
 			let query = SingleDropdownList.defaultQuery(value, props);
+
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
@@ -299,10 +299,12 @@ const SingleDropdownList = {
 			let query = SingleDropdownList.defaultQuery(value, props);
 			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryCalc = customQuery(value, props);
+				query = extractQueryFromCustomQuery(customQueryCalc);
+				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
+
 			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
@@ -319,8 +321,10 @@ const SingleDropdownList = {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
 				? getCompositeAggsQuery({
-					query: queryOptions, props, after
-				})
+					query: queryOptions,
+					props,
+					after,
+				  })
 				: getAggsQuery(queryOptions, props);
 		},
 
@@ -336,7 +340,9 @@ const SingleDropdownList = {
 			);
 			if (props.defaultQuery) {
 				const value = this.$data.currentValue;
-				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				const defaultQueryOptions = getOptionsForCustomQuery(
+					props.defaultQuery(value, props),
+				);
 				this.setQueryOptions(this.internalComponent, {
 					...queryOptions,
 					...defaultQueryOptions,
@@ -414,10 +420,14 @@ SingleDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
 		? getCompositeAggsQuery({
-			query: queryOptions, props, after
-		})
+			query: queryOptions,
+			props,
+			after,
+		  })
 		: getAggsQuery(queryOptions, props);
 };
+
+SingleDropdownList.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => ({
 	options:
@@ -443,13 +453,15 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
+const ListConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList),
+	{
+		componentType: componentTypes.singleDropdownList,
+		internalComponent: SingleDropdownList.hasInternalComponent(),
+	},
+);
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
-	componentType: componentTypes.singleDropdownList,
-	internalComponent: true,
-});
-
-SingleDropdownList.install = function(Vue) {
+SingleDropdownList.install = function (Vue) {
 	Vue.component(SingleDropdownList.name, ListConnected);
 };
 

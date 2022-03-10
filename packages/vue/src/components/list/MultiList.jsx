@@ -22,7 +22,14 @@ import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
-const { isEqual, getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const {
+	isEqual,
+	getQueryOptions,
+	checkValueChange,
+	getClassName,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const MultiList = {
 	name: 'MultiList',
@@ -366,10 +373,11 @@ const MultiList = {
 			let query = MultiList.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
@@ -387,8 +395,9 @@ const MultiList = {
 			let query = MultiList.defaultQuery(value, props);
 			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryCalc = customQuery(value, props);
+				query = extractQueryFromCustomQuery(customQueryCalc);
+				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
 			this.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -413,7 +422,9 @@ const MultiList = {
 			const queryOptions = MultiList.generateQueryOptions(props);
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
-				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				const defaultQueryOptions = getOptionsForCustomQuery(
+					props.defaultQuery(value, props),
+				);
 				this.setQueryOptions(this.internalComponent, {
 					...queryOptions,
 					...defaultQueryOptions,
@@ -603,9 +614,11 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
+MultiList.hasInternalComponent = () => true;
+
 const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
 	componentType: componentTypes.multiList,
-	internalComponent: true,
+	internalComponent: MultiList.hasInternalComponent(),
 });
 
 MultiList.install = function (Vue) {
