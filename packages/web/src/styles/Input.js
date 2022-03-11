@@ -153,7 +153,7 @@ const suggestions = (themePreset, theme) => css`
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	max-height: 375px;
+	max-height: min(100vh, 401px);
 	overflow-y: auto;
 
 	&.small {
@@ -171,6 +171,7 @@ const suggestions = (themePreset, theme) => css`
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			line-height: 20px;
 		}
 
 		&:hover,
