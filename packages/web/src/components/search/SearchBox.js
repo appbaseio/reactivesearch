@@ -315,7 +315,10 @@ const SearchBox = (props) => {
 	// fires query to fetch results(dependent components are affected here)
 	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
-		let query = searchBoxDefaultQuery(value, props);
+		let query = searchBoxDefaultQuery(
+			`${value}${categoryValue ? ` in ${categoryValue}` : ''}`,
+			props,
+		);
 		if (customQuery) {
 			const customQueryTobeSet = customQuery(value, props) || {};
 			const queryTobeSet = customQueryTobeSet.query;
