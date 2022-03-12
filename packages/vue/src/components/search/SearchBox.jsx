@@ -675,7 +675,7 @@ const SearchBox = {
 		renderInputAddonBefore() {
 			const { addonBefore } = this.$scopedSlots;
 			if (addonBefore) {
-				return <InputAddon className="addon-before">{addonBefore()}</InputAddon>;
+				return <InputAddon class="addon-before">{addonBefore()}</InputAddon>;
 			}
 
 			return null;
@@ -683,7 +683,7 @@ const SearchBox = {
 		renderInputAddonAfter() {
 			const { addonAfter } = this.$scopedSlots;
 			if (addonAfter) {
-				return <InputAddon className="addon-after">{addonAfter()}</InputAddon>;
+				return <InputAddon class="addon-after">{addonAfter()}</InputAddon>;
 			}
 
 			return null;
