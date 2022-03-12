@@ -438,7 +438,10 @@ const SearchBox = {
 		triggerCustomQuery(paramValue, categoryValue = undefined) {
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
 			const value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
-			const defaultQueryTobeSet = SearchBox.defaultQuery(value, this.$props);
+			const defaultQueryTobeSet = SearchBox.defaultQuery(
+				`${value}${categoryValue ? ` in ${categoryValue}` : ''}`,
+				this.$props,
+			);
 			let query = defaultQueryTobeSet;
 			if (customQuery) {
 				const customQueryTobeSet = customQuery(value, this.$props);
