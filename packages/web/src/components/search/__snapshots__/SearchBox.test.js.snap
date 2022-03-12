@@ -423,7 +423,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: 375px;
+  max-height: min(100vh,401px);
   overflow-y: auto;
 }
 
@@ -452,6 +452,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 20px;
 }
 
 .emotion-19 li:hover,
@@ -1900,7 +1901,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: 375px;
+  max-height: min(100vh,401px);
   overflow-y: auto;
 }
 
@@ -1929,6 +1930,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 20px;
 }
 
 .emotion-19 li:hover,
@@ -2916,7 +2918,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: 375px;
+  max-height: min(100vh,401px);
   overflow-y: auto;
 }
 
@@ -2945,6 +2947,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  line-height: 20px;
 }
 
 .emotion-17 li:hover,
