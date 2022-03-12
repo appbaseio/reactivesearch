@@ -165,6 +165,9 @@ const RangeInput = {
 		if (this.$props.defaultValue && this.$props.defaultValue.start && this.$props.defaultValue.end) {
 			this.handleChange(this.$props.defaultValue)
 		}
+		if (this.isControlled()) {
+			this.handleChange(this.$props.value, 'change');
+		}
 	},
 	render() {
 		const {

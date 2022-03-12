@@ -74,16 +74,17 @@ class ReactiveList extends Component {
 		this.sortOptionIndex = this.props.defaultSortOption
 			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
+		if (this.props.urlSortOption) {
+			this.sortOptionIndex
+				= this.props.sortOptions.findIndex(s => s.label === this.props.urlSortOption) || 0;
+		}
 	}
 
 	componentDidMount() {
 		const {
-			aggregationField,
-			distinctField,
-			distinctFieldConfig,
-			index,
-			enableAppbase,
-		} = this.props;
+			aggregationField, distinctField, distinctFieldConfig, index, enableAppbase,
+		}
+			= this.props;
 
 		if (enableAppbase && aggregationField) {
 			console.warn(
@@ -188,15 +189,7 @@ class ReactiveList extends Component {
 			checkSomePropChange(
 				this.props,
 				prevProps,
-				[
-					'hits',
-					'promotedResults',
-					'customData',
-					'total',
-					'size',
-					'time',
-					'hidden',
-				],
+				['hits', 'promotedResults', 'customData', 'total', 'size', 'time', 'hidden'],
 				() => {
 					this.props.onData(this.getData());
 				},
@@ -250,7 +243,6 @@ class ReactiveList extends Component {
 				options = { ...options, ...getOptionsFromQuery(this.defaultQuery) };
 				this.props.setQueryOptions(this.props.componentId, options, !query);
 			}
-
 
 			this.props.updateQuery(
 				{
@@ -359,13 +351,11 @@ class ReactiveList extends Component {
 		const { size, aggregationField, afterKey } = this.props;
 		const queryOptions = { size };
 		if (aggregationField) {
-			queryOptions.aggs = getCompositeAggsQuery(
-				{
-					props: this.props,
-					after: afterKey ? { after: afterKey } : null,
-					showTopHits: true,
-				},
-			).aggs;
+			queryOptions.aggs = getCompositeAggsQuery({
+				props: this.props,
+				after: afterKey ? { after: afterKey } : null,
+				showTopHits: true,
+			}).aggs;
 		}
 		return queryOptions;
 	};
@@ -411,7 +401,9 @@ class ReactiveList extends Component {
 	}
 	// Returns the props without default props to apply search relevancy settings for RS API
 	get absProps() {
-		const { originalProps: { includeFields, excludeFields, size } } = this.props;
+		const {
+			originalProps: { includeFields, excludeFields, size },
+		} = this.props;
 		return {
 			includeFields: includeFields || undefined,
 			excludeFields: excludeFields || undefined,
@@ -622,6 +614,23 @@ class ReactiveList extends Component {
 	};
 
 	updatePageURL = (page) => {
+		try {
+			if (this.props.sortOptions && this.props.sortOptions[this.sortOptionIndex]) {
+				const sortOption = this.props.sortOptions[this.sortOptionIndex].label;
+
+				this.props.setPageURL(
+					`${this.props.componentId}sortOption`,
+					sortOption,
+					`${this.props.componentId}sortOption`,
+					false,
+					this.props.URLParams,
+				);
+			}
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.log(`error', ${error}`);
+		}
+
 		this.props.setPageURL(
 			this.props.componentId,
 			page + 1,
@@ -677,10 +686,7 @@ class ReactiveList extends Component {
 	};
 	getData = () => {
 		const {
-			filteredResults,
-			promotedResults,
-			aggregationData,
-			customData,
+			filteredResults, promotedResults, aggregationData, customData,
 		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
@@ -858,6 +864,7 @@ ReactiveList.propTypes = {
 	// eslint-disable-next-line
 	originalProps: types.any,
 	index: types.string,
+	urlSortOption: types.string,
 };
 
 ReactiveList.defaultProps = {
@@ -891,6 +898,9 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value - 1)
 		|| -1,
+	urlSortOption:
+		state.selectedValues[`${props.componentId}sortOption`]
+		&& state.selectedValues[`${props.componentId}sortOption`].value,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	analytics: state.config && state.config.analytics,
@@ -933,13 +943,17 @@ const ConnectedComponent = connect(
 		<ComponentWrapper internalComponent componentType={componentTypes.reactiveList} {...props}>
 			{() => {
 				const { includeFields, excludeFields, size } = props;
-				return (<ReactiveList
-					ref={props.myForwardedRef}
-					{...props}
-					originalProps={{
-						includeFields, excludeFields, size,
-					}}
-				/>);
+				return (
+					<ReactiveList
+						ref={props.myForwardedRef}
+						{...props}
+						originalProps={{
+							includeFields,
+							excludeFields,
+							size,
+						}}
+					/>
+				);
 			}}
 		</ComponentWrapper>
 	)),

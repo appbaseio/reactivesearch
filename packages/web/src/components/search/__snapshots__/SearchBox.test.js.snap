@@ -164,16 +164,24 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
           className="emotion-7 emotion-8"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-9 emotion-10"
-            onBlur={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value="test"
           />
           <div>
@@ -1198,16 +1206,24 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
           className="emotion-9 emotion-10"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-11 emotion-12"
-            onBlur={undefined}
+            className=" emotion-11 emotion-12"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value=""
           />
           <div>
@@ -1424,16 +1440,24 @@ exports[`should render SearchBox 1`] = `
           className="emotion-7 emotion-8"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-9 emotion-10"
-            onBlur={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value=""
           />
           <div>
@@ -1654,16 +1678,24 @@ exports[`should render SearchBox with title 1`] = `
           className="emotion-9 emotion-10"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-11 emotion-12"
-            onBlur={undefined}
+            className=" emotion-11 emotion-12"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value=""
           />
           <div>
@@ -3347,16 +3379,24 @@ exports[`should render search icon on the right 1`] = `
           className="emotion-7 emotion-8"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={true}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-9 emotion-10"
-            onBlur={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value=""
           />
           <div>
@@ -3565,16 +3605,24 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
           className="emotion-7 emotion-8"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-9 emotion-10"
-            onBlur={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value="test"
           />
           <div>
@@ -3782,16 +3830,24 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
           className="emotion-7 emotion-8"
         >
           <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
             aria-label="MockSearchBox"
+            autoComplete="off"
             autoFocus={undefined}
-            className="emotion-9 emotion-10"
-            onBlur={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
             onChange={[Function]}
-            onFocus={undefined}
-            onKeyDown={undefined}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
             onKeyPress={undefined}
             onKeyUp={undefined}
             placeholder="Search"
+            role="combobox"
+            type={undefined}
             value=""
           />
           <div>

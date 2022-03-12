@@ -103,6 +103,7 @@ const Dropdown = {
 						highlightedIndex,
 						getButtonProps,
 						getItemEvents,
+						getInputEvents
 					}) => (
 						<div class={suggestionsContainer}>
 							<Select
@@ -147,7 +148,13 @@ const Dropdown = {
 									} ${getClassName(this.$props.innerClass, 'list')}`}
 								>
 									{this.$props.showSearch ? (
-										this.renderSearchbox()
+										this.renderSearchbox({
+											on: {
+												input: getInputEvents({
+													onInput: this.handleInputChange,
+												}).input,
+											},
+										})
 									) : null}
 									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
 										? this.renderNoResult()
@@ -324,10 +331,10 @@ const Dropdown = {
 			);
 		},
 
-		renderSearchbox() {
+		renderSearchbox(eventObject) {
 			const { componentId, searchPlaceholder, showClear, themePreset, innerClass }
 				= this.$props;
-			
+
 			const InputComponent = (
 				<Input
 					id={`${componentId}-input`}
@@ -340,11 +347,11 @@ const Dropdown = {
 					class={getClassName(innerClass, 'input')}
 					placeholder={searchPlaceholder}
 					value={this.$data.searchTerm}
-					onChange={this.handleInputChange}
 					themePreset={themePreset}
+					{...eventObject}
 				/>
 			);
-			
+
 			if (showClear) {
 				return (
 					<InputWrapper>
