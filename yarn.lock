@@ -110,37 +110,6 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivecore@9.14.0":
-  version "9.14.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.0.tgz#8369ab003456ba6180adb8dc0486d9b6c176ed36"
-  integrity sha512-bCHa+UHBskKM2iIrXc7iqpT64P/b8jm4gg1je5TuW9padxxFVoXP6V91Lfj9OYd1ih6++7xttoXBIso8x4+0vw==
-  dependencies:
-    cross-fetch "^3.0.4"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    xdate "^0.8.2"
-
-"@appbaseio/reactivesearch-vue@1.27.0":
-  version "1.27.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.27.0.tgz#b05736564a2825c5b3d737a587c71641c459ca15"
-  integrity sha512-oT5a7wBsZVbmpA/QHtT6SPTkaxAbw6lzh2Awc93DXImqgZ/WTuexlZ33IwB82u3wM0G4yAUbnti0bTS3b6awug==
-  dependencies:
-    "@appbaseio/reactivecore" "9.14.0"
-    "@appbaseio/vue-emotion" "0.4.4"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.0.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "9.2.12"
-    hotkeys-js "^3.8.7"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    url-search-params-polyfill "^7.0.0"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component "^3.2.15"
-    vue-types "^1.3.3"
-
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
@@ -34882,7 +34851,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.3, vue-types@^1.7.0:
+vue-types@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==

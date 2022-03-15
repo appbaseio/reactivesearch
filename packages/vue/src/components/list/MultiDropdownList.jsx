@@ -67,7 +67,7 @@ const MultiDropdownList = {
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
-		size: VueTypes.number.def(100),
+		size: VueTypes.number,
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
@@ -445,7 +445,11 @@ const MultiDropdownList = {
 
 MultiDropdownList.defaultQuery = (value, props) => {
 	let query = null;
-	const type = props.queryFormat === 'or' ? 'terms' : 'term';
+	let { queryFormat } = props;
+	if (queryFormat === undefined) {
+		queryFormat = 'or';
+	}
+	const type = queryFormat === 'or' ? 'terms' : 'term';
 
 	if (!Array.isArray(value) || value.length === 0) {
 		return null;
@@ -463,7 +467,7 @@ MultiDropdownList.defaultQuery = (value, props) => {
 		}
 	} else if (value) {
 		let listQuery;
-		if (props.queryFormat === 'or') {
+		if (queryFormat === 'or') {
 			if (props.showMissing) {
 				const hasMissingTerm = value.includes(props.missingLabel);
 				let should = [

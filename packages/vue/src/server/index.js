@@ -79,10 +79,16 @@ function getCustomQuery(component, value) {
 	// get custom or default query of sensor components
 	const currentValue = parseValue(value, component);
 	if (component.customQuery) {
-		return extractQueryFromCustomQuery(component.customQuery(currentValue, component));
+		const customQuery = component.customQuery(currentValue, component);
+		return {
+			query: extractQueryFromCustomQuery(customQuery),
+			...getOptionsForCustomQuery(customQuery),
+		};
 	}
 	return component.source.defaultQuery
-		? component.source.defaultQuery(currentValue, component)
+		? {
+			query: component.source.defaultQuery(currentValue, component),
+		  }
 		: null;
 }
 
@@ -272,7 +278,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 				});
 			}
 
-			const customQuery = getCustomQuery(component, value);
+			const { query, ...options } = getCustomQuery(component, value) || {};
+			const customQuery = query;
 			// set custom query for main component
 			queryList = queryReducer(queryList, {
 				type: 'SET_QUERY',
@@ -282,7 +289,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryOptions = queryOptionsReducer(queryOptions, {
 				type: 'SET_QUERY_OPTIONS',
 				component: component.componentId,
-				options: { ...componentQueryOptions },
+				options: { ...componentQueryOptions, ...options },
 			});
 			// Set component type in component props
 			compProps.componentType = componentType;
@@ -309,12 +316,20 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList,
 				queryOptions,
 			);
+			let componentQueryOptions = options;
+			const { componentType } = component.source;
+			if (componentType !== componentTypes.reactiveComponent) {
+				// don't merge aggs, size
+				const { aggs, size, ...rest } = options || {};
+				componentQueryOptions = rest;
+			}
 
 			const validOptions = ['aggs', 'from', 'sort'];
-			// check if query or options are valid - non-empty
+			// check if query or componentQueryOptions are valid - non-empty
 			if (
 				(queryObj && !!Object.keys(queryObj).length)
-				|| (options && Object.keys(options).some((item) => validOptions.includes(item)))
+				|| (componentQueryOptions
+					&& Object.keys(componentQueryOptions).some((item) => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -324,10 +339,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 				const currentQuery = {
 					query: { ...queryObj },
-					...options,
+					...componentQueryOptions,
 					...queryOptions[component.componentId],
 				};
-
 				queryLog = {
 					...queryLog,
 					[component.componentId]: currentQuery,

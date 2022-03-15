@@ -57,7 +57,7 @@ const MultiList = {
 		showCount: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
 		showSearch: VueTypes.bool.def(true),
-		size: VueTypes.number.def(100),
+		size: VueTypes.number,
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
@@ -83,8 +83,8 @@ const MultiList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions
-			= this.options && this.options[props.dataField]
+		this.modifiedOptions =
+			this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -232,59 +232,59 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{!this.hasCustomRenderer
-						&& filteredItemsToRender.length === 0
-						&& !this.isLoading
+						{!this.hasCustomRenderer &&
+						filteredItemsToRender.length === 0 &&
+						!this.isLoading
 							? this.renderNoResult()
 							: filteredItemsToRender.map((item) => (
-								<li
-									key={item.key}
-									class={`${
-										this.$data.currentValue[item.key] ? 'active' : ''
-									}`}
-								>
-									<Checkbox
-										type="checkbox"
-										class={getClassName(this.$props.innerClass, 'checkbox')}
-										id={`${this.$props.componentId}-${item.key}`}
-										name={this.$props.componentId}
-										value={item.key}
-										onClick={this.handleClick}
-										show={this.$props.showCheckbox}
-										{...{
-											domProps: {
-												checked: !!this.$data.currentValue[item.key],
-											},
-										}}
-									/>
-									<label
-										class={getClassName(this.$props.innerClass, 'label')}
-										for={`${this.$props.componentId}-${item.key}`}
+									<li
+										key={item.key}
+										class={`${
+											this.$data.currentValue[item.key] ? 'active' : ''
+										}`}
 									>
-										{renderItemCalc ? (
-											renderItemCalc({
-												label: item.key,
-												count: item.doc_count,
-												isChecked: !!this.$data.currentValue[item.key],
-											})
-										) : (
-											<span>
-												{item.key}
-												{this.$props.showCount && (
-													<span
-														class={getClassName(
-															this.$props.innerClass,
-															'count',
-														)}
-													>
+										<Checkbox
+											type="checkbox"
+											class={getClassName(this.$props.innerClass, 'checkbox')}
+											id={`${this.$props.componentId}-${item.key}`}
+											name={this.$props.componentId}
+											value={item.key}
+											onClick={this.handleClick}
+											show={this.$props.showCheckbox}
+											{...{
+												domProps: {
+													checked: !!this.$data.currentValue[item.key],
+												},
+											}}
+										/>
+										<label
+											class={getClassName(this.$props.innerClass, 'label')}
+											for={`${this.$props.componentId}-${item.key}`}
+										>
+											{renderItemCalc ? (
+												renderItemCalc({
+													label: item.key,
+													count: item.doc_count,
+													isChecked: !!this.$data.currentValue[item.key],
+												})
+											) : (
+												<span>
+													{item.key}
+													{this.$props.showCount && (
+														<span
+															class={getClassName(
+																this.$props.innerClass,
+																'count',
+															)}
+														>
 															&nbsp;(
-														{item.doc_count})
-													</span>
-												)}
-											</span>
-										)}
-									</label>
-								</li>
+															{item.doc_count})
+														</span>
+													)}
+												</span>
+											)}
+										</label>
+									</li>
 							  ))}
 					</UL>
 				)}
@@ -298,9 +298,9 @@ const MultiList = {
 			let { currentValue } = this.$data;
 			let finalValues = null;
 			if (
-				selectAllLabel
-				&& ((Array.isArray(value) && value.includes(selectAllLabel))
-					|| (typeof value === 'string' && value === selectAllLabel))
+				selectAllLabel &&
+				((Array.isArray(value) && value.includes(selectAllLabel)) ||
+					(typeof value === 'string' && value === selectAllLabel))
 			) {
 				if (currentValue[selectAllLabel]) {
 					currentValue = {};
@@ -488,8 +488,8 @@ const MultiList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults =
+				this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -505,7 +505,11 @@ const MultiList = {
 };
 MultiList.defaultQuery = (value, props) => {
 	let query = null;
-	const type = props.queryFormat === 'or' ? 'terms' : 'term';
+	let { queryFormat } = props;
+	if (queryFormat === undefined) {
+		queryFormat = 'or';
+	}
+	const type = queryFormat === 'or' ? 'terms' : 'term';
 
 	if (!Array.isArray(value) || value.length === 0) {
 		return null;
@@ -523,7 +527,7 @@ MultiList.defaultQuery = (value, props) => {
 		}
 	} else if (value) {
 		let listQuery;
-		if (props.queryFormat === 'or') {
+		if (queryFormat === 'or') {
 			if (props.showMissing) {
 				const hasMissingTerm = value.includes(props.missingLabel);
 				let should = [
@@ -596,9 +600,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],

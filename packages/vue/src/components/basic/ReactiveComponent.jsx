@@ -25,7 +25,7 @@ const ReactiveComponent = {
 		componentId: types.stringRequired,
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,
-		size: VueTypes.number.def(20),
+		size: VueTypes.number,
 		defaultQuery: types.func,
 		customQuery: types.func,
 		filterLabel: types.string,
@@ -96,34 +96,25 @@ const ReactiveComponent = {
 		}
 
 		this.setQuery = ({ options, ...obj }) => {
-			if (options) {
-				this.setQueryOptions(
-					props.componentId,
-					{ ...options, ...this.getAggsQuery() },
-					false,
-				);
-			}
 			let queryToBeSet = obj.query;
 
 			// when enableAppbase is true, Backend throws error because of repeated query in request body
-			if (obj && obj.query && obj.query.query) {
-				queryToBeSet = obj.query.query;
+			if (queryToBeSet && queryToBeSet.query) {
+				queryToBeSet = queryToBeSet.query;
 			}
-			let customQueryCalc = { ...options };
+			const customQueryCalc = { ...options, query: customQueryCalc };
 			// Update customQuery field for RS API
-			if (queryToBeSet || options) {
-				if (queryToBeSet.query) {
-					if (queryToBeSet.id) {
-						customQueryCalc = queryToBeSet;
-					} else {
-						customQueryCalc.query = queryToBeSet;
-					}
-				}
-				this.setCustomQuery(props.componentId, customQueryCalc);
+			this.setCustomQuery(props.componentId, customQueryCalc);
+			if (options) {
+				this.setQueryOptions(
+					props.componentId,
+					{ ...this.getAggsQuery(), ...options },
+					false,
+				);
 			}
 			this.updateQuery({
 				...obj,
-				query: customQueryCalc,
+				query: customQueryCalc.query,
 				componentId: props.componentId,
 				label: props.filterLabel,
 				showFilter: props.showFilter,
@@ -134,8 +125,7 @@ const ReactiveComponent = {
 		if (props.defaultQuery) {
 			this.internalComponent = `${props.componentId}__internal`;
 		}
-	},
-	beforeMount() {
+
 		if (this.internalComponent && this.$props.defaultQuery) {
 			updateDefaultQuery(
 				this.componentId,
@@ -325,9 +315,9 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	promotedResults: state.promotedResults[props.componentId] || [],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
