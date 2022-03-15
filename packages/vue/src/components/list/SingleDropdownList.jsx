@@ -65,7 +65,7 @@ const SingleDropdownList = {
 		selectAllLabel: types.string,
 		showCount: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
-		size: VueTypes.number.def(100),
+		size: VueTypes.number,
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
