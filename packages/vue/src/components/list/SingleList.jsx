@@ -81,8 +81,8 @@ const SingleList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions
-			= this.options && this.options[props.dataField]
+		this.modifiedOptions =
+			this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -218,66 +218,66 @@ const SingleList = {
 								</label>
 							</li>
 						) : null}
-						{!this.hasCustomRenderer
-						&& filteredItemsToRender.length === 0
-						&& !this.isLoading
+						{!this.hasCustomRenderer &&
+						filteredItemsToRender.length === 0 &&
+						!this.isLoading
 							? this.renderNoResult()
 							: filteredItemsToRender.map((item) => (
-								<li
-									key={item.key}
-									class={`${
-										this.currentValue === String(item.key) ? 'active' : ''
-									}`}
-								>
-									<Radio
-										class={getClassName(this.$props.innerClass, 'radio')}
-										id={`${this.$props.componentId}-${item.key}`}
-										name={this.$props.componentId}
-										value={item.key}
-										readOnly
-										onClick={this.handleClick}
-										type="radio"
-										show={this.$props.showRadio}
-										{...{
-											domProps: {
-												checked: this.currentValue === String(item.key),
-											},
-										}}
-									/>
-									<label
-										class={
-											getClassName(this.$props.innerClass, 'label')
-												|| null
-										}
-										for={`${this.$props.componentId}-${item.key}`}
+									<li
+										key={item.key}
+										class={`${
+											this.currentValue === String(item.key) ? 'active' : ''
+										}`}
 									>
-										{renderItemCalc ? (
-											renderItemCalc({
-												label: item.key,
-												count: item.doc_count,
-												isChecked:
+										<Radio
+											class={getClassName(this.$props.innerClass, 'radio')}
+											id={`${this.$props.componentId}-${item.key}`}
+											name={this.$props.componentId}
+											value={item.key}
+											readOnly
+											onClick={this.handleClick}
+											type="radio"
+											show={this.$props.showRadio}
+											{...{
+												domProps: {
+													checked: this.currentValue === String(item.key),
+												},
+											}}
+										/>
+										<label
+											class={
+												getClassName(this.$props.innerClass, 'label') ||
+												null
+											}
+											for={`${this.$props.componentId}-${item.key}`}
+										>
+											{renderItemCalc ? (
+												renderItemCalc({
+													label: item.key,
+													count: item.doc_count,
+													isChecked:
 														this.currentValue === String(item.key),
-											})
-										) : (
-											<span>
-												{item.key}
-												{this.$props.showCount && (
-													<span
-														class={
-															getClassName(
-																this.$props.innerClass,
-																'count',
-															) || null
-														}
-													>
+												})
+											) : (
+												<span>
+													{item.key}
+													{this.$props.showCount && (
+														<span
+															class={
+																getClassName(
+																	this.$props.innerClass,
+																	'count',
+																) || null
+															}
+														>
 															&nbsp;(
-														{item.doc_count})
-													</span>
-												)}
-											</span>
-										)}
-									</label>
-								</li>
+															{item.doc_count})
+														</span>
+													)}
+												</span>
+											)}
+										</label>
+									</li>
 							  ))}
 					</UL>
 				)}
@@ -303,7 +303,6 @@ const SingleList = {
 		},
 
 		updateDefaultQueryHandler(value, props) {
-			let defaultQueryOptions;
 			let query = SingleList.defaultQuery(value, props);
 
 			if (this.defaultQuery) {
@@ -313,11 +312,13 @@ const SingleList = {
 					query = defaultQueryObj;
 				}
 
-				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+
+				const defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+
+				this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -329,14 +330,14 @@ const SingleList = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = SingleList.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				const customQueryCalc = customQuery(value, props);
 				query = extractQueryFromCustomQuery(customQueryCalc);
-				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
+				const customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
+
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -429,8 +430,8 @@ const SingleList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults =
+				this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -501,9 +502,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| '',
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		'',
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],

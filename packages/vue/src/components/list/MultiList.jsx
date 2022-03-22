@@ -369,7 +369,6 @@ const MultiList = {
 		},
 
 		updateDefaultQueryHandler(value, props) {
-			let defaultQueryOptions;
 			let query = MultiList.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
@@ -377,11 +376,13 @@ const MultiList = {
 				if (defaultQueryObj) {
 					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+
+				const defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+				this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -393,14 +394,14 @@ const MultiList = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiList.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				const customQueryCalc = customQuery(value, props);
 				query = extractQueryFromCustomQuery(customQueryCalc);
-				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
+
+				const customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,

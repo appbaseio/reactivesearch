@@ -88,8 +88,8 @@ const MultiDropdownList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions
-			= this.options && this.options[props.dataField]
+		this.modifiedOptions =
+			this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -247,8 +247,8 @@ const MultiDropdownList = {
 					searchPlaceholder={this.$props.searchPlaceholder}
 					transformData={this.$props.transformData}
 					footer={
-						showLoadMore
-						&& !isLastBucket && (
+						showLoadMore &&
+						!isLastBucket && (
 							<div css={loadMoreContainer}>
 								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
@@ -338,7 +338,6 @@ const MultiDropdownList = {
 		},
 
 		updateDefaultQueryHandler(value, props) {
-			let defaultQueryOptions;
 			let query = MultiDropdownList.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
@@ -346,12 +345,12 @@ const MultiDropdownList = {
 				if (defaultQueryObj) {
 					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
-
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+
+				const defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+				this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -363,15 +362,15 @@ const MultiDropdownList = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiDropdownList.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				const customQueryCalc = customQuery(value, props);
 				query = extractQueryFromCustomQuery(customQueryCalc);
-				customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
+
+				const customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
 
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -387,9 +386,9 @@ const MultiDropdownList = {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
 				? getCompositeAggsQuery({
-					query: queryOptions,
-					props,
-					after,
+						query: queryOptions,
+						props,
+						after,
 				  })
 				: getAggsQuery(queryOptions, props);
 		},
@@ -532,9 +531,9 @@ MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
 		? getCompositeAggsQuery({
-			query: queryOptions,
-			props,
-			after,
+				query: queryOptions,
+				props,
+				after,
 		  })
 		: getAggsQuery(queryOptions, props);
 };
@@ -548,9 +547,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
