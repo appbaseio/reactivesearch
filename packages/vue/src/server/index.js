@@ -289,7 +289,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 			queryOptions = queryOptionsReducer(queryOptions, {
 				type: 'SET_QUERY_OPTIONS',
 				component: component.componentId,
-				options: { ...componentQueryOptions, ...options },
+				options: {
+					...options,
+				},
 			});
 			// Set component type in component props
 			compProps.componentType = componentType;
@@ -316,13 +318,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList,
 				queryOptions,
 			);
-			let componentQueryOptions = options;
-			const { componentType } = component.source;
-			if (componentType !== componentTypes.reactiveComponent) {
-				// don't merge aggs, size
-				const { aggs, size, ...rest } = options || {};
-				componentQueryOptions = rest;
-			}
+			const componentQueryOptions = options;
 
 			const validOptions = ['aggs', 'from', 'sort'];
 			// check if query or componentQueryOptions are valid - non-empty

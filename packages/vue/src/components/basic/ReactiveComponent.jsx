@@ -102,9 +102,18 @@ const ReactiveComponent = {
 			if (queryToBeSet && queryToBeSet.query) {
 				queryToBeSet = queryToBeSet.query;
 			}
-			const customQueryCalc = { ...options, query: customQueryCalc };
+
+			const customQueryCalc = {
+				...options,
+				query: queryToBeSet,
+			};
+			let rsAPIQuery = customQueryCalc;
+			// handle stored queries
+			if (queryToBeSet && queryToBeSet.id) {
+				rsAPIQuery = queryToBeSet;
+			}
 			// Update customQuery field for RS API
-			this.setCustomQuery(props.componentId, customQueryCalc);
+			this.setCustomQuery(props.componentId, rsAPIQuery);
 			if (options) {
 				this.setQueryOptions(
 					props.componentId,
