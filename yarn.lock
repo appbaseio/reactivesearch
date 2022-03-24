@@ -60,6 +60,17 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+"@appbaseio/reactivecore@9.14.1":
+  version "9.14.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.1.tgz#c753897a6d45a7b318a17ea0fc19efd7179b9dca"
+  integrity sha512-AQXVTRLiNASmcLf0zVysjiytDPJwqzEORKG/9OIjrK+FcBrK5b7ucEH5BlIIeMSZNR4F9SYinJ/yg3lMQhYRDQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"

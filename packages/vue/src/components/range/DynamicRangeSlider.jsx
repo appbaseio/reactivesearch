@@ -21,8 +21,14 @@ const {
 	updateComponentProps,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual, checkSomePropChange }
-	= helper;
+const {
+	checkValueChange,
+	getClassName,
+	isEqual,
+	checkSomePropChange,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -217,21 +223,23 @@ const DynamicRangeSlider = {
 
 		updateQueryHandler(value) {
 			let query = DynamicRangeSlider.defaultQuery(value, this.$props);
-			let customQueryOptions;
 
 			if (this.$props.customQuery) {
-				({ query } = this.$props.customQuery(value, this.$props) || {});
-				customQueryOptions = getOptionsFromQuery(
-					this.$props.customQuery(value, this.$props),
-				);
+				const customQueryTobeSet = this.$props.customQuery(value, this.$props);
+				const queryTobeSet = extractQueryFromCustomQuery(customQueryTobeSet);
+				if (queryTobeSet) {
+					query = queryTobeSet;
+				}
+				const customQueryOptions = getOptionsForCustomQuery(customQueryTobeSet);
 				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, value);
+
+				this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 			}
 
 			const { start, end } = this.range || { start: value[0], end: value[1] };
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: this.$props.componentId,
@@ -343,16 +351,16 @@ const DynamicRangeSlider = {
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-left'
+										getClassName(this.$props.innerClass, 'label') ||
+										'range-label-left'
 									}
 								>
 									{this.labels.start}
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-right'
+										getClassName(this.$props.innerClass, 'label') ||
+										'range-label-right'
 									}
 								>
 									{this.labels.end}
@@ -402,6 +410,8 @@ DynamicRangeSlider.parseValue = (value) => {
 	return [];
 };
 
+DynamicRangeSlider.hasInternalComponent = () => true;
+
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];
 	const internalRange = state.aggregations[`${props.componentId}__range__internal`];
@@ -410,26 +420,26 @@ const mapStateToProps = (state, props) => {
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 
 	if (props.nestedField) {
-		options
-			= options
-			&& componentId[props.dataField][props.nestedField]
-			&& componentId[props.dataField][props.nestedField].buckets
+		options =
+			options &&
+			componentId[props.dataField][props.nestedField] &&
+			componentId[props.dataField][props.nestedField].buckets
 				? componentId[props.dataField][props.nestedField].buckets
 				: [];
-		range
-			= range && internalRange[props.nestedField].min
+		range =
+			range && internalRange[props.nestedField].min
 				? {
-					start: internalRange[props.nestedField].min.value,
-					end: internalRange[props.nestedField].max.value,
+						start: internalRange[props.nestedField].min.value,
+						end: internalRange[props.nestedField].max.value,
 				  }
 				: null;
 	} else {
-		options
-			= options && componentId[props.dataField].buckets
+		options =
+			options && componentId[props.dataField].buckets
 				? componentId[props.dataField].buckets
 				: [];
-		range
-			= range && internalRange.min
+		range =
+			range && internalRange.min
 				? { start: internalRange.min.value, end: internalRange.max.value }
 				: null;
 	}
