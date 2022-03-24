@@ -100,19 +100,18 @@ const MultiRange = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiRange.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(
 					this.componentId,
 					this.setCustomQuery,
 					this.$props,
 					this.currentValue,
 				);
-			}
 
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
+			}
 
 			this.updateQuery({
 				componentId: props.componentId,
@@ -178,9 +177,9 @@ const MultiRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map((item) => {
-						const selected
-							= !!this.$data.currentValue
-							&& this.$data.currentValue.label === item.label;
+						const selected =
+							!!this.$data.currentValue &&
+							this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Checkbox
@@ -260,9 +259,9 @@ MultiRange.defaultQuery = (values, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	componentProps: state.props[props.componentId],
 	enableAppbase: state.config.enableAppbase,
 });
