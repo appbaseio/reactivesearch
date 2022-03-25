@@ -448,11 +448,12 @@ const SearchBox = (props) => {
 				suggestion._category,
 			);
 		} else if (onChange) {
-			onChange(suggestionValue, () =>
+			onChange(suggestionValue, ({ isOpen } = {}) =>
 				triggerQuery({
 					customQuery: true,
 					value: suggestionValue,
 					categoryValue: suggestion._category,
+					isOpen,
 				}),
 			);
 		}
@@ -720,7 +721,7 @@ const SearchBox = (props) => {
 	};
 
 	const handleFocus = (event) => {
-		if (props.autosuggest && !onChange) {
+		if (props.autosuggest) {
 			setIsOpen(true);
 		}
 		if (props.onFocus) {
