@@ -106,7 +106,7 @@ exports[`should not render search/ count when showSearch/ showCount are false 1`
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: min(100vh,401px);
+  max-height: 375px;
   overflow-y: auto;
 }
 
@@ -135,12 +135,19 @@ exports[`should not render search/ count when showSearch/ showCount are false 1`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 20px;
 }
 
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
+}
+
+.emotion-9.searchbox-suggestions-list {
+  max-height: min(100vh,401px);
+}
+
+.emotion-9.searchbox-suggestions-list li .trim {
+  line-height: 20px;
 }
 
 <div
@@ -332,7 +339,7 @@ exports[`should render list of items 1`] = `
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: min(100vh,401px);
+  max-height: 375px;
   overflow-y: auto;
 }
 
@@ -361,12 +368,19 @@ exports[`should render list of items 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 20px;
 }
 
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
+}
+
+.emotion-9.searchbox-suggestions-list {
+  max-height: min(100vh,401px);
+}
+
+.emotion-9.searchbox-suggestions-list li .trim {
+  line-height: 20px;
 }
 
 <div
@@ -597,7 +611,7 @@ exports[`should render search/count when showSearch/showCount are true 1`] = `
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: min(100vh,401px);
+  max-height: 375px;
   overflow-y: auto;
 }
 
@@ -626,12 +640,19 @@ exports[`should render search/count when showSearch/showCount are true 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 20px;
 }
 
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
+}
+
+.emotion-9.searchbox-suggestions-list {
+  max-height: min(100vh,401px);
+}
+
+.emotion-9.searchbox-suggestions-list li .trim {
+  line-height: 20px;
 }
 
 .emotion-10 {
@@ -1062,7 +1083,7 @@ exports[`should use renderItem to render the list item 1`] = `
   margin: 0;
   padding: 0;
   list-style: none;
-  max-height: min(100vh,401px);
+  max-height: 375px;
   overflow-y: auto;
 }
 
@@ -1091,12 +1112,19 @@ exports[`should use renderItem to render the list item 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 20px;
 }
 
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
+}
+
+.emotion-9.searchbox-suggestions-list {
+  max-height: min(100vh,401px);
+}
+
+.emotion-9.searchbox-suggestions-list li .trim {
+  line-height: 20px;
 }
 
 <div
