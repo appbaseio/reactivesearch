@@ -48,8 +48,8 @@
 		"url-search-params-polyfill": "^7.0.0",
 		"vue-highlight-words": "^1.2.0",
 		"vue-no-ssr": "^1.1.0",
-		"vue-types": "^1.7.0",
-		"vue-slider-component": "^3.2.15"
+		"vue-slider-component": "^3.2.15",
+		"vue-types": "^1.7.0"
 	},
 	"peerDependencies": {
 		"vue": "^2.6.10"
