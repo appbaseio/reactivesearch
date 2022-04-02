@@ -553,7 +553,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 					? config.analyticsConfig.customEvents
 					: undefined;
 			}
-			console.log('FINAL QUERY', JSON.stringify(finalQuery));
 			appbaseRef
 				.reactiveSearchv3(finalQuery, rsAPISettings)
 				.then((res) => {
