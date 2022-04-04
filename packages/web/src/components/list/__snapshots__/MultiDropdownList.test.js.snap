@@ -142,14 +142,6 @@ exports[`should not render search/ count when showSearch/ showCount are false 1`
   background-color: #eee;
 }
 
-.emotion-9.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-9.searchbox-suggestions-list li .trim {
-  line-height: 20px;
-}
-
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -373,14 +365,6 @@ exports[`should render list of items 1`] = `
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
-}
-
-.emotion-9.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-9.searchbox-suggestions-list li .trim {
-  line-height: 20px;
 }
 
 <div
@@ -645,14 +629,6 @@ exports[`should render search/count when showSearch/showCount are true 1`] = `
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
-}
-
-.emotion-9.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-9.searchbox-suggestions-list li .trim {
-  line-height: 20px;
 }
 
 .emotion-10 {
@@ -1117,14 +1093,6 @@ exports[`should use renderItem to render the list item 1`] = `
 .emotion-9 li:hover,
 .emotion-9 li:focus {
   background-color: #eee;
-}
-
-.emotion-9.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-9.searchbox-suggestions-list li .trim {
-  line-height: 20px;
 }
 
 .emotion-10 {

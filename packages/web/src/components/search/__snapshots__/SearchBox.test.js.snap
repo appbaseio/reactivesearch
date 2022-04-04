@@ -425,6 +425,8 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   list-style: none;
   max-height: 375px;
   overflow-y: auto;
+  max-height: min(100vh,401px);
+  background: red;
 }
 
 .emotion-19.small {
@@ -459,11 +461,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   background-color: #eee;
 }
 
-.emotion-19.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-19.searchbox-suggestions-list li .trim {
+.emotion-19 li .trim {
   line-height: 20px;
 }
 
@@ -587,7 +585,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
             </div>
           </div>
           <ul
-            className=" searchbox-suggestions-list emotion-19"
+            className=" emotion-19"
           >
             <li
               id="MockSearchBox-downshift-item-0"
@@ -1910,6 +1908,8 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   list-style: none;
   max-height: 375px;
   overflow-y: auto;
+  max-height: min(100vh,401px);
+  background: red;
 }
 
 .emotion-19.small {
@@ -1944,11 +1944,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   background-color: #eee;
 }
 
-.emotion-19.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-19.searchbox-suggestions-list li .trim {
+.emotion-19 li .trim {
   line-height: 20px;
 }
 
@@ -2063,7 +2059,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
         </div>
       </div>
       <ul
-        className=" searchbox-suggestions-list emotion-19"
+        className=" emotion-19"
       >
         <li
           id="MockSearchBox-downshift-item-0"
@@ -2934,6 +2930,8 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
   list-style: none;
   max-height: 375px;
   overflow-y: auto;
+  max-height: min(100vh,401px);
+  background: red;
 }
 
 .emotion-17.small {
@@ -2968,11 +2966,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
   background-color: #eee;
 }
 
-.emotion-17.searchbox-suggestions-list {
-  max-height: min(100vh,401px);
-}
-
-.emotion-17.searchbox-suggestions-list li .trim {
+.emotion-17 li .trim {
   line-height: 20px;
 }
 
@@ -3091,7 +3085,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
         </div>
       </div>
       <ul
-        className=" searchbox-suggestions-list emotion-17"
+        className=" emotion-17"
       >
         <li
           id="MockSearchBox-downshift-item-0"

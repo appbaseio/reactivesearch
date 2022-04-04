@@ -35,7 +35,7 @@ import IconWrapper from '../../styles/IconWrapper';
 import SearchSvg from '../shared/SearchSvg';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import Input, { suggestions, suggestionsContainer } from '../../styles/Input';
+import Input, { searchboxSuggestions, suggestionsContainer } from '../../styles/Input';
 import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
@@ -887,11 +887,11 @@ const SearchBox = (props) => {
 									{isOpen && renderError()}
 									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
 										<ul
-											css={suggestions(props.themePreset, props.theme)}
-											className={`${getClassName(
-												props.innerClass,
-												'list',
-											)} searchbox-suggestions-list`}
+											css={searchboxSuggestions(
+												props.themePreset,
+												props.theme,
+											)}
+											className={`${getClassName(props.innerClass, 'list')}`}
 										>
 											{parsedSuggestions().map((item, index) => (
 												<li

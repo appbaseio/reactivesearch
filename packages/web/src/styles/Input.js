@@ -180,17 +180,18 @@ const suggestions = (themePreset, theme) => css`
 	}
 
 	${themePreset === 'dark' && dark(theme)}
+`;
 
-	&.searchbox-suggestions-list {
-		max-height: min(100vh, 401px);
-		li {
-			.trim {
-				line-height: 20px;
-			}
+const searchboxSuggestions = (themePreset, theme) => css`
+	${suggestions(themePreset, theme)};
+	max-height: min(100vh, 401px);
+	background: red;
+	li {
+		.trim {
+			line-height: 20px;
 		}
 	}
 `;
-
 const suggestionsContainer = css`
 	position: relative;
 	.cancel-icon {
@@ -199,4 +200,4 @@ const suggestionsContainer = css`
 `;
 
 export default Input;
-export { suggestionsContainer, suggestions, input, noSuggestions };
+export { suggestionsContainer, suggestions, input, noSuggestions, searchboxSuggestions };
