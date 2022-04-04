@@ -153,7 +153,7 @@ const suggestions = (themePreset, theme) => css`
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	max-height: min(100vh, 401px);
+	max-height: 375px;
 	overflow-y: auto;
 
 	&.small {
@@ -171,7 +171,6 @@ const suggestions = (themePreset, theme) => css`
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-			line-height: 20px;
 		}
 
 		&:hover,
@@ -181,6 +180,15 @@ const suggestions = (themePreset, theme) => css`
 	}
 
 	${themePreset === 'dark' && dark(theme)}
+
+	&.searchbox-suggestions-list {
+		max-height: min(100vh, 401px);
+		li {
+			.trim {
+				line-height: 20px;
+			}
+		}
+	}
 `;
 
 const suggestionsContainer = css`

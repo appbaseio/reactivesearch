@@ -888,7 +888,10 @@ const SearchBox = (props) => {
 									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
 										<ul
 											css={suggestions(props.themePreset, props.theme)}
-											className={getClassName(props.innerClass, 'list')}
+											className={`${getClassName(
+												props.innerClass,
+												'list',
+											)} searchbox-suggestions-list`}
 										>
 											{parsedSuggestions().map((item, index) => (
 												<li
