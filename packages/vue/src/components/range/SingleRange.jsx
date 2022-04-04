@@ -90,10 +90,10 @@ const SingleRange = {
 					</Title>
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
-					{this.$props.data.map(item => {
-						const selected
-							= !!this.$data.currentValue
-							&& this.$data.currentValue.label === item.label;
+					{this.$props.data.map((item) => {
+						const selected =
+							!!this.$data.currentValue &&
+							this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Radio
@@ -141,18 +141,17 @@ const SingleRange = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = SingleRange.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(
 					this.componentId,
 					this.setCustomQuery,
 					this.$props,
 					this.currentValue,
 				);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,
@@ -177,7 +176,7 @@ const SingleRange = {
 	},
 };
 
-SingleRange.parseValue = (value, props) => props.data.find(item => item.label === value) || null;
+SingleRange.parseValue = (value, props) => props.data.find((item) => item.label === value) || null;
 
 SingleRange.defaultQuery = (value, props) => {
 	let query = null;
@@ -207,9 +206,9 @@ SingleRange.defaultQuery = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	componentProps: state.props[props.componentId],
 	enableAppbase: state.config.enableAppbase,
 });
@@ -224,7 +223,7 @@ const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoPr
 	componentType: componentTypes.singleRange,
 });
 
-SingleRange.install = function(Vue) {
+SingleRange.install = function (Vue) {
 	Vue.component(SingleRange.name, RangeConnected);
 };
 // Add componentType for SSR
