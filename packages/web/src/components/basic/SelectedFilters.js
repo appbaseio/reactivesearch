@@ -42,11 +42,13 @@ class SelectedFilters extends Component {
 	};
 
 	clearValues = () => {
-		const { onClear, resetToDefault, resetToValues } = this.props;
+		const {
+			onClear, resetToDefault, resetToValues, clearAllBlacklistComponents,
+		} = this.props;
 		if (resetToDefault) {
-			this.props.resetValuesToDefault();
+			this.props.resetValuesToDefault(clearAllBlacklistComponents);
 		} else {
-			this.props.clearValues(resetToValues);
+			this.props.clearValues(resetToValues, clearAllBlacklistComponents);
 		}
 		if (onClear) {
 			onClear(null);
@@ -181,6 +183,7 @@ SelectedFilters.propTypes = {
 	resetToDefault: types.bool,
 	resetToValues: object, // eslint-disable-line
 	resetValuesToDefault: types.func,
+	clearAllBlacklistComponents: types.stringArray,
 };
 
 SelectedFilters.defaultProps = {
@@ -199,9 +202,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	clearValues: resetToValues => dispatch(clearValues(resetToValues)),
+	clearValues: (resetToValues, clearAllBlacklistComponents) =>
+		dispatch(clearValues(resetToValues, clearAllBlacklistComponents)),
 	setValue: (component, value) => dispatch(setValue(component, value)),
-	resetValuesToDefault: () => dispatch(resetValuesToDefault()),
+	resetValuesToDefault: clearAllBlacklistComponents =>
+		dispatch(resetValuesToDefault(clearAllBlacklistComponents)),
 });
 
 const ConnectedComponent = connect(
