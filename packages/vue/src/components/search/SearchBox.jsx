@@ -438,7 +438,10 @@ const SearchBox = {
 		triggerCustomQuery(paramValue, categoryValue = undefined) {
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
 			const value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
-			const defaultQueryTobeSet = SearchBox.defaultQuery(value, this.$props);
+			const defaultQueryTobeSet = SearchBox.defaultQuery(
+				`${value}${categoryValue ? ` in ${categoryValue}` : ''}`,
+				this.$props,
+			);
 			let query = defaultQueryTobeSet;
 			if (customQuery) {
 				const customQueryTobeSet = customQuery(value, this.$props);
@@ -672,7 +675,7 @@ const SearchBox = {
 		renderInputAddonBefore() {
 			const { addonBefore } = this.$scopedSlots;
 			if (addonBefore) {
-				return <InputAddon>{addonBefore()}</InputAddon>;
+				return <InputAddon class="addon-before">{addonBefore()}</InputAddon>;
 			}
 
 			return null;
@@ -680,7 +683,7 @@ const SearchBox = {
 		renderInputAddonAfter() {
 			const { addonAfter } = this.$scopedSlots;
 			if (addonAfter) {
-				return <InputAddon>{addonAfter()}</InputAddon>;
+				return <InputAddon class="addon-after">{addonAfter()}</InputAddon>;
 			}
 
 			return null;
