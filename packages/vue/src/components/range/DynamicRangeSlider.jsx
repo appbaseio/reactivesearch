@@ -21,8 +21,14 @@ const {
 	updateComponentProps,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual, checkSomePropChange }
-	= helper;
+const {
+	checkValueChange,
+	getClassName,
+	isEqual,
+	checkSomePropChange,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -49,6 +55,7 @@ const DynamicRangeSlider = {
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
 		index: VueTypes.string,
+		value: types.range,
 	},
 
 	data() {
@@ -89,6 +96,7 @@ const DynamicRangeSlider = {
 		if (this.$$store) {
 			({ components } = this.$$store.getState());
 		}
+		const { value } = this.$props;
 		if (this.destroyOnUnmount || components.indexOf(this.componentId) === -1) {
 			this.addComponent(this.componentId);
 			this.addComponent(this.internalRangeComponent);
@@ -96,6 +104,8 @@ const DynamicRangeSlider = {
 				this.handleChange(this.selectedValue);
 			} else if (this.selectedValue) {
 				this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
+			} else if (value) {
+				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 			}
 
 			// get range before executing other queries
@@ -117,6 +127,12 @@ const DynamicRangeSlider = {
 	},
 
 	methods: {
+		isControlled() {
+			if (this.$props.value && this.$listeners) {
+				return true;
+			}
+			return false;
+		},
 		setDefaultValue({ start, end }) {
 			if (this.$props.defaultValue) {
 				const { start: defaultStart, end: defaultEnd } = this.$props.defaultValue(
@@ -124,6 +140,8 @@ const DynamicRangeSlider = {
 					end,
 				);
 				this.handleChange([defaultStart, defaultEnd]);
+			} else if (this.isControlled()) {
+				this.handleChange(DynamicRangeSlider.parseValue(this.$props.value), 'change');
 			} else {
 				this.currentValue = [start, end];
 			}
@@ -166,8 +184,16 @@ const DynamicRangeSlider = {
 		},
 
 		handleSlider() {
-			const sliderValues = this.$refs.slider.getValue();			
-			this.handleChange(sliderValues);
+			const sliderValues = this.$refs.slider.getValue();
+			const { value } = this.$props;
+			if (value === undefined) {
+				this.handleChange(sliderValues);
+			} else {
+				this.$emit('change', {
+					start: sliderValues[0],
+					end: sliderValues[1],
+				});
+			}
 		},
 
 		handleChange(currentValue) {
@@ -197,21 +223,23 @@ const DynamicRangeSlider = {
 
 		updateQueryHandler(value) {
 			let query = DynamicRangeSlider.defaultQuery(value, this.$props);
-			let customQueryOptions;
 
 			if (this.$props.customQuery) {
-				({ query } = this.$props.customQuery(value, this.$props) || {});
-				customQueryOptions = getOptionsFromQuery(
-					this.$props.customQuery(value, this.$props),
-				);
+				const customQueryTobeSet = this.$props.customQuery(value, this.$props);
+				const queryTobeSet = extractQueryFromCustomQuery(customQueryTobeSet);
+				if (queryTobeSet) {
+					query = queryTobeSet;
+				}
+				const customQueryOptions = getOptionsForCustomQuery(customQueryTobeSet);
 				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, value);
+
+				this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 			}
 
 			const { start, end } = this.range || { start: value[0], end: value[1] };
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: this.$props.componentId,
@@ -262,7 +290,7 @@ const DynamicRangeSlider = {
 				start: this.range.start,
 				end: this.range.end,
 			};
-
+			this.$emit('change', value);
 			this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 		},
 
@@ -280,6 +308,11 @@ const DynamicRangeSlider = {
 		customQuery(newVal, oldVal) {
 			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
 				this.updateQueryHandler(this.$data.currentValue);
+			}
+		},
+		value(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.handleChange(DynamicRangeSlider.parseValue(newVal, this.$props));
 			}
 		},
 	},
@@ -301,11 +334,11 @@ const DynamicRangeSlider = {
 						<vue-slider-component
 							ref="slider"
 							value={[
-								Math.max(start, this.currentValue[0]),
-								Math.min(end, this.currentValue[1]),
+								Math.floor(Math.max(start, this.currentValue[0])),
+								Math.ceil(Math.min(end, this.currentValue[1])),
 							]}
-							min={Math.min(start, this.currentValue[0])}
-							max={Math.max(end, this.currentValue[1])}
+							min={Math.floor(Math.min(start, this.currentValue[0]))}
+							max={Math.ceil(Math.max(end, this.currentValue[1]))}
 							onDrag-end={this.handleSlider}
 							dotSize={20}
 							height={4}
@@ -318,16 +351,16 @@ const DynamicRangeSlider = {
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-left'
+										getClassName(this.$props.innerClass, 'label') ||
+										'range-label-left'
 									}
 								>
 									{this.labels.start}
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-right'
+										getClassName(this.$props.innerClass, 'label') ||
+										'range-label-right'
 									}
 								>
 									{this.labels.end}
@@ -370,7 +403,14 @@ DynamicRangeSlider.defaultQuery = (values, props) => {
 	return query;
 };
 
-DynamicRangeSlider.parseValue = (value) => [value.start, value.end];
+DynamicRangeSlider.parseValue = (value) => {
+	if (value) {
+		return Array.isArray(value) ? value : [value.start, value.end];
+	}
+	return [];
+};
+
+DynamicRangeSlider.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];
@@ -380,26 +420,26 @@ const mapStateToProps = (state, props) => {
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 
 	if (props.nestedField) {
-		options
-			= options
-			&& componentId[props.dataField][props.nestedField]
-			&& componentId[props.dataField][props.nestedField].buckets
+		options =
+			options &&
+			componentId[props.dataField][props.nestedField] &&
+			componentId[props.dataField][props.nestedField].buckets
 				? componentId[props.dataField][props.nestedField].buckets
 				: [];
-		range
-			= range && internalRange[props.nestedField].min
+		range =
+			range && internalRange[props.nestedField].min
 				? {
-					start: internalRange[props.nestedField].min.value,
-					end: internalRange[props.nestedField].max.value,
+						start: internalRange[props.nestedField].min.value,
+						end: internalRange[props.nestedField].max.value,
 				  }
 				: null;
 	} else {
-		options
-			= options && componentId[props.dataField].buckets
+		options =
+			options && componentId[props.dataField].buckets
 				? componentId[props.dataField].buckets
 				: [];
-		range
-			= range && internalRange.min
+		range =
+			range && internalRange.min
 				? { start: internalRange.min.value, end: internalRange.max.value }
 				: null;
 	}

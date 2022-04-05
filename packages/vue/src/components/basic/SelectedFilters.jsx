@@ -18,6 +18,7 @@ const SelectedFilters = {
 		showClearAll: VueTypes.bool.def(true),
 		title: types.title,
 		resetToDefault: VueTypes.bool.def(false),
+		clearAllBlacklistComponents: VueTypes.array,
 		resetToValues: VueTypes.object,
 	},
 	inject: {
@@ -70,11 +71,11 @@ const SelectedFilters = {
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
-			const { resetToDefault, resetToValues } = this;
+			const { resetToDefault, resetToValues, clearAllBlacklistComponents } = this;
 			if (resetToDefault) {
-				this.resetValuesToDefault();
+				this.resetValuesToDefault(clearAllBlacklistComponents);
 			} else {
-				this.clearValuesAction(resetToValues);
+				this.clearValuesAction(resetToValues, clearAllBlacklistComponents);
 			}
 			this.$emit('clear', resetToValues);
 		},

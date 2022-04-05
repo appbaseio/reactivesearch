@@ -21,6 +21,10 @@
 		"no-tabs": 0,
 		"no-underscore-dangle": 0,
 		"operator-linebreak": ["error", "before"],
+		"linebreak-style": [
+			"error",
+			"unix"
+		  ], 
 		"prefer-destructuring": 0,
 		"no-console": [
 			"error",

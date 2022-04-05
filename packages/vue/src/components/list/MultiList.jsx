@@ -22,7 +22,14 @@ import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
-const { isEqual, getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const {
+	isEqual,
+	getQueryOptions,
+	checkValueChange,
+	getClassName,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const MultiList = {
 	name: 'MultiList',
@@ -50,7 +57,7 @@ const MultiList = {
 		showCount: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
 		showSearch: VueTypes.bool.def(true),
-		size: VueTypes.number.def(100),
+		size: VueTypes.number,
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
@@ -76,8 +83,8 @@ const MultiList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions
-			= this.options && this.options[props.dataField]
+		this.modifiedOptions =
+			this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -86,13 +93,13 @@ const MultiList = {
 	},
 	beforeMount() {
 		this.updateQueryHandlerOptions(this.$props);
-
-		if (this.selectedValue) {
-			this.setValue(this.selectedValue);
-		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
-		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
+		const value = this.selectedValue || this.$props.value || this.$props.defaultValue;
+		this.setValue(value, !this.selectedValue);
+	},
+	mounted() {
+		const currentValue = Object.keys(this.$data.currentValue);
+		if (this.$props.value !== undefined && !isEqual(this.$props.value, currentValue)) {
+			this.$emit('change', currentValue);
 		}
 	},
 	watch: {
@@ -132,8 +139,13 @@ const MultiList = {
 					selectedValue = [this.$props.selectAllLabel];
 				}
 			}
+
 			if (!isEqual(selectedValue, newVal)) {
-				this.setValue(newVal || [], true);
+				if (this.value === undefined) {
+					this.setValue(newVal, true);
+				} else {
+					this.$emit('change', newVal);
+				}
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -222,59 +234,59 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{!this.hasCustomRenderer
-						&& filteredItemsToRender.length === 0
-						&& !this.isLoading
+						{!this.hasCustomRenderer &&
+						filteredItemsToRender.length === 0 &&
+						!this.isLoading
 							? this.renderNoResult()
 							: filteredItemsToRender.map((item) => (
-								<li
-									key={item.key}
-									class={`${
-										this.$data.currentValue[item.key] ? 'active' : ''
-									}`}
-								>
-									<Checkbox
-										type="checkbox"
-										class={getClassName(this.$props.innerClass, 'checkbox')}
-										id={`${this.$props.componentId}-${item.key}`}
-										name={this.$props.componentId}
-										value={item.key}
-										onClick={this.handleClick}
-										show={this.$props.showCheckbox}
-										{...{
-											domProps: {
-												checked: !!this.$data.currentValue[item.key],
-											},
-										}}
-									/>
-									<label
-										class={getClassName(this.$props.innerClass, 'label')}
-										for={`${this.$props.componentId}-${item.key}`}
+									<li
+										key={item.key}
+										class={`${
+											this.$data.currentValue[item.key] ? 'active' : ''
+										}`}
 									>
-										{renderItemCalc ? (
-											renderItemCalc({
-												label: item.key,
-												count: item.doc_count,
-												isChecked: !!this.$data.currentValue[item.key],
-											})
-										) : (
-											<span>
-												{item.key}
-												{this.$props.showCount && (
-													<span
-														class={getClassName(
-															this.$props.innerClass,
-															'count',
-														)}
-													>
+										<Checkbox
+											type="checkbox"
+											class={getClassName(this.$props.innerClass, 'checkbox')}
+											id={`${this.$props.componentId}-${item.key}`}
+											name={this.$props.componentId}
+											value={item.key}
+											onClick={this.handleClick}
+											show={this.$props.showCheckbox}
+											{...{
+												domProps: {
+													checked: !!this.$data.currentValue[item.key],
+												},
+											}}
+										/>
+										<label
+											class={getClassName(this.$props.innerClass, 'label')}
+											for={`${this.$props.componentId}-${item.key}`}
+										>
+											{renderItemCalc ? (
+												renderItemCalc({
+													label: item.key,
+													count: item.doc_count,
+													isChecked: !!this.$data.currentValue[item.key],
+												})
+											) : (
+												<span>
+													{item.key}
+													{this.$props.showCount && (
+														<span
+															class={getClassName(
+																this.$props.innerClass,
+																'count',
+															)}
+														>
 															&nbsp;(
-														{item.doc_count})
-													</span>
-												)}
-											</span>
-										)}
-									</label>
-								</li>
+															{item.doc_count})
+														</span>
+													)}
+												</span>
+											)}
+										</label>
+									</li>
 							  ))}
 					</UL>
 				)}
@@ -288,9 +300,9 @@ const MultiList = {
 			let { currentValue } = this.$data;
 			let finalValues = null;
 			if (
-				selectAllLabel
-				&& ((Array.isArray(value) && value.includes(selectAllLabel))
-					|| (typeof value === 'string' && value === selectAllLabel))
+				selectAllLabel &&
+				((Array.isArray(value) && value.includes(selectAllLabel)) ||
+					(typeof value === 'string' && value === selectAllLabel))
 			) {
 				if (currentValue[selectAllLabel]) {
 					currentValue = {};
@@ -357,18 +369,20 @@ const MultiList = {
 		},
 
 		updateDefaultQueryHandler(value, props) {
-			let defaultQueryOptions;
 			let query = MultiList.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+
+				const defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+				this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -380,13 +394,14 @@ const MultiList = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiList.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryCalc = customQuery(value, props);
+				query = extractQueryFromCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
+
+				const customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,
@@ -408,7 +423,9 @@ const MultiList = {
 			const queryOptions = MultiList.generateQueryOptions(props);
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
-				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				const defaultQueryOptions = getOptionsForCustomQuery(
+					props.defaultQuery(value, props),
+				);
 				this.setQueryOptions(this.internalComponent, {
 					...queryOptions,
 					...defaultQueryOptions,
@@ -451,7 +468,7 @@ const MultiList = {
 			if (value === undefined) {
 				this.setValue(currentValue);
 			} else {
-				const values = parseValueArray(value, currentValue);
+				const values = parseValueArray(value || [], currentValue);
 				this.$emit('change', values);
 			}
 		},
@@ -474,8 +491,8 @@ const MultiList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults =
+				this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -491,7 +508,11 @@ const MultiList = {
 };
 MultiList.defaultQuery = (value, props) => {
 	let query = null;
-	const type = props.queryFormat === 'or' ? 'terms' : 'term';
+	let { queryFormat } = props;
+	if (queryFormat === undefined) {
+		queryFormat = 'or';
+	}
+	const type = queryFormat === 'or' ? 'terms' : 'term';
 
 	if (!Array.isArray(value) || value.length === 0) {
 		return null;
@@ -509,7 +530,7 @@ MultiList.defaultQuery = (value, props) => {
 		}
 	} else if (value) {
 		let listQuery;
-		if (props.queryFormat === 'or') {
+		if (queryFormat === 'or') {
 			if (props.showMissing) {
 				const hasMissingTerm = value.includes(props.missingLabel);
 				let should = [
@@ -582,9 +603,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
@@ -598,9 +619,11 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
+MultiList.hasInternalComponent = () => true;
+
 const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
 	componentType: componentTypes.multiList,
-	internalComponent: true,
+	internalComponent: MultiList.hasInternalComponent(),
 });
 
 MultiList.install = function (Vue) {
