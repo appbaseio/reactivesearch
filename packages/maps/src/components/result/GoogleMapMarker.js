@@ -1,13 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React from 'react';
-import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
-import { InfoWindow, Marker } from 'react-google-maps';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
-import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
+import { InfoWindow, Marker } from '@react-google-maps/api';
 
 class GoogleMapMarker extends React.Component {
 	static contextType = ReactReduxContext;
@@ -32,11 +30,7 @@ class GoogleMapMarker extends React.Component {
 
 	triggerAnalytics = () => {
 		// click analytics would only work client side and after javascript loads
-		const {
-			triggerClickAnalytics,
-			marker,
-			index,
-		} = this.props;
+		const { triggerClickAnalytics, marker, index } = this.props;
 
 		triggerClickAnalytics(index, marker._id);
 	};
@@ -122,9 +116,9 @@ class GoogleMapMarker extends React.Component {
 			autoClosePopover,
 			handlePreserveCenter,
 			onPopoverClick,
-			markerProps: customMarkerProps,
 			marker,
 			markerOnTop,
+			clusterer,
 		} = this.props;
 		const markerProps = {
 			position: getPosition(marker),
@@ -137,49 +131,8 @@ class GoogleMapMarker extends React.Component {
 		if (renderData) {
 			const data = renderData(marker);
 
-			if ('label' in data) {
-				return (
-					<MarkerWithLabel
-						key={marker._id}
-						labelAnchor={new window.google.maps.Point(0, 30)}
-						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
-						onClick={this.openMarker}
-						onMouseOver={this.increaseMarkerZIndex}
-						onFocus={this.increaseMarkerZIndex}
-						onMouseOut={this.removeMarkerZIndex}
-						onBlur={this.removeMarkerZIndex}
-						{...markerProps}
-						{...customMarkerProps}
-					>
-						<div css={mapPinWrapper}>
-							<MapPin>{data.label}</MapPin>
-							<MapPinArrow />
-							{onPopoverClick ? this.renderPopover(marker, true) : null}
-						</div>
-					</MarkerWithLabel>
-				);
-			} else if ('icon' in data) {
+			if ('icon' in data) {
 				markerProps.icon = data.icon;
-			} else {
-				return (
-					<MarkerWithLabel
-						key={marker._id}
-						labelAnchor={new window.google.maps.Point(0, 30)}
-						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
-						onClick={this.openMarker}
-						onMouseOver={this.increaseMarkerZIndex}
-						onFocus={this.increaseMarkerZIndex}
-						onMouseOut={this.removeMarkerZIndex}
-						onBlur={this.removeMarkerZIndex}
-						{...markerProps}
-						{...customMarkerProps}
-					>
-						<div css={mapPinWrapper}>
-							{data.custom}
-							{onPopoverClick ? this.renderPopover(marker, true) : null}
-						</div>
-					</MarkerWithLabel>
-				);
 			}
 		} else if (defaultPin) {
 			markerProps.icon = defaultPin;
@@ -196,7 +149,8 @@ class GoogleMapMarker extends React.Component {
 				onMouseOut={this.removeMarkerZIndex}
 				onBlur={this.removeMarkerZIndex}
 				{...markerProps}
-				{...markerProps}
+				title={JSON.stringify(marker)}
+				clusterer={clusterer}
 			>
 				{onPopoverClick ? this.renderPopover(marker) : null}
 			</Marker>
@@ -231,7 +185,4 @@ GoogleMapMarker.propTypes = {
 	headers: types.headers,
 };
 
-export default connect(
-	mapStateToProps,
-	null,
-)(GoogleMapMarker);
+export default connect(mapStateToProps, null)(GoogleMapMarker);

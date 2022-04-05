@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap } from 'react-google-maps';
-import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
-import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
+import { MarkerClusterer, OverlayView } from '@react-google-maps/api';
+import { getInnerKey, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
 import ReactiveMap, { MAP_SERVICES } from './ReactiveMap';
 import GoogleMapMarkers from './GoogleMapMarkers';
+import MapComponent from './MapComponent';
+import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -16,16 +17,6 @@ const FlatMap = require('./addons/styles/FlatMap');
 const LightMonochrome = require('./addons/styles/LightMonochrome');
 const MidnightCommander = require('./addons/styles/MidnightCommander');
 const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
-
-const MapComponent = withGoogleMap((props) => {
-	const { children, onMapMounted, ...allProps } = props;
-
-	return (
-		<GoogleMap ref={onMapMounted} {...allProps}>
-			{children}
-		</GoogleMap>
-	);
-});
 
 class ReactiveGoogleMap extends Component {
 	constructor(props) {
@@ -49,6 +40,7 @@ class ReactiveGoogleMap extends Component {
 			currentMapStyle,
 			mapRef: null,
 			updaterKey: 0,
+			markerLabels: [],
 		};
 	}
 
@@ -79,8 +71,55 @@ class ReactiveGoogleMap extends Component {
 		}));
 	};
 
+	handleClusteringEnd = (clusterer) => {
+		const { renderData } = this.props;
+		const markerLabelsList = [];
+		const MINIMUM_CLUSTER_SIZE = 2;
+		const allClusters = clusterer.clusters;
+		let allMarkers;
+		allClusters.forEach((cluster) => {
+			allMarkers = cluster.getMarkers();
+			allMarkers.forEach((marker) => {
+				if (allMarkers.length < MINIMUM_CLUSTER_SIZE) {
+					let CustomUI;
+					if (renderData && marker.title) {
+						const data = renderData(JSON.parse(JSON.stringify(marker.title)));
+
+						if ('label' in data) {
+							CustomUI = (
+								<div css={mapPinWrapper}>
+									<MapPin>{data.label}</MapPin>
+									<MapPinArrow />
+								</div>
+							);
+						} else {
+							CustomUI = <div css={mapPinWrapper}>{data.custom}</div>;
+						}
+					}
+					if (CustomUI) {
+						markerLabelsList.push(
+							<OverlayView
+								key={`${marker.getPosition()}label`}
+								position={marker.getPosition()}
+								mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+							>
+								{CustomUI}
+							</OverlayView>,
+						);
+					}
+				}
+			});
+		});
+		if (!isEqual(this.state.markerLabels, markerLabelsList)) {
+			this.setState({
+				markerLabels: [...markerLabelsList],
+				// updaterKey: this.state.updaterKey + 1,
+			});
+		}
+	};
+
 	renderMap = (params) => {
-		if (typeof window === 'undefined' || (window && typeof window.google === 'undefined')) {
+		if (typeof window === 'undefined') {
 			return null;
 		}
 
@@ -101,20 +140,18 @@ class ReactiveGoogleMap extends Component {
 			markerProps: this.props.markerProps,
 			triggerClickAnalytics: params.triggerClickAnalytics,
 		};
-
 		return (
 			<div style={style}>
 				<MapComponent
-					containerElement={<div style={style} />}
-					mapElement={<div style={{ height: '100%' }} />}
+					mapContainerStyle={style}
 					onMapMounted={(ref) => {
 						this.setState({
 							mapRef: ref,
 						});
 						if (params.innerRef && ref) {
-							const map = Object.values(ref.context)[0];
-							const mapRef = { ...ref, map };
-							params.innerRef(mapRef);
+							const map = { ...ref };
+
+							params.innerRef(map);
 						}
 					}}
 					zoom={params.zoom}
@@ -130,9 +167,19 @@ class ReactiveGoogleMap extends Component {
 					}}
 				>
 					{this.props.showMarkers && this.props.showMarkerClusters ? (
-						<MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
-							<GoogleMapMarkers {...markerProps} />
-						</MarkerClusterer>
+						<React.Fragment>
+							<MarkerClusterer
+								onClusteringEnd={this.handleClusteringEnd}
+								averageCenter
+								enableRetinaIcons
+								gridSize={60}
+							>
+								{clusterer => (
+									<GoogleMapMarkers {...markerProps} clusterer={clusterer} />
+								)}
+							</MarkerClusterer>
+							{this.state.markerLabels}
+						</React.Fragment>
 					) : (
 						<React.Fragment>
 							{this.props.showMarkers && <GoogleMapMarkers {...markerProps} />}
@@ -148,7 +195,8 @@ class ReactiveGoogleMap extends Component {
 							top: 10,
 							right: 46,
 							width: 120,
-							zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
+							zIndex:
+								((window.google && window.google.maps.Marker.MAX_ZINDEX) || 0) + 1,
 						}}
 					>
 						<Dropdown
