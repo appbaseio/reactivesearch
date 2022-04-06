@@ -22,8 +22,14 @@ const {
 	mockDataForTesting,
 } = Actions;
 
-const { checkValueChange, getClassName, getOptionsFromQuery, isEqual, checkSomePropChange }
-	= helper;
+const {
+	checkValueChange,
+	getClassName,
+	isEqual,
+	checkSomePropChange,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const DynamicRangeSlider = {
 	name: 'DynamicRangeSlider',
@@ -50,8 +56,6 @@ const DynamicRangeSlider = {
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
 		index: VueTypes.string,
-		mode: VueTypes.string,
-		mockData: VueTypes.object,
 		value: types.range,
 	},
 
@@ -105,19 +109,6 @@ const DynamicRangeSlider = {
 				this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
 			} else if (value) {
 				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
-			}
-			if (this.$props.mockData) {
-				this.mockDataForTesting(
-					this.internalRangeComponent,
-					this.$props.mockData[this.internalRangeComponent],
-				);
-				this.setDefaultValue({
-					start: this.$props.mockData[this.internalRangeComponent].aggregations.min.value,
-					end: this.$props.mockData[this.internalRangeComponent].aggregations.max.value,
-				});
-			} else {
-				// get range before executing other queries
-				this.updateRangeQueryOptions();
 			}
 		}
 	},
@@ -232,21 +223,23 @@ const DynamicRangeSlider = {
 
 		updateQueryHandler(value) {
 			let query = DynamicRangeSlider.defaultQuery(value, this.$props);
-			let customQueryOptions;
 
 			if (this.$props.customQuery) {
-				({ query } = this.$props.customQuery(value, this.$props) || {});
-				customQueryOptions = getOptionsFromQuery(
-					this.$props.customQuery(value, this.$props),
-				);
+				const customQueryTobeSet = this.$props.customQuery(value, this.$props);
+				const queryTobeSet = extractQueryFromCustomQuery(customQueryTobeSet);
+				if (queryTobeSet) {
+					query = queryTobeSet;
+				}
+				const customQueryOptions = getOptionsForCustomQuery(customQueryTobeSet);
 				updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, value);
+
+				this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 			}
 
 			const { start, end } = this.range || { start: value[0], end: value[1] };
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(this.$props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: this.$props.componentId,
@@ -350,11 +343,11 @@ const DynamicRangeSlider = {
 						<vue-slider-component
 							ref="slider"
 							value={[
-								Math.max(start, this.currentValue[0]),
-								Math.min(end, this.currentValue[1]),
+								Math.floor(Math.max(start, this.currentValue[0])),
+								Math.ceil(Math.min(end, this.currentValue[1])),
 							]}
-							min={Math.min(start, this.currentValue[0])}
-							max={Math.max(end, this.currentValue[1])}
+							min={Math.floor(Math.min(start, this.currentValue[0]))}
+							max={Math.ceil(Math.max(end, this.currentValue[1]))}
 							onDrag-end={this.handleSlider}
 							dotSize={20}
 							height={4}
@@ -425,6 +418,8 @@ DynamicRangeSlider.parseValue = (value) => {
 	}
 	return [];
 };
+
+DynamicRangeSlider.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => {
 	const componentId = state.aggregations[props.componentId];

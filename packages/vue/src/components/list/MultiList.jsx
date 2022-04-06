@@ -22,7 +22,14 @@ import { UL, Checkbox } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
-const { isEqual, getQueryOptions, checkValueChange, getClassName, getOptionsFromQuery } = helper;
+const {
+	isEqual,
+	getQueryOptions,
+	checkValueChange,
+	getClassName,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} = helper;
 
 const MultiList = {
 	name: 'MultiList',
@@ -50,7 +57,7 @@ const MultiList = {
 		showCount: VueTypes.bool.def(true),
 		showFilter: VueTypes.bool.def(true),
 		showSearch: VueTypes.bool.def(true),
-		size: VueTypes.number.def(100),
+		size: VueTypes.number,
 		sortBy: VueTypes.oneOf(['asc', 'desc', 'count']).def('count'),
 		title: types.title,
 		URLParams: VueTypes.bool.def(false),
@@ -362,18 +369,20 @@ const MultiList = {
 		},
 
 		updateDefaultQueryHandler(value, props) {
-			let defaultQueryOptions;
 			let query = MultiList.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
+
+				const defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
+				this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			}
-			this.setQueryOptions(this.internalComponent, defaultQueryOptions, false);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -385,13 +394,14 @@ const MultiList = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiList.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
-				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryCalc = customQuery(value, props);
+				query = extractQueryFromCustomQuery(customQueryCalc);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
+
+				const customQueryOptions = getOptionsForCustomQuery(customQueryCalc);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 
 			this.updateQuery({
 				componentId: props.componentId,
@@ -413,7 +423,9 @@ const MultiList = {
 			const queryOptions = MultiList.generateQueryOptions(props);
 			if (props.defaultQuery) {
 				const value = Object.keys(this.$data.currentValue);
-				const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
+				const defaultQueryOptions = getOptionsForCustomQuery(
+					props.defaultQuery(value, props),
+				);
 				this.setQueryOptions(this.internalComponent, {
 					...queryOptions,
 					...defaultQueryOptions,
@@ -496,7 +508,11 @@ const MultiList = {
 };
 MultiList.defaultQuery = (value, props) => {
 	let query = null;
-	const type = props.queryFormat === 'or' ? 'terms' : 'term';
+	let { queryFormat } = props;
+	if (queryFormat === undefined) {
+		queryFormat = 'or';
+	}
+	const type = queryFormat === 'or' ? 'terms' : 'term';
 
 	if (!Array.isArray(value) || value.length === 0) {
 		return null;
@@ -514,7 +530,7 @@ MultiList.defaultQuery = (value, props) => {
 		}
 	} else if (value) {
 		let listQuery;
-		if (props.queryFormat === 'or') {
+		if (queryFormat === 'or') {
 			if (props.showMissing) {
 				const hasMissingTerm = value.includes(props.missingLabel);
 				let should = [
@@ -603,10 +619,15 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-export const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
-	componentType: componentTypes.multiList,
-	internalComponent: true,
-});
+MultiList.hasInternalComponent = () => true;
+
+export const ListConnected = ComponentWrapper(
+	connect(mapStateToProps, mapDispatchtoProps)(MultiList),
+	{
+		componentType: componentTypes.multiList,
+		internalComponent: MultiList.hasInternalComponent(),
+	},
+);
 
 MultiList.install = function (Vue) {
 	Vue.component(MultiList.name, ListConnected);

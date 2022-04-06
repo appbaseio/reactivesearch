@@ -68,7 +68,7 @@ const RangeSlider = {
 			}
 		},
 		handleSlider() {
-			const sliderValues = this.$refs.slider.getValue();			
+			const sliderValues = this.$refs.slider.getValue();
 			this.handleSliderChange(sliderValues);
 		},
 		handleChange(currentValue, props = this.$props) {
@@ -93,16 +93,16 @@ const RangeSlider = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = RangeSlider.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(
 					this.componentId,
 					this.setCustomQuery,
 					this.$props,
 					this.currentValue,
 				);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
 			}
 			const {
 				showFilter,
@@ -111,7 +111,6 @@ const RangeSlider = {
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start && currentEnd === end;
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -125,7 +124,7 @@ const RangeSlider = {
 		// the method is added to support snapshot testing
 		// <NoSSR/> component doesn't render the slider in test environment
 		// hence the change
-		renderSlider(sliderComponent) {			
+		renderSlider(sliderComponent) {
 			if (this.$attrs.mode === 'test') {
 				return sliderComponent();
 			}

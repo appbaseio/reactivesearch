@@ -32,7 +32,9 @@
 					<selected-filters>
 						<div slot-scope="{ selectedValues, setValue, clearValues }">
 							<div
-								v-for="componentId in Object.keys(getFilteredValues(selectedValues))"
+								v-for="componentId in Object.keys(
+									getFilteredValues(selectedValues),
+								)"
 								:key="componentId"
 							>
 								<div>
@@ -43,7 +45,12 @@
 									</button>
 								</div>
 							</div>
-							<button v-if="Object.keys(getFilteredValues(selectedValues)).length" @click="clearValues">Clear All</button>
+							<button
+								v-if="Object.keys(getFilteredValues(selectedValues)).length"
+								@click="clearValues"
+							>
+								Clear All
+							</button>
 						</div>
 					</selected-filters>
 					<reactive-list
@@ -104,14 +111,16 @@ export default {
 		getFilteredValues(values = {}) {
 			const filteredValues = {};
 			Object.keys(values).forEach((componentId) => {
-				if(values[componentId].showFilter &&
+				if (
+					values[componentId].showFilter &&
 					(Array.isArray(values[componentId].value)
 						? values[componentId].value.length
-						: !!values[componentId].value)) {
-							filteredValues[componentId] = values[componentId]
-						}
-			})
-			return filteredValues
+						: !!values[componentId].value)
+				) {
+					filteredValues[componentId] = values[componentId];
+				}
+			});
+			return filteredValues;
 		},
 	},
 };

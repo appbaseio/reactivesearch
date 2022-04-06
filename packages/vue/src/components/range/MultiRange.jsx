@@ -100,19 +100,18 @@ const MultiRange = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = MultiRange.defaultQuery(value, props);
-			let customQueryOptions;
 			if (customQuery) {
 				({ query } = customQuery(value, props) || {});
-				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+				const customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(
 					this.componentId,
 					this.setCustomQuery,
 					this.$props,
 					this.currentValue,
 				);
-			}
 
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
+				this.setQueryOptions(props.componentId, customQueryOptions, false);
+			}
 
 			this.updateQuery({
 				componentId: props.componentId,

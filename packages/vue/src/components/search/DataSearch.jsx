@@ -49,14 +49,15 @@ const {
 	debounce,
 	checkValueChange,
 	getClassName,
-	getOptionsFromQuery,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
 	isEqual,
 	getCompositeAggsQuery,
 	withClickIds,
 	getResultStats,
 	handleOnSuggestions,
 	getTopSuggestions,
-	normalizeDataField
+	normalizeDataField,
 } = helper;
 
 const DataSearch = {
@@ -163,12 +164,12 @@ const DataSearch = {
 			if (this.currentValue) {
 				return [];
 			}
-			const customDefaultPopularSuggestions = (
-				this.defaultPopularSuggestions || []
-			).map(suggestion => ({ ...suggestion, _popular_suggestion: true }));
-			const customNormalizedRecentSearches = (
-				this.normalizedRecentSearches || []
-			).map(search => ({ ...search, _recent_search: true }));
+			const customDefaultPopularSuggestions = (this.defaultPopularSuggestions || []).map(
+				(suggestion) => ({ ...suggestion, _popular_suggestion: true }),
+			);
+			const customNormalizedRecentSearches = (this.normalizedRecentSearches || []).map(
+				(search) => ({ ...search, _recent_search: true }),
+			);
 
 			const defaultSuggestions = isPopularSuggestionsEnabled
 				? [...customNormalizedRecentSearches, ...(customDefaultPopularSuggestions || [])]
@@ -198,16 +199,18 @@ const DataSearch = {
 		customHighlight: types.func,
 		customQuery: types.func,
 		defaultQuery: types.func,
-		dataField: VueTypes.oneOfType(
-			[
-				VueTypes.string, VueTypes.shape({
-					field: VueTypes.string,
-					weight: VueTypes.number,
-				}), VueTypes.arrayOf(VueTypes.string), VueTypes.arrayOf({
-					field: VueTypes.string,
-					weight: VueTypes.number,
-				})
-			]),
+		dataField: VueTypes.oneOfType([
+			VueTypes.string,
+			VueTypes.shape({
+				field: VueTypes.string,
+				weight: VueTypes.number,
+			}),
+			VueTypes.arrayOf(VueTypes.string),
+			VueTypes.arrayOf({
+				field: VueTypes.string,
+				weight: VueTypes.number,
+			}),
+		]),
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,
 		size: VueTypes.number,
@@ -368,7 +371,11 @@ const DataSearch = {
 					console.error(requiredError);
 					return;
 				}
-				if (typeof propValue !== 'string' && typeof propValue !== 'object' && !Array.isArray(propValue)) {
+				if (
+					typeof propValue !== 'string'
+					&& typeof propValue !== 'object'
+					&& !Array.isArray(propValue)
+				) {
 					console.error(
 						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
 					);
@@ -493,17 +500,22 @@ const DataSearch = {
 			let query = DataSearch.defaultQuery(value, props);
 			if (this.defaultQuery) {
 				const defaultQueryToBeSet = this.defaultQuery(value, props) || {};
-				if (defaultQueryToBeSet.query) {
-					({ query } = defaultQueryToBeSet);
+				const defaultQueryObj = extractQueryFromCustomQuery(defaultQueryToBeSet);
+				if (defaultQueryObj) {
+					query = defaultQueryObj;
 				}
-				defaultQueryOptions = getOptionsFromQuery(defaultQueryToBeSet);
+				defaultQueryOptions = getOptionsForCustomQuery(defaultQueryToBeSet);
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
-			this.setQueryOptions(this.internalComponent, {
-				...this.queryOptions,
-				...defaultQueryOptions,
-			}, false);
+			this.setQueryOptions(
+				this.internalComponent,
+				{
+					...this.queryOptions,
+					...defaultQueryOptions,
+				},
+				false,
+			);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -519,16 +531,20 @@ const DataSearch = {
 			let query = defaultQueryTobeSet;
 			if (customQuery) {
 				const customQueryTobeSet = customQuery(value, props);
-				const queryTobeSet = customQueryTobeSet.query;
+				const queryTobeSet = extractQueryFromCustomQuery(customQueryTobeSet);
 				if (queryTobeSet) {
 					query = queryTobeSet;
 				}
-				customQueryOptions = getOptionsFromQuery(customQueryTobeSet);
+				customQueryOptions = getOptionsForCustomQuery(customQueryTobeSet);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
-				this.setQueryOptions(componentId, {
-					...this.queryOptions,
-					...customQueryOptions,
-				}, false);
+				this.setQueryOptions(
+					componentId,
+					{
+						...this.queryOptions,
+						...customQueryOptions,
+					},
+					false,
+				);
 			}
 			if (!this.isPending) {
 				this.updateQuery({
@@ -571,7 +587,9 @@ const DataSearch = {
 			// click analytics would only work client side and after javascript loads
 			let docId = documentId;
 			if (!docId) {
-				const hitData = this.suggestionsList.find(hit => hit._click_id === searchPosition);
+				const hitData = this.suggestionsList.find(
+					(hit) => hit._click_id === searchPosition,
+				);
 				if (hitData && hitData.source && hitData.source._id) {
 					docId = hitData.source._id;
 				}
@@ -811,7 +829,7 @@ const DataSearch = {
 			);
 
 			// if one of modifier keys are used, they are handled below
-			hotkeys('*', event => {
+			hotkeys('*', (event) => {
 				const modifierKeys = extractModifierKeysFromFocusShortcuts(focusShortcuts);
 
 				if (modifierKeys.length === 0) return;
@@ -890,10 +908,11 @@ const DataSearch = {
 															}}
 															key={`${index + 1}-${item.value}`}
 															style={{
-																backgroundColor: this.getBackgroundColor(
-																	highlightedIndex,
-																	index,
-																),
+																backgroundColor:
+																	this.getBackgroundColor(
+																		highlightedIndex,
+																		index,
+																	),
 															}}
 														>
 															<SuggestionItem
@@ -915,15 +934,18 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${this.suggestionsList.length
+															key={`${
+																this.suggestionsList.length
 																+ index
-																+ 1}-${sugg.value}`}
+																+ 1
+															}-${sugg.value}`}
 															style={{
-																backgroundColor: this.getBackgroundColor(
-																	highlightedIndex,
-																	this.suggestionsList.length
-																		+ index,
-																),
+																backgroundColor:
+																	this.getBackgroundColor(
+																		highlightedIndex,
+																		this.suggestionsList
+																			.length + index,
+																	),
 																justifyContent: 'flex-start',
 															}}
 														>
@@ -995,16 +1017,18 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${this.suggestionsList
-																.length
+															key={`${
+																this.suggestionsList.length
 																	+ index
-																	+ 1}-${sugg.value}`}
+																	+ 1
+															}-${sugg.value}`}
 															style={{
-																backgroundColor: this.getBackgroundColor(
-																	highlightedIndex,
-																	this.suggestionsList
-																		.length + index,
-																),
+																backgroundColor:
+																		this.getBackgroundColor(
+																			highlightedIndex,
+																			this.suggestionsList
+																				.length + index,
+																		),
 																justifyContent: 'flex-start',
 															}}
 														>
@@ -1057,7 +1081,7 @@ const DataSearch = {
 													{...{
 														on: getInputEvents({
 															onInput: this.onInputChange,
-															onBlur: e => {
+															onBlur: (e) => {
 																this.$emit(
 																	'blur',
 																	e,
@@ -1065,7 +1089,7 @@ const DataSearch = {
 																);
 															},
 															onFocus: this.handleFocus,
-															onKeyPress: e => {
+															onKeyPress: (e) => {
 																this.$emit(
 																	'keyPress',
 																	e,
@@ -1077,12 +1101,12 @@ const DataSearch = {
 																	this.triggerQuery,
 																);
 															},
-															onKeyDown: e =>
+															onKeyDown: (e) =>
 																this.handleKeyDown(
 																	e,
 																	highlightedIndex,
 																),
-															onKeyUp: e => {
+															onKeyUp: (e) => {
 																this.$emit(
 																	'keyUp',
 																	e,
@@ -1132,22 +1156,22 @@ const DataSearch = {
 									placeholder={this.$props.placeholder}
 									{...{
 										on: {
-											blur: e => {
+											blur: (e) => {
 												this.$emit('blur', e, this.triggerQuery);
 											},
-											keypress: e => {
+											keypress: (e) => {
 												this.$emit('keyPress', e, this.triggerQuery);
 												this.$emit('key-press', e, this.triggerQuery);
 											},
 											input: this.onInputChange,
-											focus: e => {
+											focus: (e) => {
 												this.$emit('focus', e, this.triggerQuery);
 											},
-											keydown: e => {
+											keydown: (e) => {
 												this.$emit('keyDown', e, this.triggerQuery);
 												this.$emit('key-down', e, this.triggerQuery);
 											},
-											keyup: e => {
+											keyup: (e) => {
 												this.$emit('keyUp', e, this.triggerQuery);
 												this.$emit('key-up', e, this.triggerQuery);
 											},
@@ -1185,7 +1209,7 @@ DataSearch.defaultQuery = (value, props) => {
 	let finalQuery = null;
 
 	if (value) {
-		const fields = normalizeDataField(props.dataField, props.fieldWeights)
+		const fields = normalizeDataField(props.dataField, props.fieldWeights);
 		finalQuery = {
 			bool: {
 				should: DataSearch.shouldQuery(value, fields, props),
@@ -1215,9 +1239,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 	const finalQuery = [];
 	const phrasePrefixFields = [];
 	const fields = dataFields.map((dataField) => {
-		const queryField = `${dataField.field}${
-			dataField.weight ? `^${dataField.weight}` : ''
-		}`;
+		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
 		if (
 			!(
 				dataField.field.endsWith('.keyword')
@@ -1299,7 +1321,7 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 
 	return finalQuery;
 };
-DataSearch.highlightQuery = props => {
+DataSearch.highlightQuery = (props) => {
 	if (props.customHighlight) {
 		return props.customHighlight(props);
 	}
@@ -1312,7 +1334,7 @@ DataSearch.highlightQuery = props => {
 	if (typeof highlightField === 'string') {
 		fields[highlightField] = {};
 	} else if (Array.isArray(highlightField)) {
-		highlightField.forEach(item => {
+		highlightField.forEach((item) => {
 			fields[item] = {};
 		});
 	}
@@ -1326,6 +1348,8 @@ DataSearch.highlightQuery = props => {
 		},
 	};
 };
+
+DataSearch.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
@@ -1364,10 +1388,10 @@ const mapDispatchToProps = {
 };
 const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,
-	internalComponent: true,
+	internalComponent: DataSearch.hasInternalComponent(),
 });
 
-DataSearch.install = function(Vue) {
+DataSearch.install = function (Vue) {
 	Vue.component(DataSearch.name, DSConnected);
 };
 // Add componentType for SSR
