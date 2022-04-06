@@ -56,6 +56,8 @@ const DynamicRangeSlider = {
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
 		index: VueTypes.string,
+		mode: VueTypes.string,
+		mockData: VueTypes.object,
 		value: types.range,
 	},
 
@@ -109,6 +111,19 @@ const DynamicRangeSlider = {
 				this.handleChange(DynamicRangeSlider.parseValue(this.selectedValue, this.$props));
 			} else if (value) {
 				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
+			}
+			if (this.$props.mockData) {
+				this.mockDataForTesting(
+					this.internalRangeComponent,
+					this.$props.mockData[this.internalRangeComponent],
+				);
+				this.setDefaultValue({
+					start: this.$props.mockData[this.internalRangeComponent].aggregations.min.value,
+					end: this.$props.mockData[this.internalRangeComponent].aggregations.max.value,
+				});
+			} else {
+				// get range before executing other queries
+				this.updateRangeQueryOptions();
 			}
 		}
 	},

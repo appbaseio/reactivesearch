@@ -1973,10 +1973,21 @@
   dependencies:
     "@emotion/memoize" "^0.6.6"
 
-"@emotion/jest@11.7.1", "@emotion/jest@^11.7.1":
+"@emotion/jest@11.7.1":
   version "11.7.1"
   resolved "https://registry.yarnpkg.com/@emotion/jest/-/jest-11.7.1.tgz#cb80a98a922c1bec8906e4ee04bf7f2d101c96b8"
   integrity sha512-IYKyiIm4a7LINESYTa6aAizRj6YTwIvpD9s9yDzkrOEJXKwCqWWOTVNNOJKBygim3fv4lC9KM5jG5qzHvy4ZJg==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@emotion/css-prettifier" "^1.0.1"
+    chalk "^4.1.0"
+    specificity "^0.4.1"
+    stylis "4.0.13"
+
+"@emotion/jest@^11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@emotion/jest/-/jest-11.9.0.tgz#3ab2494d1b4ac63f4b61a2bb14db36d96f7ecd58"
+  integrity sha512-DgmKVpciuv2tyZiRKe7uU3Rs0djpJExTRmcjxjSPAI6zuxmpbWZMDcjazdNnAD3e8HPWG2KZy3svumFw6N283g==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@emotion/css-prettifier" "^1.0.1"

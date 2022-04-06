@@ -22,9 +22,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.23% </span>
+                <span class="strong">64.94% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>51/77</span>
+                <span class='fraction'>50/77</span>
             </div>
         
             
@@ -43,9 +43,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">65.79% </span>
+                <span class="strong">64.47% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>50/76</span>
+                <span class='fraction'>49/76</span>
             </div>
         
             
@@ -364,8 +364,7 @@
 <a name='L306'></a><a href='#L306'>306</a>
 <a name='L307'></a><a href='#L307'>307</a>
 <a name='L308'></a><a href='#L308'>308</a>
-<a name='L309'></a><a href='#L309'>309</a>
-<a name='L310'></a><a href='#L310'>310</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L309'></a><a href='#L309'>309</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -460,7 +459,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -470,6 +468,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -477,7 +476,6 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -641,7 +639,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-yes">33x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -744,7 +742,7 @@ const RangeSlider = {
 			}
 		},
 <span class="fstat-no" title="function not covered" >		ha</span>ndleSlider() {
-			const sliderValues = <span class="cstat-no" title="statement not covered" >this.$refs.slider.getValue();			</span>
+			const sliderValues = <span class="cstat-no" title="statement not covered" >this.$refs.slider.getValue();</span>
 <span class="cstat-no" title="statement not covered" >			this.handleSliderChange(sliderValues);</span>
 		},
 		handleChange(currentValue, props = this.$props) {
@@ -769,16 +767,16 @@ const RangeSlider = {
 		updateQueryHandler(value, props) {
 			const { customQuery } = props;
 			let query = RangeSlider.defaultQuery(value, props);
-			let customQueryOptions;
 			<span class="missing-if-branch" title="if path not taken" >I</span>if (customQuery) {
 <span class="cstat-no" title="statement not covered" >				({ query } = customQuery(value, props) || {});</span>
-<span class="cstat-no" title="statement not covered" >				customQueryOptions = getOptionsFromQuery(customQuery(value, props));</span>
+				const customQueryOptions = <span class="cstat-no" title="statement not covered" >getOptionsFromQuery(customQuery(value, props));</span>
 <span class="cstat-no" title="statement not covered" >				updateCustomQuery(</span>
 					this.componentId,
 					this.setCustomQuery,
 					this.$props,
 					this.currentValue,
 				);
+<span class="cstat-no" title="statement not covered" >				this.setQueryOptions(props.componentId, customQueryOptions, false);</span>
 			}
 			const {
 				showFilter,
@@ -787,7 +785,6 @@ const RangeSlider = {
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
 			const isInitialValue = currentStart === start &amp;&amp; currentEnd === end;
-			this.setQueryOptions(props.componentId, customQueryOptions, false);
 			this.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -801,7 +798,7 @@ const RangeSlider = {
 		// the method is added to support snapshot testing
 		// &lt;NoSSR/&gt; component doesn't render the slider in test environment
 		// hence the change
-		renderSlider(sliderComponent) {			
+		renderSlider(sliderComponent) {
 			<span class="missing-if-branch" title="else path not taken" >E</span>if (this.$attrs.mode === 'test') {
 				return sliderComponent();
 			}
@@ -990,7 +987,7 @@ export default RangeSlider;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 08 2022 16:21:50 GMT+0530 (India Standard Time)
+                at Wed Apr 06 2022 23:49:51 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>
