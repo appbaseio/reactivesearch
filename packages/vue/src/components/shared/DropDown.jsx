@@ -16,7 +16,7 @@ const { getClassName } = helper;
 const Dropdown = {
 	data() {
 		this.__state = {
-			isOpen: false,
+			isOpen: this.$props.open,
 			searchTerm: '',
 		};
 		return this.__state;
@@ -49,6 +49,7 @@ const Dropdown = {
 		showSearch: VueTypes.bool,
 		showClear: VueTypes.bool,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
+		open: VueTypes.bool.def(false),
 	},
 
 	render() {

@@ -199,7 +199,7 @@ const RangeInput = {
 					componentId={componentId}
 					value={{
 						start: this.currentValue.start,
-						end: this.currentValue.end
+						end: this.currentValue.end,
 					}}
 					range={range}
 					dataField={dataField}
@@ -218,6 +218,7 @@ const RangeInput = {
 					nestedField={nestedField}
 					on-change={this.handleOnChange}
 					on-value-change={this.handleValueChange}
+					mode={this.$attrs.mode}
 				/>
 				<Flex class={getClassName(innerClass, 'input-container') || ''}>
 					<Flex direction="column" flex={2}>
@@ -232,17 +233,14 @@ const RangeInput = {
 							min={this.$props.range ? this.$props.range.start : 0}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isStartValid}
-							{
-							...{
+							value={this.currentValue.start}
+							{...{
 								domProps: {
-									value: this.currentValue.start
-								}
-							}
-							}
+									value: this.currentValue.start,
+								},
+							}}
 						/>
-						{!this.isStartValid && (
-							<Content alert>Input range is invalid</Content>
-						)}
+						{!this.isStartValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 					<Flex justifyContent="center" alignItems="center" flex={1}>
 						-
@@ -259,13 +257,12 @@ const RangeInput = {
 							max={this.$props.range ? this.$props.range.end : 10}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isEndValid}
-							{
-							...{
+							value={this.currentValue.end}
+							{...{
 								domProps: {
-									value: this.currentValue.end
-								}
-							}
-							}
+									value: this.currentValue.end,
+								},
+							}}
 						/>
 						{!this.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
@@ -279,7 +276,7 @@ const mapStateToProps = (state) => ({
 	themePreset: state.config.themePreset,
 });
 
-const RangeConnected = ComponentWrapper(connect(mapStateToProps, {})(RangeInput), {
+export const RangeConnected = ComponentWrapper(connect(mapStateToProps, {})(RangeInput), {
 	componentType: componentTypes.rangeInput,
 });
 

@@ -19,6 +19,7 @@ const {
 	setComponentProps,
 	setCustomQuery,
 	updateComponentProps,
+	mockDataForTesting,
 } = Actions;
 
 const {
@@ -55,6 +56,8 @@ const DynamicRangeSlider = {
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
 		index: VueTypes.string,
+		mode: VueTypes.string,
+		mockData: VueTypes.object,
 		value: types.range,
 	},
 
@@ -89,7 +92,9 @@ const DynamicRangeSlider = {
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	mounted() {
-		this.setReact();
+		if (this.$props.mode !== 'test') {
+			this.setReact();
+		}
 	},
 	beforeMount() {
 		let components = [];
@@ -107,9 +112,19 @@ const DynamicRangeSlider = {
 			} else if (value) {
 				this.handleChange(DynamicRangeSlider.parseValue(value, this.$props));
 			}
-
-			// get range before executing other queries
-			this.updateRangeQueryOptions();
+			if (this.$props.mockData) {
+				this.mockDataForTesting(
+					this.internalRangeComponent,
+					this.$props.mockData[this.internalRangeComponent],
+				);
+				this.setDefaultValue({
+					start: this.$props.mockData[this.internalRangeComponent].aggregations.min.value,
+					end: this.$props.mockData[this.internalRangeComponent].aggregations.max.value,
+				});
+			} else {
+				// get range before executing other queries
+				this.updateRangeQueryOptions();
+			}
 		}
 	},
 
@@ -251,6 +266,15 @@ const DynamicRangeSlider = {
 				componentType: componentTypes.dynamicRangeSlider,
 			});
 		},
+		// the method is added to support snapshot testing
+		// <NoSSR/> component doesn't render the slider in test environment
+		// hence the change
+		renderSlider(sliderComponent) {
+			if (this.$props.mode === 'test') {
+				return sliderComponent();
+			}
+			return <NoSSR>{sliderComponent()}</NoSSR>;
+		},
 	},
 
 	computed: {
@@ -329,7 +353,7 @@ const DynamicRangeSlider = {
 						{this.$props.title}
 					</Title>
 				)}
-				<NoSSR>
+				{this.renderSlider(() => (
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider-component
 							ref="slider"
@@ -351,16 +375,16 @@ const DynamicRangeSlider = {
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label') ||
-										'range-label-left'
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
 									}
 								>
 									{this.labels.start}
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label') ||
-										'range-label-right'
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
 									}
 								>
 									{this.labels.end}
@@ -368,7 +392,7 @@ const DynamicRangeSlider = {
 							</div>
 						) : null}
 					</Slider>
-				</NoSSR>
+				))}
 			</Container>
 		);
 	},
@@ -420,26 +444,26 @@ const mapStateToProps = (state, props) => {
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 
 	if (props.nestedField) {
-		options =
-			options &&
-			componentId[props.dataField][props.nestedField] &&
-			componentId[props.dataField][props.nestedField].buckets
+		options
+			= options
+			&& componentId[props.dataField][props.nestedField]
+			&& componentId[props.dataField][props.nestedField].buckets
 				? componentId[props.dataField][props.nestedField].buckets
 				: [];
-		range =
-			range && internalRange[props.nestedField].min
+		range
+			= range && internalRange[props.nestedField].min
 				? {
-						start: internalRange[props.nestedField].min.value,
-						end: internalRange[props.nestedField].max.value,
+					start: internalRange[props.nestedField].min.value,
+					end: internalRange[props.nestedField].max.value,
 				  }
 				: null;
 	} else {
-		options =
-			options && componentId[props.dataField].buckets
+		options
+			= options && componentId[props.dataField].buckets
 				? componentId[props.dataField].buckets
 				: [];
-		range =
-			range && internalRange.min
+		range
+			= range && internalRange.min
 				? { start: internalRange.min.value, end: internalRange.max.value }
 				: null;
 	}
@@ -465,9 +489,10 @@ const mapDispatchtoProps = {
 	setComponentProps,
 	setCustomQuery,
 	updateComponentProps,
+	mockDataForTesting,
 };
 
-const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
+export const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
 
 DynamicRangeSlider.install = function (Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);

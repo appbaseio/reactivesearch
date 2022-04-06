@@ -11,6 +11,7 @@ const {
 	setQueryListener,
 	setComponentProps,
 	updateComponentProps,
+	mockDataForTesting,
 } = Actions;
 
 const { pushToAndClause, checkPropChange, checkSomePropChange } = helper;
@@ -48,6 +49,13 @@ const ComponentWrapper = (
 		this.componentProps = parsedProps;
 		this.componentId = this.componentProps.componentId;
 		this.react = this.componentProps.react;
+
+		if (this.componentProps.mockData) {
+			this.mockDataForTesting(
+				this.componentProps.componentId,
+				this.componentProps.mockData,
+			);
+		}
 	},
 	beforeMount() {
 		let components = [];
@@ -93,7 +101,7 @@ const ComponentWrapper = (
 		}
 	},
 	mounted() {
-		if (this.internalComponent) {
+		if (this.internalComponent && this.componentProps.mode !== 'test') {
 			// Watch component after rendering the component to avoid the un-necessary calls
 			this.setReact(this.componentProps);
 		}
@@ -163,6 +171,7 @@ const mapDispatchToProps = {
 	watchComponent,
 	setComponentProps,
 	updateComponentProps,
+	mockDataForTesting,
 };
 export default (component, options = {}) =>
 	connect(mapStateToProps, mapDispatchToProps)(ComponentWrapper(component, options));

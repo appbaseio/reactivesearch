@@ -121,6 +121,15 @@ const RangeSlider = {
 				componentType: componentTypes.rangeSlider,
 			});
 		},
+		// the method is added to support snapshot testing
+		// <NoSSR/> component doesn't render the slider in test environment
+		// hence the change
+		renderSlider(sliderComponent) {
+			if (this.$attrs.mode === 'test') {
+				return sliderComponent();
+			}
+			return <NoSSR>{sliderComponent()}</NoSSR>;
+		},
 	},
 	watch: {
 		defaultValue(newVal) {
@@ -185,8 +194,8 @@ const RangeSlider = {
 						{this.$props.title}
 					</Title>
 				)}
-				{this.$props.range ? (
-					<NoSSR>
+				{this.$props.range
+					? this.renderSlider(() => (
 						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 							<vue-slider-component
 								ref="slider"
@@ -205,7 +214,7 @@ const RangeSlider = {
 									<label
 										class={
 											getClassName(this.$props.innerClass, 'label')
-											|| 'range-label-left'
+												|| 'range-label-left'
 										}
 									>
 										{this.$props.rangeLabels.start}
@@ -213,7 +222,7 @@ const RangeSlider = {
 									<label
 										class={
 											getClassName(this.$props.innerClass, 'label')
-											|| 'range-label-right'
+												|| 'range-label-right'
 										}
 									>
 										{this.$props.rangeLabels.end}
@@ -221,8 +230,8 @@ const RangeSlider = {
 								</div>
 							)}
 						</Slider>
-					</NoSSR>
-				) : null}
+					  ))
+					: null}
 			</Container>
 		);
 	},

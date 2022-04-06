@@ -1,0 +1,396 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SingleDropdownList should not render search/count when showSearch/showCount are set to false 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div>
+      <div
+        class="css-flmbq0"
+      >
+        <button
+          class="css-1dqnb28"
+          themepreset="light"
+          title="Select a value"
+        >
+          <div>
+            Select a value
+          </div>
+          <span
+            class="css-hackpy"
+            open="open"
+          />
+        </button>
+        <ul
+          class="css-1l4n3e3  "
+        >
+          <li
+            class=""
+            id="Downshift0"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                J. K. Rowling
+              </span>
+            </div>
+          </li>
+          <li
+            class=""
+            id="Downshift1"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                Nora Roberts
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SingleDropdownList should render list of items 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div>
+      <div
+        class="css-flmbq0"
+      >
+        <button
+          class="css-1dqnb28"
+          themepreset="light"
+          title="Select a value"
+        >
+          <div>
+            Select a value
+          </div>
+          <span
+            class="css-hackpy"
+            open="open"
+          />
+        </button>
+        <ul
+          class="css-1l4n3e3  "
+        >
+          <li
+            class=""
+            id="Downshift0"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                J. K. Rowling
+              </span>
+              <span
+                class=""
+              >
+                 (10)
+              </span>
+            </div>
+          </li>
+          <li
+            class=""
+            id="Downshift1"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                Nora Roberts
+              </span>
+              <span
+                class=""
+              >
+                 (7)
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SingleDropdownList should render no results message 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    mockdata="[object Object]"
+    mode="test"
+  >
+    No authors found
+  </div>
+</div>
+`;
+
+exports[`SingleDropdownList should render search/count when showSearch/showCount are true 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div>
+      <div
+        class="css-flmbq0"
+      >
+        <button
+          class="css-1dqnb28"
+          themepreset="light"
+          title="Select a value"
+        >
+          <div>
+            Select a value
+          </div>
+          <span
+            class="css-hackpy"
+            open="open"
+          />
+        </button>
+        <ul
+          class="css-1l4n3e3  "
+        >
+          <input
+            class="css-1n1dm2c"
+            id="undefined-input"
+            placeholder="Type here to search..."
+            style="border: 0px; border-bottom: 1px solid #ddd;"
+            themepreset="light"
+            value=""
+          />
+          <li
+            class=""
+            id="Downshift0"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                J. K. Rowling
+              </span>
+              <span
+                class=""
+              >
+                 (10)
+              </span>
+            </div>
+          </li>
+          <li
+            class=""
+            id="Downshift1"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                Nora Roberts
+              </span>
+              <span
+                class=""
+              >
+                 (7)
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SingleDropdownList should select default value 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div>
+      <div
+        class="css-flmbq0"
+      >
+        <button
+          class="css-1dqnb28"
+          themepreset="light"
+          title="Nora Roberts"
+        >
+          <div>
+            Nora Roberts
+          </div>
+          <span
+            class="css-hackpy"
+            open="open"
+          />
+        </button>
+        <ul
+          class="css-1l4n3e3  "
+        >
+          <li
+            class=""
+            id="Downshift0"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              <span>
+                J. K. Rowling
+              </span>
+              <span
+                class=""
+              >
+                 (10)
+              </span>
+            </div>
+          </li>
+          <li
+            class="active"
+            id="Downshift1"
+            style="background-color: rgb(250, 250, 250);"
+          >
+            <div>
+              <span>
+                Nora Roberts
+              </span>
+              <span
+                class=""
+              >
+                 (7)
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SingleDropdownList should use render prop to render the list 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div>
+      <div
+        class="css-flmbq0"
+      >
+        <button
+          class="css-1dqnb28"
+          themepreset="light"
+          title="Select a value"
+        >
+          <div>
+            Select a value
+          </div>
+          <span
+            class="css-hackpy"
+            open="open"
+          />
+        </button>
+        <div
+          classname="suggestions"
+        >
+          <ul>
+            <li
+              style="background-color: transparent;"
+            >
+              J. K. Rowling --- 10
+            </li>
+            <li
+              style="background-color: transparent;"
+            >
+              Nora Roberts --- 7
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SingleDropdownList should use renderItem to render the list item 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <div>
+      <div
+        class="css-flmbq0"
+      >
+        <button
+          class="css-1dqnb28"
+          themepreset="light"
+          title="Select a value"
+        >
+          <div>
+            Select a value
+          </div>
+          <span
+            class="css-hackpy"
+            open="open"
+          />
+        </button>
+        <ul
+          class="css-1l4n3e3  "
+        >
+          <li
+            class=""
+            id="Downshift0"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              J. K. Rowling
+              <span
+                style="color: dodgerblue;"
+              >
+                10
+              </span>
+            </div>
+          </li>
+          <li
+            class=""
+            id="Downshift1"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div>
+              Nora Roberts
+              <span
+                style="color: dodgerblue;"
+              >
+                7
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;

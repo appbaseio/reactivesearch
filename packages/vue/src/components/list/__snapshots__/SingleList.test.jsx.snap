@@ -1,0 +1,394 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SingleList should not render search/count/radio when showSearch/showCount/showRadio are set to false 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-1ug7eyp"
+          id="authors-J. K. Rowling"
+          name="authors"
+          readonly="true"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+          </span>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-1ug7eyp"
+          id="authors-Nora Roberts"
+          name="authors"
+          readonly="true"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`SingleList should render list of items 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-J. K. Rowling"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+            <span>
+               (10)
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-Nora Roberts"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+            <span>
+               (7)
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`SingleList should render no results message 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <p>
+        No authors found
+      </p>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`SingleList should render search/count/radio when showSearch/showCount/showRadio are true 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-J. K. Rowling"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+            <span>
+               (10)
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-Nora Roberts"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+            <span>
+               (7)
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`SingleList should select default value 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-J. K. Rowling"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          for="authors-J. K. Rowling"
+        >
+          <span>
+            J. K. Rowling
+            <span>
+               (10)
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        class="active"
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-Nora Roberts"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          for="authors-Nora Roberts"
+        >
+          <span>
+            Nora Roberts
+            <span>
+               (7)
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`SingleList should use render prop to render the list 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <div>
+      <ul>
+        <li
+          style="background-color: transparent;"
+        >
+          J. K. Rowling --- 10
+        </li>
+        <li
+          style="background-color: transparent;"
+        >
+          Nora Roberts --- 7
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SingleList should use renderItem to render the list item 1`] = `
+<div
+  class="css-nw180v"
+>
+  <div
+    class="css-m1gst5"
+    mockdata="[object Object]"
+    mode="test"
+  >
+    <input
+      class="css-1n1dm2c"
+      placeholder="Search"
+      style="margin: 0px 0px 8px;"
+      value=""
+    />
+    <ul
+      class="css-bbs1vb"
+    >
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-J. K. Rowling"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          for="authors-J. K. Rowling"
+        >
+          <div>
+            J. K. Rowling
+            <span
+              style="color: dodgerblue;"
+            >
+              10
+            </span>
+          </div>
+        </label>
+      </li>
+      <li
+        class=""
+      >
+        <input
+          class="css-ydwgt"
+          id="authors-Nora Roberts"
+          name="authors"
+          readonly="true"
+          show="true"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          for="authors-Nora Roberts"
+        >
+          <div>
+            Nora Roberts
+            <span
+              style="color: dodgerblue;"
+            >
+              7
+            </span>
+          </div>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
