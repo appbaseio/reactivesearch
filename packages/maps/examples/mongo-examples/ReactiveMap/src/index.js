@@ -74,7 +74,7 @@ class App extends React.Component {
 				</div>
 			),
 			showMapStyles: true,
-			renderData: () => ({
+			renderItem: () => ({
 				custom: (
 					<div
 						style={{

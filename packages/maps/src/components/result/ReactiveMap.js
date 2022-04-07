@@ -927,7 +927,7 @@ class ReactiveMap extends Component {
 		const resultsToRender = this.getResultsToRender();
 		const {
 			showMarkers,
-			renderData,
+			renderItem,
 			defaultPin,
 			onPopoverClick,
 			autoClosePopover,
@@ -940,7 +940,7 @@ class ReactiveMap extends Component {
 			getPosition: this.getPosition,
 			zoom: this.state.zoom,
 			showMarkers,
-			renderData,
+			renderItem,
 			defaultPin,
 			onPopoverClick,
 			autoClosePopover,
@@ -1041,7 +1041,7 @@ ReactiveMap.propTypes = {
 	markerProps: types.props,
 	markers: types.children,
 	render: types.func,
-	renderData: types.func,
+	renderItem: types.func,
 	renderError: types.title,
 	onPageChange: types.func,
 	onError: types.func,

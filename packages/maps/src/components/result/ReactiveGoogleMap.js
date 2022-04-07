@@ -82,7 +82,7 @@ class ReactiveGoogleMap extends Component {
 		const markerProps = {
 			resultsToRender: params.resultsToRender,
 			getPosition: params.getPosition,
-			renderData: params.renderData,
+			renderItem: params.renderItem,
 			defaultPin: params.defaultPin,
 			autoClosePopover: params.autoClosePopover,
 			handlePreserveCenter: params.handlePreserveCenter,
@@ -198,7 +198,7 @@ ReactiveGoogleMap.propTypes = {
 	markerProps: types.props,
 	markers: types.children,
 	render: types.func,
-	renderData: types.func,
+	renderItem: types.func,
 	onPageChange: types.func,
 	onPopoverClick: types.func,
 	onData: types.func,

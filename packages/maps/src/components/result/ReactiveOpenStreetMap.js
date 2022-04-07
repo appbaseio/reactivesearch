@@ -39,7 +39,7 @@ class ReactiveOpenStreetMap extends Component {
 
 	getMarkers = ({
 		showMarkers,
-		renderData,
+		renderItem,
 		defaultPin,
 		onPopoverClick,
 		resultsToRender,
@@ -62,8 +62,8 @@ class ReactiveOpenStreetMap extends Component {
 					},
 				};
 
-				if (renderData) {
-					const data = renderData(item);
+				if (renderItem) {
+					const data = renderItem(item);
 
 					if ('label' in data) {
 						openStreetMarkerProps.icon = new DivIcon({
@@ -243,7 +243,7 @@ ReactiveOpenStreetMap.propTypes = {
 	onData: types.func,
 	renderError: types.title,
 	react: types.react,
-	renderData: types.func,
+	renderItem: types.func,
 	render: types.func,
 	size: types.number,
 	sortBy: types.sortBy,

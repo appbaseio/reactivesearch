@@ -113,7 +113,7 @@ class GoogleMapMarker extends React.Component {
 	render() {
 		const {
 			getPosition,
-			renderData,
+			renderItem,
 			defaultPin,
 			autoClosePopover,
 			handlePreserveCenter,
@@ -129,8 +129,8 @@ class GoogleMapMarker extends React.Component {
 		if (markerOnTop === marker._id) {
 			markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
 		}
-		if (renderData) {
-			const data = renderData(marker);
+		if (renderItem) {
+			const data = renderItem(marker);
 
 			if ('label' in data) {
 				return (
@@ -207,7 +207,7 @@ const mapStateToProps = state => ({
 
 GoogleMapMarker.propTypes = {
 	getPosition: types.func,
-	renderData: types.func,
+	renderItem: types.func,
 	defaultPin: types.string,
 	autoClosePopover: types.bool,
 	handlePreserveCenter: types.func,
