@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { MarkerClusterer, OverlayView } from '@react-google-maps/api';
-import { getInnerKey, isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
+import { MarkerClusterer } from '@react-google-maps/api';
+import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
@@ -8,7 +8,6 @@ import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import ReactiveMap, { MAP_SERVICES } from './ReactiveMap';
 import GoogleMapMarkers from './GoogleMapMarkers';
 import MapComponent from './MapComponent';
-import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -40,7 +39,6 @@ class ReactiveGoogleMap extends Component {
 			currentMapStyle,
 			mapRef: null,
 			updaterKey: 0,
-			markerLabels: [],
 		};
 	}
 
@@ -71,53 +69,6 @@ class ReactiveGoogleMap extends Component {
 		}));
 	};
 
-	handleClusteringEnd = (clusterer) => {
-		const { renderData } = this.props;
-		const markerLabelsList = [];
-		const MINIMUM_CLUSTER_SIZE = 2;
-		const allClusters = clusterer.clusters;
-		let allMarkers;
-		allClusters.forEach((cluster) => {
-			allMarkers = cluster.getMarkers();
-			allMarkers.forEach((marker) => {
-				if (allMarkers.length < MINIMUM_CLUSTER_SIZE) {
-					let CustomUI;
-					if (renderData && marker.title) {
-						const data = renderData(JSON.parse(JSON.stringify(marker.title)));
-
-						if ('label' in data) {
-							CustomUI = (
-								<div css={mapPinWrapper}>
-									<MapPin>{data.label}</MapPin>
-									<MapPinArrow />
-								</div>
-							);
-						} else {
-							CustomUI = <div css={mapPinWrapper}>{data.custom}</div>;
-						}
-					}
-					if (CustomUI) {
-						markerLabelsList.push(
-							<OverlayView
-								key={`${marker.getPosition()}label`}
-								position={marker.getPosition()}
-								mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-							>
-								{CustomUI}
-							</OverlayView>,
-						);
-					}
-				}
-			});
-		});
-		if (!isEqual(this.state.markerLabels, markerLabelsList)) {
-			this.setState({
-				markerLabels: [...markerLabelsList],
-				// updaterKey: this.state.updaterKey + 1,
-			});
-		}
-	};
-
 	renderMap = (params) => {
 		if (typeof window === 'undefined') {
 			return null;
@@ -128,7 +79,6 @@ class ReactiveGoogleMap extends Component {
 			height: '100%',
 			position: 'relative',
 		};
-
 		const markerProps = {
 			resultsToRender: params.resultsToRender,
 			getPosition: params.getPosition,
@@ -139,6 +89,7 @@ class ReactiveGoogleMap extends Component {
 			onPopoverClick: params.onPopoverClick,
 			markerProps: this.props.markerProps,
 			triggerClickAnalytics: params.triggerClickAnalytics,
+			mapRef: this.state.mapRef,
 		};
 		return (
 			<div style={style}>
@@ -169,16 +120,17 @@ class ReactiveGoogleMap extends Component {
 					{this.props.showMarkers && this.props.showMarkerClusters ? (
 						<React.Fragment>
 							<MarkerClusterer
-								onClusteringEnd={this.handleClusteringEnd}
 								averageCenter
 								enableRetinaIcons
 								gridSize={60}
+								noClustererRedraw={false}
 							>
 								{clusterer => (
-									<GoogleMapMarkers {...markerProps} clusterer={clusterer} />
+									<React.Fragment>
+										<GoogleMapMarkers {...markerProps} clusterer={clusterer} />
+									</React.Fragment>
 								)}
 							</MarkerClusterer>
-							{this.state.markerLabels}
 						</React.Fragment>
 					) : (
 						<React.Fragment>

@@ -1,4 +1,4 @@
-import ReactiveGoogleMap from './components/result/ReactiveGoogleMapOLD';
+import ReactiveGoogleMap from './components/result/ReactiveGoogleMap';
 
 import ReactiveOpenStreetMap from './components/result/ReactiveOpenStreetMap';
 

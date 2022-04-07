@@ -6,6 +6,8 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
 import { InfoWindow, Marker } from '@react-google-maps/api';
+import MarkerWithLabel from './addons/components/MarkerWithLabel';
+import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
 
 class GoogleMapMarker extends React.Component {
 	static contextType = ReactReduxContext;
@@ -127,12 +129,52 @@ class GoogleMapMarker extends React.Component {
 		if (markerOnTop === marker._id) {
 			markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
 		}
-
 		if (renderData) {
 			const data = renderData(marker);
 
-			if ('icon' in data) {
+			if ('label' in data) {
+				return (
+					<MarkerWithLabel
+						key={marker._id}
+						labelAnchor={new window.google.maps.Point(0, 30)}
+						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+						onClick={this.openMarker}
+						onMouseOver={this.increaseMarkerZIndex}
+						onFocus={this.increaseMarkerZIndex}
+						onMouseOut={this.removeMarkerZIndex}
+						onBlur={this.removeMarkerZIndex}
+						{...markerProps}
+						clusterer={clusterer}
+					>
+						<div css={mapPinWrapper}>
+							<MapPin>{data.label}</MapPin>
+							<MapPinArrow />
+							{onPopoverClick ? this.renderPopover(marker, true) : null}
+						</div>
+					</MarkerWithLabel>
+				);
+			} else if ('icon' in data) {
 				markerProps.icon = data.icon;
+			} else {
+				return (
+					<MarkerWithLabel
+						key={marker._id}
+						labelAnchor={new window.google.maps.Point(0, 0)}
+						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
+						onClick={this.openMarker}
+						onMouseOver={this.increaseMarkerZIndex}
+						onFocus={this.increaseMarkerZIndex}
+						onMouseOut={this.removeMarkerZIndex}
+						onBlur={this.removeMarkerZIndex}
+						{...markerProps}
+						clusterer={clusterer}
+					>
+						<div css={mapPinWrapper}>
+							{data.custom}
+							{onPopoverClick ? this.renderPopover(marker, true) : null}
+						</div>
+					</MarkerWithLabel>
+				);
 			}
 		} else if (defaultPin) {
 			markerProps.icon = defaultPin;
