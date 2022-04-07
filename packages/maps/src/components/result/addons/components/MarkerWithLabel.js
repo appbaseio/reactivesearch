@@ -170,7 +170,7 @@ class MarkerWithLabel extends Component {
 			});
 		}
 	}
-	componentWillUnmount(): void {
+	componentWillUnmount() {
 		if (this.marker) {
 			unregisterEvents(this.registeredEvents);
 
