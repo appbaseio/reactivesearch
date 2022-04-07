@@ -32,7 +32,6 @@
 		"markerwithlabel": "^2.0.2",
 		"ngeohash": "^0.6.3",
 		"prop-types": "^15.6.0",
-		"react-google-maps": "^9.4.5",
 		"react-leaflet": "^2.1.3",
 		"rheostat": "^2.1.1"
 	},
