@@ -1,8 +1,9 @@
 import React from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
+import types from '@appbaseio/reactivecore/lib/utils/types';
+
 const MapComponent = (props) => {
-	// eslint-disable-next-line react/prop-types
 	const { children, onMapMounted, ...allProps } = props;
 
 	return (
@@ -14,7 +15,10 @@ const MapComponent = (props) => {
 	);
 };
 
-MapComponent.propTypes = {};
+MapComponent.propTypes = {
+	children: types.children,
+	onMapMounted: types.func,
+};
 
 MapComponent.defaultProps = {};
 

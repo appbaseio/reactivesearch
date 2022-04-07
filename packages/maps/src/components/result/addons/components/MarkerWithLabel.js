@@ -193,7 +193,7 @@ MarkerWithLabel.propTypes = {
 	options: types.props,
 	noClustererRedraw: types.bool,
 	position: types.any,
-	children: types.any,
+	children: types.children,
 };
 
 MarkerWithLabel.defaultProps = {};
