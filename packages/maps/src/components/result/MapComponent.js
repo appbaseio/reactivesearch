@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
-
+import { ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 const MapComponent = (props) => {
+	const RSContext = useContext(ReactReduxContext);
+	const mapKey = RSContext.storeState.config.mapKey || '';
 	const { children, onMapMounted, ...allProps } = props;
-
 	return (
-		<LoadScript googleMapsApiKey="">
+		<LoadScript googleMapsApiKey={mapKey}>
 			<GoogleMap onLoad={onMapMounted} {...allProps}>
 				{children}
 			</GoogleMap>
