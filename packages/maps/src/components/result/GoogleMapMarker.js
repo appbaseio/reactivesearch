@@ -191,7 +191,6 @@ class GoogleMapMarker extends React.Component {
 				onMouseOut={this.removeMarkerZIndex}
 				onBlur={this.removeMarkerZIndex}
 				{...markerProps}
-				title={JSON.stringify(marker)}
 				clusterer={clusterer}
 			>
 				{onPopoverClick ? this.renderPopover(marker) : null}
