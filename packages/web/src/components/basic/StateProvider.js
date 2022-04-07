@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { oneOfType, arrayOf, string, bool, func } from 'prop-types';
-import { getSearchState } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getSearchState, getComponent } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { connect, getComponent } from '../../utils';
+import { connect } from '../../utils';
 
 const defaultKeys = ['hits', 'value', 'aggregations', 'error'];
 

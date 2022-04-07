@@ -19,6 +19,8 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	updateInternalQuery,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -28,14 +30,7 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import {
-	connect,
-	getComponent,
-	hasCustomRenderer,
-	isEvent,
-	parseValueArray,
-	isQueryIdentical,
-} from '../../utils';
+import { connect, isEvent, parseValueArray, isQueryIdentical } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class MultiDataList extends Component {
