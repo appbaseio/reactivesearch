@@ -197,7 +197,7 @@ ReactiveGoogleMap.propTypes = {
 	mapOptions: types.props,
 	markerProps: types.props,
 	markers: types.children,
-	renderAllData: types.func,
+	render: types.func,
 	renderData: types.func,
 	onPageChange: types.func,
 	onPopoverClick: types.func,

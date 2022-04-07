@@ -244,7 +244,7 @@ ReactiveOpenStreetMap.propTypes = {
 	renderError: types.title,
 	react: types.react,
 	renderData: types.func,
-	renderAllData: types.func,
+	render: types.func,
 	size: types.number,
 	sortBy: types.sortBy,
 	showMarkers: types.bool,
