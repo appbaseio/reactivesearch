@@ -538,10 +538,14 @@ class GeoDistanceDropdown extends GeoCode {
 				<Dropdown
 					innerClass={this.props.innerClass}
 					items={this.props.data}
-					renderItem={value => this.props.renderItem(
-						value,
-						this.getSelectedLabel(this.state.currentDistance).label === value,
-					)}
+					renderItem={value =>
+						this.props.renderItem(
+							value,
+							this.getSelectedLabel(this.state.currentDistance)
+								? this.getSelectedLabel(this.state.currentDistance).label === value
+								: false,
+						)
+					}
 					onChange={this.onDistanceChange}
 					selectedItem={this.getSelectedLabel(this.state.currentDistance)}
 					placeholder="Select distance"
