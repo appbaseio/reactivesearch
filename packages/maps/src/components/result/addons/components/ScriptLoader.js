@@ -9,11 +9,14 @@ const ScriptLoader = (props) => {
 	const RSContext = useContext(ReactReduxContext);
 	const mapKey = RSContext.storeState.config.mapKey || '';
 	const { children, libraries } = props;
-	if (window.google) {
+	if (window.google && window.GOOGLE_MAPS_SCRIPT_STARTED) {
 		return children;
 	}
+	console.log('window.GOOGLE_MAPS_SCRIPT_STARTED', window.GOOGLE_MAPS_SCRIPT_STARTED);
+	window.GOOGLE_MAPS_SCRIPT_STARTED = true;
+	console.log('window.GOOGLE_MAPS_SCRIPT_STARTED', window.GOOGLE_MAPS_SCRIPT_STARTED);
 	return (
-		<LoadScript googleMapsApiKey={mapKey} libraries={libraries || LIBRARIES}>
+		<LoadScript id="load-script" googleMapsApiKey={mapKey} libraries={libraries || LIBRARIES}>
 			{children}
 		</LoadScript>
 	);
