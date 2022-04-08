@@ -43,6 +43,7 @@ import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label
 import { connect, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
 import { hasGoogleMap } from '../utils';
+import ScriptLoader from '../result/addons/components/ScriptLoader';
 
 class GeoDistanceSlider extends GeoCode {
 	constructor(props) {
@@ -637,4 +638,15 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(updateComponentProps(component, options)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceSlider));
+const ConnectedComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(
+	withTheme(props => (
+		<ScriptLoader>
+			<GeoDistanceSlider {...props} />
+		</ScriptLoader>
+	)),
+);
+
+export default ConnectedComponent;

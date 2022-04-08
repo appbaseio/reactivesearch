@@ -42,6 +42,7 @@ import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 import { connect, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
 import { hasGoogleMap } from '../utils';
+import ScriptLoader from '../result/addons/components/ScriptLoader';
 
 class GeoDistanceDropdown extends GeoCode {
 	constructor(props) {
@@ -652,4 +653,15 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(updateComponentProps(component, options)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceDropdown));
+const ConnectedComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(
+	withTheme(props => (
+		<ScriptLoader>
+			<GeoDistanceDropdown {...props} />
+		</ScriptLoader>
+	)),
+);
+
+export default ConnectedComponent;
