@@ -43,6 +43,7 @@ import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label
 import { connect, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
 import { hasGoogleMap } from '../utils';
+import ScriptLoader from '../result/addons/components/ScriptLoader';
 
 class GeoDistanceSlider extends GeoCode {
 	constructor(props) {
@@ -408,9 +409,15 @@ class GeoDistanceSlider extends GeoCode {
 				isOpen={this.state.isOpen}
 				itemToString={i => i}
 				render={({
-					getRootProps, getInputProps, getItemProps, isOpen, highlightedIndex,
+					getRootProps,
+					getInputProps,
+					getItemProps,
+					isOpen,
+					highlightedIndex,
 				}) => (
-					<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
+					<div
+						{...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}
+					>
 						<Input
 							showIcon={this.props.showIcon}
 							iconPosition={this.props.iconPosition}
@@ -434,10 +441,7 @@ class GeoDistanceSlider extends GeoCode {
 						{isOpen && this.state.suggestions.length ? (
 							<ul
 								css={suggestions(themePreset, theme)}
-								className={getClassName(
-									this.props.innerClass,
-									'list',
-								)}
+								className={getClassName(this.props.innerClass, 'list')}
 							>
 								{suggestionsList.slice(0, 11).map((item, index) => (
 									<li
@@ -623,4 +627,15 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(updateComponentProps(component, options)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceSlider));
+const ConnectedComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(
+	withTheme(props => (
+		<ScriptLoader>
+			<GeoDistanceSlider {...props} />
+		</ScriptLoader>
+	)),
+);
+
+export default ConnectedComponent;
