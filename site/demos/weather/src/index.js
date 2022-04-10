@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactiveBase } from '@appbaseio/reactivesearch';
-import { ReactiveMap } from '@appbaseio/reactivemaps';
+import { ReactiveGoogleMap } from '@appbaseio/reactivemaps';
 
 import './index.css';
 
@@ -16,7 +16,7 @@ const Main = () => (
 		}}
 	>
 		<h2>Weather updates on ReactiveMap</h2>
-		<ReactiveMap
+		<ReactiveGoogleMap
 			componentId="map"
 			dataField="coord"
 			title="Reactive Maps"
@@ -24,7 +24,7 @@ const Main = () => (
 			innerRef={(ref) => {
 				this.mapRef = ref;
 			}}
-			onData={(res) => {
+			renderItem={(res) => {
 				let icon = 'https://i.imgur.com/6gsHmLq.png';
 				if (res.clouds.all > 20 && res.clouds.all < 70) {
 					icon = 'https://i.imgur.com/6gsHmLq.png';
@@ -40,9 +40,9 @@ const Main = () => (
 					icon = 'https://i.imgur.com/VbbTyCl.png';
 				}
 
-				return ({
+				return {
 					icon,
-				});
+				};
 			}}
 			size={50}
 			defaultCenter={{ lat: 55.58, lng: -103.46 }}
@@ -50,7 +50,7 @@ const Main = () => (
 			showSearchAsMove
 			searchAsMove
 			defaultMapStyles="Blue Water"
-			onAllData={(hits, loadMore, renderMap) => {
+			render={({ data: hits, renderMap }) => {
 				if (this.mapRef) {
 					if (this.heatmap) {
 						this.heatmap.getData().clear();
@@ -59,16 +59,16 @@ const Main = () => (
 					const heatMapData = hits.map((markerData) => {
 						const location = markerData.coord;
 						const temp = Math.max(markerData.main.temp, 0);
-						return ({
+						return {
 							location: new window.google.maps.LatLng(location.lat, location.lon),
 							weight: temp,
-						});
+						};
 					});
 
 					this.heatmap = new window.google.maps.visualization.HeatmapLayer({
 						data: heatMapData,
 						radius: 30,
-						map: this.mapRef.map,
+						map: this.mapRef,
 					});
 				}
 

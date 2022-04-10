@@ -51,9 +51,9 @@ class Main extends React.Component {
 					size={50}
 					defaultZoom={3}
 					center={{ lat: 0, lng: -180 }}
-					renderAllData={(hits, loadMore, renderMap) => {
+					render={(hits, loadMore, renderMap) => {
 						if (this.mapRef) {
-							const { map } = this.mapRef;
+							const map = this.mapRef;
 							const flightPath = new window.google.maps.Polyline({
 								path: flightPlanCoordinates,
 								geodesic: true,
