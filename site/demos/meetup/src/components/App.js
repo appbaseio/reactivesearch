@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
 import { GeoDistanceDropdown, ReactiveGoogleMap } from '@appbaseio/reactivemaps';
@@ -69,32 +70,36 @@ export default () => (
 					height: 'calc(100vh - 168px)',
 					top: '168px',
 				}}
+				autoCenter={false}
 				showMarkerClusters={false}
-				renderAllData={(hits, loadMore, renderMap, renderPagination) => (
-					<div style={{ display: 'flex' }}>
-						<div id="list" className={listContainer}>
-							{hits.map((data) => (
-								<div key={data._id} className="user">
-									<div
-										className="user__image"
-										style={{ backgroundImage: `url(${data.member.photo})` }}
-										alt={data.name}
-									/>
-									<div className="user__info">
-										<h3>
-											{data.member.member_name} is going to{' '}
-											{data.event.event_name}
-										</h3>
-										<p>{data.venue_name_ngrams}</p>
+				render={(props) => {
+					const hits = props.data;
+					return (
+						<div style={{ display: 'flex' }}>
+							<div id="list" className={listContainer}>
+								{hits.map(data => (
+									<div key={data._id} className="user">
+										<div
+											className="user__image"
+											style={{ backgroundImage: `url(${data.member.photo})` }}
+											alt={data.name}
+										/>
+										<div className="user__info">
+											<h3>
+												{data.member.member_name} is going to{' '}
+												{data.event.event_name}
+											</h3>
+											<p>{data.venue_name_ngrams}</p>
+										</div>
 									</div>
-								</div>
-							))}
-							{renderPagination()}
+								))}
+								{props.renderPagination()}
+							</div>
+							<div className={mapContainer}>{props.renderMap()}</div>
 						</div>
-						<div className={mapContainer}>{renderMap()}</div>
-					</div>
-				)}
-				renderData={(data) => ({
+					);
+				}}
+				renderItem={data => ({
 					label: (
 						<span
 							style={{
