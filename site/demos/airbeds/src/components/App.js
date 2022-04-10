@@ -17,6 +17,7 @@ export default () => (
 					primaryColor: '#FF3A4E',
 				},
 			}}
+			mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 		>
 			<nav className={nav}>
 				<div className={title}>airbeds</div>
@@ -47,31 +48,35 @@ export default () => (
 				className={rightCol}
 				showMarkerClusters={false}
 				showSearchAsMove={false}
-				renderAllData={(hits, loadMore, renderMap, renderPagination) => (
-					<div style={{ display: 'flex' }}>
-						<div className="card-container">
-							{hits.map(data => (
-								<div key={data._id} className="card">
-									<div
-										className="card__image"
-										style={{ backgroundImage: `url(${data.image})` }}
-										alt={data.name}
-									/>
-									<div>
-										<h2>{data.name}</h2>
-										<div className="card__price">${data.price}</div>
-										<p className="card__info">
-											{data.room_type} · {data.accommodates} guests
-										</p>
+				render={(props) => {
+					// eslint-disable-next-line react/prop-types
+					const { data: hits, renderMap, renderPagination } = props;
+					return (
+						<div style={{ display: 'flex' }}>
+							<div className="card-container">
+								{hits.map(data => (
+									<div key={data._id} className="card">
+										<div
+											className="card__image"
+											style={{ backgroundImage: `url(${data.image})` }}
+											alt={data.name}
+										/>
+										<div>
+											<h2>{data.name}</h2>
+											<div className="card__price">${data.price}</div>
+											<p className="card__info">
+												{data.room_type} · {data.accommodates} guests
+											</p>
+										</div>
 									</div>
-								</div>
-							))}
-							{renderPagination()}
+								))}
+								{renderPagination()}
+							</div>
+							<div className="map-container">{renderMap()}</div>
 						</div>
-						<div className="map-container">{renderMap()}</div>
-					</div>
-				)}
-				renderData={data => ({
+					);
+				}}
+				renderItem={data => ({
 					label: (
 						<span style={{ width: 40, display: 'block', textAlign: 'center' }}>
 							${data.price}
