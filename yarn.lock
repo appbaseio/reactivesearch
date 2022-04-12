@@ -78,6 +78,68 @@
     react-slick "^0.24.0"
     slick-carousel "^1.8.1"
 
+"@appbaseio/docs@appbaseio/Docs#dev":
+  version "0.0.2"
+  uid ba8b76ae058dc07ab9986898fcaa54e319ac687f
+  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/ba8b76ae058dc07ab9986898fcaa54e319ac687f"
+  dependencies:
+    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/reactivemaps" "^3.0.0-beta.17"
+    "@appbaseio/reactivesearch" "^3.29.0"
+    "@loadable/component" "^5.15.2"
+    "@reach/router" "^1.2.1"
+    "@typeform/embed" "^1.34.1"
+    "@typeform/embed-react" "^1.13.0"
+    add "^2.0.6"
+    antd "^4.19.1"
+    emotion "9.2.4"
+    emotion-server "9.2.4"
+    gatsby "^4.9.2"
+    gatsby-image "^3.11.0"
+    gatsby-plugin-catch-links "4.9.0"
+    gatsby-plugin-dark-mode "^1.1.2"
+    gatsby-plugin-force-trailing-slashes "1.0.6"
+    gatsby-plugin-google-analytics "^4.9.0"
+    gatsby-plugin-image "^2.9.1"
+    gatsby-plugin-manifest "^4.9.0"
+    gatsby-plugin-offline "^5.9.0"
+    gatsby-plugin-page-progress "^2.2.1"
+    gatsby-plugin-perf-budgets "^0.0.18"
+    gatsby-plugin-postcss "5.9.0"
+    gatsby-plugin-react-helmet "5.9.0"
+    gatsby-plugin-react-svg "3.1.0"
+    gatsby-plugin-remove-serviceworker "1.0.0"
+    gatsby-plugin-sharp "^4.9.0"
+    gatsby-plugin-webpack-bundle-analyser-v2 "^1.1.26"
+    gatsby-remark-autolink-headers "5.9.0"
+    gatsby-remark-check-links "^2.1.0"
+    gatsby-remark-code-titles "1.1.0"
+    gatsby-remark-embed-snippet "7.9.0"
+    gatsby-remark-external-links "0.0.4"
+    gatsby-remark-images "6.9.0"
+    gatsby-remark-prismjs "6.9.0"
+    gatsby-remark-prismjs-copy-button "^0.3.1"
+    gatsby-source-filesystem "4.9.0"
+    gatsby-source-ghost "4.2.4"
+    gatsby-transformer-remark "5.9.0"
+    gatsby-transformer-sharp "^4.9.0"
+    gatsby-transformer-yaml "4.9.0"
+    hotkeys-js "^3.8.7"
+    js-search "^1.4.2"
+    moment "^2.24.0"
+    prismjs "1.27.0"
+    react "16.8.4"
+    react-autosuggest "9.4.3"
+    react-dom "16.8.4"
+    react-dropdown "^1.6.4"
+    react-helmet "5.2.0"
+    react-modal "3.8.1"
+    react-responsive-modal "^4.0.1"
+    react-router "^6.0.1"
+    react-router-dom "^4.3.1"
+    tocbot "4.5.0"
+    yarn "^1.22.18"
+
 "@appbaseio/docs@https://github.com/appbaseio/Docs.git#dev":
   version "0.0.2"
   resolved "https://github.com/appbaseio/Docs.git#ba8b76ae058dc07ab9986898fcaa54e319ac687f"
@@ -27975,7 +28037,7 @@ react-dom@16.8.4:
     prop-types "^15.6.2"
     scheduler "^0.13.4"
 
-react-dom@^16.1.1, react-dom@^16.2.0, react-dom@^16.7.0-alpha.2, react-dom@^16.8.3, react-dom@^16.8.4, react-dom@^16.8.6, react-dom@^16.9.0:
+react-dom@^16.1.1, react-dom@^16.2.0, react-dom@^16.7.0-alpha.2, react-dom@^16.8.3, react-dom@^16.8.6, react-dom@^16.9.0:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.14.0.tgz#7ad838ec29a777fb3c75c3a190f661cf92ab8b89"
   integrity sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw==
@@ -28731,7 +28793,7 @@ react@16.8.4:
     prop-types "^15.6.2"
     scheduler "^0.13.4"
 
-react@^16.1.1, react@^16.2.0, react@^16.7.0-alpha.2, react@^16.8.3, react@^16.8.4, react@^16.8.6, react@^16.9.0:
+react@^16.1.1, react@^16.2.0, react@^16.7.0-alpha.2, react@^16.8.3, react@^16.8.6, react@^16.9.0:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
