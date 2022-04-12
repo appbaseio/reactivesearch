@@ -116,6 +116,7 @@ class ReactiveGoogleMap extends Component {
 						...getInnerKey(this.props.mapProps, 'options'),
 						...this.props.mapOptions,
 					}}
+					libraries={this.props.libraries}
 				>
 					{this.props.showMarkers && this.props.showMarkerClusters ? (
 						<React.Fragment>
@@ -222,6 +223,7 @@ ReactiveGoogleMap.propTypes = {
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
 	index: types.string,
+	libraries: types.stringArray,
 };
 
 ReactiveGoogleMap.defaultProps = {
@@ -244,6 +246,7 @@ ReactiveGoogleMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
+	libraries: [''],
 };
 
 export default ReactiveGoogleMap;
