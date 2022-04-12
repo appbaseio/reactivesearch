@@ -100,7 +100,7 @@ class ReactiveGoogleMap extends Component {
 							mapRef: ref,
 						});
 						if (params.innerRef && ref) {
-							const map = { ...ref };
+							const map = ref;
 
 							params.innerRef(map);
 						}
