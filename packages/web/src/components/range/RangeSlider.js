@@ -100,7 +100,7 @@ class RangeSlider extends Component {
 						calendarInterval: getCalendarIntervalErrorMessage(
 							inRangeValueArray[1] - inRangeValueArray[0],
 						).calculatedCalendarInterval,
-					}
+					  }
 					: {}),
 			},
 			componentTypes.rangeSlider,
@@ -162,7 +162,7 @@ class RangeSlider extends Component {
 				this.state.currentValue
 					? this.state.currentValue.map(val =>
 						formatDateString(new XDate(val), this.state.dateFormat),
-					)
+					  )
 					: null,
 				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
 			)
@@ -302,7 +302,7 @@ class RangeSlider extends Component {
 				histogram: {
 					field: props.dataField,
 					interval: this.getValidInterval(props),
-					offset: getNumericRangeArray(props.range, props.queryFormat),
+					offset: getNumericRangeArray(props.range, props.queryFormat)[0],
 				},
 			},
 		};
@@ -353,8 +353,8 @@ class RangeSlider extends Component {
 				hasMounted
 				&& (currentValue
 					? processedStart <= processedEnd
-					&& processedStart >= rangeStart
-					&& processedEnd <= rangeEnd
+					  && processedStart >= rangeStart
+					  && processedEnd <= rangeEnd
 					: true)
 			) {
 				this.setState(
