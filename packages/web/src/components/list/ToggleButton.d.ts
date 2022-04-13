@@ -3,6 +3,7 @@ import { CommonProps } from '../..';
 import * as types from '../../types';
 
 export interface ToggleButtonProps extends CommonProps {
+	customQuery?: (...args: any[]) => any;
 	data?: types.data;
 	dataField: string;
 	defaultValue?: types.stringOrArray;
@@ -17,6 +18,18 @@ export interface ToggleButtonProps extends CommonProps {
 	showFilter?: boolean;
 	title?: types.title;
 	index?: string;
+	updateQuery: (...args: any[]) => any;
+	selectedValue?: types.selectedValue;
+	setQueryOptions: (...args: any[]) => any;
+	setCustomQuery: (...args: any[]) => any;
+	enableAppbase?: boolean,
+	// component props
+	className?: string,
+	componentId: string,
+	onQueryChange?: (...args: any[]) => any;
+	style?: types.style,
+	URLParams?: boolean;
+	enableStrictSelection?: boolean;
 }
 
 declare const ToggleButton: React.ComponentClass<ToggleButtonProps>;
