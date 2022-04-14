@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivemaps",
-	"version": "3.0.0-beta.17",
+	"version": "3.1.0-preview.3",
 	"description": "React Components for building map UIs",
 	"main": "lib/index.js",
 	"files": [
@@ -36,12 +36,12 @@
 		"rheostat": "^2.1.1"
 	},
 	"peerDependencies": {
-		"@appbaseio/reactivesearch": ">=3.26.1",
+		"@appbaseio/reactivesearch": "3.29.2-preview.1",
 		"react": ">=15",
 		"react-dom": ">=15"
 	},
 	"devDependencies": {
-		"@appbaseio/reactivesearch": ">=3.26.1",
+		"@appbaseio/reactivesearch": "3.29.2-preview.1",
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.2",
