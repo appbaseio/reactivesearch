@@ -7,6 +7,7 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	hasCustomRenderer,
+	getComponent,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { string } from 'prop-types';
 import {
@@ -19,7 +20,6 @@ import {
 	updateHits,
 	mockDataForTesting,
 } from '@appbaseio/reactivecore/lib/actions';
-import { getComponent } from '@appbaseio/reactivecore/src/utils/helper';
 
 import { connect, ReactReduxContext, getValidPropsKeys } from '../../utils';
 
