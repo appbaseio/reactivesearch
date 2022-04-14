@@ -27,15 +27,19 @@ const ScriptLoader = (props) => {
 		}
 	}, [mapScriptLoadStatus.error]);
 
-	if (window.GOOGLE_SCRIPT_LOCK_ACQUIRED === true && !mapScriptLoadStatus.loaded) {
+	if (
+		!window.google
+		&& window.GOOGLE_SCRIPT_LOCK_ACQUIRED === true
+		&& !mapScriptLoadStatus.loaded
+	) {
 		return 'Initializing...';
 	}
 
-	if (typeof window.GOOGLE_SCRIPT_LOCK_ACQUIRED === 'undefined') {
+	if (!window.google && typeof window.GOOGLE_SCRIPT_LOCK_ACQUIRED === 'undefined') {
 		window.GOOGLE_SCRIPT_LOCK_ACQUIRED = true;
 		setMapScriptLoading(true);
 	}
-	if (mapScriptLoadStatus.loaded === true) {
+	if (window.google) {
 		return children;
 	}
 
@@ -69,7 +73,9 @@ ScriptLoader.propTypes = {
 	mapKey: types.string,
 };
 
-ScriptLoader.defaultProps = {};
+ScriptLoader.defaultProps = {
+	mapScriptLoadStatus: {},
+};
 const mapStateToProps = state => ({
 	mapKey: state.config.mapKey,
 	mapScriptLoadStatus: state.googleMapScriptStatus,
