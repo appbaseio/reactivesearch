@@ -20,7 +20,7 @@ export interface ToggleButtonProps extends CommonProps {
 	index?: string;
 	// component props
 	className?: string;
-	componentId: string,
+	componentId: string;
 	onQueryChange?: (...args: any[]) => any;
 	style?: types.style,
 	URLParams?: boolean;
