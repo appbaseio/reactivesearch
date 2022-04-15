@@ -18,11 +18,6 @@ export interface ToggleButtonProps extends CommonProps {
 	showFilter?: boolean;
 	title?: types.title;
 	index?: string;
-	updateQuery: (...args: any[]) => any;
-	selectedValue?: types.selectedValue;
-	setQueryOptions: (...args: any[]) => any;
-	setCustomQuery: (...args: any[]) => any;
-	enableAppbase?: boolean,
 	// component props
 	className?: string,
 	componentId: string,
