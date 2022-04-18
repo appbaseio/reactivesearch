@@ -19,36 +19,7 @@
 					index: 'good-books-ds',
 					minChars: 4,
 				}"
-				@on-data="
-					(param) => {
-						// do something
-					}
-				"
-				:showClear="true"
-				@valueSelected="
-					(value, cause) => {
-						// do something
-					}
-				"
-				categoryField="authors.keyword"
-				:defaultQuery="
-					(value) => {
-						return {
-							query: {
-								match: {
-									original_title: value || 'harry potter',
-								},
-							},
-							timeout: '1s',
-						};
-					}
-				"
-				:applyStopwords="true"
-				:customStopwords="['be', 'the']"
-				:enablePredictiveSuggestions="true"
-				:value="value"
-				@change="handleChange"
-				:autosuggest="false"
+				:autosuggest="true"
 			>
 				<!-- <div class="suggestions" slot="renderItem" slot-scope="item">
 					👋 &nbsp; {{ item.label }}
@@ -128,20 +99,6 @@
 import './styles.css';
 export default {
 	name: 'app',
-	data() {
-		return {
-			value: '',
-		};
-	},
-	methods: {
-		handleChange(value, triggerQuery) {
-			this.value = value;
-			// Trigger the search query to update the dependent components
-			triggerQuery({
-				isOpen: false, // To close the suggestions dropdown; optional
-			});
-		},
-	},
 };
 </script>
 
