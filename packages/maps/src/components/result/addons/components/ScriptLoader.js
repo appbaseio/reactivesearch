@@ -8,12 +8,11 @@ import {
 	setGoogleMapScriptError,
 } from '@appbaseio/reactivecore/lib/actions/misc';
 
-const LIBRARIES = ['places'];
-
 const ScriptLoader = (props) => {
 	const {
 		children,
-		libraries,
+		libraries, // coming from components like GeoDistanceDropdown/Slider
+		mapLibraries,
 		mapKey,
 		setMapScriptLoadError,
 		setMapScriptLoaded,
@@ -53,7 +52,7 @@ const ScriptLoader = (props) => {
 				window.GOOGLE_SCRIPT_LOCK_ACQUIRED = false;
 			}}
 			googleMapsApiKey={mapKey || ''}
-			libraries={libraries || LIBRARIES}
+			libraries={Array.from(new Set([...libraries, ...mapLibraries]))}
 			onLoad={() => {
 				if (mapScriptLoadStatus.loaded === false) {
 					window.GOOGLE_SCRIPT_LOCK_ACQUIRED = false;
@@ -74,13 +73,17 @@ ScriptLoader.propTypes = {
 	setMapScriptLoadError: types.func,
 	mapScriptLoadStatus: types.props,
 	mapKey: types.string,
+	mapLibraries: types.stringArray,
 };
 
 ScriptLoader.defaultProps = {
 	mapScriptLoadStatus: {},
+	mapLibraries: [],
+	libraries: [],
 };
 const mapStateToProps = state => ({
 	mapKey: state.config.mapKey,
+	mapLibraries: state.config.mapLibraries,
 	mapScriptLoadStatus: state.googleMapScriptStatus,
 });
 
