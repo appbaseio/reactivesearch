@@ -3,10 +3,10 @@ import { LoadScript } from '@react-google-maps/api';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
-	SET_GOOGLE_MAP_SCRIPT_LOADING,
-	SET_GOOGLE_MAP_SCRIPT_LOADED,
-	SET_GOOGLE_MAP_SCRIPT_ERROR,
-} from '@appbaseio/reactivecore/lib/constants';
+	setGoogleMapScriptLoading,
+	setGoogleMapScriptLoaded,
+	setGoogleMapScriptError,
+} from '@appbaseio/reactivecore/lib/actions/misc';
 
 const LIBRARIES = ['places'];
 
@@ -20,7 +20,6 @@ const ScriptLoader = (props) => {
 		setMapScriptLoading,
 		mapScriptLoadStatus,
 	} = props;
-
 	useEffect(() => {
 		if (mapScriptLoadStatus.error) {
 			console.error('Error loading google api: ', mapScriptLoadStatus.error);
@@ -86,9 +85,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setMapScriptLoading: loading => dispatch({ type: SET_GOOGLE_MAP_SCRIPT_LOADING, loading }),
-	setMapScriptLoaded: loaded => dispatch({ type: SET_GOOGLE_MAP_SCRIPT_LOADED, loaded }),
-	setMapScriptLoadError: error => dispatch({ type: SET_GOOGLE_MAP_SCRIPT_ERROR, error }),
+	setMapScriptLoading: loading => dispatch(setGoogleMapScriptLoading(loading)),
+	setMapScriptLoaded: loaded => dispatch(setGoogleMapScriptLoaded(loaded)),
+	setMapScriptLoadError: error => dispatch(setGoogleMapScriptError(error)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ScriptLoader);
