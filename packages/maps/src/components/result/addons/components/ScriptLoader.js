@@ -3,29 +3,30 @@ import { LoadScript } from '@react-google-maps/api';
 import { connect } from '@appbaseio/reactivesearch/lib/utils';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
-	SET_GOOGLE_MAP_SCRIPT_LOADING,
-	SET_GOOGLE_MAP_SCRIPT_LOADED,
-	SET_GOOGLE_MAP_SCRIPT_ERROR,
-} from '@appbaseio/reactivecore/lib/constants';
-
-const LIBRARIES = ['places'];
+	setGoogleMapScriptLoading,
+	setGoogleMapScriptLoaded,
+	setGoogleMapScriptError,
+} from '@appbaseio/reactivecore/lib/actions/misc';
 
 const ScriptLoader = (props) => {
 	const {
 		children,
-		libraries,
+		mapLibraries,
 		mapKey,
 		setMapScriptLoadError,
 		setMapScriptLoaded,
 		setMapScriptLoading,
 		mapScriptLoadStatus,
 	} = props;
-
 	useEffect(() => {
 		if (mapScriptLoadStatus.error) {
 			console.error('Error loading google api: ', mapScriptLoadStatus.error);
 		}
 	}, [mapScriptLoadStatus.error]);
+
+	if (typeof window === 'undefined') {
+		return null;
+	}
 
 	if (
 		!window.google
@@ -50,7 +51,7 @@ const ScriptLoader = (props) => {
 				window.GOOGLE_SCRIPT_LOCK_ACQUIRED = false;
 			}}
 			googleMapsApiKey={mapKey || ''}
-			libraries={libraries || LIBRARIES}
+			libraries={Array.from(new Set(mapLibraries))} // avoid duplicates
 			onLoad={() => {
 				if (mapScriptLoadStatus.loaded === false) {
 					window.GOOGLE_SCRIPT_LOCK_ACQUIRED = false;
@@ -65,26 +66,28 @@ const ScriptLoader = (props) => {
 
 ScriptLoader.propTypes = {
 	children: types.children,
-	libraries: types.stringArray,
 	setMapScriptLoading: types.func,
 	setMapScriptLoaded: types.func,
 	setMapScriptLoadError: types.func,
 	mapScriptLoadStatus: types.props,
 	mapKey: types.string,
+	mapLibraries: types.stringArray,
 };
 
 ScriptLoader.defaultProps = {
 	mapScriptLoadStatus: {},
+	mapLibraries: [],
 };
 const mapStateToProps = state => ({
 	mapKey: state.config.mapKey,
+	mapLibraries: state.config.mapLibraries,
 	mapScriptLoadStatus: state.googleMapScriptStatus,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setMapScriptLoading: loading => dispatch({ type: SET_GOOGLE_MAP_SCRIPT_LOADING, loading }),
-	setMapScriptLoaded: loaded => dispatch({ type: SET_GOOGLE_MAP_SCRIPT_LOADED, loaded }),
-	setMapScriptLoadError: error => dispatch({ type: SET_GOOGLE_MAP_SCRIPT_ERROR, error }),
+	setMapScriptLoading: loading => dispatch(setGoogleMapScriptLoading(loading)),
+	setMapScriptLoaded: loaded => dispatch(setGoogleMapScriptLoaded(loaded)),
+	setMapScriptLoadError: error => dispatch(setGoogleMapScriptError(error)),
 });
 
 export default connect(mapStateToProps, mapDispatchtoProps)(ScriptLoader);
