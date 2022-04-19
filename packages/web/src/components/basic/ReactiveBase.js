@@ -46,7 +46,16 @@ class ReactiveBase extends Component {
 		checkSomePropChange(
 			this.props,
 			prevProps,
-			['app', 'url', 'type', 'credentials', 'mapKey', 'headers', 'graphQLUrl'],
+			[
+				'app',
+				'url',
+				'type',
+				'credentials',
+				'mapKey',
+				'mapLibraries',
+				'headers',
+				'graphQLUrl',
+			],
 			() => {
 				this.setStore(this.props);
 				this.setState(state => ({
@@ -165,6 +174,7 @@ class ReactiveBase extends Component {
 			config: {
 				...config,
 				mapKey: props.mapKey,
+				mapLibraries: props.mapLibraries,
 				themePreset,
 				initialQueriesSyncTime: props.initialQueriesSyncTime,
 				initialTimestamp: new Date().getTime(),
@@ -222,6 +232,7 @@ ReactiveBase.propTypes = {
 	transformRequest: types.func,
 	initialQueriesSyncTime: types.number,
 	mapKey: types.string,
+	mapLibraries: types.stringArray,
 	style: types.style,
 	className: types.string,
 	initialState: types.children,
