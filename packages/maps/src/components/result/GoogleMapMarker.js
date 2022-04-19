@@ -136,7 +136,7 @@ class GoogleMapMarker extends React.Component {
 				return (
 					<MarkerWithLabel
 						key={marker._id}
-						labelAnchor={new window.google.maps.Point(0, 30)}
+						labelAnchor={new window.google.maps.Point(0, 0)}
 						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
 						onClick={this.openMarker}
 						onMouseOver={this.increaseMarkerZIndex}
