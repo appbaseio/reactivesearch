@@ -19,13 +19,13 @@ const Main = () => {
 				position: 'relative',
 			}}
 			enableAppbase
+			mapLibraries={['visualization', 'places']}
 		>
 			<h2>Weather updates on ReactiveMap</h2>
 			<ReactiveGoogleMap
 				componentId="map"
 				dataField="city.coord"
 				title="Reactive Maps"
-				libraries={['visualization', 'places']}
 				defaultZoom={3}
 				innerRef={(ref) => {
 					mapRef.current = ref;

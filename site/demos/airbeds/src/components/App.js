@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap } from '@appbaseio/reactivemaps';
@@ -11,7 +12,6 @@ export default () => (
 			app="airbeds-test-app"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 			enableAppbase
-			type="listing"
 			theme={{
 				colors: {
 					primaryColor: '#FF3A4E',

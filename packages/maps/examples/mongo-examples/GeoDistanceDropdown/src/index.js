@@ -104,6 +104,7 @@ class App extends React.Component {
 				}}
 				enableAppbase
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
+				mapLibraries={['places']}
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search properties across the globe</h3>
