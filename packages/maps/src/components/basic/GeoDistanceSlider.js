@@ -632,7 +632,7 @@ const ConnectedComponent = connect(
 	mapDispatchtoProps,
 )(
 	withTheme(props => (
-		<ScriptLoader libraries={['places']}>
+		<ScriptLoader>
 			<GeoDistanceSlider {...props} />
 		</ScriptLoader>
 	)),

@@ -11,7 +11,6 @@ import {
 const ScriptLoader = (props) => {
 	const {
 		children,
-		libraries, // coming from components like GeoDistanceDropdown/Slider
 		mapLibraries,
 		mapKey,
 		setMapScriptLoadError,
@@ -52,7 +51,7 @@ const ScriptLoader = (props) => {
 				window.GOOGLE_SCRIPT_LOCK_ACQUIRED = false;
 			}}
 			googleMapsApiKey={mapKey || ''}
-			libraries={Array.from(new Set([...libraries, ...mapLibraries]))}
+			libraries={Array.from(new Set(mapLibraries))} // avoid duplicates
 			onLoad={() => {
 				if (mapScriptLoadStatus.loaded === false) {
 					window.GOOGLE_SCRIPT_LOCK_ACQUIRED = false;
@@ -67,7 +66,6 @@ const ScriptLoader = (props) => {
 
 ScriptLoader.propTypes = {
 	children: types.children,
-	libraries: types.stringArray,
 	setMapScriptLoading: types.func,
 	setMapScriptLoaded: types.func,
 	setMapScriptLoadError: types.func,
@@ -79,7 +77,6 @@ ScriptLoader.propTypes = {
 ScriptLoader.defaultProps = {
 	mapScriptLoadStatus: {},
 	mapLibraries: [],
-	libraries: [],
 };
 const mapStateToProps = state => ({
 	mapKey: state.config.mapKey,
