@@ -4,12 +4,10 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import ScriptLoader from './addons/components/ScriptLoader';
 
 const MapComponent = (props) => {
-	const {
-		children, onMapMounted, libraries, ...allProps
-	} = props;
+	const { children, onMapMounted, ...allProps } = props;
 
 	return (
-		<ScriptLoader libraries={libraries}>
+		<ScriptLoader>
 			<GoogleMap onLoad={onMapMounted} {...allProps}>
 				{children}
 			</GoogleMap>
@@ -20,11 +18,8 @@ const MapComponent = (props) => {
 MapComponent.propTypes = {
 	children: types.children,
 	onMapMounted: types.func,
-	libraries: types.stringArray,
 };
 
-MapComponent.defaultProps = {
-	libraries: [''],
-};
+MapComponent.defaultProps = {};
 
 export default MapComponent;
