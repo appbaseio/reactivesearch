@@ -27,6 +27,10 @@ const ScriptLoader = (props) => {
 		}
 	}, [mapScriptLoadStatus.error]);
 
+	if (typeof window === 'undefined') {
+		return null;
+	}
+
 	if (
 		!window.google
 		&& window.GOOGLE_SCRIPT_LOCK_ACQUIRED === true
