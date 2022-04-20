@@ -47,7 +47,7 @@ class GoogleMapMarkers extends React.Component {
 GoogleMapMarkers.propTypes = {
 	resultsToRender: types.hits,
 	getPosition: types.func,
-	renderData: types.func,
+	renderItem: types.func,
 	defaultPin: types.string,
 	autoClosePopover: types.bool,
 	handlePreserveCenter: types.func,

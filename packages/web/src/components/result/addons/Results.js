@@ -1,5 +1,5 @@
 import React from 'react';
-import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getClassName, getComponent } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import ImpressionTracker from './ImpressionTracker';
 
@@ -9,7 +9,6 @@ const Results = ({
 	listClass,
 	innerClass,
 	renderItem,
-	getComponent,
 	triggerClickAnalytics,
 	base,
 	analytics,
@@ -19,9 +18,11 @@ const Results = ({
 			getComponent()
 		) : (
 			<div className={`${listClass} ${getClassName(innerClass, 'list')}`}>
-				{filteredResults.map((item, index) => renderItem(item, () => {
-					triggerClickAnalytics(base + index);
-				}))}
+				{filteredResults.map((item, index) =>
+					renderItem(item, () => {
+						triggerClickAnalytics(base + index);
+					}),
+				)}
 			</div>
 		));
 	// If analytics is set to true then render with impression tracker

@@ -20,6 +20,9 @@ import {
 	updateInternalQuery,
 	updateCustomQuery,
 	updateDefaultQuery,
+	getComponent,
+	isFunction,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -30,15 +33,7 @@ import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
 import ComponentWrapper from '../basic/ComponentWrapper';
-import {
-	connect,
-	isFunction,
-	getComponent,
-	hasCustomRenderer,
-	isEvent,
-	parseValueArray,
-	isQueryIdentical,
-} from '../../utils';
+import { connect, isEvent, parseValueArray, isQueryIdentical } from '../../utils';
 
 class MultiDropdownList extends Component {
 	constructor(props) {
@@ -375,7 +370,7 @@ class MultiDropdownList extends Component {
 				query: queryOptions,
 				props,
 				after,
-			})
+			  })
 			: getAggsQuery(valueArray, queryOptions, props);
 	}
 

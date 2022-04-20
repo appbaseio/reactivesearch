@@ -1,6 +1,6 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { getComponent, hasCustomRenderer } from '../../../utils';
+import { getComponent, hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
@@ -155,11 +155,7 @@ class Mic extends React.Component {
 		if (this.hasCustomRenderer) {
 			return this.getComponent();
 		}
-		return (
-			<IconWrapper>
-				{this.Icon}
-			</IconWrapper>
-		);
+		return <IconWrapper>{this.Icon}</IconWrapper>;
 	}
 }
 

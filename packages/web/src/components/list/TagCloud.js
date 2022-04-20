@@ -12,6 +12,7 @@ import {
 	getOptionsFromQuery,
 	getAggsQuery,
 	updateCustomQuery,
+	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -22,7 +23,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Title from '../../styles/Title';
 import TagList from '../../styles/TagList';
 import Container from '../../styles/Container';
-import { connect, isFunction } from '../../utils';
+import { connect } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class TagCloud extends Component {
@@ -292,8 +293,9 @@ class TagCloud extends Component {
 								style={{ fontSize: `${size}em` }}
 								className={
 									this.state.currentValue[item.key]
-										? `${getClassName(this.props.innerClass, 'input')
-												|| ''} active`
+										? `${
+												getClassName(this.props.innerClass, 'input') || ''
+										  } active`
 										: getClassName(this.props.innerClass, 'input')
 								}
 								role="menuitem"

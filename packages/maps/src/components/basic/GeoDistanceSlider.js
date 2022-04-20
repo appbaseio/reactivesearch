@@ -115,6 +115,14 @@ class GeoDistanceSlider extends GeoCode {
 	}
 
 	componentDidUpdate(prevProps) {
+		if (this.props.onData) {
+			checkSomePropChange(this.props, prevProps, ['error', 'selectedValue'], () => {
+				this.props.onData({
+					value: this.props.selectedValue,
+					error: this.props.error,
+				});
+			});
+		}
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(
 				this.props.componentId,
@@ -583,6 +591,8 @@ GeoDistanceSlider.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
+	error: types.title,
+	onData: types.func,
 	geocoder: types.any, // eslint-disable-line
 };
 
@@ -609,6 +619,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({

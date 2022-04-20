@@ -13,6 +13,9 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	normalizeDataField,
+	getComponent as getComponentUtilFunc,
+	isFunction,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -40,11 +43,8 @@ import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
 	extractModifierKeysFromFocusShortcuts,
-	getComponent as getComponentUtilFunc,
 	handleCaretPosition,
-	hasCustomRenderer,
 	isEmpty,
-	isFunction,
 	parseFocusShortcuts,
 	suggestionTypes,
 } from '../../utils';

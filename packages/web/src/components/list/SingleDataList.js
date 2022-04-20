@@ -18,6 +18,8 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	updateInternalQuery,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -28,7 +30,7 @@ import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import { connect, getComponent, hasCustomRenderer, isEvent, isQueryIdentical } from '../../utils';
+import { connect, isEvent, isQueryIdentical } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class SingleDataList extends Component {
