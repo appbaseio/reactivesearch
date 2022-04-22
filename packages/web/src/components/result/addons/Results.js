@@ -1,5 +1,5 @@
 import React from 'react';
-import { getClassName, getComponent } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import ImpressionTracker from './ImpressionTracker';
 
@@ -12,6 +12,7 @@ const Results = ({
 	triggerClickAnalytics,
 	base,
 	analytics,
+	getComponent,
 }) => {
 	const resultElement = () =>
 		(hasCustomRender ? (
