@@ -190,7 +190,7 @@ const SearchBox = {
 		customStopwords: types.stringArray,
 		onData: types.func,
 		renderItem: types.func,
-		enterButton: types.bool,
+		enterButton: VueTypes.bool.def(false),
 		renderEnterButton: VueTypes.any,
 	},
 	mounted() {
