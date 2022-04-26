@@ -33,6 +33,7 @@ import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
 import CustomSvg from '../shared/CustomSvg';
 import AutofillSvg from '../shared/AutoFillSvg.jsx';
+import Button from '../../styles/Button';
 
 const { updateQuery, setCustomQuery, setDefaultQuery, recordSuggestionClick } = Actions;
 const {
@@ -189,6 +190,8 @@ const SearchBox = {
 		customStopwords: types.stringArray,
 		onData: types.func,
 		renderItem: types.func,
+		enterButton: types.bool,
+		renderEnterButton: VueTypes.any,
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
@@ -307,7 +310,7 @@ const SearchBox = {
 				this.triggerDefaultQuery(value);
 			} else if (this.$props.autosuggest) {
 				this.triggerDefaultQuery(value);
-			} else {
+			} else if (!this.$props.enterButton) {
 				this.triggerCustomQuery(value);
 			}
 		},
@@ -688,6 +691,38 @@ const SearchBox = {
 
 			return null;
 		},
+		renderEnterButtonElement() {
+			const { enterButton } = this.$props;
+			const { renderEnterButton } = this.$scopedSlots;
+			const enterButtonOnClick = () =>
+				this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
+
+			if (enterButton) {
+				const getEnterButtonMarkup = () => {
+					if (renderEnterButton) {
+						return renderEnterButton(enterButtonOnClick);
+					}
+
+					return (
+						<Button
+							style={{
+								borderTopLeftRadius: 0,
+								borderBottomLeftRadius: 0,
+								height: '100%',
+							}}
+							primary
+							onClick={enterButtonOnClick}
+						>
+							Search
+						</Button>
+					);
+				};
+
+				return <div class="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+			}
+
+			return null;
+		},
 		renderIcons() {
 			const {
 				iconPosition,
@@ -1017,6 +1052,7 @@ const SearchBox = {
 													&& renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
+											{this.renderEnterButtonElement()}
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsDropdown()}
 									</div>
@@ -1072,6 +1108,7 @@ const SearchBox = {
 								{this.renderIcons()}
 							</InputWrapper>
 							{this.renderInputAddonAfter()}
+							{this.renderEnterButtonElement()}
 						</InputGroup>
 					</div>
 				)}
