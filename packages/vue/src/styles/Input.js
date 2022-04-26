@@ -21,7 +21,7 @@ const input = css`
 	}
 `;
 
-const dark = theme => css`
+const dark = (theme) => css`
 	border-color: ${theme.colors.borderColor};
 `;
 
@@ -39,34 +39,34 @@ const Input = styled('input')`
 	${input};
 	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
 
-	${props =>
+	${(props) =>
 		props.showIcon
 		&& props.iconPosition === 'left'
 		&& css`
 			padding-left: 36px;
 		`};
 
-	${props =>
+	${(props) =>
 		props.showIcon
 		&& props.iconPosition === 'right'
 		&& css`
 			padding-right: 36px;
 		`};
 
-	${props =>
+	${(props) =>
 		// for clear icon
 		props.showClear
 		&& css`
 			padding-right: 36px;
 		`};
-	${props =>
+	${(props) =>
 		// for voice search icon
 		props.showVoiceSearch
 		&& css`
 			padding-right: 36px;
 		`};
 
-	${props =>
+	${(props) =>
 		// for clear icon with search icon
 		props.showClear
 		&& props.showIcon
@@ -75,7 +75,7 @@ const Input = styled('input')`
 			padding-right: 66px;
 		`};
 
-	${props =>
+	${(props) =>
 		// for voice search icon with search icon
 		props.showVoiceSearch
 		&& props.showIcon
@@ -83,14 +83,14 @@ const Input = styled('input')`
 		&& css`
 			padding-right: 66px;
 		`};
-	${props =>
+	${(props) =>
 		// for voice search icon with clear icon
 		props.showVoiceSearch
 		&& props.showIcon
 		&& css`
 			padding-right: 66px;
 		`};
-	${props =>
+	${(props) =>
 		// for clear icon with search icon and voice search
 		props.showClear
 		&& props.showIcon
@@ -100,7 +100,7 @@ const Input = styled('input')`
 			padding-right: 90px;
 		`};
 
-	${props => props.alert && alertBorder};
+	${(props) => props.alert && alertBorder};
 `;
 
 const suggestions = (themePreset, theme) => css`
@@ -115,7 +115,7 @@ const suggestions = (themePreset, theme) => css`
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	max-height: 395px;
+	max-height: min(100vh, 402px);
 	overflow-y: auto;
 
 	&.small {

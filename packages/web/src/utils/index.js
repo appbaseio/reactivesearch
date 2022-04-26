@@ -240,13 +240,6 @@ export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }
 
-export const suggestionTypes = {
-	Popular: 'popular',
-	Index: 'index',
-	Recent: 'recent',
-	Promoted: 'promoted',
-};
-
 // returns the milliseconds value for RangeSlider/ DynamicRangeSlider for date types
 // returns the value as is, if the simple numerics are used
 // this pertains to the convention that internally our components uses numerics for local state
