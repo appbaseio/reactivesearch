@@ -13,6 +13,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	normalizeDataField,
+	suggestionTypes,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -47,7 +48,6 @@ import {
 	isEmpty,
 	isFunction,
 	parseFocusShortcuts,
-	suggestionTypes,
 } from '../../utils';
 import Mic from './addons/Mic';
 import CancelSvg from '../shared/CancelSvg';
@@ -796,7 +796,7 @@ const SearchBox = (props) => {
 
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
-		triggerDefaultQuery(currentLocalValue, selectedCategory);
+		triggerDefaultQuery(currentLocalValue);
 	});
 
 	useEffect(() => {
@@ -973,7 +973,7 @@ const SearchBox = (props) => {
 																currentValue={currentValue || ''}
 																suggestion={item}
 															/>
-															{/* 👇 avoid showing autofill ifor cateogry suggestions👇 */}
+															{/* 👇 avoid showing autofill for category suggestions👇 */}
 															{item._category ? null : (
 																<AutofillSvg
 																	onClick={(e) => {
