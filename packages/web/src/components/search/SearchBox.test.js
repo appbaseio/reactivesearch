@@ -443,6 +443,23 @@ it('should render enterButton when enterButton prop is true', () => {
 	expect(elem).toMatchSnapshot();
 });
 
+it('should not render enterButton when enterButton prop is false', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
+				<SearchBox
+					mode="test"
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: [] }}
+					enterButton={false}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
 it('should render custom enterButton', () => {
 	const elem = renderer
 		.create(
