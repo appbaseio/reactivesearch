@@ -94,8 +94,8 @@ const large = css`
 
 const disabled = ({ theme }) => css`
 	background-color: ${theme.colors.backgroundColor
-		? lighten(0.1, theme.colors.backgroundColor)
-		: '#fafafa'};
+	? lighten(0.1, theme.colors.backgroundColor)
+	: '#fafafa'};
 	color: #ccc;
 	cursor: not-allowed;
 
@@ -126,7 +126,7 @@ const Button = styled('a')`
 	&:hover,
 	&:focus {
 		background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor ? darken(0.1, theme.colors.backgroundColor) : '#ccc')};
+	(theme.colors.backgroundColor ? darken(0.1, theme.colors.backgroundColor) : '#ccc')};
 	}
 
 	&:focus {
