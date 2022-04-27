@@ -672,7 +672,7 @@ const SearchBox = (props) => {
 	};
 
 	const renderEnterButtonElement = () => {
-		const { enterButton, renderEnterButton } = props;
+		const { enterButton, renderEnterButton, innerClass } = props;
 		const enterButtonOnClick = () =>
 			triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
 
@@ -684,11 +684,7 @@ const SearchBox = (props) => {
 
 				return (
 					<Button
-						style={{
-							borderTopLeftRadius: 0,
-							borderBottomLeftRadius: 0,
-							height: '100%',
-						}}
+						className={`enter-btn ${getClassName(innerClass, 'enterButton')}`}
 						primary
 						onClick={enterButtonOnClick}
 					>

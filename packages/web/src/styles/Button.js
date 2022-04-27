@@ -138,6 +138,12 @@ const Button = styled('a')`
 	${props => (props.primary ? primary : null)};
 	${props => (props.disabled ? disabled : null)};
 	${props => props.large && large};
+
+	&.enter-btn {
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+		height: 100%;
+	}
 `;
 
 export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
