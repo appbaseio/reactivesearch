@@ -36,7 +36,6 @@ class Main extends React.Component {
 				app="meetup_dataset"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				enableAppbase
-				type="meetupdata1"
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			>
 				<h2>Polylines on ReactiveMap</h2>
@@ -51,9 +50,9 @@ class Main extends React.Component {
 					size={50}
 					defaultZoom={3}
 					center={{ lat: 0, lng: -180 }}
-					renderAllData={(hits, loadMore, renderMap) => {
+					render={({ renderMap }) => {
 						if (this.mapRef) {
-							const { map } = this.mapRef;
+							const map = this.mapRef;
 							const flightPath = new window.google.maps.Polyline({
 								path: flightPlanCoordinates,
 								geodesic: true,

@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React from 'react';
-import { MarkerWithLabel } from 'react-google-maps/lib/components/addons/MarkerWithLabel';
-import { InfoWindow, Marker } from 'react-google-maps';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { connect, ReactReduxContext } from '@appbaseio/reactivesearch/lib/utils';
 
+import { InfoWindow, Marker } from '@react-google-maps/api';
+import MarkerWithLabel from './addons/components/MarkerWithLabel';
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles/MapPin';
 
 class GoogleMapMarker extends React.Component {
@@ -32,11 +32,7 @@ class GoogleMapMarker extends React.Component {
 
 	triggerAnalytics = () => {
 		// click analytics would only work client side and after javascript loads
-		const {
-			triggerClickAnalytics,
-			marker,
-			index,
-		} = this.props;
+		const { triggerClickAnalytics, marker, index } = this.props;
 
 		triggerClickAnalytics(index, marker._id);
 	};
@@ -117,14 +113,14 @@ class GoogleMapMarker extends React.Component {
 	render() {
 		const {
 			getPosition,
-			renderData,
+			renderItem,
 			defaultPin,
 			autoClosePopover,
 			handlePreserveCenter,
 			onPopoverClick,
-			markerProps: customMarkerProps,
 			marker,
 			markerOnTop,
+			clusterer,
 		} = this.props;
 		const markerProps = {
 			position: getPosition(marker),
@@ -133,15 +129,14 @@ class GoogleMapMarker extends React.Component {
 		if (markerOnTop === marker._id) {
 			markerProps.zIndex = window.google.maps.Marker.MAX_ZINDEX + 1;
 		}
-
-		if (renderData) {
-			const data = renderData(marker);
+		if (renderItem) {
+			const data = renderItem(marker);
 
 			if ('label' in data) {
 				return (
 					<MarkerWithLabel
 						key={marker._id}
-						labelAnchor={new window.google.maps.Point(0, 30)}
+						labelAnchor={new window.google.maps.Point(0, 0)}
 						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
 						onClick={this.openMarker}
 						onMouseOver={this.increaseMarkerZIndex}
@@ -149,7 +144,7 @@ class GoogleMapMarker extends React.Component {
 						onMouseOut={this.removeMarkerZIndex}
 						onBlur={this.removeMarkerZIndex}
 						{...markerProps}
-						{...customMarkerProps}
+						clusterer={clusterer}
 					>
 						<div css={mapPinWrapper}>
 							<MapPin>{data.label}</MapPin>
@@ -164,7 +159,7 @@ class GoogleMapMarker extends React.Component {
 				return (
 					<MarkerWithLabel
 						key={marker._id}
-						labelAnchor={new window.google.maps.Point(0, 30)}
+						labelAnchor={new window.google.maps.Point(0, 0)}
 						icon="https://i.imgur.com/h81muef.png" // blank png to remove the icon
 						onClick={this.openMarker}
 						onMouseOver={this.increaseMarkerZIndex}
@@ -172,7 +167,7 @@ class GoogleMapMarker extends React.Component {
 						onMouseOut={this.removeMarkerZIndex}
 						onBlur={this.removeMarkerZIndex}
 						{...markerProps}
-						{...customMarkerProps}
+						clusterer={clusterer}
 					>
 						<div css={mapPinWrapper}>
 							{data.custom}
@@ -196,7 +191,7 @@ class GoogleMapMarker extends React.Component {
 				onMouseOut={this.removeMarkerZIndex}
 				onBlur={this.removeMarkerZIndex}
 				{...markerProps}
-				{...markerProps}
+				clusterer={clusterer}
 			>
 				{onPopoverClick ? this.renderPopover(marker) : null}
 			</Marker>
@@ -212,7 +207,7 @@ const mapStateToProps = state => ({
 
 GoogleMapMarker.propTypes = {
 	getPosition: types.func,
-	renderData: types.func,
+	renderItem: types.func,
 	defaultPin: types.string,
 	autoClosePopover: types.bool,
 	handlePreserveCenter: types.func,
@@ -231,7 +226,4 @@ GoogleMapMarker.propTypes = {
 	headers: types.headers,
 };
 
-export default connect(
-	mapStateToProps,
-	null,
-)(GoogleMapMarker);
+export default connect(mapStateToProps, null)(GoogleMapMarker);

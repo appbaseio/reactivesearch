@@ -32,6 +32,9 @@ import {
 	getTopSuggestions,
 	getQueryOptions,
 	normalizeDataField,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -50,9 +53,6 @@ import Mic from './addons/Mic';
 import CustomSvg from '../shared/CustomSvg';
 import {
 	connect,
-	isFunction,
-	getComponent,
-	hasCustomRenderer,
 	handleCaretPosition,
 	isQueryIdentical,
 	hasPopularSuggestionsRenderer,
@@ -1225,10 +1225,11 @@ class CategorySearch extends Component {
 														{...getItemProps({ item })}
 														key={`${index + 1}-${item.value}`} // eslint-disable-line
 														style={{
-															backgroundColor: this.getBackgroundColor(
-																highlightedIndex,
-																index,
-															),
+															backgroundColor:
+																this.getBackgroundColor(
+																	highlightedIndex,
+																	index,
+																),
 														}}
 													>
 														<Text primary={!!item.category}>
@@ -1243,15 +1244,13 @@ class CategorySearch extends Component {
 												<li
 													{...getItemProps({ item: sugg })}
 													key={`${
-															finalSuggestionsList.length + index + 1
-														}-${sugg.value}`}
+														finalSuggestionsList.length + index + 1
+													}-${sugg.value}`}
 													style={{
-														backgroundColor:
-																this.getBackgroundColor(
-																	highlightedIndex,
-																	finalSuggestionsList.length
-																		+ index,
-																),
+														backgroundColor: this.getBackgroundColor(
+															highlightedIndex,
+															finalSuggestionsList.length + index,
+														),
 														justifyContent: 'flex-start',
 													}}
 												>
@@ -1301,19 +1300,22 @@ class CategorySearch extends Component {
 														...rest,
 													},
 													true,
-												)
+												  )
 												: this.topSuggestions.map((sugg, index) => (
 													<li
 														{...getItemProps({ item: sugg })}
-														key={`${finalSuggestionsList.length
-																+ index
-																+ 1}-${sugg.value}`}
-														style={{
-															backgroundColor: this.getBackgroundColor(
-																highlightedIndex,
+														key={`${
 																finalSuggestionsList.length
-																		+ index,
-															),
+																+ index
+																+ 1
+															}-${sugg.value}`}
+														style={{
+															backgroundColor:
+																	this.getBackgroundColor(
+																		highlightedIndex,
+																		finalSuggestionsList.length
+																			+ index,
+																	),
 															justifyContent: 'flex-start',
 														}}
 													>
@@ -1335,7 +1337,7 @@ class CategorySearch extends Component {
 															suggestion={sugg}
 														/>
 													</li>
-												))}
+												  ))}
 										</ul>
 									) : (
 										this.renderNoSuggestion(finalSuggestionsList)
