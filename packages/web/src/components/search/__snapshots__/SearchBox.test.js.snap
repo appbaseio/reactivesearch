@@ -3912,6 +3912,12 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   background-color: #0054d7;
 }
 
+.emotion-17.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -3991,15 +3997,8 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
           className="enter-button-wrapper"
         >
           <a
-            className="emotion-17 emotion-18"
+            className="enter-btn  emotion-17 emotion-18"
             onClick={[Function]}
-            style={
-              Object {
-                "borderBottomLeftRadius": 0,
-                "borderTopLeftRadius": 0,
-                "height": "100%",
-              }
-            }
           >
             Search
           </a>
