@@ -16,11 +16,13 @@ import {
 	getResultStats,
 	updateCustomQuery,
 	updateDefaultQuery,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { connect, getComponent, hasCustomRenderer } from '../../utils';
+import { connect } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class ReactiveComponent extends Component {
@@ -83,7 +85,6 @@ class ReactiveComponent extends Component {
 		// Set custom and default queries in store
 		updateCustomQuery(props.componentId, props, this.props.selectedValue);
 		updateDefaultQuery(props.componentId, props, this.props.selectedValue);
-
 
 		if (this.internalComponent && props.defaultQuery) {
 			this.defaultQuery = props.defaultQuery(this.props.selectedValue, this.props);
@@ -196,9 +197,13 @@ class ReactiveComponent extends Component {
 				});
 			}
 		});
-		if (this.props.defaultQuery
-			&& !isEqual(this.props.defaultQuery(this.props.selectedValue, this.props),
-				this.defaultQuery)) {
+		if (
+			this.props.defaultQuery
+			&& !isEqual(
+				this.props.defaultQuery(this.props.selectedValue, this.props),
+				this.defaultQuery,
+			)
+		) {
 			this.defaultQuery = this.props.defaultQuery(this.props.selectedValue, this.props);
 			const { query, ...queryOptions } = this.defaultQuery || {};
 
@@ -222,8 +227,10 @@ class ReactiveComponent extends Component {
 
 		if (
 			this.props.customQuery
-			&& !isEqual(this.props.customQuery(this.props.selectedValue, this.props),
-				prevProps.customQuery(this.props.selectedValue, this.props))
+			&& !isEqual(
+				this.props.customQuery(this.props.selectedValue, this.props),
+				prevProps.customQuery(this.props.selectedValue, this.props),
+			)
 		) {
 			const { query, ...queryOptions }
 				= this.props.customQuery(this.props.selectedValue, this.props) || {};

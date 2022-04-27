@@ -19,6 +19,9 @@ import {
 	updateInternalQuery,
 	updateCustomQuery,
 	updateDefaultQuery,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
@@ -28,14 +31,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/Dropdown';
-import {
-	connect,
-	isFunction,
-	getComponent,
-	hasCustomRenderer,
-	isEvent,
-	isQueryIdentical,
-} from '../../utils';
+import { connect, isEvent, isQueryIdentical } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class SingleDropdownList extends Component {
@@ -250,7 +246,7 @@ class SingleDropdownList extends Component {
 				query: queryOptions,
 				props,
 				after,
-			})
+			  })
 			: getAggsQuery(value, queryOptions, props);
 	}
 

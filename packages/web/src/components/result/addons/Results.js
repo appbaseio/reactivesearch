@@ -9,19 +9,21 @@ const Results = ({
 	listClass,
 	innerClass,
 	renderItem,
-	getComponent,
 	triggerClickAnalytics,
 	base,
 	analytics,
+	getComponent,
 }) => {
 	const resultElement = () =>
 		(hasCustomRender ? (
 			getComponent()
 		) : (
 			<div className={`${listClass} ${getClassName(innerClass, 'list')}`}>
-				{filteredResults.map((item, index) => renderItem(item, () => {
-					triggerClickAnalytics(base + index);
-				}))}
+				{filteredResults.map((item, index) =>
+					renderItem(item, () => {
+						triggerClickAnalytics(base + index);
+					}),
+				)}
 			</div>
 		));
 	// If analytics is set to true then render with impression tracker

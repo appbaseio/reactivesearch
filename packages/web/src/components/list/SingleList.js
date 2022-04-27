@@ -20,6 +20,9 @@ import {
 	updateInternalQuery,
 	updateCustomQuery,
 	updateDefaultQuery,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -30,14 +33,7 @@ import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
-import {
-	connect,
-	isFunction,
-	getComponent,
-	hasCustomRenderer,
-	isEvent,
-	isQueryIdentical,
-} from '../../utils';
+import { connect, isEvent, isQueryIdentical } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 // showLoadMore is experimental API and works only with ES6
@@ -263,11 +259,7 @@ class SingleList extends Component {
 			queryOptions,
 			currentValue,
 			this.props,
-			SingleList.generateQueryOptions(
-				this.props,
-				this.state.prevAfter,
-				currentValue,
-			),
+			SingleList.generateQueryOptions(this.props, this.state.prevAfter, currentValue),
 		);
 	};
 
@@ -279,7 +271,7 @@ class SingleList extends Component {
 				query: queryOptions,
 				props,
 				after,
-			})
+			  })
 			: getAggsQuery(value, queryOptions, props);
 	}
 
