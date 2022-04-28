@@ -426,7 +426,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   max-height: 375px;
   overflow-y: auto;
   max-height: min(100vh,401px);
-  background: red;
 }
 
 .emotion-19.small {
@@ -1909,7 +1908,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   max-height: 375px;
   overflow-y: auto;
   max-height: min(100vh,401px);
-  background: red;
 }
 
 .emotion-19.small {
@@ -2931,7 +2929,6 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
   max-height: 375px;
   overflow-y: auto;
   max-height: min(100vh,401px);
-  background: red;
 }
 
 .emotion-17.small {
