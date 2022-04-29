@@ -13,7 +13,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@appbaseio/reactivemaps": "3.0.0",
-        "@appbaseio/reactivesearch": "3.30.2",
+        "@appbaseio/reactivesearch": "3.30.3",
         "@emotion/css": "^11.9.0",
         "emotion": "*",
         "react": "^16.2.0",
