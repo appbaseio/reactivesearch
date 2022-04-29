@@ -33,7 +33,7 @@ export default {
 			descriptions: [
 				'ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.',
 				<React.Fragment>
-					Create a free app (aka index) with{' '}
+					Get a free trial and create a cluster with{' '}
 					<a rel="noopener noreferrer" href="https://appbase.io" target="_blank">
 						appbase.io
 					</a>
@@ -181,15 +181,6 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/"
-							target="_blank"
-						>
-							React Native
-						</a>
-					</li>
-					<li>
-						<a
-							rel="noopener noreferrer"
 							href="https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/"
 							target="_blank"
 						>
@@ -223,7 +214,7 @@ export default {
 				'We offer production support for ReactiveMaps. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://www.appbase.io/pricing/#premium-support',
 			},
 			link: {
 				title: 'Get in touch',
