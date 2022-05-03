@@ -55,6 +55,10 @@ class NumberBox extends Component {
 		checkPropChange(this.props.value, prevProps.value, () => {
 			this.setValue(this.props.value, this.props);
 		});
+		// When clearAll is hit
+		if (!this.props.selectedValue && prevProps.selectedValue) {
+			this.setValue(0, this.props);
+		}
 		checkPropChange(this.props.queryFormat, this.props.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
@@ -254,9 +258,9 @@ NumberBox.defaultProps = {
 NumberBox.componentType = componentTypes.numberBox;
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value)
+	|| null,
 	enableAppbase: state.config.enableAppbase,
 });
 
