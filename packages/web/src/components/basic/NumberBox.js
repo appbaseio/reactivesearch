@@ -57,7 +57,7 @@ class NumberBox extends Component {
 		});
 		// When clearAll is hit
 		if (!this.props.selectedValue && prevProps.selectedValue) {
-			this.setValue(0, this.props);
+			this.setValue(null, this.props);
 		}
 		checkPropChange(this.props.queryFormat, this.props.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -202,7 +202,7 @@ class NumberBox extends Component {
 						>
 							<b>-</b>
 						</Button>
-						{this.state.currentValue}
+						{this.state.currentValue || 0}
 						<Button
 							className={getClassName(this.props.innerClass, 'button') || null}
 							onClick={this.incrementValue}
