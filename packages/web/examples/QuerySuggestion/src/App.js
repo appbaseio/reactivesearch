@@ -3,6 +3,28 @@ import { SearchBox, ReactiveList, ResultCard } from '@appbaseio/reactivesearch';
 
 import { magnifyingGlassIcon, trendingIcon } from './icons';
 
+function getCategoryResults(data) {
+	const results = {};
+	// eslint-disable-next-line no-plusplus
+	for (let i = 0; i < data.length; i++) {
+		const result = data[i];
+		const category = result._category.split(',');
+		if (Array.isArray(category)) {
+			// eslint-disable-next-line no-plusplus
+			for (let j = 0; j < category.length; j++) {
+				if (!results[category[j]]) {
+					results[category[j]] = Object.assign({},
+						result, {
+							_category: category[j],
+							value: category[j],
+						});
+				}
+			}
+		}
+	}
+	return Object.keys(results).map(k => results[k]);
+}
+
 const App = () => (
 	<div className="page">
 		<h2>
@@ -31,10 +53,7 @@ const App = () => (
 				data,
 				value,
 				downshiftProps: {
-					isOpen,
-					getItemProps,
-					highlightedIndex,
-					selectedItem,
+					isOpen, getItemProps, highlightedIndex, selectedItem,
 				},
 			}) => {
 				if (loading) {
@@ -43,15 +62,11 @@ const App = () => (
 				if (error) {
 					return <div>Something went wrong! Error details {JSON.stringify(error)}</div>;
 				}
-				const popularResults = data.filter(
-					res => res._suggestion_type === 'popular',
-				);
+				const popularResults = data.filter(res => res._suggestion_type === 'popular');
 				const indexResults = data.filter(
 					res => res._suggestion_type === 'index' && !res._category,
 				);
-				const categoryResults = data
-					.filter(res => res._category)
-					.map(res => (Object.assign({}, res, { value: res._category })));
+				const categoryResults = getCategoryResults(data.filter(res => res._category));
 
 				return isOpen && Boolean(value.length) ? (
 					<div className="result suggestions">
@@ -65,12 +80,9 @@ const App = () => (
 										item,
 										style: {
 											backgroundColor:
-								  highlightedIndex === index
-								  	? 'lightgray'
-								  	: 'white',
-											fontWeight:
-								  selectedItem === item ? 'bold' : 'normal',
-							  },
+												highlightedIndex === index ? 'lightgray' : 'white',
+											fontWeight: selectedItem === item ? 'bold' : 'normal',
+										},
 									})}
 									className="listItem"
 								>
@@ -81,30 +93,35 @@ const App = () => (
 						</div>
 						<div className="resultCategory list">
 							<div className="listHead">Genres</div>
-							{categoryResults.length ? categoryResults.map((item, index) => (
-								<div
-									key={item._category}
-									{...getItemProps({
-										item,
-										style: {
-											backgroundColor:
-								  highlightedIndex === index + indexResults.length
-								  	? 'lightgray'
-								  	: 'white',
-											fontWeight:
-								  selectedItem === item ? 'bold' : 'normal',
-							  },
-									})}
-									className="listItem"
-								>
-									<span className="listIcon">{magnifyingGlassIcon}</span>
-									<span className="clipText">{item.value}</span>
-								</div>
-							)) : 'No Results'}
+							{categoryResults.length
+								? categoryResults.map((item, index) => (
+									<div
+										key={item._category}
+										{...getItemProps({
+											item,
+											style: {
+												backgroundColor:
+														highlightedIndex
+														=== index + indexResults.length
+															? 'lightgray'
+															: 'white',
+												fontWeight:
+														selectedItem === item ? 'bold' : 'normal',
+											},
+										})}
+										className="listItem"
+									>
+										<span className="listIcon">{magnifyingGlassIcon}</span>
+										<span className="clipText">{item.value}</span>
+									</div>
+								  ))
+								: 'No Results'}
 						</div>
 						<div className="resultPopular list divideLeft">
-							{/* eslint-disable-next-line react/no-unescaped-entities */}
-							<div className="listHead">Popular in <span className="clipText popularValue">"{value}"</span></div>
+							<div className="listHead">
+								{/* eslint-disable-next-line react/no-unescaped-entities */}
+								Popular in <span className="clipText popularValue">"{value}"</span>
+							</div>
 							<div>
 								{popularResults.map((item, index) => (
 									<div
@@ -113,12 +130,15 @@ const App = () => (
 											item,
 											style: {
 												backgroundColor:
-								  highlightedIndex === index + indexResults.length + categoryResults.length
-								  	? 'lightgray'
-								  	: 'white',
+													highlightedIndex
+													=== index
+														+ indexResults.length
+														+ categoryResults.length
+														? 'lightgray'
+														: 'white',
 												fontWeight:
-								  selectedItem === item ? 'bold' : 'normal',
-							  },
+													selectedItem === item ? 'bold' : 'normal',
+											},
 										})}
 										className="listItem"
 									>
@@ -142,16 +162,16 @@ const App = () => (
 				<ReactiveList.ResultCardsWrapper>
 					{data.map(item => (
 						<ResultCard id={item._id} key={item._id}>
-							<ResultCard.Image src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} />
+							<ResultCard.Image
+								src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+							/>
 							<ResultCard.Title>
-								<div
-									className="book-title"
-								>{item.original_title}
-								</div>
+								<div className="book-title">{item.original_title}</div>
 							</ResultCard.Title>
 
 							<ResultCard.Description>
-								<span className="language">{item.original_language}</span> <span>-</span> <span>{item.release_year}</span><span>-</span> <span className="genres clipText">{item.genres_data}</span>
+								<span className="language">{item.original_language}</span>
+								<span>-</span> <span>{item.release_year}</span>
 							</ResultCard.Description>
 						</ResultCard>
 					))}
