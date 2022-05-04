@@ -1196,6 +1196,10 @@ SearchBox.propTypes = {
 	onData: types.func,
 	renderItem: types.func,
 	isOpen: types.bool,
+	enableIndexSuggestions: types.bool,
+	enableFeaturedSuggestions: types.bool,
+	featuredSuggestionsConfig: types.componentObject,
+	indexSuggestionsConfig: types.componentObject,
 };
 
 SearchBox.defaultProps = {
