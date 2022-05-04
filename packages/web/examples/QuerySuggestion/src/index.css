@@ -257,9 +257,6 @@ body {
     text-overflow: ellipsis;
     width: 20vw;
 }
-.genres{
-	height: 0.9rem;
-}
-.popularValue{
-	height: 0.9rem;
+.pad-l-1{
+	padding-left: 0.5rem;
 }

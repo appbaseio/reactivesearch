@@ -118,9 +118,9 @@ const App = () => (
 								: 'No Results'}
 						</div>
 						<div className="resultPopular list divideLeft">
-							<div className="listHead">
+							<div className="listHead flex align-center">
 								{/* eslint-disable-next-line react/no-unescaped-entities */}
-								Popular in <span className="clipText popularValue">"{value}"</span>
+								<span>Popular in </span><span className="clipText pad-l-1">"{value}"</span>
 							</div>
 							<div>
 								{popularResults.map((item, index) => (
