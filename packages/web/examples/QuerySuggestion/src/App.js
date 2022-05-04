@@ -3,10 +3,6 @@ import { SearchBox, ReactiveList, ResultCard } from '@appbaseio/reactivesearch';
 
 import { magnifyingGlassIcon, trendingIcon } from './icons';
 
-function uniq(a) {
-	return a ? a.filter((item, pos) => a.indexOf(item) === pos) : [];
-}
-
 const App = () => (
 	<div className="page">
 		<h2>
@@ -23,10 +19,12 @@ const App = () => (
 		</h2>
 		<SearchBox
 			componentId="search"
-			size={5}
+			size={10}
+			aggregationSize={5}
+			categoryField="genres_data.keyword"
 			dataField={['original_title', 'overview']}
 			enablePopularSuggestions
-			popularSuggestionsConfig={{ index: 'movies-store-app' }}
+			popularSuggestionsConfig={{ index: 'movies-store-app', size: 5 }}
 			render={({
 				loading,
 				error,
@@ -49,12 +47,11 @@ const App = () => (
 					res => res._suggestion_type === 'popular',
 				);
 				const indexResults = data.filter(
-					res => res._suggestion_type === 'index',
+					res => res._suggestion_type === 'index' && !res._category,
 				);
-				const categoryField = 'genres_data';
-				const categories = indexResults && indexResults.map(doc => doc._source[categoryField].split(',')).flat();
-				const uniqueCategories = uniq(categories);
-				uniqueCategories.length = uniqueCategories.length > 5 ? 5 : uniqueCategories.length;
+				const categoryResults = data
+					.filter(res => res._category)
+					.map(res => (Object.assign({}, res, { value: res._category })));
 
 				return isOpen && Boolean(value.length) ? (
 					<div className="result suggestions">
@@ -62,7 +59,8 @@ const App = () => (
 							<div className="listHead">Suggestions</div>
 							{indexResults.map((item, index) => (
 								<div
-									key={item.value}
+									/* eslint-disable-next-line react/no-array-index-key */
+									key={item._id + index}
 									{...getItemProps({
 										item,
 										style: {
@@ -81,18 +79,41 @@ const App = () => (
 								</div>
 							))}
 						</div>
+						<div className="resultCategory list">
+							<div className="listHead">Genres</div>
+							{categoryResults.length ? categoryResults.map((item, index) => (
+								<div
+									key={item._category}
+									{...getItemProps({
+										item,
+										style: {
+											backgroundColor:
+								  highlightedIndex === index + indexResults.length
+								  	? 'lightgray'
+								  	: 'white',
+											fontWeight:
+								  selectedItem === item ? 'bold' : 'normal',
+							  },
+									})}
+									className="listItem"
+								>
+									<span className="listIcon">{magnifyingGlassIcon}</span>
+									<span className="clipText">{item.value}</span>
+								</div>
+							)) : 'No Results'}
+						</div>
 						<div className="resultPopular list divideLeft">
 							{/* eslint-disable-next-line react/no-unescaped-entities */}
-							<div className="listHead clipText">Popular in "{value}"</div>
+							<div className="listHead">Popular in <span className="clipText popularValue">"{value}"</span></div>
 							<div>
 								{popularResults.map((item, index) => (
 									<div
-										key={item.value}
+										key={item._id}
 										{...getItemProps({
 											item,
 											style: {
 												backgroundColor:
-								  highlightedIndex === index + indexResults.length
+								  highlightedIndex === index + indexResults.length + categoryResults.length
 								  	? 'lightgray'
 								  	: 'white',
 												fontWeight:
@@ -106,29 +127,6 @@ const App = () => (
 									</div>
 								))}
 							</div>
-						</div>
-						<div className="resultCategory list">
-							<div className="listHead">Genres</div>
-							{uniqueCategories.map((item, index) => (
-								<div
-									key={item.value}
-									{...getItemProps({
-										item,
-										style: {
-											backgroundColor:
-								  highlightedIndex === index + indexResults.length + popularResults.length
-								  	? 'lightgray'
-								  	: 'white',
-											fontWeight:
-								  selectedItem === item ? 'bold' : 'normal',
-							  },
-									})}
-									className="listItem"
-								>
-									<span className="listIcon">{magnifyingGlassIcon}</span>
-									<span className="clipText">{item}</span>
-								</div>
-							))}
 						</div>
 					</div>
 				) : null;

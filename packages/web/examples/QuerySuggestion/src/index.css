@@ -205,12 +205,11 @@ body {
   .result {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
 	gap: 1rem;
 	padding: 1rem;
   }
   .suggestions{
-	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	box-shadow: #9597a1 0px 8px 24px;
   }
   .resultSuggestion {
 	grid-column: 1;
@@ -243,11 +242,11 @@ body {
 	padding: 0.25rem 0rem;
 }
 .divideLeft{
-	border-left: 2px solid #f8f7f7;
+	border-left: 2px solid #dddcdc;;
     padding-left: 1rem;
 }
 .language{
-	border: 2px solid #efefefef;
+	border: 2px solid #dddcdc;
 	padding: 0.2rem;
 	text-transform: uppercase;
 }
@@ -256,8 +255,11 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 100px;
+    width: 20vw;
 }
 .genres{
+	height: 0.9rem;
+}
+.popularValue{
 	height: 0.9rem;
 }
