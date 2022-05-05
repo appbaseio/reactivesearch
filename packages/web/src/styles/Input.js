@@ -166,16 +166,32 @@ const suggestions = (themePreset, theme) => css`
 		cursor: pointer;
 		padding: 10px;
 		user-select: none;
-
+		transition: background-color 0.4s ease-in;
+		position: relative;
 		.trim {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
 
-		&:hover,
-		&:focus {
-			background-color: #eee;
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			transform: scaleY(0);
+			transform-origin: center;
+			background: #eee;
+			z-index: -1;
+			transition: transform 0.5s;
+			transition-delay: 0.1s;
+
+			&:hover {
+				transform: scaleY(1);
+				transform-origin: center;
+			}
 		}
 	}
 
@@ -185,10 +201,54 @@ const suggestions = (themePreset, theme) => css`
 const searchboxSuggestions = (themePreset, theme) => css`
 	${suggestions(themePreset, theme)};
 	max-height: min(100vh, 401px);
+	border-radius: 6px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
 
 	li {
 		.trim {
 			line-height: 20px;
+		}
+	}
+
+	.section-container {
+		padding-bottom: 5px;
+		border-bottom: 1px solid #f2f0f0;
+		.section-header {
+			padding: 10px;
+			font-size: 12px;
+			color: #7f7c7c;
+			background: #f9f9f9;
+			${themePreset === 'dark'
+			&& css`
+				color: #218fe7;
+				background: #161616;
+			`}
+		}
+
+		.section-list {
+			padding-left: 0;
+		}
+		.section-list-item {
+			&__label,
+			&__description {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				* {
+					margin: 0;
+					padding: 0;
+				}
+			}
+
+			&__label {
+			}
+			&__description {
+				margin-top: 3px;
+				font-size: 12px;
+			}
 		}
 	}
 `;
