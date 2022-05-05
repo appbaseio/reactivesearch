@@ -29,7 +29,7 @@ import {
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import hotkeys from 'hotkeys-js';
-
+import XSS from 'xss';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
@@ -916,22 +916,14 @@ const SearchBox = (props) => {
 										if (item.icon) {
 											return (
 												<div
+													style={{ display: 'flex' }}
 													dangerouslySetInnerHTML={{
-														__html: item.icon,
+														__html: XSS(item.icon),
 													}}
-													className="suggestion-icon"
 												/>
 											);
 										}
-										return (
-											<img
-												style={{
-													maxHeight: '30px',
-												}}
-												src={item.iconURL}
-												alt={item.value}
-											/>
-										);
+										return <img src={XSS(item.iconURL)} alt={item.value} />;
 
 									default:
 										return null;
