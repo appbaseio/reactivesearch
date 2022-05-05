@@ -185,7 +185,7 @@ const suggestions = (themePreset, theme) => css`
 const searchboxSuggestions = (themePreset, theme) => css`
 	${suggestions(themePreset, theme)};
 	max-height: min(100vh, 401px);
-	background: red;
+
 	li {
 		.trim {
 			line-height: 20px;

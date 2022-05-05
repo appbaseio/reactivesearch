@@ -63,7 +63,7 @@ export default {
 				},
 				{
 					title: 'Base Components',
-					href: 'https://docs.appbase.io/docs/reactivesearch/v3/base/selectedfilters/',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivebase/',
 					openWithTab: true,
 				},
 				{
@@ -73,7 +73,7 @@ export default {
 				},
 				{
 					title: 'Search Components',
-					href: 'https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/',
+					href: 'https://docs.appbase.io/docs/reactivesearch/v3/search/searchbox/',
 					openWithTab: true,
 				},
 				{

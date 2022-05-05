@@ -122,7 +122,7 @@ export default {
 				'We offer production support for ReactiveMaps. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://www.appbase.io/pricing/#premium-support',
 			},
 			link: {
 				title: 'Get in touch',
