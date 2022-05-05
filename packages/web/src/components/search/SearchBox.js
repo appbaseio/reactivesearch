@@ -140,7 +140,19 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
-		return [...MOCK_SUGGESTIONS, ...suggestionsArray];
+		suggestionsArray = [...MOCK_SUGGESTIONS, ...suggestionsArray];
+
+		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+			if (Object.keys(acc).includes(d.sectionId)) return acc;
+			if (d.sectionId) {
+				acc[currentIndex] = suggestionsArray.filter(g => g.sectionId === d.sectionId);
+			} else {
+				acc[currentIndex] = d;
+			}
+			return acc;
+		}, {});
+
+		return Object.values(sectionisedSuggestions);
 	};
 	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
@@ -1019,59 +1031,159 @@ const SearchBox = (props) => {
 											)}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{parsedSuggestions().map((item, index) => (
-												<li
-													{...getItemProps({ item })}
-													key={`${index + 1}-${item.value}`}
-													style={{
-														backgroundColor: getBackgroundColor(
-															highlightedIndex,
-															index,
-														),
-														justifyContent: 'flex-start',
-														alignItems: 'center',
-													}}
-												>
-													{props.renderItem ? (
-														props.renderItem(item)
-													) : (
-														<React.Fragment>
-															{/* eslint-disable */}
+											{parsedSuggestions().map((item, index) => {
+												if (Array.isArray(item)) {
+													const sectionHtml = XSS(item[0].sectionLabel);
 
+													return (
+														<div
+															key={`${item[0].sectionId} + ${
+																index + 1
+															}`}
+														>
 															<div
-																style={{
-																	padding: '0 10px 0 0',
-																	display: 'flex',
+																dangerouslySetInnerHTML={{
+																	__html: sectionHtml,
 																}}
-															>
-																<CustomSvg
-																	iconId={`${index + 1}-${
-																		item.value
-																	}-icon`}
-																	className={
-																		getClassName(
-																			props.innerClass,
-																			`${item._suggestion_type}-search-icon`,
-																		) || null
-																	}
-																	icon={getIcon(
-																		item._suggestion_type,
-																		item,
-																	)}
-																	type={`${item._suggestion_type}-search-icon`}
-																/>
-															</div>
-															{/* eslint-enable */}
-															<SuggestionItem
-																currentValue={currentValue || ''}
-																suggestion={item}
 															/>
+															{item.map(
+																(sectionItem, sectionIndex) => (
+																	<li
+																		{...getItemProps({
+																			item: sectionItem,
+																		})}
+																		key={`${
+																			index + sectionIndex + 1
+																		}-${sectionItem.value}`}
+																		style={{
+																			backgroundColor:
+																				getBackgroundColor(
+																					highlightedIndex,
+																					index
+																						+ sectionIndex,
+																				),
+																			justifyContent:
+																				'flex-start',
+																			alignItems: 'center',
+																		}}
+																	>
+																		{props.renderItem ? (
+																			props.renderItem(
+																				sectionItem,
+																			)
+																		) : (
+																			<React.Fragment>
+																				{/* eslint-disable */}
 
-															{getActionIcon(item)}
-														</React.Fragment>
-													)}
-												</li>
-											))}
+																				<div
+																					style={{
+																						padding:
+																							'0 10px 0 0',
+																						display:
+																							'flex',
+																					}}
+																				>
+																					<CustomSvg
+																						iconId={`${
+																							sectionIndex +
+																							index +
+																							1
+																						}-${
+																							sectionItem.value
+																						}-icon`}
+																						className={
+																							getClassName(
+																								props.innerClass,
+																								`${sectionItem._suggestion_type}-search-icon`,
+																							) ||
+																							null
+																						}
+																						icon={getIcon(
+																							sectionItem._suggestion_type,
+																							sectionItem,
+																						)}
+																						type={`${sectionItem._suggestion_type}-search-icon`}
+																					/>
+																				</div>
+																				{/* eslint-enable */}
+																				<SuggestionItem
+																					currentValue={
+																						currentValue
+																						|| ''
+																					}
+																					suggestion={
+																						sectionItem
+																					}
+																				/>
+
+																				{getActionIcon(
+																					sectionItem,
+																				)}
+																			</React.Fragment>
+																		)}
+																	</li>
+																),
+															)}
+														</div>
+													);
+												}
+
+												return (
+													<li
+														{...getItemProps({ item })}
+														key={`${index + 1}-${item.value}`}
+														style={{
+															backgroundColor: getBackgroundColor(
+																highlightedIndex,
+																index,
+															),
+															justifyContent: 'flex-start',
+															alignItems: 'center',
+														}}
+													>
+														{props.renderItem ? (
+															props.renderItem(item)
+														) : (
+															<React.Fragment>
+																{/* eslint-disable */}
+
+																<div
+																	style={{
+																		padding: '0 10px 0 0',
+																		display: 'flex',
+																	}}
+																>
+																	<CustomSvg
+																		iconId={`${index + 1}-${
+																			item.value
+																		}-icon`}
+																		className={
+																			getClassName(
+																				props.innerClass,
+																				`${item._suggestion_type}-search-icon`,
+																			) || null
+																		}
+																		icon={getIcon(
+																			item._suggestion_type,
+																			item,
+																		)}
+																		type={`${item._suggestion_type}-search-icon`}
+																	/>
+																</div>
+																{/* eslint-enable */}
+																<SuggestionItem
+																	currentValue={
+																		currentValue || ''
+																	}
+																	suggestion={item}
+																/>
+
+																{getActionIcon(item)}
+															</React.Fragment>
+														)}
+													</li>
+												);
+											})}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
