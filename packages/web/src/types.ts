@@ -169,7 +169,7 @@ export interface popularSuggestionsConfig {
 	minChars?: number;
 	showGlobal?: boolean;
 	index?: string;
-	section?: string;
+	sectionLabel?: string;
 }
 
 export interface recentSuggestionsConfig {
@@ -177,11 +177,11 @@ export interface recentSuggestionsConfig {
 	minHits?: number;
 	minChars?: number;
 	index?: string;
-	section?: string;
+	sectionLabel?: string;
 }
 
 export interface indexSuggestionsConfig {
-	section?: string;
+	sectionLabel?: string;
 	size?: number;
 	index?: string;
 }
