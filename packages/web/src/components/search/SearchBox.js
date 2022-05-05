@@ -17,6 +17,7 @@ import {
 	isFunction,
 	hasCustomRenderer,
 	suggestionTypes,
+	featuredSuggestionsActionTypes,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -93,7 +94,7 @@ const MOCK_SUGGESTIONS = [
 		sectionLabel: '<h2>Tutorials</h2>',
 		action: 'function',
 		subAction:
-			'function(currentSuggestion, value, customEvents) { history.push(`tutorial?q=${value}`);}',
+			'function(currentSuggestion, value, customEvents) { console.log("function invoked", value)}',
 		icon: null,
 		iconURL:
 			'https://camo.githubusercontent.com/95874e325a752e6ffb604991feb719c6e8bae6a552ed23d4a566bc4d518bc090/68747470733a2f2f692e696d6775722e636f6d2f696952397741732e706e67',
@@ -480,8 +481,35 @@ const SearchBox = (props) => {
 		}
 		return undefined;
 	};
+
+	const handleFeaturedSuggestionClicked = (suggestion) => {
+		if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+			const { target = '_blank', link = '/' } = JSON.parse(suggestion.subAction);
+
+			if (typeof window !== 'undefined') {
+				window.open(link, target);
+			}
+		}
+		if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+			// eslint-disable-next-line no-new-func
+			const func = new Function(`return ${suggestion.subAction}`)();
+			func(suggestion, currentValue);
+		}
+		// blur is important to close the dropdown
+		// on selecting one of featured suggestions
+		// else Downshift probably is focusing the dropdown
+		// and not letting it close
+		_inputRef.current.blur();
+	};
+
 	const onSuggestionSelected = (suggestion) => {
 		setIsOpen(false);
+		// handle featured suggestions click event
+		if (suggestion._suggestion_type === suggestionTypes.Featured) {
+			handleFeaturedSuggestionClicked(suggestion);
+			return;
+		}
+
 		const suggestionValue = suggestion.value;
 
 		if (value === undefined) {
@@ -574,10 +602,22 @@ const SearchBox = (props) => {
 		return showVoiceSearch && (window.webkitSpeechRecognition || window.SpeechRecognition);
 	};
 
-	const handleStateChange = (changes) => {
+	const handleStateChange = (changes, stateAndHelpers) => {
 		const { isOpen, type } = changes;
+		const { selectedItem } = stateAndHelpers;
 		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
 			setIsOpen(isOpen);
+		}
+
+		// allow invoking click event repeatedly on featured suggestions
+		if (
+			!changes.selectedItem
+			&& (type === Downshift.stateChangeTypes.clickItem
+				|| type === Downshift.stateChangeTypes.keyDownEnter)
+			&& selectedItem
+			&& selectedItem._suggestion_type === suggestionTypes.Featured
+		) {
+			onSuggestionSelected(selectedItem);
 		}
 	};
 
@@ -929,6 +969,35 @@ const SearchBox = (props) => {
 										return null;
 								}
 							};
+
+							// action icon is dispkayed on right of the suggestion item
+							const getActionIcon = (item) => {
+								if (item._suggestion_type === suggestionTypes.Featured) {
+									if (item.action === featuredSuggestionsActionTypes.FUNCTION) {
+										return (
+											<AutofillSvg
+												style={{
+													transform: 'rotate(135deg)',
+													pointerEvents: 'none',
+												}}
+											/>
+										);
+									}
+									return null;
+								} else if (!item._category) {
+									/* 👇 avoid showing autofill for category suggestions👇 */
+
+									return (
+										<AutofillSvg
+											onClick={(e) => {
+												e.stopPropagation();
+												onAutofillClick(item);
+											}}
+										/>
+									);
+								}
+								return null;
+							};
 							return (
 								<React.Fragment>
 									{hasCustomRenderer(props)
@@ -997,15 +1066,8 @@ const SearchBox = (props) => {
 																currentValue={currentValue || ''}
 																suggestion={item}
 															/>
-															{/* 👇 avoid showing autofill for category suggestions👇 */}
-															{item._category ? null : (
-																<AutofillSvg
-																	onClick={(e) => {
-																		e.stopPropagation();
-																		onAutofillClick(item);
-																	}}
-																/>
-															)}
+
+															{getActionIcon(item)}
 														</React.Fragment>
 													)}
 												</li>
