@@ -3,31 +3,26 @@ import Appbase from 'appbase-js';
 import valueReducer from '@appbaseio/reactivecore/lib/reducers/valueReducer';
 import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
-import compositeAggsReducer  from '@appbaseio/reactivecore/lib/reducers/compositeAggsReducer';
+import compositeAggsReducer from '@appbaseio/reactivecore/lib/reducers/compositeAggsReducer';
 import { UPDATE_COMPOSITE_AGGS } from '@appbaseio/reactivecore/lib/constants';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
-import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	buildQuery,
+	pushToAndClause,
+	extractQueryFromCustomQuery,
+	getOptionsForCustomQuery,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
 import { componentTypes, validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	getRSQuery,
 	extractPropsFromState,
 	getDependentQueries,
+	isSearchComponent,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
 
 const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
-
-const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
-
-const componentsWithOptions = [
-	componentTypes.reactiveList,
-	componentTypes.reactiveMap,
-	componentTypes.singleList,
-	componentTypes.multiList,
-	componentTypes.tagCloud,
-	...componentsWithHighlightQuery,
-];
 
 const componentsWithoutFilters = [componentTypes.numberBox, componentTypes.ratingsFilter];
 
@@ -63,21 +58,38 @@ function parseValue(value, component) {
 	return value;
 }
 
-function getQuery(component, value, componentType) {
+// Returns query DSL with query property and other options
+function getDefaultQuery(component, value) {
+	// get custom or default query of sensor components
+	const currentValue = parseValue(value, component);
 	// get default query of result components
-	if (resultComponents.includes(componentType)) {
-		return component.defaultQuery ? component.defaultQuery() : {};
+	if (component.defaultQuery) {
+		const defaultQuery = component.defaultQuery(currentValue, component);
+		return {
+			query: extractQueryFromCustomQuery(defaultQuery),
+			...getOptionsForCustomQuery(defaultQuery),
+		};
 	}
-
+	return component.source.defaultQuery
+		? { query: component.source.defaultQuery(currentValue, component) }
+		: {};
+}
+// Only results the query part
+function getCustomQuery(component, value) {
 	// get custom or default query of sensor components
 	const currentValue = parseValue(value, component);
 	if (component.customQuery) {
 		const customQuery = component.customQuery(currentValue, component);
-		return customQuery && customQuery.query;
+		return {
+			query: extractQueryFromCustomQuery(customQuery),
+			...getOptionsForCustomQuery(customQuery),
+		};
 	}
 	return component.source.defaultQuery
-		? component.source.defaultQuery(currentValue, component)
-		: {};
+		? {
+			query: component.source.defaultQuery(currentValue, component),
+		  }
+		: null;
 }
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
@@ -141,6 +153,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 				}
 			});
 			let isInternalComponentPresent = false;
+			if (component.source.hasInternalComponent) {
+				isInternalComponentPresent = component.source.hasInternalComponent(component);
+			}
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
@@ -149,7 +164,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				component.componentId,
 				component.value || component.defaultValue,
 			);
-
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;
 			if (componentsWithoutFilters.includes(componentType)) {
@@ -165,7 +179,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				showFilter,
 				URLParams: component.URLParams || false,
 			});
-
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
 				customQueries[component.componentId] = component.customQuery(value, compProps);
@@ -173,77 +186,68 @@ export default function initReactivesearch(componentCollection, searchState, set
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
 				defaultQueries[component.componentId] = component.defaultQuery(value, compProps);
 			}
-
+			let componentQueryOptions = {};
 			// [2] set query options - main component query (valid for result components)
-			if (componentsWithOptions.includes(componentType)) {
-				const options = component.source.generateQueryOptions
-					? component.source.generateQueryOptions(component)
-					: null;
-				let highlightQuery = {};
+			if (component && component.source.generateQueryOptions) {
+				componentQueryOptions = {
+					...componentQueryOptions,
+					...component.source.generateQueryOptions(component),
+				};
+			}
+			let highlightQuery = {};
 
-				if (componentsWithHighlightQuery.includes(componentType) && component.highlight) {
-					highlightQuery = component.source.highlightQuery(component);
+			if (component.source.highlightQuery) {
+				highlightQuery = component.source.highlightQuery(component);
+			}
+			if (
+				(componentQueryOptions && Object.keys(componentQueryOptions).length)
+				|| (highlightQuery && Object.keys(highlightQuery).length)
+			) {
+				// eslint-disable-next-line
+				let { aggs, size, ...otherQueryOptions } = componentQueryOptions || {};
+
+				if (aggs && Object.keys(aggs).length) {
+					isInternalComponentPresent = true;
+					componentQueryOptions = {
+						...componentQueryOptions,
+						...{ aggs, size: typeof size === 'undefined' ? 100 : size },
+					};
 				}
 
+				// sort, highlight, size, from - query should be applied on the main component
 				if (
-					(options && Object.keys(options).length)
+					(otherQueryOptions && Object.keys(otherQueryOptions).length)
 					|| (highlightQuery && Object.keys(highlightQuery).length)
 				) {
-					// eslint-disable-next-line
-					let { aggs, size, ...otherQueryOptions } = options || {};
+					if (!otherQueryOptions) otherQueryOptions = {};
+					if (!highlightQuery) highlightQuery = {};
 
-					if (aggs && Object.keys(aggs).length) {
-						isInternalComponentPresent = true;
-
-						// query should be applied on the internal component
-						// to enable feeding the data to parent component
-						queryOptions = queryOptionsReducer(queryOptions, {
-							type: 'SET_QUERY_OPTIONS',
-							component: internalComponent,
-							options: { aggs, size: typeof size === 'undefined' ? 100 : size },
-						});
+					let mainQueryOptions = { ...otherQueryOptions, ...highlightQuery, size };
+					if (isInternalComponentPresent) {
+						mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
 					}
-
-					// sort, highlight, size, from - query should be applied on the main component
-					if (
-						(otherQueryOptions && Object.keys(otherQueryOptions).length)
-						|| (highlightQuery && Object.keys(highlightQuery).length)
-					) {
-						if (!otherQueryOptions) otherQueryOptions = {};
-						if (!highlightQuery) highlightQuery = {};
-
-						let mainQueryOptions = { ...otherQueryOptions, ...highlightQuery, size };
-						if (isInternalComponentPresent) {
-							mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
+					if (isResultComponent) {
+						let currentPage = component.currentPage ? component.currentPage - 1 : 0;
+						if (
+							selectedValues[component.componentId]
+							&& selectedValues[component.componentId].value
+						) {
+							currentPage = selectedValues[component.componentId].value - 1 || 0;
 						}
-						if (isResultComponent) {
-							let currentPage = component.currentPage ? component.currentPage - 1 : 0;
-							if (
-								selectedValues[component.componentId]
-								&& selectedValues[component.componentId].value
-							) {
-								currentPage = selectedValues[component.componentId].value - 1 || 0;
-							}
-							const resultSize = component.size || 10;
-							const from = currentPage * resultSize;
-							// Update props for RS API
-							compProps.from = from;
-							mainQueryOptions = {
-								...mainQueryOptions,
-								...highlightQuery,
-								size: resultSize,
-								from,
-							};
-						}
-						queryOptions = queryOptionsReducer(queryOptions, {
-							type: 'SET_QUERY_OPTIONS',
-							component: component.componentId,
-							options: { ...mainQueryOptions },
-						});
+						const resultSize = component.size || 10;
+						const from = currentPage * resultSize;
+						// Update props for RS API
+						compProps.from = from;
+						mainQueryOptions = {
+							...mainQueryOptions,
+							...highlightQuery,
+							size: resultSize,
+							from,
+						};
 					}
+					componentQueryOptions = { ...componentQueryOptions, ...mainQueryOptions };
 				}
 			}
-
 			// [3] set dependency tree
 			if (component.react || isInternalComponentPresent || isResultComponent) {
 				let { react } = component;
@@ -257,22 +261,38 @@ export default function initReactivesearch(componentCollection, searchState, set
 					react,
 				});
 			}
-
 			// [4] set query list
-			if (isResultComponent) {
-				const { query } = getQuery(component, value, componentType);
+			// Do not set default query for suggestions
+			if (isInternalComponentPresent && !isSearchComponent(component.componentType)) {
+				const { query: defaultQuery, ...defaultQueryOptions }
+					= getDefaultQuery(component, value) || {};
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: internalComponent,
-					query,
+					query: defaultQuery,
 				});
-			} else {
-				queryList = queryReducer(queryList, {
-					type: 'SET_QUERY',
-					component: component.componentId,
-					query: getQuery(component, value, componentType),
+				queryOptions = queryOptionsReducer(queryOptions, {
+					type: 'SET_QUERY_OPTIONS',
+					component: internalComponent,
+					options: { ...componentQueryOptions, ...defaultQueryOptions },
 				});
 			}
+
+			const { query, ...options } = getCustomQuery(component, value) || {};
+			const customQuery = query;
+			// set custom query for main component
+			queryList = queryReducer(queryList, {
+				type: 'SET_QUERY',
+				component: component.componentId,
+				query: customQuery,
+			});
+			queryOptions = queryOptionsReducer(queryOptions, {
+				type: 'SET_QUERY_OPTIONS',
+				component: component.componentId,
+				options: {
+					...options,
+				},
+			});
 			// Set component type in component props
 			compProps.componentType = componentType;
 			componentProps[component.componentId] = compProps;
@@ -289,7 +309,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 			customQueries,
 			defaultQueries,
 		};
-
 		// [5] Generate finalQuery for search
 		componentCollection.forEach((component) => {
 			// eslint-disable-next-line
@@ -299,12 +318,14 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList,
 				queryOptions,
 			);
+			const componentQueryOptions = options;
 
 			const validOptions = ['aggs', 'from', 'sort'];
-			// check if query or options are valid - non-empty
+			// check if query or componentQueryOptions are valid - non-empty
 			if (
 				(queryObj && !!Object.keys(queryObj).length)
-				|| (options && Object.keys(options).some((item) => validOptions.includes(item)))
+				|| (componentQueryOptions
+					&& Object.keys(componentQueryOptions).some((item) => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -314,10 +335,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 				const currentQuery = {
 					query: { ...queryObj },
-					...options,
+					...componentQueryOptions,
 					...queryOptions[component.componentId],
 				};
-
 				queryLog = {
 					...queryLog,
 					[component.componentId]: currentQuery,
@@ -378,11 +398,14 @@ export default function initReactivesearch(componentCollection, searchState, set
 										...aggregations,
 										[component]: response.aggregations,
 									};
-									compositeAggregations = compositeAggsReducer(compositeAggregations, {
-										type: UPDATE_COMPOSITE_AGGS,
-										aggregations: response.aggregations,
-										append: false
-									})
+									compositeAggregations = compositeAggsReducer(
+										compositeAggregations,
+										{
+											type: UPDATE_COMPOSITE_AGGS,
+											aggregations: response.aggregations,
+											append: false,
+										},
+									);
 								}
 								hits = {
 									...hits,

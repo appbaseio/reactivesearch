@@ -16,7 +16,7 @@ export default ({ configName }) => {
 				marginTop: '60px',
 			}}
 		>
-			<Card big href="https://opensource.appbase.io/reactive-manual">
+			<Card big href="https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/">
 				<img src={`${imagePrefix}/Documentation.svg`} alt="Documentation" />
 				<Title>Documentation</Title>
 				<p>
@@ -36,7 +36,7 @@ export default ({ configName }) => {
 				<Title>Tutorials</Title>
 				<p>Go from scratch to a full app with these tutorial guides.</p>
 			</Card>
-			<Card big href="https://appbase.io/support">
+			<Card big href="https://www.appbase.io/pricing/#premium-support">
 				<img src={`${imagePrefix}/Support.png`} alt="Support" />
 				<Title>Support</Title>
 				<p>
@@ -51,13 +51,11 @@ export default ({ configName }) => {
 					app.
 				</p>
 			</Card>
-			<Card big href="https://gitter.im/appbaseio/reactivesearch">
+			<Card big href="https://github.com/appbaseio/reactivesearch/discussions">
 				<img src={`${imagePrefix}/Gitter.svg`} alt="Gitter" />
-				<Title>Gitter</Title>
+				<Title>Github Discussions</Title>
 				<p>
-					Join our community on Gitter. We
-					{"'"}
-					re always around and happy to help.
+					Ask questions on Github discussions.
 				</p>
 			</Card>
 		</Grid>

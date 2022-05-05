@@ -6,6 +6,8 @@ import {
 	pushToAndClause,
 	checkPropChange,
 	checkSomePropChange,
+	hasCustomRenderer,
+	getComponent,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { string } from 'prop-types';
 import {
@@ -19,13 +21,7 @@ import {
 	mockDataForTesting,
 } from '@appbaseio/reactivecore/lib/actions';
 
-import {
-	connect,
-	ReactReduxContext,
-	getValidPropsKeys,
-	hasCustomRenderer,
-	getComponent,
-} from '../../utils';
+import { connect, ReactReduxContext, getValidPropsKeys } from '../../utils';
 
 /**
  * ComponentWrapper component is a wrapper component for each ReactiveSearch component
@@ -56,14 +52,15 @@ class ComponentWrapper extends React.Component {
 			props.setComponentProps(props.componentId, props);
 		}
 
-
 		if (props.internalComponent) {
 			this.internalComponent = getInternalComponentID(props.componentId);
 		}
 
 		// Register internal component
-		if (this.internalComponent && (props.destroyOnUnmount
-			|| components.indexOf(this.internalComponent) === -1)) {
+		if (
+			this.internalComponent
+			&& (props.destroyOnUnmount || components.indexOf(this.internalComponent) === -1)
+		) {
 			props.addComponent(this.internalComponent);
 			props.setComponentProps(this.internalComponent, props);
 		}

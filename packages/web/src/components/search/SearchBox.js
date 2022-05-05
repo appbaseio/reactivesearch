@@ -13,6 +13,10 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 	normalizeDataField,
+	getComponent as getComponentUtilFunc,
+	isFunction,
+	hasCustomRenderer,
+	suggestionTypes,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -35,18 +39,14 @@ import IconWrapper from '../../styles/IconWrapper';
 import SearchSvg from '../shared/SearchSvg';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import Input, { suggestions, suggestionsContainer } from '../../styles/Input';
+import Input, { searchboxSuggestions, suggestionsContainer } from '../../styles/Input';
 import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
 	extractModifierKeysFromFocusShortcuts,
-	getComponent as getComponentUtilFunc,
 	handleCaretPosition,
-	hasCustomRenderer,
 	isEmpty,
-	isFunction,
 	parseFocusShortcuts,
-	suggestionTypes,
 } from '../../utils';
 import Mic from './addons/Mic';
 import CancelSvg from '../shared/CancelSvg';
@@ -315,7 +315,10 @@ const SearchBox = (props) => {
 	// fires query to fetch results(dependent components are affected here)
 	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
 		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
-		let query = searchBoxDefaultQuery(value, props);
+		let query = searchBoxDefaultQuery(
+			`${value}${categoryValue ? ` in ${categoryValue}` : ''}`,
+			props,
+		);
 		if (customQuery) {
 			const customQueryTobeSet = customQuery(value, props) || {};
 			const queryTobeSet = customQueryTobeSet.query;
@@ -448,11 +451,12 @@ const SearchBox = (props) => {
 				suggestion._category,
 			);
 		} else if (onChange) {
-			onChange(suggestionValue, () =>
+			onChange(suggestionValue, ({ isOpen } = {}) =>
 				triggerQuery({
 					customQuery: true,
 					value: suggestionValue,
 					categoryValue: suggestion._category,
+					isOpen,
 				}),
 			);
 		}
@@ -720,7 +724,7 @@ const SearchBox = (props) => {
 	};
 
 	const handleFocus = (event) => {
-		if (props.autosuggest && !onChange) {
+		if (props.autosuggest) {
 			setIsOpen(true);
 		}
 		if (props.onFocus) {
@@ -758,7 +762,7 @@ const SearchBox = (props) => {
 
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
-		triggerDefaultQuery(currentLocalValue, selectedCategory);
+		triggerDefaultQuery(currentLocalValue);
 	});
 
 	useEffect(() => {
@@ -883,8 +887,11 @@ const SearchBox = (props) => {
 									{isOpen && renderError()}
 									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
 										<ul
-											css={suggestions(props.themePreset, props.theme)}
-											className={getClassName(props.innerClass, 'list')}
+											css={searchboxSuggestions(
+												props.themePreset,
+												props.theme,
+											)}
+											className={`${getClassName(props.innerClass, 'list')}`}
 										>
 											{parsedSuggestions().map((item, index) => (
 												<li
@@ -932,7 +939,7 @@ const SearchBox = (props) => {
 																currentValue={currentValue || ''}
 																suggestion={item}
 															/>
-															{/* 👇 avoid showing autofill ifor cateogry suggestions👇 */}
+															{/* 👇 avoid showing autofill for category suggestions👇 */}
 															{item._category ? null : (
 																<AutofillSvg
 																	onClick={(e) => {

@@ -425,6 +425,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   list-style: none;
   max-height: 375px;
   overflow-y: auto;
+  max-height: min(100vh,401px);
 }
 
 .emotion-19.small {
@@ -457,6 +458,10 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 .emotion-19 li:hover,
 .emotion-19 li:focus {
   background-color: #eee;
+}
+
+.emotion-19 li .trim {
+  line-height: 20px;
 }
 
 .emotion-20 {
@@ -1902,6 +1907,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   list-style: none;
   max-height: 375px;
   overflow-y: auto;
+  max-height: min(100vh,401px);
 }
 
 .emotion-19.small {
@@ -1934,6 +1940,10 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
 .emotion-19 li:hover,
 .emotion-19 li:focus {
   background-color: #eee;
+}
+
+.emotion-19 li .trim {
+  line-height: 20px;
 }
 
 .emotion-20 {
@@ -2918,6 +2928,7 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
   list-style: none;
   max-height: 375px;
   overflow-y: auto;
+  max-height: min(100vh,401px);
 }
 
 .emotion-17.small {
@@ -2950,6 +2961,10 @@ exports[`should render default suggestions when defaultSuggestions prop is set 1
 .emotion-17 li:hover,
 .emotion-17 li:focus {
   background-color: #eee;
+}
+
+.emotion-17 li .trim {
+  line-height: 20px;
 }
 
 .emotion-18 {

@@ -1,4 +1,4 @@
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 const header = css`
 	width: 100%;
@@ -43,7 +43,8 @@ const filters = css`
 			background-color: transparent;
 		}
 
-		input, button {
+		input,
+		button {
 			border-radius: 4px;
 			overflow: hidden;
 		}
@@ -107,9 +108,4 @@ const mapContainer = css`
 	}
 `;
 
-export {
-	header,
-	filters,
-	listContainer,
-	mapContainer,
-};
+export { header, filters, listContainer, mapContainer };

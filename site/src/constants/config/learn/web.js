@@ -33,7 +33,7 @@ export default {
 			descriptions: [
 				'ReactiveSearch components can connect to an Elasticsearch index hosted anywhere.',
 				<React.Fragment>
-					Create a free app (aka index) with{' '}
+					Get a free trial and create a cluster with{' '}
 					<a rel="noopener noreferrer" href="https://appbase.io" target="_blank">
 						appbase.io
 					</a>
@@ -71,7 +71,7 @@ export default {
 					Add UI components for{' '}
 					<a
 						rel="noopener noreferrer"
-						href="https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/"
+						href="https://docs.appbase.io/docs/reactivesearch/v3/search/searchbox/"
 						target="_blank"
 					>
 						Search
@@ -129,19 +129,19 @@ export default {
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://codeburst.io/how-to-build-an-e-commerce-search-ui-with-react-and-elasticsearch-a581c823b2c3"
+							href="https://blog.reactivesearch.io/react-search-ui-tutorial"
 							target="_blank"
 						>
-							Building e-commerce search
+							Building Movie Search
 						</a>
 					</li>
 					<li>
 						<a
 							rel="noopener noreferrer"
-							href="https://medium.appbase.io/how-to-build-a-movie-search-app-with-react-and-elasticsearch-2470f202291c"
+							href="https://blog.reactivesearch.io/ecommerce-search-with-react-and-elasticsearch"
 							target="_blank"
 						>
-							Building Movie Search
+							Building e-commerce search
 						</a>
 					</li>
 					<li>
@@ -167,15 +167,6 @@ export default {
 			descriptions: [
 				'ReactiveSearch is also available for:',
 				<React.Fragment>
-					<li>
-						<a
-							rel="noopener noreferrer"
-							href="https://docs.appbase.io/docs/reactivesearch/native/overview/QuickStart/"
-							target="_blank"
-						>
-							React Native
-						</a>
-					</li>
 					<li>
 						<a
 							rel="noopener noreferrer"
@@ -220,7 +211,7 @@ export default {
 				'We offer production support for ReactiveMaps. Work with us to bring your dream project to life.',
 			button: {
 				title: 'SUPPORT PLANS',
-				href: 'https://appbase.io/support',
+				href: 'https://www.appbase.io/pricing/#premium-support',
 			},
 			link: {
 				title: 'Get in touch',

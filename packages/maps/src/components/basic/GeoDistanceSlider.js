@@ -43,6 +43,7 @@ import { rangeLabelsContainer } from '@appbaseio/reactivesearch/lib/styles/Label
 import { connect, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import GeoCode from './GeoCode';
 import { hasGoogleMap } from '../utils';
+import ScriptLoader from '../result/addons/components/ScriptLoader';
 
 class GeoDistanceSlider extends GeoCode {
 	constructor(props) {
@@ -114,6 +115,14 @@ class GeoDistanceSlider extends GeoCode {
 	}
 
 	componentDidUpdate(prevProps) {
+		if (this.props.onData) {
+			checkSomePropChange(this.props, prevProps, ['error', 'selectedValue'], () => {
+				this.props.onData({
+					value: this.props.selectedValue,
+					error: this.props.error,
+				});
+			});
+		}
 		checkSomePropChange(this.props, prevProps, getValidPropsKeys(this.props), () => {
 			this.props.updateComponentProps(
 				this.props.componentId,
@@ -408,9 +417,15 @@ class GeoDistanceSlider extends GeoCode {
 				isOpen={this.state.isOpen}
 				itemToString={i => i}
 				render={({
-					getRootProps, getInputProps, getItemProps, isOpen, highlightedIndex,
+					getRootProps,
+					getInputProps,
+					getItemProps,
+					isOpen,
+					highlightedIndex,
 				}) => (
-					<div {...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}>
+					<div
+						{...getRootProps({ css: suggestionsContainer }, { suppressRefError: true })}
+					>
 						<Input
 							showIcon={this.props.showIcon}
 							iconPosition={this.props.iconPosition}
@@ -434,10 +449,7 @@ class GeoDistanceSlider extends GeoCode {
 						{isOpen && this.state.suggestions.length ? (
 							<ul
 								css={suggestions(themePreset, theme)}
-								className={getClassName(
-									this.props.innerClass,
-									'list',
-								)}
+								className={getClassName(this.props.innerClass, 'list')}
 							>
 								{suggestionsList.slice(0, 11).map((item, index) => (
 									<li
@@ -579,6 +591,8 @@ GeoDistanceSlider.propTypes = {
 	unit: types.string,
 	URLParams: types.bool,
 	serviceOptions: types.props,
+	error: types.title,
+	onData: types.func,
 	geocoder: types.any, // eslint-disable-line
 };
 
@@ -605,6 +619,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
+	error: state.error[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -623,4 +638,15 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(updateComponentProps(component, options)),
 });
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withTheme(GeoDistanceSlider));
+const ConnectedComponent = connect(
+	mapStateToProps,
+	mapDispatchtoProps,
+)(
+	withTheme(props => (
+		<ScriptLoader>
+			<GeoDistanceSlider {...props} />
+		</ScriptLoader>
+	)),
+);
+
+export default ConnectedComponent;

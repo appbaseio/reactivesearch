@@ -244,7 +244,7 @@ class Tools extends Component {
 
 									<div className="button-row">
 										<Button
-											href="https://opensource.appbase.io/reactive-manual/getting-started/reactivesearch.html"
+											href="https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/"
 											target="_blank"
 											rel="noopener noreferrer"
 											bold
@@ -369,7 +369,7 @@ class Tools extends Component {
 
 									<div className="button-row">
 										<Button
-											href="https://opensource.appbase.io/reactive-manual/getting-started/reactivemaps.html"
+											href="https://docs.appbase.io/docs/reactivesearch/v3/overview/reactivemaps/"
 											target="_blank"
 											rel="noopener noreferrer"
 											bold
@@ -449,7 +449,7 @@ class Tools extends Component {
 
 									<div className="button-row">
 										<Button
-											href="https://opensource.appbase.io/reactive-manual/vue/getting-started/reactivesearch.html"
+											href="https://docs.appbase.io/docs/reactivesearch/vue/overview/QuickStart/"
 											target="_blank"
 											rel="noopener noreferrer"
 											bold
@@ -647,7 +647,7 @@ class Tools extends Component {
 										Host with appbase.io
 									</Button>
 									<Button
-										href="https://appbase.io/support"
+										href="https://www.appbase.io/pricing/#premium-support"
 										bold
 										uppercase
 										big

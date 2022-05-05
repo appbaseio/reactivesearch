@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivemaps",
-	"version": "3.0.0-beta.17",
+	"version": "3.0.0",
 	"description": "React Components for building map UIs",
 	"main": "lib/index.js",
 	"files": [
@@ -25,22 +25,23 @@
 	"dependencies": {
 		"@emotion/core": "^10.0.28",
 		"@emotion/styled": "^10.0.27",
+		"@react-google-maps/api": "^2.7.0",
 		"downshift": "^1.31.2",
 		"emotion-theming": "^10.0.27",
 		"leaflet": "^1.3.4",
+		"markerwithlabel": "^2.0.2",
 		"ngeohash": "^0.6.3",
 		"prop-types": "^15.6.0",
-		"react-google-maps": "^9.4.5",
 		"react-leaflet": "^2.1.3",
 		"rheostat": "^2.1.1"
 	},
 	"peerDependencies": {
-		"@appbaseio/reactivesearch": ">=3.26.1",
+		"@appbaseio/reactivesearch": ">=3.30.1",
 		"react": ">=15",
 		"react-dom": ">=15"
 	},
 	"devDependencies": {
-		"@appbaseio/reactivesearch": ">=3.26.1",
+		"@appbaseio/reactivesearch": ">=3.30.1",
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.2",
