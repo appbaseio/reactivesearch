@@ -92,7 +92,7 @@ const MOCK_SUGGESTIONS = [
 		url: null,
 		_suggestion_type: 'featured',
 		sectionId: 'tutorials',
-		sectionLabel: 'Tutorials',
+		sectionLabel: 'Tutorbals 🪲',
 		action: 'function',
 		subAction:
 			'function(currentSuggestion, value, customEvents) { console.log("function invoked", value)}',
@@ -1044,7 +1044,10 @@ const SearchBox = (props) => {
 															}`}
 														>
 															<div
-																className="section-header"
+																className={`section-header ${getClassName(
+																	props.innerClass,
+																	'section-label',
+																)}`}
 																dangerouslySetInnerHTML={{
 																	__html: sectionHtml,
 																}}
@@ -1226,7 +1229,7 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup>
+								<InputGroup isOpen={isOpen}>
 									{renderInputAddonBefore()}
 									<InputWrapper>
 										<Input
@@ -1288,7 +1291,7 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup>
+					<InputGroup isOpen={isOpen}>
 						{renderInputAddonBefore()}
 						<InputWrapper>
 							<Input
