@@ -109,6 +109,54 @@ const MOCK_SUGGESTIONS = [
 		_score: 0,
 		_source: {},
 	},
+	{
+		value: 'chasing harry ',
+		label: 'chasing harry winston',
+		url: null,
+		_suggestion_type: 'recent',
+		_category: null,
+		_count: 1,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: '',
+		_index: null,
+		_score: 0,
+		_source: {},
+		sectionId: 'recents',
+		sectionLabel: 'Recent Suggestions',
+	},
+	{
+		value: 'harry',
+		label: 'harry',
+		url: null,
+		_suggestion_type: 'recent',
+		_category: null,
+		_count: 10,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: '',
+		_index: null,
+		_score: 0,
+		_source: {},
+		sectionId: 'recents',
+		sectionLabel: 'Recent Suggestions',
+	},
+	{
+		value: 'harry pott',
+		label: 'harry pott',
+		url: null,
+		_suggestion_type: 'recent',
+		_category: null,
+		_count: 9,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: '',
+		_index: null,
+		_score: 0,
+		_source: {},
+		sectionId: 'recents',
+		sectionLabel: 'Recent Suggestions',
+	},
 ];
 const SearchBox = (props) => {
 	const {
@@ -144,16 +192,17 @@ const SearchBox = (props) => {
 		}
 		suggestionsArray = [...MOCK_SUGGESTIONS, ...suggestionsArray];
 
+		const sectionsAccumulated = [];
 		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
-			if (Object.keys(acc).includes(d.sectionId)) return acc;
+			if (sectionsAccumulated.includes(d.sectionId)) return acc;
 			if (d.sectionId) {
 				acc[currentIndex] = suggestionsArray.filter(g => g.sectionId === d.sectionId);
+				sectionsAccumulated.push(d.sectionId);
 			} else {
 				acc[currentIndex] = d;
 			}
 			return acc;
 		}, {});
-
 		return Object.values(sectionisedSuggestions);
 	};
 	const focusSearchBox = (event) => {
@@ -781,7 +830,7 @@ const SearchBox = (props) => {
 
 				return (
 					<Button
-						className={`enter-btn ${getClassName(innerClass, 'enterButton')}`}
+						className={`enter-btn ${getClassName(innerClass, 'enter-button')}`}
 						primary
 						onClick={enterButtonOnClick}
 					>
@@ -1041,6 +1090,8 @@ const SearchBox = (props) => {
 								}
 								return null;
 							};
+
+							let indexOffset = 0;
 							return (
 								<React.Fragment>
 									{hasCustomRenderer(props)
@@ -1062,16 +1113,15 @@ const SearchBox = (props) => {
 											)}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{parsedSuggestions().map((item, index) => {
+											{parsedSuggestions().map((item, itemIndex) => {
+												const index = indexOffset + itemIndex;
 												if (Array.isArray(item)) {
 													const sectionHtml = XSS(item[0].sectionLabel);
-
+													indexOffset += item.length - 1;
 													return (
 														<div
 															className="section-container"
-															key={`${item[0].sectionId} + ${
-																index + 1
-															}`}
+															key={`${item[0].sectionId}`}
 														>
 															<div
 																className={`section-header ${getClassName(
@@ -1090,9 +1140,8 @@ const SearchBox = (props) => {
 																				item: sectionItem,
 																			})}
 																			key={`${
-																				index
+																				sectionItem.sectionId
 																				+ sectionIndex
-																				+ 1
 																			}-${sectionItem.value}`}
 																			style={{
 																				backgroundColor:
