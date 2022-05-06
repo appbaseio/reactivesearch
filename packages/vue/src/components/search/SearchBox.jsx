@@ -705,7 +705,7 @@ const SearchBox = {
 
 					return (
 						<Button
-							class={`enter-btn ${getClassName(innerClass, 'enterButton')}`}
+							class={`enter-btn ${getClassName(innerClass, 'enter-button')}`}
 							primary
 							onClick={enterButtonOnClick}
 						>
