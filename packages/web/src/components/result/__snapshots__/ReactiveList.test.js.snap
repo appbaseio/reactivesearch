@@ -3875,6 +3875,12 @@ exports[`should render pagination at both 1`] = `
   background-color: #fafafa;
 }
 
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -3923,6 +3929,12 @@ exports[`should render pagination at both 1`] = `
   background-color: #0054d7;
 }
 
+.emotion-8.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-10 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -3962,6 +3974,12 @@ exports[`should render pagination at both 1`] = `
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-10.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
 }
 
 <div
@@ -4808,6 +4826,12 @@ exports[`should render pagination at bottom 1`] = `
   background-color: #fafafa;
 }
 
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -4856,6 +4880,12 @@ exports[`should render pagination at bottom 1`] = `
   background-color: #0054d7;
 }
 
+.emotion-8.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-10 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -4895,6 +4925,12 @@ exports[`should render pagination at bottom 1`] = `
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-10.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
 }
 
 <div
@@ -5666,6 +5702,12 @@ exports[`should render pagination at top 1`] = `
   background-color: #fafafa;
 }
 
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -5714,6 +5756,12 @@ exports[`should render pagination at top 1`] = `
   background-color: #0054d7;
 }
 
+.emotion-8.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-10 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -5753,6 +5801,12 @@ exports[`should render pagination at top 1`] = `
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-10.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
 }
 
 <div
@@ -6524,6 +6578,12 @@ exports[`should render pagination when pagination is set to true 1`] = `
   background-color: #fafafa;
 }
 
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-8 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -6572,6 +6632,12 @@ exports[`should render pagination when pagination is set to true 1`] = `
   background-color: #0054d7;
 }
 
+.emotion-8.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
 .emotion-10 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
@@ -6611,6 +6677,12 @@ exports[`should render pagination when pagination is set to true 1`] = `
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-10.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
 }
 
 <div
