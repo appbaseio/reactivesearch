@@ -9,13 +9,12 @@ const input = css`
 	width: 100%;
 	line-height: 1.5;
 	min-height: 42px;
-	padding: 8px 12px;
-	border: 1px solid #ccc;
+	padding: 8px 12px 9px;
 	background-color: #fafafa;
 	font-size: 0.9rem;
 	outline: none;
 	height: 100%;
-
+	border: 1px solid transparent;
 	&:focus {
 		background-color: #fff;
 	}
@@ -183,12 +182,13 @@ const suggestions = (themePreset, theme) => css`
 			height: 100%;
 			transform: scaleY(0);
 			transform-origin: center;
-			background: #eee;
+			background-color: #2f84f7;
 			z-index: -1;
 			transition: transform 0.5s;
-			transition-delay: 0.1s;
-
-			&:hover {
+			transition-delay: 0.3s;
+		}
+		&:hover {
+			&:after {
 				transform: scaleY(1);
 				transform-origin: center;
 			}
@@ -200,7 +200,9 @@ const suggestions = (themePreset, theme) => css`
 
 const searchboxSuggestions = (themePreset, theme) => css`
 	${suggestions(themePreset, theme)};
+
 	max-height: min(100vh, 401px);
+	border: none;
 	border-radius: 6px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
@@ -246,7 +248,8 @@ const searchboxSuggestions = (themePreset, theme) => css`
 			&__label {
 			}
 			&__description {
-				margin-top: 3px;
+				margin-top: 5px;
+				opacity: 0.7;
 				font-size: 12px;
 			}
 		}
