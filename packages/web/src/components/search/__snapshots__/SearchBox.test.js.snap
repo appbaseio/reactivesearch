@@ -61,9 +61,9 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-right: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-right: 36px;
 }
 
 .emotion-9:focus {
@@ -296,9 +296,9 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
@@ -566,9 +566,9 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-11:focus {
@@ -1546,9 +1546,9 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-11:focus {
@@ -1792,9 +1792,9 @@ exports[`should render SearchBox 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
@@ -2030,9 +2030,9 @@ exports[`should render SearchBox with title 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-11:focus {
@@ -2271,10 +2271,10 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
-  padding-right: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
+  padding-right: 36px;
 }
 
 .emotion-9:focus {
@@ -3179,9 +3179,9 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
@@ -3498,9 +3498,9 @@ exports[`should render custom enterButton 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
@@ -3761,9 +3761,9 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
@@ -4061,9 +4061,9 @@ exports[`should render search icon on the right 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-right: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-right: 36px;
 }
 
 .emotion-9:focus {
@@ -4292,9 +4292,9 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
@@ -4522,9 +4522,9 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  padding-left: 36px;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  padding-left: 36px;
 }
 
 .emotion-9:focus {
