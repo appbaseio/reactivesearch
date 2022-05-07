@@ -165,33 +165,12 @@ const suggestions = (themePreset, theme) => css`
 		cursor: pointer;
 		padding: 10px;
 		user-select: none;
-		transition: background-color 0.4s ease-in;
+		transition: all 0.3s ease-in;
 		position: relative;
 		.trim {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
-		}
-
-		&:after {
-			content: '';
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			transform: scaleY(0);
-			transform-origin: center;
-			background-color: #2f84f7;
-			z-index: -1;
-			transition: transform 0.5s;
-			transition-delay: 0.3s;
-		}
-		&:hover {
-			&:after {
-				transform: scaleY(1);
-				transform-origin: center;
-			}
 		}
 	}
 
@@ -212,11 +191,26 @@ const searchboxSuggestions = (themePreset, theme) => css`
 		.trim {
 			line-height: 20px;
 		}
+		&.li-item {
+			background-color: ${themePreset === 'dark' ? '#424242' : '#fff'};
+		}
+		&.active-li-item {
+			background-color: ${themePreset === 'dark' ? '#555' : '#2d84f6'};
+			color: #fff;
+			svg {
+				transition: fill 0.3s ease-in;
+				fill: #fff !important;
+			}
+		}
 	}
 
 	.section-container {
 		padding-bottom: 5px;
 		border-bottom: 1px solid #f2f0f0;
+		${themePreset === 'dark'
+		&& css`
+			background: #161616;
+		`};
 		.section-header {
 			padding: 10px;
 			font-size: 12px;
@@ -226,7 +220,7 @@ const searchboxSuggestions = (themePreset, theme) => css`
 			&& css`
 				color: #218fe7;
 				background: #161616;
-			`}
+			`};
 		}
 
 		.section-list {

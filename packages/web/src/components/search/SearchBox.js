@@ -158,6 +158,75 @@ const MOCK_SUGGESTIONS = [
 		sectionLabel: 'Recent Suggestions',
 	},
 ];
+
+const MOCK_SUGGESTIONS_2 = [
+	{
+		value: 'sea',
+		label: 'sea',
+		url: null,
+		_suggestion_type: 'popular',
+		_category: null,
+		_count: 3,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: 'sea',
+		_index: '.suggestions_may_08',
+		_score: 45.524982,
+		sectionId: 'popular',
+		sectionLabel: 'Popular Suggestions',
+		_source: {
+			c_browser: [],
+			c_companyId: [],
+			c_companyIds: [],
+			c_device: ['iphoneX'],
+			c_email: [],
+			c_platform: ['ios'],
+			c_referer: [],
+			c_titles: [],
+			c_user_segment: [],
+			count: 3,
+			id: 'sea',
+			indices: ['good-books-ds'],
+			ip: ['103.83.145.101', '103.83.145.234', '103.77.43.213'],
+			key: 'sea',
+			search_characters_length: 3,
+			user_id: ['jon@appbase.io', 'jon'],
+		},
+	},
+	{
+		value: 'sea shore',
+		label: 'sea shore',
+		url: null,
+		_suggestion_type: 'popular',
+		_category: null,
+		_count: 3,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: 'sea',
+		_index: '.suggestions_may_08',
+		_score: 45.524982,
+		sectionId: 'popular',
+		sectionLabel: 'Popular Suggestions',
+		_source: {
+			c_browser: [],
+			c_companyId: [],
+			c_companyIds: [],
+			c_device: ['iphoneX'],
+			c_email: [],
+			c_platform: ['ios'],
+			c_referer: [],
+			c_titles: [],
+			c_user_segment: [],
+			count: 3,
+			id: 'sea',
+			indices: ['good-books-ds'],
+			ip: ['103.83.145.101', '103.83.145.234', '103.77.43.213'],
+			key: 'sea',
+			search_characters_length: 3,
+			user_id: ['jon@appbase.io', 'jon'],
+		},
+	},
+];
 const SearchBox = (props) => {
 	const {
 		selectedValue,
@@ -190,7 +259,7 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
-		suggestionsArray = [...MOCK_SUGGESTIONS, ...suggestionsArray];
+		suggestionsArray = [...MOCK_SUGGESTIONS, ...suggestionsArray, ...MOCK_SUGGESTIONS_2];
 
 		const sectionsAccumulated = [];
 		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -685,14 +754,6 @@ const SearchBox = (props) => {
 		}
 	};
 
-	const getBackgroundColor = (highlightedIndex, index) => {
-		const isDark = props.themePreset === 'dark';
-		if (isDark) {
-			return highlightedIndex === index ? '#555' : '#424242';
-		}
-		return highlightedIndex === index ? '#eee' : '#fff';
-	};
-
 	const handleSearchIconClick = () => {
 		if (currentValue.trim()) {
 			setValue(currentValue, true);
@@ -1129,7 +1190,7 @@ const SearchBox = (props) => {
 																	'section-label',
 																)}`}
 																dangerouslySetInnerHTML={{
-																	__html: sectionHtml,
+																	__html: XSS(sectionHtml),
 																}}
 															/>
 															<ul className="section-list">
@@ -1144,17 +1205,23 @@ const SearchBox = (props) => {
 																				+ sectionIndex
 																			}-${sectionItem.value}`}
 																			style={{
-																				backgroundColor:
-																					getBackgroundColor(
-																						highlightedIndex,
-																						index
-																							+ sectionIndex,
-																					),
 																				justifyContent:
 																					'flex-start',
 																				alignItems:
 																					'center',
 																			}}
+																			className={`${
+																				highlightedIndex
+																				=== index + sectionIndex
+																					? `active-li-item ${getClassName(
+																						props.innerClass,
+																						'active-suggestion-item',
+																					  )}`
+																					: `li-item ${getClassName(
+																						props.innerClass,
+																						'suggestion-item',
+																					  )}`
+																			}`}
 																		>
 																			{props.renderItem ? (
 																				props.renderItem(
@@ -1242,13 +1309,20 @@ const SearchBox = (props) => {
 														{...getItemProps({ item })}
 														key={`${index + 1}-${item.value}`}
 														style={{
-															backgroundColor: getBackgroundColor(
-																highlightedIndex,
-																index,
-															),
 															justifyContent: 'flex-start',
 															alignItems: 'center',
 														}}
+														className={`${
+															highlightedIndex === index
+																? `active-li-item ${getClassName(
+																	props.innerClass,
+																	'active-suggestion-item',
+																  )}`
+																: `li-item ${getClassName(
+																	props.innerClass,
+																	'suggestion-item',
+																  )}`
+														}`}
 													>
 														{props.renderItem ? (
 															props.renderItem(item)

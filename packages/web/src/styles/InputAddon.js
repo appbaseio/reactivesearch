@@ -17,13 +17,9 @@ const InputAddon = styled.div`
 
 	&:first-of-type {
 		border-right: 1px solid #f0efef;
-		border-bottom-right-radius: 0;
-		border-top-right-radius: 0;
 	}
 	&:last-of-type {
 		border-left: 1px solid #f0efef;
-		border-bottom-left-radius: 0;
-		border-top-left-radius: 0;
 	}
 `;
 
