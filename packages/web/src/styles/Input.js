@@ -5,7 +5,7 @@ const alertBorder = ({ theme }) => css`
 	border: 1px solid ${theme.colors.alertColor};
 `;
 
-const input = css`
+const input = searchBox => css`
 	width: 100%;
 	line-height: 1.5;
 	min-height: 42px;
@@ -18,6 +18,11 @@ const input = css`
 	&:focus {
 		background-color: #fff;
 	}
+	${searchBox
+	&& css`
+		padding: 8px 12px 9px;
+		border: 1px solid transparent;
+	`};
 `;
 
 const dark = theme => css`
@@ -35,7 +40,7 @@ const darkInput = ({ theme }) => css`
 `;
 
 const Input = styled('input')`
-	${input};
+	${props => input(props.searchBox)};
 	${({ themePreset }) => themePreset === 'dark' && darkInput};
 
 	${props =>
@@ -98,12 +103,6 @@ const Input = styled('input')`
 		`};
 
 	${props => props.alert && alertBorder};
-	${props =>
-			props.searchBox
-		&& css`
-			padding: 8px 12px 9px;
-			border: 1px solid transparent;
-		`};
 `;
 const noSuggestions = (themePreset, theme) => css`
 	display: block;
