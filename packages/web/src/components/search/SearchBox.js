@@ -1247,6 +1247,7 @@ const SearchBox = (props) => {
 											})}
 											themePreset={props.themePreset}
 											type={props.type}
+											searchBox // a prop specific to Input styled-component
 										/>
 										{renderIcons()}
 										{!props.expandSuggestionsContainer
@@ -1300,6 +1301,7 @@ const SearchBox = (props) => {
 								showIcon={props.showIcon}
 								showClear={props.showClear}
 								themePreset={props.themePreset}
+								searchBox // a prop specific to Input styled-component
 							/>
 							{renderIcons()}
 						</InputWrapper>

@@ -9,12 +9,12 @@ const input = css`
 	width: 100%;
 	line-height: 1.5;
 	min-height: 42px;
-	padding: 8px 12px 9px;
+	padding: 8px 12px;
+	border: 1px solid #ccc;
 	background-color: #fafafa;
 	font-size: 0.9rem;
 	outline: none;
 	height: 100%;
-	border: 1px solid transparent;
 	&:focus {
 		background-color: #fff;
 	}
@@ -98,6 +98,12 @@ const Input = styled('input')`
 		`};
 
 	${props => props.alert && alertBorder};
+	${props =>
+			props.searchBox
+		&& css`
+			padding: 8px 12px 9px;
+			border: 1px solid transparent;
+		`};
 `;
 const noSuggestions = (themePreset, theme) => css`
 	display: block;
@@ -165,12 +171,15 @@ const suggestions = (themePreset, theme) => css`
 		cursor: pointer;
 		padding: 10px;
 		user-select: none;
-		transition: all 0.3s ease-in;
-		position: relative;
+
 		.trim {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+		}
+		&:hover,
+		&:focus {
+			background-color: #eee;
 		}
 	}
 
@@ -188,6 +197,12 @@ const searchboxSuggestions = (themePreset, theme) => css`
 	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
 
 	li {
+		transition: all 0.3s ease-in;
+		position: relative;
+		&:hover,
+		&:focus {
+			background-color: unset;
+		}
 		.trim {
 			line-height: 20px;
 		}

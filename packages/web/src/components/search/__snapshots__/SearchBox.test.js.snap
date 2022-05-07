@@ -55,13 +55,15 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-right: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -288,13 +290,15 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -556,13 +560,15 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-11:focus {
@@ -691,15 +697,28 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-  position: relative;
 }
 
 .emotion-19 li .trim {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-19 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: unset;
 }
 
 .emotion-19 li .trim {
@@ -1521,13 +1540,15 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-11:focus {
@@ -1765,13 +1786,15 @@ exports[`should render SearchBox 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -2001,13 +2024,15 @@ exports[`should render SearchBox with title 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-11:focus {
@@ -2240,14 +2265,16 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
   padding-right: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -2376,15 +2403,28 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-  position: relative;
 }
 
 .emotion-19 li .trim {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-19 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: unset;
 }
 
 .emotion-19 li .trim {
@@ -3133,13 +3173,15 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -3450,13 +3492,15 @@ exports[`should render custom enterButton 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -3711,13 +3755,15 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -4009,13 +4055,15 @@ exports[`should render search icon on the right 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-right: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -4238,13 +4286,15 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
@@ -4466,13 +4516,15 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   width: 100%;
   line-height: 1.5;
   min-height: 42px;
-  padding: 8px 12px 9px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
   height: 100%;
-  border: 1px solid transparent;
   padding-left: 36px;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
 }
 
 .emotion-9:focus {
