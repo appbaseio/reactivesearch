@@ -40,6 +40,7 @@ import SearchSvg from '../shared/SearchSvg';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import Input, { searchboxSuggestions, suggestionsContainer } from '../../styles/Input';
+import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
@@ -365,12 +366,13 @@ const SearchBox = (props) => {
 		}
 	};
 	const handleTextChange = debounce((valueParam = undefined, cause = undefined) => {
+		const { enterButton } = props;
 		if (cause === causes.CLEAR_VALUE) {
 			triggerCustomQuery(valueParam);
 			triggerDefaultQuery(valueParam);
 		} else if (props.autosuggest) {
 			triggerDefaultQuery(valueParam);
-		} else if (value === undefined && !onChange) {
+		} else if (value === undefined && !onChange && !enterButton) {
 			triggerCustomQuery(valueParam);
 		}
 	}, props.debounce);
@@ -664,6 +666,34 @@ const SearchBox = (props) => {
 		const { addonAfter } = props;
 		if (addonAfter) {
 			return <InputAddon>{addonAfter}</InputAddon>;
+		}
+
+		return null;
+	};
+
+	const renderEnterButtonElement = () => {
+		const { enterButton, renderEnterButton, innerClass } = props;
+		const enterButtonOnClick = () =>
+			triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+
+		if (enterButton) {
+			const getEnterButtonMarkup = () => {
+				if (typeof renderEnterButton === 'function') {
+					return renderEnterButton(enterButtonOnClick);
+				}
+
+				return (
+					<Button
+						className={`enter-btn ${getClassName(innerClass, 'enterButton')}`}
+						primary
+						onClick={enterButtonOnClick}
+					>
+						Search
+					</Button>
+				);
+			};
+
+			return <div className="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
 		}
 
 		return null;
@@ -1010,6 +1040,7 @@ const SearchBox = (props) => {
 											)}
 									</InputWrapper>
 									{renderInputAddonAfter()}
+									{renderEnterButtonElement()}
 								</InputGroup>
 
 								{props.expandSuggestionsContainer
@@ -1052,6 +1083,7 @@ const SearchBox = (props) => {
 							{renderIcons()}
 						</InputWrapper>
 						{renderInputAddonAfter()}
+						{renderEnterButtonElement()}
 					</InputGroup>
 				</div>
 			)}
@@ -1157,6 +1189,8 @@ SearchBox.propTypes = {
 	onData: types.func,
 	renderItem: types.func,
 	isOpen: types.bool,
+	enterButton: types.bool,
+	renderEnterButton: types.func,
 };
 
 SearchBox.defaultProps = {
@@ -1188,6 +1222,7 @@ SearchBox.defaultProps = {
 	expandSuggestionsContainer: true,
 	suggestions: [],
 	isOpen: false,
+	enterButton: false,
 };
 
 const mapStateToProps = (state, props) => ({
