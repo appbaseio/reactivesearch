@@ -186,7 +186,7 @@ export interface indexSuggestionsConfig {
 	index?: string;
 }
 export interface featuredSuggestionsConfig {
-	defaultSuggestionsGroupId: string;
+	featuredSuggestionsGroupId: string;
 	visibleSuggestionsPerSection?: number;
 	maxSuggestionsPerSection?: number;
 	sectionsOrder?: stringArray;
