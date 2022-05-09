@@ -41,7 +41,6 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -63,6 +62,7 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-right: 36px;
 }
 
@@ -276,7 +276,6 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -298,6 +297,7 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -508,10 +508,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: 1px solid #f2f0f0;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
 }
 
@@ -543,10 +539,14 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 
 .emotion-7:first-of-type {
   border-right: 1px solid #f0efef;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
 }
 
 .emotion-7:last-of-type {
   border-left: 1px solid #f0efef;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
 .emotion-9 {
@@ -568,7 +568,10 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .emotion-11:focus {
@@ -676,6 +679,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
 }
 
 .emotion-19.small {
@@ -783,7 +787,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  width: 85%;
 }
 
 .emotion-20 svg.cancel-icon {
@@ -958,25 +961,29 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </div>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Go to <mark>Home</mark>",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "Go to <mark>Home</mark>",
+                          }
                         }
-                      }
-                    />
-                    <div
-                      className="section-list-item__description"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Blazing fast search with Appbase",
+                      />
+                      <div
+                        className="section-list-item__description"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "Blazing fast search with Appbase",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -1024,25 +1031,29 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </div>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Go to <mark>SearchBox</mark> getting started guide",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "Go to <mark>SearchBox</mark> getting started guide",
+                          }
                         }
-                      }
-                    />
-                    <div
-                      className="section-list-item__description"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Headless API to build search interface, easy to use and understand",
+                      />
+                      <div
+                        className="section-list-item__description"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "Headless API to build search interface, easy to use and understand",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                   <button
                     className="emotion-24 emotion-25"
@@ -1121,17 +1132,21 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </svg>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "chasing harry winston",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "chasing harry winston",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                   <button
                     className="emotion-24 emotion-25"
@@ -1189,17 +1204,21 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </svg>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "harry",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "harry",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                   <button
                     className="emotion-24 emotion-25"
@@ -1257,17 +1276,21 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </svg>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "harry pott",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "harry pott",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                   <button
                     className="emotion-24 emotion-25"
@@ -1341,17 +1364,21 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </svg>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "sea",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "sea",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                   <button
                     className="emotion-24 emotion-25"
@@ -1409,17 +1436,21 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                     </svg>
                   </div>
                   <div
-                    className="emotion-20 emotion-21"
-                    direction="column"
+                    className="trim"
                   >
                     <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "sea shore",
+                      className="emotion-20 emotion-21"
+                      direction="column"
+                    >
+                      <div
+                        className="section-list-item__label"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "sea shore",
+                          }
                         }
-                      }
-                    />
+                      />
+                    </div>
                   </div>
                   <button
                     className="emotion-24 emotion-25"
@@ -1492,7 +1523,6 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -1523,10 +1553,14 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
 
 .emotion-7:first-of-type {
   border-right: 1px solid #f0efef;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
 }
 
 .emotion-7:last-of-type {
   border-left: 1px solid #f0efef;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
 .emotion-9 {
@@ -1548,6 +1582,7 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -1772,7 +1807,6 @@ exports[`should render SearchBox 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -1794,6 +1828,7 @@ exports[`should render SearchBox 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -2010,7 +2045,6 @@ exports[`should render SearchBox with title 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-9 {
@@ -2032,6 +2066,7 @@ exports[`should render SearchBox with title 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -2247,10 +2282,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: 1px solid #f2f0f0;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
 }
 
@@ -2273,8 +2304,11 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
   padding-right: 36px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .emotion-9:focus {
@@ -2382,6 +2416,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
 }
 
 .emotion-19.small {
@@ -2489,7 +2524,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  width: 85%;
 }
 
 .emotion-20 svg.cancel-icon {
@@ -2655,25 +2689,29 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "Go to <mark>Home</mark>",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Go to <mark>Home</mark>",
+                      }
                     }
-                  }
-                />
-                <div
-                  className="section-list-item__description"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "Blazing fast search with Appbase",
+                  />
+                  <div
+                    className="section-list-item__description"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Blazing fast search with Appbase",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
             </li>
           </ul>
@@ -2721,25 +2759,29 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "Go to <mark>SearchBox</mark> getting started guide",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Go to <mark>SearchBox</mark> getting started guide",
+                      }
                     }
-                  }
-                />
-                <div
-                  className="section-list-item__description"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "Headless API to build search interface, easy to use and understand",
+                  />
+                  <div
+                    className="section-list-item__description"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Headless API to build search interface, easy to use and understand",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
               <button
                 className="emotion-24 emotion-25"
@@ -2813,17 +2855,21 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "chasing harry winston",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "chasing harry winston",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
               <button
                 className="emotion-24 emotion-25"
@@ -2876,17 +2922,21 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "harry",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "harry",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
               <button
                 className="emotion-24 emotion-25"
@@ -2939,17 +2989,21 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "harry pott",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "harry pott",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
               <button
                 className="emotion-24 emotion-25"
@@ -3018,17 +3072,21 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "sea",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "sea",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
               <button
                 className="emotion-24 emotion-25"
@@ -3081,17 +3139,21 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                 </div>
               </div>
               <div
-                className="emotion-20 emotion-21"
-                direction="column"
+                className="trim"
               >
                 <div
-                  className="section-list-item__label"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "sea shore",
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    className="section-list-item__label"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "sea shore",
+                      }
                     }
-                  }
-                />
+                  />
+                </div>
               </div>
               <button
                 className="emotion-24 emotion-25"
@@ -3155,10 +3217,6 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: 1px solid #f2f0f0;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
 }
 
@@ -3181,7 +3239,10 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .emotion-9:focus {
@@ -3478,7 +3539,6 @@ exports[`should render custom enterButton 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -3500,6 +3560,7 @@ exports[`should render custom enterButton 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -3741,7 +3802,6 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -3763,6 +3823,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -4037,10 +4098,6 @@ exports[`should render search icon on the right 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: 1px solid #f2f0f0;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
 }
 
@@ -4063,7 +4120,10 @@ exports[`should render search icon on the right 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-right: 36px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .emotion-9:focus {
@@ -4272,7 +4332,6 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -4294,6 +4353,7 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
@@ -4502,7 +4562,6 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   width: 100%;
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
   border-radius: 6px;
-  overflow: hidden;
 }
 
 .emotion-7 {
@@ -4524,6 +4583,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   height: 100%;
   padding: 8px 12px 9px;
   border: 1px solid transparent;
+  border-radius: 6px;
   padding-left: 36px;
 }
 
