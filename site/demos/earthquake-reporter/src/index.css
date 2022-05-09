@@ -30,7 +30,6 @@ h1 {
 
 .maps-container {
 	flex: 1;
-	border: 1px solid;
 }
 @media only screen and (max-width: 800px) {
 	.filters-container {

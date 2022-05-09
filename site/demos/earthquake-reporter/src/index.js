@@ -132,19 +132,21 @@ class App extends React.Component {
 
 					<div className="maps-container">
 						<SelectedFilters />
-						{this.state.mapProvider.value === 'googleMap' ? (
-							<ReactiveGoogleMap
-								style={{ height: '90vh' }}
-								componentId="googleMap"
-								{...mapProps}
-							/>
-						) : (
-							<ReactiveOpenStreetMap
-								style={{ height: '90vh' }}
-								componentId="openstreetMap"
-								{...mapProps}
-							/>
-						)}
+						<div style={{ border: '1px solid #ccc', marginTop: '10px' }}>
+							{this.state.mapProvider.value === 'googleMap' ? (
+								<ReactiveGoogleMap
+									style={{ height: '90vh' }}
+									componentId="googleMap"
+									{...mapProps}
+								/>
+							) : (
+								<ReactiveOpenStreetMap
+									style={{ height: '90vh' }}
+									componentId="openstreetMap"
+									{...mapProps}
+								/>
+							)}
+						</div>
 					</div>
 				</div>
 			</ReactiveBase>
