@@ -35,6 +35,7 @@ class Main extends React.Component {
 				enableAppbase
 				type="meetupdata1"
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
+				mapLibraries={['places']}
 			>
 				<h2>Data Layer on ReactiveMap</h2>
 				{this.renderInfo()}
@@ -54,9 +55,9 @@ class Main extends React.Component {
 							},
 						},
 					})}
-					renderAllData={(hits, loadMore, renderMap) => {
+					render={({ data: hits, renderMap }) => {
 						if (this.mapRef) {
-							const { map } = this.mapRef;
+							const map = this.mapRef;
 							const count = {
 								California: 0,
 								Texas: 0,
