@@ -1,3 +1,4 @@
+import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
 const InputAddon = styled.div`
@@ -17,9 +18,25 @@ const InputAddon = styled.div`
 
 	&:first-of-type {
 		border-right: 1px solid #f0efef;
+		border-bottom-left-radius: 6px;
+		border-top-left-radius: 6px;
+		${props =>
+	props.isOpen
+			&& props.expandSuggestionsContainer
+			&& css`
+				border-bottom-left-radius: 0;
+			`};
 	}
 	&:last-of-type {
 		border-left: 1px solid #f0efef;
+		border-bottom-right-radius: 6px;
+		border-top-right-radius: 6px;
+		${props =>
+				props.isOpen
+			&& props.expandSuggestionsContainer
+			&& css`
+				border-bottom-right-radius: 0;
+			`};
 	}
 `;
 

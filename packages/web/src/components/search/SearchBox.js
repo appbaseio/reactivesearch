@@ -698,17 +698,25 @@ const SearchBox = (props) => {
 		return getComponentUtilFunc(data, props);
 	};
 	const renderInputAddonBefore = () => {
-		const { addonBefore } = props;
+		const { addonBefore, expandSuggestionsContainer } = props;
 		if (addonBefore) {
-			return <InputAddon>{addonBefore}</InputAddon>;
+			return (
+				<InputAddon isOpen={isOpen} expandSuggestionsContainer={expandSuggestionsContainer}>
+					{addonBefore}
+				</InputAddon>
+			);
 		}
 
 		return null;
 	};
 	const renderInputAddonAfter = () => {
-		const { addonAfter } = props;
+		const { addonAfter, expandSuggestionsContainer } = props;
 		if (addonAfter) {
-			return <InputAddon>{addonAfter}</InputAddon>;
+			return (
+				<InputAddon isOpen={isOpen} expandSuggestionsContainer={expandSuggestionsContainer}>
+					{addonAfter}
+				</InputAddon>
+			);
 		}
 
 		return null;
@@ -1065,8 +1073,6 @@ const SearchBox = (props) => {
 																				)
 																			) : (
 																				<React.Fragment>
-																					{/* eslint-disable */}
-
 																					<div
 																						style={{
 																							padding:
@@ -1077,9 +1083,9 @@ const SearchBox = (props) => {
 																					>
 																						<CustomSvg
 																							iconId={`${
-																								sectionIndex +
-																								index +
-																								1
+																								sectionIndex
+																								+ index
+																								+ 1
 																							}-${
 																								sectionItem.value
 																							}-icon`}
@@ -1087,8 +1093,8 @@ const SearchBox = (props) => {
 																								getClassName(
 																									props.innerClass,
 																									`${sectionItem._suggestion_type}-search-icon`,
-																								) ||
-																								null
+																								)
+																								|| null
 																							}
 																							icon={getIcon(
 																								sectionItem._suggestion_type,
@@ -1097,36 +1103,30 @@ const SearchBox = (props) => {
 																							type={`${sectionItem._suggestion_type}-search-icon`}
 																						/>
 																					</div>
-																					{/* eslint-enable */}
-
-																					<Flex
-																						direction="column"
-																						css={{
-																							width: '85%',
-																						}}
-																					>
-																						{sectionItem.label && (
-																							<div
-																								className="section-list-item__label"
-																								dangerouslySetInnerHTML={{
-																									__html: XSS(
-																										sectionItem.label,
-																									),
-																								}}
-																							/>
-																						)}
-																						{sectionItem.description && (
-																							<div
-																								className="section-list-item__description"
-																								dangerouslySetInnerHTML={{
-																									__html: XSS(
-																										sectionItem.description,
-																									),
-																								}}
-																							/>
-																						)}
-																					</Flex>
-
+																					<div className="trim">
+																						<Flex direction="column">
+																							{sectionItem.label && (
+																								<div
+																									className="section-list-item__label"
+																									dangerouslySetInnerHTML={{
+																										__html: XSS(
+																											sectionItem.label,
+																										),
+																									}}
+																								/>
+																							)}
+																							{sectionItem.description && (
+																								<div
+																									className="section-list-item__description"
+																									dangerouslySetInnerHTML={{
+																										__html: XSS(
+																											sectionItem.description,
+																										),
+																									}}
+																								/>
+																							)}
+																						</Flex>
+																					</div>
 																					{getActionIcon(
 																						sectionItem,
 																					)}
@@ -1248,6 +1248,7 @@ const SearchBox = (props) => {
 											themePreset={props.themePreset}
 											type={props.type}
 											searchBox // a prop specific to Input styled-component
+											isOpen={isOpen} // is dropdown open or not
 										/>
 										{renderIcons()}
 										{!props.expandSuggestionsContainer
@@ -1282,7 +1283,7 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup isOpen={isOpen}>
+					<InputGroup isOpen={false}>
 						{renderInputAddonBefore()}
 						<InputWrapper>
 							<Input
@@ -1302,6 +1303,7 @@ const SearchBox = (props) => {
 								showClear={props.showClear}
 								themePreset={props.themePreset}
 								searchBox // a prop specific to Input styled-component
+								isOpen={false} // is dropdown open or not
 							/>
 							{renderIcons()}
 						</InputWrapper>

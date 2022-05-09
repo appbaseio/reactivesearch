@@ -22,6 +22,7 @@ const input = searchBox => css`
 	&& css`
 		padding: 8px 12px 9px;
 		border: 1px solid transparent;
+		border-radius: 6px;
 	`};
 `;
 
@@ -103,6 +104,13 @@ const Input = styled('input')`
 		`};
 
 	${props => props.alert && alertBorder};
+
+	${props =>
+			props.isOpen
+		&& css`
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		`};
 `;
 const noSuggestions = (themePreset, theme) => css`
 	display: block;
@@ -194,7 +202,7 @@ const searchboxSuggestions = (themePreset, theme) => css`
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
-
+	border-top: 1px solid #f2f0f0;
 	li {
 		transition: all 0.3s ease-in;
 		position: relative;
