@@ -8,6 +8,7 @@ import {
 } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
+import './index.css';
 
 const providers = [
 	{
@@ -73,33 +74,10 @@ class App extends React.Component {
 				enableAppbase
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			>
-				<div>
-					<div>
-						<RangeSlider
-							title="Filter By Magnitude"
-							componentId="magnitude-filter"
-							dataField="magnitude"
-							range={{
-								start: 1,
-								end: 10,
-							}}
-							rangeLabels={{
-								start: '1',
-								end: '10',
-							}}
-							tooltipTrigger="hover"
-						/>
-						<DynamicRangeSlider
-							title="Filter By Year"
-							componentId="year-filter"
-							dataField="time"
-							queryFormat="date"
-							rangeLabels={(min, max) => ({
-								start: new Date(min).toISOString().substring(0, 10),
-								end: new Date(max).toISOString().substring(0, 10),
-							})}
-						/>
-						<hr />
+				<div className="container">
+					<div className="filters-container">
+						{' '}
+						<h1>Earthquakes Reporter</h1>
 						<div
 							style={{
 								position: 'relative',
@@ -124,9 +102,35 @@ class App extends React.Component {
 								returnsObject
 							/>
 						</div>
+						<hr />
+						<RangeSlider
+							title="Filter By Magnitude"
+							componentId="magnitude-filter"
+							dataField="magnitude"
+							range={{
+								start: 1,
+								end: 10,
+							}}
+							rangeLabels={{
+								start: '1',
+								end: '10',
+							}}
+							tooltipTrigger="hover"
+						/>
+						<hr />
+						<DynamicRangeSlider
+							title="Filter By Year"
+							componentId="year-filter"
+							dataField="time"
+							queryFormat="date"
+							rangeLabels={(min, max) => ({
+								start: new Date(min).toISOString().substring(0, 10),
+								end: new Date(max).toISOString().substring(0, 10),
+							})}
+						/>
 					</div>
 
-					<div>
+					<div className="maps-container">
 						<SelectedFilters />
 						{this.state.mapProvider.value === 'googleMap' ? (
 							<ReactiveGoogleMap
