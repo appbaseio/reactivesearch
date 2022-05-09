@@ -1,0 +1,42 @@
+body {
+	padding: 0 1rem 1rem;
+	background: #ffefba; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#ffffff,
+		#ffefba
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to right,
+		#ffffff,
+		#ffefba
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	box-sizing: border-box;
+}
+h1 {
+	width: max-content;
+	margin: 0;
+	margin-bottom: 22px;
+}
+.container {
+	display: flex;
+	align-items: flex-start;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+
+.filters-container {
+	flex-basis: 30%;
+}
+
+.maps-container {
+	flex: 1;
+}
+@media only screen and (max-width: 800px) {
+	.filters-container {
+		flex-basis: 100%;
+	}
+	h1 {
+		margin: 0 auto;
+	}
+}
