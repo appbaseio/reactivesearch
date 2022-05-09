@@ -16,6 +16,7 @@ body {
 h1 {
 	width: max-content;
 	margin: 0;
+	margin-bottom: 22px;
 }
 .container {
 	display: flex;
