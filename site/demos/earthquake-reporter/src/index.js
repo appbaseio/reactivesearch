@@ -5,6 +5,7 @@ import {
 	SelectedFilters,
 	RangeSlider,
 	DynamicRangeSlider,
+	SingleList,
 } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
@@ -45,7 +46,7 @@ class App extends React.Component {
 			defaultZoom: 3,
 			size: 50,
 			react: {
-				and: ['magnitude-filter', 'year-filter'],
+				and: ['magnitude-filter', 'year-filter', 'places'],
 			},
 			onPopoverClick: item => <div>{item.place}</div>,
 			showMapStyles: true,
@@ -78,30 +79,15 @@ class App extends React.Component {
 					<div className="filters-container">
 						{' '}
 						<h1>Earthquakes Reporter</h1>
-						<div
-							style={{
-								position: 'relative',
-								zIndex: 9999999,
-								marginBottom: '1rem',
-							}}
-						>
-							<div
-								style={{
-									marginTop: '20px',
-									marginBottom: '5px',
-									fontSize: '1 rem',
-								}}
-							>
-								<b>Select Map Provider</b>
-							</div>
-							<Dropdown
-								items={providers}
-								onChange={this.setProvider}
-								selectedItem={this.state.mapProvider}
-								keyField="label"
-								returnsObject
-							/>
-						</div>
+						<SelectedFilters />
+						<hr />
+						<SingleList
+							title="Filter By Places"
+							componentId="places"
+							dataField="place.keyword"
+							size={50}
+							showSearch
+						/>
 						<hr />
 						<RangeSlider
 							title="Filter By Magnitude"
@@ -131,8 +117,33 @@ class App extends React.Component {
 					</div>
 
 					<div className="maps-container">
-						<SelectedFilters />
-						<div style={{ border: '1px solid #ccc', marginTop: '10px' }}>
+						<div style={{ marginTop: '10px' }}>
+							{' '}
+							<div
+								style={{
+									position: 'relative',
+									zIndex: 9999999,
+									marginBottom: '1rem',
+								}}
+							>
+								<div
+									style={{
+										marginTop: '20px',
+										marginBottom: '5px',
+										fontSize: '1 rem',
+									}}
+								>
+									<b>Select Map Provider</b>
+								</div>
+								<Dropdown
+									items={providers}
+									onChange={this.setProvider}
+									selectedItem={this.state.mapProvider}
+									keyField="label"
+									returnsObject
+								/>
+							</div>
+							<hr />
 							{this.state.mapProvider.value === 'googleMap' ? (
 								<ReactiveGoogleMap
 									style={{ height: '90vh' }}
