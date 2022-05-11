@@ -154,7 +154,8 @@ class DataSearch extends Component {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		if (enableDefaultSuggestions) {
+		const shouldFetchInitialSuggestions = enableDefaultSuggestions || this.state.currentValue;
+		if (shouldFetchInitialSuggestions) {
 			fetchPopularSuggestions(componentId);
 			if (enableRecentSearches) {
 				fetchRecentSearches();
@@ -960,7 +961,7 @@ class DataSearch extends Component {
 		} = this.props;
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
-		if (currentValue || !enableDefaultSuggestions) {
+		if (currentValue || enableDefaultSuggestions === false) {
 			return [];
 		}
 		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => ({
