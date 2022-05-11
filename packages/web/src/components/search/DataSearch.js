@@ -124,6 +124,7 @@ class DataSearch extends Component {
 			distinctFieldConfig,
 			index,
 			enableAppbase,
+			enableDefaultSuggestions,
 		} = this.props;
 
 		// TODO: Remove in 4.0
@@ -153,9 +154,12 @@ class DataSearch extends Component {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		fetchPopularSuggestions(componentId);
-		if (enableRecentSearches) {
-			fetchRecentSearches();
+		const shouldFetchInitialSuggestions = enableDefaultSuggestions || this.state.currentValue;
+		if (shouldFetchInitialSuggestions) {
+			fetchPopularSuggestions(componentId);
+			if (enableRecentSearches) {
+				fetchRecentSearches();
+			}
 		}
 	}
 
@@ -953,10 +957,11 @@ class DataSearch extends Component {
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
 			defaultSuggestions,
+			enableDefaultSuggestions,
 		} = this.props;
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
-		if (currentValue) {
+		if (currentValue || enableDefaultSuggestions === false) {
 			return [];
 		}
 		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => ({
@@ -1057,11 +1062,19 @@ class DataSearch extends Component {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
 		const {
-			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
+			theme,
+			themePreset,
+			size,
+			recentSearchesIcon,
+			popularSearchesIcon,
+			enableDefaultSuggestions,
 		} = this.props;
-		const hasSuggestions = currentValue
+		let hasSuggestions = currentValue
 			? suggestionsList.length || this.topSuggestions.length
 			: this.defaultSuggestions.length;
+		if (enableDefaultSuggestions === false && !currentValue) {
+			hasSuggestions = false;
+		}
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1448,6 +1461,7 @@ DataSearch.propTypes = {
 	addonBefore: types.children,
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
+	enableDefaultSuggestions: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -1480,6 +1494,7 @@ DataSearch.defaultProps = {
 	addonBefore: undefined,
 	addonAfter: undefined,
 	expandSuggestionsContainer: true,
+	enableDefaultSuggestions: true,
 };
 
 // Add componentType for SSR
