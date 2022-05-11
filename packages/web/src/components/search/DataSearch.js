@@ -124,6 +124,7 @@ class DataSearch extends Component {
 			distinctFieldConfig,
 			index,
 			enableAppbase,
+			enableDefaultSuggestions,
 		} = this.props;
 
 		// TODO: Remove in 4.0
@@ -153,9 +154,11 @@ class DataSearch extends Component {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		fetchPopularSuggestions(componentId);
-		if (enableRecentSearches) {
-			fetchRecentSearches();
+		if (enableDefaultSuggestions) {
+			fetchPopularSuggestions(componentId);
+			if (enableRecentSearches) {
+				fetchRecentSearches();
+			}
 		}
 	}
 
@@ -953,10 +956,11 @@ class DataSearch extends Component {
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
 			defaultSuggestions,
+			enableDefaultSuggestions,
 		} = this.props;
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
-		if (currentValue) {
+		if (currentValue || !enableDefaultSuggestions) {
 			return [];
 		}
 		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => ({
@@ -1448,6 +1452,7 @@ DataSearch.propTypes = {
 	addonBefore: types.children,
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
+	enableDefaultSuggestions: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -1480,6 +1485,7 @@ DataSearch.defaultProps = {
 	addonBefore: undefined,
 	addonAfter: undefined,
 	expandSuggestionsContainer: true,
+	enableDefaultSuggestions: true,
 };
 
 // Add componentType for SSR
