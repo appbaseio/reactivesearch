@@ -1062,11 +1062,19 @@ class DataSearch extends Component {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
 		const {
-			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
+			theme,
+			themePreset,
+			size,
+			recentSearchesIcon,
+			popularSearchesIcon,
+			enableDefaultSuggestions,
 		} = this.props;
-		const hasSuggestions = currentValue
+		let hasSuggestions = currentValue
 			? suggestionsList.length || this.topSuggestions.length
 			: this.defaultSuggestions.length;
+		if (enableDefaultSuggestions === false && !currentValue) {
+			hasSuggestions = false;
+		}
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
