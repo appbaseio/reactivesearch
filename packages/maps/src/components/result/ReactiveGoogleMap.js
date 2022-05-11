@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap } from 'react-google-maps';
-import MarkerClusterer from 'react-google-maps/lib/components/addons/MarkerClusterer';
+import { MarkerClusterer } from '@react-google-maps/api';
 import { getInnerKey } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
@@ -8,6 +7,7 @@ import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
 import ReactiveMap, { MAP_SERVICES } from './ReactiveMap';
 import GoogleMapMarkers from './GoogleMapMarkers';
+import MapComponent from './MapComponent';
 
 const Standard = require('./addons/styles/Standard');
 const BlueEssence = require('./addons/styles/BlueEssence');
@@ -16,16 +16,6 @@ const FlatMap = require('./addons/styles/FlatMap');
 const LightMonochrome = require('./addons/styles/LightMonochrome');
 const MidnightCommander = require('./addons/styles/MidnightCommander');
 const UnsaturatedBrowns = require('./addons/styles/UnsaturatedBrowns');
-
-const MapComponent = withGoogleMap((props) => {
-	const { children, onMapMounted, ...allProps } = props;
-
-	return (
-		<GoogleMap ref={onMapMounted} {...allProps}>
-			{children}
-		</GoogleMap>
-	);
-});
 
 class ReactiveGoogleMap extends Component {
 	constructor(props) {
@@ -80,7 +70,7 @@ class ReactiveGoogleMap extends Component {
 	};
 
 	renderMap = (params) => {
-		if (typeof window === 'undefined' || (window && typeof window.google === 'undefined')) {
+		if (typeof window === 'undefined') {
 			return null;
 		}
 
@@ -89,32 +79,30 @@ class ReactiveGoogleMap extends Component {
 			height: '100%',
 			position: 'relative',
 		};
-
 		const markerProps = {
 			resultsToRender: params.resultsToRender,
 			getPosition: params.getPosition,
-			renderData: params.renderData,
+			renderItem: params.renderItem,
 			defaultPin: params.defaultPin,
 			autoClosePopover: params.autoClosePopover,
 			handlePreserveCenter: params.handlePreserveCenter,
 			onPopoverClick: params.onPopoverClick,
 			markerProps: this.props.markerProps,
 			triggerClickAnalytics: params.triggerClickAnalytics,
+			mapRef: this.state.mapRef,
 		};
-
 		return (
 			<div style={style}>
 				<MapComponent
-					containerElement={<div style={style} />}
-					mapElement={<div style={{ height: '100%' }} />}
+					mapContainerStyle={style}
 					onMapMounted={(ref) => {
 						this.setState({
 							mapRef: ref,
 						});
 						if (params.innerRef && ref) {
-							const map = Object.values(ref.context)[0];
-							const mapRef = { ...ref, map };
-							params.innerRef(mapRef);
+							const map = ref;
+
+							params.innerRef(map);
 						}
 					}}
 					zoom={params.zoom}
@@ -128,11 +116,23 @@ class ReactiveGoogleMap extends Component {
 						...getInnerKey(this.props.mapProps, 'options'),
 						...this.props.mapOptions,
 					}}
+					libraries={this.props.libraries}
 				>
 					{this.props.showMarkers && this.props.showMarkerClusters ? (
-						<MarkerClusterer averageCenter enableRetinaIcons gridSize={60}>
-							<GoogleMapMarkers {...markerProps} />
-						</MarkerClusterer>
+						<React.Fragment>
+							<MarkerClusterer
+								averageCenter
+								enableRetinaIcons
+								gridSize={60}
+								noClustererRedraw={false}
+							>
+								{clusterer => (
+									<React.Fragment>
+										<GoogleMapMarkers {...markerProps} clusterer={clusterer} />
+									</React.Fragment>
+								)}
+							</MarkerClusterer>
+						</React.Fragment>
 					) : (
 						<React.Fragment>
 							{this.props.showMarkers && <GoogleMapMarkers {...markerProps} />}
@@ -148,7 +148,8 @@ class ReactiveGoogleMap extends Component {
 							top: 10,
 							right: 46,
 							width: 120,
-							zIndex: window.google.maps.Marker.MAX_ZINDEX + 1,
+							zIndex:
+								((window.google && window.google.maps.Marker.MAX_ZINDEX) || 0) + 1,
 						}}
 					>
 						<Dropdown
@@ -197,8 +198,8 @@ ReactiveGoogleMap.propTypes = {
 	mapOptions: types.props,
 	markerProps: types.props,
 	markers: types.children,
-	renderAllData: types.func,
-	renderData: types.func,
+	render: types.func,
+	renderItem: types.func,
 	onPageChange: types.func,
 	onPopoverClick: types.func,
 	onData: types.func,
@@ -222,6 +223,7 @@ ReactiveGoogleMap.propTypes = {
 	updaterKey: types.number,
 	mapRef: types.any, // eslint-disable-line
 	index: types.string,
+	libraries: types.stringArray,
 };
 
 ReactiveGoogleMap.defaultProps = {
@@ -244,6 +246,7 @@ ReactiveGoogleMap.defaultProps = {
 	showMarkerClusters: true,
 	unit: 'mi',
 	defaultRadius: 100,
+	libraries: [''],
 };
 
 export default ReactiveGoogleMap;

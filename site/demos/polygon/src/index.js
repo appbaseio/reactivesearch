@@ -51,9 +51,9 @@ class Main extends React.Component {
 					size={500}
 					defaultZoom={5}
 					center={{ lat: 24.886, lng: -70.268 }}
-					renderAllData={(hits, loadMore, renderMap) => {
+					render={({ renderMap }) => {
 						if (this.mapRef) {
-							const { map } = this.mapRef;
+							const map = this.mapRef;
 							const bermudaTriangle = new window.google.maps.Polygon({
 								paths: triangleCoords,
 								strokeColor: '#FF0000',
@@ -62,7 +62,6 @@ class Main extends React.Component {
 								fillColor: '#FF0000',
 								fillOpacity: 0.35,
 							});
-
 							// renders polygon on the map
 							// refer: https://developers.google.com/maps/documentation/javascript/shapes#polygons
 							bermudaTriangle.setMap(map);

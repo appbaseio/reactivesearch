@@ -23,6 +23,9 @@ import {
 	updateInternalQuery,
 	updateCustomQuery,
 	updateDefaultQuery,
+	getComponent,
+	isFunction,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -32,15 +35,7 @@ import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import {
-	connect,
-	isFunction,
-	getComponent,
-	hasCustomRenderer,
-	isEvent,
-	parseValueArray,
-	isQueryIdentical,
-} from '../../utils';
+import { connect, isEvent, parseValueArray, isQueryIdentical } from '../../utils';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class MultiList extends Component {
@@ -396,7 +391,7 @@ class MultiList extends Component {
 				query: queryOptions,
 				props,
 				after,
-			})
+			  })
 			: getAggsQuery(valueArray, queryOptions, props);
 	}
 

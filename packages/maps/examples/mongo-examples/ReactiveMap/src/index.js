@@ -74,7 +74,7 @@ class App extends React.Component {
 				</div>
 			),
 			showMapStyles: true,
-			renderData: () => ({
+			renderItem: () => ({
 				custom: (
 					<div
 						style={{
@@ -100,6 +100,8 @@ class App extends React.Component {
 					index: 'custom',
 				}}
 				enableAppbase
+				mapLibraries={['places']}
+				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>

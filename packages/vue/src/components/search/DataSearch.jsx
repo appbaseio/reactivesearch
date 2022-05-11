@@ -115,10 +115,14 @@ const DataSearch = {
 			);
 		}
 
-		this.loadPopularSuggestions(this.$props.componentId);
 		this.currentValue = this.selectedValue || '';
-		if (enableRecentSearches) {
-			this.getRecentSearches();
+		const shouldFetchInitialSuggestions
+			= this.$props.enableDefaultSuggestions || this.currentValue;
+		if (shouldFetchInitialSuggestions) {
+			this.loadPopularSuggestions(this.$props.componentId);
+			if (enableRecentSearches) {
+				this.getRecentSearches();
+			}
 		}
 		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
 		// Set custom and default queries in store
@@ -161,7 +165,7 @@ const DataSearch = {
 		defaultSearchSuggestions() {
 			const isPopularSuggestionsEnabled
 				= this.enableQuerySuggestions || this.enablePopularSuggestions;
-			if (this.currentValue) {
+			if (this.currentValue || !this.enableDefaultSuggestions) {
 				return [];
 			}
 			const customDefaultPopularSuggestions = (this.defaultPopularSuggestions || []).map(
@@ -268,6 +272,7 @@ const DataSearch = {
 		addonAfter: VueTypes.any,
 		expandSuggestionsContainer: VueTypes.bool.def(true),
 		index: VueTypes.string,
+		enableDefaultSuggestions: VueTypes.bool.def(true),
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -845,11 +850,14 @@ const DataSearch = {
 		},
 	},
 	render() {
-		const { theme, size, expandSuggestionsContainer } = this.$props;
+		const { theme, size, expandSuggestionsContainer, enableDefaultSuggestions } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
-		const hasSuggestions = this.currentValue
+		let hasSuggestions = this.currentValue
 			? this.suggestionsList.length || this.topSuggestions.length
 			: this.defaultSearchSuggestions.length;
+		if (enableDefaultSuggestions === false && !this.currentValue) {
+			hasSuggestions = false;
+		}
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (

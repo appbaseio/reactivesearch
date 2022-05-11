@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect as connectToStore } from 'react-redux';
-import { isEqual, isValidDateRangeQueryFormat } from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, isValidDateRangeQueryFormat, isFunction } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import XDate from 'xdate';
 
@@ -24,38 +24,6 @@ export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
 		...userTheme.component,
 	},
 });
-
-/**
- * To determine wether an element is a function
- * @param {any} element
- */
-export const isFunction = element => typeof element === 'function';
-
-/**
- * Extracts the render prop from props and returns a valid React element
- * @param {Object} data
- * @param {Object} props
- */
-export const getComponent = (data = {}, props = {}) => {
-	const { children, render } = props;
-	// Render function as child
-	if (isFunction(children)) {
-		return children(data);
-	}
-	// Render function as render prop
-	if (isFunction(render)) {
-		return render(data);
-	}
-	return null;
-};
-/**
- * To determine whether a component has render prop defined or not
- * @returns {Boolean}
- */
-export const hasCustomRenderer = (props = {}) => {
-	const { render, children } = props;
-	return isFunction(children) || isFunction(render);
-};
 
 export const isEvent = candidate =>
 	!!(candidate && candidate.stopPropagation && candidate.preventDefault);
@@ -240,13 +208,6 @@ export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
 }
 
-export const suggestionTypes = {
-	Popular: 'popular',
-	Index: 'index',
-	Recent: 'recent',
-	Promoted: 'promoted',
-};
-
 // returns the milliseconds value for RangeSlider/ DynamicRangeSlider for date types
 // returns the value as is, if the simple numerics are used
 // this pertains to the convention that internally our components uses numerics for local state
@@ -302,4 +263,3 @@ export const getValueArrayWithinLimits = (currentValueArray, rangeArray) => {
 		return currentValueArray;
 	}
 };
-

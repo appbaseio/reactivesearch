@@ -55,6 +55,9 @@ class NumberBox extends Component {
 		checkPropChange(this.props.value, prevProps.value, () => {
 			this.setValue(this.props.value, this.props);
 		});
+		if (this.props.selectedValue !== prevProps.selectedValue) {
+			this.setValue(this.props.selectedValue, this.props);
+		}
 		checkPropChange(this.props.queryFormat, this.props.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
@@ -168,7 +171,7 @@ class NumberBox extends Component {
 			componentId: props.componentId,
 			query,
 			value,
-			showFilter: false, // we don't need filters for NumberBox
+			showFilter: props.showFilter, // we don't need filters for NumberBox
 			URLParams: props.URLParams,
 			componentType: componentTypes.numberBox,
 		});
@@ -198,7 +201,7 @@ class NumberBox extends Component {
 						>
 							<b>-</b>
 						</Button>
-						{this.state.currentValue}
+						{this.state.currentValue || 0}
 						<Button
 							className={getClassName(this.props.innerClass, 'button') || null}
 							onClick={this.incrementValue}
@@ -235,6 +238,7 @@ NumberBox.propTypes = {
 	queryFormat: types.queryFormatNumberBox,
 	react: types.react,
 	style: types.style,
+	showFilter: types.bool,
 	title: types.title,
 	URLParams: types.bool,
 	index: types.string,
@@ -246,15 +250,16 @@ NumberBox.defaultProps = {
 	queryFormat: 'gte',
 	style: {},
 	URLParams: false,
+	showFilter: true,
 };
 
 // Add componentType for SSR
 NumberBox.componentType = componentTypes.numberBox;
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: state.selectedValues[props.componentId]
-		? state.selectedValues[props.componentId].value
-		: null,
+	selectedValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value)
+	|| null,
 	enableAppbase: state.config.enableAppbase,
 });
 

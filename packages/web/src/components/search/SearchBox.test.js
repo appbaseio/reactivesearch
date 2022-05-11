@@ -425,3 +425,64 @@ it('should not render expanded dropdown when expandSuggestionsContainer prop is 
 		.toJSON();
 	expect(elem).toMatchSnapshot();
 });
+
+it('should render enterButton when enterButton prop is true', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
+				<SearchBox
+					mode="test"
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: [] }}
+					enterButton
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should not render enterButton when enterButton prop is false', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
+				<SearchBox
+					mode="test"
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: [] }}
+					enterButton={false}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should render custom enterButton', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
+				<SearchBox
+					mode="test"
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: [] }}
+					enterButton
+					renderEnterButton={clickHandler => (
+						<div style={{ height: '100%', display: 'flex', alignItems: 'stretch' }}>
+							<button style={{ border: '1px solid #c3c3c3' }} onClick={clickHandler}>
+								<span aria-label="search" role="img">
+									🔍
+								</span>{' '}
+								Search
+							</button>
+						</div>
+					)}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});

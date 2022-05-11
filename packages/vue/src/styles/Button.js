@@ -128,9 +128,15 @@ const Button = styled('a')`
 		box-shadow: ${({ theme }) => `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
 	}
 
-	${props => (props.primary ? primary : null)};
-	${props => (props.disabled ? disabled : null)};
-	${props => props.large && large};
+	${(props) => (props.primary ? primary : null)};
+	${(props) => (props.disabled ? disabled : null)};
+	${(props) => props.large && large};
+
+	&.enter-btn {
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+		height: 100%;
+	}
 `;
 
 const loadMoreContainer = css({

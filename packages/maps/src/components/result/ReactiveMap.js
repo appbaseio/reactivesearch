@@ -22,15 +22,13 @@ import {
 	getClassName,
 	getResultStats,
 	checkSomePropChange,
+	getComponent,
+	hasCustomRenderer,
+	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import {
-	connect,
-	isFunction,
-	ReactReduxContext,
-	getValidPropsKeys,
-} from '@appbaseio/reactivesearch/lib/utils';
+import { connect, ReactReduxContext, getValidPropsKeys } from '@appbaseio/reactivesearch/lib/utils';
 import Pagination from '@appbaseio/reactivesearch/lib/components/result/addons/Pagination';
 import { Checkbox } from '@appbaseio/reactivesearch/lib/styles/FormControlList';
 import geohash from 'ngeohash';
@@ -930,7 +928,7 @@ class ReactiveMap extends Component {
 		const resultsToRender = this.getResultsToRender();
 		const {
 			showMarkers,
-			renderData,
+			renderItem,
 			defaultPin,
 			onPopoverClick,
 			autoClosePopover,
@@ -943,7 +941,7 @@ class ReactiveMap extends Component {
 			getPosition: this.getPosition,
 			zoom: this.state.zoom,
 			showMarkers,
-			renderData,
+			renderItem,
 			defaultPin,
 			onPopoverClick,
 			autoClosePopover,
@@ -959,6 +957,23 @@ class ReactiveMap extends Component {
 		};
 	}
 
+	getComponent = () => {
+		const { error, isLoading } = this.props;
+		const data = {
+			error,
+			loading: isLoading,
+			loadMore: this.loadMore,
+			...this.getData(),
+			setPage: this.setPage,
+			renderMap: () => this.props.renderMap(this.mapParams),
+			renderPagination: this.renderPagination,
+		};
+		return getComponent(data, this.props);
+	};
+	get hasCustomRenderer() {
+		return hasCustomRenderer(this.props);
+	}
+
 	render() {
 		const style = {
 			width: '100%',
@@ -971,15 +986,8 @@ class ReactiveMap extends Component {
 				{this.renderError()}
 				{this.shouldRenderLoader ? this.props.loader : null}
 				{!this.shouldRenderLoader
-					&& (this.props.renderAllData
-						? this.props.renderAllData(
-							this.withClickIds(parseHits(this.props.hits)),
-							this.loadMore,
-							() => this.props.renderMap(this.mapParams),
-							this.renderPagination,
-							this.triggerAnalytics,
-							this.getData(),
-						) // prettier-ignore
+					&& (this.hasCustomRenderer
+						? this.getComponent() // prettier-ignore
 						: this.props.renderMap(this.mapParams))}
 			</div>
 		);
@@ -1033,8 +1041,8 @@ ReactiveMap.propTypes = {
 	mapProps: types.props,
 	markerProps: types.props,
 	markers: types.children,
-	renderAllData: types.func,
-	renderData: types.func,
+	render: types.func,
+	renderItem: types.func,
 	renderError: types.title,
 	onPageChange: types.func,
 	onError: types.func,

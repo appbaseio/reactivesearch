@@ -22,6 +22,9 @@ import {
 	getCompositeAggsQuery,
 	getResultStats,
 	updateDefaultQuery,
+	isFunction,
+	getComponent,
+	hasCustomRenderer,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -33,7 +36,7 @@ import Flex from '../../styles/Flex';
 import { resultStats, sortOptions } from '../../styles/results';
 import { container } from '../../styles/Card';
 import { container as listContainer } from '../../styles/ListItem';
-import { connect, isFunction, getComponent, hasCustomRenderer } from '../../utils';
+import { connect } from '../../utils';
 import Results from './addons/Results';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
