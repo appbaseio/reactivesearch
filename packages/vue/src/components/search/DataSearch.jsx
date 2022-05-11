@@ -850,11 +850,14 @@ const DataSearch = {
 		},
 	},
 	render() {
-		const { theme, size, expandSuggestionsContainer } = this.$props;
+		const { theme, size, expandSuggestionsContainer, enableDefaultSuggestions } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
-		const hasSuggestions = this.currentValue
+		let hasSuggestions = this.currentValue
 			? this.suggestionsList.length || this.topSuggestions.length
 			: this.defaultSearchSuggestions.length;
+		if (enableDefaultSuggestions === false && !this.currentValue) {
+			hasSuggestions = false;
+		}
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
