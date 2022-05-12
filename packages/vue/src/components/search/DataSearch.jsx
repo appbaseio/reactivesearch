@@ -44,7 +44,7 @@ const {
 	recordSuggestionClick,
 	loadPopularSuggestions,
 	getRecentSearches,
-	updateHits,
+	resetStoreForComponent,
 } = Actions;
 const {
 	debounce,
@@ -458,7 +458,7 @@ const DataSearch = {
 			const performUpdate = () => {
 				// Refresh recent searches when value becomes empty
 				if (!value && props.enableDefaultSuggestions === false) {
-					this.updateHits(props.componentId, { hits: [], total: 0 });
+					this.resetStoreForComponent(props.componentId);
 				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
@@ -504,6 +504,11 @@ const DataSearch = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		updateDefaultQueryHandler(value, props) {
+			if (!value && props.enableDefaultSuggestions === false) {
+				// clear Component data from store
+				this.resetStoreForComponent(props.componentId);
+				return;
+			}
 			let defaultQueryOptions;
 			let query = DataSearch.defaultQuery(value, props);
 			if (this.defaultQuery) {
@@ -1396,7 +1401,7 @@ const mapDispatchToProps = {
 	recordSuggestionClick,
 	loadPopularSuggestions,
 	getRecentSearches,
-	updateHits,
+	resetStoreForComponent,
 };
 const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,
