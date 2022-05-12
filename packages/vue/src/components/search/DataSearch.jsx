@@ -44,6 +44,7 @@ const {
 	recordSuggestionClick,
 	loadPopularSuggestions,
 	getRecentSearches,
+	updateHits,
 } = Actions;
 const {
 	debounce,
@@ -456,7 +457,9 @@ const DataSearch = {
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
 				// Refresh recent searches when value becomes empty
-				if (!value && this.currentValue && this.enableRecentSearches) {
+				if (!value && props.enableDefaultSuggestions === false) {
+					this.updateHits(props.componentId, { hits: [], total: 0 });
+				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
 				this.currentValue = value;
@@ -1393,6 +1396,7 @@ const mapDispatchToProps = {
 	recordSuggestionClick,
 	loadPopularSuggestions,
 	getRecentSearches,
+	updateHits,
 };
 const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,
