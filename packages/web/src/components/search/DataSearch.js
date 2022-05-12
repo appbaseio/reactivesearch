@@ -14,7 +14,7 @@ import {
 	setCustomHighlightOptions,
 	loadPopularSuggestions,
 	getRecentSearches,
-	updateHits,
+	resetStoreForComponent,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -448,13 +448,13 @@ class DataSearch extends Component {
 					enableRecentSearches,
 					fetchRecentSearches,
 					enableDefaultSuggestions,
-					updateStoreHits,
+					resetStore,
 					componentId,
 				} = this.props;
 				// Refresh recent searches when value becomes empty,
 				// only when enableDefaultSuggestions is true
 				if (!value && enableDefaultSuggestions === false) {
-					updateStoreHits(componentId, { hits: [], total: 0 });
+					resetStore(componentId);
 				} else if (!value && this.state.currentValue && enableRecentSearches) {
 					fetchRecentSearches();
 				}
@@ -533,7 +533,13 @@ class DataSearch extends Component {
 	}, this.props.debounce);
 
 	updateDefaultQuery = (value, props) => {
-		const { defaultQuery } = props;
+		const { defaultQuery, resetStore, enableDefaultSuggestions } = props;
+		if (!value && enableDefaultSuggestions === false) {
+			// clear Component data from store
+			resetStore(props.componentId);
+			return;
+		}
+
 		let defaultQueryOptions;
 		let query = DataSearch.defaultQuery(value, props);
 		if (defaultQuery) {
@@ -1377,7 +1383,7 @@ DataSearch.propTypes = {
 	setCustomHighlightOptions: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
 	triggerAnalytics: types.funcRequired,
-	updateStoreHits: types.funcRequired,
+	resetStore: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
 	lastUsedQuery: types.string,
@@ -1546,7 +1552,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
-	updateStoreHits: (componentId, hits) => dispatch(updateHits(componentId, hits)),
+	resetStore: componentId => dispatch(resetStoreForComponent(componentId)),
 });
 
 const ConnectedComponent = connect(
