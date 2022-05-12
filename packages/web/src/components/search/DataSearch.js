@@ -14,6 +14,7 @@ import {
 	setCustomHighlightOptions,
 	loadPopularSuggestions,
 	getRecentSearches,
+	updateHits,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -443,9 +444,18 @@ class DataSearch extends Component {
 	) => {
 		const performUpdate = () => {
 			if (hasMounted) {
-				const { enableRecentSearches, fetchRecentSearches } = this.props;
-				// Refresh recent searches when value becomes empty
-				if (!value && this.state.currentValue && enableRecentSearches) {
+				const {
+					enableRecentSearches,
+					fetchRecentSearches,
+					enableDefaultSuggestions,
+					updateStoreHits,
+					componentId,
+				} = this.props;
+				// Refresh recent searches when value becomes empty,
+				// only when enableDefaultSuggestions is true
+				if (!value && enableDefaultSuggestions === false) {
+					updateStoreHits(componentId, { hits: [], total: 0 });
+				} else if (!value && this.state.currentValue && enableRecentSearches) {
 					fetchRecentSearches();
 				}
 				this.setState(
@@ -1367,6 +1377,7 @@ DataSearch.propTypes = {
 	setCustomHighlightOptions: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
 	triggerAnalytics: types.funcRequired,
+	updateStoreHits: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
 	lastUsedQuery: types.string,
@@ -1535,6 +1546,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
+	updateStoreHits: (componentId, hits) => dispatch(updateHits(componentId, hits)),
 });
 
 const ConnectedComponent = connect(
