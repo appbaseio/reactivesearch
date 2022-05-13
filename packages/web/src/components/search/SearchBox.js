@@ -434,7 +434,7 @@ const SearchBox = (props) => {
 	const withTriggerQuery = (func) => {
 		if (func) {
 			return e =>
-				func(e, ({ isOpen }: { isOpen: false }) => setValue(props.value, !isOpen, props));
+				func(e, ({ isOpen } = { isOpen: false }) => setValue(props.value, !isOpen, props));
 		}
 		return undefined;
 	};

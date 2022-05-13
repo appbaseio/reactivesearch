@@ -520,12 +520,17 @@ const SearchBox = {
 			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 		},
 
-		handleKeyDown(event, highlightedIndex) {
+		handleKeyDown(event, highlightedIndex = null) {
 			// if a suggestion was selected, delegate the handling to suggestion handler
-			if (event.key === 'Enter' && highlightedIndex === null) {
-				this.setValue(event.target.value, true);
-				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
+			if (event.key === 'Enter') {
+				if (this.$props.autosuggest === false) {
+					this.enterButtonOnClick();
+				} else if (highlightedIndex === null) {
+					this.setValue(event.target.value, true);
+					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
+				}
 			}
+
 			// Need to review
 			this.$emit('keyDown', event, this.triggerQuery);
 			this.$emit('key-down', event, this.triggerQuery);
@@ -691,23 +696,24 @@ const SearchBox = {
 
 			return null;
 		},
+		enterButtonOnClick() {
+			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
+		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
 			const { renderEnterButton } = this.$scopedSlots;
-			const enterButtonOnClick = () =>
-				this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
 
 			if (enterButton) {
 				const getEnterButtonMarkup = () => {
 					if (renderEnterButton) {
-						return renderEnterButton(enterButtonOnClick);
+						return renderEnterButton(this.enterButtonOnClick);
 					}
 
 					return (
 						<Button
 							class={`enter-btn ${getClassName(innerClass, 'enterButton')}`}
 							primary
-							onClick={enterButtonOnClick}
+							onClick={this.enterButtonOnClick}
 						>
 							Search
 						</Button>
@@ -1077,10 +1083,7 @@ const SearchBox = {
 											focus: (e) => {
 												this.$emit('focus', e, this.triggerQuery);
 											},
-											keydown: (e) => {
-												this.$emit('keyDown', e, this.triggerQuery);
-												this.$emit('key-down', e, this.triggerQuery);
-											},
+											keydown: this.handleKeyDown,
 											keyup: (e) => {
 												this.$emit('keyUp', e, this.triggerQuery);
 												this.$emit('key-up', e, this.triggerQuery);
