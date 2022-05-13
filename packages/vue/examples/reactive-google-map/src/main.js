@@ -4,10 +4,12 @@ import {
 	ReactiveBase,
 	ReactiveGoogleMap,
 	SelectedFilters,
-	SingleList
+	SingleList,
+	DataSearch,
 } from '@appbaseio/reactivesearch-vue';
 
 Vue.use(ReactiveBase);
+Vue.use(DataSearch);
 Vue.use(SingleList);
 Vue.use(SelectedFilters);
 Vue.use(ReactiveGoogleMap, {
@@ -16,5 +18,5 @@ Vue.use(ReactiveGoogleMap, {
 Vue.config.productionTip = false;
 
 new Vue({
-	render: h => h(App),
+	render: (h) => h(App),
 }).$mount('#app');
