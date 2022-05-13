@@ -35,7 +35,9 @@ const Main = () => (
 				showResultStats={false}
 				render={({ data, rawData, resultStats }) => {
 					const knowledgeGraph = rawData && rawData.knowledgeGraph;
-					const knowledgeGraphItem = knowledgeGraph && knowledgeGraph.itemListElement[0] && knowledgeGraph.itemListElement[0].result;
+					const knowledgeGraphItem = knowledgeGraph
+												&& knowledgeGraph.itemListElement[0]
+												&& knowledgeGraph.itemListElement[0].result;
 					return (
 						<div className="grid">
 							<div className="resultStats">
