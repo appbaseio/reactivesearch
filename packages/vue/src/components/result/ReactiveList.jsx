@@ -503,6 +503,7 @@ const ReactiveList = {
 					{this.data.map((item, index) =>
 						renderItem({
 							item,
+							count: this.currentPageState * size + index + 1,
 							triggerClickAnalytics: () =>
 								this.triggerClickAnalytics(this.currentPageState * size + index),
 						}),
