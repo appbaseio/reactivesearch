@@ -31,8 +31,8 @@ const Main = () => (
 			<div className="col">
 				<SearchBox
 					title="SearchBox"
-					defaultValue="Harry Potter"
-					dataField={[{ field: 'original_title', weight: 20 }]}
+					defaultValue="Ceremony"
+					dataField="original_title"
 					componentId="BookSensor"
 					size={10}
 					index="good-books,good-books-ds"
