@@ -24,7 +24,7 @@ body{
 }
 .grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, 150px) 200px;
+    grid-template-columns: repeat(auto-fill, 150px) 250px;
     gap: 15px;
 }
 
@@ -34,7 +34,7 @@ body{
 .list{
     grid-column: 1 / -2;
     display: grid;
-    grid-template-columns: inherit;
+    grid-template-columns: repeat(auto-fill, 150px);
     order: -1;
     gap: 10px;
 }
@@ -45,7 +45,7 @@ body{
     padding: 1rem;
     text-align: center;
     transition: opacity 50ms;
-    width: 200px;
+    width: 250px;
     display: block;
     text-decoration: none;
     color: inherit;
