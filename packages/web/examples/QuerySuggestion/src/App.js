@@ -31,7 +31,7 @@ const App = () => (
 			React Searchbox with query suggestions{' '}
 			<span style={{ fontSize: '1rem' }}>
 				<a
-					href="https://docs.appbase.io/docs/reactivesearch/react-searchbox/apireference/"
+					href="https://docs.appbase.io/docs/reactivesearch/v3/search/searchbox/"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
