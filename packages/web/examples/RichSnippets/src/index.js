@@ -40,6 +40,7 @@ const Main = () => (
 												&& knowledgeGraph.itemListElement[0].result;
 					return (
 						<div className="grid">
+
 							<div className="resultStats">
 								{resultStats.numberOfResults ? `Found ${resultStats.numberOfResults} results in ${resultStats.time}ms` : ''}
 							</div>
@@ -49,9 +50,12 @@ const Main = () => (
 										<div>
 											{knowledgeGraphItem.image ? (<img src={knowledgeGraphItem.image.contentUrl} className="bannerImg" alt="movie poster" />) : null}
 											<h3 className="bannerText">{knowledgeGraphItem.name}</h3>
+											<p>{knowledgeGraphItem.detailedDescription.articleBody.substr(0, 100).concat('...')
+											}
+											</p>
 										</div>
 									</a>
-								) : 'No results'}
+								) : null}
 							</div>
 							<div className="list main">
 								{data.map(item => (
