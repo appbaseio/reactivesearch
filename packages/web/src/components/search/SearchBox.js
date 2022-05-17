@@ -452,23 +452,30 @@ const SearchBox = (props) => {
 	};
 
 	const handleFeaturedSuggestionClicked = (suggestion) => {
-		if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
-			const { target = '_blank', link = '/' } = JSON.parse(suggestion.subAction);
+		try {
+			if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+				const { target = '_self', link = '/' } = JSON.parse(suggestion.subAction);
 
-			if (typeof window !== 'undefined') {
-				window.open(link, target);
+				if (typeof window !== 'undefined') {
+					window.open(link, target);
+				}
 			}
+			if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+				// eslint-disable-next-line no-new-func
+				const func = new Function(`return ${suggestion.subAction}`)();
+				func(suggestion, currentValue);
+			}
+			// blur is important to close the dropdown
+			// on selecting one of featured suggestions
+			// else Downshift probably is focusing the dropdown
+			// and not letting it close
+			_inputRef.current.blur();
+		} catch (e) {
+			console.error(
+				`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
+				e,
+			);
 		}
-		if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
-			// eslint-disable-next-line no-new-func
-			const func = new Function(`return ${suggestion.subAction}`)();
-			func(suggestion, currentValue);
-		}
-		// blur is important to close the dropdown
-		// on selecting one of featured suggestions
-		// else Downshift probably is focusing the dropdown
-		// and not letting it close
-		_inputRef.current.blur();
 	};
 
 	const onSuggestionSelected = (suggestion) => {
