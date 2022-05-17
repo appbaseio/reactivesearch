@@ -203,8 +203,8 @@ body {
 	padding: 1rem;
   }
   .result {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
+	display: flex;
+	flex: 1;
 	gap: 1rem;
 	padding: 1rem;
   }
@@ -233,10 +233,12 @@ body {
   }
   .list {
 	text-align: left;
+	margin: 0.5rem;
   }
   .listHead {
-	font-weight: bold;
 	color: gray;
+	font-size: 1.5rem;
+	margin: 0.25rem;
   }
 .listIcon{
 	padding: 0.25rem;
@@ -244,9 +246,9 @@ body {
 .listItem{
 	padding: 0.25rem 0rem;
 }
-.divideLeft{
-	border-left: 2px solid #dddcdc;;
-    padding-left: 1rem;
+.divider{
+	width: 2px;
+	background-color:  #dddcdc;;
 }
 .language{
 	border: 2px solid #dddcdc;

@@ -66,84 +66,94 @@ const App = () => (
 
 				return isOpen ? (
 					<div className="result suggestions">
-						<div className="resultSuggestion list">
-							<div className="listHead">Suggestions</div>
-							{indexResults.map((item, index) => (
-								<div
-									/* eslint-disable-next-line react/no-array-index-key */
-									key={item._id + index}
-									{...getItemProps({
-										item,
-										style: {
-											backgroundColor:
+						<div className="flex column">
+							{indexResults.length
+								? (
+									<div className="resultSuggestion list">
+										<div className="listHead">Suggestions</div>
+										{indexResults.map((item, index) => (
+											<div
+											/* eslint-disable-next-line react/no-array-index-key */
+												key={item._id + index}
+												{...getItemProps({
+													item,
+													style: {
+														backgroundColor:
 												highlightedIndex === index ? 'lightgray' : 'white',
-											fontWeight: selectedItem === item ? 'bold' : 'normal',
-										},
-									})}
-									className="listItem"
-								>
-									<span className="listIcon">{magnifyingGlassIcon}</span>
-									<span className="clipText">{item.value}</span>
-								</div>
-							))}
-						</div>
-						<div className="resultCategory list">
-							<div className="listHead">Genres</div>
+														fontWeight: selectedItem === item ? 'bold' : 'normal',
+													},
+												})}
+												className="listItem"
+											>
+												<span className="listIcon">{magnifyingGlassIcon}</span>
+												<span className="clipText">{item.value}</span>
+											</div>
+										))}
+									</div>
+								) : null}
 							{categoryResults.length
-								? categoryResults.map((item, index) => (
-									<div
-										key={item._category}
-										{...getItemProps({
-											item,
-											style: {
-												backgroundColor:
+								? (
+									<div className="resultCategory list">
+										<div className="listHead">Genres</div>
+										{categoryResults.map((item, index) => (
+											<div
+												key={item._category}
+												{...getItemProps({
+													item,
+													style: {
+														backgroundColor:
 														highlightedIndex
 														=== index + indexResults.length
 															? 'lightgray'
 															: 'white',
-												fontWeight:
+														fontWeight:
 														selectedItem === item ? 'bold' : 'normal',
-											},
-										})}
-										className="listItem"
-									>
-										<span className="listIcon">{magnifyingGlassIcon}</span>
-										<span className="clipText">{item.value}</span>
+													},
+												})}
+												className="listItem"
+											>
+												<span className="listIcon">{magnifyingGlassIcon}</span>
+												<span className="clipText">{item.value}</span>
+											</div>
+										))}
 									</div>
-								  ))
-								: 'No Results'}
+								) : null}
 						</div>
-						<div className="resultPopular list divideLeft">
-							<div className="listHead flex align-center">
-								{/* eslint-disable-next-line react/no-unescaped-entities */}
-								<span>Popular in </span><span className="clipText pad-l-1">"{value}"</span>
-							</div>
-							<div>
-								{popularResults.map((item, index) => (
-									<div
-										key={item._id}
-										{...getItemProps({
-											item,
-											style: {
-												backgroundColor:
+						{((indexResults.length || categoryResults.length) && popularResults.length) ? <div className="divider" /> : null}
+						{popularResults.length
+							? (
+								<div className="resultPopular list">
+									<div className="listHead flex align-center">
+										{/* eslint-disable-next-line react/no-unescaped-entities */}
+										<span>Popular</span>{value ? <span className="clipText pad-l-1">in "{value}"</span> : null}
+									</div>
+									<div>
+										{popularResults.map((item, index) => (
+											<div
+												key={item._id}
+												{...getItemProps({
+													item,
+													style: {
+														backgroundColor:
 													highlightedIndex
 													=== index
 														+ indexResults.length
 														+ categoryResults.length
 														? 'lightgray'
 														: 'white',
-												fontWeight:
+														fontWeight:
 													selectedItem === item ? 'bold' : 'normal',
-											},
-										})}
-										className="listItem"
-									>
-										<span className="listIcon">{trendingIcon}</span>
-										<span className="clipText">{item.value}</span>
+													},
+												})}
+												className="listItem"
+											>
+												<span className="listIcon">{trendingIcon}</span>
+												<span className="clipText">{item.value}</span>
+											</div>
+										))}
 									</div>
-								))}
-							</div>
-						</div>
+								</div>
+							) : null}
 					</div>
 				) : null;
 			}}
