@@ -209,7 +209,10 @@ body {
 	padding: 1rem;
   }
   .suggestions{
-	box-shadow: #9597a1 0px 8px 24px;
+	position: absolute;
+    box-shadow: #9597a1 0px 8px 24px;
+    background: white;
+    width: 100%;
   }
   .resultSuggestion {
 	grid-column: 1;

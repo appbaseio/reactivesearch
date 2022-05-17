@@ -48,7 +48,6 @@ const App = () => (
 			enablePopularSuggestions
 			popularSuggestionsConfig={{ index: 'movies-store-app', size: 5 }}
 			render={({
-				loading,
 				error,
 				data,
 				value,
@@ -56,9 +55,6 @@ const App = () => (
 					isOpen, getItemProps, highlightedIndex, selectedItem,
 				},
 			}) => {
-				if (loading) {
-					return <div>Fetching Suggestions.</div>;
-				}
 				if (error) {
 					return <div>Something went wrong! Error details {JSON.stringify(error)}</div>;
 				}
@@ -68,7 +64,7 @@ const App = () => (
 				);
 				const categoryResults = getCategoryResults(data.filter(res => res._category));
 
-				return isOpen && Boolean(value.length) ? (
+				return isOpen ? (
 					<div className="result suggestions">
 						<div className="resultSuggestion list">
 							<div className="listHead">Suggestions</div>
