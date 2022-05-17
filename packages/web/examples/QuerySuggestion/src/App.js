@@ -64,7 +64,7 @@ const App = () => (
 				);
 				const categoryResults = getCategoryResults(data.filter(res => res._category));
 
-				return isOpen ? (
+				return isOpen && (indexResults.length || categoryResults.length || popularResults.length) ? (
 					<div className="result suggestions">
 						<div className="flex column">
 							{indexResults.length
