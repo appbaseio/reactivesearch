@@ -162,7 +162,7 @@ const App = () => (
 		<ReactiveList
 			componentId="result"
 			size={5}
-			dataField={['original_title', 'overview']}
+			dataField="original_title"
 			react={{ and: 'search' }}
 			pagination
 			render={({ data }) => (
