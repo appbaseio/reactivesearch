@@ -260,7 +260,7 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 20vw;
+    width: 40vw;
 }
 .pad-l-1{
 	padding-left: 0.5rem;
