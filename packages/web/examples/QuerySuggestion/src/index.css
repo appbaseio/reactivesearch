@@ -1,0 +1,267 @@
+/* layout */
+
+body {
+	font-family: 'Avenir', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-top: 15px;
+  }
+
+  .row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+  }
+
+  .col {
+	flex: 1;
+	padding: 15px;
+  }
+
+  .row > .col:first-child {
+	border-right: 1px solid #ccc;
+	max-width: 400px;
+  }
+
+  .row > .col:last-child {
+	background: #fafafa;
+  }
+
+  .flex {
+	display: flex;
+  }
+
+  .wrap {
+	flex-wrap: wrap;
+  }
+
+  .column {
+	flex-direction: column;
+  }
+
+  .align-center {
+	align-items: center;
+  }
+
+  .justify-center {
+	justify-content: center;
+  }
+
+  .justify-space-between {
+	justify-content: space-between;
+  }
+
+  .text-center {
+	text-align: center;
+  }
+
+  .text-left {
+	text-align: left;
+  }
+
+  @media all and (max-width: 767px) {
+	.row {
+	  flex-direction: column;
+	}
+
+	.row > .col:first-child {
+	  border-right: none;
+	  max-width: none;
+	}
+  }
+
+  /* apps */
+
+  .authors-list {
+	color: #9d9d9d;
+	font-weight: bold;
+  }
+
+  .ratings-list {
+	padding: 10px 0;
+  }
+
+  .avg-rating {
+	color: #6b6b6b;
+  }
+
+  .stars {
+	color: gold;
+  }
+
+  .location {
+	color: salmon;
+	margin-right: 5px;
+  }
+
+  .meetup-location {
+	margin: 4px 0;
+  }
+
+  .book-title {
+	white-space: normal;
+	margin-top: 4px;
+  }
+
+  .book-title-card {
+	white-space: normal;
+	margin-top: 4px;
+	max-height: 45px;
+  }
+
+  .book-image {
+	height: 150px;
+	width: 110px;
+	background-size: cover;
+  }
+
+  .book-header {
+	font-weight: bold;
+	margin-bottom: 5px;
+  }
+
+  .book-content {
+	background: white;
+	margin: 10px 0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+
+  .meetup-title {
+	white-space: normal;
+  }
+
+  .meetup-topics {
+	height: 35px;
+	overflow: hidden;
+  }
+
+  .meetup-topic {
+	background-color: #dedede;
+	color: #555;
+	padding: 5px 10px;
+	margin: 5px;
+	border-radius: 4px;
+  }
+
+  .meetup-topic:first-child {
+	margin-left: 0;
+  }
+
+  .col .meetup-list-image {
+	background-size: cover;
+  }
+
+  .list-item {
+	display: flex;
+	height: 30px;
+	height: 30px;
+	align-items: center;
+  }
+
+  .list-item-label {
+	margin-left: 10px;
+	height: 30px;
+	line-height: 2;
+  }
+
+  .pagination {
+	display: -ms-flexbox;
+	display: flex;
+	padding-left: 0;
+	list-style: none;
+	border-radius: 0.25rem;
+	padding-top: 20px;
+	justify-content: flex-end;
+  }
+
+  .page-link {
+	position: relative;
+	display: block;
+	padding: 0.5rem 0.75rem;
+	margin-left: -1px;
+	line-height: 1.25;
+	color: #007bff;
+	background-color: #fff;
+	border: 1px solid #dee2e6;
+  }
+
+  .page-link:hover {
+	cursor: pointer;
+	background-color: #e6e6e6;
+  }
+
+  li.page-item.active > a {
+	background: #007bff;
+	color: white;
+	border-color: #007bff;
+  }
+  .page {
+	padding: 1rem;
+  }
+  .result {
+	display: flex;
+	flex: 1;
+	gap: 1rem;
+	padding: 1rem;
+  }
+  .suggestions{
+	position: absolute;
+    box-shadow: #9597a1 0px 8px 24px;
+    background: white;
+    width: 100%;
+  }
+  .resultSuggestion {
+	grid-column: 1;
+	grid-row: 1;
+  }
+  .resultCategory {
+	grid-column: 1;
+	grid-row: 2;
+  }
+  .resultPopular {
+	grid-area: 1 / 2 / 3 / 3;
+  }
+  .loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+  }
+  .list {
+	text-align: left;
+	margin: 0.5rem;
+  }
+  .listHead {
+	color: gray;
+	font-size: 1.5rem;
+	margin: 0.25rem;
+  }
+.listIcon{
+	padding: 0.25rem;
+}
+.listItem{
+	padding: 0.25rem 0rem;
+}
+.divider{
+	width: 2px;
+	background-color:  #dddcdc;;
+}
+.language{
+	border: 2px solid #dddcdc;
+	padding: 0.2rem;
+	text-transform: uppercase;
+}
+.clipText{
+	display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 40vw;
+}
+.pad-l-1{
+	padding-left: 0.5rem;
+}

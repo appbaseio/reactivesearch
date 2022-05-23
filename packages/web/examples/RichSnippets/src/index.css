@@ -1,0 +1,115 @@
+body{
+    margin: 0px;
+}
+.logo{
+    display: flex;
+    width: 9rem;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+.cover{
+	align-items: center;
+    background: rgb(119,47,150);
+    background: linear-gradient(90deg, rgba(119,47,150,1) 0%, rgba(222,52,139,1) 50%, rgba(173,0,133,1) 100%);
+    background-position: 50%;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 368px;
+    padding: .5rem 1rem;
+    text-align: center;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 150px) 250px;
+    gap: 15px;
+}
+
+.sidebar{
+    grid-column-end: -1;
+}
+.list{
+    grid-column: 1 / -2;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 150px);
+    order: -1;
+    gap: 10px;
+}
+.banner{
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,.16);
+    padding: 1rem;
+    text-align: center;
+    transition: opacity 50ms;
+    width: 250px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+@media only screen and (max-width: 500px) {
+    .list{
+        order: 0;
+    }
+}
+.bannerImg{
+    max-width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.coverTitle{
+	font-size: 38px;
+    font-weight: 300;
+}
+.searchBox{
+    width: 30rem;
+    max-width: 80vw;
+    color: black;
+}
+.searchBox input{
+    border-radius: 5px;
+}
+.card{
+    height: 300px;
+    padding: 20px;
+}
+.cardImg{
+    max-width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+.cardTitle{
+    margin: 3px;
+    font-weight: bold;
+    color: gray;
+}
+
+.cardBadge{
+    border: 1px solid gray;
+    padding: 3px;
+    margin: 2px;
+    border-radius: 3px;
+}
+.ratings > div{
+    margin: 3px;
+}
+.resultStats{
+    grid-column: 1/-1;
+    order: -1;
+    text-align: center;
+    padding: 5px;
+}
+/* UTILITIES */
+.uppercase{
+    text-transform: uppercase;
+}
+.bold{
+    font-weight: bold;
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
