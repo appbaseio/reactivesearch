@@ -434,7 +434,7 @@ const SearchBox = (props) => {
 	const withTriggerQuery = (func) => {
 		if (func) {
 			return e =>
-				func(e, ({ isOpen }: { isOpen: false }) => setValue(props.value, !isOpen, props));
+				func(e, ({ isOpen } = { isOpen: false }) => setValue(props.value, !isOpen, props));
 		}
 		return undefined;
 	};
@@ -499,14 +499,21 @@ const SearchBox = (props) => {
 			);
 		}
 	};
+	const enterButtonOnClick = () =>
+		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
 
-	const handleKeyDown = (event, highlightedIndex) => {
+	const handleKeyDown = (event, highlightedIndex = null) => {
 		// if a suggestion was selected, delegate the handling
 		// to suggestion handler
-		if (event.key === 'Enter' && highlightedIndex === null) {
-			setValue(event.target.value, true);
-			onValueSelected(event.target.value, causes.ENTER_PRESS);
+		if (event.key === 'Enter') {
+			if (props.autosuggest === false) {
+				enterButtonOnClick();
+			} else if (highlightedIndex === null) {
+				setValue(event.target.value, true);
+				onValueSelected(event.target.value, causes.ENTER_PRESS);
+			}
 		}
+
 		if (props.onKeyDown) {
 			props.onKeyDown(event, this.triggerQuery);
 		}
@@ -673,8 +680,6 @@ const SearchBox = (props) => {
 
 	const renderEnterButtonElement = () => {
 		const { enterButton, renderEnterButton, innerClass } = props;
-		const enterButtonOnClick = () =>
-			triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
 
 		if (enterButton) {
 			const getEnterButtonMarkup = () => {
@@ -1072,7 +1077,7 @@ const SearchBox = (props) => {
 								onBlur={withTriggerQuery(props.onBlur)}
 								onFocus={withTriggerQuery(props.onFocus)}
 								onKeyPress={withTriggerQuery(props.onKeyPress)}
-								onKeyDown={withTriggerQuery(props.onKeyDown)}
+								onKeyDown={handleKeyDown}
 								onKeyUp={withTriggerQuery(props.onKeyUp)}
 								autoFocus={props.autoFocus}
 								iconPosition={props.iconPosition}
