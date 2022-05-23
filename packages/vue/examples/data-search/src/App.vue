@@ -22,6 +22,7 @@
 				className="result-list-container"
 				:pagination="true"
 				:size="5"
+				:URLParams="true"
 				:react="{ and: ['BookSensor'] }"
 			>
 				<div slot="renderItem" slot-scope="{ item }">

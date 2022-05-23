@@ -133,6 +133,28 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.51":
+  version "1.16.0-alpha.51"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.51.tgz#39fac386b84da1894c955a1c323bed9c2ff4f8cf"
+  integrity sha512-OQkWEMwFQakgcTyXYmBseOPdDNi6pdS5GZIkIDL963/hVFBwFX6wtCc7DPfLaFAKA5HwonhnIgNdHvExfjPTjw==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.6"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^5.0.0"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    gmap-vue "^1.5.0"
+    hotkeys-js "^3.8.7"
+    ngeohash "^0.6.3"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^3.2.15"
+    vue-types "^1.7.0"
+
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
@@ -2214,6 +2236,11 @@
     ansi-html-community "0.0.8"
     html-entities "^2.3.3"
     strip-ansi "^6.0.0"
+
+"@google/markerclustererplus@^5.1.0":
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@google/markerclustererplus/-/markerclustererplus-5.1.3.tgz#dd7ddbb2a17c977e0b0252c3d8e61fcf502b1bf2"
+  integrity sha512-2wQGO6GGbKPC2tNmTz8ei1zBa64zV3QBBvgLHiPvYqUA63230qNqfQpN+nzsrl1RM40NJtty4Y1CEQKxq6MBGg==
 
 "@googlemaps/js-api-loader@1.13.10":
   version "1.13.10"
@@ -17581,6 +17608,13 @@ globule@^1.0.0:
     glob "~7.1.1"
     lodash "~4.17.10"
     minimatch "~3.0.2"
+
+gmap-vue@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/gmap-vue/-/gmap-vue-1.5.0.tgz#43de7cba85c61280bfa65e6450b9d55657e9a82f"
+  integrity sha512-WE0VnSM1EsaTFVsnq53WGnre9cP1Q9DPCr0IiPmaoqsQioAKtTNBNyomrEvg0NIsVuxrdC2qvbgZPXCa8v/mBA==
+  dependencies:
+    "@google/markerclustererplus" "^5.1.0"
 
 good-listener@^1.2.2:
   version "1.2.2"
@@ -33856,7 +33890,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.3:
+vue-types@^1.3.3, vue-types@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==
