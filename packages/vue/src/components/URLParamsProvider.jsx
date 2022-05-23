@@ -22,22 +22,40 @@ const URLParamsProvider = {
 		window.onpopstate = () => {
 			this.init();
 			const activeComponents = Array.from(this.params.keys());
-
 			// remove inactive components from selectedValues
 			Object.keys(this.currentSelectedState)
-				.filter(item => !activeComponents.includes(item))
-				.forEach(component => {
-					this.setValue(component, null);
+				.filter((item) => !activeComponents.includes(item))
+				.forEach((component) => {
+					this.setValue(
+						component,
+						null,
+						undefined,
+						undefined,
+						undefined,
+						undefined,
+						undefined,
+						undefined,
+						'URL',
+					);
 				});
-
 			// update active components in selectedValues
-			Array.from(this.params.entries()).forEach(item => {
+			Array.from(this.params.entries()).forEach((item) => {
 				try {
 					const [component, value] = item;
 					const { label, showFilter, URLParams } = this.selectedValues[component] || {
 						label: component,
 					};
-					this.setValue(component, JSON.parse(value), label, showFilter, URLParams);
+					this.setValue(
+						component,
+						JSON.parse(value),
+						label,
+						showFilter,
+						URLParams,
+						undefined,
+						undefined,
+						undefined,
+						'URL',
+					);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
 					console.error(e);
@@ -53,7 +71,6 @@ const URLParamsProvider = {
 			this.checkForURLParamsChange();
 		},
 		selectedValues(newVal, oldVal) {
-			this.currentSelectedState = newVal;
 			if (!isEqual(newVal, oldVal)) {
 				this.searchString = this.$props.getSearchParams
 					? this.$props.getSearchParams()
@@ -61,31 +78,40 @@ const URLParamsProvider = {
 				this.params = new URLSearchParams(this.searchString);
 				const currentComponents = Object.keys(newVal);
 				const urlComponents = Array.from(this.params.keys());
-
+				let shouldPushHistory = false;
 				currentComponents
-					.filter(component => newVal[component].URLParams)
-					.forEach(component => {
+					.filter((component) => newVal[component].URLParams)
+					.forEach((component) => {
+						const selectedValues = newVal[component];
 						// prevents empty history pollution on initial load
 						if (
 							this.hasValidValue(newVal[component])
 							|| this.hasValidValue(oldVal[component])
 						) {
-							const selectedValues = newVal[component];
 							if (selectedValues.URLParams) {
 								if (selectedValues.category) {
-									this.setURL(
+									const shouldUpdateHistory = this.setURL(
 										component,
 										this.getValue({
 											category: selectedValues.category,
 											value: selectedValues.value,
 										}),
 									);
+									if (shouldUpdateHistory) {
+										shouldPushHistory = true;
+									}
 								} else {
-									this.setURL(component, this.getValue(selectedValues.value));
+									const shouldUpdateHistory = this.setURL(
+										component,
+										this.getValue(selectedValues.value),
+									);
+									if (shouldUpdateHistory) {
+										shouldPushHistory = true;
+									}
 								}
 							} else {
 								this.params.delete(component);
-								this.pushToHistory();
+								shouldPushHistory = true;
 							}
 						} else if (
 							!this.hasValidValue(newVal[component])
@@ -93,24 +119,28 @@ const URLParamsProvider = {
 						) {
 							// doesn't have a valid value, but the url has a (stale) valid value set
 							this.params.delete(component);
-							this.pushToHistory();
+							shouldPushHistory = true;
 						}
 					});
 
 				// remove unmounted components
 				Object.keys(newVal)
-					.filter(component => !currentComponents.includes(component))
-					.forEach(component => {
+					.filter((component) => !currentComponents.includes(component))
+					.forEach((component) => {
 						this.params.delete(component);
-						this.pushToHistory();
+						shouldPushHistory = true;
 					});
 
 				if (!currentComponents.length) {
-					Array.from(this.params.keys()).forEach(item => {
-						if(this.searchComponents && this.searchComponents.includes(item)) {
+					Array.from(this.params.keys()).forEach((item) => {
+						if (this.searchComponents && this.searchComponents.includes(item)) {
 							this.params.delete(item);
+							shouldPushHistory = true;
 						}
 					});
+				}
+
+				if (shouldPushHistory) {
 					this.pushToHistory();
 				}
 			}
@@ -162,8 +192,9 @@ const URLParamsProvider = {
 
 		getValue(value) {
 			if (Array.isArray(value) && value.length) {
-				return value.map(item => this.getValue(item));
-			} if (value && typeof value === 'object') {
+				return value.map((item) => this.getValue(item));
+			}
+			if (value && typeof value === 'object') {
 				// TODO: support for NestedList
 				if (value.location) return value;
 				if (value.category) return value;
@@ -173,24 +204,20 @@ const URLParamsProvider = {
 		},
 
 		setURL(component, value) {
-			this.searchString = this.$props.getSearchParams
-				? this.$props.getSearchParams()
-				: window.location.search;
-			this.params = new URLSearchParams(this.searchString);
 			if (
 				!value
 				|| (typeof value === 'string' && value.trim() === '')
 				|| (Array.isArray(value) && value.length === 0)
 			) {
 				this.params.delete(component);
-				this.pushToHistory();
-			} else {
-				const data = JSON.stringify(this.getValue(value));
-				if (data !== this.params.get(component)) {
-					this.params.set(component, data);
-					this.pushToHistory();
-				}
+				return true;
 			}
+			const data = JSON.stringify(value);
+			if (data !== this.params.get(component)) {
+				this.params.set(component, data);
+				return true;
+			}
+			return false;
 		},
 
 		pushToHistory() {
@@ -208,11 +235,15 @@ const URLParamsProvider = {
 	},
 	render() {
 		const children = this.$slots.default;
-		return <Base as={this.$props.as} class={this.$props.className}>{children}</Base>;
+		return (
+			<Base as={this.$props.as} class={this.$props.className}>
+				{children}
+			</Base>
+		);
 	},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
 	selectedValues: state.selectedValues,
 	searchComponents: state.components,
 });
@@ -225,7 +256,4 @@ const mapDispatchtoProps = {
 URLParamsProvider.install = function (Vue) {
 	Vue.component(URLParamsProvider.name, URLParamsProvider);
 };
-export default connect(
-	mapStateToProps,
-	mapDispatchtoProps,
-)(URLParamsProvider);
+export default connect(mapStateToProps, mapDispatchtoProps)(URLParamsProvider);

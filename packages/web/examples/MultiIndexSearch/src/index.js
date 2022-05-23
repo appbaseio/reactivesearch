@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	ReactiveList,
 	ResultCard,
 	SelectedFilters,
@@ -11,25 +11,31 @@ import {
 
 import './index.css';
 
+
+const badge = {
+	'good-books': 'badgeAqua',
+	'good-books-ds': 'badgeCrimson',
+};
+
 const Main = () => (
 	<ReactiveBase
-		app="good-books-ds"
-		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+		app="good-books,good-books-ds"
+		url="https://b59ca4ceab0d:00a2085f-8794-4a7e-96af-041f45332f0e@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 		enableAppbase
 		appbaseConfig={{
 			recordAnalytics: true,
+			userId: 'jon',
 		}}
 	>
 		<div className="row">
 			<div className="col">
-				<DataSearch
-					title="DataSearch"
-					dataField={['original_title', 'original_title.search']}
+				<SearchBox
+					title="SearchBox"
+					defaultValue="Ceremony"
+					dataField="original_title"
 					componentId="BookSensor"
-					URLParams
-					enableRecentSearches
-					enablePopularSuggestions
-					size={5}
+					size={10}
+					index="good-books,good-books-ds"
 				/>
 			</div>
 
@@ -41,7 +47,6 @@ const Main = () => (
 					size={10}
 					className="result-list-container"
 					pagination
-					URLParams
 					react={{
 						and: 'BookSensor',
 					}}
@@ -88,9 +93,14 @@ const Main = () => (
 													</span>
 												</div>
 											</div>
-											<span className="pub-year">
-												Pub {item.original_publication_year}
-											</span>
+											<div>
+												<span className="pub-year">
+													Pub {item.original_publication_year}
+												</span>
+												<span className={badge[item._index]}>
+													{item._index}
+												</span>
+											</div>
 										</div>
 									</ResultCard.Description>
 								</ResultCard>
