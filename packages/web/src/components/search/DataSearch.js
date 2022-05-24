@@ -14,6 +14,7 @@ import {
 	setCustomHighlightOptions,
 	loadPopularSuggestions,
 	getRecentSearches,
+	resetStoreForComponent,
 } from '@appbaseio/reactivecore/lib/actions';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import {
@@ -124,6 +125,7 @@ class DataSearch extends Component {
 			distinctFieldConfig,
 			index,
 			enableAppbase,
+			enableDefaultSuggestions,
 		} = this.props;
 
 		// TODO: Remove in 4.0
@@ -153,9 +155,12 @@ class DataSearch extends Component {
 				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
-		fetchPopularSuggestions(componentId);
-		if (enableRecentSearches) {
-			fetchRecentSearches();
+		const shouldFetchInitialSuggestions = enableDefaultSuggestions || this.state.currentValue;
+		if (shouldFetchInitialSuggestions) {
+			fetchPopularSuggestions(componentId);
+			if (enableRecentSearches) {
+				fetchRecentSearches();
+			}
 		}
 	}
 
@@ -439,9 +444,18 @@ class DataSearch extends Component {
 	) => {
 		const performUpdate = () => {
 			if (hasMounted) {
-				const { enableRecentSearches, fetchRecentSearches } = this.props;
-				// Refresh recent searches when value becomes empty
-				if (!value && this.state.currentValue && enableRecentSearches) {
+				const {
+					enableRecentSearches,
+					fetchRecentSearches,
+					enableDefaultSuggestions,
+					resetStore,
+					componentId,
+				} = this.props;
+				// Refresh recent searches when value becomes empty,
+				// only when enableDefaultSuggestions is true
+				if (!value && enableDefaultSuggestions === false) {
+					resetStore(componentId);
+				} else if (!value && this.state.currentValue && enableRecentSearches) {
 					fetchRecentSearches();
 				}
 				this.setState(
@@ -519,7 +533,13 @@ class DataSearch extends Component {
 	}, this.props.debounce);
 
 	updateDefaultQuery = (value, props) => {
-		const { defaultQuery } = props;
+		const { defaultQuery, resetStore, enableDefaultSuggestions } = props;
+		if (!value && enableDefaultSuggestions === false) {
+			// clear Component data from store
+			resetStore(props.componentId);
+			return;
+		}
+
 		let defaultQueryOptions;
 		let query = DataSearch.defaultQuery(value, props);
 		if (defaultQuery) {
@@ -953,10 +973,11 @@ class DataSearch extends Component {
 			showDistinctSuggestions,
 			defaultPopularSuggestions,
 			defaultSuggestions,
+			enableDefaultSuggestions,
 		} = this.props;
 		const isPopularSuggestionsEnabled = enableQuerySuggestions || enablePopularSuggestions;
 		const { currentValue } = this.state;
-		if (currentValue) {
+		if (currentValue || enableDefaultSuggestions === false) {
 			return [];
 		}
 		const customDefaultPopularSuggestions = defaultPopularSuggestions.map(suggestion => ({
@@ -1057,11 +1078,19 @@ class DataSearch extends Component {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
 		const {
-			theme, themePreset, size, recentSearchesIcon, popularSearchesIcon,
+			theme,
+			themePreset,
+			size,
+			recentSearchesIcon,
+			popularSearchesIcon,
+			enableDefaultSuggestions,
 		} = this.props;
-		const hasSuggestions = currentValue
+		let hasSuggestions = currentValue
 			? suggestionsList.length || this.topSuggestions.length
 			: this.defaultSuggestions.length;
+		if (enableDefaultSuggestions === false && !currentValue) {
+			hasSuggestions = false;
+		}
 		return (
 			<Container style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -1354,6 +1383,7 @@ DataSearch.propTypes = {
 	setCustomHighlightOptions: types.funcRequired,
 	setSuggestionsSearchValue: types.funcRequired,
 	triggerAnalytics: types.funcRequired,
+	resetStore: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
 	lastUsedQuery: types.string,
@@ -1448,6 +1478,7 @@ DataSearch.propTypes = {
 	addonBefore: types.children,
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
+	enableDefaultSuggestions: types.bool,
 };
 
 DataSearch.defaultProps = {
@@ -1480,6 +1511,7 @@ DataSearch.defaultProps = {
 	addonBefore: undefined,
 	addonAfter: undefined,
 	expandSuggestionsContainer: true,
+	enableDefaultSuggestions: true,
 };
 
 // Add componentType for SSR
@@ -1520,6 +1552,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	fetchRecentSearches: queryOptions => dispatch(getRecentSearches(queryOptions)),
 	fetchPopularSuggestions: component => dispatch(loadPopularSuggestions(component)),
+	resetStore: componentId => dispatch(resetStoreForComponent(componentId)),
 });
 
 const ConnectedComponent = connect(

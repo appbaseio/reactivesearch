@@ -44,6 +44,7 @@ const {
 	recordSuggestionClick,
 	loadPopularSuggestions,
 	getRecentSearches,
+	resetStoreForComponent,
 } = Actions;
 const {
 	debounce,
@@ -115,10 +116,14 @@ const DataSearch = {
 			);
 		}
 
-		this.loadPopularSuggestions(this.$props.componentId);
 		this.currentValue = this.selectedValue || '';
-		if (enableRecentSearches) {
-			this.getRecentSearches();
+		const shouldFetchInitialSuggestions
+			= this.$props.enableDefaultSuggestions || this.currentValue;
+		if (shouldFetchInitialSuggestions) {
+			this.loadPopularSuggestions(this.$props.componentId);
+			if (enableRecentSearches) {
+				this.getRecentSearches();
+			}
 		}
 		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
 		// Set custom and default queries in store
@@ -161,7 +166,7 @@ const DataSearch = {
 		defaultSearchSuggestions() {
 			const isPopularSuggestionsEnabled
 				= this.enableQuerySuggestions || this.enablePopularSuggestions;
-			if (this.currentValue) {
+			if (this.currentValue || !this.enableDefaultSuggestions) {
 				return [];
 			}
 			const customDefaultPopularSuggestions = (this.defaultPopularSuggestions || []).map(
@@ -268,6 +273,7 @@ const DataSearch = {
 		addonAfter: VueTypes.any,
 		expandSuggestionsContainer: VueTypes.bool.def(true),
 		index: VueTypes.string,
+		enableDefaultSuggestions: VueTypes.bool.def(true),
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -451,7 +457,9 @@ const DataSearch = {
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
 				// Refresh recent searches when value becomes empty
-				if (!value && this.currentValue && this.enableRecentSearches) {
+				if (!value && props.enableDefaultSuggestions === false) {
+					this.resetStoreForComponent(props.componentId);
+				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
 				this.currentValue = value;
@@ -496,6 +504,11 @@ const DataSearch = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		updateDefaultQueryHandler(value, props) {
+			if (!value && props.enableDefaultSuggestions === false) {
+				// clear Component data from store
+				this.resetStoreForComponent(props.componentId);
+				return;
+			}
 			let defaultQueryOptions;
 			let query = DataSearch.defaultQuery(value, props);
 			if (this.defaultQuery) {
@@ -845,11 +858,14 @@ const DataSearch = {
 		},
 	},
 	render() {
-		const { theme, size, expandSuggestionsContainer } = this.$props;
+		const { theme, size, expandSuggestionsContainer, enableDefaultSuggestions } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
-		const hasSuggestions = this.currentValue
+		let hasSuggestions = this.currentValue
 			? this.suggestionsList.length || this.topSuggestions.length
 			: this.defaultSearchSuggestions.length;
+		if (enableDefaultSuggestions === false && !this.currentValue) {
+			hasSuggestions = false;
+		}
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -1385,6 +1401,7 @@ const mapDispatchToProps = {
 	recordSuggestionClick,
 	loadPopularSuggestions,
 	getRecentSearches,
+	resetStoreForComponent,
 };
 const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
 	componentType: componentTypes.dataSearch,

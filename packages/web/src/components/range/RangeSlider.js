@@ -146,14 +146,24 @@ class RangeSlider extends Component {
 				getNumericRangeArray(prevProps.value, this.props.queryFormat),
 			)
 		) {
-			const value = RangeSlider.parseValue(this.props.value, this.props);
-			this.handleChange(
-				getValueArrayWithinLimits(
+			let value = getValueArrayWithinLimits(
+				RangeSlider.parseValue(this.props.value, this.props),
+				getNumericRangeArray(this.props.range, this.props.queryFormat),
+			);
+
+			// when the current value is equal to the range,
+			// this implies the component is reset to initial values
+			// thus we pass null to handleChange that would fire query
+			// to update the dependent result components as well
+
+			value = !isEqual(value, getNumericRangeArray(this.props.range, this.props.queryFormat))
+				? getValueArrayWithinLimits(
 					value,
 					getNumericRangeArray(this.props.range, this.props.queryFormat),
-				),
-				this.props,
-			);
+				  )
+				: null;
+
+			this.handleChange(value, this.props);
 		} else if (
 			// cautionary conversion of state and selectedValues from state to numerics
 			// in order to make comparison meaningful

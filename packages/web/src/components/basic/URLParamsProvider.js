@@ -19,7 +19,17 @@ class URLParamsProvider extends Component {
 			Object.keys(this.currentSelectedState)
 				.filter(item => !activeComponents.includes(item))
 				.forEach((component) => {
-					this.props.setValue(component, null);
+					this.props.setValue(
+						component,
+						null,
+						undefined,
+						undefined,
+						undefined,
+						undefined,
+						undefined,
+						undefined,
+						'URL',
+					);
 				});
 
 			// update active components in selectedValues
@@ -29,7 +39,17 @@ class URLParamsProvider extends Component {
 					const { label, showFilter, URLParams } = this.props.selectedValues[
 						component
 					] || { label: component };
-					this.props.setValue(component, JSON.parse(value), label, showFilter, URLParams);
+					this.props.setValue(
+						component,
+						JSON.parse(value),
+						label,
+						showFilter,
+						URLParams,
+						undefined,
+						undefined,
+						undefined,
+						'URL',
+					);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
 				}
@@ -42,7 +62,7 @@ class URLParamsProvider extends Component {
 		// when the url changes, which enables us to
 		// make `onpopstate` event handler work with history.pushState updates
 		this.checkForURLParamsChange();
-
+		let shouldPushHistory = false;
 		this.currentSelectedState = this.props.selectedValues;
 		if (!isEqual(this.props.selectedValues, prevProps.selectedValues)) {
 			this.searchString = this.props.getSearchParams
@@ -64,13 +84,16 @@ class URLParamsProvider extends Component {
 						const prevValues = prevProps.selectedValues[component];
 						if (selectedValues.URLParams) {
 							if (selectedValues.category) {
-								this.setURL(
+								const shouldUpdateHistory = this.setURL(
 									component,
 									this.getValue({
 										category: selectedValues.category,
 										value: selectedValues.value,
 									}),
 								);
+								if (shouldUpdateHistory) {
+									shouldPushHistory = true;
+								}
 							} else {
 								const currentValue = this.getValue(selectedValues.value);
 								const prevValue = prevValues && this.getValue(prevValues.value);
@@ -82,12 +105,18 @@ class URLParamsProvider extends Component {
 								*/
 
 								if (prevValue !== currentValue) {
-									this.setURL(component, this.getValue(selectedValues.value));
+									const shouldUpdateHistory = this.setURL(
+										component,
+										this.getValue(selectedValues.value),
+									);
+									if (shouldUpdateHistory) {
+										shouldPushHistory = true;
+									}
 								}
 							}
 						} else {
 							this.params.delete(component);
-							this.pushToHistory();
+							shouldPushHistory = true;
 						}
 					} else if (
 						!this.hasValidValue(this.props.selectedValues[component])
@@ -95,7 +124,7 @@ class URLParamsProvider extends Component {
 					) {
 						// doesn't have a valid value, but the url has a (stale) valid value set
 						this.params.delete(component);
-						this.pushToHistory();
+						shouldPushHistory = true;
 					}
 				});
 
@@ -104,7 +133,7 @@ class URLParamsProvider extends Component {
 				.filter(component => !currentComponents.includes(component))
 				.forEach((component) => {
 					this.params.delete(component);
-					this.pushToHistory();
+					shouldPushHistory = true;
 				});
 
 			if (!currentComponents.length) {
@@ -112,8 +141,12 @@ class URLParamsProvider extends Component {
 				Array.from(this.params.keys()).forEach((item) => {
 					if (searchComponents && searchComponents.includes(item)) {
 						this.params.delete(item);
+						shouldPushHistory = true;
 					}
 				});
+			}
+
+			if (shouldPushHistory) {
 				this.pushToHistory();
 			}
 		}
@@ -174,24 +207,20 @@ class URLParamsProvider extends Component {
 	}
 
 	setURL(component, value) {
-		this.searchString = this.props.getSearchParams
-			? this.props.getSearchParams()
-			: window.location.search;
-		this.params = new URLSearchParams(this.searchString);
 		if (
 			!value
 			|| (typeof value === 'string' && value.trim() === '')
 			|| (Array.isArray(value) && value.length === 0)
 		) {
 			this.params.delete(component);
-			this.pushToHistory();
-		} else {
-			const data = JSON.stringify(this.getValue(value));
-			if (data !== this.params.get(component)) {
-				this.params.set(component, data);
-				this.pushToHistory();
-			}
+			return true;
 		}
+		const data = JSON.stringify(value);
+		if (data !== this.params.get(component)) {
+			this.params.set(component, data);
+			return true;
+		}
+		return false;
 	}
 
 	pushToHistory() {
@@ -244,8 +273,30 @@ const mapStateToProps = state => ({
 
 const mapDispatchtoProps = dispatch => ({
 	setHeaders: headers => dispatch(setHeaders(headers)),
-	setValue: (component, value, label, showFilter, URLParams) =>
-		dispatch(setValue(component, value, label, showFilter, URLParams)),
+	setValue: (
+		component,
+		value,
+		label,
+		showFilter,
+		URLParams,
+		componentType,
+		category,
+		meta,
+		updateSource,
+	) =>
+		dispatch(
+			setValue(
+				component,
+				value,
+				label,
+				showFilter,
+				URLParams,
+				componentType,
+				category,
+				meta,
+				updateSource,
+			),
+		),
 });
 
 const ConnectedComponent = connect(

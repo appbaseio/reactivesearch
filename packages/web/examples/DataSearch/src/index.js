@@ -41,6 +41,7 @@ const Main = () => (
 					size={10}
 					className="result-list-container"
 					pagination
+					URLParams
 					react={{
 						and: 'BookSensor',
 					}}
@@ -69,16 +70,17 @@ const Main = () => (
 												</div>
 												<div className="ratings-list flex align-center">
 													<span className="stars">
-														{/* eslint-disable */
-														Array(item.average_rating_rounded)
-															.fill('x')
-															.map((_, index) => (
-																<i
-																	className="fas fa-star"
-																	key={index}
-																/>
-															))
-														/* eslint-enable */
+														{
+															/* eslint-disable */
+															Array(item.average_rating_rounded)
+																.fill('x')
+																.map((_, index) => (
+																	<i
+																		className="fas fa-star"
+																		key={index}
+																	/>
+																))
+															/* eslint-enable */
 														}
 													</span>
 													<span className="avg-rating">
