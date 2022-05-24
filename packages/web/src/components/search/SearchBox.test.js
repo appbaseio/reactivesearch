@@ -5,6 +5,137 @@ import SearchBox from './SearchBox';
 
 const MOCK_HITS_DATA = [
 	{
+		value: 'harry potter',
+		label: 'harry potter',
+		url: null,
+		_suggestion_type: 'recent',
+		_category: null,
+		_count: 216,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: '',
+		_index: null,
+		_score: 0,
+		_source: {},
+	},
+	{
+		value: 'complete night harry potter film wizardry boxed set',
+		label: 'complete night harry potter film wizardry boxed set',
+		url: null,
+		_suggestion_type: 'recent',
+		_category: null,
+		_count: 1,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: '',
+		_index: null,
+		_score: 0,
+		_source: {},
+	},
+	{
+		value: 'harry potter complete series',
+		label: 'harry potter <b class="highlight">complete series</b>',
+		url: null,
+		_suggestion_type: 'popular',
+		_category: null,
+		_count: null,
+		_rs_score: 2.1,
+		_matched_tokens: ['harry', 'potter'],
+		_id: 'Sj7tXXEBhDwVijd9m1hJ',
+		_index: 'good-books-ds',
+		_score: 46.806698,
+		_source: {
+			authors: 'J.K. Rowling',
+			average_rating: 4.74,
+			average_rating_rounded: 5,
+			books_count: 76,
+			id: 422,
+			image: 'https://images.gr-assets.com/books/1392579059l/862041.jpg',
+			image_medium: 'https://images.gr-assets.com/books/1392579059m/862041.jpg',
+			isbn: '545044251',
+			language_code: 'eng',
+			original_publication_year: 1998,
+			original_series: 'Harry Potter',
+			original_title: 'Complete Harry Potter Boxed Set',
+			ratings_count: 190050,
+			title: 'Harry Potter Boxset (Harry Potter, #1-7)',
+		},
+	},
+	{
+		value: 'night harry potter film wizardry boxed set',
+		label: 'night harry potter film wizardry boxed set',
+		url: null,
+		_suggestion_type: 'promoted',
+		_category: null,
+		_count: 3,
+		_rs_score: 0,
+		_matched_tokens: null,
+		_id: '',
+		_index: null,
+		_score: 0,
+		_source: {},
+	},
+	{
+		value: 'harry potter film wizardry',
+		label: 'harry potter <b class="highlight">film wizardry</b>',
+		url: null,
+		_suggestion_type: 'index',
+		_category: null,
+		_count: null,
+		_rs_score: 2.1,
+		_matched_tokens: ['harry', 'potter'],
+		_id: 'yrDtXXEB2-YohfeSysnk',
+		_index: 'good-books-ds',
+		_score: 51.51347,
+		_source: {
+			authors: 'Brian Sibley',
+			average_rating: 4.48,
+			average_rating_rounded: 4,
+			books_count: 24,
+			id: 2001,
+			image: 'https://images.gr-assets.com/books/1464452934l/7952502.jpg',
+			image_medium: 'https://images.gr-assets.com/books/1464452934m/7952502.jpg',
+			isbn: '61997811',
+			language_code: 'eng',
+			original_publication_year: 2010,
+			original_series: '',
+			original_title: 'Harry Potter: Film Wizardry',
+			ratings_count: 45081,
+			title: 'Harry Potter: Film Wizardry',
+		},
+	},
+	{
+		value: 'harry potter boxed set',
+		label: 'harry potter <b class="highlight">boxed set</b>',
+		url: null,
+		_suggestion_type: 'index',
+		_category: null,
+		_count: null,
+		_rs_score: 2.1,
+		_matched_tokens: ['harry', 'potter'],
+		_id: 'Sj7tXXEBhDwVijd9m1hJ',
+		_index: 'good-books-ds',
+		_score: 46.806698,
+		_source: {
+			authors: 'J.K. Rowling',
+			average_rating: 4.74,
+			average_rating_rounded: 5,
+			books_count: 76,
+			id: 422,
+			image: 'https://images.gr-assets.com/books/1392579059l/862041.jpg',
+			image_medium: 'https://images.gr-assets.com/books/1392579059m/862041.jpg',
+			isbn: '545044251',
+			language_code: 'eng',
+			original_publication_year: 1998,
+			original_series: 'Harry Potter',
+			original_title: 'Complete Harry Potter Boxed Set',
+			ratings_count: 190050,
+			title: 'Harry Potter Boxset (Harry Potter, #1-7)',
+		},
+	},
+];
+const MOCK_HITS_DATA_FEATURED_SUGGESTIONS = [
+	{
 		value: 'home page',
 		label: 'Go to <mark>Home</mark>',
 		description: 'Blazing fast search with Appbase',
@@ -488,6 +619,23 @@ it('should render custom enterButton', () => {
 							</button>
 						</div>
 					)}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should render SearchBox with featured suggestions', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
+				<SearchBox
+					mode="test"
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: MOCK_HITS_DATA_FEATURED_SUGGESTIONS }}
+					isOpen
 				/>
 			</ReactiveBase>,
 		)
