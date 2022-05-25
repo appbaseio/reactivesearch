@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect as connectToStore } from 'react-redux';
-import { isEqual, isValidDateRangeQueryFormat, isFunction } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	isEqual,
+	isValidDateRangeQueryFormat,
+	isFunction,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import XDate from 'xdate';
 

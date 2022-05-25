@@ -162,3 +162,31 @@ export type showClearAll = 'never' | 'always' | 'default' | true | false;
 export type resetToDefault = boolean;
 
 export type calendarInterval = 'month' | 'day' | 'year' | 'week' | 'quarter' | 'hour' | 'minute';
+
+export interface popularSuggestionsConfig {
+	size?: number;
+	minCount?: number;
+	minChars?: number;
+	showGlobal?: boolean;
+	index?: string;
+	sectionLabel?: string;
+}
+
+export interface recentSuggestionsConfig {
+	size?: number;
+	minHits?: number;
+	minChars?: number;
+	index?: string;
+	sectionLabel?: string;
+}
+
+export interface indexSuggestionsConfig {
+	sectionLabel?: string;
+	size?: number;
+	index?: string;
+}
+export interface featuredSuggestionsConfig {
+	featuredSuggestionsGroupId: string;
+	maxSuggestionsPerSection?: number;
+	sectionsOrder?: stringArray;
+}

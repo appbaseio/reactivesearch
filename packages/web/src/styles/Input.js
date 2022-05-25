@@ -5,7 +5,7 @@ const alertBorder = ({ theme }) => css`
 	border: 1px solid ${theme.colors.alertColor};
 `;
 
-const input = css`
+const input = searchBox => css`
 	width: 100%;
 	line-height: 1.5;
 	min-height: 42px;
@@ -15,10 +15,15 @@ const input = css`
 	font-size: 0.9rem;
 	outline: none;
 	height: 100%;
-
 	&:focus {
 		background-color: #fff;
 	}
+	${searchBox
+	&& css`
+		padding: 8px 12px 9px;
+		border: 1px solid transparent;
+		border-radius: 6px;
+	`};
 `;
 
 const dark = theme => css`
@@ -36,7 +41,7 @@ const darkInput = ({ theme }) => css`
 `;
 
 const Input = styled('input')`
-	${input};
+	${props => input(props.searchBox)};
 	${({ themePreset }) => themePreset === 'dark' && darkInput};
 
 	${props =>
@@ -99,6 +104,13 @@ const Input = styled('input')`
 		`};
 
 	${props => props.alert && alertBorder};
+
+	${props =>
+			props.isOpen
+		&& css`
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		`};
 `;
 const noSuggestions = (themePreset, theme) => css`
 	display: block;
@@ -172,7 +184,6 @@ const suggestions = (themePreset, theme) => css`
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
-
 		&:hover,
 		&:focus {
 			background-color: #eee;
@@ -184,11 +195,79 @@ const suggestions = (themePreset, theme) => css`
 
 const searchboxSuggestions = (themePreset, theme) => css`
 	${suggestions(themePreset, theme)};
-	max-height: min(100vh, 401px);
 
+	max-height: min(100vh, 401px);
+	border: none;
+	border-radius: 6px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+	border-top: 1px solid #f2f0f0;
 	li {
+		transition: all 0.3s ease-in;
+		position: relative;
+		&:hover,
+		&:focus {
+			background-color: unset;
+		}
 		.trim {
 			line-height: 20px;
+		}
+		&.li-item {
+			background-color: ${themePreset === 'dark' ? '#424242' : '#fff'};
+		}
+		&.active-li-item {
+			background-color: ${themePreset === 'dark' ? '#555' : '#2d84f6'};
+			color: #fff;
+			svg {
+				transition: fill 0.3s ease-in;
+				fill: #fff !important;
+			}
+		}
+	}
+
+	.section-container {
+		padding-bottom: 5px;
+		border-bottom: 1px solid #f2f0f0;
+		${themePreset === 'dark'
+		&& css`
+			background: #161616;
+		`};
+		.section-header {
+			padding: 10px;
+			font-size: 12px;
+			color: #7f7c7c;
+			background: #f9f9f9;
+			${themePreset === 'dark'
+			&& css`
+				color: #218fe7;
+				background: #161616;
+			`};
+		}
+
+		.section-list {
+			padding-left: 0;
+		}
+		.section-list-item {
+			&__label,
+			&__description {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+				* {
+					margin: 0;
+					padding: 0;
+				}
+			}
+
+			&__label {
+			}
+			&__description {
+				margin-top: 5px;
+				opacity: 0.7;
+				font-size: 12px;
+			}
 		}
 	}
 `;

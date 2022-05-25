@@ -17,6 +17,7 @@ import {
 	isFunction,
 	hasCustomRenderer,
 	suggestionTypes,
+	featuredSuggestionsActionTypes,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -29,7 +30,7 @@ import {
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
 import hotkeys from 'hotkeys-js';
-
+import XSS from 'xss';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
@@ -54,6 +55,7 @@ import CancelSvg from '../shared/CancelSvg';
 import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
+import Flex from '../../styles/Flex';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -93,10 +95,20 @@ const SearchBox = (props) => {
 		let suggestionsArray = [];
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
-		} else if (Array.isArray(props.defaultSuggestions) && props.defaultSuggestions.length) {
-			suggestionsArray = [...withClickIds(props.defaultSuggestions)];
 		}
-		return suggestionsArray;
+
+		const sectionsAccumulated = [];
+		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+			if (sectionsAccumulated.includes(d.sectionId)) return acc;
+			if (d.sectionId) {
+				acc[currentIndex] = suggestionsArray.filter(g => g.sectionId === d.sectionId);
+				sectionsAccumulated.push(d.sectionId);
+			} else {
+				acc[currentIndex] = d;
+			}
+			return acc;
+		}, {});
+		return Object.values(sectionisedSuggestions);
 	};
 	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
@@ -438,8 +450,42 @@ const SearchBox = (props) => {
 		}
 		return undefined;
 	};
+
+	const handleFeaturedSuggestionClicked = (suggestion) => {
+		try {
+			if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+				const { target = '_self', link = '/' } = JSON.parse(suggestion.subAction);
+
+				if (typeof window !== 'undefined') {
+					window.open(link, target);
+				}
+			}
+			if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+				// eslint-disable-next-line no-new-func
+				const func = new Function(`return ${suggestion.subAction}`)();
+				func(suggestion, currentValue);
+			}
+			// blur is important to close the dropdown
+			// on selecting one of featured suggestions
+			// else Downshift probably is focusing the dropdown
+			// and not letting it close
+			_inputRef.current.blur();
+		} catch (e) {
+			console.error(
+				`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
+				e,
+			);
+		}
+	};
+
 	const onSuggestionSelected = (suggestion) => {
 		setIsOpen(false);
+		// handle featured suggestions click event
+		if (suggestion._suggestion_type === suggestionTypes.Featured) {
+			handleFeaturedSuggestionClicked(suggestion);
+			return;
+		}
+
 		const suggestionValue = suggestion.value;
 
 		if (value === undefined) {
@@ -539,19 +585,23 @@ const SearchBox = (props) => {
 		return showVoiceSearch && (window.webkitSpeechRecognition || window.SpeechRecognition);
 	};
 
-	const handleStateChange = (changes) => {
+	const handleStateChange = (changes, stateAndHelpers) => {
 		const { isOpen, type } = changes;
+		const { selectedItem } = stateAndHelpers;
 		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
 			setIsOpen(isOpen);
 		}
-	};
 
-	const getBackgroundColor = (highlightedIndex, index) => {
-		const isDark = props.themePreset === 'dark';
-		if (isDark) {
-			return highlightedIndex === index ? '#555' : '#424242';
+		// allow invoking click event repeatedly on featured suggestions
+		if (
+			!changes.selectedItem
+			&& (type === Downshift.stateChangeTypes.clickItem
+				|| type === Downshift.stateChangeTypes.keyDownEnter)
+			&& selectedItem
+			&& selectedItem._suggestion_type === suggestionTypes.Featured
+		) {
+			onSuggestionSelected(selectedItem);
 		}
-		return highlightedIndex === index ? '#eee' : '#fff';
 	};
 
 	const handleSearchIconClick = () => {
@@ -662,17 +712,25 @@ const SearchBox = (props) => {
 		return getComponentUtilFunc(data, props);
 	};
 	const renderInputAddonBefore = () => {
-		const { addonBefore } = props;
+		const { addonBefore, expandSuggestionsContainer } = props;
 		if (addonBefore) {
-			return <InputAddon>{addonBefore}</InputAddon>;
+			return (
+				<InputAddon isOpen={isOpen} expandSuggestionsContainer={expandSuggestionsContainer}>
+					{addonBefore}
+				</InputAddon>
+			);
 		}
 
 		return null;
 	};
 	const renderInputAddonAfter = () => {
-		const { addonAfter } = props;
+		const { addonAfter, expandSuggestionsContainer } = props;
 		if (addonAfter) {
-			return <InputAddon>{addonAfter}</InputAddon>;
+			return (
+				<InputAddon isOpen={isOpen} expandSuggestionsContainer={expandSuggestionsContainer}>
+					{addonAfter}
+				</InputAddon>
+			);
 		}
 
 		return null;
@@ -689,7 +747,7 @@ const SearchBox = (props) => {
 
 				return (
 					<Button
-						className={`enter-btn ${getClassName(innerClass, 'enterButton')}`}
+						className={`enter-btn ${getClassName(innerClass, 'enter-button')}`}
 						primary
 						onClick={enterButtonOnClick}
 					>
@@ -897,16 +955,60 @@ const SearchBox = (props) => {
 						...rest
 					}) => {
 						const renderSuggestionsDropdown = () => {
-							const getIcon = (iconType) => {
+							const getIcon = (iconType, item) => {
 								switch (iconType) {
 									case suggestionTypes.Recent:
 										return props.recentSearchesIcon;
 									case suggestionTypes.Popular:
 										return props.popularSearchesIcon;
+									case suggestionTypes.Featured:
+										if (item.icon) {
+											return (
+												<div
+													style={{ display: 'flex' }}
+													dangerouslySetInnerHTML={{
+														__html: XSS(item.icon),
+													}}
+												/>
+											);
+										}
+										return <img src={XSS(item.iconURL)} alt={item.value} />;
+
 									default:
 										return null;
 								}
 							};
+
+							// action icon is dispkayed on right of the suggestion item
+							const getActionIcon = (item) => {
+								if (item._suggestion_type === suggestionTypes.Featured) {
+									if (item.action === featuredSuggestionsActionTypes.FUNCTION) {
+										return (
+											<AutofillSvg
+												style={{
+													transform: 'rotate(135deg)',
+													pointerEvents: 'none',
+												}}
+											/>
+										);
+									}
+									return null;
+								} else if (!item._category) {
+									/* 👇 avoid showing autofill for category suggestions👇 */
+
+									return (
+										<AutofillSvg
+											onClick={(e) => {
+												e.stopPropagation();
+												onAutofillClick(item);
+											}}
+										/>
+									);
+								}
+								return null;
+							};
+
+							let indexOffset = 0;
 							return (
 								<React.Fragment>
 									{hasCustomRenderer(props)
@@ -928,65 +1030,191 @@ const SearchBox = (props) => {
 											)}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{parsedSuggestions().map((item, index) => (
-												<li
-													{...getItemProps({ item })}
-													key={`${index + 1}-${item.value}`}
-													style={{
-														backgroundColor: getBackgroundColor(
-															highlightedIndex,
-															index,
-														),
-														justifyContent: 'flex-start',
-														alignItems: 'center',
-													}}
-												>
-													{props.renderItem ? (
-														props.renderItem(item)
-													) : (
-														<React.Fragment>
-															{/* eslint-disable */}
-
+											{parsedSuggestions().map((item, itemIndex) => {
+												const index = indexOffset + itemIndex;
+												if (Array.isArray(item)) {
+													const sectionHtml = XSS(item[0].sectionLabel);
+													indexOffset += item.length - 1;
+													return (
+														<div
+															className="section-container"
+															key={`${item[0].sectionId}`}
+														>
 															<div
-																style={{
-																	padding: '0 10px 0 0',
-																	display: 'flex',
+																className={`section-header ${getClassName(
+																	props.innerClass,
+																	'section-label',
+																)}`}
+																dangerouslySetInnerHTML={{
+																	__html: XSS(sectionHtml),
 																}}
-															>
-																<CustomSvg
-																	iconId={`${index + 1}-${
-																		item.value
-																	}-icon`}
-																	className={
-																		getClassName(
-																			props.innerClass,
-																			`${item._suggestion_type}-search-icon`,
-																		) || null
-																	}
-																	icon={getIcon(
-																		item._suggestion_type,
-																	)}
-																	type={`${item._suggestion_type}-search-icon`}
-																/>
-															</div>
-															{/* eslint-enable */}
-															<SuggestionItem
-																currentValue={currentValue || ''}
-																suggestion={item}
 															/>
-															{/* 👇 avoid showing autofill for category suggestions👇 */}
-															{item._category ? null : (
-																<AutofillSvg
-																	onClick={(e) => {
-																		e.stopPropagation();
-																		onAutofillClick(item);
+															<ul className="section-list">
+																{item.map(
+																	(sectionItem, sectionIndex) => (
+																		<li
+																			{...getItemProps({
+																				item: sectionItem,
+																			})}
+																			key={`${
+																				sectionItem.sectionId
+																				+ sectionIndex
+																			}-${sectionItem.value}`}
+																			style={{
+																				justifyContent:
+																					'flex-start',
+																				alignItems:
+																					'center',
+																			}}
+																			className={`${
+																				highlightedIndex
+																				=== index + sectionIndex
+																					? `active-li-item ${getClassName(
+																						props.innerClass,
+																						'active-suggestion-item',
+																					  )}`
+																					: `li-item ${getClassName(
+																						props.innerClass,
+																						'suggestion-item',
+																					  )}`
+																			}`}
+																		>
+																			{props.renderItem ? (
+																				props.renderItem(
+																					sectionItem,
+																				)
+																			) : (
+																				<React.Fragment>
+																					<div
+																						style={{
+																							padding:
+																								'0 10px 0 0',
+																							display:
+																								'flex',
+																						}}
+																					>
+																						<CustomSvg
+																							iconId={`${
+																								sectionIndex
+																								+ index
+																								+ 1
+																							}-${
+																								sectionItem.value
+																							}-icon`}
+																							className={
+																								getClassName(
+																									props.innerClass,
+																									`${sectionItem._suggestion_type}-search-icon`,
+																								)
+																								|| null
+																							}
+																							icon={getIcon(
+																								sectionItem._suggestion_type,
+																								sectionItem,
+																							)}
+																							type={`${sectionItem._suggestion_type}-search-icon`}
+																						/>
+																					</div>
+																					<div className="trim">
+																						<Flex direction="column">
+																							{sectionItem.label && (
+																								<div
+																									className="section-list-item__label"
+																									dangerouslySetInnerHTML={{
+																										__html: XSS(
+																											sectionItem.label,
+																										),
+																									}}
+																								/>
+																							)}
+																							{sectionItem.description && (
+																								<div
+																									className="section-list-item__description"
+																									dangerouslySetInnerHTML={{
+																										__html: XSS(
+																											sectionItem.description,
+																										),
+																									}}
+																								/>
+																							)}
+																						</Flex>
+																					</div>
+																					{getActionIcon(
+																						sectionItem,
+																					)}
+																				</React.Fragment>
+																			)}
+																		</li>
+																	),
+																)}
+															</ul>
+														</div>
+													);
+												}
+
+												return (
+													<li
+														{...getItemProps({ item })}
+														key={`${index + 1}-${item.value}`}
+														style={{
+															justifyContent: 'flex-start',
+															alignItems: 'center',
+														}}
+														className={`${
+															highlightedIndex === index
+																? `active-li-item ${getClassName(
+																	props.innerClass,
+																	'active-suggestion-item',
+																  )}`
+																: `li-item ${getClassName(
+																	props.innerClass,
+																	'suggestion-item',
+																  )}`
+														}`}
+													>
+														{props.renderItem ? (
+															props.renderItem(item)
+														) : (
+															<React.Fragment>
+																{/* eslint-disable */}
+
+																<div
+																	style={{
+																		padding: '0 10px 0 0',
+																		display: 'flex',
 																	}}
+																>
+																	<CustomSvg
+																		iconId={`${index + 1}-${
+																			item.value
+																		}-icon`}
+																		className={
+																			getClassName(
+																				props.innerClass,
+																				`${item._suggestion_type}-search-icon`,
+																			) || null
+																		}
+																		icon={getIcon(
+																			item._suggestion_type,
+																			item,
+																		)}
+																		type={`${item._suggestion_type}-search-icon`}
+																	/>
+																</div>
+																{/* eslint-enable */}
+																<SuggestionItem
+																	currentValue={
+																		currentValue || ''
+																	}
+																	suggestion={item}
 																/>
-															)}
-														</React.Fragment>
-													)}
-												</li>
-											))}
+
+																{getActionIcon(item)}
+															</React.Fragment>
+														)}
+													</li>
+												);
+											})}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1002,7 +1230,7 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup>
+								<InputGroup isOpen={isOpen}>
 									{renderInputAddonBefore()}
 									<InputWrapper>
 										<Input
@@ -1031,6 +1259,8 @@ const SearchBox = (props) => {
 											})}
 											themePreset={props.themePreset}
 											type={props.type}
+											searchBox // a prop specific to Input styled-component
+											isOpen={isOpen} // is dropdown open or not
 										/>
 										{renderIcons()}
 										{!props.expandSuggestionsContainer
@@ -1065,7 +1295,7 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup>
+					<InputGroup isOpen={false}>
 						{renderInputAddonBefore()}
 						<InputWrapper>
 							<Input
@@ -1084,6 +1314,8 @@ const SearchBox = (props) => {
 								showIcon={props.showIcon}
 								showClear={props.showClear}
 								themePreset={props.themePreset}
+								searchBox // a prop specific to Input styled-component
+								isOpen={false} // is dropdown open or not
 							/>
 							{renderIcons()}
 						</InputWrapper>
@@ -1131,7 +1363,6 @@ SearchBox.propTypes = {
 	debounce: types.number,
 	defaultValue: types.string,
 	value: types.string,
-	defaultSuggestions: types.suggestions,
 	customData: types.title,
 	downShiftProps: types.props,
 	children: types.func,
@@ -1194,6 +1425,10 @@ SearchBox.propTypes = {
 	onData: types.func,
 	renderItem: types.func,
 	isOpen: types.bool,
+	enableIndexSuggestions: types.bool,
+	enableFeaturedSuggestions: types.bool,
+	featuredSuggestionsConfig: types.componentObject,
+	indexSuggestionsConfig: types.componentObject,
 	enterButton: types.bool,
 	renderEnterButton: types.func,
 };
