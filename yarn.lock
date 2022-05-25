@@ -155,6 +155,39 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+"@appbaseio/reactivecore@9.14.8":
+  version "9.14.8"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.8.tgz#f37d7c983b7f9b506b25136e6f5e6b9d41269110"
+  integrity sha512-ffjbX/qVHIRyM0c4/o/ab8xEJyt1hSbi8CfvYNLZTFgDU/eZ3iy2tQHsFUv9wj5wUP4BuGhuGUA8M32LTV4FgQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.53":
+  version "1.16.0-alpha.53"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.53.tgz#b3f5ece7dfad30b698be20095dad1f542530c5c8"
+  integrity sha512-lxfXz/+xhLJdezx5Q9EAQh4VHovIIk5OOiKm7x3FBtwiPSjs3itwVDCticIj5WwJxjNcl+74wZs+unXcpGJt3w==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.8"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^5.0.0"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    gmap-vue "^1.5.0"
+    hotkeys-js "^3.8.7"
+    ngeohash "^0.6.3"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^3.2.15"
+    vue-types "^1.7.0"
+
 "@appbaseio/reactivesearch@3.29.1":
   version "3.29.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.29.1.tgz#962edf01ea052c6637753956eb730985c692877c"
