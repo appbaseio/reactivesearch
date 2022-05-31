@@ -2,27 +2,27 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const AutofillSvgIcon = styled.button`
-  display: flex;
-  margin-left: auto;
-  position: relative;
-  right: -3px;
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0;
-  z-index: 111;
+	display: flex;
+	margin-left: auto;
+	position: relative;
+	right: -3px;
+	border: none;
+	outline: none;
+	background: transparent;
+	padding: 0;
+	z-index: 111;
 
-  svg {
-    cursor: pointer;
-    fill: #707070;
-    height: 20px;
-  }
+	svg {
+		cursor: pointer;
+		fill: #707070;
+		height: 17px;
+	}
 
-  &:hover {
-    svg {
-      fill: #1c1a1a;
-    }
-  }
+	&:hover {
+		svg {
+			fill: #1c1a1a;
+		}
+	}
 `;
 
 const SelectArrowSvg = props => (

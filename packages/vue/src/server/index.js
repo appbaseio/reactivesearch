@@ -349,7 +349,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 						extractPropsFromState(
 							state,
 							component.componentId,
-							queryOptions && queryOptions[component.componentId]
+							queryOptions && Object.keys(queryOptions[component.componentId]).length
 								? { from: queryOptions[component.componentId].from }
 								: null,
 						),

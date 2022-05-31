@@ -74,13 +74,18 @@ export interface SearchBoxProps extends CommonProps {
 	addonAfter?: types.children;
 	expandSuggestionsContainer?: boolean;
 	index?: string;
-	popularSuggestionsConfig?: object;
-	recentSuggestionsConfig?: object;
+	popularSuggestionsConfig?: types.popularSuggestionsConfig;
+	recentSuggestionsConfig?: types.recentSuggestionsConfig;
+	indexSuggestionsConfig?: types.indexSuggestionsConfig;
+	featuredSuggestionsConfig?: types.featuredSuggestionsConfig;
+	enableIndexSuggestions?: boolean;
+	enableFeaturedSuggestions?: boolean;
 	applyStopwords?: boolean;
 	customStopwords?: string[];
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;
 }
+
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;
 
 export default SearchBox;
