@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.14.4":
-  version "9.14.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.4.tgz#e0c4b4a6dbf57675fe98fff240f7dc7add6c7a0b"
+"@appbaseio/reactivecore@9.14.5":
+  version "9.14.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.5.tgz#e59133dad9f3296e3a09ea68c84402ef1c39aeb6"
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -12,11 +12,11 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.28.0":
-  version "1.28.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.28.0.tgz#c554795ed90714d3e1d5714cee2af7da47479395"
+"@appbaseio/reactivesearch-vue@1.29.0":
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.29.0.tgz#da7cc03d933c7598cf354748a09be16bc49a4479"
   dependencies:
-    "@appbaseio/reactivecore" "9.14.4"
+    "@appbaseio/reactivecore" "9.14.5"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^5.0.0"
@@ -2758,8 +2758,8 @@ events@^1.0.0:
   resolved "https://registry.npmjs.org/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
 eventsource@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.0.7.tgz#8fbc72c93fcd34088090bc0a4e64f4b5cee6d8d0"
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.1.1.tgz#4544a35a57d7120fba4fa4c86cb4023b2c09df2f"
   dependencies:
     original "^1.0.0"
 
