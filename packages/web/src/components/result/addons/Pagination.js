@@ -14,14 +14,10 @@ function getStartPage(totalPages, currentPage, showEndPage) {
 
 const buildPaginationDOM = (props, position) => {
 	const {
-		pages,
-		currentPage,
-		setPage,
-		totalPages,
-		innerClass,
-		fragmentName,
-		showEndPage,
-	} = props;
+		pages, currentPage, setPage, totalPages, innerClass, fragmentName, showEndPage,
+	}
+		= props;
+
 	let start
 		= position === 'start'
 			? getStartPage(pages, currentPage, showEndPage)
@@ -66,7 +62,7 @@ const buildPaginationDOM = (props, position) => {
 			}
 		}
 	}
-	return paginationButtons;
+	return [paginationButtons, start];
 };
 
 class Pagination extends React.PureComponent {
@@ -75,22 +71,17 @@ class Pagination extends React.PureComponent {
 			showEndPage, currentPage, totalPages, pages,
 		} = this.props;
 		if (!showEndPage) return buildPaginationDOM(this.props, 'start');
-		if (currentPage <= (totalPages - pages) + 2 || totalPages <= pages) {
-			return buildPaginationDOM(this.props, 'start');
+		if (currentPage <= (totalPages - pages) + 2 || totalPages < pages) {
+			return buildPaginationDOM(this.props, 'start')[0];
 		}
 		return null;
 	}
 
 	render() {
 		const {
-			pages,
-			currentPage,
-			setPage,
-			totalPages,
-			innerClass,
-			fragmentName,
-			showEndPage,
-		} = this.props;
+			pages, currentPage, setPage, totalPages, innerClass, fragmentName, showEndPage,
+		}
+			= this.props;
 		if (!totalPages) {
 			return null;
 		}
@@ -132,6 +123,13 @@ class Pagination extends React.PureComponent {
 				alt: `Page ${currentPage + 2}`,
 			};
 		}
+		// the ellipsis between pages are to be be rendered only when
+		// the page values around the values have a difference of atleast two between them
+		// eg: 1,2,3...4,5 --> doesn't hold good coz '3' and '4' have a difference of only 1
+		// eg: 1,2,3...,5,6 --> looks good
+		const areEllipsisSeparatorValuesDifferent
+			= buildPaginationDOM(this.props, 'end')[1] - buildPaginationDOM(this.props, 'start')[1]
+			>= 2;
 		return (
 			<div css={pagination} className={getClassName(innerClass, 'pagination')}>
 				<Button
@@ -160,14 +158,15 @@ class Pagination extends React.PureComponent {
 						1
 					</Button>
 				}
-				{showEndPage && currentPage >= Math.floor(pages / 2) + !!(pages % 2) ? (
-					<span>...</span>
-				) : null}
-				{this.buildIntermediatePaginationDom()}
-				{showEndPage && pages > 2 && currentPage <= totalPages - Math.ceil(pages * 0.75) ? (
-					<span>...</span>
-				) : null}
-				{showEndPage && totalPages >= pages && buildPaginationDOM(this.props, 'end')}
+				{(showEndPage
+					&& currentPage >= Math.floor(pages / 2) + !!(pages % 2)
+					&& areEllipsisSeparatorValuesDifferent) ? (<span>...</span>) : null}
+				{this.buildIntermediatePaginationDom()[0]}
+				{(showEndPage
+				&& pages > 2
+				&& currentPage <= totalPages - Math.ceil(pages * 0.75)
+				&& areEllipsisSeparatorValuesDifferent) ? (<span>...</span>) : null}
+				{showEndPage && totalPages >= pages && buildPaginationDOM(this.props, 'end')[0]}
 				<Button
 					className={getClassName(innerClass, 'button') || null}
 					disabled={currentPage >= totalPages - 1}
