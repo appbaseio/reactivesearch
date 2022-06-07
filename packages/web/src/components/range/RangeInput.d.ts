@@ -17,6 +17,7 @@ export interface RangeInputProps extends CommonProps {
 	themePreset?: types.themePreset;
 	selectedValue?: types.selectedValue;
 	includeNullValues?: boolean;
+	showHistogram?: boolean;
 	index?: string;
 	queryFormat?: types.queryFormatDate;
 	calendarInterval?: types.calendarInterval;

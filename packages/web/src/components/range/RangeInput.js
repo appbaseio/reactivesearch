@@ -481,6 +481,7 @@ RangeInput.propTypes = {
 	stepValue: types.number,
 	style: types.style,
 	themePreset: types.themePreset,
+	showHistogram: types.bool,
 	componentId: types.stringRequired,
 	includeNullValues: types.bool,
 	enableAppbase: types.bool,
@@ -496,6 +497,7 @@ RangeInput.defaultProps = {
 	},
 	stepValue: 1,
 	includeNullValues: false,
+	showHistogram: true,
 };
 
 const mapStateToProps = (state, props) => ({
