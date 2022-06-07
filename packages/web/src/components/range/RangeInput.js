@@ -478,6 +478,7 @@ RangeInput.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	range: types.range,
+	rangeLabels: types.rangeLabels,
 	stepValue: types.number,
 	style: types.style,
 	themePreset: types.themePreset,
