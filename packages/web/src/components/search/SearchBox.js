@@ -83,6 +83,7 @@ const SearchBox = (props) => {
 		showFilter,
 		URLParams,
 		customQuery,
+		customEvents,
 	} = props;
 
 	const internalComponent = getInternalComponentID(componentId);
@@ -463,7 +464,7 @@ const SearchBox = (props) => {
 			if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
 				// eslint-disable-next-line no-new-func
 				const func = new Function(`return ${suggestion.subAction}`)();
-				func(suggestion, currentValue);
+				func(suggestion, currentValue, customEvents);
 			}
 			// blur is important to close the dropdown
 			// on selecting one of featured suggestions
@@ -1040,15 +1041,17 @@ const SearchBox = (props) => {
 															className="section-container"
 															key={`${item[0].sectionId}`}
 														>
-															{XSS(sectionHtml) && <div
-																className={`section-header ${getClassName(
-																	props.innerClass,
-																	'section-label',
-																)}`}
-																dangerouslySetInnerHTML={{
-																	__html: XSS(sectionHtml),
-																}}
-															/>}
+															{XSS(sectionHtml) && (
+																<div
+																	className={`section-header ${getClassName(
+																		props.innerClass,
+																		'section-label',
+																	)}`}
+																	dangerouslySetInnerHTML={{
+																		__html: XSS(sectionHtml),
+																	}}
+																/>
+															)}
 															<ul className="section-list">
 																{item.map(
 																	(sectionItem, sectionIndex) => (
@@ -1431,6 +1434,7 @@ SearchBox.propTypes = {
 	indexSuggestionsConfig: types.componentObject,
 	enterButton: types.bool,
 	renderEnterButton: types.func,
+	customEvents: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1484,6 +1488,7 @@ const mapStateToProps = (state, props) => ({
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
 });
 
 const mapDispatchtoProps = dispatch => ({
