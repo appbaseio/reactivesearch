@@ -39,6 +39,7 @@ export interface SingleList extends CommonProps {
 	children?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
 	index?: string;
+	preferencesPath?: string;
 	enableStrictSelection?: boolean;
 }
 

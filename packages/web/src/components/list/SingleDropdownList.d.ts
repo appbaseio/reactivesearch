@@ -39,6 +39,7 @@ export interface SingleDropdownList extends CommonProps {
 	renderNoResults?: (...args: any[]) => any;
 	showSearch?: boolean;
 	index?: string;
+	preferencesPath?: string;
 	showClear?: boolean;
 }
 

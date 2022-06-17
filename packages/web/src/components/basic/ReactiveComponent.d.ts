@@ -23,6 +23,7 @@ export interface ReactiveComponentProps {
 	distinctField?: string;
 	distinctFieldConfig?: object;
 	index?: string;
+	preferencesPath?: string;
 }
 
 declare const ReactiveComponent: React.ComponentClass<ReactiveComponentProps>;

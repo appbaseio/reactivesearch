@@ -18,6 +18,7 @@ export interface ToggleButtonProps extends CommonProps {
 	showFilter?: boolean;
 	title?: types.title;
 	index?: string;
+	preferencesPath?: string;
 	// component props
 	className?: string;
 	componentId: string;

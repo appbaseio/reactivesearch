@@ -10,6 +10,8 @@ import XDate from 'xdate';
 
 export const ReactReduxContext = React.createContext(null);
 
+export const SearchPreferencesContext = React.createContext(null);
+
 export const connect = (...args) => connectToStore(...args, null, { context: ReactReduxContext });
 
 export const X_SEARCH_CLIENT = 'ReactiveSearch React';
@@ -164,7 +166,7 @@ export function isHotkeyCombination(hotkey) {
 // stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
-	const chrCode = which - (48 * Math.floor(which / 48));
+	const chrCode = which - 48 * Math.floor(which / 48);
 	return String.fromCharCode(which >= 96 ? chrCode : which);
 }
 

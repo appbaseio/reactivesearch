@@ -20,6 +20,7 @@ export interface SingleRangeProps extends CommonProps {
 	title?: types.title;
 	includeNullValues?: boolean;
 	index?: string;
+	preferencesPath?: string;
 }
 
 declare const SingleRange: React.ComponentClass<SingleRangeProps>;

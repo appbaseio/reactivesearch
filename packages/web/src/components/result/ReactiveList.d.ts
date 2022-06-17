@@ -43,6 +43,7 @@ declare namespace ReactiveListTree {
 		distinctField?: string;
 		distinctFieldConfig?: object;
 		index?: string;
+	preferencesPath?: string;
 	}
 
 	interface CommonWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
