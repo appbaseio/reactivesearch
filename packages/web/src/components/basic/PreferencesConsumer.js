@@ -17,12 +17,14 @@ const PreferencesConsumer = ({ children, userProps }) => {
 	const componentId = userProps.componentId;
 	const preferencesPath = userProps.preferencesPath;
 	let preferences;
-	if (preferencesPath) {
-		// read preferences from path
-		preferences = deepValue(context, preferencesPath);
-	} else {
-		preferences = deepValue(context, ['componentSettings', componentId].join('.'));
-		// read preferences from componentSettings
+	if (context) {
+		if (preferencesPath) {
+			// read preferences from path
+			preferences = deepValue(context, preferencesPath);
+		} else {
+			preferences = deepValue(context, ['componentSettings', componentId].join('.'));
+			// read preferences from componentSettings
+		}
 	}
 	// Retrieve component specific preferences
 	let componentProps = userProps;

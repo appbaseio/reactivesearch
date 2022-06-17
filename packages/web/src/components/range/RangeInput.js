@@ -24,6 +24,7 @@ import {
 	getValueArrayWithinLimits,
 } from '../../utils';
 import DateContainer from '../../styles/DateContainer';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 class RangeInput extends Component {
@@ -513,7 +514,7 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
+	<PreferencesConsumer userProps={props}>
 		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 	</PreferencesConsumer>
 ));
