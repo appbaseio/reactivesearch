@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 
@@ -7,7 +7,6 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	hasCustomRenderer,
-	getComponent,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { string } from 'prop-types';
 import {
@@ -22,6 +21,7 @@ import {
 } from '@appbaseio/reactivecore/lib/actions';
 
 import { connect, ReactReduxContext, getValidPropsKeys } from '../../utils';
+import PureComponentWrapper from './PureComponentWrapper';
 
 /**
  * ComponentWrapper component is a wrapper component for each ReactiveSearch component
@@ -33,7 +33,7 @@ import { connect, ReactReduxContext, getValidPropsKeys } from '../../utils';
  * 5. Update component props in redux store
  * 6. Unregister the component on un-mount
  */
-class ComponentWrapper extends React.Component {
+class ComponentWrapper extends PureComponent {
 	static contextType = ReactReduxContext;
 
 	constructor(props, context) {
@@ -122,7 +122,7 @@ class ComponentWrapper extends React.Component {
 
 	render() {
 		if (this.hasCustomRenderer) {
-			return getComponent({}, this.props);
+			return <PureComponentWrapper {...this.props} />;
 		}
 		return null;
 	}
