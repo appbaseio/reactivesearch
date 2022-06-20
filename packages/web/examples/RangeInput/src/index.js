@@ -1,7 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ReactiveBase, RangeInput, ResultList, ReactiveList } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	RangeInput,
+	ResultList,
+	ReactiveList,
+	SelectedFilters,
+	RangeSlider,
+} from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -12,6 +19,7 @@ const Main = () => (
 		enableAppbase
 	>
 		<div className="row">
+			<SelectedFilters />
 			<div className="col">
 				<RangeInput
 					dataField="ratings_count"
@@ -25,6 +33,18 @@ const Main = () => (
 						end: '50K',
 					}}
 					URLParams
+				/>{' '}
+				<RangeSlider
+					dataField="ratings_count"
+					componentId="BookSensor_slider"
+					range={{
+						start: 3000,
+						end: 50000,
+					}}
+					rangeLabels={{
+						start: '3K',
+						end: '50K',
+					}}
 				/>
 			</div>
 
@@ -37,7 +57,7 @@ const Main = () => (
 					className="result-list-container"
 					pagination
 					react={{
-						and: 'BookSensor',
+						and: ['BookSensor', 'BookSensor_slider'],
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
@@ -66,15 +86,17 @@ const Main = () => (
 														<span className="stars">
 															{Array(item.average_rating_rounded)
 																.fill('x')
-																.map((
-																	item, // eslint-disable-line
-																	index,
-																) => (
-																	<i
-																		className="fas fa-star"
-																		key={index} // eslint-disable-line
-																	/>
-																))}
+																.map(
+																	(
+																		item, // eslint-disable-line
+																		index,
+																	) => (
+																		<i
+																			className="fas fa-star"
+																			key={index} // eslint-disable-line
+																		/>
+																	),
+																)}
 														</span>
 														<span className="avg-rating">
 															({item.average_rating} avg)
