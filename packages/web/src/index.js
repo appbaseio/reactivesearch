@@ -35,6 +35,8 @@ import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
 
+import { SearchPreferencesContext } from './utils';
+
 export {
 	// basic
 	ReactiveBase,
@@ -71,4 +73,5 @@ export {
 	ReactiveList,
 	ResultCard,
 	ResultList,
+	SearchPreferencesContext,
 };
