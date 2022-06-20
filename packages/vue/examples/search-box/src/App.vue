@@ -20,7 +20,6 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
-				:enterButton="true"
 			>
 				<!-- <div class="suggestions" slot="renderItem" slot-scope="item">
 					👋 &nbsp; {{ item.label }}

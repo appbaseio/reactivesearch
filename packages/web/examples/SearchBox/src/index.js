@@ -55,8 +55,6 @@ const Main = () => (
 						console.log(value, cause);
 					}}
 					renderNoSuggestion="No suggestions found."
-					enterButton
-					autosuggest={false}
 				/>
 			</div>
 
