@@ -169,6 +169,7 @@ export interface popularSuggestionsConfig {
 	minChars?: number;
 	showGlobal?: boolean;
 	index?: string;
+	preferencesPath?: string;
 	sectionLabel?: string;
 }
 
@@ -177,6 +178,7 @@ export interface recentSuggestionsConfig {
 	minHits?: number;
 	minChars?: number;
 	index?: string;
+	preferencesPath?: string;
 	sectionLabel?: string;
 }
 
@@ -184,6 +186,7 @@ export interface indexSuggestionsConfig {
 	sectionLabel?: string;
 	size?: number;
 	index?: string;
+	preferencesPath?: string;
 }
 export interface featuredSuggestionsConfig {
 	featuredSuggestionsGroupId: string;

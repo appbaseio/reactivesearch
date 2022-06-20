@@ -20,6 +20,7 @@ import Button, { numberBoxContainer } from '../../styles/Button';
 import Flex from '../../styles/Flex';
 import Container from '../../styles/Container';
 import { connect } from '../../utils';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class NumberBox extends Component {
@@ -257,9 +258,10 @@ NumberBox.defaultProps = {
 NumberBox.componentType = componentTypes.numberBox;
 
 const mapStateToProps = (state, props) => ({
-	selectedValue: (state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value)
-	|| null,
+	selectedValue:
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	enableAppbase: state.config.enableAppbase,
 });
 
@@ -282,7 +284,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 
 hoistNonReactStatics(ForwardRefComponent, NumberBox);

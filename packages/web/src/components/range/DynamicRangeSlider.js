@@ -33,7 +33,7 @@ import Rheostat from 'rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import { oneOf } from 'prop-types';
-
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
 import SliderHandle from './addons/SliderHandle';
@@ -159,7 +159,7 @@ class DynamicRangeSlider extends Component {
 								formatRange(this.props.range, this.props).end
 										- formatRange(this.props.range, this.props).start,
 							).calculatedCalendarInterval,
-						}
+						  }
 						: {}),
 				},
 				componentTypes.dynamicRangeSlider,
@@ -451,7 +451,7 @@ class DynamicRangeSlider extends Component {
 				isValidDateRangeQueryFormat(props.queryFormat)
 					? formatDateString(normalizedValue[1])
 					: normalizedValue[1],
-			]
+			  ]
 			: null;
 		const performUpdate = () => {
 			this.setState(
@@ -806,7 +806,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DynamicRangeSlider);
 
