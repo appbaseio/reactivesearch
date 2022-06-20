@@ -12,7 +12,8 @@
 				:pagination="true"
 				paginationAt="bottom"
 				:from="0"
-				:size="5"
+				:size="2000"
+				:showEndPage="true"
 				:react="{ and: ['BookSensor'] }"
 				:URLParams="true"
 			>

@@ -96,7 +96,7 @@ const Pagination = {
 		const buildIntermediatePaginationDom = () => {
 			const { showEndPage, currentPage, totalPages, pages } = props;
 			if (!showEndPage) return buildPaginationDOM('start');
-			if (currentPage <= totalPages - pages + 2 || totalPages <= pages) {
+			if (currentPage <= totalPages - pages + 2 || totalPages < pages) {
 				return buildPaginationDOM('start');
 			}
 			return null;

@@ -48,6 +48,7 @@ class Main extends React.Component {
 							onChange={this.handleChange}
 							onKeyDown={this.handleKeyDown}
 							showClear
+							enableDefaultSuggestions={false}
 						/>
 					</div>
 
@@ -87,15 +88,18 @@ class Main extends React.Component {
 														</div>
 														<div className="ratings-list flex align-center">
 															<span className="stars">
-																{Array(item.average_rating_rounded)
-																	.fill('x')
-																	// eslint-disable-next-line no-shadow
-																	.map((item, index) => (
-																		<i
-																			className="fas fa-star"
-																			key={index.toString()}
-																		/>
-																	)) // eslint-disable-line
+																{
+																	Array(
+																		item.average_rating_rounded,
+																	)
+																		.fill('x')
+																		// eslint-disable-next-line no-shadow
+																		.map((item, index) => (
+																			<i
+																				className="fas fa-star"
+																				key={index.toString()}
+																			/>
+																		)) // eslint-disable-line
 																}
 															</span>
 															<span className="avg-rating">
