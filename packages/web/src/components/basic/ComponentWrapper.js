@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 
@@ -33,7 +33,7 @@ import PureComponentWrapper from './PureComponentWrapper';
  * 5. Update component props in redux store
  * 6. Unregister the component on un-mount
  */
-class ComponentWrapper extends PureComponent {
+class ComponentWrapper extends Component {
 	static contextType = ReactReduxContext;
 
 	constructor(props, context) {
