@@ -144,6 +144,19 @@ const Button = styled('a')`
 		border-bottom-left-radius: 0px;
 		height: 100%;
 	}
+
+	${props =>
+		props.isLinkType
+		&& css`
+			background-color: transparent;
+			text-decoration: underline;
+			text-underline-position: under;
+			color: #2c2daf;
+
+			&:hover {
+				background-color: transparent;
+			}
+		`};
 `;
 
 export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
