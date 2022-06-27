@@ -684,7 +684,12 @@ class ReactiveList extends Component {
 		];
 		// convert JSON to CSV
 		const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
-		const header = Object.keys(arrayOfJson[0]);
+		let header = [];
+		arrayOfJson.forEach((item) => {
+			const keys = Object.keys(item); // 👇️ {'a', 'b', 'c'}
+			const set = new Set([...keys, ...header]);
+			header = [...set];
+		});
 		let csv = arrayOfJson.map(row =>
 			header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','),
 		);
