@@ -25,6 +25,7 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
+	saveDataAsFile,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -40,6 +41,8 @@ import { connect } from '../../utils';
 import Results from './addons/Results';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import Button from '../../styles/Button';
+import DownloadSvg from '../shared/DownloadSvg';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
@@ -673,6 +676,63 @@ class ReactiveList extends Component {
 		</select>
 	);
 
+	triggerExportCSV = () => {
+		const arrayOfJson = [
+			{ name: 'Item 1', color: 'Green', size: 'X-Large' },
+			{ name: 'Item 2', color: 'Green', size: 'X-Large' },
+			{ name: 'Item 3', color: 'Green', size: 'X-Large' },
+		];
+		// convert JSON to CSV
+		const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
+		const header = Object.keys(arrayOfJson[0]);
+		let csv = arrayOfJson.map(row =>
+			header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','),
+		);
+		csv.unshift(header.join(','));
+		csv = csv.join('\r\n');
+
+		// Create link and download
+		saveDataAsFile('testExport', csv, 'csv');
+	};
+
+	triggerExportJSON = () => {
+		const arrayOfJson = [
+			{ name: 'Item 1', color: 'Green', size: 'X-Large' },
+			{ name: 'Item 2', color: 'Green', size: 'X-Large' },
+			{ name: 'Item 3', color: 'Green', size: 'X-Large' },
+		];
+
+		saveDataAsFile('testExport', arrayOfJson, 'json');
+	};
+
+	renderExportOptions = () => {
+		if (typeof this.props.renderExport === 'function') {
+			return this.props.renderExport({
+				triggerExportCSV: this.triggerExportCSV,
+				triggerExportJSON: this.triggerExportJSON,
+			});
+		}
+		return (
+			<Flex
+				labelPosition="left"
+				flex="1 1 auto"
+				className={getClassName(this.props.innerClass, 'export')}
+			>
+				<span>Export: </span>
+				<Button style={{ gap: '2px' }} isLinkType onClick={this.triggerExportCSV}>
+					CSV <DownloadSvg />
+				</Button>
+				<Button
+					style={{ gap: '2px', paddingLeft: '0' }}
+					isLinkType
+					onClick={this.triggerExportJSON}
+				>
+					JSON <DownloadSvg />
+				</Button>
+			</Flex>
+		);
+	};
+
 	renderError = () => {
 		const { error, isLoading, renderError } = this.props;
 		if (renderError && error && !isLoading) {
@@ -699,6 +759,8 @@ class ReactiveList extends Component {
 			customData,
 			rawData: this.props.rawData,
 			resultStats: this.stats,
+			triggerExportCSV: this.triggerExportCSV,
+			triggerExportJSON: this.triggerExportJSON,
 		};
 	};
 	getComponent = () => {
@@ -744,8 +806,10 @@ class ReactiveList extends Component {
 				<Flex
 					labelPosition={this.props.sortOptions ? 'right' : 'left'}
 					className={getClassName(this.props.innerClass, 'resultsInfo')}
+					justifyContent="space-between"
 				>
 					{this.props.sortOptions ? this.renderSortOptions() : null}
+					{this.props.showExport ? this.renderExportOptions() : null}
 					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
 				{!this.props.isLoading && !error && filteredResults.length === 0
@@ -869,6 +933,8 @@ ReactiveList.propTypes = {
 	originalProps: types.any,
 	index: types.string,
 	urlSortOption: types.string,
+	showExport: types.bool,
+	renderExport: types.func,
 };
 
 ReactiveList.defaultProps = {
@@ -892,6 +958,7 @@ ReactiveList.defaultProps = {
 	scrollOnChange: true,
 	defaultSortOption: null,
 	originalProps: {},
+	showExport: true,
 };
 
 // Add componentType for SSR
@@ -965,7 +1032,7 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
+	<PreferencesConsumer userProps={props}>
 		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 	</PreferencesConsumer>
 ));
