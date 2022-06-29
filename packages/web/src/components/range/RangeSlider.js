@@ -430,7 +430,7 @@ class RangeSlider extends Component {
 		}
 		const { showFilter } = props;
 
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions, false);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -634,8 +634,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
+	setQueryOptions: (...args) =>
+		dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	updateComponentProps: (component, options, componentType) =>
 		dispatch(updateComponentProps(component, options, componentType)),
