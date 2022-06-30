@@ -35,6 +35,8 @@ import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
 
+import ReactiveChart from './components/chart/ReactiveChart';
+
 import { SearchPreferencesContext } from './utils';
 
 export {
@@ -74,4 +76,6 @@ export {
 	ResultCard,
 	ResultList,
 	SearchPreferencesContext,
+	// chart
+	ReactiveChart,
 };
