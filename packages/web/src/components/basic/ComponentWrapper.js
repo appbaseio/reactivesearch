@@ -20,8 +20,7 @@ import {
 	updateHits,
 	mockDataForTesting,
 } from '@appbaseio/reactivecore/lib/actions';
-
-import { connect, ReactReduxContext, getValidPropsKeys } from '../../utils';
+import { connect, ReduxGetStateContext, getValidPropsKeys } from '../../utils';
 
 /**
  * ComponentWrapper component is a wrapper component for each ReactiveSearch component
@@ -34,15 +33,15 @@ import { connect, ReactReduxContext, getValidPropsKeys } from '../../utils';
  * 6. Unregister the component on un-mount
  */
 class ComponentWrapper extends React.Component {
-	static contextType = ReactReduxContext;
+	static contextType = ReduxGetStateContext;
 
 	constructor(props, context) {
 		super(props, context);
 		// Register a component only when `destroyOnUnmount` is `true`
 		// or component is not present in store
 		let components = [];
-		if (context.store) {
-			({ components } = context.store.getState());
+		if (context && context.getState) {
+			({ components } = context.getState());
 		}
 		if (props.destroyOnUnmount || components.indexOf(props.componentId) === -1) {
 			// Register  component
@@ -114,8 +113,10 @@ class ComponentWrapper extends React.Component {
 		// Register internal component
 		if (this.internalComponent) {
 			if (this.props.mode !== 'test') {
-				// Watch component after rendering the component to avoid the un-necessary calls
-				this.setReact(this.props);
+				if (this.props.setReact) {
+					// Watch component after rendering the component to avoid the un-necessary calls
+					this.setReact(this.props);
+				}
 			}
 		}
 	}
@@ -146,9 +147,14 @@ ComponentWrapper.propTypes = {
 	onQueryChange: types.func,
 	react: types.react,
 	render: types.func,
+	setReact: types.bool,
 	// props to test the components
 	mockData: types.any, // eslint-disable-line
 	mode: string,
+};
+
+ComponentWrapper.defaultProps = {
+	setReact: true,
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

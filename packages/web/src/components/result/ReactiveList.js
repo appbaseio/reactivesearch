@@ -371,7 +371,7 @@ class ReactiveList extends Component {
 		} = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
-		const parsedPromotedResults = parseHits(promotedResults) || [];
+		const parsedPromotedResults = parseHits(promotedResults || []) || [];
 		let filteredResults = results;
 		const base = currentPage * size;
 
@@ -563,13 +563,13 @@ class ReactiveList extends Component {
 		const { hits, promotedResults, total } = this.props;
 
 		const shouldStatsVisible
-			= hits && promotedResults && (hits.length || promotedResults.length);
+			= (hits && hits.length) || (promotedResults && promotedResults.length);
 		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
 		} else if (total) {
 			return (
 				<p css={resultStats} className={getClassName(this.props.innerClass, 'resultStats')}>
-					{this.props.total} results found in {this.props.time}ms
+					{this.props.total} results found in {this.props.time || 0}ms
 				</p>
 			);
 		}
@@ -695,7 +695,7 @@ class ReactiveList extends Component {
 		return {
 			data: this.withClickIds(filteredResults),
 			aggregationData: this.withClickIds(aggregationData || []),
-			promotedData: this.withClickIds(promotedResults),
+			promotedData: this.withClickIds(promotedResults || []),
 			customData,
 			rawData: this.props.rawData,
 			resultStats: this.stats,
@@ -910,14 +910,14 @@ const mapStateToProps = (state, props) => ({
 	analytics: state.config && state.config.analytics,
 	aggregationData: state.compositeAggregations[props.componentId],
 	isLoading: state.isLoading[props.componentId] || false,
-	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
+	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
 	enableAppbase: state.config.enableAppbase,
 	queryLog: state.queryLog[props.componentId],
 	error: state.error[props.componentId],
-	promotedResults: state.promotedResults[props.componentId] || [],
+	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
 	afterKey:
 		state.aggregations[props.componentId]
@@ -943,30 +943,34 @@ const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(
-	withTheme(props => (
-		<ComponentWrapper internalComponent componentType={componentTypes.reactiveList} {...props}>
-			{() => {
-				const { includeFields, excludeFields, size } = props;
-				return (
-					<ReactiveList
-						ref={props.myForwardedRef}
-						{...props}
-						originalProps={{
-							includeFields,
-							excludeFields,
-							size,
-						}}
-					/>
-				);
-			}}
-		</ComponentWrapper>
-	)),
+	withTheme((props) => {
+		const { includeFields, excludeFields, size } = props;
+		return (
+			<ReactiveList
+				ref={props.myForwardedRef}
+				{...props}
+				originalProps={{
+					includeFields,
+					excludeFields,
+					size,
+				}}
+			/>
+		);
+	}),
 );
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				internalComponent
+				componentType={componentTypes.reactiveList}
+				{...preferenceProps}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, ReactiveList);

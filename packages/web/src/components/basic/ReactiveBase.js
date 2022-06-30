@@ -17,6 +17,7 @@ import {
 	composeThemeObject,
 	ReactReduxContext,
 	SearchPreferencesContext,
+	ReduxGetStateContext,
 	X_SEARCH_CLIENT,
 } from '../../utils';
 
@@ -193,6 +194,8 @@ class ReactiveBase extends Component {
 		this.store = configureStore(initialState);
 	};
 
+	getReduxState = () => this.store.getState();
+
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
 		return (
@@ -207,7 +210,9 @@ class ReactiveBase extends Component {
 							getSearchParams={this.props.getSearchParams}
 							setSearchParams={this.props.setSearchParams}
 						>
-							{this.props.children}
+							<ReduxGetStateContext.Provider value={this.getReduxState}>
+								{this.props.children}
+							</ReduxGetStateContext.Provider>
 						</URLParamsProvider>
 					</Provider>
 				</ThemeProvider>
