@@ -36,6 +36,8 @@ export type paginationAt = 'top' | 'bottom' | 'both';
 
 export type tooltipTrigger = 'hover' | 'none' | 'focus' | 'always';
 
+export type chartType = 'pie' | 'scatter' | 'histogram' | 'bar' | 'line';
+
 export interface range {
 	start: number;
 	end: number;

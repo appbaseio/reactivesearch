@@ -45,3 +45,5 @@ export { default as ResultList } from './components/result/ResultList';
 export { default as CategorySearch } from './components/search/CategorySearch';
 export { default as DataSearch } from './components/search/DataSearch';
 export { default as SearchBox } from './components/search/SearchBox';
+
+export { default as ReactiveChart } from './components/chart/ReactiveChart';

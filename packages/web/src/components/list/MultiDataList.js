@@ -624,7 +624,7 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
+	<PreferencesConsumer userProps={props}>
 		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 	</PreferencesConsumer>
 ));
