@@ -286,7 +286,7 @@ class MultiDataList extends Component {
 			customQueryOptions = getOptionsFromQuery(customQuery(queryValue, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions, false);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -610,7 +610,7 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
 const ConnectedComponent = connect(

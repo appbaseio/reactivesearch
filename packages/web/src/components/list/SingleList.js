@@ -240,7 +240,7 @@ class SingleList extends Component {
 				this.state.currentValue,
 			),
 			...customQueryOptions,
-		});
+		}, false);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -614,7 +614,7 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
 
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
