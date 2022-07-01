@@ -1,4 +1,5 @@
 import '@appbaseio/reactivecore/lib/utils/polyfills';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import ReactiveBase from './components/basic/ReactiveBase';
 import SelectedFilters from './components/basic/SelectedFilters';
@@ -78,4 +79,5 @@ export {
 	SearchPreferencesContext,
 	// chart
 	ReactiveChart,
+	componentTypes,
 };
