@@ -420,54 +420,54 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				case componentTypes.reactiveList:
 					return <ReactiveList {...preferenceProps} />;
 				case componentTypes.dataSearch:
-					return <DataSearch />;
+					return <DataSearch {...preferenceProps} />;
 				case componentTypes.categorySearch:
-					return <CategorySearch />;
+					return <CategorySearch {...preferenceProps} />;
 				case componentTypes.searchBox:
-					return <SearchBox />;
+					return <SearchBox {...preferenceProps} />;
 				// list components
 				case componentTypes.singleList:
 					return <SingleList {...preferenceProps} />;
 				case componentTypes.multiList:
-					return <MultiList />;
+					return <MultiList {...preferenceProps} />;
 				case componentTypes.singleDataList:
-					return <SingleDataList />;
+					return <SingleDataList {...preferenceProps} />;
 				case componentTypes.multiDataList:
-					return <MultiDataList />;
+					return <MultiDataList {...preferenceProps} />;
 				case componentTypes.singleDropdownList:
-					return <SingleDropdownList />;
+					return <SingleDropdownList {...preferenceProps} />;
 				case componentTypes.multiDropdownList:
-					return <MultiDropdownList />;
+					return <MultiDropdownList {...preferenceProps} />;
 				case componentTypes.singleDropdownRange:
-					return <SingleDropdownRange />;
+					return <SingleDropdownRange {...preferenceProps} />;
 				case componentTypes.multiDropdownRange:
-					return <MultiDropdownRange />;
+					return <MultiDropdownRange {...preferenceProps} />;
 				// basic components
 				case componentTypes.numberBox:
-					return <NumberBox />;
+					return <NumberBox {...preferenceProps} />;
 				case componentTypes.tagCloud:
-					return <TagCloud />;
+					return <TagCloud {...preferenceProps} />;
 				case componentTypes.toggleButton:
-					return <ToggleButton />;
+					return <ToggleButton {...preferenceProps} />;
 				// range components
 				case componentTypes.datePicker:
-					return <DatePicker />;
+					return <DatePicker {...preferenceProps} />;
 				case componentTypes.dateRange:
-					return <DateRange />;
+					return <DateRange {...preferenceProps} />;
 				case componentTypes.dynamicRangeSlider:
-					return <DynamicRangeSlider />;
+					return <DynamicRangeSlider {...preferenceProps} />;
 				case componentTypes.singleRange:
-					return <SingleRange />;
+					return <SingleRange {...preferenceProps} />;
 				case componentTypes.multiRange:
-					return <MultiRange />;
+					return <MultiRange {...preferenceProps} />;
 				case componentTypes.rangeSlider:
-					return <RangeSlider />;
+					return <RangeSlider {...preferenceProps} />;
 				case componentTypes.ratingsFilter:
-					return <RatingsFilter />;
+					return <RatingsFilter {...preferenceProps} />;
 				case componentTypes.rangeInput:
-					return <RangeInput />;
+					return <RangeInput {...preferenceProps} />;
 				case componentTypes.reactiveChart:
-					return <ReactiveChart />;
+					return <ReactiveChart {...preferenceProps} />;
 				case componentTypes.reactiveComponent:
 				default:
 					return (
