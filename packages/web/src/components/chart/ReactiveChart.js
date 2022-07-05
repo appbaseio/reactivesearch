@@ -115,9 +115,11 @@ class ReactiveChart extends React.Component {
 	};
 
 	transformOptions(options, props) {
-		return props.options && props.options[props.dataField]
-			? props.options[props.dataField].buckets
-			: [];
+		return (
+			props.options && props.options[props.dataField]
+				? props.options[props.dataField].buckets
+				: []
+		).filter(item => !!String(item.key).length);
 	}
 	updateDefaultQuery = (queryOptions) => {
 		const props = this.props;
