@@ -31,6 +31,7 @@ import Input from '../../styles/Input';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect, isEvent, isQueryIdentical } from '../../utils';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class SingleDataList extends Component {
@@ -205,7 +206,7 @@ class SingleDataList extends Component {
 			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions, false);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -529,7 +530,7 @@ const mapDispatchtoProps = dispatch => ({
 
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
 const ConnectedComponent = connect(
@@ -543,7 +544,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, SingleDataList);
 

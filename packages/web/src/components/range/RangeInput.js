@@ -24,6 +24,7 @@ import {
 	getValueArrayWithinLimits,
 } from '../../utils';
 import DateContainer from '../../styles/DateContainer';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 
 const DATE_FORMAT = 'yyyy-MM-dd';
 class RangeInput extends Component {
@@ -478,9 +479,11 @@ RangeInput.propTypes = {
 	onValueChange: types.func,
 	onChange: types.func,
 	range: types.range,
+	rangeLabels: types.rangeLabels,
 	stepValue: types.number,
 	style: types.style,
 	themePreset: types.themePreset,
+	showHistogram: types.bool,
 	componentId: types.stringRequired,
 	includeNullValues: types.bool,
 	enableAppbase: types.bool,
@@ -496,6 +499,7 @@ RangeInput.defaultProps = {
 	},
 	stepValue: 1,
 	includeNullValues: false,
+	showHistogram: true,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -513,7 +517,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, RangeInput);
 

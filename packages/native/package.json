@@ -1,58 +1,58 @@
 {
-	"name": "@appbaseio/reactivesearch-native",
-	"version": "0.12.0",
-	"description": "Native data components for building reactive UIs with Elasticsearch",
-	"main": "src/index.js",
-	"files": [
-		"src/"
-	],
-	"scripts": {
-		"lint": "eslint .",
-		"precommit": "eslint ."
-	},
-	"author": "Appbase Inc. <info@appbase.io> (https://github.com/appbaseio)",
-	"license": "Apache-2.0",
-	"homepage": "https://github.com/appbaseio/reactivesearch",
-	"keywords": [
-		"appbaseio",
-		"appbase",
-		"search",
-		"UI components",
-		"react-native",
-		"reactivesearch"
-	],
-	"peerDependencies": {
-		"react": "*",
-		"react-native": "*"
-	},
-	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-eslint": "^8.2.3",
-		"babel-preset-react-native": "^4.0.0",
-		"eslint": "^4.19.1",
-		"eslint-config-airbnb": "^16.1.0",
-		"eslint-config-prettier": "^2.9.0",
-		"eslint-plugin-babel": "^5.1.0",
-		"eslint-plugin-import": "^2.11.0",
-		"eslint-plugin-jsx-a11y": "^6.0.3",
-		"eslint-plugin-prettier": "^2.6.0",
-		"eslint-plugin-react": "^7.7.0",
-		"eslint-plugin-react-native": "^3.2.1",
-		"husky": "^0.14.3",
-		"prettier": "^1.12.1",
-		"react": "~16.9.0",
-		"react-native": "~0.62.3"
-	},
-	"dependencies": {
-		"@appbaseio/reactivecore": "9.14.9",
-		"@babel/polyfill": "^7.0.0-rc.3",
-		"@ptomasroos/react-native-multi-slider": "^1.0.0",
-		"appbase-js": "^5.0.0",
-		"hoist-non-react-statics": "^3.3.0",
-		"native-base": "^2.4.2",
-		"prop-types": "^15.6.1",
-		"react-native-calendars": "^1.18.2",
-		"react-redux": "^5.0.7",
-		"xdate": "^0.8.2"
-	}
+    "name": "@appbaseio/reactivesearch-native",
+    "version": "0.12.0",
+    "description": "Native data components for building reactive UIs with Elasticsearch",
+    "main": "src/index.js",
+    "files": [
+        "src/"
+    ],
+    "scripts": {
+        "lint": "eslint .",
+        "precommit": "eslint ."
+    },
+    "author": "Appbase Inc. <info@appbase.io> (https://github.com/appbaseio)",
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/appbaseio/reactivesearch",
+    "keywords": [
+        "appbaseio",
+        "appbase",
+        "search",
+        "UI components",
+        "react-native",
+        "reactivesearch"
+    ],
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-eslint": "^8.2.3",
+        "babel-preset-react-native": "^4.0.0",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-config-prettier": "^2.9.0",
+        "eslint-plugin-babel": "^5.1.0",
+        "eslint-plugin-import": "^2.11.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-prettier": "^2.6.0",
+        "eslint-plugin-react": "^7.7.0",
+        "eslint-plugin-react-native": "^3.2.1",
+        "husky": "^0.14.3",
+        "prettier": "^1.12.1",
+        "react": "~16.9.0",
+        "react-native": "~0.62.3"
+    },
+    "dependencies": {
+        "@appbaseio/reactivecore": "9.14.12",
+        "@babel/polyfill": "^7.0.0-rc.3",
+        "@ptomasroos/react-native-multi-slider": "^1.0.0",
+        "appbase-js": "^5.0.0",
+        "hoist-non-react-statics": "^3.3.0",
+        "native-base": "^2.4.2",
+        "prop-types": "^15.6.1",
+        "react-native-calendars": "^1.18.2",
+        "react-redux": "^5.0.7",
+        "xdate": "^0.8.2"
+    }
 }

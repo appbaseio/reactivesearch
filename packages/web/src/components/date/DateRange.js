@@ -22,6 +22,7 @@ import Flex from '../../styles/Flex';
 import { connect } from '../../utils';
 
 import CancelSvg from '../shared/CancelSvg';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class DateRange extends Component {
@@ -374,7 +375,7 @@ class DateRange extends Component {
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(props.componentId, props, value);
 			}
-			props.setQueryOptions(props.componentId, customQueryOptions);
+			props.setQueryOptions(props.componentId, customQueryOptions, false);
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -578,7 +579,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
 const ConnectedComponent = connect(
@@ -594,7 +595,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DateRange);
 

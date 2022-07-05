@@ -61,6 +61,7 @@ import {
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import Mic from './addons/Mic';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
@@ -588,7 +589,7 @@ class DataSearch extends Component {
 			props.setQueryOptions(props.componentId, {
 				...this.queryOptions,
 				...customQueryOptions,
-			});
+			}, false);
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -1546,7 +1547,7 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
@@ -1568,7 +1569,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DataSearch);
 

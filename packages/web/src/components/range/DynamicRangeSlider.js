@@ -33,7 +33,7 @@ import Rheostat from 'rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import { oneOf } from 'prop-types';
-
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import HistogramContainer from './addons/HistogramContainer';
 import RangeLabel from './addons/RangeLabel';
 import SliderHandle from './addons/SliderHandle';
@@ -159,7 +159,7 @@ class DynamicRangeSlider extends Component {
 								formatRange(this.props.range, this.props).end
 										- formatRange(this.props.range, this.props).start,
 							).calculatedCalendarInterval,
-						}
+						  }
 						: {}),
 				},
 				componentTypes.dynamicRangeSlider,
@@ -451,7 +451,7 @@ class DynamicRangeSlider extends Component {
 				isValidDateRangeQueryFormat(props.queryFormat)
 					? formatDateString(normalizedValue[1])
 					: normalizedValue[1],
-			]
+			  ]
 			: null;
 		const performUpdate = () => {
 			this.setState(
@@ -503,7 +503,7 @@ class DynamicRangeSlider extends Component {
 			updateCustomQuery(props.componentId, props, value);
 		}
 		const { showFilter } = props;
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions, false);
 
 		props.updateQuery({
 			componentId: props.componentId,
@@ -791,8 +791,8 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
+	setQueryOptions: (...args) =>
+		dispatch(setQueryOptions(...args)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
@@ -806,7 +806,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DynamicRangeSlider);
 

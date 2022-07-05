@@ -34,6 +34,7 @@ import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
 import { connect, isEvent, isQueryIdentical } from '../../utils';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 // showLoadMore is experimental API and works only with ES6
@@ -239,7 +240,7 @@ class SingleList extends Component {
 				this.state.currentValue,
 			),
 			...customQueryOptions,
-		});
+		}, false);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -613,7 +614,7 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
 
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
@@ -630,7 +631,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, SingleList);
 

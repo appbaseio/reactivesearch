@@ -74,6 +74,7 @@ export interface SearchBoxProps extends CommonProps {
 	addonAfter?: types.children;
 	expandSuggestionsContainer?: boolean;
 	index?: string;
+	preferencesPath?: string;
 	popularSuggestionsConfig?: types.popularSuggestionsConfig;
 	recentSuggestionsConfig?: types.recentSuggestionsConfig;
 	indexSuggestionsConfig?: types.indexSuggestionsConfig;

@@ -1,4 +1,5 @@
 import '@appbaseio/reactivecore/lib/utils/polyfills';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import ReactiveBase from './components/basic/ReactiveBase';
 import SelectedFilters from './components/basic/SelectedFilters';
@@ -34,6 +35,10 @@ import SearchBox from './components/search/SearchBox';
 import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
+
+import ReactiveChart from './components/chart/ReactiveChart';
+
+import { SearchPreferencesContext } from './utils';
 
 export {
 	// basic
@@ -71,4 +76,8 @@ export {
 	ReactiveList,
 	ResultCard,
 	ResultList,
+	SearchPreferencesContext,
+	// chart
+	ReactiveChart,
+	componentTypes,
 };

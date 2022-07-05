@@ -36,6 +36,8 @@ export type paginationAt = 'top' | 'bottom' | 'both';
 
 export type tooltipTrigger = 'hover' | 'none' | 'focus' | 'always';
 
+export type chartType = 'pie' | 'scatter' | 'histogram' | 'bar' | 'line';
+
 export interface range {
 	start: number;
 	end: number;
@@ -169,6 +171,7 @@ export interface popularSuggestionsConfig {
 	minChars?: number;
 	showGlobal?: boolean;
 	index?: string;
+	preferencesPath?: string;
 	sectionLabel?: string;
 }
 
@@ -177,6 +180,7 @@ export interface recentSuggestionsConfig {
 	minHits?: number;
 	minChars?: number;
 	index?: string;
+	preferencesPath?: string;
 	sectionLabel?: string;
 }
 
@@ -184,6 +188,7 @@ export interface indexSuggestionsConfig {
 	sectionLabel?: string;
 	size?: number;
 	index?: string;
+	preferencesPath?: string;
 }
 export interface featuredSuggestionsConfig {
 	featuredSuggestionsGroupId: string;

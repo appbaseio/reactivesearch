@@ -85,6 +85,7 @@ export interface CategorySearchProps extends CommonProps {
 	addonAfter?: types.children;
 	expandSuggestionsContainer?: boolean;
 	index?: string;
+	preferencesPath?: string;
 }
 
 declare const CategorySearch: React.ComponentClass<CategorySearchProps>;

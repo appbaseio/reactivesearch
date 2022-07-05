@@ -20,6 +20,7 @@ import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect } from '../../utils';
+import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
 class ToggleButton extends Component {
@@ -202,7 +203,7 @@ class ToggleButton extends Component {
 			updateCustomQuery(props.componentId, props, value);
 		}
 
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions, false);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -320,7 +321,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
 const ConnectedComponent = connect(
@@ -334,7 +335,9 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<ConnectedComponent {...props} myForwardedRef={ref} />
+	<PreferencesConsumer userProps={props} >
+		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, ToggleButton);
 

@@ -13,7 +13,13 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
 import getTheme from '../../styles/theme';
-import { composeThemeObject, ReactReduxContext, X_SEARCH_CLIENT } from '../../utils';
+import {
+	composeThemeObject,
+	ReactReduxContext,
+	SearchPreferencesContext,
+	ReduxGetStateContext,
+	X_SEARCH_CLIENT,
+} from '../../utils';
 
 class ReactiveBase extends Component {
 	constructor(props) {
@@ -188,23 +194,29 @@ class ReactiveBase extends Component {
 		this.store = configureStore(initialState);
 	};
 
+	getReduxState = () => this.store.getState();
+
 	render() {
 		const theme = composeThemeObject(getTheme(this.props.themePreset), this.props.theme);
 		return (
-			<ThemeProvider theme={theme} key={this.state.key}>
-				<Provider context={ReactReduxContext} store={this.store}>
-					<URLParamsProvider
-						headers={this.headers}
-						style={this.props.style}
-						as={this.props.as}
-						className={this.props.className}
-						getSearchParams={this.props.getSearchParams}
-						setSearchParams={this.props.setSearchParams}
-					>
-						{this.props.children}
-					</URLParamsProvider>
-				</Provider>
-			</ThemeProvider>
+			<SearchPreferencesContext.Provider value={this.props.preferences}>
+				<ThemeProvider theme={theme} key={this.state.key}>
+					<Provider context={ReactReduxContext} store={this.store}>
+						<URLParamsProvider
+							headers={this.headers}
+							style={this.props.style}
+							as={this.props.as}
+							className={this.props.className}
+							getSearchParams={this.props.getSearchParams}
+							setSearchParams={this.props.setSearchParams}
+						>
+							<ReduxGetStateContext.Provider value={this.getReduxState}>
+								{this.props.children}
+							</ReduxGetStateContext.Provider>
+						</URLParamsProvider>
+					</Provider>
+				</ThemeProvider>
+			</SearchPreferencesContext.Provider>
 		);
 	}
 }
@@ -245,6 +257,7 @@ ReactiveBase.propTypes = {
 	getSearchParams: types.func,
 	setSearchParams: types.func,
 	mongodb: types.mongodb,
+	preferences: types.preferences,
 };
 
 export default ReactiveBase;
