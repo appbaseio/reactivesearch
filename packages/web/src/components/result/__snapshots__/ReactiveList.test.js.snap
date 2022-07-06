@@ -33,6 +33,10 @@ exports[`should display result stats when showResultStats is set 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -48,6 +52,109 @@ exports[`should display result stats when showResultStats is set 1`] = `
 }
 
 .emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
+.emotion-14 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -66,8 +173,49 @@ exports[`should display result stats when showResultStats is set 1`] = `
     <div
       className=" emotion-2 emotion-3"
     >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
       <p
-        className=" emotion-4"
+        className=" emotion-14"
       >
         9418
          results found in 
@@ -666,6 +814,10 @@ exports[`should hide result stats when showResultStats is set 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -680,6 +832,109 @@ exports[`should hide result stats when showResultStats is set 1`] = `
   fill: #424242;
 }
 
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -690,7 +945,49 @@ exports[`should hide result stats when showResultStats is set 1`] = `
   >
     <div
       className=" emotion-2 emotion-3"
-    />
+    >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
+    </div>
     <div
       className=" "
     >
@@ -1282,6 +1579,10 @@ exports[`should render custom result stats message 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -1296,6 +1597,109 @@ exports[`should render custom result stats message 1`] = `
   fill: #424242;
 }
 
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -1307,6 +1711,47 @@ exports[`should render custom result stats message 1`] = `
     <div
       className=" emotion-2 emotion-3"
     >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
       <span>
         <h3
           style={
@@ -1920,6 +2365,10 @@ exports[`should render item as defined in renderItem 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -1934,6 +2383,109 @@ exports[`should render item as defined in renderItem 1`] = `
   fill: #424242;
 }
 
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -1944,7 +2496,49 @@ exports[`should render item as defined in renderItem 1`] = `
   >
     <div
       className=" emotion-2 emotion-3"
-    />
+    >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
+    </div>
     <div
       className=" "
     >
@@ -2536,6 +3130,10 @@ exports[`should render items in a card layout 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -2558,6 +3156,109 @@ exports[`should render items in a card layout 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
+.emotion-14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -2569,12 +3270,12 @@ exports[`should render items in a card layout 1`] = `
 }
 
 @media (max-width:420px) {
-  .emotion-4 {
+  .emotion-14 {
     margin: 0;
   }
 }
 
-.emotion-5 {
+.emotion-15 {
   width: auto;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -2608,7 +3309,7 @@ exports[`should render items in a card layout 1`] = `
   transition: all 0.3s ease;
 }
 
-.emotion-5 h2 {
+.emotion-15 h2 {
   width: 100%;
   font-size: 0.9rem;
   line-height: 1.2rem;
@@ -2619,11 +3320,11 @@ exports[`should render items in a card layout 1`] = `
   padding: 10px 0 8px;
 }
 
-.emotion-5 p {
+.emotion-15 p {
   margin: 0;
 }
 
-.emotion-5 article {
+.emotion-15 article {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -2631,13 +3332,13 @@ exports[`should render items in a card layout 1`] = `
   font-size: 0.9rem;
 }
 
-.emotion-5:hover,
-.emotion-5:focus {
+.emotion-15:hover,
+.emotion-15:focus {
   box-shadow: 0 0 8px 1px rgba(0,0,0,.3);
 }
 
 @media (max-width:420px) {
-  .emotion-5 {
+  .emotion-15 {
     width: 50%;
     min-width: 0;
     height: 210px;
@@ -2647,13 +3348,13 @@ exports[`should render items in a card layout 1`] = `
     border: 1px solid #eee;
   }
 
-  .emotion-5:hover,
-  .emotion-5:focus {
+  .emotion-15:hover,
+  .emotion-15:focus {
     box-shadow: 0;
   }
 }
 
-.emotion-7 {
+.emotion-17 {
   width: calc(100% + 20px);
   height: 220px;
   margin: -10px -10px 0;
@@ -2663,7 +3364,7 @@ exports[`should render items in a card layout 1`] = `
   background-repeat: no-repeat;
 }
 
-.emotion-9 {
+.emotion-19 {
   margin: 0 0 8px;
   font-size: 1rem;
   color: #424242;
@@ -2679,19 +3380,61 @@ exports[`should render items in a card layout 1`] = `
   >
     <div
       className=" emotion-2 emotion-3"
-    />
+    >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
+    </div>
     <div
-      className="emotion-4"
+      className="emotion-14"
     >
       <a
-        className="emotion-5 emotion-6"
+        className="emotion-15 emotion-16"
         href={undefined}
         id={undefined}
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          className="emotion-7 emotion-8"
+          className="emotion-17 emotion-18"
           style={
             Object {
               "backgroundImage": "url(https://images.gr-assets.com/books/1455618673l/15997.jpg)",
@@ -2699,7 +3442,7 @@ exports[`should render items in a card layout 1`] = `
           }
         />
         <h2
-          className="emotion-9 emotion-10"
+          className="emotion-19 emotion-20"
         >
           <div
             className="book-title-card text-center"
@@ -2761,14 +3504,14 @@ exports[`should render items in a card layout 1`] = `
         </article>
       </a>
       <a
-        className="emotion-5 emotion-6"
+        className="emotion-15 emotion-16"
         href={undefined}
         id={undefined}
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          className="emotion-7 emotion-8"
+          className="emotion-17 emotion-18"
           style={
             Object {
               "backgroundImage": "url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png)",
@@ -2776,7 +3519,7 @@ exports[`should render items in a card layout 1`] = `
           }
         />
         <h2
-          className="emotion-9 emotion-10"
+          className="emotion-19 emotion-20"
         >
           <div
             className="book-title-card text-center"
@@ -2838,14 +3581,14 @@ exports[`should render items in a card layout 1`] = `
         </article>
       </a>
       <a
-        className="emotion-5 emotion-6"
+        className="emotion-15 emotion-16"
         href={undefined}
         id={undefined}
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          className="emotion-7 emotion-8"
+          className="emotion-17 emotion-18"
           style={
             Object {
               "backgroundImage": "url(https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png)",
@@ -2853,7 +3596,7 @@ exports[`should render items in a card layout 1`] = `
           }
         />
         <h2
-          className="emotion-9 emotion-10"
+          className="emotion-19 emotion-20"
         >
           <div
             className="book-title-card text-center"
@@ -2915,14 +3658,14 @@ exports[`should render items in a card layout 1`] = `
         </article>
       </a>
       <a
-        className="emotion-5 emotion-6"
+        className="emotion-15 emotion-16"
         href={undefined}
         id={undefined}
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          className="emotion-7 emotion-8"
+          className="emotion-17 emotion-18"
           style={
             Object {
               "backgroundImage": "url(https://images.gr-assets.com/books/1373059909l/18079719.jpg)",
@@ -2930,7 +3673,7 @@ exports[`should render items in a card layout 1`] = `
           }
         />
         <h2
-          className="emotion-9 emotion-10"
+          className="emotion-19 emotion-20"
         >
           <div
             className="book-title-card text-center"
@@ -2992,14 +3735,14 @@ exports[`should render items in a card layout 1`] = `
         </article>
       </a>
       <a
-        className="emotion-5 emotion-6"
+        className="emotion-15 emotion-16"
         href={undefined}
         id={undefined}
         rel="noopener noreferrer"
         target="_blank"
       >
         <div
-          className="emotion-7 emotion-8"
+          className="emotion-17 emotion-18"
           style={
             Object {
               "backgroundImage": "url(https://images.gr-assets.com/books/1367533032l/72855.jpg)",
@@ -3007,7 +3750,7 @@ exports[`should render items in a card layout 1`] = `
           }
         />
         <h2
-          className="emotion-9 emotion-10"
+          className="emotion-19 emotion-20"
         >
           <div
             className="book-title-card text-center"
@@ -3106,6 +3849,10 @@ exports[`should render items in a list layout 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -3120,6 +3867,109 @@ exports[`should render items in a list layout 1`] = `
   fill: #424242;
 }
 
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -3130,7 +3980,49 @@ exports[`should render items in a list layout 1`] = `
   >
     <div
       className=" emotion-2 emotion-3"
-    />
+    >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
+    </div>
     <div
       className=" "
     >
@@ -3722,6 +4614,10 @@ exports[`should render no results message 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -3736,6 +4632,109 @@ exports[`should render no results message 1`] = `
   fill: #424242;
 }
 
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -3746,7 +4745,49 @@ exports[`should render no results message 1`] = `
   >
     <div
       className=" emotion-2 emotion-3"
-    />
+    >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
+    </div>
     <div>
       <p>
         No Results Found!
@@ -3792,6 +4833,10 @@ exports[`should render pagination at both 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -3807,6 +4852,109 @@ exports[`should render pagination at both 1`] = `
 }
 
 .emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
+.emotion-14 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -3814,19 +4962,19 @@ exports[`should render pagination at both 1`] = `
   font-size: 0.82rem;
 }
 
-.emotion-5 {
+.emotion-15 {
   margin: 10px -3px;
   max-width: 100%;
   text-align: center;
 }
 
-.emotion-5 a {
+.emotion-15 a {
   margin: 0 3px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.emotion-6 {
+.emotion-16 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -3859,29 +5007,29 @@ exports[`should render pagination at both 1`] = `
   cursor: not-allowed;
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #ccc;
 }
 
-.emotion-6:focus {
+.emotion-16:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #fafafa;
 }
 
-.emotion-6.enter-btn {
+.emotion-16.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-8 {
+.emotion-18 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -3913,29 +5061,29 @@ exports[`should render pagination at both 1`] = `
   color: #fff;
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #ccc;
 }
 
-.emotion-8:focus {
+.emotion-18:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #0054d7;
 }
 
-.emotion-8.enter-btn {
+.emotion-18.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-10 {
+.emotion-20 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -3965,18 +5113,18 @@ exports[`should render pagination at both 1`] = `
   transition: all 0.3s ease;
 }
 
-.emotion-10:hover,
-.emotion-10:focus {
+.emotion-20:hover,
+.emotion-20:focus {
   background-color: #ccc;
 }
 
-.emotion-10:focus {
+.emotion-20:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-10.enter-btn {
+.emotion-20.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
@@ -3993,8 +5141,49 @@ exports[`should render pagination at both 1`] = `
     <div
       className=" emotion-2 emotion-3"
     >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
       <p
-        className=" emotion-4"
+        className=" emotion-14"
       >
         9418
          results found in 
@@ -4003,10 +5192,10 @@ exports[`should render pagination at both 1`] = `
       </p>
     </div>
     <div
-      className=" emotion-5"
+      className=" emotion-15"
     >
       <a
-        className="emotion-6 emotion-7"
+        className="emotion-16 emotion-7"
         disabled={true}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4016,7 +5205,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 1"
-        className=" active emotion-8 emotion-7"
+        className=" active emotion-18 emotion-7"
         href="?MockSearchResult=1"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4026,7 +5215,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=2"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4036,7 +5225,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 3"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=3"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4046,7 +5235,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 4"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=4"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4056,7 +5245,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 5"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=5"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4066,7 +5255,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         disabled={false}
         href="?MockSearchResult=2"
         onClick={[Function]}
@@ -4632,10 +5821,10 @@ exports[`should render pagination at both 1`] = `
       </div>
     </div>
     <div
-      className=" emotion-5"
+      className=" emotion-15"
     >
       <a
-        className="emotion-6 emotion-7"
+        className="emotion-16 emotion-7"
         disabled={true}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4645,7 +5834,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 1"
-        className=" active emotion-8 emotion-7"
+        className=" active emotion-18 emotion-7"
         href="?MockSearchResult=1"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4655,7 +5844,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=2"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4665,7 +5854,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 3"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=3"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4675,7 +5864,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 4"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=4"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4685,7 +5874,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 5"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=5"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -4695,7 +5884,7 @@ exports[`should render pagination at both 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         disabled={false}
         href="?MockSearchResult=2"
         onClick={[Function]}
@@ -4743,6 +5932,10 @@ exports[`should render pagination at bottom 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -4758,6 +5951,109 @@ exports[`should render pagination at bottom 1`] = `
 }
 
 .emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
+.emotion-14 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -4765,19 +6061,19 @@ exports[`should render pagination at bottom 1`] = `
   font-size: 0.82rem;
 }
 
-.emotion-5 {
+.emotion-15 {
   margin: 10px -3px;
   max-width: 100%;
   text-align: center;
 }
 
-.emotion-5 a {
+.emotion-15 a {
   margin: 0 3px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.emotion-6 {
+.emotion-16 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -4810,29 +6106,29 @@ exports[`should render pagination at bottom 1`] = `
   cursor: not-allowed;
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #ccc;
 }
 
-.emotion-6:focus {
+.emotion-16:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #fafafa;
 }
 
-.emotion-6.enter-btn {
+.emotion-16.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-8 {
+.emotion-18 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -4864,29 +6160,29 @@ exports[`should render pagination at bottom 1`] = `
   color: #fff;
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #ccc;
 }
 
-.emotion-8:focus {
+.emotion-18:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #0054d7;
 }
 
-.emotion-8.enter-btn {
+.emotion-18.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-10 {
+.emotion-20 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -4916,18 +6212,18 @@ exports[`should render pagination at bottom 1`] = `
   transition: all 0.3s ease;
 }
 
-.emotion-10:hover,
-.emotion-10:focus {
+.emotion-20:hover,
+.emotion-20:focus {
   background-color: #ccc;
 }
 
-.emotion-10:focus {
+.emotion-20:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-10.enter-btn {
+.emotion-20.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
@@ -4944,8 +6240,49 @@ exports[`should render pagination at bottom 1`] = `
     <div
       className=" emotion-2 emotion-3"
     >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
       <p
-        className=" emotion-4"
+        className=" emotion-14"
       >
         9418
          results found in 
@@ -5508,10 +6845,10 @@ exports[`should render pagination at bottom 1`] = `
       </div>
     </div>
     <div
-      className=" emotion-5"
+      className=" emotion-15"
     >
       <a
-        className="emotion-6 emotion-7"
+        className="emotion-16 emotion-7"
         disabled={true}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5521,7 +6858,7 @@ exports[`should render pagination at bottom 1`] = `
       </a>
       <a
         alt="Page 1"
-        className=" active emotion-8 emotion-7"
+        className=" active emotion-18 emotion-7"
         href="?MockSearchResult=1"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5531,7 +6868,7 @@ exports[`should render pagination at bottom 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=2"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5541,7 +6878,7 @@ exports[`should render pagination at bottom 1`] = `
       </a>
       <a
         alt="Page 3"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=3"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5551,7 +6888,7 @@ exports[`should render pagination at bottom 1`] = `
       </a>
       <a
         alt="Page 4"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=4"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5561,7 +6898,7 @@ exports[`should render pagination at bottom 1`] = `
       </a>
       <a
         alt="Page 5"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=5"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5571,7 +6908,7 @@ exports[`should render pagination at bottom 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         disabled={false}
         href="?MockSearchResult=2"
         onClick={[Function]}
@@ -5619,6 +6956,10 @@ exports[`should render pagination at top 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -5634,6 +6975,109 @@ exports[`should render pagination at top 1`] = `
 }
 
 .emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
+.emotion-14 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -5641,19 +7085,19 @@ exports[`should render pagination at top 1`] = `
   font-size: 0.82rem;
 }
 
-.emotion-5 {
+.emotion-15 {
   margin: 10px -3px;
   max-width: 100%;
   text-align: center;
 }
 
-.emotion-5 a {
+.emotion-15 a {
   margin: 0 3px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.emotion-6 {
+.emotion-16 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -5686,29 +7130,29 @@ exports[`should render pagination at top 1`] = `
   cursor: not-allowed;
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #ccc;
 }
 
-.emotion-6:focus {
+.emotion-16:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #fafafa;
 }
 
-.emotion-6.enter-btn {
+.emotion-16.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-8 {
+.emotion-18 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -5740,29 +7184,29 @@ exports[`should render pagination at top 1`] = `
   color: #fff;
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #ccc;
 }
 
-.emotion-8:focus {
+.emotion-18:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #0054d7;
 }
 
-.emotion-8.enter-btn {
+.emotion-18.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-10 {
+.emotion-20 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -5792,18 +7236,18 @@ exports[`should render pagination at top 1`] = `
   transition: all 0.3s ease;
 }
 
-.emotion-10:hover,
-.emotion-10:focus {
+.emotion-20:hover,
+.emotion-20:focus {
   background-color: #ccc;
 }
 
-.emotion-10:focus {
+.emotion-20:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-10.enter-btn {
+.emotion-20.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
@@ -5820,8 +7264,49 @@ exports[`should render pagination at top 1`] = `
     <div
       className=" emotion-2 emotion-3"
     >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
       <p
-        className=" emotion-4"
+        className=" emotion-14"
       >
         9418
          results found in 
@@ -5830,10 +7315,10 @@ exports[`should render pagination at top 1`] = `
       </p>
     </div>
     <div
-      className=" emotion-5"
+      className=" emotion-15"
     >
       <a
-        className="emotion-6 emotion-7"
+        className="emotion-16 emotion-7"
         disabled={true}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5843,7 +7328,7 @@ exports[`should render pagination at top 1`] = `
       </a>
       <a
         alt="Page 1"
-        className=" active emotion-8 emotion-7"
+        className=" active emotion-18 emotion-7"
         href="?MockSearchResult=1"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5853,7 +7338,7 @@ exports[`should render pagination at top 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=2"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5863,7 +7348,7 @@ exports[`should render pagination at top 1`] = `
       </a>
       <a
         alt="Page 3"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=3"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5873,7 +7358,7 @@ exports[`should render pagination at top 1`] = `
       </a>
       <a
         alt="Page 4"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=4"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5883,7 +7368,7 @@ exports[`should render pagination at top 1`] = `
       </a>
       <a
         alt="Page 5"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=5"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -5893,7 +7378,7 @@ exports[`should render pagination at top 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         disabled={false}
         href="?MockSearchResult=2"
         onClick={[Function]}
@@ -6495,6 +7980,10 @@ exports[`should render pagination when pagination is set to true 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
 }
 
 .emotion-2 svg.cancel-icon {
@@ -6510,6 +7999,109 @@ exports[`should render pagination when pagination is set to true 1`] = `
 }
 
 .emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.emotion-4 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-4 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-6 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  text-underline-position: under;
+  color: #2c2daf;
+}
+
+.emotion-6:hover,
+.emotion-6:focus {
+  background-color: #ccc;
+}
+
+.emotion-6:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-6.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-6:hover {
+  background-color: transparent;
+}
+
+.emotion-6.disabled {
+  color: hsl(240deg 7% 62%);
+  -webkit-text-decoration-color: hsl(240deg 7% 62%);
+  text-decoration-color: hsl(240deg 7% 62%);
+  cursor: default;
+  pointer-events: none;
+}
+
+.emotion-8 {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  -webkit-text-decoration-thickness: 2px;
+  text-decoration-thickness: 2px;
+  position: relative;
+  top: -1px;
+  margin-left: 2px;
+}
+
+.emotion-14 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -6517,19 +8109,19 @@ exports[`should render pagination when pagination is set to true 1`] = `
   font-size: 0.82rem;
 }
 
-.emotion-5 {
+.emotion-15 {
   margin: 10px -3px;
   max-width: 100%;
   text-align: center;
 }
 
-.emotion-5 a {
+.emotion-15 a {
   margin: 0 3px;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.emotion-6 {
+.emotion-16 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -6562,29 +8154,29 @@ exports[`should render pagination when pagination is set to true 1`] = `
   cursor: not-allowed;
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #ccc;
 }
 
-.emotion-6:focus {
+.emotion-16:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-6:hover,
-.emotion-6:focus {
+.emotion-16:hover,
+.emotion-16:focus {
   background-color: #fafafa;
 }
 
-.emotion-6.enter-btn {
+.emotion-16.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-8 {
+.emotion-18 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -6616,29 +8208,29 @@ exports[`should render pagination when pagination is set to true 1`] = `
   color: #fff;
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #ccc;
 }
 
-.emotion-8:focus {
+.emotion-18:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-8:hover,
-.emotion-8:focus {
+.emotion-18:hover,
+.emotion-18:focus {
   background-color: #0054d7;
 }
 
-.emotion-8.enter-btn {
+.emotion-18.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-10 {
+.emotion-20 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -6668,18 +8260,18 @@ exports[`should render pagination when pagination is set to true 1`] = `
   transition: all 0.3s ease;
 }
 
-.emotion-10:hover,
-.emotion-10:focus {
+.emotion-20:hover,
+.emotion-20:focus {
   background-color: #ccc;
 }
 
-.emotion-10:focus {
+.emotion-20:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-10.enter-btn {
+.emotion-20.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
@@ -6696,8 +8288,49 @@ exports[`should render pagination when pagination is set to true 1`] = `
     <div
       className=" emotion-2 emotion-3"
     >
+      <div
+        className=" emotion-4 emotion-3"
+      >
+        <span>
+          Export: 
+           
+        </span>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+            }
+          }
+        >
+          CSV 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+        <a
+          className=" emotion-6 emotion-7"
+          onClick={[Function]}
+          style={
+            Object {
+              "gap": "2px",
+              "paddingLeft": "0",
+            }
+          }
+        >
+          JSON 
+          <span
+            className="emotion-8 emotion-9"
+          >
+            ⬇
+          </span>
+        </a>
+      </div>
       <p
-        className=" emotion-4"
+        className=" emotion-14"
       >
         9418
          results found in 
@@ -7260,10 +8893,10 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </div>
     </div>
     <div
-      className=" emotion-5"
+      className=" emotion-15"
     >
       <a
-        className="emotion-6 emotion-7"
+        className="emotion-16 emotion-7"
         disabled={true}
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -7273,7 +8906,7 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </a>
       <a
         alt="Page 1"
-        className=" active emotion-8 emotion-7"
+        className=" active emotion-18 emotion-7"
         href="?MockSearchResult=1"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -7283,7 +8916,7 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=2"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -7293,7 +8926,7 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </a>
       <a
         alt="Page 3"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=3"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -7303,7 +8936,7 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </a>
       <a
         alt="Page 4"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=4"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -7313,7 +8946,7 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </a>
       <a
         alt="Page 5"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         href="?MockSearchResult=5"
         onClick={[Function]}
         onKeyPress={[Function]}
@@ -7323,7 +8956,7 @@ exports[`should render pagination when pagination is set to true 1`] = `
       </a>
       <a
         alt="Page 2"
-        className="emotion-10 emotion-7"
+        className="emotion-20 emotion-7"
         disabled={false}
         href="?MockSearchResult=2"
         onClick={[Function]}
