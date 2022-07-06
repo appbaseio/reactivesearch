@@ -27,6 +27,7 @@ import {
 	getComponent,
 	hasCustomRenderer,
 	saveDataAsFile,
+	flatten,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -44,7 +45,6 @@ import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import Button from '../../styles/Button';
 import DownloadSvg from '../shared/DownloadSvg';
-import { flatten } from '@appbaseio/reactivecore/src/utils/helper';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
