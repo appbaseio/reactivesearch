@@ -11,6 +11,7 @@ import {
 	setValue,
 	updateComponentProps,
 	setDefaultQuery,
+	loadDataToExport,
 } from '@appbaseio/reactivecore/lib/actions';
 import {
 	isEqual,
@@ -43,6 +44,7 @@ import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import Button from '../../styles/Button';
 import DownloadSvg from '../shared/DownloadSvg';
+import { flatten } from '@appbaseio/reactivecore/src/utils/helper';
 
 class ReactiveList extends Component {
 	static ResultCardsWrapper = ({ children, ...rest }) => (
@@ -76,6 +78,7 @@ class ReactiveList extends Component {
 		this.state = {
 			from: this.initialFrom,
 			currentPage,
+			exportLoading: false,
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
 		this.sortOptionIndex = this.props.defaultSortOption
@@ -677,40 +680,65 @@ class ReactiveList extends Component {
 	);
 
 	triggerExportCSV = () => {
-		const arrayOfJson = [
-			{ name: 'Item 1', color: 'Green', size: 'X-Large' },
-			{ name: 'Item 2', color: 'Green', size: 'X-Large' },
-			{ name: 'Item 3', color: 'Green', size: 'X-Large' },
-		];
-		// convert JSON to CSV
-		const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
-		let header = [];
-		arrayOfJson.forEach((item) => {
-			const keys = Object.keys(item); // 👇️ {'a', 'b', 'c'}
-			const set = new Set([...keys, ...header]);
-			header = [...set];
+		const { exportData, componentId } = this.props;
+		this.setState({
+			exportLoading: true,
 		});
-		let csv = arrayOfJson.map(row =>
-			header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','),
-		);
-		csv.unshift(header.join(','));
-		csv = csv.join('\r\n');
+		exportData(componentId)
+			.then((res) => {
+				const arrayOfJson = res.map(item => flatten(item));
 
-		// Create link and download
-		saveDataAsFile('testExport', csv, 'csv');
+				// convert JSON to CSV
+				const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
+				let header = [];
+				arrayOfJson.forEach((item) => {
+					const keys = Object.keys(item); // 👇️ {'a', 'b', 'c'}
+					const set = new Set([...keys, ...header]);
+					header = Array.from(set);
+				});
+				header = header.filter(item => typeof item !== 'object');
+
+				let csv = arrayOfJson.map(row =>
+					header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','),
+				);
+				csv.unshift(header.join(','));
+				csv = csv.join('\r\n');
+
+				// Create link and download
+				saveDataAsFile('csvData', csv, 'csv');
+			})
+			.catch((error) => {
+				console.error(error, error.stack);
+			})
+			.finally(() => {
+				this.setState({
+					exportLoading: false,
+				});
+			});
 	};
 
 	triggerExportJSON = () => {
-		const arrayOfJson = [
-			{ name: 'Item 1', color: 'Green', size: 'X-Large' },
-			{ name: 'Item 2', color: 'Green', size: 'X-Large' },
-			{ name: 'Item 3', color: 'Green', size: 'X-Large' },
-		];
-
-		saveDataAsFile('testExport', arrayOfJson, 'json');
+		const { exportData, componentId } = this.props;
+		this.setState({
+			exportLoading: true,
+		});
+		exportData(componentId)
+			.then((res) => {
+				const arrayOfJson = res;
+				saveDataAsFile('jsonData', arrayOfJson, 'json');
+			})
+			.catch((error) => {
+				console.error(error, error.stack);
+			})
+			.finally(() => {
+				this.setState({
+					exportLoading: false,
+				});
+			});
 	};
 
 	renderExportOptions = () => {
+		const { exportLoading } = this.state;
 		if (typeof this.props.renderExport === 'function') {
 			return this.props.renderExport({
 				triggerExportCSV: this.triggerExportCSV,
@@ -723,14 +751,20 @@ class ReactiveList extends Component {
 				flex="1 1 auto"
 				className={getClassName(this.props.innerClass, 'export')}
 			>
-				<span>Export: </span>
-				<Button style={{ gap: '2px' }} isLinkType onClick={this.triggerExportCSV}>
+				<span>{exportLoading ? 'Exporting... ' : 'Export: '} </span>
+				<Button
+					style={{ gap: '2px' }}
+					isLinkType
+					onClick={this.triggerExportCSV}
+					className={`${exportLoading ? 'disabled' : ''}`}
+				>
 					CSV <DownloadSvg />
 				</Button>
 				<Button
 					style={{ gap: '2px', paddingLeft: '0' }}
 					isLinkType
 					onClick={this.triggerExportJSON}
+					className={`${exportLoading ? 'disabled' : ''}`}
 				>
 					JSON <DownloadSvg />
 				</Button>
@@ -940,6 +974,7 @@ ReactiveList.propTypes = {
 	urlSortOption: types.string,
 	showExport: types.bool,
 	renderExport: types.func,
+	exportData: types.funcRequired,
 };
 
 ReactiveList.defaultProps = {
@@ -1009,6 +1044,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
+	exportData: component => dispatch(loadDataToExport(component)),
 });
 
 const ConnectedComponent = connect(

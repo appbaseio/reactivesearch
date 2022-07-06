@@ -156,6 +156,12 @@ const Button = styled('a')`
 			&:hover {
 				background-color: transparent;
 			}
+			&.disabled {
+				color: hsl(240deg 7% 62%);
+				text-decoration-color: hsl(240deg 7% 62%);
+				cursor: default;
+				pointer-events: none;
+			}
 		`};
 `;
 
