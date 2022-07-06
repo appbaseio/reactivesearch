@@ -13,7 +13,7 @@ Vue.use(DataSearch);
 Vue.use(SingleList);
 Vue.use(SelectedFilters);
 Vue.use(ReactiveGoogleMap, {
-	key: '',
+	key: 'AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU',
 });
 Vue.config.productionTip = false;
 

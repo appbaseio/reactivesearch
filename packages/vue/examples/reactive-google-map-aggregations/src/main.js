@@ -4,17 +4,17 @@ import {
 	ReactiveBase,
 	ReactiveGoogleMap,
 	SelectedFilters,
-	SingleList
+	SingleList,
 } from '@appbaseio/reactivesearch-vue';
 
 Vue.use(ReactiveBase);
 Vue.use(SingleList);
 Vue.use(SelectedFilters);
 Vue.use(ReactiveGoogleMap, {
-	key: '',
+	key: 'AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU',
 });
 Vue.config.productionTip = false;
 
 new Vue({
-	render: h => h(App),
+	render: (h) => h(App),
 }).$mount('#app');

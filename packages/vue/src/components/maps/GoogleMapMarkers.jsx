@@ -1,7 +1,9 @@
 import VueTypes from 'vue-types';
-import GmapCluster from 'gmap-vue/dist/components/cluster';
+import { components } from 'gmap-vue';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import GoogleMapMarker from './GoogleMapMarker.jsx';
+
+const { Cluster } = components;
 
 const GoogleMapMarkers = {
 	name: 'GoogleMapMarkers',
@@ -32,7 +34,7 @@ const GoogleMapMarkers = {
 		},
 		getClusterMarkers() {
 			if (this.clickedCluster && Array.isArray(this.clickedCluster.getMarkers())) {
-				return this.clickedCluster.getMarkers().map(marker => marker.metaData);
+				return this.clickedCluster.getMarkers().map((marker) => marker.metaData);
 			}
 			return [];
 		},
@@ -73,11 +75,11 @@ const GoogleMapMarkers = {
 		if (this.showMarkerClusters) {
 			return (
 				<div>
-					<GmapCluster
+					<Cluster
 						{...{
 							props: this.clusterProps,
 						}}
-						onclick={cluster => {
+						onclick={(cluster) => {
 							this.clickedCluster = cluster;
 							this.clusterMarkers = this.getClusterMarkers();
 							this.$emit('open-cluster-popover', this.clusterMarkers);
@@ -94,7 +96,7 @@ const GoogleMapMarkers = {
 								}}
 							/>
 						))}
-					</GmapCluster>
+					</Cluster>
 					{this.clickedCluster && this.renderClusterPopover ? (
 						<InfoWindowWrapper
 							id="cluster"
@@ -103,14 +105,16 @@ const GoogleMapMarkers = {
 								position: this.getAdditionalProps().position,
 								options: this.getAdditionalProps().defaultOptions,
 							}}
-							renderPopover={handleClose => this.renderClusterPopover({
-								markers: this.clusterMarkers,
-								cluster: this.clickedCluster,
-								handleClose: () => {
-									handleClose();
-									this.closeMarker();
-								},
-							})}
+							renderPopover={(handleClose) =>
+								this.renderClusterPopover({
+									markers: this.clusterMarkers,
+									cluster: this.clickedCluster,
+									handleClose: () => {
+										handleClose();
+										this.closeMarker();
+									},
+								})
+							}
 							events={{
 								closeclick: this.closeMarker,
 							}}

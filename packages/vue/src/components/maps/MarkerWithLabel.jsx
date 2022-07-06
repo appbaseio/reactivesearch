@@ -1,5 +1,7 @@
-import MapElementMixin from 'gmap-vue/dist/mixins/map-element';
+import { components } from 'gmap-vue';
 import VueTypes from 'vue-types';
+
+const { MapElementMixin } = components;
 
 // Note: This file has been taken from https://github.com/eregnier/vue2-gmap-custom-marker/blob/master/gmap-custom-marker.vue
 const MarkerWithLabel = {
@@ -96,7 +98,7 @@ const MarkerWithLabel = {
 	},
 	provide() {
 		const self = this;
-		return this.$mapPromise.then(map => {
+		return this.$mapPromise.then((map) => {
 			class Overlay extends window.google.maps.OverlayView {
 				constructor(map2) {
 					super();
@@ -104,6 +106,7 @@ const MarkerWithLabel = {
 					this.setMap(map2);
 					this.draw = () => this.repaint();
 					this.setPosition = () => this.repaint();
+					this.getVisible = () => true;
 				}
 
 				repaint() {
@@ -158,8 +161,9 @@ const MarkerWithLabel = {
 								throw new Error('Invalid alignment type of custom marker!');
 						}
 						if (self.cssPosition) {
-							div.style.transform = `translate(${x + self.offsetX}px, ${y
-								+ self.offsetY}px)`;
+							div.style.transform = `translate(${x + self.offsetX}px, ${
+								y + self.offsetY
+							}px)`;
 						} else {
 							div.style.left = `${x + self.offsetX}px`;
 							div.style.top = `${y + self.offsetY}px`;
@@ -212,7 +216,7 @@ const MarkerWithLabel = {
 	methods: {
 		afterCreate(inst) {
 			if (this.$clusterPromise && !this.isMarkerAdded) {
-				this.$clusterPromise.then(co => {
+				this.$clusterPromise.then((co) => {
 					co.addMarker(inst);
 					this.$clusterObject = co;
 					this.isMarkerAdded = true;

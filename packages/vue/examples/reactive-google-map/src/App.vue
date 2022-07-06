@@ -7,15 +7,6 @@
 		>
 			<div class="row">
 				<div class="col">
-					<DataSearch
-						className="result-list-container"
-						componentId="BookSensor"
-						:dataField="['original_title', 'original_title.search']"
-						:URLParams="true"
-						:size="3"
-						:enablePopularSuggestions="true"
-						:enableRecentSearches="true"
-					/>
 					<single-list
 						title="Places"
 						componentId="places"

@@ -13,6 +13,7 @@
 		"@appbaseio/reactivesearch-vue": "1.16.0-alpha.55"
 	},
 	"devDependencies": {
+		"@babel/plugin-proposal-optional-chaining": "^7.18.6",
 		"@vue/cli-plugin-babel": "~4.5.0",
 		"@vue/cli-plugin-eslint": "~4.5.0",
 		"@vue/cli-service": "~4.5.0",
