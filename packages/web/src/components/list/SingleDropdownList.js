@@ -485,25 +485,27 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
+
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<ComponentWrapper
-		{...props}
-		internalComponent
-		componentType={componentTypes.singleDropdownList}
-	>
-		{() => <SingleDropdownList ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
-));
+)(props => <SingleDropdownList ref={props.myForwardedRef} {...props} />);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.singleDropdownList}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
+
 hoistNonReactStatics(ForwardRefComponent, SingleDropdownList);
 
 ForwardRefComponent.displayName = 'SingleDropdownList';
