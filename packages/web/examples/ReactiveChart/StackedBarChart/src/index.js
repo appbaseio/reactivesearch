@@ -29,7 +29,7 @@ const Main = () => (
 					filterLabel="Language"
 					URLParams
 					title="Languages"
-					defaultQuery={(value, props) => ({
+					defaultQuery={() => ({
 						aggs: {
 							years: {
 								terms: {
@@ -80,7 +80,9 @@ const Main = () => (
 							},
 							yAxis: {},
 							series: Object.keys(genresReleaseYearTable).map(genre => ({
-								data: Object.keys(genresReleaseYearTable[genre]).sort().map(year => genresReleaseYearTable[genre][year]),
+								data: Object.keys(genresReleaseYearTable[genre])
+									.sort()
+									.map(year => genresReleaseYearTable[genre][year]),
 								stack: 'x',
 								type: 'bar',
 								name: genre,
