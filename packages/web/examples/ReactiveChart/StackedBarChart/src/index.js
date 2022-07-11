@@ -31,14 +31,14 @@ const Main = () => (
 					title="Languages"
 					defaultQuery={(value, props) => ({
 						aggs: {
-							genres: {
+							years: {
 								terms: {
-									field: 'genres_data.keyword',
+									field: 'release_year',
 								},
 								aggs: {
-									release_year: {
+									genres: {
 										terms: {
-											field: 'release_year',
+											field: 'genres_data.keyword',
 										},
 									},
 								},
@@ -47,6 +47,7 @@ const Main = () => (
 					})}
 					setOption={({ rawData }) => {
 						const releaseYearGenresTable = {};
+						const genresReleaseYearTable = {};
 						const aggs = rawData ? rawData.aggregations : null;
 						// eslint-disable-next-line no-unused-expressions
 						if (aggs) {
@@ -65,6 +66,12 @@ const Main = () => (
 									});
 								});
 							});
+							Object.keys(releaseYearGenresTable).forEach((year) => {
+								Object.keys(releaseYearGenresTable[year]).forEach((genre) => {
+									if (!genresReleaseYearTable[genre]) genresReleaseYearTable[genre] = {};
+									genresReleaseYearTable[genre][year] = releaseYearGenresTable[year][genre];
+								});
+							});
 						}
 						return {
 							legend: {},
@@ -72,8 +79,11 @@ const Main = () => (
 								data: Object.keys(releaseYearGenresTable).map(k => k),
 							},
 							yAxis: {},
-							series: Object.keys(releaseYearGenresTable).map(year => ({
-								data: releaseYearGenresTable[year],
+							series: Object.keys(genresReleaseYearTable).map(genre => ({
+								data: Object.keys(genresReleaseYearTable[genre]).sort().map(year => genresReleaseYearTable[genre][year]),
+								stack: 'x',
+								type: 'bar',
+								name: genre,
 							})),
 						};
 					}}
