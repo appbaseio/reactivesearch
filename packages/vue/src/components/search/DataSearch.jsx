@@ -91,9 +91,8 @@ const DataSearch = {
 			distinctField,
 			distinctFieldConfig,
 			index,
-			mode,
 		} = this.$props;
-		window.console.log('inside created lifecycle');
+
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
 			console.warn(
@@ -124,12 +123,8 @@ const DataSearch = {
 
 		this.currentValue = '';
 		if (this.isTagsMode) {
-			window.console.log('SEARCH_COMPONENTS_MODES.TAG');
 			this.currentValue = '';
-			// this.selectedTags = [...(this.selectedValue ?? [])];
 		}
-		window.console.log('this.currentValue', this.currentValue);
-		window.console.log('this.selectedTags', this.selectedTags);
 		const shouldFetchInitialSuggestions
 			= this.$props.enableDefaultSuggestions || this.currentValue;
 		if (shouldFetchInitialSuggestions) {
@@ -169,8 +164,6 @@ const DataSearch = {
 			return this.recentSearches || [];
 		},
 		normalizedPopularSuggestions() {
-			window.console.log('inside normalizedPopularSuggestions');
-			window.console.log('this.currentValue', this.currentValue);
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				this.currentValue ? this.popularSuggestions : this.defaultPopularSuggestions || [],
@@ -179,7 +172,6 @@ const DataSearch = {
 			);
 		},
 		defaultSearchSuggestions() {
-			window.console.log('inside defaultSearchSuggestions method');
 			const isPopularSuggestionsEnabled
 				= this.enableQuerySuggestions || this.enablePopularSuggestions;
 			if (this.currentValue || !this.enableDefaultSuggestions) {
@@ -195,7 +187,6 @@ const DataSearch = {
 			const defaultSuggestions = isPopularSuggestionsEnabled
 				? [...customNormalizedRecentSearches, ...(customDefaultPopularSuggestions || [])]
 				: customNormalizedRecentSearches;
-			window.console.log('this.currentValue', this.currentValue);
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				defaultSuggestions,
@@ -338,7 +329,6 @@ const DataSearch = {
 			this.updateQueryOptions();
 		},
 		dataField() {
-			console.log('Inside dataField watcher');
 			this.updateQueryOptions();
 			this.updateQueryHandler(
 				this.$props.componentId,
@@ -350,7 +340,6 @@ const DataSearch = {
 			this.updateQueryOptions();
 		},
 		fieldWeights() {
-			console.log('Inside fieldWeights watcher');
 			this.updateQueryHandler(
 				this.$props.componentId,
 				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
@@ -358,7 +347,6 @@ const DataSearch = {
 			);
 		},
 		fuzziness() {
-			console.log('Inside fuzziness watcher');
 			this.updateQueryHandler(
 				this.$props.componentId,
 				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
@@ -366,7 +354,6 @@ const DataSearch = {
 			);
 		},
 		queryFormat() {
-			console.log('Inside queryFormat watcher');
 			this.updateQueryHandler(
 				this.$props.componentId,
 				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
@@ -374,13 +361,10 @@ const DataSearch = {
 			);
 		},
 		defaultValue(newVal) {
-			console.log('Inside defaultValue watcher');
 			this.setValue(newVal, true, this.$props);
 		},
 		value(newVal, oldVal) {
-			console.log('Inside value watcher controlled usage');
 			if (!isEqual(newVal, oldVal)) {
-				console.log('this.$data.isTagsMode', this.$data.isTagsMode);
 				this.setValue(newVal, true, this.$props, undefined, false);
 			}
 		},
@@ -390,7 +374,6 @@ const DataSearch = {
 			}
 		},
 		customQuery(newVal, oldVal) {
-			console.log('Inside customQuery watcher');
 			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
 				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
@@ -414,7 +397,6 @@ const DataSearch = {
 					// selected value is cleared, call onValueSelected
 					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 				}
-				window.console.log('selectedValue watcher triggering setValue', newVal, oldVal);
 				if (this.isTagsMode) {
 					// handling reset of tags through SelectedFilters or URL
 					this.selectedTags = [];
@@ -433,9 +415,7 @@ const DataSearch = {
 	},
 	methods: {
 		handleText(value) {
-			window.console.log('inside handleText method');
 			if (this.$props.autosuggest) {
-				window.console.log('this.$props.autosuggest', this.$props.autosuggest);
 				this.updateDefaultQueryHandler(value, this.$props);
 			} else {
 				this.updateQueryHandler(this.$props.componentId, value, this.$props);
@@ -530,9 +510,6 @@ const DataSearch = {
 			}
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
-			window.console.log('inside setValue method');
-			window.console.log('value', value);
-
 			const performUpdate = () => {
 				if (this.isTagsMode && isEqual(value, this.selectedTags)) {
 					return;
@@ -575,16 +552,13 @@ const DataSearch = {
 							: undefined;
 				}
 
-				window.console.log('queryHandlerValue', queryHandlerValue);
-				window.console.log('isDefaultValue', isDefaultValue);
-				window.console.log('this.currentValue', this.currentValue);
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
 							this.isOpen = false;
 						}
-						typeof value === 'string'
-							&& this.updateDefaultQueryHandler(value, this.$props);
+						if (typeof value === 'string')
+							this.updateDefaultQueryHandler(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
@@ -593,7 +567,6 @@ const DataSearch = {
 							cause === causes.SUGGESTION_SELECT
 							|| (this.isTagsMode ? this.selectedTags.length === 0 : value === '')
 						) {
-							window.console.log('updateQueryHandler called from setValue');
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 						} else {
 							this.setValue('', true);
@@ -602,7 +575,6 @@ const DataSearch = {
 						this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 					}
 				} else {
-					window.console.log('value change', value);
 					// debounce for handling text while typing
 					this.handleTextChange(value);
 				}
@@ -658,7 +630,6 @@ const DataSearch = {
 			});
 		},
 		updateQueryHandler(componentId, value, props) {
-			window.console.log('inside updateQueryHandler');
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
 
 			let customQueryOptions;
@@ -681,7 +652,6 @@ const DataSearch = {
 					false,
 				);
 			}
-			window.console.log('value supplied', value);
 			if (!this.isPending) {
 				this.updateQuery({
 					componentId,
@@ -777,12 +747,10 @@ const DataSearch = {
 		},
 
 		onSuggestionSelected(suggestion) {
-			window.console.log('inside onSuggestionSelected');
 			const { value } = this.$props;
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
-				window.console.log('inside onSuggestionSelected', suggestion.value);
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
 			} else if (this.isTagsMode) {
 				const emitValue = Array.isArray(this.selectedTags) ? [...this.selectedTags] : [];
