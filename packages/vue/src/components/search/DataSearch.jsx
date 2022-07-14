@@ -3,6 +3,7 @@ import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
+import { SEARCH_COMPONENTS_MODES } from '@appbaseio/reactivecore/src/utils/constants';
 import {
 	connect,
 	getComponent,
@@ -34,6 +35,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
 import CustomSvg from '../shared/CustomSvg';
+import { TagItem, TagsContainer } from '../../styles/Tags';
 
 const {
 	updateQuery,
@@ -67,9 +69,11 @@ const DataSearch = {
 		const props = this.$props;
 		this.__state = {
 			currentValue: '',
+			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
 			isPending: false,
+			isTagsMode: props.mode === SEARCH_COMPONENTS_MODES.TAG,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -87,7 +91,9 @@ const DataSearch = {
 			distinctField,
 			distinctFieldConfig,
 			index,
+			mode,
 		} = this.$props;
+		window.console.log('inside created lifecycle');
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
 			console.warn(
@@ -116,9 +122,16 @@ const DataSearch = {
 			);
 		}
 
-		this.currentValue = this.selectedValue || '';
-		const shouldFetchInitialSuggestions
-			= this.$props.enableDefaultSuggestions || this.currentValue;
+		this.currentValue = '';
+		if (this.isTagsMode) {
+			window.console.log('SEARCH_COMPONENTS_MODES.TAG');
+			this.currentValue = '';
+			this.selectedTags = [...(this.selectedValue ?? [])];
+		}
+		window.console.log('this.currentValue', this.currentValue);
+		window.console.log('this.selectedTags', this.selectedTags);
+		const shouldFetchInitialSuggestions =
+			this.$props.enableDefaultSuggestions || this.currentValue;
 		if (shouldFetchInitialSuggestions) {
 			this.loadPopularSuggestions(this.$props.componentId);
 			if (enableRecentSearches) {
@@ -134,9 +147,9 @@ const DataSearch = {
 		suggestionsList() {
 			let suggestionsList = [];
 			if (
-				!this.$data.currentValue
-				&& this.$props.defaultSuggestions
-				&& this.$props.defaultSuggestions.length
+				!this.$data.currentValue &&
+				this.$props.defaultSuggestions &&
+				this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = this.$props.defaultSuggestions;
 			} else if (this.$data.currentValue) {
@@ -156,6 +169,8 @@ const DataSearch = {
 			return this.recentSearches || [];
 		},
 		normalizedPopularSuggestions() {
+			window.console.log('inside normalizedPopularSuggestions');
+			window.console.log('this.currentValue', this.currentValue);
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				this.currentValue ? this.popularSuggestions : this.defaultPopularSuggestions || [],
@@ -164,8 +179,9 @@ const DataSearch = {
 			);
 		},
 		defaultSearchSuggestions() {
-			const isPopularSuggestionsEnabled
-				= this.enableQuerySuggestions || this.enablePopularSuggestions;
+			window.console.log('inside defaultSearchSuggestions method');
+			const isPopularSuggestionsEnabled =
+				this.enableQuerySuggestions || this.enablePopularSuggestions;
 			if (this.currentValue || !this.enableDefaultSuggestions) {
 				return [];
 			}
@@ -179,6 +195,7 @@ const DataSearch = {
 			const defaultSuggestions = isPopularSuggestionsEnabled
 				? [...customNormalizedRecentSearches, ...(customDefaultPopularSuggestions || [])]
 				: customNormalizedRecentSearches;
+			window.console.log('this.currentValue', this.currentValue);
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				defaultSuggestions,
@@ -222,7 +239,7 @@ const DataSearch = {
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,
 		excludeFields: types.excludeFields,
-		value: types.value,
+		value: VueTypes.oneOfType([VueTypes.arrayOf(VueTypes.string), types.value]),
 		defaultSuggestions: types.suggestions,
 		enableSynonyms: VueTypes.bool.def(true),
 		enableQuerySuggestions: VueTypes.bool.def(false),
@@ -274,6 +291,8 @@ const DataSearch = {
 		expandSuggestionsContainer: VueTypes.bool.def(true),
 		index: VueTypes.string,
 		enableDefaultSuggestions: VueTypes.bool.def(true),
+		mode: VueTypes.oneOf(['select', 'tag']).def('select'),
+		renderSelectedTags: VueTypes.any,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -289,11 +308,26 @@ const DataSearch = {
 		}
 
 		if (this.selectedValue) {
-			this.setValue(this.selectedValue, true);
+			this.setValue(
+				this.selectedValue,
+				true,
+				this.$props,
+				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
 		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
+			this.setValue(
+				this.$props.value,
+				true,
+				this.$props,
+				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
 		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
+			this.setValue(
+				this.$props.defaultValue,
+				true,
+				this.$props,
+				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
 		}
 	},
 	mounted() {
@@ -320,10 +354,13 @@ const DataSearch = {
 			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
 		},
 		defaultValue(newVal) {
+			console.log('Inside defaultValue watcher');
 			this.setValue(newVal, true, this.$props);
 		},
 		value(newVal, oldVal) {
+			console.log('Inside value watcher controlled usage');
 			if (!isEqual(newVal, oldVal)) {
+				console.log('this.$data.isTagsMode', this.$data.isTagsMode);
 				this.setValue(newVal, true, this.$props, undefined, false);
 			}
 		},
@@ -346,11 +383,17 @@ const DataSearch = {
 			}
 		},
 		selectedValue(newVal, oldVal) {
-			if (oldVal !== newVal && this.$data.currentValue !== newVal) {
+			if (
+				!isEqual(newVal, oldVal) &&
+				(this.isTagsMode
+					? !isEqual(this.$data.selectedTags, newVal)
+					: this.$data.currentValue !== newVal)
+			) {
 				if (!newVal && this.$data.currentValue) {
 					// selected value is cleared, call onValueSelected
 					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 				}
+				window.console.log('selectedValue watcher triggering setValue', newVal, oldVal);
 				this.setValue(newVal || '', true, this.$props);
 			}
 		},
@@ -360,7 +403,9 @@ const DataSearch = {
 	},
 	methods: {
 		handleText(value) {
+			window.console.log('inside handleText method');
 			if (this.$props.autosuggest) {
+				window.console.log('this.$props.autosuggest', this.$props.autosuggest);
 				this.updateDefaultQueryHandler(value, this.$props);
 			} else {
 				this.updateQueryHandler(this.$props.componentId, value, this.$props);
@@ -378,9 +423,9 @@ const DataSearch = {
 					return;
 				}
 				if (
-					typeof propValue !== 'string'
-					&& typeof propValue !== 'object'
-					&& !Array.isArray(propValue)
+					typeof propValue !== 'string' &&
+					typeof propValue !== 'object' &&
+					!Array.isArray(propValue)
 				) {
 					console.error(
 						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
@@ -455,33 +500,78 @@ const DataSearch = {
 			}
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
+			window.console.log('inside setValue method');
+			window.console.log('value', value);
+
 			const performUpdate = () => {
+				if (this.isTagsMode && isEqual(value, this.selectedTags)) {
+					return;
+				}
 				// Refresh recent searches when value becomes empty
 				if (!value && props.enableDefaultSuggestions === false) {
 					this.resetStoreForComponent(props.componentId);
 				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
-				this.currentValue = value;
+				if (this.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+					if (Array.isArray(this.selectedTags) && this.selectedTags.length) {
+						// check if value already present in selectedTags
+						if (typeof value === 'string' && this.selectedTags.includes(value)) {
+							this.isOpen = false;
+							return;
+						}
+						this.selectedTags = [...this.selectedTags];
+
+						if (typeof value === 'string' && !!value) {
+							this.selectedTags.push(value);
+						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
+							const mergedArray = Array.from(
+								new Set([...this.selectedTags, ...value]),
+							);
+							this.selectedTags = mergedArray;
+						}
+					} else if (value) {
+						this.selectedTags = typeof value !== 'string' ? value : [...value];
+					}
+					this.currentValue = '';
+				} else {
+					this.currentValue = value;
+				}
+				let queryHandlerValue = value;
+				if (this.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+					queryHandlerValue =
+						Array.isArray(this.selectedTags) && this.selectedTags.length
+							? this.selectedTags
+							: undefined;
+				}
+
+				window.console.log('queryHandlerValue', queryHandlerValue);
+				window.console.log('isDefaultValue', isDefaultValue);
+				window.console.log('this.currentValue', this.currentValue);
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
 							this.isOpen = false;
 						}
-						this.updateDefaultQueryHandler(value, this.$props);
+						typeof value === 'string' &&
+							this.updateDefaultQueryHandler(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
 					if (props.strictSelection) {
-						if (cause === causes.SUGGESTION_SELECT || value === '') {
-							this.updateQueryHandler(props.componentId, value, props);
+						if (
+							cause === causes.SUGGESTION_SELECT ||
+							(this.isTagsMode ? this.selectedTags.length === 0 : value === '')
+						) {
+							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 						} else {
 							this.setValue('', true);
 						}
 					} else {
-						this.updateQueryHandler(props.componentId, value, props);
+						this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 					}
 				} else {
+					window.console.log('value change', value);
 					// debounce for handling text while typing
 					this.handleTextChange(value);
 				}
@@ -578,12 +668,12 @@ const DataSearch = {
 		},
 		handleVoiceResults({ results }) {
 			if (
-				results
-				&& results[0]
-				&& results[0].isFinal
-				&& results[0][0]
-				&& results[0][0].transcript
-				&& results[0][0].transcript.trim()
+				results &&
+				results[0] &&
+				results[0].isFinal &&
+				results[0][0] &&
+				results[0][0].transcript &&
+				results[0][0].transcript.trim()
 			) {
 				this.isPending = false;
 				this.setValue(results[0][0].transcript.trim(), true);
@@ -649,15 +739,28 @@ const DataSearch = {
 		},
 
 		onSuggestionSelected(suggestion) {
+			window.console.log('inside onSuggestionSelected');
 			const { value } = this.$props;
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
+				window.console.log('inside onSuggestionSelected', suggestion.value);
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
+			} else if (this.isTagsMode) {
+				let emitValue = Array.isArray(this.selectedTags) ? [...this.selectedTags] : [];
+				if (this.selectedTags.includes(suggestion.value)) {
+					// avoid duplicates in tags array
+					this.isOpen = false;
+					return;
+				}
+				emitValue.push(suggestion.value);
+				this.setValue(emitValue, true, this.$props, causes.SUGGESTION_SELECT, true);
+				this.$emit('change', emitValue, this.triggerQuery);
 			} else {
-				this.isPending = false;
 				this.$emit('change', suggestion.value, this.triggerQuery);
 			}
+			this.isPending = false;
+
 			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
@@ -719,17 +822,17 @@ const DataSearch = {
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
-			const renderNoSuggestion
-				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderNoSuggestion =
+				this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
-				renderNoSuggestion
-				&& isOpen
-				&& !finalSuggestionsList.length
-				&& !this.isLoading
-				&& currentValue
-				&& !(renderError && this.error)
+				renderNoSuggestion &&
+				isOpen &&
+				!finalSuggestionsList.length &&
+				!this.isLoading &&
+				currentValue &&
+				!(renderError && this.error)
 			) {
 				return (
 					<SuggestionWrapper
@@ -755,6 +858,61 @@ const DataSearch = {
 			}
 
 			return null;
+		},
+		renderTag(item) {
+			const { innerClass } = this.$props;
+
+			return (
+				<TagItem className={getClassName(innerClass, 'selectedTag') || null}>
+					<span>{item}</span>
+					<span
+						role="img"
+						aria-label="delete-tag"
+						class="close-icon"
+						onClick={() => this.clearTag(item)}
+					>
+						<CancelSvg />
+					</span>
+				</TagItem>
+			);
+		},
+		clearAllTags() {
+			this.selectedTags = null;
+			this.setValue('', true, this.$props, causes.SUGGESTION_SELECT);
+		},
+		clearTag(tagValue) {
+			this.selectedTags = [...this.selectedTags.filter((tag) => tag !== tagValue)];
+			this.setValue('', true, this.$props, causes.SUGGESTION_SELECT);
+		},
+		renderTags() {
+			if (!Array.isArray(this.selectedTags)) {
+				return null;
+			}
+			const tagsList = [...this.selectedTags];
+			const shouldRenderClearAllTag = tagsList.length > 1;
+			const renderSelectedTags =
+				this.$scopedSlots.renderSelectedTags || this.$props.renderSelectedTags;
+
+			return renderSelectedTags ? (
+				renderSelectedTags(this.selectedTags, this.clearTag, this.clearAllTags)
+			) : (
+				<TagsContainer>
+					{tagsList.map((item) => this.renderTag(item))}
+					{shouldRenderClearAllTag && (
+						<TagItem>
+							<span>Clear All</span>
+							<span
+								role="img"
+								aria-label="delete-tag"
+								class="close-icon"
+								onClick={this.clearAllTags}
+							>
+								<CancelSvg />
+							</span>
+						</TagItem>
+					)}
+				</TagsContainer>
+			);
 		},
 		renderInputAddonAfter() {
 			const { addonAfter } = this.$scopedSlots;
@@ -812,10 +970,10 @@ const DataSearch = {
 			const elt = event.target || event.srcElement;
 			const { tagName } = elt;
 			if (
-				elt.isContentEditable
-				|| tagName === 'INPUT'
-				|| tagName === 'SELECT'
-				|| tagName === 'TEXTAREA'
+				elt.isContentEditable ||
+				tagName === 'INPUT' ||
+				tagName === 'SELECT' ||
+				tagName === 'TEXTAREA'
 			) {
 				// already in an input
 				return;
@@ -893,8 +1051,8 @@ const DataSearch = {
 							}) => {
 								const renderSuggestionsContainer = () => (
 									<div>
-										{this.hasCustomRenderer
-											&& this.getComponent({
+										{this.hasCustomRenderer &&
+											this.getComponent({
 												isOpen,
 												getItemProps,
 												getItemEvents,
@@ -951,9 +1109,9 @@ const DataSearch = {
 																}),
 															}}
 															key={`${
-																this.suggestionsList.length
-																+ index
-																+ 1
+																this.suggestionsList.length +
+																index +
+																1
 															}-${sugg.value}`}
 															style={{
 																backgroundColor:
@@ -970,39 +1128,39 @@ const DataSearch = {
 																	padding: '0 10px 0 0',
 																}}
 															>
-																{sugg.source
-																	&& sugg.source._recent_search && (
-																	<CustomSvg
-																		className={
-																			getClassName(
-																				this.$props
-																					.innerClass,
-																				'recent-search-icon',
-																			) || null
-																		}
-																		icon={
-																			recentSearchesIcon
-																		}
-																		type="recent-search-icon"
-																	/>
-																)}
-																{sugg.source
-																	&& sugg.source
+																{sugg.source &&
+																	sugg.source._recent_search && (
+																		<CustomSvg
+																			className={
+																				getClassName(
+																					this.$props
+																						.innerClass,
+																					'recent-search-icon',
+																				) || null
+																			}
+																			icon={
+																				recentSearchesIcon
+																			}
+																			type="recent-search-icon"
+																		/>
+																	)}
+																{sugg.source &&
+																	sugg.source
 																		._popular_suggestion && (
-																	<CustomSvg
-																		className={
-																			getClassName(
-																				this.$props
-																					.innerClass,
-																				'popular-search-icon',
-																			) || null
-																		}
-																		icon={
-																			popularSearchesIcon
-																		}
-																		type="popular-search-icon"
-																	/>
-																)}
+																		<CustomSvg
+																			className={
+																				getClassName(
+																					this.$props
+																						.innerClass,
+																					'popular-search-icon',
+																				) || null
+																			}
+																			icon={
+																				popularSearchesIcon
+																			}
+																			type="popular-search-icon"
+																		/>
+																	)}
 															</div>
 															<SuggestionItem
 																currentValue={this.currentValue}
@@ -1013,63 +1171,63 @@ const DataSearch = {
 												)}
 												{hasQuerySuggestionsRenderer(this)
 													? this.getComponent(
-														{
-															isOpen,
-															getItemProps,
-															getItemEvents,
-															highlightedIndex,
-														},
-														true,
+															{
+																isOpen,
+																getItemProps,
+																getItemEvents,
+																highlightedIndex,
+															},
+															true,
 													  )
 													: this.topSuggestions.map((sugg, index) => (
-														<li
-															{...{
-																domProps: getItemProps({
-																	item: sugg,
-																}),
-															}}
-															{...{
-																on: getItemEvents({
-																	item: sugg,
-																}),
-															}}
-															key={`${
-																this.suggestionsList.length
-																	+ index
-																	+ 1
-															}-${sugg.value}`}
-															style={{
-																backgroundColor:
+															<li
+																{...{
+																	domProps: getItemProps({
+																		item: sugg,
+																	}),
+																}}
+																{...{
+																	on: getItemEvents({
+																		item: sugg,
+																	}),
+																}}
+																key={`${
+																	this.suggestionsList.length +
+																	index +
+																	1
+																}-${sugg.value}`}
+																style={{
+																	backgroundColor:
 																		this.getBackgroundColor(
 																			highlightedIndex,
 																			this.suggestionsList
 																				.length + index,
 																		),
-																justifyContent: 'flex-start',
-															}}
-														>
-															<div
-																style={{
-																	padding: '0 10px 0 0',
+																	justifyContent: 'flex-start',
 																}}
 															>
-																<CustomSvg
-																	className={
-																		getClassName(
-																			this.$props
-																				.innerClass,
-																			'popular-search-icon',
-																		) || null
-																	}
-																	icon={popularSearchesIcon}
-																	type="popular-search-icon"
+																<div
+																	style={{
+																		padding: '0 10px 0 0',
+																	}}
+																>
+																	<CustomSvg
+																		className={
+																			getClassName(
+																				this.$props
+																					.innerClass,
+																				'popular-search-icon',
+																			) || null
+																		}
+																		icon={popularSearchesIcon}
+																		type="popular-search-icon"
+																	/>
+																</div>
+																<SuggestionItem
+																	currentValue={this.currentValue}
+																	suggestion={sugg}
 																/>
-															</div>
-															<SuggestionItem
-																currentValue={this.currentValue}
-																suggestion={sugg}
-															/>
-														</li>
+															</li>
 													  ))}
 											</ul>
 										) : (
@@ -1151,12 +1309,13 @@ const DataSearch = {
 													autocomplete="off"
 												/>
 												{this.renderIcons()}
-												{!expandSuggestionsContainer
-													&& renderSuggestionsContainer()}
+												{!expandSuggestionsContainer &&
+													renderSuggestionsContainer()}
 											</InputWrapper>{' '}
 											{this.renderInputAddonAfter()}
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsContainer()}
+										{this.renderTags()}
 									</div>
 								);
 							},
@@ -1258,9 +1417,9 @@ DataSearch.shouldQuery = (value, dataFields, props) => {
 		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
 		if (
 			!(
-				dataField.field.endsWith('.keyword')
-				|| dataField.field.endsWith('.autosuggest')
-				|| dataField.field.endsWith('.search')
+				dataField.field.endsWith('.keyword') ||
+				dataField.field.endsWith('.autosuggest') ||
+				dataField.field.endsWith('.search')
 			)
 		) {
 			phrasePrefixFields.push(queryField);
@@ -1369,9 +1528,9 @@ DataSearch.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
