@@ -1,6 +1,5 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import { isSearchComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
@@ -69,19 +68,7 @@ const SelectedFilters = {
 
 	methods: {
 		remove(component, value = null) {
-			const { selectedValues } = this;
-			let valueToSet = null;
-			if (
-				isSearchComponent(selectedValues[component].componentType)
-				&& Array.isArray(selectedValues[component].value)
-			) {
-				valueToSet = selectedValues[component].value?.filter((tag) => tag !== value);
-
-				if (valueToSet && valueToSet.length === 0) {
-					valueToSet = null;
-				}
-			}
-			this.setValue(component, valueToSet);
+			this.setValue(component, null);
 			this.$emit('clear', component, value);
 		},
 		clearValues() {
