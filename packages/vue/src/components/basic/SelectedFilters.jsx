@@ -1,6 +1,5 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { isSearchComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
@@ -152,47 +151,8 @@ const SelectedFilters = {
 			);
 			return filterComponents
 				.map((component, index) => {
-					const { label, value, componentType } = selectedValues[component];
+					const { label, value } = selectedValues[component];
 					const isArray = Array.isArray(value);
-
-					// handle search components' tag mode
-					if (
-						isArray
-						&& (componentType === componentTypes.dataSearch
-							|| componentType === componentTypes.searchBox)
-					) {
-						return (
-							<div>
-								<span>{component} </span>
-								{value.map((valueTag) =>
-									this.renderFilterButton(
-										component,
-										`$
-								{component}-${index + valueTag}`,
-										() => this.remove(component, valueTag),
-										`${valueTag}`,
-									),
-								)}
-								{value.length > 1 ? (
-									<Button
-										class={getClassName(this.$props.innerClass, 'button') || ''}
-										{...{
-											on: {
-												click: () => this.clearValue(component),
-												keypress: (event) =>
-													handleA11yAction(event, () =>
-														this.clearValue(component),
-													),
-											},
-										}}
-										tabIndex="0"
-									>
-										{this.$props.clearAllLabel}
-									</Button>
-								) : null}
-							</div>
-						);
-					}
 
 					// default behaviour
 					if (label && ((isArray && value.length) || (!isArray && value))) {
