@@ -875,7 +875,7 @@ const DataSearch = {
 			const { innerClass } = this.$props;
 
 			return (
-				<TagItem class={getClassName(innerClass, 'selectedTag') || null}>
+				<TagItem class={getClassName(innerClass, 'selectedTag') || ''}>
 					<span>{item}</span>
 					<span
 						role="img"
@@ -921,9 +921,7 @@ const DataSearch = {
 				<TagsContainer>
 					{tagsList.map((item) => this.renderTag(item))}
 					{shouldRenderClearAllTag && (
-						<TagItem
-							class={getClassName(this.$props.innerClass, 'selectedTag') || null}
-						>
+						<TagItem class={getClassName(this.$props.innerClass, 'selectedTag') || ''}>
 							<span>Clear All</span>
 							<span
 								role="img"

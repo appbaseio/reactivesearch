@@ -10,7 +10,7 @@ export const TagsContainer = styled('div')`
 export const TagItem = styled('span')`
 	cursor: default;
 	box-sizing: border-box;
-	margin: 0 8px 8px 0;
+	margin: 0 4px 4px 0;
 	color: #000000d9;
 	font-size: 14px;
 	font-variant: tabular-nums;
