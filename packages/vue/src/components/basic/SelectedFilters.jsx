@@ -103,7 +103,7 @@ const SelectedFilters = {
 			} else {
 				this.setValue(componentId, null);
 			}
-			this.$emit('clear', resetToValues);
+			this.$emit('clear', resetToValues?.[componentId]);
 		},
 		renderValue(value, isArray) {
 			if (isArray && value.length) {
