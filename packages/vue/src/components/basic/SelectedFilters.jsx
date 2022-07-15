@@ -1,7 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { isSearchComponent } from '@appbaseio/reactivecore/lib/utils/helper';
+import { isSearchComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
