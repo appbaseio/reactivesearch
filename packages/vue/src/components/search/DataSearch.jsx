@@ -93,12 +93,9 @@ const DataSearch = {
 			index,
 			mode,
 		} = this.$props;
-		window.console.log('this.$options.isTagsMode', this.$options.isTagsMode);
 		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
 			this.$options.isTagsMode = true;
 		}
-		window.console.log('mode', mode);
-		window.console.log('this.$options.isTagsMode', this.$options.isTagsMode);
 
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
