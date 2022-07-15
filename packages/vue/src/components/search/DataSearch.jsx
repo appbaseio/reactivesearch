@@ -65,6 +65,7 @@ const {
 
 const DataSearch = {
 	name: 'DataSearch',
+	isTagsMode: false,
 	data() {
 		const props = this.$props;
 		this.__state = {
@@ -73,7 +74,6 @@ const DataSearch = {
 			isOpen: false,
 			normalizedSuggestions: [],
 			isPending: false,
-			isTagsMode: props.mode === SEARCH_COMPONENTS_MODES.TAG,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -91,7 +91,14 @@ const DataSearch = {
 			distinctField,
 			distinctFieldConfig,
 			index,
+			mode,
 		} = this.$props;
+		window.console.log('this.$options.isTagsMode', this.$options.isTagsMode);
+		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
+			this.$options.isTagsMode = true;
+		}
+		window.console.log('mode', mode);
+		window.console.log('this.$options.isTagsMode', this.$options.isTagsMode);
 
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
@@ -122,7 +129,7 @@ const DataSearch = {
 		}
 
 		this.currentValue = '';
-		if (this.isTagsMode) {
+		if (this.$options.isTagsMode) {
 			this.currentValue = '';
 		}
 		const shouldFetchInitialSuggestions
@@ -303,21 +310,21 @@ const DataSearch = {
 				this.selectedValue,
 				true,
 				this.$props,
-				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
 			);
 		} else if (this.$props.value) {
 			this.setValue(
 				this.$props.value,
 				true,
 				this.$props,
-				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
 			);
 		} else if (this.$props.defaultValue) {
 			this.setValue(
 				this.$props.defaultValue,
 				true,
 				this.$props,
-				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
 			);
 		}
 	},
@@ -332,7 +339,7 @@ const DataSearch = {
 			this.updateQueryOptions();
 			this.updateQueryHandler(
 				this.$props.componentId,
-				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
 				this.$props,
 			);
 		},
@@ -342,21 +349,21 @@ const DataSearch = {
 		fieldWeights() {
 			this.updateQueryHandler(
 				this.$props.componentId,
-				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
 				this.$props,
 			);
 		},
 		fuzziness() {
 			this.updateQueryHandler(
 				this.$props.componentId,
-				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
 				this.$props,
 			);
 		},
 		queryFormat() {
 			this.updateQueryHandler(
 				this.$props.componentId,
-				this.$data.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
 				this.$props,
 			);
 		},
@@ -389,7 +396,7 @@ const DataSearch = {
 		selectedValue(newVal, oldVal) {
 			if (
 				!isEqual(newVal, oldVal)
-				&& (this.isTagsMode
+				&& (this.$options.isTagsMode
 					? !isEqual(this.$data.selectedTags, newVal)
 					: this.$data.currentValue !== newVal)
 			) {
@@ -397,7 +404,7 @@ const DataSearch = {
 					// selected value is cleared, call onValueSelected
 					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 				}
-				if (this.isTagsMode) {
+				if (this.$options.isTagsMode) {
 					// handling reset of tags through SelectedFilters or URL
 					this.selectedTags = [];
 				}
@@ -405,7 +412,7 @@ const DataSearch = {
 					newVal || '',
 					true,
 					this.$props,
-					this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
 				);
 			}
 		},
@@ -511,7 +518,7 @@ const DataSearch = {
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
-				if (this.isTagsMode && isEqual(value, this.selectedTags)) {
+				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
 					return;
 				}
 				// Refresh recent searches when value becomes empty
@@ -520,7 +527,7 @@ const DataSearch = {
 				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
-				if (this.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
 					if (Array.isArray(this.selectedTags) && this.selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && this.selectedTags.includes(value)) {
@@ -545,7 +552,7 @@ const DataSearch = {
 					this.currentValue = value;
 				}
 				let queryHandlerValue = value;
-				if (this.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
 					queryHandlerValue
 						= Array.isArray(this.selectedTags) && this.selectedTags.length
 							? this.selectedTags
@@ -565,7 +572,9 @@ const DataSearch = {
 					if (props.strictSelection) {
 						if (
 							cause === causes.SUGGESTION_SELECT
-							|| (this.isTagsMode ? this.selectedTags.length === 0 : value === '')
+							|| (this.$options.isTagsMode
+								? this.selectedTags.length === 0
+								: value === '')
 						) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 						} else {
@@ -721,7 +730,7 @@ const DataSearch = {
 					event.target.value,
 					true,
 					this.$props,
-					this.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
 				);
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
@@ -752,7 +761,7 @@ const DataSearch = {
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
-			} else if (this.isTagsMode) {
+			} else if (this.$options.isTagsMode) {
 				const emitValue = Array.isArray(this.selectedTags) ? [...this.selectedTags] : [];
 				if (this.selectedTags.includes(suggestion.value)) {
 					// avoid duplicates in tags array
