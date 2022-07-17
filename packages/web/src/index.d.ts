@@ -28,6 +28,7 @@ export { default as MultiList } from './components/list/MultiList';
 export { default as SingleDataList } from './components/list/SingleDataList';
 export { default as SingleDropdownList } from './components/list/SingleDropdownList';
 export { default as SingleList } from './components/list/SingleList';
+export { default as TabDataList } from './components/list/TabDataList';
 export { default as TagCloud } from './components/list/TagCloud';
 export { default as ToggleButton } from './components/list/ToggleButton';
 
