@@ -4,10 +4,10 @@ import React, { Component } from 'react';
 import { connect } from '../../utils';
 
 class ErrorBoundary extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { error: null };
+	state = {
+		error: null,
 	}
+
 	invokeErrorCallback() {
 		const error = this.props.error || this.state.error;
 		if (this.props.onError) {
@@ -32,7 +32,13 @@ class ErrorBoundary extends Component {
 				return this.props.renderError(error, componentId);
 			}
 			// You can render any custom fallback UI
-			return <h2>Error occured while rendering.</h2>;
+			return (
+				<div>
+					<h2>Error occured while rendering.</h2>
+					<p>{error.message}</p>
+					<p>{error.stack}</p>
+				</div>
+			);
 		}
 
 		return this.props.children;
