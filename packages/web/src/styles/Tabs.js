@@ -11,4 +11,10 @@ export const TabLink = styled('a')`
 	border-width: 0px;
 	border-style: solid;
 	border-bottom-width: ${({ selected }) => (selected ? '2px' : '0px')};
+	display: inline-block;
+	cursor: pointer;
+`;
+
+export const TabContainer = styled('div')`
+	padding: 5px;
 `;
