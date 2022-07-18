@@ -1,6 +1,7 @@
+import { getComponent, hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
 import React, { Component } from 'react';
 import Container from '../../styles/Container';
-import { TabLink } from '../../styles/Tabs';
+import { TabLink, TabContainer } from '../../styles/Tabs';
 
 import SingleDataList from './SingleDataList';
 
@@ -13,15 +14,23 @@ class TabDataList extends Component {
 			<SingleDataList
 				{...props}
 				render={(params) => {
-					const { data } = params;
-					if (typeof (props.render) === 'function') {
-						return props.render(params);
+					const { data, value, handleChange } = params;
+					if (hasCustomRenderer(props)) {
+						return getComponent(props);
 					}
 					return (
 						<Container>
-							{data.map(item => (
-								<TabLink href={`#${item.label}`}>{item.label}</TabLink>
-							))}
+							<TabContainer>
+								{data.map(item => (
+									<TabLink
+										onClick={() => handleChange(item.value)}
+										selected={item.value === value}
+										key={item.value}
+									>
+										{item.label}
+									</TabLink>
+								))}
+							</TabContainer>
 						</Container>
 					);
 				}
