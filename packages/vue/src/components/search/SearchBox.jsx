@@ -353,11 +353,9 @@ const SearchBox = {
 		handleText(value, cause) {
 			if (cause === causes.CLEAR_VALUE) {
 				this.triggerCustomQuery(value);
-				window.console.log('inside handleText wathcer');
 				this.triggerDefaultQuery(value);
 			} else if (this.$props.autosuggest) {
 				this.triggerDefaultQuery(value);
-				window.console.log('inside handleText wathcer');
 			} else if (!this.$props.enterButton) {
 				this.triggerCustomQuery(value);
 			}
@@ -429,7 +427,6 @@ const SearchBox = {
 			categoryValue = undefined,
 		) {
 			const performUpdate = () => {
-				window.console.log('inside setValue method', value, this.selectedTags);
 				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
 					return;
 				}
@@ -458,8 +455,6 @@ const SearchBox = {
 					this.currentValue = value;
 				}
 
-				window.console.log('this.currentValue', this.currentValue);
-
 				let queryHandlerValue = value;
 				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
 					queryHandlerValue
@@ -477,7 +472,6 @@ const SearchBox = {
 							this.triggerDefaultQuery(this.currentValue);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
-					window.console.log('cause', cause);
 					if (props.strictSelection) {
 						if (
 							cause === causes.SUGGESTION_SELECT
@@ -514,9 +508,6 @@ const SearchBox = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		triggerDefaultQuery(paramValue) {
-			window.console.log('inside  triggerDefaultQuery method');
-			window.console.log('paramValue', paramValue);
-
 			if (!this.$props.autosuggest) {
 				return;
 			}
@@ -536,7 +527,6 @@ const SearchBox = {
 					value,
 				);
 			}
-			window.console.log('default query value', value);
 			this.updateQuery({
 				componentId: this.internalComponent,
 				query,
@@ -545,7 +535,6 @@ const SearchBox = {
 			});
 		},
 		triggerCustomQuery(paramValue, categoryValue = undefined) {
-			window.console.log('inside triggerCustomQuery ,method');
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
 			let value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
 			if (this.$options.isTagsMode) {
@@ -564,16 +553,6 @@ const SearchBox = {
 				}
 				updateCustomQuery(this.$props.componentId, this.setCustomQuery, this.$props, value);
 			}
-			window.console.log('upate query ', {
-				componentId: this.$props.componentId,
-				query,
-				value,
-				label: filterLabel,
-				showFilter,
-				URLParams,
-				componentType: componentTypes.searchBox,
-				category: categoryValue,
-			});
 			this.updateQuery({
 				componentId: this.$props.componentId,
 				query,
@@ -610,7 +589,6 @@ const SearchBox = {
 			value = undefined,
 			categoryValue = undefined,
 		}) {
-			window.console.log('inside triggerQuery method');
 			if (typeof isOpen === 'boolean') {
 				this.isOpen = isOpen;
 			}
@@ -619,7 +597,6 @@ const SearchBox = {
 				this.triggerCustomQuery(value, categoryValue);
 			}
 			if (defaultQuery) {
-				window.console.log('triggering defaultQuery');
 				this.triggerDefaultQuery(value);
 			}
 		},
@@ -717,7 +694,6 @@ const SearchBox = {
 						this.isOpen = false;
 						return;
 					}
-					window.console.log('emitValue', emitValue);
 					emitValue.push(suggestion.value);
 				}
 
