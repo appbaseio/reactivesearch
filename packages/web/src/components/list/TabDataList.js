@@ -1,5 +1,6 @@
 import { getComponent, hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
-import { bool, string } from 'prop-types';
+import types from '@appbaseio/reactivecore/lib/utils/types';
+import { bool } from 'prop-types';
 import React, { Component } from 'react';
 import Container from '../../styles/Container';
 import { TabLink, TabContainer } from '../../styles/Tabs';
@@ -42,7 +43,7 @@ class TabDataList extends Component {
 					}
 					return (
 						<Container>
-							<TabContainer>
+							<TabContainer vertical={props.displayAsVertical}>
 								{data.map(item => (
 									<TabLink
 										onClick={() => handleChange(item.value)}
@@ -63,9 +64,24 @@ class TabDataList extends Component {
 	}
 }
 
+TabDataList.defaultProps = {
+	displayAsVertical: false,
+};
+
 TabDataList.propTypes = {
-	showCount: bool,
-	dataField: string,
 	displayAsVertical: bool,
+	children: types.func,
+	componentId: types.stringRequired,
+	dataField: types.stringRequired,
+	onChange: types.func,
+	react: types.react,
+	selectAllLabel: types.string,
+	showSearch: types.bool,
+	title: types.title,
+	URLParams: types.bool,
+	showCount: types.bool,
+	render: types.func,
+	renderNoResults: types.func,
+	index: types.string,
 };
 export default TabDataList;
