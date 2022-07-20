@@ -1,4 +1,5 @@
 import { getComponent, hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
+import { bool, string } from 'prop-types';
 import React, { Component } from 'react';
 import Container from '../../styles/Container';
 import { TabLink, TabContainer } from '../../styles/Tabs';
@@ -14,9 +15,30 @@ class TabDataList extends Component {
 			<SingleDataList
 				{...props}
 				render={(params) => {
-					const { data, value, handleChange } = params;
+					const {
+						data, value, handleChange, rawData,
+					} = params;
 					if (hasCustomRenderer(props)) {
 						return getComponent(props);
+					}
+					if (props.showCount) {
+						// eslint-disable-next-line no-shadow
+						const data = rawData && rawData.aggregations[props.dataField];
+						const buckets = data && data.buckets;
+						return (
+							<Container>
+								<TabContainer vertical={props.displayAsVertical}>
+									{buckets && buckets.map(item => (
+										<TabLink
+											onClick={() => handleChange(item.key)}
+											selected={item.key === value}
+											key={item.key}
+										>{item.key}({item.doc_count})
+										</TabLink>
+									))}
+								</TabContainer>
+							</Container>
+						);
 					}
 					return (
 						<Container>
@@ -40,4 +62,10 @@ class TabDataList extends Component {
 		);
 	}
 }
+
+TabDataList.propTypes = {
+	showCount: bool,
+	dataField: string,
+	displayAsVertical: bool,
+};
 export default TabDataList;
