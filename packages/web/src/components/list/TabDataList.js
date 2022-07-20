@@ -34,6 +34,7 @@ class TabDataList extends Component {
 											onClick={() => handleChange(item.key)}
 											selected={item.key === value}
 											key={item.key}
+											vertical={props.displayAsVertical}
 										>{item.key}({item.doc_count})
 										</TabLink>
 									))}
@@ -48,6 +49,7 @@ class TabDataList extends Component {
 									<TabLink
 										onClick={() => handleChange(item.value)}
 										selected={item.value === value}
+										vertical={props.displayAsVertical}
 										key={item.value}
 									>
 										{item.label}
