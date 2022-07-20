@@ -30,7 +30,7 @@ class TabDataList extends Component {
 									vertical={props.displayAsVertical}
 									key={item.value}
 								>
-									{item.label}{props.showCount && item.count ? `(${item.count})` : null}
+									{item.label}{props.showCount && item.count ? ` (${item.count})` : null}
 								</TabLink>
 							))}
 						</TabContainer>
