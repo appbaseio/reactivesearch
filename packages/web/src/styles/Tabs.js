@@ -17,4 +17,6 @@ export const TabLink = styled('a')`
 
 export const TabContainer = styled('div')`
 	padding: 5px;
+	display: flex;
+	flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};
 `;
