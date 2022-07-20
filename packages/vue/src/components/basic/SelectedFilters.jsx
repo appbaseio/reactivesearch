@@ -87,7 +87,7 @@ const SelectedFilters = {
 					this.components.filter((component) => component !== componentId),
 				);
 			} else {
-				this.setValue(componentId, null);
+				this.setValue(componentId, resetToValues?.[componentId] || null);
 			}
 			this.$emit('clear', resetToValues?.[componentId]);
 		},
