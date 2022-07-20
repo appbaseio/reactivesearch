@@ -14,7 +14,7 @@ export const TabLink = styled('a')`
 	border-left-width: ${({ selected, vertical }) => (selected && vertical ? '2px' : '0px')};
 	display: inline-block;
 	cursor: pointer;
-	whitespace: no-wrap;
+	white-space: nowrap;
 `;
 
 export const TabContainer = styled('div')`
