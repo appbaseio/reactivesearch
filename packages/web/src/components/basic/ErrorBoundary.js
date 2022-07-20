@@ -34,9 +34,8 @@ class ErrorBoundary extends Component {
 			// You can render any custom fallback UI
 			return (
 				<div>
-					<h2>Error occured while rendering.</h2>
+					<h2>Error occured!</h2>
 					<p>{error.message}</p>
-					<p>{error.stack}</p>
 				</div>
 			);
 		}
