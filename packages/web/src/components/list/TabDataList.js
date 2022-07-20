@@ -2,7 +2,6 @@ import { getComponent, hasCustomRenderer } from '@appbaseio/reactivecore/lib/uti
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { bool } from 'prop-types';
 import React, { Component } from 'react';
-import Container from '../../styles/Container';
 import { TabLink, TabContainer } from '../../styles/Tabs';
 
 import SingleDataList from './SingleDataList';
@@ -17,46 +16,24 @@ class TabDataList extends Component {
 				{...props}
 				render={(params) => {
 					const {
-						data, value, handleChange, rawData,
+						data, value, handleChange,
 					} = params;
 					if (hasCustomRenderer(props)) {
 						return getComponent(props);
 					}
-					if (props.showCount) {
-						// eslint-disable-next-line no-shadow
-						const data = rawData && rawData.aggregations[props.dataField];
-						const buckets = data && data.buckets;
-						return (
-							<Container>
-								<TabContainer vertical={props.displayAsVertical}>
-									{buckets && buckets.map(item => (
-										<TabLink
-											onClick={() => handleChange(item.key)}
-											selected={item.key === value}
-											key={item.key}
-											vertical={props.displayAsVertical}
-										>{item.key}({item.doc_count})
-										</TabLink>
-									))}
-								</TabContainer>
-							</Container>
-						);
-					}
 					return (
-						<Container>
-							<TabContainer vertical={props.displayAsVertical}>
-								{data.map(item => (
-									<TabLink
-										onClick={() => handleChange(item.value)}
-										selected={item.value === value}
-										vertical={props.displayAsVertical}
-										key={item.value}
-									>
-										{item.label}
-									</TabLink>
-								))}
-							</TabContainer>
-						</Container>
+						<TabContainer vertical={props.displayAsVertical}>
+							{data.map(item => (
+								<TabLink
+									onClick={() => handleChange(item.value)}
+									selected={item.value === value}
+									vertical={props.displayAsVertical}
+									key={item.value}
+								>
+									{item.label}{props.showCount && item.count ? `(${item.count})` : null}
+								</TabLink>
+							))}
+						</TabContainer>
 					);
 				}
 
