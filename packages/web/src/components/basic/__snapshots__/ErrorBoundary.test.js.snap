@@ -218,23 +218,6 @@ exports[`should handle error with componentIds passed 1`] = `
   className="emotion-0 emotion-1"
   style={Object {}}
 >
-  <div>
-    <h2>
-      Error occured while rendering.
-    </h2>
-    <p>
-      Network request failed
-    </p>
-    <p>
-      Error: Network request failed
-    at Object.&lt;anonymous&gt; (/Users/shubham/repos/reactivesearch/packages/web/src/components/basic/ErrorBoundary.test.js:94:12)
-    at Object.asyncFn (/Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/jasmine_async.js:82:37)
-    at /Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/queue_runner.js:52:12
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (/Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/queue_runner.js:39:19)
-    at /Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/queue_runner.js:73:82
-    </p>
-  </div>
   <div
     className="emotion-2 emotion-3"
     style={Object {}}
@@ -339,9 +322,7 @@ exports[`should handle error with renderError 1`] = `
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
->
-  Error: 500: Network request failed
-</div>
+/>
 `;
 
 exports[`should handle network errors 501, 502 1`] = `
@@ -368,23 +349,5 @@ exports[`should handle network errors 501, 502 1`] = `
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
->
-  <div>
-    <h2>
-      Error occured while rendering.
-    </h2>
-    <p>
-      500: Network request failed
-    </p>
-    <p>
-      Error: 500: Network request failed
-    at Object.&lt;anonymous&gt; (/Users/shubham/repos/reactivesearch/packages/web/src/components/basic/ErrorBoundary.test.js:38:13)
-    at Object.asyncFn (/Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/jasmine_async.js:82:37)
-    at /Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/queue_runner.js:52:12
-    at new Promise (&lt;anonymous&gt;)
-    at mapper (/Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/queue_runner.js:39:19)
-    at /Users/shubham/repos/reactivesearch/node_modules/jest-config/node_modules/jest-jasmine2/build/queue_runner.js:73:82
-    </p>
-  </div>
-</div>
+/>
 `;
