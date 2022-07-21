@@ -33,7 +33,9 @@ it('should render', () => {
 						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
 						{ label: 'Nora Roberts', value: 'Nora Roberts' },
 					]}
-					mockData={MOCK_AGGREGATIONS_DATA}
+					mockData={{
+						aggregations: MOCK_AGGREGATIONS_DATA,
+					}}
 				/>
 			</ReactiveBase>,
 		)
@@ -41,19 +43,24 @@ it('should render', () => {
 	expect(elem).toMatchSnapshot();
 });
 it('should render with title', () => {
-	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-			<TabDataList
-				mode="test"
-				componentId="authors"
-				dataField="authors.keyword"
-				data={[
-					{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
-					{ label: 'Nora Roberts', value: 'Nora Roberts' },
-				]}
-			/>
-		</ReactiveBase>,
-	).toJSON();
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+				<TabDataList
+					mode="test"
+					componentId="authors"
+					dataField="authors.keyword"
+					data={[
+						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
+						{ label: 'Nora Roberts', value: 'Nora Roberts' },
+					]}
+					mockData={{
+						aggregations: MOCK_AGGREGATIONS_DATA,
+					}}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
 	expect(elem).toMatchSnapshot();
 });
 
@@ -69,7 +76,33 @@ it('should render with renderItem', () => {
 						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
 						{ label: 'Nora Roberts', value: 'Nora Roberts' },
 					]}
+					mockData={{
+						aggregations: MOCK_AGGREGATIONS_DATA,
+					}}
 					renderItem={item => `${item.label} V`}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should render with showCount', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+				<TabDataList
+					mode="test"
+					componentId="authors"
+					dataField="authors.keyword"
+					data={[
+						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
+						{ label: 'Nora Roberts', value: 'Nora Roberts' },
+					]}
+					mockData={{
+						aggregations: MOCK_AGGREGATIONS_DATA,
+					}}
+					showCount
 				/>
 			</ReactiveBase>,
 		)
