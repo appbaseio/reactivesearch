@@ -31,7 +31,9 @@ const TabDataList = (props) => {
 								vertical={props.displayAsVertical}
 								key={item.value}
 							>
-								{renderItem ? (renderItem(item)) : defaultItem(item)}
+								{renderItem
+									? (renderItem(item.label, item.count, item.value === value))
+									: defaultItem(item)}
 							</TabLink>
 						))}
 					</TabContainer>
