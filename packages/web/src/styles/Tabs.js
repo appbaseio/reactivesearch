@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-// eslint-disable-next-line import/prefer-default-export
 export const TabLink = styled('a')`
 	color: ${({ theme, selected }) =>
 	(selected ? theme.colors.primaryColor : theme.colors.textColor)};
