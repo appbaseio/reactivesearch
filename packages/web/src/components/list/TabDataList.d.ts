@@ -8,10 +8,7 @@ export interface TabDataList extends CommonProps {
 	defaultValue?: string;
 	value?: string;
 	placeholder?: string;
-	nestedField?: string;
 	react?: types.react;
-	selectAllLabel?: string;
-	showSearch?: boolean;
 	title?: types.title;
 	showCount?: boolean;
 	render?: (...args: any[]) => any;
@@ -19,7 +16,6 @@ export interface TabDataList extends CommonProps {
 	children?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
-	enableStrictSelection?: boolean;
 }
 
 declare const TabDataList: React.ComponentClass<TabDataList>;

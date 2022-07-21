@@ -11,9 +11,12 @@ import SingleDataList from './SingleDataList';
 class TabDataList extends Component {
 	render() {
 		const { props } = this;
+		const { renderItem } = props;
+		const defaultItem = item => `${item.label} ${props.showCount && item.count ? `(${item.count})` : ''}`;
 		return (
 			<SingleDataList
 				{...props}
+				showSearch={false}
 				render={(params) => {
 					const {
 						data, value, handleChange,
@@ -30,7 +33,7 @@ class TabDataList extends Component {
 									vertical={props.displayAsVertical}
 									key={item.value}
 								>
-									{item.label}{props.showCount && item.count ? ` (${item.count})` : null}
+									{renderItem ? (renderItem(item)) : defaultItem(item)}
 								</TabLink>
 							))}
 						</TabContainer>
@@ -54,12 +57,11 @@ TabDataList.propTypes = {
 	dataField: types.stringRequired,
 	onChange: types.func,
 	react: types.react,
-	selectAllLabel: types.string,
-	showSearch: types.bool,
 	title: types.title,
 	URLParams: types.bool,
 	showCount: types.bool,
 	render: types.func,
+	renderItem: types.func,
 	renderNoResults: types.func,
 	index: types.string,
 };
