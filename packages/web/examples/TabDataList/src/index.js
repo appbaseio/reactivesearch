@@ -20,7 +20,7 @@ const Main = () => (
 		<div className="container">
 			<SelectedFilters />
 			<TabDataList
-				title="SingleDataList"
+				title="Filter by Topics"
 				componentId="CitySensor"
 				dataField="group.group_topics.topic_name_raw.keyword"
 				data={[
