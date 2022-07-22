@@ -6,6 +6,7 @@ import * as types from '../../types';
 export interface ReactiveChartProps extends CommonProps {
 	// UI props
 	filterLabel?: string;
+	type?: string;
 	// events
 	onClick?: (...args: any[]) => any;
 	onDblClick?: (...args: any[]) => any;
@@ -15,6 +16,7 @@ export interface ReactiveChartProps extends CommonProps {
 	onMouseOut?: (...args: any[]) => any;
 	onGlobalOut?: (...args: any[]) => any;
 	onContextMenu?: (...args: any[]) => any;
+	onDataZoom?: (...args: any[]) => any;
 	// ---- user props ---
 	// props to configure query
 	dataField: types.dataFieldArray;

@@ -1,7 +1,7 @@
 {
 	"name": "reactivechartbar",
 	"version": "1.0.0",
-	"description": "DataSearch example for ReactiveSearch",
+	"description": "BarChart example for ReactiveSearch",
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
