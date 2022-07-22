@@ -33,9 +33,6 @@ it('should render', () => {
 						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
 						{ label: 'Nora Roberts', value: 'Nora Roberts' },
 					]}
-					mockData={{
-						aggregations: MOCK_AGGREGATIONS_DATA,
-					}}
 				/>
 			</ReactiveBase>,
 		)
@@ -54,9 +51,6 @@ it('should render with title', () => {
 						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
 						{ label: 'Nora Roberts', value: 'Nora Roberts' },
 					]}
-					mockData={{
-						aggregations: MOCK_AGGREGATIONS_DATA,
-					}}
 				/>
 			</ReactiveBase>,
 		)
@@ -76,10 +70,7 @@ it('should render with renderItem', () => {
 						{ label: 'J. K. Rowling', value: 'J. K. Rowling' },
 						{ label: 'Nora Roberts', value: 'Nora Roberts' },
 					]}
-					mockData={{
-						aggregations: MOCK_AGGREGATIONS_DATA,
-					}}
-					renderItem={item => `${item.label} V`}
+					renderItem={label => `${label} V`}
 				/>
 			</ReactiveBase>,
 		)
