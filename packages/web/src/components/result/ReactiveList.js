@@ -680,11 +680,11 @@ class ReactiveList extends Component {
 	);
 
 	triggerExportCSV = () => {
-		const { exportData, componentId } = this.props;
+		const { exportData, componentId, total } = this.props;
 		this.setState({
 			exportLoading: true,
 		});
-		exportData(componentId)
+		exportData(componentId, '', total)
 			.then((res) => {
 				const arrayOfJson = res.map(item => flatten(item));
 
@@ -718,11 +718,11 @@ class ReactiveList extends Component {
 	};
 
 	triggerExportJSON = () => {
-		const { exportData, componentId } = this.props;
+		const { exportData, componentId, total } = this.props;
 		this.setState({
 			exportLoading: true,
 		});
-		exportData(componentId)
+		exportData(componentId, '', total)
 			.then((res) => {
 				const arrayOfJson = res;
 				saveDataAsFile('jsonData', arrayOfJson, 'json');
@@ -1044,7 +1044,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),
-	exportData: component => dispatch(loadDataToExport(component)),
+	exportData: (component, cursor, total) => dispatch(loadDataToExport(component, cursor, total)),
 });
 
 const ConnectedComponent = connect(
