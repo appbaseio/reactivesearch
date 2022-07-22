@@ -38,6 +38,15 @@ const PreferencesConsumer = ({ children, userProps }) => {
 			return null;
 		}
 	}
+	// Parse component props
+	Object.keys(componentProps).forEach((p) => {
+		if (typeof componentProps[p] === 'string') {
+			if (['defaultQuery', 'customQuery', 'setOption'].includes(p)) {
+				// eslint-disable-next-line
+				componentProps[p] = eval(componentProps[p].parseFunction());
+			}
+		}
+	});
 	return children(componentProps);
 };
 
