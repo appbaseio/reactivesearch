@@ -25,6 +25,31 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { connect } from '../../utils';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
+import SingleList from '../list/SingleList';
+import ReactiveList from '../result/ReactiveList';
+import DataSearch from '../search/DataSearch';
+import CategorySearch from '../search/CategorySearch';
+import SearchBox from '../search/SearchBox';
+import MultiList from '../list/MultiList';
+import SingleDataList from '../list/SingleDataList';
+import TabDataList from '../list/TabDataList';
+import MultiDataList from '../list/MultiDataList';
+import SingleDropdownList from '../list/SingleDropdownList';
+import MultiDropdownList from '../list/MultiDropdownList';
+import SingleDropdownRange from '../range/SingleDropdownRange';
+import MultiDropdownRange from '../range/MultiDropdownRange';
+import NumberBox from './NumberBox';
+import TagCloud from '../list/TagCloud';
+import ToggleButton from '../list/ToggleButton';
+import DatePicker from '../date/DatePicker';
+import DateRange from '../date/DateRange';
+import SingleRange from '../range/SingleRange';
+import MultiRange from '../range/MultiRange';
+import RangeSlider from '../range/RangeSlider';
+import DynamicRangeSlider from '../range/DynamicRangeSlider';
+import RatingsFilter from '../range/RatingsFilter';
+import RangeInput from '../range/RangeInput';
+import ReactiveChart from '../chart/ReactiveChart';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -387,20 +412,79 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<ComponentWrapper
-		{...props}
-		internalComponent={!!props.defaultQuery}
-		componentType={componentTypes.reactiveComponent}
-	>
-		{() => <ReactiveComponent ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
-));
+)(props => <ReactiveComponent ref={props.myForwardedRef} {...props} />);
 
-// eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{(preferenceProps) => {
+			switch (preferenceProps.componentType) {
+				case componentTypes.reactiveList:
+					return <ReactiveList {...preferenceProps} />;
+				case componentTypes.dataSearch:
+					return <DataSearch {...preferenceProps} />;
+				case componentTypes.categorySearch:
+					return <CategorySearch {...preferenceProps} />;
+				case componentTypes.searchBox:
+					return <SearchBox {...preferenceProps} />;
+				// list components
+				case componentTypes.singleList:
+					return <SingleList {...preferenceProps} />;
+				case componentTypes.multiList:
+					return <MultiList {...preferenceProps} />;
+				case componentTypes.singleDataList:
+					return <SingleDataList {...preferenceProps} />;
+				case componentTypes.tabDataList:
+					return <TabDataList {...preferenceProps} />;
+				case componentTypes.multiDataList:
+					return <MultiDataList {...preferenceProps} />;
+				case componentTypes.singleDropdownList:
+					return <SingleDropdownList {...preferenceProps} />;
+				case componentTypes.multiDropdownList:
+					return <MultiDropdownList {...preferenceProps} />;
+				case componentTypes.singleDropdownRange:
+					return <SingleDropdownRange {...preferenceProps} />;
+				case componentTypes.multiDropdownRange:
+					return <MultiDropdownRange {...preferenceProps} />;
+				// basic components
+				case componentTypes.numberBox:
+					return <NumberBox {...preferenceProps} />;
+				case componentTypes.tagCloud:
+					return <TagCloud {...preferenceProps} />;
+				case componentTypes.toggleButton:
+					return <ToggleButton {...preferenceProps} />;
+				// range components
+				case componentTypes.datePicker:
+					return <DatePicker {...preferenceProps} />;
+				case componentTypes.dateRange:
+					return <DateRange {...preferenceProps} />;
+				case componentTypes.dynamicRangeSlider:
+					return <DynamicRangeSlider {...preferenceProps} />;
+				case componentTypes.singleRange:
+					return <SingleRange {...preferenceProps} />;
+				case componentTypes.multiRange:
+					return <MultiRange {...preferenceProps} />;
+				case componentTypes.rangeSlider:
+					return <RangeSlider {...preferenceProps} />;
+				case componentTypes.ratingsFilter:
+					return <RatingsFilter {...preferenceProps} />;
+				case componentTypes.rangeInput:
+					return <RangeInput {...preferenceProps} />;
+				case componentTypes.reactiveChart:
+					return <ReactiveChart {...preferenceProps} />;
+				case componentTypes.reactiveComponent:
+				default:
+					return (
+						<ComponentWrapper
+							{...preferenceProps}
+							// eslint-disable-next-line
+							internalComponent={!!props.defaultQuery}
+							componentType={componentTypes.reactiveComponent}
+						>
+							{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+						</ComponentWrapper>
+					);
+			}
+		}}
 	</PreferencesConsumer>
 ));
 

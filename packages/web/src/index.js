@@ -1,4 +1,5 @@
 import '@appbaseio/reactivecore/lib/utils/polyfills';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import ReactiveBase from './components/basic/ReactiveBase';
 import SelectedFilters from './components/basic/SelectedFilters';
@@ -15,6 +16,7 @@ import SingleDropdownList from './components/list/SingleDropdownList';
 import MultiDropdownList from './components/list/MultiDropdownList';
 import SingleDataList from './components/list/SingleDataList';
 import MultiDataList from './components/list/MultiDataList';
+import TabDataList from './components/list/TabDataList';
 import TagCloud from './components/list/TagCloud';
 import ToggleButton from './components/list/ToggleButton';
 
@@ -34,6 +36,8 @@ import SearchBox from './components/search/SearchBox';
 import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
+
+import ReactiveChart from './components/chart/ReactiveChart';
 
 import { SearchPreferencesContext } from './utils';
 
@@ -56,6 +60,7 @@ export {
 	MultiDropdownList,
 	SingleDataList,
 	MultiDataList,
+	TabDataList,
 	// range
 	SingleRange,
 	MultiRange,
@@ -74,4 +79,7 @@ export {
 	ResultCard,
 	ResultList,
 	SearchPreferencesContext,
+	// chart
+	ReactiveChart,
+	componentTypes,
 };

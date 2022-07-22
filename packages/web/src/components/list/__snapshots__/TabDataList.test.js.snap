@@ -1,0 +1,317 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling 
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts 
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with renderItem 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling V
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts V
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with showCount 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling (10)
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts (7)
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling 
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts 
+      </a>
+    </div>
+  </div>
+</div>
+`;

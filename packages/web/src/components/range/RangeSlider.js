@@ -430,7 +430,7 @@ class RangeSlider extends Component {
 		}
 		const { showFilter } = props;
 
-		props.setQueryOptions(props.componentId, customQueryOptions);
+		props.setQueryOptions(props.componentId, customQueryOptions, false);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -634,26 +634,31 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
+	setQueryOptions: (...args) =>
+		dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	updateComponentProps: (component, options, componentType) =>
 		dispatch(updateComponentProps(component, options, componentType)),
 });
 
+
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<ComponentWrapper {...props} internalComponent componentType={componentTypes.rangeSlider}>
-		{() => <RangeSlider ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
-));
+)(props => <RangeSlider ref={props.myForwardedRef} {...props} />);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.rangeSlider}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, RangeSlider);

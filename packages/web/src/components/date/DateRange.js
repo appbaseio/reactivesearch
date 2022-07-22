@@ -375,7 +375,7 @@ class DateRange extends Component {
 				customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 				updateCustomQuery(props.componentId, props, value);
 			}
-			props.setQueryOptions(props.componentId, customQueryOptions);
+			props.setQueryOptions(props.componentId, customQueryOptions, false);
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -579,24 +579,26 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(
-	withTheme(props => (
-		<ComponentWrapper {...props} componentType={componentTypes.dateRange}>
-			{() => <DateRange ref={props.myForwardedRef} {...props} />}
-		</ComponentWrapper>
-	)),
-);
+)(withTheme(props => <DateRange ref={props.myForwardedRef} {...props} />));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.dateRange}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DateRange);

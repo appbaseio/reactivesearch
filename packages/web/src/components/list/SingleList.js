@@ -240,7 +240,7 @@ class SingleList extends Component {
 				this.state.currentValue,
 			),
 			...customQueryOptions,
-		});
+		}, false);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -614,25 +614,30 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 
-	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
 
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
 
+
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<ComponentWrapper {...props} internalComponent componentType={componentTypes.singleList}>
-		{() => <SingleList ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
-));
+)(props => <SingleList ref={props.myForwardedRef} {...props} />);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.singleList}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, SingleList);

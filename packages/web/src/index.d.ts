@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { SearchPreferencesContext } from './utils';
 import * as types from './types';
 
 export interface CommonProps {
@@ -26,6 +28,7 @@ export { default as MultiList } from './components/list/MultiList';
 export { default as SingleDataList } from './components/list/SingleDataList';
 export { default as SingleDropdownList } from './components/list/SingleDropdownList';
 export { default as SingleList } from './components/list/SingleList';
+export { default as TabDataList } from './components/list/TabDataList';
 export { default as TagCloud } from './components/list/TagCloud';
 export { default as ToggleButton } from './components/list/ToggleButton';
 
@@ -45,3 +48,7 @@ export { default as ResultList } from './components/result/ResultList';
 export { default as CategorySearch } from './components/search/CategorySearch';
 export { default as DataSearch } from './components/search/DataSearch';
 export { default as SearchBox } from './components/search/SearchBox';
+
+export { default as ReactiveChart } from './components/chart/ReactiveChart';
+
+export { componentTypes, SearchPreferencesContext };
