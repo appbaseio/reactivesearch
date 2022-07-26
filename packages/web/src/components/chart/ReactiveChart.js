@@ -124,7 +124,7 @@ class ReactiveChart extends React.Component {
 	updateDefaultQuery = (queryOptions) => {
 		const props = this.props;
 		let value;
-		if (props.chartType === ChartTypes.Histogram) {
+		if (props.type === 'range') {
 			value = getNumericRangeArray(props.range, props.queryFormat);
 		}
 		updateInternalQuery(
@@ -277,7 +277,7 @@ class ReactiveChart extends React.Component {
 		});
 	};
 	handleRange = (...args) => {
-		const { useAsFilter } = this.props;
+		const { useAsFilter, onDataZoom } = this.props;
 		if (useAsFilter) {
 			const echartInstance = args[1];
 			const axis = echartInstance.getModel().option.xAxis[0];
@@ -291,6 +291,9 @@ class ReactiveChart extends React.Component {
 				endRangeValue.value !== undefined ? endRangeValue.value : endRangeValue,
 			];
 			this.setValue(rangeValue);
+		}
+		if (onDataZoom) {
+			onDataZoom(...args);
 		}
 	};
 	render() {
@@ -426,6 +429,9 @@ ReactiveChart.getOption = ({
 		case ChartTypes.Scatter:
 			return {
 				title: chartTitle,
+				tooltip: {
+					trigger: 'item',
+				},
 				xAxis: {
 					name: xAxisName,
 				},
@@ -443,6 +449,9 @@ ReactiveChart.getOption = ({
 		case ChartTypes.Line:
 			return {
 				title: chartTitle,
+				tooltip: {
+					trigger: 'item',
+				},
 				xAxis: {
 					name: xAxisName,
 					type: 'category',
@@ -468,11 +477,14 @@ ReactiveChart.getOption = ({
 		case ChartTypes.Bar:
 			return {
 				title: chartTitle,
+				tooltip: {
+					trigger: 'item',
+				},
 				xAxis: {
 					type: 'category',
 					name: xAxisName,
 					data: aggregationData.map(item => ({
-						value: item.doc_count,
+						value: item.key,
 						name: item.key,
 					})),
 				},
@@ -499,10 +511,6 @@ ReactiveChart.getOption = ({
 				title: chartTitle,
 				tooltip: {
 					trigger: 'item',
-				},
-				legend: {
-					orient: 'vertical',
-					left: 'left',
 				},
 				series: [
 					{
@@ -632,6 +640,7 @@ ReactiveChart.propTypes = {
 	onMouseOut: func,
 	onGlobalOut: func,
 	onContextMenu: func,
+	onDataZoom: func,
 	// ---- user props ---
 	// props to configure query
 	componentId: types.stringRequired,
@@ -645,6 +654,7 @@ ReactiveChart.propTypes = {
 	index: types.string,
 	queryFormat: types.queryFormatSearch,
 	range: types.range,
+	type: oneOf(['term', 'range', 'search', 'geo', 'suggestion']),
 	// eslint-disable-next-line
 	value: any,
 	// props to configure chart

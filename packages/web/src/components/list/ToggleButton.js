@@ -324,19 +324,24 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
+
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<ComponentWrapper {...props} componentType={componentTypes.toggleButton}>
-		{() => <ToggleButton ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
-));
+)(props => <ToggleButton ref={props.myForwardedRef} {...props} />);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.toggleButton}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, ToggleButton);
