@@ -36,7 +36,7 @@ exports[`should render 1`] = `
 .emotion-6 {
   color: #424242;
   font-weight: normal;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-color: white;
@@ -115,7 +115,7 @@ exports[`should render with renderItem 1`] = `
 .emotion-6 {
   color: #424242;
   font-weight: normal;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-color: white;
@@ -194,7 +194,7 @@ exports[`should render with showCount 1`] = `
 .emotion-6 {
   color: #424242;
   font-weight: normal;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-color: white;
@@ -273,7 +273,7 @@ exports[`should render with title 1`] = `
 .emotion-6 {
   color: #424242;
   font-weight: normal;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   -webkit-text-decoration: none;
   text-decoration: none;
   border-color: white;
