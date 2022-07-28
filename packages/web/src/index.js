@@ -17,6 +17,7 @@ import SingleDropdownList from './components/list/SingleDropdownList';
 import MultiDropdownList from './components/list/MultiDropdownList';
 import SingleDataList from './components/list/SingleDataList';
 import MultiDataList from './components/list/MultiDataList';
+import TabDataList from './components/list/TabDataList';
 import TagCloud from './components/list/TagCloud';
 import ToggleButton from './components/list/ToggleButton';
 
@@ -61,6 +62,7 @@ export {
 	MultiDropdownList,
 	SingleDataList,
 	MultiDataList,
+	TabDataList,
 	// range
 	SingleRange,
 	MultiRange,

@@ -1559,18 +1559,20 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(
-	withTheme(props => (
-		<ComponentWrapper {...props} internalComponent componentType={componentTypes.dataSearch}>
-			{() => <DataSearch ref={props.myForwardedRef} {...props} />}
-		</ComponentWrapper>
-	)),
-);
+)(withTheme(props => <DataSearch ref={props.myForwardedRef} {...props} />));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.dataSearch}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DataSearch);
