@@ -2,7 +2,7 @@ import { hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { bool } from 'prop-types';
 import React from 'react';
-import { TabLink, TabContainer, Tab } from '../../styles/Tabs';
+import { TabLink, TabContainer } from '../../styles/Tabs';
 
 import SingleDataList from './SingleDataList';
 
@@ -11,7 +11,7 @@ const TabDataList = (props) => {
 	const defaultItem = item =>
 		`${item.label} ${props.showCount && item.count ? `(${item.count})` : ''}`;
 
-	if (hasCustomRenderer(props)) {
+	if (hasCustomRenderer(props) || props.showRadio) {
 		return <SingleDataList {...props} />;
 	}
 	return (
@@ -20,28 +20,18 @@ const TabDataList = (props) => {
 			showSearch={props.showSearch}
 			render={({ data, value, handleChange }) => (
 				<TabContainer vertical={props.displayAsVertical}>
-					{data.map((item) => {
-						if (props.showRadio) {
-							return (
-								<Tab onClick={() => handleChange(item.value)}>
-									<input type="radio" checked={item.value === value} />
-									<span>{defaultItem(item)}</span>
-								</Tab>
-							);
-						}
-						return (
-							<TabLink
-								onClick={() => handleChange(item.value)}
-								selected={item.value === value}
-								vertical={props.displayAsVertical}
-								key={item.value}
-							>
-								{renderItem
-									? renderItem(item.label, item.count, item.value === value)
-									: defaultItem(item)}
-							</TabLink>
-						);
-					})}
+					{data.map(item => (
+						<TabLink
+							onClick={() => handleChange(item.value)}
+							selected={item.value === value}
+							vertical={props.displayAsVertical}
+							key={item.value}
+						>
+							{renderItem
+								? renderItem(item.label, item.count, item.value === value)
+								: defaultItem(item)}
+						</TabLink>
+					))}
 				</TabContainer>
 			)}
 		/>
