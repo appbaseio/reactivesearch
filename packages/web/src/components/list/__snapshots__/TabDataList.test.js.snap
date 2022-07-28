@@ -65,14 +65,14 @@ exports[`should render 1`] = `
         onClick={[Function]}
         selected={false}
       >
-        J. K. Rowling
+        J. K. Rowling 
       </a>
       <a
         className="emotion-6 emotion-7"
         onClick={[Function]}
         selected={false}
       >
-        Nora Roberts
+        Nora Roberts 
       </a>
     </div>
   </div>
@@ -144,14 +144,14 @@ exports[`should render with displayAsVertical 1`] = `
         onClick={[Function]}
         selected={false}
       >
-        J. K. Rowling
+        J. K. Rowling 
       </a>
       <a
         className="emotion-6 emotion-7"
         onClick={[Function]}
         selected={false}
       >
-        Nora Roberts
+        Nora Roberts 
       </a>
     </div>
   </div>
@@ -1567,14 +1567,14 @@ exports[`should render with showSearch 1`] = `
         onClick={[Function]}
         selected={false}
       >
-        J. K. Rowling
+        J. K. Rowling 
       </a>
       <a
         className="emotion-8 emotion-9"
         onClick={[Function]}
         selected={false}
       >
-        Nora Roberts
+        Nora Roberts 
       </a>
     </div>
   </div>
@@ -1646,14 +1646,14 @@ exports[`should render with title 1`] = `
         onClick={[Function]}
         selected={false}
       >
-        J. K. Rowling
+        J. K. Rowling 
       </a>
       <a
         className="emotion-6 emotion-7"
         onClick={[Function]}
         selected={false}
       >
-        Nora Roberts
+        Nora Roberts 
       </a>
     </div>
   </div>
