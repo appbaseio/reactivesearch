@@ -5,7 +5,71 @@ import { ReactiveBase, TreeList, ReactiveList, SelectedFilters } from '@appbasei
 
 import './index.css';
 
+const recLookup = (obj, path) => {
+	try {
+		const parts = path.split('.');
+		if (parts.length === 1) {
+			return obj[parts[0]];
+		}
+		return recLookup(obj[parts[0]], parts.slice(1).join('.'));
+	} catch (e) {
+		return false;
+	}
+};
 class Main extends Component {
+	renderListItems(listItem, parentPath, selectedValues, handleListItemClick) {
+		if (!(listItem instanceof Object) || Object.keys(listItem).length === 0) {
+			return null;
+		}
+		const listItemLabel = listItem.key;
+		const listItemCount = listItem.count;
+		const isLeafNode = !(Array.isArray(listItem.list) && listItem.list.length > 0);
+
+		let newParentPath = listItemLabel;
+		if (parentPath) {
+			newParentPath = `${parentPath}.${listItemLabel}`;
+		}
+		const isSelected = recLookup(selectedValues, newParentPath);
+
+		return (
+			<li key={newParentPath}>
+				{/* eslint-disable jsx-a11y/click-events-have-key-events */}
+				{/* eslint-disable jsx-a11y/no-static-element-interactions */}
+				<span
+					style={isSelected ? { background: 'green', margin: '5px 0' } : {}}
+					onClick={() => handleListItemClick(listItemLabel, parentPath, isLeafNode)}
+				>
+					<React.Fragment>
+						<span>{listItemLabel}</span>
+
+						<span>{listItemCount}</span>
+					</React.Fragment>
+				</span>
+				{isLeafNode === false && (
+					<div className="--list-child">
+						{/* eslint-disable-next-line no-use-before-define */}
+						{this.renderLists(
+							listItem.list,
+							newParentPath,
+							isSelected,
+							selectedValues,
+							handleListItemClick,
+						)}
+					</div>
+				)}
+			</li>
+		);
+	}
+
+	renderLists(transformedData, parentPath, isExpanded, selectedValues, handleClick) {
+		return (
+			<ul style={isExpanded ? { fontWeight: 600 } : {}}>
+				{transformedData.map(listItem =>
+					this.renderListItems(listItem, parentPath, selectedValues, handleClick),
+				)}
+			</ul>
+		);
+	}
 	render() {
 		return (
 			<ReactiveBase
@@ -24,14 +88,35 @@ class Main extends Component {
 							}
 							showIcon
 							showLeafIcon
-							icon={<span>🦷</span>}
-							leafIcon={<span>☘️</span>}
-							showLine
-							renderItem={(label, count, isSelected) => (
-								<span style={isSelected ? { background: 'green' } : {}}>
-									{label} - {count}
+							icon={
+								<span role="img" aria-label="folder-icon">
+									🦷
 								</span>
-							)}
+							}
+							leafIcon={
+								<span role="img" aria-label="leaf-icon">
+									☘️
+								</span>
+							}
+							showLine
+							// renderItem={(label, count, isSelected) => (
+							// 	<span style={isSelected ? { background: 'green' } : {}}>
+							// 		{label} - {count}
+							// 	</span>
+							// )}
+							// showSearch
+							// render={(propData) => {
+							// 	const {
+							// 		/* eslint-disable no-unused-vars */
+							// 		data,
+							// 		rawData,
+							// 		error,
+							// 		handleClick,
+							// 		value,
+							// 		loading,
+							// 	} = propData;
+							// 	return this.renderLists(data, '', true, value, handleClick);
+							// }}
 						/>
 					</div>
 
