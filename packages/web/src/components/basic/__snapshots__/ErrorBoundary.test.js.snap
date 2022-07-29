@@ -218,6 +218,14 @@ exports[`should handle error with componentIds passed 1`] = `
   className="emotion-0 emotion-1"
   style={Object {}}
 >
+  <div>
+    <h2>
+      Error occured!
+    </h2>
+    <p>
+      Network request failed
+    </p>
+  </div>
   <div
     className="emotion-2 emotion-3"
     style={Object {}}
@@ -322,7 +330,9 @@ exports[`should handle error with renderError 1`] = `
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
-/>
+>
+  Error: 500: Network request failed
+</div>
 `;
 
 exports[`should handle network errors 501, 502 1`] = `
@@ -349,5 +359,14 @@ exports[`should handle network errors 501, 502 1`] = `
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
-/>
+>
+  <div>
+    <h2>
+      Error occured!
+    </h2>
+    <p>
+      500: Network request failed
+    </p>
+  </div>
+</div>
 `;
