@@ -6,7 +6,12 @@ import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { useState, useEffect, useRef } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-
+import {
+	getClassName,
+	hasCustomRenderer,
+	getComponent as getComponentHelper,
+} from '@appbaseio/reactivecore/lib/utils/helper';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import { recLookup, setDeep } from '@appbaseio/reactivecore/src/utils/helper';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
@@ -16,9 +21,8 @@ import Button from '../../styles/Button';
 import { HierarchicalMenuList, HierarchicalMenuListItem } from '../../styles/TreeList';
 import { connect } from '../../utils';
 import Input from '../../styles/Input';
-import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+
 import Title from '../../styles/Title';
-import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -41,6 +45,9 @@ const TreeList = (props) => {
 		className,
 		title,
 		style,
+		rawData,
+		error,
+		isLoading,
 	} = props;
 	const hasMounted = useRef();
 
@@ -304,8 +311,17 @@ const TreeList = (props) => {
 			</HierarchicalMenuList>
 		);
 	}
-
-	const getFilteredData = (transformedData) => {};
+	const getComponent = () => {
+		const data = {
+			data: transformedData,
+			rawData,
+			error,
+			handleClick: handleListItemClick,
+			value: selectedValues,
+			loading: isLoading,
+		};
+		return getComponentHelper(data, props);
+	};
 
 	return (
 		<Container style={style} className={className}>
@@ -313,7 +329,9 @@ const TreeList = (props) => {
 				<Title className={getClassName(innerClass, 'title') || null}>{title}</Title>
 			)}
 			{renderSearch()}
-			{renderHierarchicalMenu(transformedData, '', true)}
+			{hasCustomRenderer(props)
+				? getComponent()
+				: renderHierarchicalMenu(transformedData, '', true)}
 		</Container>
 	);
 };
@@ -343,6 +361,7 @@ TreeList.propTypes = {
 	innerClass: types.style,
 	placeholder: types.string,
 	title: types.title,
+	isLoading: types.bool,
 };
 
 TreeList.defaultProps = {
@@ -367,6 +386,7 @@ const mapStateToProps = (state, props) => ({
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
+	isLoading: state.isLoading[props.componentId],
 });
 
 const mapDispatchtoProps = () => ({});
