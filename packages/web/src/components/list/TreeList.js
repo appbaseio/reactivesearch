@@ -15,6 +15,10 @@ import Container from '../../styles/Container';
 import Button from '../../styles/Button';
 import { HierarchicalMenuList, HierarchicalMenuListItem } from '../../styles/TreeList';
 import { connect } from '../../utils';
+import Input from '../../styles/Input';
+import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+import Title from '../../styles/Title';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -25,7 +29,18 @@ const useConstructor = (callBack = () => {}) => {
 
 const TreeList = (props) => {
 	const {
-		showCount, mode, showLine, renderItem,
+		showCount,
+		mode,
+		showLine,
+		renderItem,
+		showSearch,
+		placeholder,
+		componentId,
+		themePreset,
+		innerClass,
+		className,
+		title,
+		style,
 	} = props;
 	const hasMounted = useRef();
 
@@ -113,7 +128,7 @@ const TreeList = (props) => {
 			],
 		},
 	]);
-
+	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedValues, setSelectedValues] = useState({});
 
 	useConstructor(() => {
@@ -123,6 +138,29 @@ const TreeList = (props) => {
 	useEffect(() => {
 		hasMounted.current = true;
 	}, []);
+
+	const handleInputChange = (e) => {
+		const { value } = e.target;
+		setSearchTerm(value);
+	};
+	const renderSearch = () => {
+		if (showSearch) {
+			return (
+				<Input
+					className={getClassName(innerClass, 'input') || null}
+					onChange={handleInputChange}
+					value={searchTerm}
+					placeholder={placeholder || 'Search'}
+					style={{
+						margin: '0 0 8px',
+					}}
+					aria-label={`${componentId}-search`}
+					themePreset={themePreset}
+				/>
+			);
+		}
+		return null;
+	};
 
 	const handleListItemClick = (key, parentPath, isLeafNode) => {
 		let path = key;
@@ -204,6 +242,18 @@ const TreeList = (props) => {
 		const listItemLabel = listItem.key;
 		const listItemCount = listItem.count;
 		const isLeafNode = !(Array.isArray(listItem.list) && listItem.list.length > 0);
+
+		if (
+			showSearch
+			&& searchTerm
+			&& isLeafNode
+			&& !replaceDiacritics(listItemLabel)
+				.toLowerCase()
+				.includes(replaceDiacritics(searchTerm).toLowerCase())
+		) {
+			return null;
+		}
+
 		let newParentPath = listItemLabel;
 		if (parentPath) {
 			newParentPath = `${parentPath}.${listItemLabel}`;
@@ -255,8 +305,14 @@ const TreeList = (props) => {
 		);
 	}
 
+	const getFilteredData = (transformedData) => {};
+
 	return (
-		<Container style={props.style} className={props.className}>
+		<Container style={style} className={className}>
+			{props.title && (
+				<Title className={getClassName(innerClass, 'title') || null}>{title}</Title>
+			)}
+			{renderSearch()}
 			{renderHierarchicalMenu(transformedData, '', true)}
 		</Container>
 	);
@@ -284,6 +340,9 @@ TreeList.propTypes = {
 	switcherIcon: types.func,
 	render: types.func,
 	renderItem: types.func,
+	innerClass: types.style,
+	placeholder: types.string,
+	title: types.title,
 };
 
 TreeList.defaultProps = {
