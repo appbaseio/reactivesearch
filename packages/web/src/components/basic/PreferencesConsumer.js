@@ -43,7 +43,7 @@ const PreferencesConsumer = ({ children, userProps }) => {
 		if (typeof componentProps[p] === 'string') {
 			if (['defaultQuery', 'customQuery', 'setOption'].includes(p)) {
 				// eslint-disable-next-line
-				componentProps[p] = eval(componentProps[p].parseFunction());
+				componentProps[p] = eval(componentProps[p]);
 			}
 		}
 	});

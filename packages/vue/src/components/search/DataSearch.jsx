@@ -3,6 +3,7 @@ import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
+import { SEARCH_COMPONENTS_MODES } from '@appbaseio/reactivecore/src/utils/constants';
 import {
 	connect,
 	getComponent,
@@ -34,6 +35,7 @@ import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Mic from './addons/Mic.jsx';
 import CustomSvg from '../shared/CustomSvg';
+import { TagItem, TagsContainer } from '../../styles/Tags';
 
 const {
 	updateQuery,
@@ -63,10 +65,12 @@ const {
 
 const DataSearch = {
 	name: 'DataSearch',
+	isTagsMode: false,
 	data() {
 		const props = this.$props;
 		this.__state = {
 			currentValue: '',
+			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
 			isPending: false,
@@ -87,7 +91,12 @@ const DataSearch = {
 			distinctField,
 			distinctFieldConfig,
 			index,
+			mode,
 		} = this.$props;
+		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
+			this.$options.isTagsMode = true;
+		}
+
 		// TODO: Remove in 2.0
 		if (enableQuerySuggestions) {
 			console.warn(
@@ -116,7 +125,10 @@ const DataSearch = {
 			);
 		}
 
-		this.currentValue = this.selectedValue || '';
+		this.currentValue = '';
+		if (this.$options.isTagsMode) {
+			this.currentValue = '';
+		}
 		const shouldFetchInitialSuggestions
 			= this.$props.enableDefaultSuggestions || this.currentValue;
 		if (shouldFetchInitialSuggestions) {
@@ -222,7 +234,7 @@ const DataSearch = {
 		debounce: VueTypes.number.def(0),
 		defaultValue: types.string,
 		excludeFields: types.excludeFields,
-		value: types.value,
+		value: VueTypes.oneOfType([VueTypes.arrayOf(VueTypes.string), types.value]),
 		defaultSuggestions: types.suggestions,
 		enableSynonyms: VueTypes.bool.def(true),
 		enableQuerySuggestions: VueTypes.bool.def(false),
@@ -274,6 +286,8 @@ const DataSearch = {
 		expandSuggestionsContainer: VueTypes.bool.def(true),
 		index: VueTypes.string,
 		enableDefaultSuggestions: VueTypes.bool.def(true),
+		mode: VueTypes.oneOf(['select', 'tag']).def('select'),
+		renderSelectedTags: VueTypes.any,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {
@@ -289,11 +303,26 @@ const DataSearch = {
 		}
 
 		if (this.selectedValue) {
-			this.setValue(this.selectedValue, true);
+			this.setValue(
+				this.selectedValue,
+				true,
+				this.$props,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
 		} else if (this.$props.value) {
-			this.setValue(this.$props.value, true);
+			this.setValue(
+				this.$props.value,
+				true,
+				this.$props,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
 		} else if (this.$props.defaultValue) {
-			this.setValue(this.$props.defaultValue, true);
+			this.setValue(
+				this.$props.defaultValue,
+				true,
+				this.$props,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
 		}
 	},
 	mounted() {
@@ -305,19 +334,35 @@ const DataSearch = {
 		},
 		dataField() {
 			this.updateQueryOptions();
-			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
+			this.updateQueryHandler(
+				this.$props.componentId,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$props,
+			);
 		},
 		highlightField() {
 			this.updateQueryOptions();
 		},
 		fieldWeights() {
-			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
+			this.updateQueryHandler(
+				this.$props.componentId,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$props,
+			);
 		},
 		fuzziness() {
-			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
+			this.updateQueryHandler(
+				this.$props.componentId,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$props,
+			);
 		},
 		queryFormat() {
-			this.updateQueryHandler(this.$props.componentId, this.$data.currentValue, this.$props);
+			this.updateQueryHandler(
+				this.$props.componentId,
+				this.$options.isTagsMode ? this.$data.selectedTags : this.$data.currentValue,
+				this.$props,
+			);
 		},
 		defaultValue(newVal) {
 			this.setValue(newVal, true, this.$props);
@@ -346,12 +391,26 @@ const DataSearch = {
 			}
 		},
 		selectedValue(newVal, oldVal) {
-			if (oldVal !== newVal && this.$data.currentValue !== newVal) {
+			if (
+				!isEqual(newVal, oldVal)
+				&& (this.$options.isTagsMode
+					? !isEqual(this.$data.selectedTags, newVal)
+					: this.$data.currentValue !== newVal)
+			) {
 				if (!newVal && this.$data.currentValue) {
 					// selected value is cleared, call onValueSelected
 					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 				}
-				this.setValue(newVal || '', true, this.$props);
+				if (this.$options.isTagsMode) {
+					// handling reset of tags through SelectedFilters or URL
+					this.selectedTags = [];
+				}
+				this.setValue(
+					newVal || '',
+					true,
+					this.$props,
+					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+				);
 			}
 		},
 		focusShortcuts() {
@@ -456,30 +515,70 @@ const DataSearch = {
 		},
 		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
 			const performUpdate = () => {
+				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
+					return;
+				}
 				// Refresh recent searches when value becomes empty
 				if (!value && props.enableDefaultSuggestions === false) {
 					this.resetStoreForComponent(props.componentId);
 				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
-				this.currentValue = value;
+				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+					if (Array.isArray(this.selectedTags) && this.selectedTags.length) {
+						// check if value already present in selectedTags
+						if (typeof value === 'string' && this.selectedTags.includes(value)) {
+							this.isOpen = false;
+							return;
+						}
+						this.selectedTags = [...this.selectedTags];
+
+						if (typeof value === 'string' && !!value) {
+							this.selectedTags.push(value);
+						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
+							const mergedArray = Array.from(
+								new Set([...this.selectedTags, ...value]),
+							);
+							this.selectedTags = mergedArray;
+						}
+					} else if (value) {
+						this.selectedTags = typeof value !== 'string' ? value : [...value];
+					}
+					this.currentValue = '';
+				} else {
+					this.currentValue = value;
+				}
+				let queryHandlerValue = value;
+				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+					queryHandlerValue
+						= Array.isArray(this.selectedTags) && this.selectedTags.length
+							? this.selectedTags
+							: undefined;
+				}
+
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
 							this.isOpen = false;
 						}
-						this.updateDefaultQueryHandler(value, this.$props);
+						if (typeof value === 'string')
+							this.updateDefaultQueryHandler(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
 					if (props.strictSelection) {
-						if (cause === causes.SUGGESTION_SELECT || value === '') {
-							this.updateQueryHandler(props.componentId, value, props);
+						if (
+							cause === causes.SUGGESTION_SELECT
+							|| (this.$options.isTagsMode
+								? this.selectedTags.length === 0
+								: value === '')
+						) {
+							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 						} else {
 							this.setValue('', true);
 						}
 					} else {
-						this.updateQueryHandler(props.componentId, value, props);
+						this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 					}
 				} else {
 					// debounce for handling text while typing
@@ -624,7 +723,12 @@ const DataSearch = {
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
 			if (event.key === 'Enter' && highlightedIndex === null) {
-				this.setValue(event.target.value, true);
+				this.setValue(
+					event.target.value,
+					true,
+					this.$props,
+					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+				);
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
 			// Need to review
@@ -654,10 +758,21 @@ const DataSearch = {
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
+			} else if (this.$options.isTagsMode) {
+				const emitValue = Array.isArray(this.selectedTags) ? [...this.selectedTags] : [];
+				if (this.selectedTags.includes(suggestion.value)) {
+					// avoid duplicates in tags array
+					this.isOpen = false;
+					return;
+				}
+				emitValue.push(suggestion.value);
+				this.setValue(emitValue, true, this.$props, causes.SUGGESTION_SELECT, true);
+				this.$emit('change', emitValue, this.triggerQuery);
 			} else {
-				this.isPending = false;
 				this.$emit('change', suggestion.value, this.triggerQuery);
 			}
+			this.isPending = false;
+
 			this.onValueSelectedHandler(
 				suggestion.value,
 				causes.SUGGESTION_SELECT,
@@ -755,6 +870,71 @@ const DataSearch = {
 			}
 
 			return null;
+		},
+		renderTag(item) {
+			const { innerClass } = this.$props;
+
+			return (
+				<TagItem class={getClassName(innerClass, 'selected-tag') || ''}>
+					<span>{item}</span>
+					<span
+						role="img"
+						aria-label="delete-tag"
+						class="close-icon"
+						onClick={() => this.clearTag(item)}
+					>
+						<CancelSvg />
+					</span>
+				</TagItem>
+			);
+		},
+		clearAllTags() {
+			this.selectedTags = [];
+			this.setValue('', true, this.$props, causes.SUGGESTION_SELECT);
+			if (this.$props.value !== undefined) {
+				this.$emit('change', this.selectedTags, this.triggerQuery);
+			}
+		},
+		clearTag(tagValue) {
+			this.selectedTags = [...this.selectedTags.filter((tag) => tag !== tagValue)];
+			this.setValue('', true, this.$props, causes.SUGGESTION_SELECT);
+			if (this.$props.value !== undefined) {
+				this.$emit('change', this.selectedTags, this.triggerQuery);
+			}
+		},
+		renderTags() {
+			if (!Array.isArray(this.selectedTags)) {
+				return null;
+			}
+			const tagsList = [...this.selectedTags];
+			const shouldRenderClearAllTag = tagsList.length > 1;
+			const renderSelectedTags
+				= this.$scopedSlots.renderSelectedTags || this.$props.renderSelectedTags;
+
+			return renderSelectedTags ? (
+				renderSelectedTags({
+					values: this.selectedTags,
+					handleClear: this.clearTag,
+					handleClearAll: this.clearAllTags,
+				})
+			) : (
+				<TagsContainer>
+					{tagsList.map((item) => this.renderTag(item))}
+					{shouldRenderClearAllTag && (
+						<TagItem class={getClassName(this.$props.innerClass, 'selected-tag') || ''}>
+							<span>Clear All</span>
+							<span
+								role="img"
+								aria-label="delete-tag"
+								class="close-icon"
+								onClick={this.clearAllTags}
+							>
+								<CancelSvg />
+							</span>
+						</TagItem>
+					)}
+				</TagsContainer>
+			);
 		},
 		renderInputAddonAfter() {
 			const { addonAfter } = this.$scopedSlots;
@@ -1157,6 +1337,7 @@ const DataSearch = {
 											{this.renderInputAddonAfter()}
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsContainer()}
+										{this.renderTags()}
 									</div>
 								);
 							},
