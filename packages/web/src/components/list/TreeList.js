@@ -48,6 +48,8 @@ const TreeList = (props) => {
 		rawData,
 		error,
 		isLoading,
+		showCheckbox,
+		showRadio,
 	} = props;
 	const hasMounted = useRef();
 
@@ -282,6 +284,26 @@ const TreeList = (props) => {
 					) : (
 						<React.Fragment>
 							{!isLeafNode && renderSwitcherIcon(isSelected)}
+							{mode === 'multiple' && showCheckbox && (
+								<React.Fragment>
+									<input
+										checked={isSelected}
+										id={`${listItemLabel}-radio-${newParentPath}`}
+										name={`${listItemLabel}-radio-${newParentPath}`}
+										type="checkbox"
+									/>
+								</React.Fragment>
+							)}
+							{mode === 'single' && showRadio && (
+								<React.Fragment>
+									<input
+										checked={isSelected}
+										id={`${listItemLabel}-radio-${newParentPath}`}
+										name={`${listItemLabel}-radio-${newParentPath}`}
+										type="radio"
+									/>
+								</React.Fragment>
+							)}
 							{renderIcon(isLeafNode)}
 							<span className="--list-item-label">{listItemLabel}</span>
 							{showCount && (
