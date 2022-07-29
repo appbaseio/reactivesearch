@@ -328,7 +328,10 @@ const TreeList = (props) => {
 		}
 
 		return (
-			<HierarchicalMenuList isSelected={isExpanded}>
+			<HierarchicalMenuList
+				className={`${isExpanded ? '--open' : ''}`}
+				isSelected={isExpanded}
+			>
 				{listArray.map(listItem => renderHierarchicalMenuListItem(listItem, parentPath))}
 			</HierarchicalMenuList>
 		);

@@ -5,14 +5,12 @@ export const HierarchicalMenuList = styled('ul')`
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	position: relative;
-	overflow-y: auto;
+	max-height: 0;
+	overflow: hidden;
 
-	${props =>
-	props.isSelected === false
-		&& css`
-			max-height: 0;
-		`};
+	&.--open {
+		max-height: 100%;
+	}
 `;
 
 export const HierarchicalMenuListItem = styled('li')`
