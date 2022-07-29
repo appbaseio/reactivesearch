@@ -82,22 +82,24 @@ class Main extends Component {
 						<TreeList
 							componentId="BookSensor"
 							showCount
-							mode="single"
-							switcherIcon={bool =>
-								(bool ? <span> &#8592;</span> : <span> &#8598;</span>)
-							}
+							showCheckbox
+							showRadio
+							mode="multiple"
+							// switcherIcon={bool =>
+							// 	(bool ? <span> &#8592;</span> : <span> &#8598;</span>)
+							// }
 							showIcon
 							showLeafIcon
-							icon={
-								<span role="img" aria-label="folder-icon">
-									🦷
-								</span>
-							}
-							leafIcon={
-								<span role="img" aria-label="leaf-icon">
-									☘️
-								</span>
-							}
+							// icon={
+							// 	<span role="img" aria-label="folder-icon">
+							// 		🦷
+							// 	</span>
+							// }
+							// leafIcon={
+							// 	<span role="img" aria-label="leaf-icon">
+							// 		☘️
+							// 	</span>
+							// }
 							showLine
 							// renderItem={(label, count, isSelected) => (
 							// 	<span style={isSelected ? { background: 'green' } : {}}>
