@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactiveBase from '../basic/ReactiveBase';
-import TabDataList from './TabDataList';
+import SingleDataList from './SingleDataList';
 
 const MOCK_AGGREGATIONS_DATA = {
 	'authors.keyword': {
@@ -25,7 +25,7 @@ it('should render', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -43,7 +43,7 @@ it('should render with title', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -62,7 +62,7 @@ it('should render with renderItem', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -82,7 +82,7 @@ it('should render with showCount', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -105,7 +105,7 @@ it('should render with displayAsVertical', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -129,7 +129,7 @@ it('should render with showSearch', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -153,7 +153,7 @@ it('should render with showRadio', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -177,7 +177,7 @@ it('should render with showRadio and displayAsVertical', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -202,7 +202,7 @@ it('should render with showRadio, showSearch and displayAsVertical', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
@@ -227,7 +227,7 @@ it('should render with showRadio and showSearch', () => {
 	const elem = renderer
 		.create(
 			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
-				<TabDataList
+				<SingleDataList
 					mode="test"
 					componentId="authors"
 					dataField="authors.keyword"
