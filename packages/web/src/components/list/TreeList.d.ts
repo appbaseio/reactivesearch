@@ -4,6 +4,7 @@ import { CommonProps } from '../..';
 import * as types from '../../types';
 
 export interface TreeListProps extends CommonProps {
+	componentId: string;
 	className?: string;
 	style?: types.style;
 	showRadio?: boolean;
@@ -18,7 +19,7 @@ export interface TreeListProps extends CommonProps {
 	showLine?: boolean;
 	switcherIcon: (expanded: boolean) => types.children;
 	render?: (data: any) => any;
-	renderItem: (data: any) => any;
+	renderItem: (item: any, count?: number, isSelected?: boolean) => any;
 }
 
 declare const TreeList: React.ComponentClass<TreeListProps>;
