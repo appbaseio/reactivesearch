@@ -82,17 +82,19 @@ class ReactiveList extends Component {
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
 		this.sortOptionIndex = this.props.defaultSortOption
-			? this.props.sortOptions.findIndex((s) => s.label === this.props.defaultSortOption)
+			? this.props.sortOptions.findIndex(s => s.label === this.props.defaultSortOption)
 			: 0;
 		if (this.props.urlSortOption) {
-			this.sortOptionIndex =
-				this.props.sortOptions.findIndex((s) => s.label === this.props.urlSortOption) || 0;
+			this.sortOptionIndex
+				= this.props.sortOptions.findIndex(s => s.label === this.props.urlSortOption) || 0;
 		}
 	}
 
 	componentDidMount() {
-		const { aggregationField, distinctField, distinctFieldConfig, index, enableAppbase } =
-			this.props;
+		const {
+			aggregationField, distinctField, distinctFieldConfig, index, enableAppbase,
+		}
+			= this.props;
 
 		if (enableAppbase && aggregationField) {
 			console.warn(
@@ -204,12 +206,12 @@ class ReactiveList extends Component {
 			);
 		}
 		if (
-			!isEqual(this.props.sortOptions, prevProps.sortOptions) ||
-			this.props.sortBy !== prevProps.sortBy ||
-			this.props.size !== prevProps.size ||
-			!isEqual(this.props.dataField, prevProps.dataField) ||
-			!isEqual(this.props.includeFields, prevProps.includeFields) ||
-			!isEqual(this.props.excludeFields, prevProps.excludeFields)
+			!isEqual(this.props.sortOptions, prevProps.sortOptions)
+			|| this.props.sortBy !== prevProps.sortBy
+			|| this.props.size !== prevProps.size
+			|| !isEqual(this.props.dataField, prevProps.dataField)
+			|| !isEqual(this.props.includeFields, prevProps.includeFields)
+			|| !isEqual(this.props.excludeFields, prevProps.excludeFields)
 		) {
 			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
@@ -284,9 +286,9 @@ class ReactiveList extends Component {
 			}
 
 			if (
-				this.props.currentPage !== prevProps.currentPage &&
-				this.props.currentPage > 0 &&
-				this.props.currentPage <= totalPages
+				this.props.currentPage !== prevProps.currentPage
+				&& this.props.currentPage > 0
+				&& this.props.currentPage <= totalPages
 			) {
 				this.setPage(this.props.currentPage - 1);
 			}
@@ -296,10 +298,10 @@ class ReactiveList extends Component {
 			if (this.props.hits && prevProps.hits) {
 				if (
 					// new items are loaded (from: 0)
-					this.props.hits.length < prevProps.hits.length ||
+					this.props.hits.length < prevProps.hits.length
 					// new items are loaded and 'from' hasn't changed
-					(this.props.hits.length === prevProps.hits.length &&
-						this.props.hits !== prevProps.hits)
+					|| (this.props.hits.length === prevProps.hits.length
+						&& this.props.hits !== prevProps.hits)
 				) {
 					// query has changed
 					if (this.props.scrollOnChange) {
@@ -314,9 +316,9 @@ class ReactiveList extends Component {
 		}
 
 		if (
-			prevProps.queryLog &&
-			this.props.queryLog &&
-			prevProps.queryLog !== this.props.queryLog
+			prevProps.queryLog
+			&& this.props.queryLog
+			&& prevProps.queryLog !== this.props.queryLog
 		) {
 			// usecase:
 			// - query has changed from non-null prev query
@@ -342,8 +344,8 @@ class ReactiveList extends Component {
 
 		// handle window url history change (on native back and forth interactions)
 		if (
-			this.state.currentPage !== this.props.defaultPage &&
-			this.props.defaultPage !== prevProps.defaultPage
+			this.state.currentPage !== this.props.defaultPage
+			&& this.props.defaultPage !== prevProps.defaultPage
 		) {
 			this.setPage(this.props.defaultPage >= 0 ? this.props.defaultPage : 0);
 		}
@@ -370,7 +372,9 @@ class ReactiveList extends Component {
 
 	// Calculate results
 	getAllData = () => {
-		const { size, promotedResults, aggregationData, customData } = this.props;
+		const {
+			size, promotedResults, aggregationData, customData,
+		} = this.props;
 		const { currentPage } = this.state;
 		const results = parseHits(this.props.hits) || [];
 		const parsedPromotedResults = parseHits(promotedResults || []) || [];
@@ -378,9 +382,9 @@ class ReactiveList extends Component {
 		const base = currentPage * size;
 
 		if (parsedPromotedResults.length) {
-			const ids = parsedPromotedResults.map((item) => item._id).filter(Boolean);
+			const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
 			if (ids) {
-				filteredResults = filteredResults.filter((item) => !ids.includes(item._id));
+				filteredResults = filteredResults.filter(item => !ids.includes(item._id));
 			}
 
 			filteredResults = [...parsedPromotedResults, ...filteredResults];
@@ -454,7 +458,7 @@ class ReactiveList extends Component {
 		const getSortOption = () => {
 			if (defaultSortOption) {
 				const sortOption = sortOptionsNew.find(
-					(option) => option.label === defaultSortOption,
+					option => option.label === defaultSortOption,
 				);
 				if (sortOption) {
 					return {
@@ -487,12 +491,12 @@ class ReactiveList extends Component {
 	};
 
 	scrollHandler = () => {
-		let renderLoader =
-			window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight;
+		let renderLoader
+			= window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight;
 		if (this.props.scrollTarget) {
-			renderLoader =
-				this.domNode.clientHeight + this.domNode.scrollTop + 300 >=
-				this.domNode.scrollHeight;
+			renderLoader
+				= this.domNode.clientHeight + this.domNode.scrollTop + 300
+				>= this.domNode.scrollHeight;
 		}
 		if (!this.props.isLoading && renderLoader) {
 			this.loadMore();
@@ -564,8 +568,8 @@ class ReactiveList extends Component {
 	renderResultStats = () => {
 		const { hits, promotedResults, total } = this.props;
 
-		const shouldStatsVisible =
-			(hits && hits.length) || (promotedResults && promotedResults.length);
+		const shouldStatsVisible
+			= (hits && hits.length) || (promotedResults && promotedResults.length);
 		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
 		} else if (total) {
@@ -650,7 +654,7 @@ class ReactiveList extends Component {
 		let docId = documentId;
 		if (!docId) {
 			const { data } = this.getData();
-			const hitData = data.find((hit) => hit._click_id === searchPosition);
+			const hitData = data.find(hit => hit._click_id === searchPosition);
 			if (hitData && hitData._id) {
 				docId = hitData._id;
 			}
@@ -682,7 +686,7 @@ class ReactiveList extends Component {
 		});
 		exportData(componentId, '', total)
 			.then((res) => {
-				const arrayOfJson = res.map((item) => flatten(item));
+				const arrayOfJson = res.map(item => flatten(item));
 
 				// convert JSON to CSV
 				const replacer = (key, value) => (value === null ? '' : value); // specify how you want to handle null values here
@@ -692,10 +696,10 @@ class ReactiveList extends Component {
 					const set = new Set([...keys, ...header]);
 					header = Array.from(set);
 				});
-				header = header.filter((item) => typeof item !== 'object');
+				header = header.filter(item => typeof item !== 'object');
 
-				let csv = arrayOfJson.map((row) =>
-					header.map((fieldName) => JSON.stringify(row[fieldName], replacer)).join(','),
+				let csv = arrayOfJson.map(row =>
+					header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','),
 				);
 				csv.unshift(header.join(','));
 				csv = csv.join('\r\n');
@@ -784,7 +788,9 @@ class ReactiveList extends Component {
 		}));
 	};
 	getData = () => {
-		const { filteredResults, promotedResults, aggregationData, customData } = this.getAllData();
+		const {
+			filteredResults, promotedResults, aggregationData, customData,
+		} = this.getAllData();
 		return {
 			data: this.withClickIds(filteredResults),
 			aggregationData: this.withClickIds(aggregationData || []),
@@ -811,7 +817,9 @@ class ReactiveList extends Component {
 	};
 
 	render() {
-		const { renderItem, size, error, renderPagination, analytics } = this.props;
+		const {
+			renderItem, size, error, renderPagination, analytics,
+		} = this.props;
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
 		const paginationProps = {
@@ -840,14 +848,16 @@ class ReactiveList extends Component {
 					justifyContent="space-between"
 				>
 					{this.props.sortOptions ? this.renderSortOptions() : null}
-					{this.props.showExport ? this.renderExportOptions() : null}
+					{this.props.showExport && filteredResults.length !== 0
+						? this.renderExportOptions()
+						: null}
 					{this.props.showResultStats ? this.renderResultStats() : null}
 				</Flex>
 				{!this.props.isLoading && !error && filteredResults.length === 0
 					? this.renderNoResults()
 					: null}
-				{this.shouldRenderPagination &&
-				['top', 'both'].indexOf(this.props.paginationAt) !== -1
+				{this.shouldRenderPagination
+				&& ['top', 'both'].indexOf(this.props.paginationAt) !== -1
 					? paginationElement
 					: null}
 
@@ -876,8 +886,8 @@ class ReactiveList extends Component {
 						</div>
 					) // prettier-ignore
 					: null}
-				{this.shouldRenderPagination &&
-				['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
+				{this.shouldRenderPagination
+				&& ['bottom', 'both'].indexOf(this.props.paginationAt) !== -1
 					? paginationElement
 					: null}
 
@@ -998,12 +1008,12 @@ ReactiveList.componentType = componentTypes.reactiveList;
 
 const mapStateToProps = (state, props) => ({
 	defaultPage:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value - 1) ||
-		-1,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value - 1)
+		|| -1,
 	urlSortOption:
-		state.selectedValues[`${props.componentId}sortOption`] &&
-		state.selectedValues[`${props.componentId}sortOption`].value,
+		state.selectedValues[`${props.componentId}sortOption`]
+		&& state.selectedValues[`${props.componentId}sortOption`].value,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	analytics: state.config && state.config.analytics,
@@ -1019,12 +1029,12 @@ const mapStateToProps = (state, props) => ({
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
 	afterKey:
-		state.aggregations[props.componentId] &&
-		state.aggregations[props.componentId][props.aggregationField] &&
-		state.aggregations[props.componentId][props.aggregationField].after_key,
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.aggregationField]
+		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 });
 
-const mapDispatchtoProps = (dispatch) => ({
+const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	updateComponentProps: (component, options, componentType) =>
 		dispatch(updateComponentProps(component, options, componentType)),
@@ -1062,7 +1072,7 @@ const ConnectedComponent = connect(
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<PreferencesConsumer userProps={props}>
-		{(preferenceProps) => (
+		{preferenceProps => (
 			<ComponentWrapper
 				internalComponent
 				componentType={componentTypes.reactiveList}
