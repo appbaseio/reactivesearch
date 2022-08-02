@@ -86,8 +86,7 @@ class StateProvider extends Component {
 					computedValuesMap[component] = null;
 				}
 			});
-
-		setValues(valuesMap);
+		setValues(computedValuesMap);
 	};
 
 	render() {
