@@ -1,0 +1,1661 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling 
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts 
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with displayAsVertical 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 2px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling 
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts 
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with renderItem 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling V
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts V
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with showCount 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling (10)
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts (7)
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with showRadio 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  white-space: nowrap;
+}
+
+.emotion-4 li {
+  min-height: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.emotion-6 {
+  border: 0;
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.emotion-6:focus+label::before {
+  box-shadow: 0 0 0 2px #d7e7ff;
+}
+
+.emotion-6:hover+label::before {
+  border-color: #0B6AFF;
+}
+
+.emotion-6:active+label::before {
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+}
+
+.emotion-6+label {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0.4rem 0;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.emotion-6+label:hover {
+  color: #0B6AFF;
+}
+
+.emotion-6+label>span {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  line-height: 1.3rem;
+}
+
+.emotion-6+label>span>span:first-of-type {
+  padding-right: 5px;
+}
+
+.emotion-6+label>span>span:nth-of-type(2) {
+  color: #9b9b9b;
+}
+
+.emotion-6+label::before {
+  background-color: #fff;
+  border: 1px solid #595959;
+  box-sizing: content-box;
+  content: '';
+  color: #0B6AFF;
+  margin-right: calc(16px * 0.5);
+  top: 50%;
+  left: 0;
+  width: calc(16px + 1px);
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.emotion-6+label::after {
+  box-sizing: content-box;
+  content: '';
+  background-color: #0B6AFF;
+  position: absolute;
+  top: 11px;
+  left: calc(1px + 4px / 2);
+  width: calc(16px - 4px);
+  height: calc(16px - 4px);
+  margin-top: calc(16px / -2 - 4px / -2);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  -webkit-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+.emotion-6+label::before,
+.emotion-6+label::after {
+  border-radius: 50%;
+}
+
+.emotion-6:checked:active+label,
+.emotion-6:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-6:checked:active+label::before,
+.emotion-6:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.emotion-6:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
+  border-color: #0B6AFF;
+}
+
+.emotion-6:checked+label::after {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.emotion-8 {
+  margin: 0.4rem!important;
+}
+
+.emotion-8::before {
+  width: 16px!important;
+}
+
+.emotion-10 {
+  width: auto!important;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <ul
+      aria-label="authors-items"
+      className="emotion-4 emotion-5"
+      role="radiogroup"
+    >
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-6 emotion-7"
+          id="authors-J. K. Rowling"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          className="emotion-8 emotion-9"
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span
+            className="emotion-10 emotion-11"
+          >
+            J. K. Rowling
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-6 emotion-7"
+          id="authors-Nora Roberts"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          className="emotion-8 emotion-9"
+          htmlFor="authors-Nora Roberts"
+        >
+          <span
+            className="emotion-10 emotion-11"
+          >
+            Nora Roberts
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render with showRadio and displayAsVertical 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  display: block;
+  white-space: nowrap;
+}
+
+.emotion-4 li {
+  min-height: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.emotion-6 {
+  border: 0;
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.emotion-6:focus+label::before {
+  box-shadow: 0 0 0 2px #d7e7ff;
+}
+
+.emotion-6:hover+label::before {
+  border-color: #0B6AFF;
+}
+
+.emotion-6:active+label::before {
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+}
+
+.emotion-6+label {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0.4rem 0;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.emotion-6+label:hover {
+  color: #0B6AFF;
+}
+
+.emotion-6+label>span {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  line-height: 1.3rem;
+}
+
+.emotion-6+label>span>span:first-of-type {
+  padding-right: 5px;
+}
+
+.emotion-6+label>span>span:nth-of-type(2) {
+  color: #9b9b9b;
+}
+
+.emotion-6+label::before {
+  background-color: #fff;
+  border: 1px solid #595959;
+  box-sizing: content-box;
+  content: '';
+  color: #0B6AFF;
+  margin-right: calc(16px * 0.5);
+  top: 50%;
+  left: 0;
+  width: calc(16px + 1px);
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.emotion-6+label::after {
+  box-sizing: content-box;
+  content: '';
+  background-color: #0B6AFF;
+  position: absolute;
+  top: 11px;
+  left: calc(1px + 4px / 2);
+  width: calc(16px - 4px);
+  height: calc(16px - 4px);
+  margin-top: calc(16px / -2 - 4px / -2);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  -webkit-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+.emotion-6+label::before,
+.emotion-6+label::after {
+  border-radius: 50%;
+}
+
+.emotion-6:checked:active+label,
+.emotion-6:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-6:checked:active+label::before,
+.emotion-6:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.emotion-6:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
+  border-color: #0B6AFF;
+}
+
+.emotion-6:checked+label::after {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.emotion-8 {
+  margin: 0.4rem!important;
+}
+
+.emotion-8::before {
+  width: 16px!important;
+}
+
+.emotion-10 {
+  width: auto!important;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <ul
+      aria-label="authors-items"
+      className="emotion-4 emotion-5"
+      role="radiogroup"
+    >
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-6 emotion-7"
+          id="authors-J. K. Rowling"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          className="emotion-8 emotion-9"
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span
+            className="emotion-10 emotion-11"
+          >
+            J. K. Rowling
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-6 emotion-7"
+          id="authors-Nora Roberts"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          className="emotion-8 emotion-9"
+          htmlFor="authors-Nora Roberts"
+        >
+          <span
+            className="emotion-10 emotion-11"
+          >
+            Nora Roberts
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render with showRadio and showSearch 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-4:focus {
+  background-color: #fff;
+}
+
+.emotion-6 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  white-space: nowrap;
+}
+
+.emotion-6 li {
+  min-height: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.emotion-8 {
+  border: 0;
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.emotion-8:focus+label::before {
+  box-shadow: 0 0 0 2px #d7e7ff;
+}
+
+.emotion-8:hover+label::before {
+  border-color: #0B6AFF;
+}
+
+.emotion-8:active+label::before {
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+}
+
+.emotion-8+label {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0.4rem 0;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.emotion-8+label:hover {
+  color: #0B6AFF;
+}
+
+.emotion-8+label>span {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  line-height: 1.3rem;
+}
+
+.emotion-8+label>span>span:first-of-type {
+  padding-right: 5px;
+}
+
+.emotion-8+label>span>span:nth-of-type(2) {
+  color: #9b9b9b;
+}
+
+.emotion-8+label::before {
+  background-color: #fff;
+  border: 1px solid #595959;
+  box-sizing: content-box;
+  content: '';
+  color: #0B6AFF;
+  margin-right: calc(16px * 0.5);
+  top: 50%;
+  left: 0;
+  width: calc(16px + 1px);
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.emotion-8+label::after {
+  box-sizing: content-box;
+  content: '';
+  background-color: #0B6AFF;
+  position: absolute;
+  top: 11px;
+  left: calc(1px + 4px / 2);
+  width: calc(16px - 4px);
+  height: calc(16px - 4px);
+  margin-top: calc(16px / -2 - 4px / -2);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  -webkit-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+.emotion-8+label::before,
+.emotion-8+label::after {
+  border-radius: 50%;
+}
+
+.emotion-8:checked:active+label,
+.emotion-8:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-8:checked:active+label::before,
+.emotion-8:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.emotion-8:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
+  border-color: #0B6AFF;
+}
+
+.emotion-8:checked+label::after {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.emotion-10 {
+  margin: 0.4rem!important;
+}
+
+.emotion-10::before {
+  width: 16px!important;
+}
+
+.emotion-12 {
+  width: auto!important;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="emotion-4 emotion-5"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="emotion-6 emotion-7"
+      role="radiogroup"
+    >
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-8 emotion-9"
+          id="authors-J. K. Rowling"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          className="emotion-10 emotion-11"
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span
+            className="emotion-12 emotion-13"
+          >
+            J. K. Rowling
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-8 emotion-9"
+          id="authors-Nora Roberts"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          className="emotion-10 emotion-11"
+          htmlFor="authors-Nora Roberts"
+        >
+          <span
+            className="emotion-12 emotion-13"
+          >
+            Nora Roberts
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render with showRadio, showSearch and displayAsVertical 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-4:focus {
+  background-color: #fff;
+}
+
+.emotion-6 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 12px;
+  display: block;
+  white-space: nowrap;
+}
+
+.emotion-6 li {
+  min-height: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.emotion-8 {
+  border: 0;
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.emotion-8:focus+label::before {
+  box-shadow: 0 0 0 2px #d7e7ff;
+}
+
+.emotion-8:hover+label::before {
+  border-color: #0B6AFF;
+}
+
+.emotion-8:active+label::before {
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+}
+
+.emotion-8+label {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0.4rem 0;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.emotion-8+label:hover {
+  color: #0B6AFF;
+}
+
+.emotion-8+label>span {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  line-height: 1.3rem;
+}
+
+.emotion-8+label>span>span:first-of-type {
+  padding-right: 5px;
+}
+
+.emotion-8+label>span>span:nth-of-type(2) {
+  color: #9b9b9b;
+}
+
+.emotion-8+label::before {
+  background-color: #fff;
+  border: 1px solid #595959;
+  box-sizing: content-box;
+  content: '';
+  color: #0B6AFF;
+  margin-right: calc(16px * 0.5);
+  top: 50%;
+  left: 0;
+  width: calc(16px + 1px);
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.emotion-8+label::after {
+  box-sizing: content-box;
+  content: '';
+  background-color: #0B6AFF;
+  position: absolute;
+  top: 11px;
+  left: calc(1px + 4px / 2);
+  width: calc(16px - 4px);
+  height: calc(16px - 4px);
+  margin-top: calc(16px / -2 - 4px / -2);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  -webkit-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+.emotion-8+label::before,
+.emotion-8+label::after {
+  border-radius: 50%;
+}
+
+.emotion-8:checked:active+label,
+.emotion-8:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-8:checked:active+label::before,
+.emotion-8:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.emotion-8:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
+  border-color: #0B6AFF;
+}
+
+.emotion-8:checked+label::after {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+.emotion-10 {
+  margin: 0.4rem!important;
+}
+
+.emotion-10::before {
+  width: 16px!important;
+}
+
+.emotion-12 {
+  width: auto!important;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="emotion-4 emotion-5"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="emotion-6 emotion-7"
+      role="radiogroup"
+    >
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-8 emotion-9"
+          id="authors-J. K. Rowling"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          className="emotion-10 emotion-11"
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span
+            className="emotion-12 emotion-13"
+          >
+            J. K. Rowling
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-8 emotion-9"
+          id="authors-Nora Roberts"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          className="emotion-10 emotion-11"
+          htmlFor="authors-Nora Roberts"
+        >
+          <span
+            className="emotion-12 emotion-13"
+          >
+            Nora Roberts
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render with showSearch 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+}
+
+.emotion-4:focus {
+  background-color: #fff;
+}
+
+.emotion-6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-8 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <input
+      aria-label="authors-search"
+      className="emotion-4 emotion-5"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <div
+      className="emotion-6 emotion-7"
+    >
+      <a
+        className="emotion-8 emotion-9"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling 
+      </a>
+      <a
+        className="emotion-8 emotion-9"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts 
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with title 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  max-width: 90vw;
+  overflow-x: auto;
+}
+
+.emotion-6 {
+  color: #424242;
+  font-weight: normal;
+  padding: 0.5rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  border-color: white;
+  border-width: 0px;
+  border-style: solid;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  display: inline-block;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4 emotion-5"
+    >
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        J. K. Rowling 
+      </a>
+      <a
+        className="emotion-6 emotion-7"
+        onClick={[Function]}
+        selected={false}
+      >
+        Nora Roberts 
+      </a>
+    </div>
+  </div>
+</div>
+`;
