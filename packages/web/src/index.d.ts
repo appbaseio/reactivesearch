@@ -18,6 +18,7 @@ export { default as ReactiveBase } from './components/basic/ReactiveBase';
 export { default as ReactiveComponent } from './components/basic/ReactiveComponent';
 export { default as SelectedFilters } from './components/basic/SelectedFilters';
 export { default as StateProvider } from './components/basic/StateProvider';
+export { default as ErrorBoundary } from './components/basic/ErrorBoundary';
 
 export { default as DatePicker } from './components/date/DatePicker';
 export { default as DateRange } from './components/date/DateRange';
@@ -28,6 +29,7 @@ export { default as MultiList } from './components/list/MultiList';
 export { default as SingleDataList } from './components/list/SingleDataList';
 export { default as SingleDropdownList } from './components/list/SingleDropdownList';
 export { default as SingleList } from './components/list/SingleList';
+export { default as TabDataList } from './components/list/TabDataList';
 export { default as TagCloud } from './components/list/TagCloud';
 export { default as ToggleButton } from './components/list/ToggleButton';
 

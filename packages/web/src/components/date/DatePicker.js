@@ -310,21 +310,24 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
+
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(
-	withTheme(props => (
-		<ComponentWrapper {...props} componentType={componentTypes.datePicker}>
-			{() => <DatePicker ref={props.myForwardedRef} {...props} />}
-		</ComponentWrapper>
-	)),
-);
+)(withTheme(props => (<DatePicker ref={props.myForwardedRef} {...props} />)));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+	<PreferencesConsumer userProps={props}>
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.datePicker}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, DatePicker);

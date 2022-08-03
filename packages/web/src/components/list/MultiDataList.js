@@ -617,15 +617,21 @@ const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
 )(props => (
-	<ComponentWrapper {...props} internalComponent componentType={componentTypes.multiDataList}>
-		{() => <MultiDataList ref={props.myForwardedRef} {...props} />}
-	</ComponentWrapper>
+	<MultiDataList ref={props.myForwardedRef} {...props} />
 ));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<PreferencesConsumer userProps={props}>
-		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+		{preferenceProps => (
+			<ComponentWrapper
+				{...preferenceProps}
+				internalComponent
+				componentType={componentTypes.multiDataList}
+			>
+				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+			</ComponentWrapper>
+		)}
 	</PreferencesConsumer>
 ));
 hoistNonReactStatics(ForwardRefComponent, MultiDataList);

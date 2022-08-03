@@ -32,6 +32,7 @@ import CategorySearch from '../search/CategorySearch';
 import SearchBox from '../search/SearchBox';
 import MultiList from '../list/MultiList';
 import SingleDataList from '../list/SingleDataList';
+import TabDataList from '../list/TabDataList';
 import MultiDataList from '../list/MultiDataList';
 import SingleDropdownList from '../list/SingleDropdownList';
 import MultiDropdownList from '../list/MultiDropdownList';
@@ -432,6 +433,8 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 					return <MultiList {...preferenceProps} />;
 				case componentTypes.singleDataList:
 					return <SingleDataList {...preferenceProps} />;
+				case componentTypes.tabDataList:
+					return <TabDataList {...preferenceProps} />;
 				case componentTypes.multiDataList:
 					return <MultiDataList {...preferenceProps} />;
 				case componentTypes.singleDropdownList:
