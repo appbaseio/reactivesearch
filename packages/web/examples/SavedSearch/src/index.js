@@ -31,7 +31,7 @@ class Main extends Component {
 								setSearchState(savedState);
 							}}
 						>
-							Reply State
+							Replay State
 						</button>
 					)}
 				</StateProvider>
@@ -42,6 +42,7 @@ class Main extends Component {
 							componentId="BookSensor"
 							dataField="authors.keyword"
 							aggregationSize={100}
+							URLParams
 						/>
 						<SingleRange
 							componentId="Ratings"
@@ -52,6 +53,7 @@ class Main extends Component {
 								{ start: 3, end: 4, label: 'Rating 3 to 4' },
 								{ start: 4, end: 5, label: 'Rating > 4' },
 							]}
+							URLParams
 						/>
 					</div>
 
@@ -67,6 +69,7 @@ class Main extends Component {
 							react={{
 								and: ['BookSensor', 'Ratings'],
 							}}
+							URLParams
 						/>
 					</div>
 				</div>
