@@ -16,6 +16,7 @@
 						dataField="authors.keyword"
 						className="multi-list-container"
 						:showCount="true"
+						:URLParams="true"
 					/>
 					<SingleRange
 						componentId="Ratings"
@@ -27,6 +28,7 @@
 						]"
 						title="Filter Ratings"
 						class="ratings-container"
+						:URLParams="true"
 					/>
 				</div>
 				<div class="col">
@@ -38,6 +40,7 @@
 						:from="0"
 						:size="5"
 						:react="{ and: ['Ratings', 'Authors'] }"
+						:URLParams="true"
 					>
 						<div slot="renderItem" slot-scope="{ item }">
 							<div class="flex book-content" key="item._id">
