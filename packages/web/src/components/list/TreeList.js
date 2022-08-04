@@ -12,7 +12,11 @@ import {
 	getComponent as getComponentHelper,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
-import { recLookup, setDeep } from '@appbaseio/reactivecore/src/utils/helper';
+import {
+	recLookup,
+	setDeep,
+	transformRawTreeListData,
+} from '@appbaseio/reactivecore/src/utils/helper';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -29,37 +33,6 @@ const useConstructor = (callBack = () => {}) => {
 	if (hasBeenCalled) return;
 	callBack();
 	setHasBeenCalled(true);
-};
-
-const transformRawData = (data, dataField, level = 0) => {
-	const newState = [];
-	if (data instanceof Object) {
-		const aggsKeys = Object.keys(data);
-		aggsKeys.forEach((key) => {
-			if (Array.isArray(data[key].buckets)) {
-				data[key].buckets.forEach((bucket) => {
-					newState.push({
-						key: bucket.key,
-						count: bucket.doc_count,
-						level,
-						...(bucket[dataField[level + 1]] instanceof Object
-							? {
-								list: transformRawData(
-									{
-										[dataField[level + 1]]: bucket[dataField[level + 1]],
-									},
-									dataField,
-									level + 1,
-								),
-							  }
-							: {}),
-					});
-				});
-			}
-		});
-	}
-
-	return newState;
 };
 
 const TreeList = (props) => {
@@ -98,8 +71,12 @@ const TreeList = (props) => {
 	}, []);
 
 	useEffect(() => {
-		setTransformedData(transformRawData(rawData.aggregations, dataField));
+		setTransformedData(transformRawTreeListData(rawData.aggregations, dataField));
 	}, [rawData]);
+
+	useEffect(() => {
+		console.log('selectedValues', selectedValues);
+	}, [selectedValues]);
 
 	const handleInputChange = (e) => {
 		const { value } = e.target;
@@ -387,6 +364,52 @@ const MOCK_DATA = {
 							{
 								key: 'VINYL',
 								doc_count: 69731,
+								level3: {
+									doc_count_error_upper_bound: 9,
+									sum_other_doc_count: 2606,
+									buckets: [
+										{
+											key: 'SPORTS & FITNESS',
+											doc_count: 12553,
+										},
+										{
+											key: 'DRAMA/DR',
+											doc_count: 9853,
+										},
+										{
+											key: 'COMEDY/CO',
+											doc_count: 4455,
+										},
+										{
+											key: 'TV-A-Z',
+											doc_count: 4252,
+										},
+										{
+											key: 'SCIENCE FICTION/SF',
+											doc_count: 3826,
+										},
+										{
+											key: 'ACTION/AC',
+											doc_count: 3336,
+										},
+										{
+											key: 'CHILDRENS-FAMILY',
+											doc_count: 3035,
+										},
+										{
+											key: 'MUSIC DVD',
+											doc_count: 2208,
+										},
+										{
+											key: 'FAITH',
+											doc_count: 1077,
+										},
+										{
+											key: 'SPORTS',
+											doc_count: 1067,
+										},
+									],
+								},
 							},
 							{
 								key: 'MUSIC DVD',
