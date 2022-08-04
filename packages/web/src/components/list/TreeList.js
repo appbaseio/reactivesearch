@@ -322,18 +322,28 @@ const TreeList = (props) => {
 		return null;
 	};
 
+	const sanitizeObject = obj =>
+		JSON.parse(
+			JSON.stringify(obj, (key, value) =>
+				// eslint-disable-next-line eqeqeq
+				(value === null || value == {} || value === false ? undefined : value),
+			),
+		);
+
 	const handleListItemClick = (key, parentPath, isLeafNode) => {
 		let path = key;
 		if (parentPath) {
 			path = `${parentPath}.${key}`;
 		}
-		const newSelectedValues = { ...selectedValues };
+		let newSelectedValues = { ...selectedValues };
 		if (mode === 'single' && isLeafNode && recLookup(newSelectedValues, parentPath)) {
 			setDeep(newSelectedValues, parentPath.split('.'), undefined, true);
 		}
-		setDeep(newSelectedValues, path.split('.'), !recLookup(newSelectedValues, path), true);
+		const value = recLookup(newSelectedValues, path) ? undefined : true;
 
-		if (isLeafNode) {
+		setDeep(newSelectedValues, path.split('.'), value, true);
+		newSelectedValues = sanitizeObject({ ...newSelectedValues });
+		if (isLeafNode || !value) {
 			if (props.value === undefined) {
 				setValue(newSelectedValues);
 			} else if (props.onChange) {
