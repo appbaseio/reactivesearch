@@ -1,5 +1,7 @@
 import { helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import { setValues } from '@appbaseio/reactivecore/lib/actions/value';
+import { isInternalComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import { connect } from '../../utils/index';
 
 const { getSearchState } = helper;
@@ -20,7 +22,7 @@ const filterByComponentIds = (state, props = {}) => {
 	}
 	if (Array.isArray(componentIds)) {
 		const filteredState = {};
-		componentIds.forEach(componentId => {
+		componentIds.forEach((componentId) => {
 			filteredState[componentId] = state[componentId];
 		});
 		return filteredState;
@@ -33,7 +35,7 @@ const filterByKeys = (state, allowedKeys) =>
 		(components, componentId) => ({
 			...components,
 			[componentId]: Object.keys(state[componentId])
-				.filter(key => allowedKeys.includes(key))
+				.filter((key) => allowedKeys.includes(key))
 				.reduce((obj, key) => {
 					// eslint-disable-next-line
 					obj[key] = state[componentId][key];
@@ -52,7 +54,7 @@ const StateProvider = {
 	},
 	data() {
 		this.__state = {
-			searchState: null
+			searchState: null,
 		};
 		return this.__state;
 	},
@@ -139,11 +141,25 @@ const StateProvider = {
 				);
 			}
 		},
+		setSearchState(valuesMap = {}) {
+			const { components } = this;
+			const computedValuesMap = {};
+			components
+				.filter((component) => !isInternalComponent(component))
+				.forEach((component) => {
+					if (component in valuesMap) {
+						computedValuesMap[component] = valuesMap[component];
+					} else {
+						computedValuesMap[component] = null;
+					}
+				});
+			this.setValues(computedValuesMap);
+		},
 	},
 	render() {
 		const { searchState } = this;
 		const dom = this.$scopedSlots.default;
-		return dom ? dom({ searchState }) : null;
+		return dom ? dom({ searchState, setSearchState: this.setSearchState }) : null;
 	},
 };
 
@@ -160,11 +176,14 @@ const mapStateToProps = (state, props) => ({
 	customData: filterByComponentIds(state.customData, props),
 	settings: filterByComponentIds(state.settings, props),
 	rawData: filterByComponentIds(state.rawData, props),
+	components: filterByComponentIds(state.components, props),
 });
 
-const StateProviderConnected = connect(mapStateToProps, {})(StateProvider);
+const mapDispatchtoProps = { setValues };
 
-StateProvider.install = function(Vue) {
+const StateProviderConnected = connect(mapStateToProps, mapDispatchtoProps)(StateProvider);
+
+StateProvider.install = function (Vue) {
 	Vue.component(StateProvider.name, StateProviderConnected);
 };
 export default StateProvider;

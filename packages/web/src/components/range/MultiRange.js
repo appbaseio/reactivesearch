@@ -16,11 +16,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import {
-	connect,
-	getRangeQueryWithNullValues,
-	parseValueArray,
-} from '../../utils';
+import { connect, getRangeQueryWithNullValues, parseValueArray } from '../../utils';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -31,7 +27,6 @@ class MultiRange extends Component {
 		const defaultValue = props.defaultValue || props.value;
 		const value = props.selectedValue || defaultValue || [];
 		const currentValue = MultiRange.parseValue(value, props);
-
 		const selectedValues = {};
 		currentValue.forEach((item) => {
 			selectedValues[item.label] = true;
@@ -84,14 +79,23 @@ class MultiRange extends Component {
 		) {
 			const { value, onChange } = this.props;
 
+			const processSelectedValues = this.props.selectedValue
+				? this.props.selectedValue.map((item) => {
+					if (typeof item === 'object' && 'label' in item) {
+						return item.label;
+					}
+					return item;
+				  })
+				: null;
 			if (value === undefined) {
-				this.selectItem({ item: this.props.selectedValue || null, isDefaultValue: true });
+				this.selectItem({ item: processSelectedValues, isDefaultValue: true });
 			} else if (onChange) {
 				this.selectItem({
 					item: this.props.selectedValue || null,
 				});
 			} else {
 				const selectedValuesArray = Object.keys(this.state.selectedValues);
+
 				this.selectItem({
 					item: selectedValuesArray,
 					isDefaultValue: true,
@@ -196,7 +200,6 @@ class MultiRange extends Component {
 		}
 
 		props.setQueryOptions(props.componentId, customQueryOptions, false);
-
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -323,10 +326,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

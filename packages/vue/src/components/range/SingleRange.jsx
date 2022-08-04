@@ -91,9 +91,9 @@ const SingleRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map((item) => {
-						const selected =
-							!!this.$data.currentValue &&
-							this.$data.currentValue.label === item.label;
+						const selected
+							= !!this.$data.currentValue
+							&& this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Radio
@@ -122,7 +122,8 @@ const SingleRange = {
 
 	methods: {
 		setValue(value, props = this.$props) {
-			const currentValue = SingleRange.parseValue(value, props);
+			const currentValue
+				= typeof value === 'string' ? SingleRange.parseValue(value, props) : value;
 			const performUpdate = () => {
 				this.currentValue = currentValue;
 				this.updateQueryHandler(currentValue, props);
@@ -206,9 +207,9 @@ SingleRange.defaultQuery = (value, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	componentProps: state.props[props.componentId],
 	enableAppbase: state.config.enableAppbase,
 });
