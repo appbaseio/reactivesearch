@@ -32,12 +32,6 @@ const GoogleMapMarkers = {
 		setOpenMarkers(openMarkers) {
 			this.openMarkers = openMarkers;
 		},
-		getClusterMarkers() {
-			if (this.clickedCluster && Array.isArray(this.clickedCluster.getMarkers())) {
-				return this.clickedCluster.getMarkers().map((marker) => marker.metaData);
-			}
-			return [];
-		},
 		getAdditionalProps() {
 			return {
 				position: {
@@ -80,8 +74,9 @@ const GoogleMapMarkers = {
 							props: this.clusterProps,
 						}}
 						onclick={(cluster) => {
+							const markers = cluster.markers.map((i) => i.metaData);
 							this.clickedCluster = cluster;
-							this.clusterMarkers = this.getClusterMarkers();
+							this.clusterMarkers = markers;
 							this.$emit('open-cluster-popover', this.clusterMarkers);
 						}}
 						ref="clusterRef"
