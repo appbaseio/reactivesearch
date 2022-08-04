@@ -456,7 +456,7 @@ ReactiveChart.getOption = ({
 					name: xAxisName,
 					type: 'category',
 					data: aggregationData.map(item => ({
-						value: item.doc_count,
+						value: item.key,
 						name: item.key,
 					})),
 				},
@@ -514,7 +514,6 @@ ReactiveChart.getOption = ({
 				},
 				series: [
 					{
-						name: 'Access From',
 						type: 'pie',
 						radius: '50%',
 						data: aggregationData.map(item => ({

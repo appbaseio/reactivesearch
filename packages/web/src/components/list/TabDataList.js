@@ -11,13 +11,13 @@ const TabDataList = (props) => {
 	const defaultItem = item =>
 		`${item.label} ${props.showCount && item.count ? `(${item.count})` : ''}`;
 
-	if (hasCustomRenderer(props)) {
-		return <SingleDataList {...props} showSearch={false} />;
+	if (hasCustomRenderer(props) || props.showRadio) {
+		return <SingleDataList {...props} />;
 	}
 	return (
 		<SingleDataList
 			{...props}
-			showSearch={false}
+			showSearch={props.showSearch}
 			render={({ data, value, handleChange }) => (
 				<TabContainer vertical={props.displayAsVertical}>
 					{data.map(item => (
@@ -40,6 +40,8 @@ const TabDataList = (props) => {
 
 TabDataList.defaultProps = {
 	displayAsVertical: false,
+	showRadio: false,
+	showSearch: false,
 };
 
 TabDataList.propTypes = {
@@ -52,6 +54,8 @@ TabDataList.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	showCount: types.bool,
+	showRadio: types.bool,
+	showSearch: types.bool,
 	render: types.func,
 	renderItem: types.func,
 	renderNoResults: types.func,

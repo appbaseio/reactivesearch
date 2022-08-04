@@ -25,6 +25,7 @@ import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import styled from '@emotion/styled';
 
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
@@ -33,6 +34,22 @@ import { UL, Radio } from '../../styles/FormControlList';
 import { connect, isEvent, isQueryIdentical } from '../../utils';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
+
+
+const SingleDataListUL = styled(UL)`
+	display: ${({ displayAsVertical }) => (displayAsVertical ? 'block' : 'flex')};
+	white-space:nowrap;
+`;
+
+const Span = styled.span`
+	width: auto !important;
+`;
+const Label = styled.label`
+	::before{
+		width: 16px !important;
+	}
+	margin: 0.4rem !important;
+`;
 
 class SingleDataList extends Component {
 	constructor(props) {
@@ -364,9 +381,10 @@ class SingleDataList extends Component {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL
+					<SingleDataListUL
 						className={getClassName(this.props.innerClass, 'list') || null}
 						aria-label={`${this.props.componentId}-items`}
+						displayAsVertical={this.props.displayAsVertical}
 						role="radiogroup"
 					>
 						{selectAllLabel && (
@@ -385,12 +403,12 @@ class SingleDataList extends Component {
 									checked={isAllChecked}
 									show={this.props.showRadio}
 								/>
-								<label
+								<Label
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 								>
 									{selectAllLabel}
-								</label>
+								</Label>
 							</li>
 						)}
 						{listItems.length
@@ -415,7 +433,7 @@ class SingleDataList extends Component {
 											checked={isChecked}
 											show={this.props.showRadio}
 										/>
-										<label
+										<Label
 											className={
 												getClassName(this.props.innerClass, 'label') || null
 											}
@@ -424,7 +442,7 @@ class SingleDataList extends Component {
 											{renderItem ? (
 												renderItem(item.label, item.count, isChecked)
 											) : (
-												<span>
+												<Span>
 													{item.label}
 													{showCount && item.count && (
 														<span
@@ -438,14 +456,14 @@ class SingleDataList extends Component {
 																&nbsp;({item.count})
 														</span>
 													)}
-												</span>
+												</Span>
 											)}
-										</label>
+										</Label>
 									</li>
 								);
 							}) // prettier-ignore
 							: this.props.renderNoResults && this.props.renderNoResults()}
-					</UL>
+					</SingleDataListUL>
 				)}
 			</Container>
 		);
@@ -493,6 +511,7 @@ SingleDataList.propTypes = {
 	renderNoResults: types.func,
 	index: types.string,
 	enableStrictSelection: types.bool,
+	displayAsVertical: types.bool,
 };
 
 SingleDataList.defaultProps = {
@@ -505,6 +524,7 @@ SingleDataList.defaultProps = {
 	URLParams: false,
 	showCount: false,
 	enableStrictSelection: false,
+	displayAsVertical: true,
 };
 
 // Add componentType for SSR

@@ -2,6 +2,7 @@ import '@appbaseio/reactivecore/lib/utils/polyfills';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import ReactiveBase from './components/basic/ReactiveBase';
+import ErrorBoundary from './components/basic/ErrorBoundary';
 import SelectedFilters from './components/basic/SelectedFilters';
 import NumberBox from './components/basic/NumberBox';
 import ReactiveComponent from './components/basic/ReactiveComponent';
@@ -50,6 +51,7 @@ export {
 	NumberBox,
 	TagCloud,
 	ReactiveComponent,
+	ErrorBoundary,
 	// date
 	DatePicker,
 	DateRange,

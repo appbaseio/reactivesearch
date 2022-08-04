@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@appbaseio/reactivecore@9.14.0":
-  version "9.14.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.0.tgz#8369ab003456ba6180adb8dc0486d9b6c176ed36"
+"@appbaseio/reactivecore@9.14.5":
+  version "9.14.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.5.tgz#e59133dad9f3296e3a09ea68c84402ef1c39aeb6"
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -12,11 +12,11 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.27.0":
-  version "1.27.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.27.0.tgz#b05736564a2825c5b3d737a587c71641c459ca15"
+"@appbaseio/reactivesearch-vue@1.29.0":
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.29.0.tgz#da7cc03d933c7598cf354748a09be16bc49a4479"
   dependencies:
-    "@appbaseio/reactivecore" "9.14.0"
+    "@appbaseio/reactivecore" "9.14.5"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^5.0.0"
@@ -1169,10 +1169,6 @@ arr-union@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/arr-union/-/arr-union-3.1.0.tgz#e39b09aea9def866a8f206e288af63919bae39c4"
 
-array-filter@~0.0.0:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
-
 array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
@@ -1180,14 +1176,6 @@ array-flatten@1.1.1:
 array-flatten@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-2.1.1.tgz#426bb9da84090c1838d812c8150af20a8331e296"
-
-array-map@~0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"
-
-array-reduce@~0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
 
 array-union@^1.0.1:
   version "1.0.2"
@@ -2758,8 +2746,8 @@ events@^1.0.0:
   resolved "https://registry.npmjs.org/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
 eventsource@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.0.7.tgz#8fbc72c93fcd34088090bc0a4e64f4b5cee6d8d0"
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/eventsource/-/eventsource-1.1.1.tgz#4544a35a57d7120fba4fa4c86cb4023b2c09df2f"
   dependencies:
     original "^1.0.0"
 
@@ -4015,10 +4003,6 @@ jsonfile@^4.0.0:
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
   optionalDependencies:
     graceful-fs "^4.1.6"
-
-jsonify@~0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
 jsprim@^1.2.2:
   version "1.4.1"
@@ -5895,13 +5879,8 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
 
 shell-quote@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.6.1.tgz#f4781949cce402697127430ea3b3c5476f481767"
-  dependencies:
-    array-filter "~0.0.0"
-    array-map "~0.0.0"
-    array-reduce "~0.0.0"
-    jsonify "~0.0.0"
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.7.3.tgz#aa40edac170445b9a431e17bb62c0b881b9c4123"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
