@@ -20,6 +20,7 @@ export interface TreeListProps extends CommonProps {
 	switcherIcon: (expanded: boolean) => types.children;
 	render?: (data: any) => any;
 	renderItem: (item: any, count?: number, isSelected?: boolean) => any;
+	dataField: types.stringArray;
 }
 
 declare const TreeList: React.ComponentClass<TreeListProps>;
