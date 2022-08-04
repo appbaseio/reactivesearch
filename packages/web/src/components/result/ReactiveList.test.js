@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactiveBase from '../basic/ReactiveBase';
@@ -456,6 +457,56 @@ it('should render custom result stats message', () => {
 								Page {currentPage + 1}/{numberOfPages}
 							</h4>
 						</span>
+					)}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should render data export buttons', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+				<ReactiveList
+					mode="test"
+					componentId="MockSearchResult"
+					dataField="original_title.keyword"
+					className="result-list-container"
+					from={0}
+					size={3}
+					renderItem={booksReactiveList}
+					mockData={{ hits: MOCK_HITS_DATA, total: 9418, time: 10 }}
+					showExport
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should custom render data export buttons', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+				<ReactiveList
+					mode="test"
+					componentId="MockSearchResult"
+					dataField="original_title.keyword"
+					className="result-list-container"
+					from={0}
+					size={3}
+					renderItem={booksReactiveList}
+					mockData={{ hits: MOCK_HITS_DATA, total: 9418, time: 10 }}
+					showExport
+					renderExport={({ triggerExportCSV, triggerExportJSON }) => (
+						<div>
+							{' '}
+							Custom Export
+							<button onClick={triggerExportCSV}>CSV 🔢</button>
+							<button onClick={triggerExportJSON}>JSON ❤️</button>
+						</div>
 					)}
 				/>
 			</ReactiveBase>,
