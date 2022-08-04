@@ -1,6 +1,6 @@
 import { helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import { setValues } from '@appbaseio/reactivecore/src/actions/value';
+import { setValues } from '@appbaseio/reactivecore/lib/actions/value';
 import { isInternalComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import { connect } from '../../utils/index';
 

@@ -3,7 +3,7 @@ import { oneOfType, arrayOf, string, bool, func } from 'prop-types';
 import { getSearchState, getComponent } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import { setValues as setValuesAction } from '@appbaseio/reactivecore/src/actions/value';
+import { setValues as setValuesAction } from '@appbaseio/reactivecore/lib/actions/value';
 import { isInternalComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import { connect } from '../../utils';
 
