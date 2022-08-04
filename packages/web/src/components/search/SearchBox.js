@@ -1042,14 +1042,14 @@ const SearchBox = (props) => {
 															className="section-container"
 															key={`${item[0].sectionId}`}
 														>
-															{XSS(sectionHtml) && (
+															{sectionHtml && (
 																<div
 																	className={`section-header ${getClassName(
 																		props.innerClass,
 																		'section-label',
 																	)}`}
 																	dangerouslySetInnerHTML={{
-																		__html: XSS(sectionHtml),
+																		__html: sectionHtml,
 																	}}
 																/>
 															)}
