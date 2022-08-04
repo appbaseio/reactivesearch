@@ -1,9 +1,11 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	componentTypes,
+	SEARCH_COMPONENTS_MODES,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
-import { SEARCH_COMPONENTS_MODES } from '@appbaseio/reactivecore/src/utils/constants';
 import {
 	connect,
 	getComponent,
