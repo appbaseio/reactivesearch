@@ -144,6 +144,25 @@ const Button = styled('a')`
 		border-bottom-left-radius: 0px;
 		height: 100%;
 	}
+
+	${props =>
+		props.isLinkType
+		&& css`
+			background-color: transparent;
+			text-decoration: underline;
+			text-underline-position: under;
+			color: #2c2daf;
+
+			&:hover {
+				background-color: transparent;
+			}
+			&.disabled {
+				color: hsl(240deg 7% 62%);
+				text-decoration-color: hsl(240deg 7% 62%);
+				cursor: default;
+				pointer-events: none;
+			}
+		`};
 `;
 
 export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
