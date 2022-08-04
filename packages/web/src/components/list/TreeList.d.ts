@@ -21,6 +21,16 @@ export interface TreeListProps extends CommonProps {
 	render?: (data: any) => any;
 	renderItem: (item: any, count?: number, isSelected?: boolean) => any;
 	dataField: types.stringArray;
+	showFilter?: boolean;
+	index?: string;
+	onValueChange?: (...args: any[]) => any;
+	onChange?: (...args: any[]) => any;
+	onError?: (...args: any[]) => any;
+	defaultValue?: types.stringArray;
+	value?: types.stringArray;
+	beforeValueChange?: (...args: any[]) => any;
+	customQuery?: (...args: any[]) => any;
+	defaultQuery?: (...args: any[]) => any;
 }
 
 declare const TreeList: React.ComponentClass<TreeListProps>;

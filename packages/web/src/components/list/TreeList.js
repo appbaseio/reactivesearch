@@ -19,13 +19,11 @@ import {
 	checkValueChange,
 	getAggsQuery,
 	isEqual,
-} from '@appbaseio/reactivecore/lib/utils/helper';
-import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
-import {
 	recLookup,
 	setDeep,
 	transformRawTreeListData,
-} from '@appbaseio/reactivecore/src/utils/helper';
+} from '@appbaseio/reactivecore/lib/utils/helper';
+import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import {
 	setQueryOptions as setQueryOptionsAction,
 	updateQuery as updateQueryAction,
@@ -145,7 +143,6 @@ const TreeList = (props) => {
 	};
 
 	const updateQuery = (value) => {
-		console.log('updateQuery', value);
 		const { customQuery } = props;
 		let query = getDefaultQuery(value);
 		let customQueryOptions;
@@ -171,8 +168,6 @@ const TreeList = (props) => {
 	};
 
 	function updateDefaultQuery(queryOptions) {
-		console.log('updateDefaultQuery ');
-		console.log('queryOptions', queryOptions);
 		const value = transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues);
 		// Update default query for RS API
 		updateDefaultQueryHelper(componentId, props, value);
@@ -187,9 +182,10 @@ const TreeList = (props) => {
 	}
 
 	const setValue = (value, hasMountedParam = hasMounted.current) => {
-		const parsedValue = transformTreeListLocalStateIntoQueryComptaibleFormat(value);
-		const finalValues = parsedValue;
-		console.log('parsedValue', parsedValue);
+		const finalValues
+			= Array.isArray(value) === false
+				? transformTreeListLocalStateIntoQueryComptaibleFormat(value)
+				: value;
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				updateQuery(finalValues);
@@ -197,7 +193,9 @@ const TreeList = (props) => {
 			};
 
 			if (hasMountedParam) {
-				setSelectedValues(value);
+				setSelectedValues(
+					Array.isArray(value) ? transformValueIntoLocalState(value) : value,
+				);
 				handleUpdates();
 			} else {
 				handleUpdates();
@@ -211,11 +209,10 @@ const TreeList = (props) => {
 		hasMounted.current = false;
 		const defaultValue = props.defaultValue || props.value;
 		const currentValueArray = props.selectedValue || defaultValue || [];
-
 		// update local state for selected values
 		if (currentValueArray.length) {
 			const newSelectedValues = transformValueIntoLocalState(currentValueArray);
-			setValue(newSelectedValues);
+			setValue(newSelectedValues, true);
 		}
 		// Set custom and default queries in store
 		updateCustomQueryHelper(componentId, props, currentValueArray);
@@ -275,15 +272,13 @@ const TreeList = (props) => {
 				)
 			) {
 				const { value, onChange } = props;
-				let valueToSet = {};
+				let valueToSet = [];
 				if (Array.isArray(props.selectedValue) && props.selectedValue.length) {
-					const newSelectedValues = transformValueIntoLocalState(props.selectedValue);
-
-					valueToSet = newSelectedValues;
+					valueToSet = props.selectedValue;
 				}
 				if (value === undefined) {
 					setValue(valueToSet);
-				} else if (onChange) {
+				} else if (onChange && !isEqual(value, valueToSet)) {
 					onChange(valueToSet);
 				}
 			}
@@ -339,11 +334,11 @@ const TreeList = (props) => {
 		if (mode === 'single' && isLeafNode && recLookup(newSelectedValues, parentPath)) {
 			setDeep(newSelectedValues, parentPath.split('.'), undefined, true);
 		}
-		const value = recLookup(newSelectedValues, path) ? undefined : true;
+		const newValue = recLookup(newSelectedValues, path) ? undefined : true;
 
-		setDeep(newSelectedValues, path.split('.'), value, true);
+		setDeep(newSelectedValues, path.split('.'), newValue, true);
 		newSelectedValues = sanitizeObject({ ...newSelectedValues });
-		if (isLeafNode || !value) {
+		if (isLeafNode || !newValue) {
 			if (props.value === undefined) {
 				setValue(newSelectedValues);
 			} else if (props.onChange) {
@@ -576,6 +571,7 @@ TreeList.propTypes = {
 	onValueChange: types.func,
 	beforeValueChange: types.func,
 	sortBy: types.sortByWithCount,
+	onError: types.func,
 };
 
 TreeList.defaultProps = {
