@@ -94,7 +94,7 @@ const RecentFavorites = () => {
 
 	return (
 		<div>
-			<button onClick={loadFavorites}>Load favorites</button>
+			<button onClick={loadFavorites}>Reload favorites</button>
 			{recentFavorites.length ? (
 				<section>
 					<h3>Favorites</h3>
@@ -128,10 +128,10 @@ const Main = () => {
 						index="good-books-ds"
 						showClear
 					/>
+					<RecentFavorites />
 				</div>
 
 				<div className="col">
-					<RecentFavorites />
 					<ReactiveList
 						componentId="SearchResult"
 						dataField="original_title"

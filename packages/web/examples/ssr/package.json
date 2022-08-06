@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "3.36.1",
+		"@appbaseio/reactivesearch": "3.37.1",
 		"@zeit/next-css": "^1.0.1",
 		"emotion-server": "^10.0.27",
 		"moment": "^2.29.2",

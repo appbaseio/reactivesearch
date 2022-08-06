@@ -37,7 +37,7 @@ const RecentSavedSearches = () => {
 
 	return (
 		<div>
-			<button onClick={loadSavedSearches}>Load saved searches</button>
+			<button onClick={loadSavedSearches}>Reload saved searches</button>
 			{recentSearches.length ? (
 				<section>
 					<h3>Saved searches</h3>
