@@ -798,6 +798,7 @@ class ReactiveList extends Component {
 			customData,
 			rawData: this.props.rawData,
 			resultStats: this.stats,
+			settings: this.props.settings,
 			triggerExportCSV: this.triggerExportCSV,
 			triggerExportJSON: this.triggerExportJSON,
 		};
@@ -924,6 +925,7 @@ ReactiveList.propTypes = {
 	config: types.props,
 	analytics: types.bool,
 	queryLog: types.props,
+	settings: types.props,
 	error: types.title,
 	headers: types.headers,
 	enableAppbase: types.bool,
@@ -1028,6 +1030,7 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
+	settings: state.settings[props.componentId],
 	afterKey:
 		state.aggregations[props.componentId]
 		&& state.aggregations[props.componentId][props.aggregationField]

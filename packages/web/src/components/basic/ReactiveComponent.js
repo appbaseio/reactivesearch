@@ -309,6 +309,7 @@ class ReactiveComponent extends Component {
 		}
 		return {
 			data: filteredResults,
+			settings: this.props.settings,
 			promotedData: promotedResults,
 			aggregationData: aggregationData || [],
 			rawData,
@@ -355,6 +356,7 @@ ReactiveComponent.propTypes = {
 	hits: types.data,
 	rawData: types.rawData,
 	promotedResults: types.hits,
+	settings: types.props,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
@@ -399,6 +401,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
+	settings: state.settings[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
