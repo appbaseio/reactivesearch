@@ -203,6 +203,7 @@ const SearchBox = {
 		renderEnterButton: VueTypes.any,
 		mode: VueTypes.oneOf(['select', 'tag']).def('select'),
 		renderSelectedTags: VueTypes.any,
+		searchboxId: VueTypes.string,
 	},
 	beforeMount() {
 		if (this.selectedValue) {
