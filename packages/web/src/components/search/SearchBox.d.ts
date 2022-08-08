@@ -85,6 +85,7 @@ export interface SearchBoxProps extends CommonProps {
 	customStopwords?: string[];
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;
+	searchboxId?: string;
 }
 
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;

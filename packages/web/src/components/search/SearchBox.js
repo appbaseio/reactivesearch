@@ -1436,6 +1436,7 @@ SearchBox.propTypes = {
 	enterButton: types.bool,
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
+	searchboxId: types.string,
 };
 
 SearchBox.defaultProps = {
