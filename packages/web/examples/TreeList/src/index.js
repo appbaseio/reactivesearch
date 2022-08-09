@@ -73,18 +73,21 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="good-books-ds"
+				app="best-buy-dataset"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				enableAppbase
 			>
 				<div className="row">
 					<div className="col">
 						<TreeList
+							loader={<h3>loading...⏰</h3>}
+							renderNoResults={() => <b>Oops! Nothing found!</b>}
 							componentId="BookSensor"
 							showCount
 							showCheckbox
 							showRadio
 							mode="multiple"
+							dataField={['class.keyword', 'subClass.keyword']}
 							// switcherIcon={bool =>
 							// 	(bool ? <span> &#8592;</span> : <span> &#8598;</span>)
 							// }
@@ -130,10 +133,11 @@ class Main extends Component {
 							className="result-list-container"
 							from={0}
 							size={5}
-							renderItem={this.booksReactiveList}
+							renderItem={this.reactiveList}
 							react={{
 								and: ['BookSensor'],
 							}}
+							includeFields={['class', 'subclass', 'name', 'image', 'salePrice']}
 						/>
 					</div>
 				</div>
@@ -141,30 +145,23 @@ class Main extends Component {
 		);
 	}
 
-	booksReactiveList(data) {
+	reactiveList(data) {
 		return (
 			<div className="flex book-content" key={data._id}>
 				<img src={data.image} alt="Book Cover" className="book-image" />
 				<div className="flex column justify-center" style={{ marginLeft: 20 }}>
-					<div className="book-header">{data.original_title}</div>
+					<div className="book-header">{data.name}</div>
 					<div className="flex column justify-space-between">
 						<div>
 							<div>
-								by <span className="authors-list">{data.authors}</span>
+								<span className="authors-list">
+									{data.class} > {data.subclass}
+								</span>
 							</div>
 							<div className="ratings-list flex align-center">
-								<span className="stars">
-									{Array(data.average_rating_rounded)
-										.fill('x')
-										.map((item, index) => (
-											// eslint-disable-next-line react/no-array-index-key
-											<i className="fas fa-star" key={index} />
-										))}
-								</span>
-								<span className="avg-rating">({data.average_rating} avg)</span>
+								Sale Price 💰 <b>{data.salePrice}</b>
 							</div>
 						</div>
-						<span className="pub-year">Pub {data.original_publication_year}</span>
 					</div>
 				</div>
 			</div>
