@@ -943,9 +943,9 @@ const SearchBox = {
 			});
 		},
 		onAutofillClick(suggestion) {
-			const { value } = suggestion;
+			const { value, label } = suggestion;
 			this.isOpen = true;
-			this.currentValue = value;
+			this.currentValue = label;
 			this.triggerDefaultQuery(value);
 		},
 		renderAutoFill(suggestion) {
