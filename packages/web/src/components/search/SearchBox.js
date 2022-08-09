@@ -974,7 +974,13 @@ const SearchBox = (props) => {
 												/>
 											);
 										}
-										return <img src={XSS(item.iconURL)} alt={item.value} />;
+										return (
+											<img
+												style={{ maxHeight: '25px' }}
+												src={XSS(item.iconURL)}
+												alt={item.value}
+											/>
+										);
 
 									default:
 										return null;
