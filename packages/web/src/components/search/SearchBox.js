@@ -828,9 +828,9 @@ const SearchBox = (props) => {
 	};
 
 	const onAutofillClick = (suggestion) => {
-		const value = suggestion.value;
+		const { value, label } = suggestion;
 		setIsOpen(true);
-		setCurrentValue(value);
+		setCurrentValue(label);
 		triggerDefaultQuery(value);
 	};
 
