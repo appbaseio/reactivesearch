@@ -99,7 +99,7 @@ const SearchBox = {
 			);
 		}
 
-		this.currentValue = this.selectedValue || this.value || this.defaultValue || '';
+		this.currentValue = decodeHtml(this.selectedValue || this.value || this.defaultValue || '');
 		if (this.$options.isTagsMode) {
 			this.currentValue = '';
 		}
@@ -456,7 +456,7 @@ const SearchBox = {
 					}
 					this.currentValue = '';
 				} else {
-					this.currentValue = value;
+					this.currentValue = decodeHtml(value);
 				}
 
 				let queryHandlerValue = value;
