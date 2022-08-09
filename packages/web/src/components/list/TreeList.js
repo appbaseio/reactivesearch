@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 import { withTheme } from 'emotion-theming';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
 	getClassName,
@@ -89,18 +89,19 @@ const TreeList = (props) => {
 		enableAppbase,
 		index,
 		sortBy,
-		testMode,
-		mockData,
 		renderError,
 		renderNoResults,
 		loader,
+		aggregationData,
 	} = props;
 	const hasMounted = useRef();
 
-	const [transformedData, setTransformedData] = useState([]);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedValues, setSelectedValues] = useState({});
-
+	const getTransformedData = useMemo(
+		() => transformRawTreeListData(aggregationData, dataField),
+		[aggregationData, dataField],
+	);
 	const generateQueryOptions = () => {
 		const queryOptions = getQueryOptions(props);
 		const valueArray = transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues);
@@ -229,14 +230,6 @@ const TreeList = (props) => {
 	});
 
 	useEffect(() => {
-		if (testMode) {
-			setTransformedData(transformRawTreeListData(mockData, dataField));
-		} else {
-			setTransformedData(transformRawTreeListData(rawData.aggregations, dataField));
-		}
-	}, [rawData]);
-
-	useEffect(() => {
 		if (hasMounted.current) {
 			updateDefaultQuery();
 			updateQuery([]);
@@ -305,6 +298,7 @@ const TreeList = (props) => {
 			);
 		}
 	}, []);
+
 	const handleInputChange = (e) => {
 		const { value } = e.target;
 		setSearchTerm(value);
@@ -559,7 +553,7 @@ const TreeList = (props) => {
 	}
 	const getComponent = () => {
 		const data = {
-			data: transformedData,
+			data: getTransformedData,
 			rawData,
 			error,
 			handleClick: handleListItemClick,
@@ -576,7 +570,8 @@ const TreeList = (props) => {
 	if (renderError && error) {
 		return isFunction(renderError) ? renderError(error) : renderError;
 	}
-	if (!transformedData || transformedData.length === 0) {
+
+	if (!getTransformedData || getTransformedData.length === 0) {
 		return renderNoResults ? renderNoResults() : null;
 	}
 	return (
@@ -587,7 +582,7 @@ const TreeList = (props) => {
 			{renderSearch()}
 			{hasCustomRenderer(props)
 				? getComponent()
-				: renderHierarchicalMenu(transformedData, '', true)}
+				: renderHierarchicalMenu(getTransformedData, '', true)}
 		</Container>
 	);
 };
@@ -595,7 +590,7 @@ TreeList.propTypes = {
 	selectedValue: types.selectedValue,
 	error: types.title,
 	rawData: types.rawData,
-	aggregationData: types.aggregationData,
+	aggregationData: types.rawData,
 	themePreset: types.themePreset,
 	updateQuery: types.funcRequired,
 	setQueryOptions: types.funcRequired,
@@ -637,8 +632,6 @@ TreeList.propTypes = {
 	sortBy: types.sortByWithCount,
 	onError: types.func,
 	showSwitcherIcon: types.bool,
-	testMode: types.bool,
-	mockData: types.rawData,
 	renderError: types.title,
 	renderNoResults: types.func,
 	loader: types.title,
@@ -658,8 +651,6 @@ TreeList.defaultProps = {
 	showLine: false,
 	URLParams: false,
 	sortBy: 'count',
-	testMode: false,
-	mockData: null,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -668,7 +659,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	rawData: state.rawData[props.componentId] || {},
-	aggregationData: state.compositeAggregations[props.componentId],
+	aggregationData: state.aggregations[props.componentId] || {},
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],
