@@ -22,6 +22,7 @@ import {
 	recLookup,
 	setDeep,
 	transformRawTreeListData,
+	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import {
@@ -88,6 +89,11 @@ const TreeList = (props) => {
 		enableAppbase,
 		index,
 		sortBy,
+		testMode,
+		mockData,
+		renderError,
+		renderNoResults,
+		loader,
 	} = props;
 	const hasMounted = useRef();
 
@@ -223,7 +229,11 @@ const TreeList = (props) => {
 	});
 
 	useEffect(() => {
-		setTransformedData(transformRawTreeListData(rawData.aggregations, dataField));
+		if (testMode) {
+			setTransformedData(transformRawTreeListData(mockData, dataField));
+		} else {
+			setTransformedData(transformRawTreeListData(rawData.aggregations, dataField));
+		}
 	}, [rawData]);
 
 	useEffect(() => {
@@ -559,6 +569,16 @@ const TreeList = (props) => {
 		return getComponentHelper(data, props);
 	};
 
+	if (isLoading && loader) {
+		return loader;
+	}
+
+	if (renderError && error) {
+		return isFunction(renderError) ? renderError(error) : renderError;
+	}
+	if (!transformedData || transformedData.length === 0) {
+		return renderNoResults ? renderNoResults() : null;
+	}
 	return (
 		<Container style={style} className={className}>
 			{props.title && (
@@ -617,6 +637,11 @@ TreeList.propTypes = {
 	sortBy: types.sortByWithCount,
 	onError: types.func,
 	showSwitcherIcon: types.bool,
+	testMode: types.bool,
+	mockData: types.rawData,
+	renderError: types.title,
+	renderNoResults: types.func,
+	loader: types.title,
 };
 
 TreeList.defaultProps = {
@@ -633,6 +658,8 @@ TreeList.defaultProps = {
 	showLine: false,
 	URLParams: false,
 	sortBy: 'count',
+	testMode: false,
+	mockData: null,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -665,6 +692,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				{...preferenceProps}
 				internalComponent
 				componentType={componentTypes.treeList}
+				mode={preferenceProps.testMode ? 'test' : ''}
 			>
 				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 			</ComponentWrapper>
