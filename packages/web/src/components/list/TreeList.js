@@ -187,7 +187,6 @@ const TreeList = (props) => {
 			= Array.isArray(value) === false
 				? transformTreeListLocalStateIntoQueryComptaibleFormat(value)
 				: value;
-		console.log('finalValues', finalValues);
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				updateQuery(finalValues);
@@ -327,18 +326,20 @@ const TreeList = (props) => {
 			),
 		);
 
-	const handleListItemClick = (key, parentPath, isLeafNode) => {
+	const handleListItemClick = (key, parentPath) => {
 		let path = key;
 		if (parentPath) {
 			path = `${parentPath}.${key}`;
 		}
 		let newSelectedValues = { ...selectedValues };
-		if (mode === 'single' && isLeafNode && recLookup(newSelectedValues, parentPath)) {
-			setDeep(newSelectedValues, parentPath.split('.'), undefined, true);
-		}
-		const newValue = !recLookup(newSelectedValues, path);
+		if (mode === 'single') {
+			newSelectedValues = {};
+			setDeep(newSelectedValues, path.split('.'), true, true);
+		} else {
+			const newValue = !recLookup(newSelectedValues, path);
 
-		setDeep(newSelectedValues, path.split('.'), newValue, true);
+			setDeep(newSelectedValues, path.split('.'), newValue, true);
+		}
 		newSelectedValues = sanitizeObject({ ...newSelectedValues });
 		if (props.value === undefined) {
 			setValue(newSelectedValues);
@@ -435,8 +436,15 @@ const TreeList = (props) => {
 		if (parentPath) {
 			newParentPath = `${parentPath}.${listItemLabel}`;
 		}
-		const isSelected = !!recLookup(selectedValues, newParentPath);
-
+		let isSelected = false;
+		if (mode === 'single') {
+			if (recLookup(selectedValues, newParentPath) === true) {
+				isSelected = true;
+			}
+		} else {
+			isSelected = !!recLookup(selectedValues, newParentPath);
+		}
+		const isExpanded = !!recLookup(selectedValues, newParentPath);
 		return (
 			<HierarchicalMenuListItem
 				className={`${isSelected ? '-selected-item' : ''}`}
@@ -446,7 +454,7 @@ const TreeList = (props) => {
 				<Button
 					isLinkType
 					onClick={() => {
-						handleListItemClick(listItemLabel, parentPath, isLeafNode);
+						handleListItemClick(listItemLabel, parentPath);
 					}}
 				>
 					{typeof renderItem === 'function' ? (
@@ -463,6 +471,7 @@ const TreeList = (props) => {
 										id={`${listItemLabel}-checkbox-${newParentPath}`}
 										name={`${listItemLabel}-checkbox-${newParentPath}`}
 										show
+										readOnly
 									/>
 									<label
 										style={{
@@ -486,6 +495,7 @@ const TreeList = (props) => {
 										id={`${listItemLabel}-radio-${newParentPath}`}
 										name={`${listItemLabel}-radio-${newParentPath}`}
 										show
+										readOnly
 									/>
 
 									<label
@@ -516,7 +526,7 @@ const TreeList = (props) => {
 				{isLeafNode === false && (
 					<div className="--list-child">
 						{/* eslint-disable-next-line no-use-before-define */}
-						{renderHierarchicalMenu(listItem.list, newParentPath, isSelected)}
+						{renderHierarchicalMenu(listItem.list, newParentPath, isExpanded)}
 					</div>
 				)}
 			</HierarchicalMenuListItem>
