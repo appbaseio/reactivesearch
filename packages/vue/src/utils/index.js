@@ -36,7 +36,7 @@ export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
  * To determine wether an element is a function
  * @param {any} element
  */
-export const isFunction = element => typeof element === 'function';
+export const isFunction = (element) => typeof element === 'function';
 
 // parses current array (i.e. this.$props.value) for `onChange` callback for multi-* components
 export function parseValueArray(objectValues, currentValue) {
@@ -49,7 +49,7 @@ export function parseValueArray(objectValues, currentValue) {
 	}
 
 	if (selectedValues.includes(currentValue)) {
-		return selectedValues.filter(item => item !== currentValue);
+		return selectedValues.filter((item) => item !== currentValue);
 	}
 	return [...selectedValues, currentValue];
 }
@@ -74,9 +74,9 @@ export const hasCustomRenderer = (_ref = {}) => {
 };
 
 export const getValidPropsKeys = (props = {}) =>
-	Object.keys(props).filter(i => validProps.includes(i));
+	Object.keys(props).filter((i) => validProps.includes(i));
 
-export const isEvent = candidate =>
+export const isEvent = (candidate) =>
 	!!(candidate && candidate.stopPropagation && candidate.preventDefault);
 
 export const updateDefaultQuery = (componentId, setDefaultQuery, props, value) => {
@@ -132,7 +132,7 @@ export const getCamelCase = (str = '') => {
 	return capitalString || '';
 };
 
-export const isEmpty = val => !(val && val.length && Object.keys(val).length);
+export const isEmpty = (val) => !(val && val.length && Object.keys(val).length);
 
 export function isNumeric(value) {
 	return /^-?\d+$/.test(value);
@@ -159,7 +159,7 @@ export function parseFocusShortcuts(focusShortcutsArray) {
 	if (isEmpty(focusShortcutsArray)) return [];
 
 	const parsedFocusShortcutsArray = [];
-	focusShortcutsArray.forEach(element => {
+	focusShortcutsArray.forEach((element) => {
 		if (typeof element === 'string') {
 			if (isHotkeyCombination(element)) {
 				// splitting the combination into pieces
@@ -194,7 +194,7 @@ export const MODIFIER_KEYS = ['shift', 'ctrl', 'alt', 'control', 'option', 'cmd'
 
 // filter out modifierkeys such as ctrl, alt, command, shift from focusShortcuts prop
 export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
-	return focusShortcutsArray.filter(shortcutKey => MODIFIER_KEYS.includes(shortcutKey));
+	return focusShortcutsArray.filter((shortcutKey) => MODIFIER_KEYS.includes(shortcutKey));
 }
 
 export const debounce = (method, delay) => {
@@ -204,3 +204,8 @@ export const debounce = (method, delay) => {
 		method();
 	}, delay);
 };
+export function decodeHtml(html) {
+	const txt = document.createElement('textarea');
+	txt.innerHTML = html;
+	return txt.value;
+}

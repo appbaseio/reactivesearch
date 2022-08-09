@@ -17,6 +17,7 @@ import {
 	isEmpty,
 	parseFocusShortcuts,
 	extractModifierKeysFromFocusShortcuts,
+	decodeHtml,
 } from '../../utils/index';
 import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
@@ -944,9 +945,9 @@ const SearchBox = {
 			});
 		},
 		onAutofillClick(suggestion) {
-			const { value, label } = suggestion;
+			const { value } = suggestion;
 			this.isOpen = true;
-			this.currentValue = label;
+			this.currentValue = decodeHtml(value);
 			this.triggerDefaultQuery(value);
 		},
 		renderAutoFill(suggestion) {
