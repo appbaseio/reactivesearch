@@ -22,13 +22,13 @@ const TabDataList = (props) => {
 				<TabContainer vertical={props.displayAsVertical}>
 					{data.map(item => (
 						<TabLink
-							onClick={() => handleChange(item.value)}
-							selected={item.value === value}
+							onClick={() => handleChange(item.label)}
+							selected={item.label === value}
 							vertical={props.displayAsVertical}
-							key={item.value}
+							key={item.label}
 						>
 							{renderItem
-								? renderItem(item.label, item.count, item.value === value)
+								? renderItem(item.label, item.count, item.label === value)
 								: defaultItem(item)}
 						</TabLink>
 					))}
