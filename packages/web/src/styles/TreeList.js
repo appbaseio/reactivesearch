@@ -76,4 +76,13 @@ export const HierarchicalMenuListItem = styled('li')`
 			}
 		}
 	}
+
+	&:hover {
+		> a {
+			color: #0a6afe;
+			& > span {
+				color: #0a6afe;
+			}
+		}
+	}
 `;
