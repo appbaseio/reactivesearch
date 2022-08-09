@@ -187,6 +187,7 @@ const TreeList = (props) => {
 			= Array.isArray(value) === false
 				? transformTreeListLocalStateIntoQueryComptaibleFormat(value)
 				: value;
+		console.log('finalValues', finalValues);
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				updateQuery(finalValues);
@@ -335,21 +336,17 @@ const TreeList = (props) => {
 		if (mode === 'single' && isLeafNode && recLookup(newSelectedValues, parentPath)) {
 			setDeep(newSelectedValues, parentPath.split('.'), undefined, true);
 		}
-		const newValue = recLookup(newSelectedValues, path) ? undefined : true;
+		const newValue = !recLookup(newSelectedValues, path);
 
 		setDeep(newSelectedValues, path.split('.'), newValue, true);
 		newSelectedValues = sanitizeObject({ ...newSelectedValues });
-		if (isLeafNode || !newValue) {
-			if (props.value === undefined) {
-				setValue(newSelectedValues);
-			} else if (props.onChange) {
-				const valueToSet
-					= transformTreeListLocalStateIntoQueryComptaibleFormat(newSelectedValues);
+		if (props.value === undefined) {
+			setValue(newSelectedValues);
+		} else if (props.onChange) {
+			const valueToSet
+				= transformTreeListLocalStateIntoQueryComptaibleFormat(newSelectedValues);
 
-				props.onChange(valueToSet);
-			}
-		} else {
-			setSelectedValues(newSelectedValues);
+			props.onChange(valueToSet);
 		}
 	};
 
@@ -438,8 +435,8 @@ const TreeList = (props) => {
 		if (parentPath) {
 			newParentPath = `${parentPath}.${listItemLabel}`;
 		}
-		const isSelected = recLookup(selectedValues, newParentPath);
-		console.log('isSelected', isSelected);
+		const isSelected = !!recLookup(selectedValues, newParentPath);
+
 		return (
 			<HierarchicalMenuListItem
 				className={`${isSelected ? '-selected-item' : ''}`}
