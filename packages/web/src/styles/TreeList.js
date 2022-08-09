@@ -63,8 +63,8 @@ export const HierarchicalMenuListItem = styled('li')`
 		margin-left: 10px;
 		padding: 0.1rem 0.4rem;
 		font-size: 0.8rem;
-		color: #3a4570;
-		background-color: #dfe2ee;
+		color: #424242;
+		background-color: #dee1e6;
 		border-radius: 8px;
 	}
 	&.-selected-item {
