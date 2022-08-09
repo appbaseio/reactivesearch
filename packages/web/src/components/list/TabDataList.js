@@ -6,6 +6,15 @@ import { TabLink, TabContainer } from '../../styles/Tabs';
 
 import SingleDataList from './SingleDataList';
 
+/**
+ * Data property has two properties: label and value.
+ * `label` is unique and is used for comparison.
+ * `value` may not be unique and is used for querying the index.
+ *
+ * Data List componenents use label as value.
+ * This is also added to the `isComponentUsesLabelAsValue` in reactivecore.
+ */
+
 const TabDataList = (props) => {
 	const { renderItem } = props;
 	const defaultItem = item =>
