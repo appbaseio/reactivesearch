@@ -168,7 +168,8 @@ export function isHotkeyCombination(hotkey) {
 // stackoverflow ref: https://stackoverflow.com/a/29811987/10822996
 export function getCharFromCharCode(passedCharCode) {
 	const which = passedCharCode;
-	const chrCode = which - (48 * Math.floor(which / 48));
+	// eslint-disable-next-line no-mixed-operators
+	const chrCode = which - 48 * Math.floor(which / 48);
 	return String.fromCharCode(which >= 96 ? chrCode : which);
 }
 

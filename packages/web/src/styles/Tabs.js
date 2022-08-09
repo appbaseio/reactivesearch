@@ -4,7 +4,7 @@ export const TabLink = styled('a')`
 	color: ${({ theme, selected }) =>
 	(selected ? theme.colors.primaryColor : theme.colors.textColor)};
 	font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
-	padding: 0.5rem 0.5rem;
+	padding: 0.5rem;
 	text-decoration: none;
 	border-color: ${({ selected, theme }) => (selected ? theme.colors.primaryColor : 'white')};
 	border-width: 0px;
@@ -21,4 +21,9 @@ export const TabContainer = styled('div')`
 	flex-direction: ${({ vertical }) => (vertical ? 'column' : 'row')};
 	${({ vertical }) => (vertical ? 'max-height: 50vh' : 'max-width: 90vw')};
 	${({ vertical }) => (vertical ? 'overflow-y: auto' : 'overflow-x: auto')};
+`;
+
+export const Tab = styled.div`
+	cursor: pointer;
+	padding: 0.5rem;
 `;

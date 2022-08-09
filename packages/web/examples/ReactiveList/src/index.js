@@ -55,11 +55,12 @@ class Main extends Component {
 							</div>
 							<div className="ratings-list flex align-center">
 								<span className="stars">
-									{Array(data.average_rating_rounded)
-										.fill('x')
-										.map((item, index) => (
-											<i className="fas fa-star" key={index} />
-										)) // eslint-disable-line
+									{
+										Array(data.average_rating_rounded)
+											.fill('x')
+											.map((item, index) => (
+												<i className="fas fa-star" key={index} />
+											)) // eslint-disable-line
 									}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>

@@ -514,7 +514,6 @@ ReactiveChart.getOption = ({
 				},
 				series: [
 					{
-						name: 'Access From',
 						type: 'pie',
 						radius: '50%',
 						data: aggregationData.map(item => ({

@@ -1,7 +1,10 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
-import { componentTypes, SEARCH_COMPONENTS_MODES } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	componentTypes,
+	SEARCH_COMPONENTS_MODES,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
 import {
 	connect,
@@ -200,6 +203,7 @@ const SearchBox = {
 		renderEnterButton: VueTypes.any,
 		mode: VueTypes.oneOf(['select', 'tag']).def('select'),
 		renderSelectedTags: VueTypes.any,
+		searchboxId: VueTypes.string,
 	},
 	beforeMount() {
 		if (this.selectedValue) {

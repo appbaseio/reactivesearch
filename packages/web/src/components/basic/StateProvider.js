@@ -3,6 +3,8 @@ import { oneOfType, arrayOf, string, bool, func } from 'prop-types';
 import { getSearchState, getComponent } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
+import { setValues as setValuesAction } from '@appbaseio/reactivecore/lib/actions/value';
+import { isInternalComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import { connect } from '../../utils';
 
 const defaultKeys = ['hits', 'value', 'aggregations', 'error'];
@@ -71,9 +73,25 @@ class StateProvider extends Component {
 			onChange(prevState.searchState, this.state.searchState);
 		}
 	}
+
+	setSearchState = (valuesMap) => {
+		const { components, setValues } = this.props;
+		const computedValuesMap = {};
+		components
+			.filter(component => !isInternalComponent(component))
+			.forEach((component) => {
+				if (component in valuesMap) {
+					computedValuesMap[component] = valuesMap[component];
+				} else {
+					computedValuesMap[component] = null;
+				}
+			});
+		setValues(computedValuesMap);
+	};
+
 	render() {
 		const { searchState } = this.state;
-		return getComponent({ searchState }, this.props);
+		return getComponent({ searchState, setSearchState: this.setSearchState }, this.props);
 	}
 }
 StateProvider.defaultProps = {
@@ -96,6 +114,8 @@ StateProvider.propTypes = {
 	error: types.componentObject,
 	promotedResults: types.componentObject,
 	rawData: types.rawData,
+	components: arrayOf(string),
+	setValues: types.funcRequired,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -111,6 +131,11 @@ const mapStateToProps = (state, props) => ({
 	customData: filterByComponentIds(state.customData, props),
 	settings: filterByComponentIds(state.settings, props),
 	rawData: filterByComponentIds(state.rawData, props),
+	components: filterByComponentIds(state.components, props),
 });
 
-export default connect(mapStateToProps, null)(StateProvider);
+const mapDispatchtoProps = dispatch => ({
+	setValues: valueMap => dispatch(setValuesAction(valueMap)),
+});
+
+export default connect(mapStateToProps, mapDispatchtoProps)(StateProvider);
