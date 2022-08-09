@@ -46,6 +46,7 @@ import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
+	decodeHtml,
 	extractModifierKeysFromFocusShortcuts,
 	handleCaretPosition,
 	isEmpty,
@@ -403,7 +404,7 @@ const SearchBox = (props) => {
 		const performUpdate = () => {
 			if (hasMounted) {
 				if (toggleIsOpen) setIsOpen(!isOpen);
-				setCurrentValue(value);
+				setCurrentValue(decodeHtml(value));
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery({
@@ -828,9 +829,9 @@ const SearchBox = (props) => {
 	};
 
 	const onAutofillClick = (suggestion) => {
-		const { value, label } = suggestion;
+		const { value } = suggestion;
 		setIsOpen(true);
-		setCurrentValue(label);
+		setCurrentValue(decodeHtml(value));
 		triggerDefaultQuery(value);
 	};
 
@@ -853,7 +854,7 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-		setCurrentValue(currentLocalValue);
+		setCurrentValue(decodeHtml(currentLocalValue));
 
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
