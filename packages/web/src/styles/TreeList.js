@@ -19,7 +19,7 @@ export const HierarchicalMenuListItem = styled('li')`
 	box-sizing: border-box;
 
 	a {
-		color: #18a0fb;
+		color: #424242;
 		text-decoration: none;
 		gap: 5px;
 		.--leaf-icon,
@@ -47,7 +47,7 @@ export const HierarchicalMenuListItem = styled('li')`
 			height: 100%;
 			content: '';
 			position: absolute;
-			border-left: 1px solid #18a0fb66;
+			border-left: 1px solid #787878;
 			width: 0;
 			left: 19px;
 			${props =>

@@ -39,6 +39,7 @@ import { connect } from '../../utils';
 import Input from '../../styles/Input';
 
 import Title from '../../styles/Title';
+import { Checkbox, Radio } from '../../styles/FormControlList';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -353,7 +354,10 @@ const TreeList = (props) => {
 	};
 
 	const renderSwitcherIcon = (isExpanded) => {
-		const { switcherIcon } = props;
+		const { switcherIcon, showSwitcherIcon } = props;
+		if (showSwitcherIcon === false) {
+			return null;
+		}
 		if (typeof switcherIcon === 'function') {
 			return switcherIcon(isExpanded);
 		}
@@ -435,7 +439,7 @@ const TreeList = (props) => {
 			newParentPath = `${parentPath}.${listItemLabel}`;
 		}
 		const isSelected = recLookup(selectedValues, newParentPath);
-
+		console.log('isSelected', isSelected);
 		return (
 			<HierarchicalMenuListItem
 				className={`${isSelected ? '-selected-item' : ''}`}
@@ -444,33 +448,66 @@ const TreeList = (props) => {
 			>
 				<Button
 					isLinkType
-					onClick={() => handleListItemClick(listItemLabel, parentPath, isLeafNode)}
+					onClick={() => {
+						handleListItemClick(listItemLabel, parentPath, isLeafNode);
+					}}
 				>
 					{typeof renderItem === 'function' ? (
 						renderItem(listItemLabel, listItemCount, isSelected)
 					) : (
 						<React.Fragment>
 							{!isLeafNode && renderSwitcherIcon(isSelected)}
+							{/* eslint-disable jsx-a11y/click-events-have-key-events */}
+							{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
 							{mode === 'multiple' && showCheckbox && (
 								<React.Fragment>
-									<input
+									<Checkbox
 										checked={isSelected}
-										id={`${listItemLabel}-radio-${newParentPath}`}
-										name={`${listItemLabel}-radio-${newParentPath}`}
-										type="checkbox"
+										id={`${listItemLabel}-checkbox-${newParentPath}`}
+										name={`${listItemLabel}-checkbox-${newParentPath}`}
+										show
+									/>
+									<label
+										style={{
+											width: '26px',
+											marginTop: 0,
+											marginBottom: 0,
+											marginRight: '-9px',
+											left: '-3px',
+										}}
+										htmlFor={`${listItemLabel}-checkbox-${newParentPath}`}
+										onClick={(e) => {
+											e.stopPropagation();
+										}}
 									/>
 								</React.Fragment>
 							)}
 							{mode === 'single' && showRadio && (
 								<React.Fragment>
-									<input
+									<Radio
 										checked={isSelected}
 										id={`${listItemLabel}-radio-${newParentPath}`}
 										name={`${listItemLabel}-radio-${newParentPath}`}
-										type="radio"
+										show
+									/>
+
+									<label
+										style={{
+											width: '26px',
+											marginTop: 0,
+											marginBottom: 0,
+											marginRight: '-9px',
+											left: '-3px',
+										}}
+										htmlFor={`${listItemLabel}-radio-${newParentPath}`}
+										onClick={(e) => {
+											e.stopPropagation();
+										}}
 									/>
 								</React.Fragment>
-							)}
+							)}{' '}
+							{/* eslint-enable jsx-a11y/click-events-have-key-events */}
+							{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
 							{renderIcon(isLeafNode)}
 							<span className="--list-item-label">{listItemLabel}</span>
 							{showCount && (
@@ -572,10 +609,12 @@ TreeList.propTypes = {
 	beforeValueChange: types.func,
 	sortBy: types.sortByWithCount,
 	onError: types.func,
+	showSwitcherIcon: types.bool,
 };
 
 TreeList.defaultProps = {
 	className: null,
+	showSwitcherIcon: true,
 	style: null,
 	showRadio: false,
 	showCheckbox: false,
