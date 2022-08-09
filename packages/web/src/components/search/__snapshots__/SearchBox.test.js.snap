@@ -2353,6 +2353,11 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                   <img
                     alt="SearchBox: Tutorial"
                     src="https://camo.githubusercontent.com/95874e325a752e6ffb604991feb719c6e8bae6a552ed23d4a566bc4d518bc090/68747470733a2f2f692e696d6775722e636f6d2f696952397741732e706e67"
+                    style={
+                      Object {
+                        "maxHeight": "25px",
+                      }
+                    }
                   />
                 </div>
               </div>
