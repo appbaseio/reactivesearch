@@ -20,6 +20,7 @@ import MultiDataList from './components/list/MultiDataList';
 import TabDataList from './components/list/TabDataList';
 import TagCloud from './components/list/TagCloud';
 import ToggleButton from './components/list/ToggleButton';
+import TreeList from './components/list/TreeList';
 
 import SingleRange from './components/range/SingleRange';
 import MultiRange from './components/range/MultiRange';
@@ -63,6 +64,7 @@ export {
 	SingleDataList,
 	MultiDataList,
 	TabDataList,
+	TreeList,
 	// range
 	SingleRange,
 	MultiRange,
