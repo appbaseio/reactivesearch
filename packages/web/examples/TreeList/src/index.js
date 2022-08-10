@@ -84,15 +84,21 @@ class Main extends Component {
 							renderNoResults={() => <b>Oops! Nothing found!</b>}
 							componentId="BookSensor"
 							showCount
-							showCheckbox
+							// showCheckbox
+							title="TreeList UI"
 							showRadio
 							mode="multiple"
-							dataField={['class.keyword', 'subClass.keyword']}
+							dataField={[
+								'class.keyword',
+								'subclass.keyword',
+								'categoryPath.name.keyword',
+							]}
 							// switcherIcon={bool =>
 							// 	(bool ? <span> &#8592;</span> : <span> &#8598;</span>)
 							// }
 							showIcon
 							showLeafIcon
+							aggregationSize={2}
 							// icon={
 							// 	<span role="img" aria-label="folder-icon">
 							// 		🦷

@@ -471,6 +471,7 @@ const TreeList = (props) => {
 							{mode === 'multiple' && showCheckbox && (
 								<React.Fragment>
 									<Checkbox
+										className={getClassName(innerClass, 'checkbox') || null}
 										checked={isSelected}
 										id={`${listItemLabel}-checkbox-${newParentPath}`}
 										name={`${listItemLabel}-checkbox-${newParentPath}`}
@@ -496,6 +497,7 @@ const TreeList = (props) => {
 								<React.Fragment>
 									<Radio
 										checked={isSelected}
+										className={getClassName(innerClass, 'radio') || null}
 										id={`${listItemLabel}-radio-${newParentPath}`}
 										name={`${listItemLabel}-radio-${newParentPath}`}
 										show
@@ -520,9 +522,21 @@ const TreeList = (props) => {
 							{/* eslint-enable jsx-a11y/click-events-have-key-events */}
 							{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
 							{renderIcon(isLeafNode)}
-							<span className="--list-item-label">{listItemLabel}</span>
+							<span
+								className={`--list-item-label ${
+									getClassName(innerClass, 'label') || ''
+								}`}
+							>
+								{listItemLabel}
+							</span>
 							{showCount && (
-								<span className="--list-item-count">{listItemCount}</span>
+								<span
+									className={`--list-item-count ${
+										getClassName(innerClass, 'count') || ''
+									}`}
+								>
+									{listItemCount}
+								</span>
 							)}
 						</React.Fragment>
 					)}
@@ -635,6 +649,7 @@ TreeList.propTypes = {
 	renderError: types.title,
 	renderNoResults: types.func,
 	loader: types.title,
+	aggergationSize: types.number,
 };
 
 TreeList.defaultProps = {
