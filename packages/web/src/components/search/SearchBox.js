@@ -1269,7 +1269,7 @@ const SearchBox = (props) => {
 												autoFocus: props.autoFocus,
 											})}
 											themePreset={props.themePreset}
-											type={props.type}
+											type="search"
 											searchBox // a prop specific to Input styled-component
 											isOpen={isOpen} // is dropdown open or not
 										/>
@@ -1327,6 +1327,7 @@ const SearchBox = (props) => {
 								themePreset={props.themePreset}
 								searchBox // a prop specific to Input styled-component
 								isOpen={false} // is dropdown open or not
+								type="search"
 							/>
 							{renderIcons()}
 						</InputWrapper>
