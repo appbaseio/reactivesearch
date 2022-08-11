@@ -50,6 +50,7 @@ import DynamicRangeSlider from '../range/DynamicRangeSlider';
 import RatingsFilter from '../range/RatingsFilter';
 import RangeInput from '../range/RangeInput';
 import ReactiveChart from '../chart/ReactiveChart';
+import TreeList from '../list/TreeList';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -421,6 +422,8 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<PreferencesConsumer userProps={props}>
 		{(preferenceProps) => {
 			switch (preferenceProps.componentType) {
+				case componentTypes.treeList:
+					return <TreeList {...preferenceProps} />;
 				case componentTypes.reactiveList:
 					return <ReactiveList {...preferenceProps} />;
 				case componentTypes.dataSearch:

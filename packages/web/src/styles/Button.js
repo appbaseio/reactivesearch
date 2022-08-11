@@ -152,7 +152,6 @@ const Button = styled('a')`
 			text-decoration: underline;
 			text-underline-position: under;
 			color: #2c2daf;
-
 			&:hover {
 				background-color: transparent;
 			}
