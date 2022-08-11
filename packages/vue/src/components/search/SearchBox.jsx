@@ -17,6 +17,7 @@ import {
 	isEmpty,
 	parseFocusShortcuts,
 	extractModifierKeysFromFocusShortcuts,
+	decodeHtml,
 } from '../../utils/index';
 import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
@@ -98,7 +99,7 @@ const SearchBox = {
 			);
 		}
 
-		this.currentValue = this.selectedValue || this.value || this.defaultValue || '';
+		this.currentValue = decodeHtml(this.selectedValue || this.value || this.defaultValue || '');
 		if (this.$options.isTagsMode) {
 			this.currentValue = '';
 		}
@@ -455,7 +456,7 @@ const SearchBox = {
 					}
 					this.currentValue = '';
 				} else {
-					this.currentValue = value;
+					this.currentValue = decodeHtml(value);
 				}
 
 				let queryHandlerValue = value;
@@ -946,7 +947,7 @@ const SearchBox = {
 		onAutofillClick(suggestion) {
 			const { value } = suggestion;
 			this.isOpen = true;
-			this.currentValue = value;
+			this.currentValue = decodeHtml(value);
 			this.triggerDefaultQuery(value);
 		},
 		renderAutoFill(suggestion) {
