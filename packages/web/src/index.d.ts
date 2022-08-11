@@ -32,6 +32,7 @@ export { default as SingleList } from './components/list/SingleList';
 export { default as TabDataList } from './components/list/TabDataList';
 export { default as TagCloud } from './components/list/TagCloud';
 export { default as ToggleButton } from './components/list/ToggleButton';
+export { default as TreeList } from './components/list/TreeList';
 
 export { default as DynamicRangeSlider } from './components/range/DynamicRangeSlider';
 export { default as MultiDropdownRange } from './components/range/MultiDropdownRange';
