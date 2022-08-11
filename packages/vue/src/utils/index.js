@@ -204,8 +204,9 @@ export const debounce = (method, delay) => {
 		method();
 	}, delay);
 };
-export function decodeHtml(html) {
-	const txt = document.createElement('textarea');
-	txt.innerHTML = html;
-	return txt.value;
+export function decodeHtml(str) {
+	return str.replace(/&#([0-9]{1,3});/gi, (match, numStr) => {
+		const num = parseInt(numStr, 10); // read num as normal number
+		return String.fromCharCode(num);
+	});
 }
