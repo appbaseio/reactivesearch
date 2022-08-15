@@ -302,7 +302,7 @@ HierarchicalMenuListItemComponent.propTypes = {
 	listItem: types.rawData,
 	showLine: types.bool,
 	renderItem: types.func,
-	handleListItemClick: PropTypes.bool,
+	handleListItemClick: types.func,
 	renderSwitcherIcon: types.func,
 	showCheckbox: PropTypes.bool,
 	innerClass: types.style,
