@@ -110,7 +110,6 @@ const HierarchicalMenuListItemComponent = ({
 	showRadio,
 	renderIcon,
 	showCount,
-	showSearch,
 	showSwitcherIcon,
 	switcherIcon,
 }) => {
@@ -120,17 +119,6 @@ const HierarchicalMenuListItemComponent = ({
 	const listItemLabel = listItem.key;
 	const listItemCount = listItem.count;
 	const isLeafNode = !(Array.isArray(listItem.list) && listItem.list.length > 0);
-
-	if (
-		showSearch
-		&& searchTerm
-		&& isLeafNode
-		&& !replaceDiacritics(listItemLabel)
-			.toLowerCase()
-			.includes(replaceDiacritics(searchTerm).toLowerCase())
-	) {
-		return null;
-	}
 
 	let newParentPath = listItemLabel;
 	if (parentPath) {
@@ -150,6 +138,12 @@ const HierarchicalMenuListItemComponent = ({
 	useEffect(() => {
 		setIsExpanded(!!recLookup(selectedValues, newParentPath));
 	}, [selectedValues]);
+
+	useEffect(() => {
+		if (listItem.initiallyExpanded) {
+			setIsExpanded(listItem.initiallyExpanded);
+		}
+	}, [listItem.initiallyExpanded]);
 
 	const renderSwitcherIcon = (isExpandedProp) => {
 		if (showSwitcherIcon === false) {
@@ -291,7 +285,6 @@ const HierarchicalMenuListItemComponent = ({
 							showRadio,
 							renderIcon,
 							showCount,
-							showSearch,
 							showSwitcherIcon,
 							switcherIcon,
 						}}
@@ -316,7 +309,6 @@ HierarchicalMenuListItemComponent.propTypes = {
 	showRadio: PropTypes.bool,
 	renderIcon: types.func,
 	showCount: PropTypes.bool,
-	showSearch: PropTypes.bool,
 	showSwitcherIcon: types.bool,
 	switcherIcon: types.children,
 };
@@ -355,10 +347,52 @@ const TreeList = (props) => {
 
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedValues, setSelectedValues] = useState({});
-	const getTransformedData = useMemo(
-		() => transformRawTreeListData(aggregationData, dataField),
-		[aggregationData, dataField],
-	);
+
+	const filterDataBasedOnSearchTerm = (listArray, parentPath) => {
+		if (!(listArray && Array.isArray(listArray) && listArray.length)) {
+			return null;
+		}
+		const result = [];
+		listArray.forEach((ele) => {
+			const isLeafItem = !ele.list;
+			let newParentPath = ele.key;
+			if (parentPath) {
+				newParentPath = `${parentPath}.${ele.key}`;
+			}
+			const keyHasSearchTerm
+				= replaceDiacritics(ele.key)
+					.toLowerCase()
+					.includes(replaceDiacritics(searchTerm).toLowerCase())
+				|| recLookup(selectedValues, newParentPath);
+
+			if (isLeafItem && keyHasSearchTerm) {
+				result.push({
+					...ele,
+					initiallyExpanded: keyHasSearchTerm,
+				});
+			} else if (!isLeafItem) {
+				const filteredChildrenItems = filterDataBasedOnSearchTerm(ele.list, newParentPath);
+				if (keyHasSearchTerm || !!filteredChildrenItems.length) {
+					result.push({
+						...ele,
+						initiallyExpanded: keyHasSearchTerm || !!filteredChildrenItems.length,
+						list: filteredChildrenItems,
+					});
+				}
+			}
+		});
+
+		return result;
+	};
+
+	const getTransformedData = useMemo(() => {
+		const transformedData = transformRawTreeListData(aggregationData, dataField);
+		let filteredData = [];
+		if (showSearch && searchTerm) {
+			filteredData = filterDataBasedOnSearchTerm(transformedData, '');
+		}
+		return filteredData.length ? filteredData : transformedData;
+	}, [aggregationData, dataField, searchTerm, showSearch]);
 	const generateQueryOptions = () => {
 		const queryOptions = getQueryOptions(props);
 		const valueArray = transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues);
@@ -711,7 +745,6 @@ const TreeList = (props) => {
 						showRadio,
 						renderIcon,
 						showCount,
-						showSearch,
 						showSwitcherIcon,
 						switcherIcon,
 					}}
