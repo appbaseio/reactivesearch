@@ -79,9 +79,9 @@ export const HierarchicalMenuListItem = styled('li')`
 
 	&:hover {
 		> a {
-			color: #0a6afe;
+			font-weight: 700;
 			& > span {
-				color: #0a6afe;
+				font-weight: 700;
 			}
 		}
 	}

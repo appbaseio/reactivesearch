@@ -577,8 +577,8 @@ const TreeList = (props) => {
 		return getComponentHelper(data, props);
 	};
 
-	if (isLoading && loader) {
-		return loader;
+	if (isLoading) {
+		return loader || null;
 	}
 
 	if (renderError && error) {
