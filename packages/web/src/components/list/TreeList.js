@@ -462,7 +462,7 @@ const TreeList = (props) => {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: componentTypes.multiList,
+			componentType: componentTypes.treeList,
 		});
 	};
 
