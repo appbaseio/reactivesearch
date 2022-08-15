@@ -93,7 +93,16 @@ class Main extends Component {
 																						.join(
 																							' > ',
 																						);
-
+																			if (
+																				JSON.stringify(
+																					newValueArray,
+																				)
+																				=== JSON.stringify(
+																					valueArray,
+																				)
+																			) {
+																				return;
+																			}
 																			setValue(
 																				component,
 																				newValueArray.filter(
