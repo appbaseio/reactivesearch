@@ -9,9 +9,11 @@ const IconWrapper = styled.div`
 	cursor: pointer;
 	height: 100%;
 	min-width: 20px;
-
-	svg.search-icon {
+	svg,
+	svg g#el_D93PK3GbmJ {
 		fill: ${({ theme }) => theme.colors.primaryColor};
+	}
+	svg.search-icon {
 		transform: scale(1.25);
 	}
 
