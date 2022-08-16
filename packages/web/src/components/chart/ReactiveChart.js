@@ -54,10 +54,17 @@ class ReactiveChart extends React.Component {
 		this.state = {
 			currentValue,
 			options,
+			chartProps: {
+				chartType: '',
+				mainLabel: '', // (Label on the x-axis)
+				secondaryLabel: '', // (Label on the y-axis)
+				value: null,
+			},
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
+		const { chartProps } = this.state;
 		// Set custom and default queries in store
-		updateCustomQuery(props.componentId, props, currentValue);
+		updateCustomQuery(props.componentId, props, chartProps);
 		updateDefaultQuery(this.internalComponent, props, currentValue);
 
 		this.updateQueryOptions(props, false);
@@ -81,7 +88,7 @@ class ReactiveChart extends React.Component {
 			this.updateQuery('', this.props);
 		}
 
-		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
+		if (!isQueryIdentical(this.state.chartProps, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
@@ -95,7 +102,7 @@ class ReactiveChart extends React.Component {
 			if (value === undefined) {
 				this.setValue(this.props.selectedValue);
 			} else if (onChange) {
-				onChange(this.props.selectedValue);
+				onChange(this.state.chartProps);
 			} else {
 				this.setValue(this.state.currentValue, true);
 			}
@@ -168,6 +175,14 @@ class ReactiveChart extends React.Component {
 	};
 	handleClick = (...args) => {
 		const { onClick, useAsFilter, chartType } = this.props;
+		this.setState({
+			chartProps: args[0] ? {
+				mainLabel: args[0].name,
+				secondaryLabel: args[0].seriesName,
+				value: this.state.currentValue,
+				chartType: args[0].seriesType,
+			} : {},
+		});
 		if (onClick) {
 			onClick(...args);
 		}
@@ -189,10 +204,12 @@ class ReactiveChart extends React.Component {
 		const { customQuery } = props;
 		let query = ReactiveChart.defaultQuery(value, props);
 		let customQueryOptions;
+		const { chartProps } = this.state;
+
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
-			updateCustomQuery(props.componentId, props, value);
+			({ query } = customQuery(chartProps, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(chartProps, props));
+			updateCustomQuery(props.componentId, props, chartProps);
 		}
 		props.setQueryOptions(
 			props.componentId,
