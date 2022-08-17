@@ -151,6 +151,18 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   left: 0;
 }
 
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -230,6 +242,9 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
           </div>
         </div>
       </div>
+      <div
+        className="emotion-19 emotion-20"
+      />
     </div>
   </div>
 </div>
@@ -386,6 +401,18 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   fill: #595959;
 }
 
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -462,6 +489,9 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>
@@ -815,6 +845,18 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 
 .emotion-21:hover svg {
   fill: #1c1a1a;
+}
+
+.emotion-40 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
 }
 
 <div
@@ -1315,6 +1357,9 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
           </h3>
         </div>
       </div>
+      <div
+        className="emotion-40 emotion-41"
+      />
     </div>
   </div>
 </div>
@@ -1509,6 +1554,18 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   fill: #595959;
 }
 
+.emotion-21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -1599,6 +1656,9 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
           </h3>
         </div>
       </div>
+      <div
+        className="emotion-21 emotion-22"
+      />
     </div>
   </div>
 </div>
@@ -1755,6 +1815,18 @@ exports[`should render SearchBox 1`] = `
   fill: #595959;
 }
 
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -1831,6 +1903,9 @@ exports[`should render SearchBox 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>
@@ -2155,6 +2230,18 @@ exports[`should render SearchBox with featured suggestions 1`] = `
 
 .emotion-22:hover svg {
   fill: #1c1a1a;
+}
+
+.emotion-44 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
 }
 
 <div
@@ -2799,6 +2886,323 @@ exports[`should render SearchBox with featured suggestions 1`] = `
           </ul>
         </div>
       </ul>
+      <div
+        className="emotion-44 emotion-45"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render SearchBox with tags 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg.search-icon {
+  fill: #0B6AFF;
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.emotion-19 {
+  cursor: default;
+  box-sizing: border-box;
+  margin: 0 4px 4px 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: 'tnum';
+  display: inline-block;
+  height: auto;
+  padding: 0 2px 0 7px;
+  font-size: 12px;
+  line-height: 22px;
+  white-space: nowrap;
+  background: #fafafa;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  opacity: 1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.emotion-19 span.close-icon svg {
+  cursor: pointer;
+  height: 15px;
+  position: relative;
+  top: 4px;
+  fill: #262626;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-11 emotion-12"
+            >
+              
+            </div>
+            <div
+              className="emotion-13 emotion-12"
+            >
+              <div
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="emotion-17 emotion-18"
+      >
+        <span
+          className=" emotion-19 emotion-20"
+        >
+          <span>
+            Paradise Ahead!
+          </span>
+          <span
+            aria-label="delete-tag"
+            className="close-icon"
+            onClick={[Function]}
+            role="img"
+          >
+            <svg
+              alt="Clear"
+              className="cancel-icon"
+              height="20px"
+              onClick={undefined}
+              viewBox="0 0 24 24"
+              width="20px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Clear
+              </title>
+              <path
+                d="M0 0h24v24H0V0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"
+              />
+            </svg>
+          </span>
+        </span>
+      </div>
     </div>
   </div>
 </div>
@@ -2961,6 +3365,18 @@ exports[`should render SearchBox with title 1`] = `
   fill: #595959;
 }
 
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -3042,6 +3458,9 @@ exports[`should render SearchBox with title 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-19 emotion-20"
+      />
     </div>
   </div>
 </div>
@@ -3358,6 +3777,18 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
 
 .emotion-21:hover svg {
   fill: #1c1a1a;
+}
+
+.emotion-38 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
 }
 
 <div
@@ -3825,6 +4256,9 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
           </button>
         </li>
       </ul>
+      <div
+        className="emotion-38 emotion-39"
+      />
     </div>
   </div>
 </div>
@@ -3982,6 +4416,18 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
 }
 
 <div
@@ -4147,6 +4593,9 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>
@@ -4303,6 +4752,18 @@ exports[`should render custom enterButton 1`] = `
   fill: #595959;
 }
 
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -4410,6 +4871,9 @@ exports[`should render custom enterButton 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>
@@ -4620,6 +5084,18 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   height: 100%;
 }
 
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -4706,6 +5182,9 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
           </a>
         </div>
       </div>
+      <div
+        className="emotion-19 emotion-20"
+      />
     </div>
   </div>
 </div>
@@ -4865,6 +5344,18 @@ exports[`should render search icon on the right 1`] = `
   left: 0;
 }
 
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -4940,6 +5431,9 @@ exports[`should render search icon on the right 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>
@@ -5096,6 +5590,18 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   fill: #595959;
 }
 
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -5170,6 +5676,9 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>
@@ -5326,6 +5835,18 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   fill: #595959;
 }
 
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -5402,6 +5923,9 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
           </div>
         </div>
       </div>
+      <div
+        className="emotion-17 emotion-18"
+      />
     </div>
   </div>
 </div>

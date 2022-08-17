@@ -335,6 +335,24 @@ it('should render SearchBox', () => {
 	expect(elem).toMatchSnapshot();
 });
 
+it('should render SearchBox with tags', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: [] }}
+					mode="tag"
+					defaultValue={['Paradise Ahead!']}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
 it('should render SearchBox with title', () => {
 	const elem = renderer
 		.create(

@@ -1597,7 +1597,7 @@ SearchBox.propTypes = {
 	aggregationSize: types.number,
 	size: types.number,
 	debounce: types.number,
-	defaultValue: types.string,
+	defaultValue: oneOfType([types.string, types.stringArray]),
 	value: oneOfType([types.string, types.stringArray]),
 	customData: types.title,
 	downShiftProps: types.props,
