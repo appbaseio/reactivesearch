@@ -98,7 +98,8 @@ const SearchBox = (props) => {
 
 	const internalComponent = getInternalComponentID(componentId);
 	const [currentValue, setCurrentValue] = useState('');
-	const [selectedTags, setSelectedTags] = useState([]);
+	// eslint-disable-next-line prefer-const
+	let [selectedTags, setSelectedTags] = useState([]);
 	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
 	const isTagsMode = useRef(false);
@@ -421,6 +422,7 @@ const SearchBox = (props) => {
 		console.log('----------- INSIDE setValue METHOOD ------------');
 		console.log('value', value);
 		console.log('selectedTags', selectedTags);
+		console.log('cause', cause);
 		const performUpdate = () => {
 			if (isTagsMode.current && isEqual(value, selectedTags)) {
 				return;
@@ -577,13 +579,22 @@ const SearchBox = (props) => {
 			let emitValue = suggestionValue;
 			if (isTagsMode.current) {
 				emitValue = Array.isArray(selectedTags) ? [...selectedTags] : [];
-				if (selectedTags.includes(suggestionValue)) {
+				if (selectedTags && selectedTags.includes(suggestionValue)) {
 					// avoid duplicates in tags array
 					setIsOpen(false);
 					return;
 				}
 				emitValue.push(suggestionValue);
 			}
+			setValue(
+				emitValue,
+				true,
+				props,
+				causes.SUGGESTION_SELECT,
+				true,
+				false,
+				suggestion._category,
+			);
 			onChange(emitValue, () =>
 				triggerQuery({
 					customQuery: true,
@@ -618,14 +629,16 @@ const SearchBox = (props) => {
 		} else if (onChange) {
 			// handle caret position in controlled components
 			handleCaretPosition(e);
+
 			onChange(
 				inputValue,
-				({ isOpen } = {}) =>
+				({ isOpen } = {}) => {
 					triggerQuery({
 						customQuery: true,
 						value: inputValue,
 						isOpen,
-					}),
+					});
+				},
 				e,
 			);
 		}
@@ -953,7 +966,9 @@ const SearchBox = (props) => {
 			}
 		}
 		setCurrentValue(isTagsMode.current ? '' : decodeHtml(currentLocalValue));
-
+		if (isTagsMode.current && Array.isArray(currentLocalValue)) {
+			setSelectedTags(currentLocalValue);
+		}
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
 		triggerDefaultQuery(currentLocalValue);
@@ -1057,17 +1072,30 @@ const SearchBox = (props) => {
 
 	useEffect(() => {
 		if (hasMounted.current) {
+			console.log('--------- INSIDE [value] useffect---------');
+			console.log('value', value);
+			console.log('currentValue', currentValue);
 			if (
 				value !== undefined
 				&& !isEqual(value, isTagsMode.current ? selectedTags : currentValue)
 			) {
+				let cause = !value ? causes.CLEAR_VALUE : undefined;
+				if (isTagsMode.current) {
+					cause = causes.SUGGESTION_SELECT;
+				}
+
+				if (isTagsMode.current && typeof value === 'string') {
+					setValue(value, false, props, undefined, true, false);
+					setCurrentValue(value);
+					triggerDefaultQuery();
+					return;
+				}
+
 				setValue(
 					value,
 					!isOpen && props.autosuggest && !props.strictSelection,
 					props,
-					Array.isArray(value) && isTagsMode.current
-						? causes.SUGGESTION_SELECT
-						: undefined,
+					cause,
 					undefined,
 					false,
 				);
@@ -1081,9 +1109,9 @@ const SearchBox = (props) => {
 		console.log('selectedValue', selectedValue);
 		console.log(
 			'if condition',
-			hasMounted.current
-				&& !isEqual(isTagsMode.current ? selectedTags : currentValue, selectedValue)
-				&& !(typeof currentValue !== 'string' && !selectedValue),
+			hasMounted.current,
+			!isEqual(isTagsMode.current ? selectedTags : currentValue, selectedValue),
+			!(typeof currentValue !== 'string' && !selectedValue),
 		);
 		if (
 			// since, selectedValue will be updated when currentValue changes,
@@ -1099,9 +1127,12 @@ const SearchBox = (props) => {
 				// selected value is cleared, call onValueSelected
 				onValueSelected('', causes.CLEAR_VALUE, null);
 			}
+			if (isTagsMode.current && Array.isArray(selectedValue)) {
+				selectedTags = []; // reset
+			}
 			if (value === undefined) {
 				setValue(
-					selectedValue || '',
+					!selectedValue || isEmpty(selectedValue) ? '' : selectedValue,
 					true,
 					props,
 					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
@@ -1113,8 +1144,11 @@ const SearchBox = (props) => {
 					!isEqual(value, selectedValue)
 					&& !isEqual(selectedValue, isTagsMode.current ? selectedTags : currentValue)
 				) {
+					if (isTagsMode.current && typeof selectedValue !== 'string') {
+						setSelectedTags(selectedValue);
+					}
 					// value prop exists
-					onChange(selectedValue || '', ({ isOpen } = {}) =>
+					onChange(selectedValue || (isTagsMode.current ? [] : ''), ({ isOpen } = {}) =>
 						triggerQuery({
 							customQuery: true,
 							value: selectedValue || '',
