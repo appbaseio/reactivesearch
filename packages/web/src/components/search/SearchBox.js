@@ -318,8 +318,6 @@ const SearchBox = (props) => {
 
 	// fires query to fetch suggestion
 	const triggerDefaultQuery = (paramValue) => {
-		console.log('----------- INSIDE triggerDefaultQuery --------------');
-		console.log('paramValue', paramValue);
 		if (!props.autosuggest) {
 			return;
 		}
@@ -343,12 +341,10 @@ const SearchBox = (props) => {
 
 	// fires query to fetch results(dependent components are affected here)
 	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
-		console.log('----------- INSIDE triggerCustomQuery --------------');
 		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		if (isTagsMode.current) {
 			value = paramValue;
 		}
-		console.log('paramValue', paramValue);
 		let query = searchBoxDefaultQuery(
 			`${value}${!isTagsMode.current && categoryValue ? ` in ${categoryValue}` : ''}`,
 			props,
@@ -419,10 +415,6 @@ const SearchBox = (props) => {
 		toggleIsOpen = true,
 		categoryValue = undefined,
 	) => {
-		console.log('----------- INSIDE setValue METHOOD ------------');
-		console.log('value', value);
-		console.log('selectedTags', selectedTags);
-		console.log('cause', cause);
 		const performUpdate = () => {
 			if (isTagsMode.current && isEqual(value, selectedTags)) {
 				return;
@@ -938,7 +930,6 @@ const SearchBox = (props) => {
 	const hasMounted = useRef();
 	useConstructor(() => {
 		const { mode } = props;
-		console.log('mode', mode);
 		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
 			isTagsMode.current = true;
 		}
@@ -974,10 +965,7 @@ const SearchBox = (props) => {
 		triggerDefaultQuery(currentLocalValue);
 	});
 	const clearTag = (tagValue) => {
-		console.log('--------- INSIDE clearTag method ----------- ');
-		console.log('tagValue', tagValue);
 		const newSelectedTags = [...selectedTags.filter(tag => tag !== tagValue)];
-		console.log('newSelectedTags', newSelectedTags);
 		setSelectedTags(newSelectedTags);
 		setCurrentValue('');
 		triggerCustomQuery(newSelectedTags);
@@ -1072,9 +1060,6 @@ const SearchBox = (props) => {
 
 	useEffect(() => {
 		if (hasMounted.current) {
-			console.log('--------- INSIDE [value] useffect---------');
-			console.log('value', value);
-			console.log('currentValue', currentValue);
 			if (
 				value !== undefined
 				&& !isEqual(value, isTagsMode.current ? selectedTags : currentValue)
@@ -1104,15 +1089,6 @@ const SearchBox = (props) => {
 	}, [value]);
 
 	useEffect(() => {
-		console.log('--------- INSIDE selectedValue USEFFECT--------');
-		console.log('selectedTags', selectedTags);
-		console.log('selectedValue', selectedValue);
-		console.log(
-			'if condition',
-			hasMounted.current,
-			!isEqual(isTagsMode.current ? selectedTags : currentValue, selectedValue),
-			!(typeof currentValue !== 'string' && !selectedValue),
-		);
 		if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
