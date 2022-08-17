@@ -20,11 +20,16 @@ const Main = () => (
 			recordAnalytics: true,
 			userId: 'jon',
 		}}
+		theme={{
+			colors: {
+				primaryColor: 'violet',
+			},
+		}}
 	>
 		<div className="row">
 			<div className="col">
 				<SearchBox
-					title="SearchBox"
+					title="SearchBox sd"
 					defaultValue="Harry Potter"
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
@@ -55,6 +60,7 @@ const Main = () => (
 						console.log(value, cause);
 					}}
 					renderNoSuggestion="No suggestions found."
+					showVoiceSearch
 				/>
 			</div>
 

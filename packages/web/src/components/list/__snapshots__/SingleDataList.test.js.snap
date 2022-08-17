@@ -37,6 +37,13 @@ exports[`should render 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -337,6 +344,13 @@ exports[`should render with displayAsVertical 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {
@@ -641,6 +655,13 @@ exports[`should render with renderItem 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -929,6 +950,13 @@ exports[`should render with showCount 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {
@@ -1243,6 +1271,13 @@ exports[`should render with showRadio 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -1543,6 +1578,13 @@ exports[`should render with showRadio and displayAsVertical 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {
@@ -1847,6 +1889,13 @@ exports[`should render with showRadio and showSearch 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -2147,6 +2196,13 @@ exports[`should render with showRadio, showSearch and displayAsVertical 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {
@@ -2451,6 +2507,13 @@ exports[`should render with showSearch 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -2751,6 +2814,13 @@ exports[`should render with title 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {

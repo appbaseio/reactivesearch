@@ -318,6 +318,13 @@ exports[`should render list of items 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -645,6 +652,13 @@ exports[`should render search/count/checkbox when showSearch/showCount/showCheck
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
@@ -941,6 +955,13 @@ exports[`should select default value 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {
@@ -1242,6 +1263,13 @@ exports[`should use render prop to render the list item 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -1311,6 +1339,13 @@ exports[`should use renderItem to render the list item 1`] = `
 
 .emotion-4:focus {
   background-color: #fff;
+}
+
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-6 {
