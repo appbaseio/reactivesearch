@@ -170,18 +170,18 @@ class ReactiveChart extends React.Component {
 		return query;
 	};
 	updateQueryOptions = (props, addAfterKey = false) => {
-		const { currentValue, chartProps } = this.state;
+		const { chartProps } = this.state;
 		const queryOptions = ReactiveChart.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
-			{ ...chartProps, value: currentValue },
+			chartProps,
 		);
 
 		this.updateDefaultQuery(queryOptions);
 	};
 	handleClick = (...args) => {
 		const {
-			onClick, useAsFilter, chartType,
+			onClick, useAsFilter, chartType, setOption,
 		} = this.props;
 		if (onClick) {
 			onClick(...args);
@@ -197,7 +197,12 @@ class ReactiveChart extends React.Component {
 			if (!Number.isNaN(parseInt(value, 10))) {
 				value = parseInt(value, 10);
 			}
-			this.setValue({ value, eventData: item });
+			// If chart is rendered by user using setOption
+			if (typeof setOption === 'function') {
+				this.setValue({ value: null, eventData: item });
+			} else {
+				this.setValue({ value, eventData: item });
+			}
 		}
 	};
 	updateQuery = (value, props, execute = true) => {
