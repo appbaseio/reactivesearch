@@ -55,10 +55,10 @@ class ReactiveChart extends React.Component {
 			currentValue,
 			options,
 			chartProps: {
-				chartType: '',
+				chartType: props.chartType,
 				mainLabel: '', // (Label on the x-axis)
 				secondaryLabel: '', // (Label on the y-axis)
-				value: null,
+				value: currentValue,
 			},
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
@@ -102,7 +102,7 @@ class ReactiveChart extends React.Component {
 			if (value === undefined) {
 				this.setValue(this.props.selectedValue);
 			} else if (onChange) {
-				onChange(this.state.chartProps);
+				onChange(this.props.selectedValue);
 			} else {
 				this.setValue(this.state.currentValue, true);
 			}
