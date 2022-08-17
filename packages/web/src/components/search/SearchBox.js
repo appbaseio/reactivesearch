@@ -584,11 +584,11 @@ const SearchBox = (props) => {
 				}
 				emitValue.push(suggestionValue);
 			}
-			onChange(emitValue, ({ isOpen } = {}) =>
+			onChange(emitValue, () =>
 				triggerQuery({
 					customQuery: true,
 					value: emitValue,
-					isOpen,
+					isOpen: false,
 					...(!isTagsMode.current && { categoryValue: suggestion._category }),
 				}),
 			);
