@@ -1065,7 +1065,9 @@ const SearchBox = (props) => {
 					value,
 					!isOpen && props.autosuggest && !props.strictSelection,
 					props,
-					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
+					Array.isArray(value) && isTagsMode.current
+						? causes.SUGGESTION_SELECT
+						: undefined,
 					undefined,
 					false,
 				);
