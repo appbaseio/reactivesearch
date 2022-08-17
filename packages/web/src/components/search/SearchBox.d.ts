@@ -86,6 +86,7 @@ export interface SearchBoxProps extends CommonProps {
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;
 	searchboxId?: string;
+	mode?: string;
 }
 
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;

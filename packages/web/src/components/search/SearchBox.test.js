@@ -324,7 +324,7 @@ it('should render SearchBox', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -340,7 +340,7 @@ it('should render SearchBox with title', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -357,7 +357,7 @@ it('should render search icon on the right', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -375,7 +375,7 @@ it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props a
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -394,7 +394,7 @@ it('should render custom (search/ clear icon/ recent search icon/ popular search
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: MOCK_HITS_DATA }}
@@ -430,7 +430,7 @@ it('should show voice search when showVoiceSearch prop is set', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -447,7 +447,7 @@ it('should render custom dropdown UI when render prop is set', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: MOCK_HITS_DATA }}
@@ -516,7 +516,7 @@ it('should render with a default value when defaultValue prop is set', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -533,7 +533,7 @@ it('should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					addonBefore={<h3> Before</h3>}
@@ -550,7 +550,7 @@ it('should not render expanded dropdown when expandSuggestionsContainer prop is 
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					addonBefore={<h3> Before</h3>}
@@ -570,7 +570,7 @@ it('should render enterButton when enterButton prop is true', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -587,7 +587,7 @@ it('should not render enterButton when enterButton prop is false', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -604,7 +604,7 @@ it('should render custom enterButton', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
@@ -631,7 +631,7 @@ it('should render SearchBox with featured suggestions', () => {
 		.create(
 			<ReactiveBase enableAppbase app="test" url="https://foo:bar@localhost:800">
 				<SearchBox
-					mode="test"
+					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: MOCK_HITS_DATA_FEATURED_SUGGESTIONS }}
