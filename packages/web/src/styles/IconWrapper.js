@@ -20,6 +20,24 @@ const IconWrapper = styled.div`
 	svg.cancel-icon {
 		fill: ${({ theme }) => theme.colors.borderColor || '#000'};
 	}
+	svg.--listen-svg {
+		fill: ${({ theme }) => (theme.colors ? theme.colors.primaryColor : '#707070')};
+		filter: hue-rotate(-10deg);
+		#el_-Vm65Ltfy7,
+		#el_9bggsfQOtU,
+		#el_zclQ34fvf7,
+		#el_aa9sjx4H0vA,
+		#el_z5u6RAFhx7d,
+		#el__ZcqlS20zcw,
+		#el_FYYKCI_u24e,
+		#el_RMT1KUfbdF8,
+		#el_uzZNtK32Zi,
+		g#el_QJeJ_2CDw5 > path:first-child {
+			fill: ${({ theme }) =>
+	(theme.colors ? theme.colors.primaryColor : '#707070')} !important;
+			filter: hue-rotate(-10deg) !important;
+		}
+	}
 `;
 
 export default IconWrapper;

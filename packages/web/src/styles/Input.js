@@ -226,7 +226,7 @@ const searchboxSuggestions = (themePreset, theme) => css`
 			${themePreset
 			&& theme
 			&& `svg {
-				fill: ${theme.colors.primaryColor};
+				fill: ${theme.colors ? theme.colors.primaryColor : '#707070'};
 			}`}
 		}
 		&.active-li-item {

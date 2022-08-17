@@ -129,7 +129,9 @@ class Mic extends React.Component {
 		const { className } = this.props;
 		switch (status) {
 			case STATUS.active:
-				return <ListenSvg className={className} onClick={this.handleClick} />;
+				return (
+					<ListenSvg className={`${className} --listen-svg`} onClick={this.handleClick} />
+				);
 			case STATUS.stopped:
 			case STATUS.denied:
 				return <MuteSvg className={className} onClick={this.handleClick} />;
