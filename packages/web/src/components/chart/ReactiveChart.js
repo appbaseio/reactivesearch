@@ -139,7 +139,7 @@ class ReactiveChart extends React.Component {
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			value,
+			{ ...chartProps, value },
 			this.props,
 			ReactiveChart.generateQueryOptions(
 				this.props,
