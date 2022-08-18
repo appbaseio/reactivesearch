@@ -143,7 +143,7 @@ class SelectedFilters extends Component {
 
 	render() {
 		if (this.props.render) {
-			return this.props.render(this.props);
+			return this.props.render({ clearValue: this.clearValue, ...this.props });
 		}
 
 		const { theme } = this.props;
