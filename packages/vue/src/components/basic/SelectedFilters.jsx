@@ -4,7 +4,7 @@ import types from '../../utils/vueTypes';
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect } from '../../utils/index';
+import { connect, decodeHtml } from '../../utils/index';
 
 const { setValue, clearValues, resetValuesToDefault } = Actions;
 const { getClassName, handleA11yAction } = helper;
@@ -148,7 +148,7 @@ const SelectedFilters = {
 							component,
 							`${component}-${index + 1}`,
 							() => this.remove(component, value),
-							`${selectedValues[component].label}: ${valueToRender}`,
+							`${selectedValues[component].label}: ${decodeHtml(valueToRender)}`,
 						);
 					}
 

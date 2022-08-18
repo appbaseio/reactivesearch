@@ -50,6 +50,7 @@ import DynamicRangeSlider from '../range/DynamicRangeSlider';
 import RatingsFilter from '../range/RatingsFilter';
 import RangeInput from '../range/RangeInput';
 import ReactiveChart from '../chart/ReactiveChart';
+import TreeList from '../list/TreeList';
 
 class ReactiveComponent extends Component {
 	constructor(props) {
@@ -309,6 +310,7 @@ class ReactiveComponent extends Component {
 		}
 		return {
 			data: filteredResults,
+			settings: this.props.settings,
 			promotedData: promotedResults,
 			aggregationData: aggregationData || [],
 			rawData,
@@ -355,6 +357,7 @@ ReactiveComponent.propTypes = {
 	hits: types.data,
 	rawData: types.rawData,
 	promotedResults: types.hits,
+	settings: types.props,
 	isLoading: types.bool,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
@@ -399,6 +402,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
+	settings: state.settings[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -418,6 +422,8 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<PreferencesConsumer userProps={props}>
 		{(preferenceProps) => {
 			switch (preferenceProps.componentType) {
+				case componentTypes.treeList:
+					return <TreeList {...preferenceProps} />;
 				case componentTypes.reactiveList:
 					return <ReactiveList {...preferenceProps} />;
 				case componentTypes.dataSearch:

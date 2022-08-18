@@ -10,7 +10,7 @@ import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/util
 import Button, { filters } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect } from '../../utils';
+import { connect, decodeHtml } from '../../utils';
 
 class SelectedFilters extends Component {
 	constructor(props) {
@@ -97,7 +97,7 @@ class SelectedFilters extends Component {
 							onClick={() => this.remove(component, value)}
 						>
 							<span>
-								{selectedValues[component].label}: {valueToRender}
+								{selectedValues[component].label}: {decodeHtml(valueToRender)}
 							</span>
 							<span>&#x2715;</span>
 						</Button>

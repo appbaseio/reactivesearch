@@ -7,7 +7,7 @@ import { SearchPreferencesContext } from '../../utils';
  * and set the props from preferences to the component
  *
  */
-const deepValue = (o, p) => p.split('.').reduce((a, v) => a[v], o);
+const deepValue = (o, p) => p.split('.').reduce((a, v) => (a ? a[v] : null), o);
 
 const PreferencesConsumer = ({ children, userProps }) => {
 	const context = useContext(SearchPreferencesContext);

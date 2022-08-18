@@ -46,6 +46,7 @@ import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
+	decodeHtml,
 	extractModifierKeysFromFocusShortcuts,
 	handleCaretPosition,
 	isEmpty,
@@ -403,7 +404,7 @@ const SearchBox = (props) => {
 		const performUpdate = () => {
 			if (hasMounted) {
 				if (toggleIsOpen) setIsOpen(!isOpen);
-				setCurrentValue(value);
+				setCurrentValue(decodeHtml(value));
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery({
@@ -828,9 +829,9 @@ const SearchBox = (props) => {
 	};
 
 	const onAutofillClick = (suggestion) => {
-		const value = suggestion.value;
+		const { value } = suggestion;
 		setIsOpen(true);
-		setCurrentValue(value);
+		setCurrentValue(decodeHtml(value));
 		triggerDefaultQuery(value);
 	};
 
@@ -853,7 +854,7 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-		setCurrentValue(currentLocalValue);
+		setCurrentValue(decodeHtml(currentLocalValue));
 
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
@@ -974,7 +975,13 @@ const SearchBox = (props) => {
 												/>
 											);
 										}
-										return <img src={XSS(item.iconURL)} alt={item.value} />;
+										return (
+											<img
+												style={{ maxHeight: '25px' }}
+												src={XSS(item.iconURL)}
+												alt={item.value}
+											/>
+										);
 
 									default:
 										return null;
@@ -1320,6 +1327,7 @@ const SearchBox = (props) => {
 								themePreset={props.themePreset}
 								searchBox // a prop specific to Input styled-component
 								isOpen={false} // is dropdown open or not
+								type={props.type}
 							/>
 							{renderIcons()}
 						</InputWrapper>
@@ -1436,6 +1444,7 @@ SearchBox.propTypes = {
 	enterButton: types.bool,
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
+	searchboxId: types.string,
 };
 
 SearchBox.defaultProps = {
@@ -1468,6 +1477,7 @@ SearchBox.defaultProps = {
 	suggestions: [],
 	isOpen: false,
 	enterButton: false,
+	type: 'search',
 };
 
 const mapStateToProps = (state, props) => ({

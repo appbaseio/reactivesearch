@@ -425,6 +425,7 @@ class ReactiveMap extends Component {
 			customData,
 			rawData: this.props.rawData,
 			resultStats: getResultStats(this.props),
+			settings: this.props.settings,
 		};
 	};
 
@@ -1023,6 +1024,7 @@ ReactiveMap.propTypes = {
 	hidden: types.number,
 	rawData: types.rawData,
 	triggerAnalytics: types.funcRequired,
+	settings: types.props,
 	// component props
 	autoCenter: types.bool,
 	center: types.location,
@@ -1087,6 +1089,7 @@ const mapStateToProps = (state, props) => ({
 	promotedResults: state.promotedResults[props.componentId] || [],
 	customData: state.customData[props.componentId],
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	settings: state.settings[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
