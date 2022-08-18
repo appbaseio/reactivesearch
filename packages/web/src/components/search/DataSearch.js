@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { Component } from 'react';
@@ -35,10 +37,15 @@ import {
 	isFunction,
 	getComponent,
 	hasCustomRenderer,
+	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	componentTypes,
+	SEARCH_COMPONENTS_MODES,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 import hotkeys from 'hotkeys-js';
+import { oneOf, oneOfType } from 'prop-types';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
@@ -47,6 +54,7 @@ import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
 import SearchSvg from '../shared/SearchSvg';
 import CancelSvg from '../shared/CancelSvg';
 import Container from '../../styles/Container';
+import { TagItem, TagsContainer } from '../../styles/Tags';
 import CustomSvg from '../shared/CustomSvg';
 import {
 	connect,
@@ -57,6 +65,7 @@ import {
 	isEmpty,
 	parseFocusShortcuts,
 	extractModifierKeysFromFocusShortcuts,
+	decodeHtml,
 } from '../../utils';
 import SuggestionItem from './addons/SuggestionItem';
 import SuggestionWrapper from './addons/SuggestionWrapper';
@@ -73,12 +82,19 @@ class DataSearch extends Component {
 	constructor(props) {
 		super(props);
 		const currentValue = props.selectedValue || props.value || props.defaultValue || '';
-
+		if (props.mode === SEARCH_COMPONENTS_MODES.TAG) {
+			this.isTagsMode = true;
+			console.warn(
+				'Warning(ReactiveSearch): The `categoryField` prop is not supported when `mode` prop is set to `tag`',
+			);
+		}
 		this.state = {
-			currentValue,
+			currentValue: this.isTagsMode ? '' : currentValue,
 			suggestions: [],
+			selectedTags: [],
 			isOpen: false,
 		};
+
 		this.internalComponent = getInternalComponentID(props.componentId);
 		/**
 		 * To regulate the query execution based on the input handler,
@@ -225,22 +241,37 @@ class DataSearch extends Component {
 			},
 		);
 		if (this.props.value !== prevProps.value) {
-			this.setValue(this.props.value, true, this.props, undefined, undefined, false);
+			this.setValue(
+				this.props.value,
+				true,
+				this.props,
+				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+				undefined,
+				false,
+			);
 		} else if (
 			// since, selectedValue will be updated when currentValue changes,
 			// we must only check for the changes introduced by
 			// clear action from SelectedFilters component in which case,
 			// the currentValue will never match the updated selectedValue
-			this.props.selectedValue !== prevProps.selectedValue
-			&& this.state.currentValue !== this.props.selectedValue
+			!isEqual(this.props.selectedValue, prevProps.selectedValue)
+			&& !isEqual(this.state.currentValue, this.props.selectedValue)
 		) {
 			const { value, onChange } = this.props;
-			if (!this.props.selectedValue && this.state.currentValue) {
+			if (
+				(!this.props.selectedValue || isEmpty(this.props.selectedValue))
+				&& this.state.currentValue
+			) {
 				// selected value is cleared, call onValueSelected
 				this.onValueSelected('', causes.CLEAR_VALUE, null);
 			}
 			if (value === undefined) {
-				this.setValue(this.props.selectedValue || '', true, this.props);
+				this.setValue(
+					this.props.selectedValue || '',
+					true,
+					this.props,
+					this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+				);
 			} else if (onChange) {
 				// value prop exists
 				onChange(this.props.selectedValue || '', this.triggerQuery);
@@ -250,7 +281,14 @@ class DataSearch extends Component {
 				// if the clear action was triggered by interacting with
 				// selected-filters component
 				this.isPending = false;
-				this.setValue(this.state.currentValue, true, this.props);
+				this.setValue(
+					this.isTagsMode ? this.state.selectedTags : this.state.currentValue,
+					true,
+					this.props,
+					this.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+					true,
+					false,
+				);
 			}
 		}
 	}
@@ -444,6 +482,9 @@ class DataSearch extends Component {
 		toggleIsOpen = true,
 	) => {
 		const performUpdate = () => {
+			if (this.isTagsMode && isEqual(value, this.state.selectedTags)) {
+				return;
+			}
 			if (hasMounted) {
 				const {
 					enableRecentSearches,
@@ -459,11 +500,45 @@ class DataSearch extends Component {
 				} else if (!value && this.state.currentValue && enableRecentSearches) {
 					fetchRecentSearches();
 				}
+				let newCurrentValue = decodeHtml(value);
+				let newSelectedTags = [];
+				const { selectedTags } = this.state;
+				let isOpen = false;
+				if (this.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+					if (Array.isArray(selectedTags) && selectedTags.length) {
+						// check if value already present in selectedTags
+						if (typeof value === 'string' && selectedTags.includes(value)) {
+							isOpen = false;
+							return;
+						}
+
+						if (typeof value === 'string' && !!value) {
+							newSelectedTags = [...selectedTags, value];
+						} else if (Array.isArray(value) && !isEqual(selectedTags, value)) {
+							const mergedArray = Array.from(new Set([...selectedTags, ...value]));
+							newSelectedTags = mergedArray;
+						}
+					} else if (value) {
+						newSelectedTags = typeof value !== 'string' ? value : [...value];
+					}
+					newCurrentValue = '';
+				} else {
+					newCurrentValue = decodeHtml(value);
+				}
 				this.setState(
 					{
-						currentValue: value,
+						currentValue: newCurrentValue,
+						selectedTags: newSelectedTags,
+						isOpen,
 					},
 					() => {
+						let queryHandlerValue = value;
+						if (this.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+							queryHandlerValue
+								= Array.isArray(newSelectedTags) && newSelectedTags.length
+									? newSelectedTags
+									: undefined;
+						}
 						if (isDefaultValue) {
 							if (this.props.autosuggest) {
 								if (toggleIsOpen) {
@@ -471,18 +546,21 @@ class DataSearch extends Component {
 										isOpen: false,
 									});
 								}
-								this.updateDefaultQuery(value, props);
+								this.updateDefaultQuery(newCurrentValue, props);
 							}
 							// in case of strict selection only SUGGESTION_SELECT should be able
 							// to set the query otherwise the value should reset
 							if (props.strictSelection) {
-								if (cause === causes.SUGGESTION_SELECT || value === '') {
-									this.updateQuery(value, props);
+								if (
+									cause === causes.SUGGESTION_SELECT
+									|| (this.isTagsMode ? newSelectedTags.length === 0 : value === '')
+								) {
+									this.updateQuery(queryHandlerValue, props);
 								} else {
 									this.setValue('', true);
 								}
 							} else {
-								this.updateQuery(value, props);
+								this.updateQuery(queryHandlerValue, props);
 							}
 						} else {
 							// debounce for handling text while typing
@@ -586,10 +664,14 @@ class DataSearch extends Component {
 			// execute the query on an uncontrolled component
 			// query options should be applied to the source component,
 			// not on internal component, hence using `this.props.componentId` here
-			props.setQueryOptions(props.componentId, {
-				...this.queryOptions,
-				...customQueryOptions,
-			}, false);
+			props.setQueryOptions(
+				props.componentId,
+				{
+					...this.queryOptions,
+					...customQueryOptions,
+				},
+				false,
+			);
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -629,7 +711,11 @@ class DataSearch extends Component {
 		// if a suggestion was selected, delegate the handling
 		// to suggestion handler
 		if (event.key === 'Enter' && highlightedIndex === null) {
-			this.setValue(event.target.value, true);
+			this.setValue(
+				event.target.value,
+				true,
+				this.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+			);
 			this.onValueSelected(event.target.value, causes.ENTER_PRESS);
 		}
 		if (this.props.onKeyDown) {
@@ -670,7 +756,20 @@ class DataSearch extends Component {
 			this.setValue(suggestion.value, true, this.props, causes.SUGGESTION_SELECT);
 		} else if (onChange) {
 			this.isPending = false;
-			onChange(suggestion.value, this.triggerQuery);
+			let emitValue = suggestion.value;
+			const { selectedTags } = this.state;
+			if (this.isTagsMode) {
+				emitValue = Array.isArray(selectedTags) ? [...selectedTags] : [];
+				if (selectedTags && selectedTags.includes(suggestion.value)) {
+					// avoid duplicates in tags array
+					this.setState({
+						isOpen: false,
+					});
+					return;
+				}
+				emitValue.push(suggestion.value);
+			}
+			onChange(emitValue, this.triggerQuery);
 		}
 		// Record analytics for selected suggestions
 		this.triggerClickAnalytics(suggestion._click_id);
@@ -1075,6 +1174,76 @@ class DataSearch extends Component {
 		});
 	};
 
+	clearTag = (tagValue) => {
+		const newSelectedTags = [...this.state.selectedTags.filter(tag => tag !== tagValue)];
+
+		this.setState({ currentValue: '', selectedTags: newSelectedTags });
+		this.updateQuery(newSelectedTags);
+		if (this.props.value !== undefined && typeof this.props.onChange === 'function') {
+			this.props.onChange(newSelectedTags, this.triggerQuery);
+		}
+	};
+	clearAllTags = () => {
+		this.setState({ selectedTags: [] });
+		this.setValue('', true, this.props, causes.SUGGESTION_SELECT, true, false);
+		if (this.props.value !== undefined && typeof onChange === 'function') {
+			this.props.onChange([], this.triggerQuery);
+		}
+	};
+
+	renderTag = (item) => {
+		const { innerClass } = this.props;
+
+		return (
+			<TagItem key={item} className={getClassName(innerClass, 'selected-tag') || ''}>
+				<span>{item}</span>
+				<span
+					role="img"
+					aria-label="delete-tag"
+					className="close-icon"
+					onClick={() => this.clearTag(item)}
+				>
+					<CancelSvg />
+				</span>
+			</TagItem>
+		);
+	};
+
+	renderTags = () => {
+		const { selectedTags } = this.state;
+		if (!Array.isArray(selectedTags)) {
+			return null;
+		}
+		const tagsList = [...selectedTags];
+		const shouldRenderClearAllTag = tagsList.length > 1;
+		const { renderSelectedTags, innerClass } = this.props;
+
+		return renderSelectedTags ? (
+			renderSelectedTags({
+				values: selectedTags,
+				handleClear: this.clearTag,
+				handleClearAll: this.clearAllTags,
+			})
+		) : (
+			<TagsContainer>
+				{tagsList.map(item => this.renderTag(item))}
+				{shouldRenderClearAllTag && (
+					<TagItem class={getClassName(innerClass, 'selected-tag') || ''}>
+						<span>Clear All</span>
+						<span
+							role="img"
+							aria-label="delete-tag"
+							className="close-icon"
+							onClick={this.clearAllTags}
+						>
+							<CancelSvg />
+						</span>
+					</TagItem>
+				)}
+			</TagsContainer>
+		);
+	};
+
 	render() {
 		const { currentValue } = this.state;
 		const suggestionsList = this.parsedSuggestions;
@@ -1362,6 +1531,7 @@ class DataSearch extends Component {
 						</InputGroup>
 					</div>
 				)}
+				{this.renderTags()}
 			</Container>
 		);
 	}
@@ -1414,8 +1584,8 @@ DataSearch.propTypes = {
 	aggregationSize: types.number,
 	size: types.number,
 	debounce: types.number,
-	defaultValue: types.string,
-	value: types.string,
+	defaultValue: oneOfType([types.string, types.stringArray]),
+	value: oneOfType([types.string, types.stringArray]),
 	defaultSuggestions: types.suggestions,
 	promotedResults: types.hits,
 	customData: types.title,
@@ -1480,6 +1650,8 @@ DataSearch.propTypes = {
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
 	enableDefaultSuggestions: types.bool,
+	mode: oneOf(['select', 'tag']),
+	renderSelectedTags: types.func,
 };
 
 DataSearch.defaultProps = {
@@ -1513,6 +1685,7 @@ DataSearch.defaultProps = {
 	addonAfter: undefined,
 	expandSuggestionsContainer: true,
 	enableDefaultSuggestions: true,
+	mode: 'single',
 };
 
 // Add componentType for SSR
