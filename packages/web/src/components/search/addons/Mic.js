@@ -1,6 +1,10 @@
 import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { getComponent, hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	getClassName,
+	getComponent,
+	hasCustomRenderer,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
@@ -130,7 +134,10 @@ class Mic extends React.Component {
 		switch (status) {
 			case STATUS.active:
 				return (
-					<ListenSvg className={`${className} --listen-svg`} onClick={this.handleClick} />
+					<ListenSvg
+						className={getClassName(className, '--listen-svg')}
+						onClick={this.handleClick}
+					/>
 				);
 			case STATUS.stopped:
 			case STATUS.denied:
