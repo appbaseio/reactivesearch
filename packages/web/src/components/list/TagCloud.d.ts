@@ -26,6 +26,7 @@ export interface TagCloudProps extends CommonProps {
 	sortBy?: types.sortByWithCount;
 	title?: types.title;
 	index?: string;
+	preferencesPath?: string;
 }
 
 declare const TagCloud: React.ComponentClass<TagCloudProps>;

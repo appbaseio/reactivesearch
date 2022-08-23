@@ -30,6 +30,7 @@ export interface RangeSliderProps extends CommonProps {
 	renderTooltipData?: (...args: any[]) => any;
 	includeNullValues?: boolean;
 	index?: string;
+	preferencesPath?: string;
 	queryFormat?: types.queryFormatDate;
 	calendarInterval?: types.calendarInterval;
 }
