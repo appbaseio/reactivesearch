@@ -109,11 +109,11 @@ const TreeList = (props) => {
 			if (parentPath) {
 				newParentPath = `${parentPath}.${ele.key}`;
 			}
-			const keyHasSearchTerm =
-				replaceDiacritics(ele.key)
+			const keyHasSearchTerm
+				= replaceDiacritics(ele.key)
 					.toLowerCase()
-					.includes(replaceDiacritics(searchTerm).toLowerCase()) ||
-				recLookup(selectedValues, newParentPath);
+					.includes(replaceDiacritics(searchTerm).toLowerCase())
+				|| recLookup(selectedValues, newParentPath);
 
 			if (isLeafItem && keyHasSearchTerm) {
 				result.push({
@@ -174,7 +174,7 @@ const TreeList = (props) => {
 
 		if (value) {
 			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = value.map((item) => ({
+			const queryArray = value.map(item => ({
 				[type]: {
 					[props.dataField]: item,
 				},
@@ -231,8 +231,8 @@ const TreeList = (props) => {
 	}
 
 	const setValue = (value, hasMountedParam = hasMounted.current) => {
-		const finalValues =
-			Array.isArray(value) === false
+		const finalValues
+			= Array.isArray(value) === false
 				? transformTreeListLocalStateIntoQueryComptaibleFormat(value)
 				: value;
 		const performUpdate = () => {
@@ -279,8 +279,8 @@ const TreeList = (props) => {
 
 	useEffect(() => {
 		if (hasMounted.current) {
-			const valueArray =
-				transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues) || [];
+			const valueArray
+				= transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues) || [];
 			updateQuery(valueArray);
 		}
 	}, [props.customQuery]);
@@ -293,8 +293,8 @@ const TreeList = (props) => {
 
 	useEffect(() => {
 		if (hasMounted.current) {
-			const valueArray =
-				transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues) || [];
+			const valueArray
+				= transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues) || [];
 			updateQueryOptions();
 			updateQuery(valueArray);
 		}
@@ -363,11 +363,11 @@ const TreeList = (props) => {
 		return null;
 	};
 
-	const sanitizeObject = (obj) =>
+	const sanitizeObject = obj =>
 		JSON.parse(
 			JSON.stringify(obj, (key, value) =>
 				// eslint-disable-next-line eqeqeq
-				value === null || value == {} || value === false ? undefined : value,
+				(value === null || value == {} || value === false ? undefined : value),
 			),
 		);
 
@@ -389,15 +389,17 @@ const TreeList = (props) => {
 		if (props.value === undefined) {
 			setValue(newSelectedValues);
 		} else if (props.onChange) {
-			const valueToSet =
-				transformTreeListLocalStateIntoQueryComptaibleFormat(newSelectedValues);
+			const valueToSet
+				= transformTreeListLocalStateIntoQueryComptaibleFormat(newSelectedValues);
 
 			props.onChange(valueToSet);
 		}
 	};
 
 	const renderIcon = (isLeafNode) => {
-		const { showIcon, showLeafIcon, icon, leafIcon } = props;
+		const {
+			showIcon, showLeafIcon, icon, leafIcon,
+		} = props;
 
 		if (isLeafNode) {
 			if (!showLeafIcon) return null;
@@ -571,9 +573,9 @@ TreeList.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	rawData: state.rawData[props.componentId] || {},
 	aggregationData: state.aggregations[props.componentId] || {},
 	themePreset: state.config.themePreset,
@@ -582,19 +584,19 @@ const mapStateToProps = (state, props) => ({
 	enableAppbase: state.config.enableAppbase,
 });
 
-const mapDispatchtoProps = (dispatch) => ({
+const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptionsAction(component, props)),
-	updateQuery: (updateQueryObject) => dispatch(updateQueryAction(updateQueryObject)),
+	updateQuery: updateQueryObject => dispatch(updateQueryAction(updateQueryObject)),
 });
 
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme((props) => <TreeList ref={props.myForwardedRef} {...props} />));
+)(withTheme(props => <TreeList ref={props.myForwardedRef} {...props} />));
 
 const ForwardRefComponent = React.forwardRef((props, ref) => (
 	<PreferencesConsumer userProps={props}>
-		{(preferenceProps) => (
+		{preferenceProps => (
 			<ComponentWrapper
 				{...preferenceProps}
 				internalComponent
