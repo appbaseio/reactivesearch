@@ -111,6 +111,13 @@ const Input = styled('input')`
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 		`};
+
+	&[type='search']::-webkit-search-decoration,
+	&[type='search']::-webkit-search-cancel-button,
+	&[type='search']::-webkit-search-results-button,
+	&[type='search']::-webkit-search-results-decoration {
+		display: none;
+	}
 `;
 const noSuggestions = (themePreset, theme) => css`
 	display: block;
@@ -215,6 +222,12 @@ const searchboxSuggestions = (themePreset, theme) => css`
 		}
 		&.li-item {
 			background-color: ${themePreset === 'dark' ? '#424242' : '#fff'};
+
+			${themePreset
+			&& theme
+			&& `svg {
+				fill: ${theme.colors ? theme.colors.primaryColor : '#707070'};
+			}`}
 		}
 		&.active-li-item {
 			background-color: ${themePreset === 'dark' ? '#555' : '#2d84f6'};

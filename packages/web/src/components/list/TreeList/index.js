@@ -30,17 +30,15 @@ import {
 	updateQuery as updateQueryAction,
 } from '@appbaseio/reactivecore/lib/actions/query';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import PreferencesConsumer from '../basic/PreferencesConsumer';
-import ComponentWrapper from '../basic/ComponentWrapper';
+import PreferencesConsumer from '../../basic/PreferencesConsumer';
+import ComponentWrapper from '../../basic/ComponentWrapper';
 
-import Container from '../../styles/Container';
-import Button from '../../styles/Button';
-import { HierarchicalMenuList, HierarchicalMenuListItem } from '../../styles/TreeList';
-import { connect } from '../../utils';
-import Input from '../../styles/Input';
+import Container from '../../../styles/Container';
+import { connect } from '../../../utils';
+import Input from '../../../styles/Input';
 
-import Title from '../../styles/Title';
-import { Checkbox, Radio } from '../../styles/FormControlList';
+import Title from '../../../styles/Title';
+import HierarchicalMenuComponent from './HierarchicalMenuComponent';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -93,15 +91,58 @@ const TreeList = (props) => {
 		renderNoResults,
 		loader,
 		aggregationData,
+		showSwitcherIcon,
+		switcherIcon,
 	} = props;
 	const hasMounted = useRef();
-
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedValues, setSelectedValues] = useState({});
-	const getTransformedData = useMemo(
-		() => transformRawTreeListData(aggregationData, dataField),
-		[aggregationData, dataField],
-	);
+
+	const filterDataBasedOnSearchTerm = (listArray, parentPath) => {
+		if (!(listArray && Array.isArray(listArray) && listArray.length)) {
+			return null;
+		}
+		const result = [];
+		listArray.forEach((ele) => {
+			const isLeafItem = !ele.list;
+			let newParentPath = ele.key;
+			if (parentPath) {
+				newParentPath = `${parentPath}.${ele.key}`;
+			}
+			const keyHasSearchTerm
+				= replaceDiacritics(ele.key)
+					.toLowerCase()
+					.includes(replaceDiacritics(searchTerm).toLowerCase())
+				|| recLookup(selectedValues, newParentPath);
+
+			if (isLeafItem && keyHasSearchTerm) {
+				result.push({
+					...ele,
+					initiallyExpanded: keyHasSearchTerm,
+				});
+			} else if (!isLeafItem) {
+				const filteredChildrenItems = filterDataBasedOnSearchTerm(ele.list, newParentPath);
+				if (keyHasSearchTerm || !!filteredChildrenItems.length) {
+					result.push({
+						...ele,
+						initiallyExpanded: keyHasSearchTerm || !!filteredChildrenItems.length,
+						list: filteredChildrenItems,
+					});
+				}
+			}
+		});
+
+		return result;
+	};
+
+	const getTransformedData = useMemo(() => {
+		const transformedData = transformRawTreeListData(aggregationData, dataField);
+		let filteredData = [];
+		if (showSearch && searchTerm) {
+			filteredData = filterDataBasedOnSearchTerm(transformedData, '');
+		}
+		return filteredData.length ? filteredData : transformedData;
+	}, [aggregationData, dataField, searchTerm, showSearch]);
 	const generateQueryOptions = () => {
 		const queryOptions = getQueryOptions(props);
 		const valueArray = transformTreeListLocalStateIntoQueryComptaibleFormat(selectedValues);
@@ -171,7 +212,7 @@ const TreeList = (props) => {
 			label: props.filterLabel,
 			showFilter: props.showFilter,
 			URLParams: props.URLParams,
-			componentType: componentTypes.multiList,
+			componentType: componentTypes.treeList,
 		});
 	};
 
@@ -355,18 +396,6 @@ const TreeList = (props) => {
 		}
 	};
 
-	const renderSwitcherIcon = (isExpanded) => {
-		const { switcherIcon, showSwitcherIcon } = props;
-		if (showSwitcherIcon === false) {
-			return null;
-		}
-		if (typeof switcherIcon === 'function') {
-			return switcherIcon(isExpanded);
-		}
-
-		return <span className="--switcher-icon">&#10148;</span>;
-	};
-
 	const renderIcon = (isLeafNode) => {
 		const {
 			showIcon, showLeafIcon, icon, leafIcon,
@@ -417,154 +446,6 @@ const TreeList = (props) => {
 		);
 	};
 
-	const renderHierarchicalMenuListItem = (listItem, parentPath) => {
-		if (!(listItem instanceof Object) || Object.keys(listItem).length === 0) {
-			return null;
-		}
-		const listItemLabel = listItem.key;
-		const listItemCount = listItem.count;
-		const isLeafNode = !(Array.isArray(listItem.list) && listItem.list.length > 0);
-
-		if (
-			showSearch
-			&& searchTerm
-			&& isLeafNode
-			&& !replaceDiacritics(listItemLabel)
-				.toLowerCase()
-				.includes(replaceDiacritics(searchTerm).toLowerCase())
-		) {
-			return null;
-		}
-
-		let newParentPath = listItemLabel;
-		if (parentPath) {
-			newParentPath = `${parentPath}.${listItemLabel}`;
-		}
-		let isSelected = false;
-		if (mode === 'single') {
-			if (recLookup(selectedValues, newParentPath) === true) {
-				isSelected = true;
-			}
-		} else {
-			isSelected = !!recLookup(selectedValues, newParentPath);
-		}
-		const isExpanded = !!recLookup(selectedValues, newParentPath);
-		return (
-			<HierarchicalMenuListItem
-				className={`${isSelected ? '-selected-item' : ''}`}
-				key={newParentPath}
-				showLine={showLine}
-			>
-				<Button
-					isLinkType
-					onClick={() => {
-						handleListItemClick(listItemLabel, parentPath);
-					}}
-				>
-					{typeof renderItem === 'function' ? (
-						renderItem(listItemLabel, listItemCount, isSelected)
-					) : (
-						<React.Fragment>
-							{!isLeafNode && renderSwitcherIcon(isSelected)}
-							{/* eslint-disable jsx-a11y/click-events-have-key-events */}
-							{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
-							{mode === 'multiple' && showCheckbox && (
-								<React.Fragment>
-									<Checkbox
-										className={getClassName(innerClass, 'checkbox') || null}
-										checked={isSelected}
-										id={`${listItemLabel}-checkbox-${newParentPath}`}
-										name={`${listItemLabel}-checkbox-${newParentPath}`}
-										show
-										readOnly
-									/>
-									<label
-										style={{
-											width: '26px',
-											marginTop: 0,
-											marginBottom: 0,
-											marginRight: '-9px',
-											left: '-3px',
-										}}
-										htmlFor={`${listItemLabel}-checkbox-${newParentPath}`}
-										onClick={(e) => {
-											e.stopPropagation();
-										}}
-									/>
-								</React.Fragment>
-							)}
-							{mode === 'single' && showRadio && (
-								<React.Fragment>
-									<Radio
-										checked={isSelected}
-										className={getClassName(innerClass, 'radio') || null}
-										id={`${listItemLabel}-radio-${newParentPath}`}
-										name={`${listItemLabel}-radio-${newParentPath}`}
-										show
-										readOnly
-									/>
-
-									<label
-										style={{
-											width: '26px',
-											marginTop: 0,
-											marginBottom: 0,
-											marginRight: '-9px',
-											left: '-3px',
-										}}
-										htmlFor={`${listItemLabel}-radio-${newParentPath}`}
-										onClick={(e) => {
-											e.stopPropagation();
-										}}
-									/>
-								</React.Fragment>
-							)}{' '}
-							{/* eslint-enable jsx-a11y/click-events-have-key-events */}
-							{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
-							{renderIcon(isLeafNode)}
-							<span
-								className={`--list-item-label ${
-									getClassName(innerClass, 'label') || ''
-								}`}
-							>
-								{listItemLabel}
-							</span>
-							{showCount && (
-								<span
-									className={`--list-item-count ${
-										getClassName(innerClass, 'count') || ''
-									}`}
-								>
-									{listItemCount}
-								</span>
-							)}
-						</React.Fragment>
-					)}
-				</Button>
-				{isLeafNode === false && (
-					<div className="--list-child">
-						{/* eslint-disable-next-line no-use-before-define */}
-						{renderHierarchicalMenu(listItem.list, newParentPath, isExpanded)}
-					</div>
-				)}
-			</HierarchicalMenuListItem>
-		);
-	};
-
-	function renderHierarchicalMenu(listArray, parentPath = '', isExpanded = false) {
-		if (!Array.isArray(listArray) || listArray.length === 0) {
-			return null;
-		}
-
-		return (
-			<HierarchicalMenuList
-				className={`${isExpanded ? '--open' : ''}`}
-				isSelected={isExpanded}
-			>
-				{listArray.map(listItem => renderHierarchicalMenuListItem(listItem, parentPath))}
-			</HierarchicalMenuList>
-		);
-	}
 	const getComponent = () => {
 		const data = {
 			data: getTransformedData,
@@ -577,8 +458,8 @@ const TreeList = (props) => {
 		return getComponentHelper(data, props);
 	};
 
-	if (isLoading && loader) {
-		return loader;
+	if (isLoading) {
+		return loader || null;
 	}
 
 	if (renderError && error) {
@@ -594,9 +475,31 @@ const TreeList = (props) => {
 				<Title className={getClassName(innerClass, 'title') || null}>{title}</Title>
 			)}
 			{renderSearch()}
-			{hasCustomRenderer(props)
-				? getComponent()
-				: renderHierarchicalMenu(getTransformedData, '', true)}
+			{hasCustomRenderer(props) ? (
+				getComponent()
+			) : (
+				<HierarchicalMenuComponent
+					key="initial-node"
+					listArray={getTransformedData}
+					parentPath=""
+					isExpanded
+					listItemProps={{
+						mode,
+						selectedValues,
+						searchTerm,
+						showLine,
+						renderItem,
+						handleListItemClick,
+						showCheckbox,
+						innerClass,
+						showRadio,
+						renderIcon,
+						showCount,
+						showSwitcherIcon,
+						switcherIcon,
+					}}
+				/>
+			)}
 		</Container>
 	);
 };

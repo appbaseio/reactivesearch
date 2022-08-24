@@ -70,6 +70,13 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -116,8 +123,12 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   min-width: 20px;
 }
 
-.emotion-13 svg.search-icon {
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -125,6 +136,27 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
 
 .emotion-13 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-15 {
@@ -320,6 +352,13 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -390,8 +429,12 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -399,6 +442,27 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -608,6 +672,13 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   background-color: #fff;
 }
 
+.emotion-11[type='search']::-webkit-search-decoration,
+.emotion-11[type='search']::-webkit-search-cancel-button,
+.emotion-11[type='search']::-webkit-search-results-button,
+.emotion-11[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-13 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -678,8 +749,12 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   min-width: 20px;
 }
 
-.emotion-17 svg.search-icon {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -687,6 +762,27 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 
 .emotion-17 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-19 {
@@ -761,6 +857,10 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 
 .emotion-19 li.li-item {
   background-color: #fff;
+}
+
+.emotion-19 li.li-item svg {
+  fill: #0B6AFF;
 }
 
 .emotion-19 li.active-li-item {
@@ -967,11 +1067,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 <svg
                   alt="Recent Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -1034,11 +1129,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 <svg
                   alt="Recent Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -1101,11 +1191,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 <svg
                   alt="Popular Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -1168,11 +1253,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                 <svg
                   alt="promoted search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -1234,7 +1314,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                   height="12"
                   style={
                     Object {
-                      "fill": "#707070",
                       "left": "3px",
                       "marginRight": "8px",
                       "position": "relative",
@@ -1304,7 +1383,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
                   height="12"
                   style={
                     Object {
-                      "fill": "#707070",
                       "left": "3px",
                       "marginRight": "8px",
                       "position": "relative",
@@ -1473,6 +1551,13 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   background-color: #fff;
 }
 
+.emotion-11[type='search']::-webkit-search-decoration,
+.emotion-11[type='search']::-webkit-search-cancel-button,
+.emotion-11[type='search']::-webkit-search-results-button,
+.emotion-11[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-13 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1543,8 +1628,12 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   min-width: 20px;
 }
 
-.emotion-17 svg.search-icon {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -1552,6 +1641,27 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
 
 .emotion-17 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-21 {
@@ -1734,6 +1844,13 @@ exports[`should render SearchBox 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1804,8 +1921,12 @@ exports[`should render SearchBox 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -1813,6 +1934,27 @@ exports[`should render SearchBox 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -1984,6 +2126,13 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2054,8 +2203,12 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -2063,6 +2216,27 @@ exports[`should render SearchBox with featured suggestions 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -2137,6 +2311,10 @@ exports[`should render SearchBox with featured suggestions 1`] = `
 
 .emotion-17 li.li-item {
   background-color: #fff;
+}
+
+.emotion-17 li.li-item svg {
+  fill: #0B6AFF;
 }
 
 .emotion-17 li.active-li-item {
@@ -2531,11 +2709,6 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 <svg
                   alt="Recent Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -2603,11 +2776,6 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 <svg
                   alt="Recent Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -2675,11 +2843,6 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 <svg
                   alt="Recent Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -2763,11 +2926,6 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 <svg
                   alt="Popular Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -2835,11 +2993,6 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 <svg
                   alt="Popular Search"
                   height="20"
-                  style={
-                    Object {
-                      "fill": "#707070",
-                    }
-                  }
                   viewBox="0 0 24 24"
                   width="20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -2964,6 +3117,13 @@ exports[`should render SearchBox with tags 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3034,8 +3194,12 @@ exports[`should render SearchBox with tags 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -3043,6 +3207,27 @@ exports[`should render SearchBox with tags 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -3284,6 +3469,13 @@ exports[`should render SearchBox with title 1`] = `
   background-color: #fff;
 }
 
+.emotion-11[type='search']::-webkit-search-decoration,
+.emotion-11[type='search']::-webkit-search-cancel-button,
+.emotion-11[type='search']::-webkit-search-results-button,
+.emotion-11[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-13 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3354,8 +3546,12 @@ exports[`should render SearchBox with title 1`] = `
   min-width: 20px;
 }
 
-.emotion-17 svg.search-icon {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -3363,6 +3559,27 @@ exports[`should render SearchBox with title 1`] = `
 
 .emotion-17 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-19 {
@@ -3540,6 +3757,13 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3586,8 +3810,12 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   min-width: 20px;
 }
 
-.emotion-13 svg.search-icon {
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -3595,6 +3823,27 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
 
 .emotion-13 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-15 {
@@ -3693,6 +3942,10 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
 
 .emotion-19 li.li-item {
   background-color: #fff;
+}
+
+.emotion-19 li.li-item svg {
+  fill: #0B6AFF;
 }
 
 .emotion-19 li.active-li-item {
@@ -4076,11 +4329,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             <svg
               alt="promoted search"
               height="20"
-              style={
-                Object {
-                  "fill": "#707070",
-                }
-              }
               viewBox="0 0 24 24"
               width="20"
               xmlns="http://www.w3.org/2000/svg"
@@ -4142,7 +4390,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
               height="12"
               style={
                 Object {
-                  "fill": "#707070",
                   "left": "3px",
                   "marginRight": "8px",
                   "position": "relative",
@@ -4212,7 +4459,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
               height="12"
               style={
                 Object {
-                  "fill": "#707070",
                   "left": "3px",
                   "marginRight": "8px",
                   "position": "relative",
@@ -4337,6 +4583,13 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -4407,8 +4660,12 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -4416,6 +4673,27 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -4671,6 +4949,13 @@ exports[`should render custom enterButton 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -4741,8 +5026,12 @@ exports[`should render custom enterButton 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -4750,6 +5039,27 @@ exports[`should render custom enterButton 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -4949,6 +5259,13 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -5019,8 +5336,12 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -5028,6 +5349,27 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -5263,6 +5605,13 @@ exports[`should render search icon on the right 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -5309,8 +5658,12 @@ exports[`should render search icon on the right 1`] = `
   min-width: 20px;
 }
 
-.emotion-13 svg.search-icon {
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -5318,6 +5671,27 @@ exports[`should render search icon on the right 1`] = `
 
 .emotion-13 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-15 {
@@ -5509,6 +5883,13 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -5579,8 +5960,12 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -5588,6 +5973,27 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
@@ -5754,6 +6160,13 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   background-color: #fff;
 }
 
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -5824,8 +6237,12 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
@@ -5833,6 +6250,27 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
 
 .emotion-15 svg.cancel-icon {
   fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-17 {
