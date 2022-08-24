@@ -19,6 +19,7 @@ import {
 	SearchPreferencesContext,
 	ReduxGetStateContext,
 	X_SEARCH_CLIENT,
+	transformRequestUsingEndpoint,
 } from '../../utils';
 
 class ReactiveBase extends Component {
@@ -44,6 +45,12 @@ class ReactiveBase extends Component {
 		if (analytics !== undefined) {
 			console.warn(
 				'Warning(ReactiveSearch): The `analytics` prop has been marked as deprecated, please set the `recordAnalytics` property as `true` in `appbaseConfig` prop instead.',
+			);
+		}
+
+		if (!this.props.enableAppbase && this.props.endpoint instanceof Object) {
+			console.warn(
+				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
 			);
 		}
 	}
@@ -181,11 +188,17 @@ class ReactiveBase extends Component {
 			}
 		});
 
-		const { themePreset } = props;
+		const { themePreset, enableAppbase, endpoint } = props;
 
 		const appbaseRef = Appbase(config);
 		if (this.props.transformRequest) {
-			appbaseRef.transformRequest = this.props.transformRequest;
+			appbaseRef.transformRequest = (request) => {
+				const modifiedRequest = enableAppbase
+					? transformRequestUsingEndpoint(request, endpoint)
+					: request;
+
+				return this.props.transformRequest(modifiedRequest);
+			};
 		}
 
 		const initialState = {
