@@ -13,7 +13,7 @@ import {
 	getDependentQueries,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
-import { X_SEARCH_CLIENT } from '../utils';
+import { transformRequestUsingEndpoint, X_SEARCH_CLIENT } from '../utils';
 
 const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
 
@@ -92,17 +92,36 @@ export default function initReactivesearch(componentCollection, searchState, set
 			...(settings.enableAppbase && {
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+				...(settings.endpoint instanceof Object
+				&& settings.endpoint.headers instanceof Object
+					? settings.config.headers
+					: {}),
 			}),
 			...settings.headers,
 		};
+		let url
+			= settings.url && settings.url.trim() !== ''
+				? settings.url
+				: 'https://scalr.api.appbase.io';
+
+		let transformRequest = settings.transformRequest || null;
+
+		if (settings.enableAppbase && settings.endpoint instanceof Object) {
+			if (settings.endpoint.url) url = settings.endpoint.url;
+			if (settings.transformRequest) {
+				transformRequest = (request) => {
+					const modifiedRequest = settings.enableAppbase
+						? transformRequestUsingEndpoint(request, settings.endpoint)
+						: request;
+					return settings.transformRequest(modifiedRequest);
+				};
+			}
+		}
 		const config = {
-			url:
-				settings.url && settings.url.trim() !== ''
-					? settings.url
-					: 'https://scalr.api.appbase.io',
+			url,
 			app: settings.app,
 			credentials,
-			transformRequest: settings.transformRequest || null,
+			transformRequest,
 			type: settings.type ? settings.type : '*',
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
@@ -150,16 +169,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					value,
-					compProps,
-				);
+				customQueries[component.componentId] = component.customQuery(value, compProps);
 			}
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					value,
-					compProps,
-				);
+				defaultQueries[component.componentId] = component.defaultQuery(value, compProps);
 			}
 
 			// [1] set selected values
@@ -347,8 +360,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 						};
 					}
 				} else {
-					const preference = config && config.analyticsConfig && config.analyticsConfig.userId
-						? `${config.analyticsConfig.userId}_${component}` : component;
+					const preference
+						= config && config.analyticsConfig && config.analyticsConfig.userId
+							? `${config.analyticsConfig.userId}_${component}`
+							: component;
 					finalQuery = [
 						...finalQuery,
 						{
