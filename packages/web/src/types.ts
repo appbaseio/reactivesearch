@@ -195,3 +195,10 @@ export interface featuredSuggestionsConfig {
 	maxSuggestionsPerSection?: number;
 	sectionsOrder?: stringArray;
 }
+
+export interface endpointConfig {
+	url: string;
+	headers?: object;
+	body?: object;
+	method?: string;
+}
