@@ -68,20 +68,20 @@ export const HierarchicalMenuListItem = styled('li')`
 		border-radius: 8px;
 	}
 	&.-selected-item {
-		font-weight: 700;
-
+		font-weight: 700 !important;
+	}
+	&.-expanded-item {
 		& > a {
 			& > .--switcher-icon {
 				transform: rotate(90deg);
 			}
 		}
 	}
-
-	&:hover {
-		> a {
-			color: #0a6afe;
-			& > span {
-				color: #0a6afe;
+	.--list-item-label-count-wrapper {
+		&:hover {
+			.--list-item-count,
+			.--list-item-label {
+				font-weight: 700;
 			}
 		}
 	}
