@@ -123,8 +123,8 @@ class ReactiveBase extends Component {
 			if (props.endpoint.url) {
 				url = props.endpoint.url;
 			} else {
-				console.error(
-					'Error(ReactiveSearch): The `endpoint` prop requires `url` property.',
+				throw Error(
+					'Error(ReactiveSearch): The `endpoint` prop object requires `url` property.',
 				);
 			}
 		}
