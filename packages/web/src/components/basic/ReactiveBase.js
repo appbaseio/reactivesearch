@@ -118,8 +118,18 @@ class ReactiveBase extends Component {
 			...props.analyticsConfig, // TODO: remove in 4.0
 			...props.appbaseConfig,
 		};
+		let url = props.url && props.url.trim() !== '' ? props.url : '';
+		if (props.enableAppbase && props.endpoint instanceof Object) {
+			if (props.endpoint.url) {
+				url = props.endpoint.url;
+			} else {
+				console.error(
+					'Error(ReactiveSearch): The `endpoint` prop requires `url` property.',
+				);
+			}
+		}
 		const config = {
-			url: props.url && props.url.trim() !== '' ? props.url : '',
+			url,
 			app: props.app,
 			credentials,
 			type: this.type,
@@ -132,6 +142,8 @@ class ReactiveBase extends Component {
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 			mongodb: props.mongodb,
+			...(props.enableAppbase
+				&& props.endpoint instanceof Object && { endpoint: props.endpoint }),
 		};
 
 		let queryParams = '';
@@ -228,6 +240,7 @@ ReactiveBase.defaultProps = {
 	graphQLUrl: '',
 	as: 'div',
 	enableAppbase: false,
+	endpoint: null,
 };
 
 ReactiveBase.propTypes = {
@@ -258,6 +271,7 @@ ReactiveBase.propTypes = {
 	setSearchParams: types.func,
 	mongodb: types.mongodb,
 	preferences: types.preferences,
+	endpoint: types.endpoint,
 };
 
 export default ReactiveBase;
