@@ -979,6 +979,7 @@ ReactiveList.propTypes = {
 	showExport: types.bool,
 	renderExport: types.func,
 	exportData: types.funcRequired,
+	endpoint: types.endpoint,
 };
 
 ReactiveList.defaultProps = {
