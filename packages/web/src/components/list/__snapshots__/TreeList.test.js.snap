@@ -29454,6 +29454,13 @@ exports[`should render with showSearch 1`] = `
   background-color: #fff;
 }
 
+.emotion-4[type='search']::-webkit-search-decoration,
+.emotion-4[type='search']::-webkit-search-cancel-button,
+.emotion-4[type='search']::-webkit-search-results-button,
+.emotion-4[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-6 {
   list-style: none;
   padding: 0;
