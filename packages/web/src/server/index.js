@@ -102,6 +102,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 					: {}),
 			}),
 			...settings.headers,
+			...(settings.enableAppbase && settings.endpoint && settings.endpoint.headers
+				? settings.config.headers
+				: {}),
 		};
 		let url
 			= settings.url && settings.url.trim() !== ''
