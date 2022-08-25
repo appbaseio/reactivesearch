@@ -290,6 +290,7 @@ const DataSearch = {
 		enableDefaultSuggestions: VueTypes.bool.def(true),
 		mode: VueTypes.oneOf(['select', 'tag']).def('select'),
 		renderSelectedTags: VueTypes.any,
+		endpoint: types.endpointConfig,
 	},
 	beforeMount() {
 		if (this.$props.highlight) {

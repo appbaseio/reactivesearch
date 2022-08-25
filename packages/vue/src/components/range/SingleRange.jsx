@@ -38,6 +38,7 @@ const SingleRange = {
 		URLParams: VueTypes.bool.def(false),
 		nestedField: types.string,
 		index: VueTypes.string,
+		endpoint: types.endpointConfig,
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
