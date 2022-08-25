@@ -108,14 +108,15 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 		if (settings.enableAppbase && settings.endpoint instanceof Object) {
 			if (settings.endpoint.url) url = settings.endpoint.url;
-			if (settings.transformRequest) {
-				transformRequest = (request) => {
-					const modifiedRequest = settings.enableAppbase
-						? transformRequestUsingEndpoint(request, settings.endpoint)
-						: request;
+
+			transformRequest = (request) => {
+				const modifiedRequest = transformRequestUsingEndpoint(request, settings.endpoint);
+
+				if (settings.transformRequest) {
 					return settings.transformRequest(modifiedRequest);
-				};
-			}
+				}
+				return modifiedRequest;
+			};
 		}
 		const config = {
 			url,
@@ -127,6 +128,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
+			endpoint: settings.endpoint,
 		};
 		const appbaseRef = Appbase(config);
 
