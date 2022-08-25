@@ -1,9 +1,6 @@
 import configureStore from '@appbaseio/reactivecore';
-import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
-import {
-	updateAnalyticsConfig,
-	transformRequestUsingEndpoint,
-} from '@appbaseio/reactivecore/lib/actions/analytics';
+import { isEqual, transformRequestUsingEndpoint } from '@appbaseio/reactivecore/lib/utils/helper';
+import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
 import 'url-search-params-polyfill';
@@ -214,8 +211,7 @@ const ReactiveBase = {
 				const modifiedRequest = enableAppbase
 					? transformRequestUsingEndpoint(request, endpoint)
 					: request;
-				if (this.$props.transformRequest)
-					return this.$props.transformRequest(modifiedRequest);
+				if (props.transformRequest) return props.transformRequest(modifiedRequest);
 				return modifiedRequest;
 			};
 
