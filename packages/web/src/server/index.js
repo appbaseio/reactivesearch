@@ -96,14 +96,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 			...(settings.enableAppbase && {
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-				...(settings.endpoint instanceof Object
-				&& settings.endpoint.headers instanceof Object
-					? settings.config.headers
-					: {}),
 			}),
 			...settings.headers,
 			...(settings.enableAppbase && settings.endpoint && settings.endpoint.headers
-				? settings.config.headers
+				? settings.endpoint.headers
 				: {}),
 		};
 		let url
