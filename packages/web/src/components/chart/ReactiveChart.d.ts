@@ -45,6 +45,7 @@ export interface ReactiveChartProps extends CommonProps {
 	onError: (...args: any[]) => any;
 	renderError: types.title;
 	onChange: (...args: any[]) => any;
+	endpoint?: types.endpointConfig;
 }
 
 declare const ReactiveChart: React.ComponentClass<ReactiveChartProps>;
