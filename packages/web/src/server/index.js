@@ -4,7 +4,11 @@ import valueReducer from '@appbaseio/reactivecore/lib/reducers/valueReducer';
 import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
-import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	buildQuery,
+	pushToAndClause,
+	transformRequestUsingEndpoint,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
 import { componentTypes, validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
@@ -13,7 +17,7 @@ import {
 	getDependentQueries,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
-import { transformRequestUsingEndpoint, X_SEARCH_CLIENT } from '../utils';
+import { X_SEARCH_CLIENT } from '../utils';
 
 const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
 

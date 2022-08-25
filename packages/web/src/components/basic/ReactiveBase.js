@@ -7,7 +7,10 @@ import 'url-search-params-polyfill';
 import { ThemeProvider } from 'emotion-theming';
 
 import configureStore from '@appbaseio/reactivecore';
-import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	checkSomePropChange,
+	transformRequestUsingEndpoint,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
@@ -19,7 +22,6 @@ import {
 	SearchPreferencesContext,
 	ReduxGetStateContext,
 	X_SEARCH_CLIENT,
-	transformRequestUsingEndpoint,
 } from '../../utils';
 
 class ReactiveBase extends Component {
