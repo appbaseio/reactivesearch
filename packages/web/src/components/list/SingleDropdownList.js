@@ -439,6 +439,7 @@ SingleDropdownList.propTypes = {
 	index: types.string,
 	showClear: types.bool,
 	isOpen: types.bool,
+	endpoint: types.endpoint,
 };
 
 SingleDropdownList.defaultProps = {
@@ -484,7 +485,6 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,
