@@ -102,7 +102,7 @@ class ReactiveBase extends Component {
 
 	get headers() {
 		const {
-			enableAppbase, headers, appbaseConfig, mongodb,
+			enableAppbase, headers, appbaseConfig, mongodb, endpoint,
 		} = this.props;
 		const { enableTelemetry } = appbaseConfig || {};
 		return {
@@ -112,6 +112,11 @@ class ReactiveBase extends Component {
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
 			...headers,
+			...(enableAppbase
+				&& endpoint
+				&& endpoint.headers && {
+				...endpoint.headers,
+			}),
 		};
 	}
 
