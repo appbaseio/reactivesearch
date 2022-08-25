@@ -640,6 +640,7 @@ ReactiveChart.propTypes = {
 	onGlobalOut: func,
 	onContextMenu: func,
 	onDataZoom: func,
+	beforeValueChange: func,
 	// ---- user props ---
 	// props to configure query
 	componentId: types.stringRequired,

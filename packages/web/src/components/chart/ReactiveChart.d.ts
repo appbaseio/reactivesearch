@@ -17,6 +17,7 @@ export interface ReactiveChartProps extends CommonProps {
 	onGlobalOut?: (...args: any[]) => any;
 	onContextMenu?: (...args: any[]) => any;
 	onDataZoom?: (...args: any[]) => any;
+	beforeValueChange?: (...args: any[]) => any;
 	// ---- user props ---
 	// props to configure query
 	dataField: types.dataFieldArray;
