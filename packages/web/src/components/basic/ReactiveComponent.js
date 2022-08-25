@@ -380,6 +380,7 @@ ReactiveComponent.propTypes = {
 	distinctFieldConfig: types.componentObject,
 	config: types.props,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 // Add componentType for SSR
