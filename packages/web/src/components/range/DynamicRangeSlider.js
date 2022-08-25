@@ -717,6 +717,7 @@ DynamicRangeSlider.propTypes = {
 	calendarInterval: types.calendarInterval,
 	mockData: types.any, // eslint-disable-line
 	mode: types.string,
+	endpoint: types.endpoint,
 };
 
 DynamicRangeSlider.defaultProps = {
@@ -791,8 +792,7 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(updateComponentProps(component, options, componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
@@ -806,7 +806,7 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props} >
+	<PreferencesConsumer userProps={props}>
 		{preferenceProps => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 	</PreferencesConsumer>
 ));
