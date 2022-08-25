@@ -1,6 +1,9 @@
 import configureStore from '@appbaseio/reactivecore';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
-import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
+import {
+	updateAnalyticsConfig,
+	transformRequestUsingEndpoint,
+} from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
 import 'url-search-params-polyfill';
@@ -23,11 +26,16 @@ const ReactiveBase = {
 		this.setStore(this.$props);
 	},
 	mounted() {
-		const { analyticsConfig } = this;
+		const { analyticsConfig, enableAppbase, endpoint } = this;
 		// TODO: Remove in 2.0
 		if (analyticsConfig !== undefined) {
 			console.warn(
 				'Warning(ReactiveSearch): The `analyticsConfig` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
+			);
+		}
+		if (!enableAppbase && endpoint instanceof Object) {
+			console.warn(
+				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
 			);
 		}
 	},
@@ -54,6 +62,7 @@ const ReactiveBase = {
 		getSearchParams: types.func,
 		setSearchParams: types.func,
 		mongodb: types.mongodb,
+		endpoint: types.endpointConfig,
 	},
 	provide() {
 		return {
@@ -103,7 +112,7 @@ const ReactiveBase = {
 	},
 	computed: {
 		getHeaders() {
-			const { enableAppbase, headers, appbaseConfig, mongodb } = this.$props;
+			const { enableAppbase, headers, appbaseConfig, mongodb, endpoint } = this.$props;
 			const { enableTelemetry } = appbaseConfig || {};
 			return {
 				...(enableAppbase
@@ -112,6 +121,11 @@ const ReactiveBase = {
 					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 				}),
 				...headers,
+				...(enableAppbase
+					&& endpoint
+					&& endpoint.headers && {
+					...endpoint.headers,
+				}),
 			};
 		},
 	},
@@ -129,8 +143,19 @@ const ReactiveBase = {
 				...props.analyticsConfig,
 				...props.appbaseConfig,
 			};
+			let url = props.url && props.url.trim() !== '' ? props.url : '';
+			if (props.enableAppbase && props.endpoint instanceof Object) {
+				if (props.endpoint.url) {
+					// eslint-disable-next-line prefer-destructuring
+					url = props.endpoint.url;
+				} else {
+					throw Error(
+						'Error(ReactiveSearch): The `endpoint` prop object requires `url` property.',
+					);
+				}
+			}
 			const config = {
-				url: props.url && props.url.trim() !== '' ? props.url : '',
+				url,
 				app: props.app,
 				credentials,
 				type: props.type ? props.type : '*',
@@ -142,6 +167,8 @@ const ReactiveBase = {
 					: props.analytics,
 				analyticsConfig: appbaseConfig,
 				mongodb: props.mongodb,
+				...(props.enableAppbase
+					&& props.endpoint instanceof Object && { endpoint: props.endpoint }),
 			};
 			let queryParams = '';
 
@@ -179,13 +206,18 @@ const ReactiveBase = {
 				}
 			});
 
-			const { themePreset } = props;
+			const { themePreset, enableAppbase, endpoint } = props;
 
 			const appbaseRef = Appbase(config);
 
-			if (this.$props.transformRequest) {
-				appbaseRef.transformRequest = this.$props.transformRequest;
-			}
+			appbaseRef.transformRequest = (request) => {
+				const modifiedRequest = enableAppbase
+					? transformRequestUsingEndpoint(request, endpoint)
+					: request;
+				if (this.$props.transformRequest)
+					return this.$props.transformRequest(modifiedRequest);
+				return modifiedRequest;
+			};
 
 			if (this.$props.transformResponse) {
 				appbaseRef.transformResponse = this.$props.transformResponse;
