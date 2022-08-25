@@ -586,10 +586,14 @@ class DataSearch extends Component {
 			// execute the query on an uncontrolled component
 			// query options should be applied to the source component,
 			// not on internal component, hence using `this.props.componentId` here
-			props.setQueryOptions(props.componentId, {
-				...this.queryOptions,
-				...customQueryOptions,
-			}, false);
+			props.setQueryOptions(
+				props.componentId,
+				{
+					...this.queryOptions,
+					...customQueryOptions,
+				},
+				false,
+			);
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -1480,6 +1484,7 @@ DataSearch.propTypes = {
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
 	enableDefaultSuggestions: types.bool,
+	endpoint: types.endpoint,
 };
 
 DataSearch.defaultProps = {
