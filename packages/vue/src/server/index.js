@@ -11,6 +11,7 @@ import {
 	pushToAndClause,
 	extractQueryFromCustomQuery,
 	getOptionsForCustomQuery,
+	transformRequestUsingEndpoint,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
 import { componentTypes, validProps } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -108,15 +109,37 @@ export default function initReactivesearch(componentCollection, searchState, set
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
 			...settings.headers,
+			...(settings.enableAppbase && settings.endpoint && settings.endpoint.headers
+				? settings.endpoint.headers
+				: {}),
 		};
+		let url
+			= settings.url && settings.url.trim() !== ''
+				? settings.url
+				: 'https://scalr.api.appbase.io';
+		let transformRequest = settings.transformRequest || null;
+
+		if (settings.enableAppbase && settings.endpoint instanceof Object) {
+			if (settings.endpoint.url) {
+				// eslint-disable-next-line prefer-destructuring
+				url = settings.endpoint.url;
+			}
+
+			transformRequest = (request) => {
+				const modifiedRequest = transformRequestUsingEndpoint(request, settings.endpoint);
+
+				if (settings.transformRequest) {
+					return settings.transformRequest(modifiedRequest);
+				}
+				return modifiedRequest;
+			};
+		}
+
 		const config = {
-			url:
-				settings.url && settings.url.trim() !== ''
-					? settings.url
-					: 'https://scalr.api.appbase.io',
+			url,
 			app: settings.app,
 			credentials,
-			transformRequest: settings.transformRequest || null,
+			transformRequest,
 			type: settings.type ? settings.type : '*',
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
