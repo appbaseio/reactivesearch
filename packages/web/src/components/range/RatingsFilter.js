@@ -250,6 +250,7 @@ RatingsFilter.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 RatingsFilter.defaultProps = {
@@ -273,10 +274,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,
