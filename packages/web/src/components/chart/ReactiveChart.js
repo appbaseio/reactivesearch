@@ -54,23 +54,15 @@ class ReactiveChart extends React.Component {
 		this.state = {
 			currentValue,
 			options,
-			chartProps: {
-				chartType: props.chartType,
-				mainLabel: '', // (Label on the x-axis)
-				secondaryLabel: '', // (Label on the y-axis)
-				data: {}, // raw data
-				value: currentValue,
-			},
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
-		const { chartProps } = this.state;
 		// Set custom and default queries in store
-		updateCustomQuery(props.componentId, props, chartProps);
-		updateDefaultQuery(this.internalComponent, props, chartProps);
+		updateCustomQuery(props.componentId, props, currentValue);
+		updateDefaultQuery(this.internalComponent, props, currentValue);
 
 		this.updateQueryOptions(props, false);
 		if (currentValue) {
-			this.setValue({ value: currentValue, isDefault: true });
+			this.setValue(currentValue, true, props);
 		}
 		this.setReact(props, this.internalComponent);
 		this.handleRange = debounce(this.handleRange, 100);
@@ -83,29 +75,29 @@ class ReactiveChart extends React.Component {
 				options: this.transformOptions(this.props.options, this.props),
 			});
 		}
-		if (!isQueryIdentical(this.state.chartProps, this.props, prevProps, 'defaultQuery')) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
 			this.updateQuery('', this.props);
 		}
 
-		if (!isQueryIdentical(this.state.chartProps, this.props, prevProps, 'customQuery')) {
+		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'customQuery')) {
 			this.updateQuery(this.state.currentValue, this.props);
 		}
 
 		if (this.props.value !== prevProps.value) {
-			this.setValue({ value: this.props.value });
+			this.setValue(this.props.value);
 		} else if (
 			this.state.currentValue !== this.props.selectedValue
 			&& this.props.selectedValue !== prevProps.selectedValue
 		) {
 			const { value, onChange } = this.props;
 			if (value === undefined) {
-				this.setValue({ value: this.props.selectedValue });
+				this.setValue(this.props.selectedValue);
 			} else if (onChange) {
 				onChange(this.props.selectedValue);
 			} else {
-				this.setValue({ value: this.state.currentValue, isDefault: true });
+				this.setValue(this.state.currentValue, true);
 			}
 		}
 	}
@@ -131,7 +123,6 @@ class ReactiveChart extends React.Component {
 	}
 	updateDefaultQuery = (queryOptions) => {
 		const props = this.props;
-		const { chartProps } = this.state;
 		let value;
 		if (props.type === 'range') {
 			value = getNumericRangeArray(props.range, props.queryFormat);
@@ -139,12 +130,9 @@ class ReactiveChart extends React.Component {
 		updateInternalQuery(
 			this.internalComponent,
 			queryOptions,
-			{ ...chartProps, value },
+			value,
 			this.props,
-			ReactiveChart.generateQueryOptions(
-				this.props,
-				this.state.prevAfter,
-				{ ...chartProps, value }),
+			ReactiveChart.generateQueryOptions(this.props, this.state.prevAfter, value),
 			null,
 		);
 	};
@@ -170,19 +158,16 @@ class ReactiveChart extends React.Component {
 		return query;
 	};
 	updateQueryOptions = (props, addAfterKey = false) => {
-		const { chartProps } = this.state;
 		const queryOptions = ReactiveChart.generateQueryOptions(
 			props,
 			addAfterKey ? this.state.after : {},
-			chartProps,
+			this.state.currentValue,
 		);
 
 		this.updateDefaultQuery(queryOptions);
 	};
 	handleClick = (...args) => {
-		const {
-			onClick, useAsFilter, chartType, setOption,
-		} = this.props;
+		const { onClick, useAsFilter, chartType } = this.props;
 		if (onClick) {
 			onClick(...args);
 		}
@@ -197,24 +182,17 @@ class ReactiveChart extends React.Component {
 			if (!Number.isNaN(parseInt(value, 10))) {
 				value = parseInt(value, 10);
 			}
-			// If chart is rendered by user using setOption
-			if (typeof setOption === 'function') {
-				this.setValue({ value: null, eventData: item });
-			} else {
-				this.setValue({ value, eventData: item });
-			}
+			this.setValue(value);
 		}
 	};
 	updateQuery = (value, props, execute = true) => {
 		const { customQuery } = props;
 		let query = ReactiveChart.defaultQuery(value, props);
 		let customQueryOptions;
-		const { chartProps } = this.state;
-
 		if (customQuery) {
-			({ query } = customQuery(chartProps, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(chartProps, props));
-			updateCustomQuery(props.componentId, props, chartProps);
+			({ query } = customQuery(value, props) || {});
+			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
+			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(
 			props.componentId,
@@ -222,7 +200,7 @@ class ReactiveChart extends React.Component {
 				...ReactiveChart.generateQueryOptions(
 					props,
 					this.state.prevAfter,
-					chartProps,
+					this.state.currentValue,
 				),
 				...customQueryOptions,
 			},
@@ -242,23 +220,13 @@ class ReactiveChart extends React.Component {
 			false,
 		);
 	};
-	setValue = ({
-		value, eventData = {}, isDefault = false,
-	}) => {
-		const props = this.props;
+	setValue = (value, isDefault = false, props = this.props) => {
 		const performUpdate = () => {
 			const handleUpdates = () => {
 				this.updateQuery(value, props);
 			};
 			this.setState(
 				{
-					chartProps: eventData ? {
-						mainLabel: eventData.name,
-						secondaryLabel: eventData.seriesName,
-						value,
-						chartType: eventData.seriesType,
-						data: eventData.data,
-					} : {},
 					currentValue: value,
 				},
 				handleUpdates,
@@ -322,7 +290,7 @@ class ReactiveChart extends React.Component {
 				startRangeValue.value !== undefined ? startRangeValue.value : startRangeValue,
 				endRangeValue.value !== undefined ? endRangeValue.value : endRangeValue,
 			];
-			this.setValue({ value: rangeValue, eventData: args[0] });
+			this.setValue(rangeValue);
 		}
 		if (onDataZoom) {
 			onDataZoom(...args);
@@ -375,7 +343,8 @@ class ReactiveChart extends React.Component {
 
 ReactiveChart.generateQueryOptions = (props, after, value = {}) => {
 	const queryOptions = getQueryOptions(props);
-	return getAggsQuery(value, queryOptions, props);
+	const valueArray = Array.isArray(value) ? value : [value];
+	return getAggsQuery(valueArray, queryOptions, props);
 };
 
 ReactiveChart.defaultQuery = (value, props) => {
@@ -671,7 +640,6 @@ ReactiveChart.propTypes = {
 	onGlobalOut: func,
 	onContextMenu: func,
 	onDataZoom: func,
-	beforeValueChange: func,
 	// ---- user props ---
 	// props to configure query
 	componentId: types.stringRequired,
