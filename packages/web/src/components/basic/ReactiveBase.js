@@ -191,15 +191,14 @@ class ReactiveBase extends Component {
 		const { themePreset, enableAppbase, endpoint } = props;
 
 		const appbaseRef = Appbase(config);
-		if (this.props.transformRequest) {
-			appbaseRef.transformRequest = (request) => {
-				const modifiedRequest = enableAppbase
-					? transformRequestUsingEndpoint(request, endpoint)
-					: request;
 
-				return this.props.transformRequest(modifiedRequest);
-			};
-		}
+		appbaseRef.transformRequest = (request) => {
+			const modifiedRequest = enableAppbase
+				? transformRequestUsingEndpoint(request, endpoint)
+				: request;
+			if (this.props.transformRequest) return this.props.transformRequest(modifiedRequest);
+			return modifiedRequest;
+		};
 
 		const initialState = {
 			config: {
