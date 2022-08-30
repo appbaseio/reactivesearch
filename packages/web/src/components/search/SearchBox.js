@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /** @jsx jsx */
 import {
 	componentTypes,
@@ -1001,6 +999,8 @@ const SearchBox = (props) => {
 		return (
 			<TagItem key={item} className={getClassName(innerClass, 'selected-tag') || ''}>
 				<span>{item}</span>
+				{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+				 jsx-a11y/click-events-have-key-events */}
 				<span
 					role="img"
 					aria-label="delete-tag"
@@ -1009,6 +1009,8 @@ const SearchBox = (props) => {
 				>
 					<CancelSvg />
 				</span>
+				{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions,
+				jsx-a11y/click-events-have-key-events */}
 			</TagItem>
 		);
 	};
