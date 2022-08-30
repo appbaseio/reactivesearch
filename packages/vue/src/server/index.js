@@ -134,7 +134,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				return modifiedRequest;
 			};
 		}
-
 		const config = {
 			url,
 			app: settings.app,
@@ -145,6 +144,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
+			...(settings.enableAppbase
+				&& settings.endpoint instanceof Object && {
+				endpoint: settings.endpoint,
+			}),
 		};
 		const appbaseRef = Appbase(config);
 
