@@ -23,8 +23,8 @@ export interface SearchBoxProps extends CommonProps {
 	aggregationSize?: number;
 	size?: number;
 	debounce?: number;
-	defaultValue?: string;
-	value?: string;
+	defaultValue?: types.date;
+	value?: types.date;
 	defaultSuggestions?: types.suggestions;
 	downShiftProps?: types.props;
 	fieldWeights?: types.fieldWeights;
@@ -87,6 +87,7 @@ export interface SearchBoxProps extends CommonProps {
 	renderEnterButton?: (onClick: any) => types.children;
 	searchboxId?: string;
 	endpoint?: types.endpointConfig;
+	mode?: string;
 }
 
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;
