@@ -1035,6 +1035,8 @@ const SearchBox = (props) => {
 				{shouldRenderClearAllTag && (
 					<TagItem class={getClassName(innerClass, 'selected-tag') || ''}>
 						<span>Clear All</span>
+						{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+				 jsx-a11y/click-events-have-key-events */}
 						<span
 							role="img"
 							aria-label="delete-tag"
@@ -1042,7 +1044,9 @@ const SearchBox = (props) => {
 							onClick={clearAllTags}
 						>
 							<CancelSvg />
-						</span>
+						</span>{' '}
+						{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions,
+				jsx-a11y/click-events-have-key-events */}
 					</TagItem>
 				)}
 			</TagsContainer>
