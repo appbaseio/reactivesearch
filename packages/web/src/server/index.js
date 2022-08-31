@@ -466,7 +466,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 									hits = {
 										...hits,
 										[component]: {
-											hits: hitsObj.hits.hits,
+											hits: hitsObj.hits,
 											total:
 												typeof hitsObj.total === 'object'
 													? hitsObj.total.value
