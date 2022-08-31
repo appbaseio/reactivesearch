@@ -108,10 +108,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 				: 'https://scalr.api.appbase.io';
 
 		let transformRequest = settings.transformRequest || null;
-
 		if (settings.enableAppbase && settings.endpoint instanceof Object) {
 			if (settings.endpoint.url) url = settings.endpoint.url;
-
 			transformRequest = (request) => {
 				const modifiedRequest = transformRequestUsingEndpoint(request, settings.endpoint);
 
@@ -132,8 +130,11 @@ export default function initReactivesearch(componentCollection, searchState, set
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
 			endpoint: settings.endpoint,
+			enableAppbase: settings.enableAppbase,
 		};
 		const appbaseRef = Appbase(config);
+
+		appbaseRef.transformRequest = transformRequest;
 
 		let components = [];
 		let selectedValues = {};
@@ -310,6 +311,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			props: componentProps,
 			customQueries,
 			defaultQueries,
+			config,
 		};
 
 		// [5] Generate finalQuery for search
@@ -458,14 +460,17 @@ export default function initReactivesearch(componentCollection, searchState, set
 											[component]: response.aggregations,
 										};
 									}
+									const hitsObj = response.hits
+										? response.hits
+										: response[component].hits;
 									hits = {
 										...hits,
 										[component]: {
-											hits: response.hits.hits,
+											hits: hitsObj.hits.hits,
 											total:
-												typeof response.hits.total === 'object'
-													? response.hits.total.value
-													: response.hits.total,
+												typeof hitsObj.total === 'object'
+													? hitsObj.total.value
+													: hitsObj.total,
 											time: response.took,
 										},
 									};
@@ -541,7 +546,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 				.then((res) => {
 					handleRSResponse(res);
 				})
-				.catch(err => reject(err));
+				.catch((err) => {
+					reject(err);
+				});
 		} else {
 			appbaseRef
 				.msearch({
