@@ -119,7 +119,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				: 'https://scalr.api.appbase.io';
 		let transformRequest = settings.transformRequest || null;
 
-		if (settings.enableAppbase && settings.endpoint instanceof Object) {
+		if (settings.enableAppbase && settings.endpoint) {
 			if (settings.endpoint.url) {
 				// eslint-disable-next-line prefer-destructuring
 				url = settings.endpoint.url;
@@ -134,6 +134,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				return modifiedRequest;
 			};
 		}
+
 		const config = {
 			url,
 			app: settings.app,
@@ -144,10 +145,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
-			...(settings.enableAppbase
-				&& settings.endpoint instanceof Object && {
-				endpoint: settings.endpoint,
-			}),
+			endpoint: settings.endpoint,
 			enableAppbase: settings.enableAppbase,
 		};
 		const appbaseRef = Appbase(config);

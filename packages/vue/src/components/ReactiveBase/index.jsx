@@ -30,7 +30,7 @@ const ReactiveBase = {
 				'Warning(ReactiveSearch): The `analyticsConfig` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
 			);
 		}
-		if (!enableAppbase && endpoint instanceof Object) {
+		if (!enableAppbase && endpoint) {
 			console.warn(
 				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
 			);
@@ -141,7 +141,7 @@ const ReactiveBase = {
 				...props.appbaseConfig,
 			};
 			let url = props.url && props.url.trim() !== '' ? props.url : '';
-			if (props.enableAppbase && props.endpoint instanceof Object) {
+			if (props.enableAppbase && props.endpoint) {
 				if (props.endpoint.url) {
 					// eslint-disable-next-line prefer-destructuring
 					url = props.endpoint.url;
@@ -164,8 +164,7 @@ const ReactiveBase = {
 					: props.analytics,
 				analyticsConfig: appbaseConfig,
 				mongodb: props.mongodb,
-				...(props.enableAppbase
-					&& props.endpoint instanceof Object && { endpoint: props.endpoint }),
+				endpoint: props.endpoint,
 			};
 			let queryParams = '';
 
