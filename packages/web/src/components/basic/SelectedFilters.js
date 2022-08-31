@@ -41,6 +41,19 @@ class SelectedFilters extends Component {
 		}
 	};
 
+	clearValue = (componentId) => {
+		const { resetToDefault, resetToValues = {}, onClear } = this.props;
+		if (resetToDefault) {
+			this.props.resetValuesToDefault(
+				this.components.filter(component => component !== componentId),
+			);
+		} else {
+			this.props.setValue(componentId, resetToValues[componentId] || null);
+		}
+		if (onClear) {
+			onClear(resetToValues[componentId]);
+		}
+	};
 	clearValues = () => {
 		const {
 			onClear, resetToDefault, resetToValues, clearAllBlacklistComponents,
@@ -74,10 +87,25 @@ class SelectedFilters extends Component {
 		return value;
 	};
 
+	renderFilterButton = (component, keyProp, handleRemove, label) => (
+		<Button
+			className={getClassName(this.props.innerClass, 'button') || null}
+			key={keyProp}
+			onKeyPress={event => handleA11yAction(event, handleRemove)}
+			onClick={handleRemove}
+			tabIndex="0"
+		>
+			<span>{label}</span>
+			<span>&#x2715;</span>
+		</Button>
+	);
+
 	renderFilters = () => {
 		const { selectedValues } = this.props;
-		return Object.keys(selectedValues)
-			.filter(id => this.props.components.includes(id) && selectedValues[id].showFilter)
+		const filterComponents = Object.keys(selectedValues).filter(
+			id => this.props.components.includes(id) && selectedValues[id].showFilter,
+		);
+		return filterComponents
 			.map((component, index) => {
 				const { label, value, category } = selectedValues[component];
 				const isArray = Array.isArray(value);
@@ -86,21 +114,11 @@ class SelectedFilters extends Component {
 					const valueToRender = category
 						? this.renderValue(`${value} in ${category} category`, isArray)
 						: this.renderValue(value, isArray);
-					return (
-						<Button
-							className={getClassName(this.props.innerClass, 'button') || null}
-							key={`${component}-${index + 1}`}
-							tabIndex="0"
-							onKeyPress={event =>
-								handleA11yAction(event, () => this.remove(component, value))
-							}
-							onClick={() => this.remove(component, value)}
-						>
-							<span>
-								{selectedValues[component].label}: {decodeHtml(valueToRender)}
-							</span>
-							<span>&#x2715;</span>
-						</Button>
+					return this.renderFilterButton(
+						component,
+						`${component}-${index + 1}`,
+						() => this.remove(component, value),
+						`${selectedValues[component].label}: ${decodeHtml(valueToRender)}`,
 					);
 				}
 				return null;
@@ -122,9 +140,10 @@ class SelectedFilters extends Component {
 				return ((isArray && value.length) || (!isArray && value)) && !isResultComponent;
 			});
 	};
+
 	render() {
 		if (this.props.render) {
-			return this.props.render(this.props);
+			return this.props.render({ clearValue: this.clearValue, ...this.props });
 		}
 
 		const { theme } = this.props;
@@ -149,7 +168,7 @@ class SelectedFilters extends Component {
 					</Title>
 				)}
 				{filtersToRender}
-				{this.props.showClearAll && hasFilters ? (
+				{this.props.showClearAll && hasFilters && filtersToRender.length > 1 ? (
 					<Button
 						className={getClassName(this.props.innerClass, 'button') || null}
 						onClick={this.clearValues}
