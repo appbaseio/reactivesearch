@@ -647,6 +647,13 @@ exports[`should render search/count when showSearch/showCount are true 1`] = `
   background-color: #fff;
 }
 
+.emotion-10[type='search']::-webkit-search-decoration,
+.emotion-10[type='search']::-webkit-search-cancel-button,
+.emotion-10[type='search']::-webkit-search-results-button,
+.emotion-10[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 <div
   className="emotion-0 emotion-1"
   style={Object {}}

@@ -44,21 +44,22 @@ const Pagination = {
 
 		const innerClassName = getClassName(props.innerClass, 'button');
 		const primary = props.currentPage === 0;
-		const className
-			= innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : '';
+		const className =
+			innerClassName || primary ? `${innerClassName} ${primary ? 'active' : ''}` : '';
 
-		const buildPaginationDOM = position => {
+		const buildPaginationDOM = (position) => {
 			const { pages, currentPage, totalPages, setPage, showEndPage } = props;
-			let start
-				= position === 'start'
+			let start =
+				position === 'start'
 					? getStartPage(pages, currentPage, showEndPage)
 					: Math.max(2, Math.ceil(totalPages - (pages - 1) / 2 + 1));
 			const paginationButtons = [];
+			let endPage = start;
 			if (start <= totalPages) {
 				let totalPagesToShow = pages < totalPages ? start + (pages - 1) : totalPages + 1;
 				if (showEndPage) {
-					totalPagesToShow
-						= position === 'start'
+					totalPagesToShow =
+						position === 'start'
 							? start + (Math.ceil(pages / 2) - (pages % 2))
 							: totalPages + 1;
 				}
@@ -68,8 +69,8 @@ const Pagination = {
 				}
 				for (let i = start; i < Math.min(totalPages + 1, totalPagesToShow); i += 1) {
 					const activeButton = currentPage === i - 1;
-					const classNameBtn
-						= innerClassName || activeButton
+					const classNameBtn =
+						innerClassName || activeButton
 							? `${innerClassName} ${activeButton ? 'active' : ''}`
 							: '';
 
@@ -78,7 +79,7 @@ const Pagination = {
 							class={classNameBtn}
 							primary={activeButton}
 							tabIndex="0"
-							onKeyPress={event => handleA11yAction(event, () => setPage(i - 1))}
+							onKeyPress={(event) => handleA11yAction(event, () => setPage(i - 1))}
 							alt={`page-${i}`}
 							onClick={() => setPage(i - 1)}
 						>
@@ -87,17 +88,20 @@ const Pagination = {
 					);
 					if (i <= totalPages + 1) {
 						paginationButtons.push(pageBtn);
+						if (i === Math.min(totalPages + 1, totalPagesToShow) - 1) {
+							endPage = i;
+						}
 					}
 				}
 			}
-			return paginationButtons;
+			return [paginationButtons, start, endPage];
 		};
 
 		const buildIntermediatePaginationDom = () => {
 			const { showEndPage, currentPage, totalPages, pages } = props;
-			if (!showEndPage) return buildPaginationDOM('start');
-			if (currentPage <= totalPages - pages + 2 || totalPages <= pages) {
-				return buildPaginationDOM('start');
+			if (!showEndPage) return buildPaginationDOM('start')[0];
+			if (currentPage <= totalPages - pages + 2 || totalPages < pages) {
+				return buildPaginationDOM('start')[0];
 			}
 			return null;
 		};
@@ -107,7 +111,7 @@ const Pagination = {
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage === 0}
-					onKeyPress={event => handleA11yAction(event, onPrevPage)}
+					onKeyPress={(event) => handleA11yAction(event, onPrevPage)}
 					onClick={onPrevPage}
 					tabIndex="0"
 				>
@@ -117,28 +121,33 @@ const Pagination = {
 					<Button
 						class={className}
 						primary={primary}
-						onKeyPress={event => handleA11yAction(event, () => props.setPage(0))}
+						onKeyPress={(event) => handleA11yAction(event, () => props.setPage(0))}
 						onClick={() => props.setPage(0)}
 						tabIndex="0"
 					>
 						1
 					</Button>
 				}
-				{props.showEndPage
-				&& props.currentPage >= Math.floor(props.pages / 2) + !!(props.pages % 2) ? (
-						<span>...</span>
-					) : null}
-				{buildIntermediatePaginationDom()}
-				{props.showEndPage
-				&& props.pages > 2
-				&& props.currentPage <= props.totalPages - Math.ceil(props.pages * 0.75) ? (
-						<span>...</span>
-					) : null}
-				{props.showEndPage && props.totalPages >= props.pages && buildPaginationDOM('end')}
+				{props.showEndPage &&
+				props.currentPage >= Math.floor(props.pages / 2) + !!(props.pages % 2) &&
+				buildPaginationDOM('start')[1] !== 2 ? (
+					<span>...</span>
+				) : null}
+				{buildIntermediatePaginationDom()}			
+				{props.showEndPage &&
+				props.pages > 2 &&
+				props.currentPage <= props.totalPages - Math.ceil(props.pages * 0.75) &&
+				buildPaginationDOM('start')[2] !==
+					buildPaginationDOM('end')[1] - 1 ? (
+					<span>...</span>
+				) : null}
+				{props.showEndPage &&
+					props.totalPages >= props.pages &&
+					buildPaginationDOM('end')[0]}
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage >= props.totalPages - 1}
-					onKeyPress={event => handleA11yAction(event, onNextPage)}
+					onKeyPress={(event) => handleA11yAction(event, onNextPage)}
 					onClick={onNextPage}
 					tabIndex="0"
 				>
@@ -148,7 +157,7 @@ const Pagination = {
 		);
 	},
 };
-Pagination.install = function(Vue) {
+Pagination.install = function (Vue) {
 	Vue.component(Pagination.name, Pagination);
 };
 export default Pagination;
