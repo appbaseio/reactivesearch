@@ -1,7 +1,5 @@
-import { components } from 'gmap-vue';
+import MapElementMixin from 'gmap-vue/dist/mixins/map-element';
 import VueTypes from 'vue-types';
-
-const { MapElementMixin } = components;
 
 // Note: This file has been taken from https://github.com/eregnier/vue2-gmap-custom-marker/blob/master/gmap-custom-marker.vue
 const MarkerWithLabel = {
@@ -106,7 +104,6 @@ const MarkerWithLabel = {
 					this.setMap(map2);
 					this.draw = () => this.repaint();
 					this.setPosition = () => this.repaint();
-					this.getVisible = () => true;
 				}
 
 				repaint() {

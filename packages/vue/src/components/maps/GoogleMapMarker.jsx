@@ -1,12 +1,10 @@
-import { components } from 'gmap-vue';
+import Marker from 'gmap-vue/dist/components/marker';
 import { Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
 import MarkerWithLabel from './MarkerWithLabel.jsx';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles';
-
-const { Marker } = components;
 
 const { recordResultClick } = Actions;
 

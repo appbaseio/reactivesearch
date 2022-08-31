@@ -1,9 +1,7 @@
 import VueTypes from 'vue-types';
-import { components } from 'gmap-vue';
+import Cluster from 'gmap-vue/dist/components/cluster';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import GoogleMapMarker from './GoogleMapMarker.jsx';
-
-const { Cluster } = components;
 
 const GoogleMapMarkers = {
 	name: 'GoogleMapMarkers',

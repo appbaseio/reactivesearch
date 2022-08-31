@@ -1,7 +1,5 @@
 import VueTypes from 'vue-types';
-import { components } from 'gmap-vue';
-
-const { InfoWindow } = components;
+import InfoWindow from 'gmap-vue/dist/components-implementation/info-window';
 
 const InfoWindowWrapper = {
 	name: 'InfoWindowWrapper',

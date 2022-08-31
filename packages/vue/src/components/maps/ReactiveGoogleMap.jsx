@@ -1,11 +1,10 @@
-import GmapVue, { components } from 'gmap-vue';
+import * as GmapMapFull from 'gmap-vue';
+import Map from 'gmap-vue/dist/components-implementation/map';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { RMConnected } from './ReactiveMap.jsx';
 import GoogleMapMarkers from './GoogleMapMarkers.jsx';
 import types from '../../utils/vueTypes';
-
-const { MapLayer: Map } = components;
 
 const ReactiveGoogleMap = {
 	name: 'ReactiveGoogleMap',
@@ -163,7 +162,7 @@ ReactiveGoogleMap.install = function (Vue, options) {
 	if (!options || !options.key) {
 		console.error('ReactiveSearch: map key is required to use ReactiveGoogleMap component');
 	}
-	Vue.use(GmapVue, {
+	Vue.use(GmapMapFull, {
 		load: {
 			key: options.key,
 			libraries: 'places',
