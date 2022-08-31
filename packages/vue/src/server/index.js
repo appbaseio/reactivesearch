@@ -148,9 +148,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 				&& settings.endpoint instanceof Object && {
 				endpoint: settings.endpoint,
 			}),
+			enableAppbase: settings.enableAppbase,
 		};
 		const appbaseRef = Appbase(config);
-
+		appbaseRef.transformRequest = transformRequest;
 		let components = [];
 		let selectedValues = {};
 		const internalValues = {};
@@ -498,14 +499,17 @@ export default function initReactivesearch(componentCollection, searchState, set
 										};
 									}
 									timestamp[component] = res._timestamp;
+									const hitsObj = response.hits
+										? response.hits
+										: response[component].hits;
 									hits = {
 										...hits,
 										[component]: {
-											hits: response.hits.hits,
+											hits: hitsObj.hits,
 											total:
-												typeof response.hits.total === 'object'
-													? response.hits.total.value
-													: response.hits.total,
+												typeof hitsObj.total === 'object'
+													? hitsObj.total.value
+													: hitsObj.total,
 											time: response.took,
 										},
 									};
