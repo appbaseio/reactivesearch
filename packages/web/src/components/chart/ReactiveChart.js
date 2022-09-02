@@ -639,6 +639,7 @@ ReactiveChart.propTypes = {
 	onMouseOut: func,
 	onGlobalOut: func,
 	onContextMenu: func,
+	beforeValueChange: func,
 	onDataZoom: func,
 	// ---- user props ---
 	// props to configure query
