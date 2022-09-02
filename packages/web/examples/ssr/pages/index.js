@@ -12,20 +12,13 @@ import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
 const components = {
 	settings: {
+		app: 'airbnb-dev',
+		url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
 		theme: {
 			colors: {
 				primaryColor: '#FF3A4E',
 			},
 		},
-		endpoint: {
-			url: 'https://appbase-demo-ansible-abxiydt-arc.searchbase.io/airbnb-dev/_reactivesearch.v3',
-			headers: {
-				authorization:
-					'Basic YTAzYTFjYjcxMzIxOjc1YjY2MDNkLTk0NTYtNGE1YS1hZjZiLWE0ODdiMzA5ZWI2MQ==',
-			},
-			method: 'POST',
-		},
-
 		enableAppbase: true,
 	},
 	datasearch: {
