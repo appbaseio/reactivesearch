@@ -192,6 +192,13 @@ exports[`should not render histogram when showHistogram is set to false 1`] = `
   background-color: #fff;
 }
 
+.emotion-15[type='search']::-webkit-search-decoration,
+.emotion-15[type='search']::-webkit-search-cancel-button,
+.emotion-15[type='search']::-webkit-search-results-button,
+.emotion-15[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -528,6 +535,13 @@ exports[`should not render slider when ShowSlider is false 1`] = `
 
 .emotion-10:focus {
   background-color: #fff;
+}
+
+.emotion-10[type='search']::-webkit-search-decoration,
+.emotion-10[type='search']::-webkit-search-cancel-button,
+.emotion-10[type='search']::-webkit-search-results-button,
+.emotion-10[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-12 {
@@ -1262,6 +1276,13 @@ exports[`should render histogram when showHistogram is set to true 1`] = `
 
 .emotion-218:focus {
   background-color: #fff;
+}
+
+.emotion-218[type='search']::-webkit-search-decoration,
+.emotion-218[type='search']::-webkit-search-cancel-button,
+.emotion-218[type='search']::-webkit-search-results-button,
+.emotion-218[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-220 {
@@ -2230,6 +2251,13 @@ exports[`should render range labels 1`] = `
   background-color: #fff;
 }
 
+.emotion-15[type='search']::-webkit-search-decoration,
+.emotion-15[type='search']::-webkit-search-cancel-button,
+.emotion-15[type='search']::-webkit-search-results-button,
+.emotion-15[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2586,6 +2614,13 @@ exports[`should render range with slider 1`] = `
   background-color: #fff;
 }
 
+.emotion-15[type='search']::-webkit-search-decoration,
+.emotion-15[type='search']::-webkit-search-cancel-button,
+.emotion-15[type='search']::-webkit-search-results-button,
+.emotion-15[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
 .emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2928,6 +2963,13 @@ exports[`should render title 1`] = `
 
 .emotion-12:focus {
   background-color: #fff;
+}
+
+.emotion-12[type='search']::-webkit-search-decoration,
+.emotion-12[type='search']::-webkit-search-cancel-button,
+.emotion-12[type='search']::-webkit-search-results-button,
+.emotion-12[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-14 {
@@ -3275,6 +3317,13 @@ exports[`should select default value 1`] = `
 
 .emotion-15:focus {
   background-color: #fff;
+}
+
+.emotion-15[type='search']::-webkit-search-decoration,
+.emotion-15[type='search']::-webkit-search-cancel-button,
+.emotion-15[type='search']::-webkit-search-results-button,
+.emotion-15[type='search']::-webkit-search-results-decoration {
+  display: none;
 }
 
 .emotion-17 {

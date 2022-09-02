@@ -1,8 +1,12 @@
 /** @jsx jsx */
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	componentTypes,
+	SEARCH_COMPONENTS_MODES,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { jsx } from '@emotion/core';
 import { withTheme } from 'emotion-theming';
+import { oneOf, oneOfType } from 'prop-types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import {
 	debounce,
@@ -18,6 +22,7 @@ import {
 	hasCustomRenderer,
 	suggestionTypes,
 	featuredSuggestionsActionTypes,
+	isEqual,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -39,6 +44,7 @@ import InputAddon from '../../styles/InputAddon';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import SearchSvg from '../shared/SearchSvg';
+import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import Input, { searchboxSuggestions, suggestionsContainer } from '../../styles/Input';
@@ -90,8 +96,11 @@ const SearchBox = (props) => {
 
 	const internalComponent = getInternalComponentID(componentId);
 	const [currentValue, setCurrentValue] = useState('');
+	// eslint-disable-next-line prefer-const
+	let [selectedTags, setSelectedTags] = useState([]);
 	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
+	const isTagsMode = useRef(false);
 	const stats = () => getResultStats(props);
 
 	const parsedSuggestions = () => {
@@ -330,9 +339,12 @@ const SearchBox = (props) => {
 
 	// fires query to fetch results(dependent components are affected here)
 	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
-		const value = typeof paramValue !== 'string' ? currentValue : paramValue;
+		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
+		if (isTagsMode.current) {
+			value = paramValue;
+		}
 		let query = searchBoxDefaultQuery(
-			`${value}${categoryValue ? ` in ${categoryValue}` : ''}`,
+			`${value}${!isTagsMode.current && categoryValue ? ` in ${categoryValue}` : ''}`,
 			props,
 		);
 		if (customQuery) {
@@ -351,7 +363,7 @@ const SearchBox = (props) => {
 			showFilter,
 			URLParams,
 			componentType: componentTypes.searchBox,
-			category: categoryValue,
+			...(!isTagsMode.current ? { category: categoryValue } : {}),
 		});
 	};
 
@@ -402,27 +414,79 @@ const SearchBox = (props) => {
 		categoryValue = undefined,
 	) => {
 		const performUpdate = () => {
+			if (isTagsMode.current && isEqual(value, selectedTags)) {
+				return;
+			}
+			let newSelectedTags = [];
+			let newCurrentValue = decodeHtml(value);
 			if (hasMounted) {
+				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
+					if (Array.isArray(selectedTags) && selectedTags.length) {
+						// check if value already present in selectedTags
+						if (typeof value === 'string' && selectedTags.includes(value)) {
+							setIsOpen(false);
+							return;
+						}
+
+						if (typeof value === 'string' && !!value) {
+							newSelectedTags = [...selectedTags, value];
+						} else if (Array.isArray(value) && !isEqual(selectedTags, value)) {
+							const mergedArray = Array.from(new Set([...selectedTags, ...value]));
+							newSelectedTags = mergedArray;
+						}
+					} else if (value) {
+						newSelectedTags = typeof value !== 'string' ? value : [...value];
+					}
+					newCurrentValue = '';
+					setSelectedTags(newSelectedTags);
+				} else {
+					newCurrentValue = decodeHtml(value);
+				}
+
 				if (toggleIsOpen) setIsOpen(!isOpen);
-				setCurrentValue(decodeHtml(value));
+				setCurrentValue(newCurrentValue);
+
+				let queryHandlerValue = value;
+				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
+					queryHandlerValue
+						= Array.isArray(newSelectedTags) && newSelectedTags.length
+							? newSelectedTags
+							: undefined;
+				}
+
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery({
 							...(toggleIsOpen && { isOpen: !isOpen }),
-							defaultQuery: true,
+							defaultQuery: false,
 							value,
 						});
+
+						triggerDefaultQuery(newCurrentValue);
 					}
 					// in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 					if (setValueProps.strictSelection) {
-						if (cause === causes.SUGGESTION_SELECT || value === '') {
-							triggerCustomQuery(value, categoryValue);
+						if (
+							cause === causes.SUGGESTION_SELECT
+							|| (isTagsMode.current ? newSelectedTags.length === 0 : value === '')
+						) {
+							triggerCustomQuery(
+								queryHandlerValue,
+								isTagsMode.current ? undefined : categoryValue,
+							);
 						} else {
 							setValue('', true);
 						}
-					} else {
-						triggerCustomQuery(value, categoryValue);
+					} else if (
+						props.value === undefined
+						|| cause === causes.SUGGESTION_SELECT
+						|| cause === causes.CLEAR_VALUE
+					) {
+						triggerCustomQuery(
+							queryHandlerValue,
+							isTagsMode.current ? undefined : categoryValue,
+						);
 					}
 				} else {
 					// debounce for handling text while typing
@@ -434,7 +498,7 @@ const SearchBox = (props) => {
 					defaultQuery: props.autosuggest,
 					customQuery: true,
 					value,
-					categoryValue,
+					categoryValue: isTagsMode.current ? undefined : categoryValue,
 				});
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
@@ -502,12 +566,31 @@ const SearchBox = (props) => {
 				suggestion._category,
 			);
 		} else if (onChange) {
-			onChange(suggestionValue, ({ isOpen } = {}) =>
+			let emitValue = suggestionValue;
+			if (isTagsMode.current) {
+				emitValue = Array.isArray(selectedTags) ? [...selectedTags] : [];
+				if (selectedTags && selectedTags.includes(suggestionValue)) {
+					// avoid duplicates in tags array
+					setIsOpen(false);
+					return;
+				}
+				emitValue.push(suggestionValue);
+			}
+			setValue(
+				emitValue,
+				true,
+				props,
+				causes.SUGGESTION_SELECT,
+				true,
+				false,
+				suggestion._category,
+			);
+			onChange(emitValue, () =>
 				triggerQuery({
 					customQuery: true,
-					value: suggestionValue,
-					categoryValue: suggestion._category,
-					isOpen,
+					value: emitValue,
+					isOpen: false,
+					...(!isTagsMode.current && { categoryValue: suggestion._category }),
 				}),
 			);
 		}
@@ -536,14 +619,16 @@ const SearchBox = (props) => {
 		} else if (onChange) {
 			// handle caret position in controlled components
 			handleCaretPosition(e);
+
 			onChange(
 				inputValue,
-				({ isOpen } = {}) =>
+				({ isOpen } = {}) => {
 					triggerQuery({
 						customQuery: true,
 						value: inputValue,
 						isOpen,
-					}),
+					});
+				},
 				e,
 			);
 		}
@@ -558,7 +643,12 @@ const SearchBox = (props) => {
 			if (props.autosuggest === false) {
 				enterButtonOnClick();
 			} else if (highlightedIndex === null) {
-				setValue(event.target.value, true);
+				setValue(
+					event.target.value,
+					true,
+					props,
+					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
+				);
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
 		}
@@ -837,6 +927,16 @@ const SearchBox = (props) => {
 
 	const hasMounted = useRef();
 	useConstructor(() => {
+		const { mode } = props;
+		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
+			isTagsMode.current = true;
+		}
+
+		if (isTagsMode.current) {
+			console.warn(
+				'Warning(ReactiveSearch): The `categoryField` prop is not supported when `mode` prop is set to `tag`',
+			);
+		}
 		if (!props.enableAppbase) {
 			throw new Error('enableAppbase is required to be true when using SearchBox component.');
 		}
@@ -854,13 +954,104 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-		setCurrentValue(decodeHtml(currentLocalValue));
-
+		setCurrentValue(isTagsMode.current ? '' : decodeHtml(currentLocalValue));
+		if (isTagsMode.current && Array.isArray(currentLocalValue)) {
+			setSelectedTags(currentLocalValue);
+		}
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
 		triggerDefaultQuery(currentLocalValue);
 	});
+	const clearTag = (tagValue) => {
+		const newSelectedTags = [...selectedTags.filter(tag => tag !== tagValue)];
+		setSelectedTags(newSelectedTags);
+		setCurrentValue('');
+		triggerCustomQuery(newSelectedTags);
 
+		if (props.value !== undefined && typeof onChange === 'function') {
+			onChange(newSelectedTags, ({ isOpen } = {}) =>
+				triggerQuery({
+					customQuery: true,
+					value: newSelectedTags,
+					isOpen,
+				}),
+			);
+		}
+	};
+	const clearAllTags = () => {
+		setSelectedTags([]);
+
+		setValue('', true, props, causes.SUGGESTION_SELECT, hasMounted.current, false);
+		if (props.value !== undefined && typeof onChange === 'function') {
+			onChange([], ({ isOpen } = {}) =>
+				triggerQuery({
+					customQuery: true,
+					value: [],
+					isOpen,
+				}),
+			);
+		}
+	};
+
+	const renderTag = (item) => {
+		const { innerClass } = props;
+
+		return (
+			<TagItem key={item} className={getClassName(innerClass, 'selected-tag') || ''}>
+				<span>{item}</span>
+				{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+				 jsx-a11y/click-events-have-key-events */}
+				<span
+					role="img"
+					aria-label="delete-tag"
+					className="close-icon"
+					onClick={() => clearTag(item)}
+				>
+					<CancelSvg />
+				</span>
+				{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions,
+				jsx-a11y/click-events-have-key-events */}
+			</TagItem>
+		);
+	};
+
+	const renderTags = () => {
+		if (!Array.isArray(selectedTags)) {
+			return null;
+		}
+		const tagsList = [...selectedTags];
+		const shouldRenderClearAllTag = tagsList.length > 1;
+		const { renderSelectedTags, innerClass } = props;
+
+		return renderSelectedTags ? (
+			renderSelectedTags({
+				values: selectedTags,
+				handleClear: clearTag,
+				handleClearAll: clearAllTags,
+			})
+		) : (
+			<TagsContainer>
+				{tagsList.map(item => renderTag(item))}
+				{shouldRenderClearAllTag && (
+					<TagItem class={getClassName(innerClass, 'selected-tag') || ''}>
+						<span>Clear All</span>
+						{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+				 jsx-a11y/click-events-have-key-events */}
+						<span
+							role="img"
+							aria-label="delete-tag"
+							className="close-icon"
+							onClick={clearAllTags}
+						>
+							<CancelSvg />
+						</span>{' '}
+						{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions,
+				jsx-a11y/click-events-have-key-events */}
+					</TagItem>
+				)}
+			</TagsContainer>
+		);
+	};
 	useEffect(() => {
 		if (onData) {
 			onData({
@@ -875,12 +1066,27 @@ const SearchBox = (props) => {
 
 	useEffect(() => {
 		if (hasMounted.current) {
-			if (value !== undefined && currentValue !== value) {
+			if (
+				value !== undefined
+				&& !isEqual(value, isTagsMode.current ? selectedTags : currentValue)
+			) {
+				let cause = !value ? causes.CLEAR_VALUE : undefined;
+				if (isTagsMode.current) {
+					cause = causes.SUGGESTION_SELECT;
+				}
+
+				if (isTagsMode.current && typeof value === 'string') {
+					setValue(value, false, props, undefined, true, false);
+					setCurrentValue(value);
+					triggerDefaultQuery();
+					return;
+				}
+
 				setValue(
 					value,
 					!isOpen && props.autosuggest && !props.strictSelection,
 					props,
-					undefined,
+					cause,
 					undefined,
 					false,
 				);
@@ -896,19 +1102,35 @@ const SearchBox = (props) => {
 			// the currentValue will never match the updated selectedValue
 			// currentValue !== props.defaultValue &&
 			hasMounted.current
-			&& currentValue !== selectedValue
+			&& !isEqual(isTagsMode.current ? selectedTags : currentValue, selectedValue)
 			&& !(typeof currentValue !== 'string' && !selectedValue)
 		) {
 			if (!selectedValue && currentValue) {
 				// selected value is cleared, call onValueSelected
 				onValueSelected('', causes.CLEAR_VALUE, null);
 			}
+			if (isTagsMode.current && Array.isArray(selectedValue)) {
+				selectedTags = []; // reset
+			}
 			if (value === undefined) {
-				setValue(selectedValue || '', true, props, undefined, hasMounted.current, false);
+				setValue(
+					!selectedValue || isEmpty(selectedValue) ? '' : selectedValue,
+					true,
+					props,
+					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
+					hasMounted.current,
+					false,
+				);
 			} else if (onChange) {
-				if (value !== selectedValue && selectedValue !== currentValue) {
+				if (
+					!isEqual(value, selectedValue)
+					&& !isEqual(selectedValue, isTagsMode.current ? selectedTags : currentValue)
+				) {
+					if (isTagsMode.current && typeof selectedValue !== 'string') {
+						setSelectedTags(selectedValue);
+					}
 					// value prop exists
-					onChange(selectedValue || '', ({ isOpen } = {}) =>
+					onChange(selectedValue || (isTagsMode.current ? [] : ''), ({ isOpen } = {}) =>
 						triggerQuery({
 							customQuery: true,
 							value: selectedValue || '',
@@ -922,7 +1144,14 @@ const SearchBox = (props) => {
 				// if the clear action was triggered by interacting with
 				// selected-filters component
 
-				setValue(currentValue, true, props, undefined, true, false);
+				setValue(
+					isTagsMode.current ? selectedTags : currentValue,
+					true,
+					props,
+					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
+					true,
+					false,
+				);
 			}
 		}
 	}, [selectedValue]);
@@ -1299,6 +1528,7 @@ const SearchBox = (props) => {
 										setHighlightedIndex,
 										...rest,
 									)}
+								{renderTags()}
 							</div>
 						);
 					}}
@@ -1373,8 +1603,8 @@ SearchBox.propTypes = {
 	aggregationSize: types.number,
 	size: types.number,
 	debounce: types.number,
-	defaultValue: types.string,
-	value: types.string,
+	defaultValue: oneOfType([types.string, types.stringArray]),
+	value: oneOfType([types.string, types.stringArray]),
 	customData: types.title,
 	downShiftProps: types.props,
 	children: types.func,
@@ -1445,6 +1675,8 @@ SearchBox.propTypes = {
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
 	searchboxId: types.string,
+	mode: oneOf(['select', 'tag']),
+	renderSelectedTags: types.func,
 };
 
 SearchBox.defaultProps = {
@@ -1478,6 +1710,7 @@ SearchBox.defaultProps = {
 	isOpen: false,
 	enterButton: false,
 	type: 'search',
+	mode: 'single',
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1523,6 +1756,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				{...preferenceProps}
 				internalComponent
 				componentType={componentTypes.searchBox}
+				mode={preferenceProps.testMode ? 'test' : ''}
 			>
 				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 			</ComponentWrapper>

@@ -25,8 +25,8 @@ export interface DataSearchProps extends CommonProps {
 	aggregationSize?: number;
 	size?: number;
 	debounce?: number;
-	defaultValue?: string;
-	value?: string;
+	defaultValue?: types.date;
+	value?: types.date;
 	defaultSuggestions?: types.suggestions;
 	downShiftProps?: types.props;
 	fieldWeights?: types.fieldWeights;
@@ -82,6 +82,7 @@ export interface DataSearchProps extends CommonProps {
 	index?: string;
 	preferencesPath?: string;
 	enableDefaultSuggestions?: boolean;
+	mode?: string;
 }
 declare const DataSearch: React.ComponentClass<DataSearchProps>;
 
