@@ -82,6 +82,10 @@ class SelectedFilters extends Component {
 			if (value.location) {
 				label = `${value.location} - ${label}`;
 			}
+			// Detect if value is from a chart with chartType as custom
+			if (value && value.mainLabel && value.secondaryLabel) {
+				label = `${value.mainLabel}-${value.secondaryLabel}-${JSON.stringify(value.data)}`;
+			}
 			return label;
 		}
 		return value;
