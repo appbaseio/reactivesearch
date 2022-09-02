@@ -1,16 +1,15 @@
 <template>
   <div class="container">
-    <ReactiveBase
-      v-bind="components.settings"
+    <ReactiveBase 
+      v-bind="components.settings" 
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
         <DataSearch v-bind="components.datasearch" />
-        <SingleList v-bind="components.list" />
       </nav>
       <ReactiveList v-bind="components.result">
-        <div
-          slot="render"
+        <div 
+          slot="render" 
           slot-scope="{ data }">
           <ResultCardsWrapper>
             <ResultCard
@@ -18,7 +17,7 @@
               :key="result._id"
               :href="result.listing_url"
             >
-              <ResultCardImage :src="result.image" />
+              <ResultCardImage :src="result.picture_url" />
               <ResultCardTitle>
                 {{ result.name }}
               </ResultCardTitle>
@@ -37,13 +36,12 @@
 </template>
 
 <script>
-import { initReactivesearch, DataSearch, ReactiveList,SingleList } from '@appbaseio/reactivesearch-vue';
+import { initReactivesearch, DataSearch, ReactiveList } from '@appbaseio/reactivesearch-vue';
 import './styles/airbnb.css';
-
 
 const components = {
 	settings: {
-		app: 'airbeds-test-app',
+		app: 'airbnb-dev',
 		url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
 		enableAppbase: true,
 		theme: {
@@ -51,10 +49,6 @@ const components = {
 				primaryColor: '#FF3A4E',
 			},
 		},
-	},
-	list: {
-		componentId: 'SearchSensor2',
-		dataField: 'room_type.keyword'
 	},
 	datasearch: {
 		componentId: 'SearchSensor',
@@ -104,10 +98,6 @@ export default {
 						...components.result,
 						source: ReactiveList,
 					},
-					{
-						...components.list,
-						source: SingleList,
-					}
 				],
 				query,
 				components.settings,
