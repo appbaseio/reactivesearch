@@ -122,8 +122,17 @@ export default function initReactivesearch(componentCollection, searchState, set
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
+			enableAppbase: settings.enableAppbase,
 		};
 		const appbaseRef = Appbase(config);
+
+		if (config.transformRequest) {
+			appbaseRef.transformRequest = config.transformRequest;
+		}
+
+		if (config.transformResponse) {
+			appbaseRef.transformResponse = config.transformResponse;
+		}
 
 		let components = [];
 		let selectedValues = {};
@@ -505,7 +514,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				resolve(state);
 			});
 		};
-
 		if (config.graphQLUrl) {
 			const handleTransformRequest = (res) => {
 				if (config.transformRequest && typeof config.transformRequest === 'function') {

@@ -111,6 +111,14 @@ export default function initReactivesearch(componentCollection, searchState, set
 		};
 		const appbaseRef = Appbase(config);
 
+		if (config.transformRequest) {
+			appbaseRef.transformRequest = config.transformRequest;
+		}
+
+		if (config.transformResponse) {
+			appbaseRef.transformResponse = config.transformResponse;
+		}
+
 		let components = [];
 		let selectedValues = {};
 		const internalValues = {};
@@ -150,16 +158,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 			// Set custom and default queries
 			if (component.customQuery && typeof component.customQuery === 'function') {
-				customQueries[component.componentId] = component.customQuery(
-					value,
-					compProps,
-				);
+				customQueries[component.componentId] = component.customQuery(value, compProps);
 			}
 			if (component.defaultQuery && typeof component.defaultQuery === 'function') {
-				defaultQueries[component.componentId] = component.defaultQuery(
-					value,
-					compProps,
-				);
+				defaultQueries[component.componentId] = component.defaultQuery(value, compProps);
 			}
 
 			// [1] set selected values
@@ -347,8 +349,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 						};
 					}
 				} else {
-					const preference = config && config.analyticsConfig && config.analyticsConfig.userId
-						? `${config.analyticsConfig.userId}_${component}` : component;
+					const preference
+						= config && config.analyticsConfig && config.analyticsConfig.userId
+							? `${config.analyticsConfig.userId}_${component}`
+							: component;
 					finalQuery = [
 						...finalQuery,
 						{
