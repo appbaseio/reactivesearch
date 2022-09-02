@@ -192,6 +192,13 @@ class ReactiveChart extends React.Component {
 			if (!Number.isNaN(parseInt(value, 10))) {
 				value = parseInt(value, 10);
 			}
+			if (chartType === ChartTypes.Custom) {
+				value = {
+					mainLabel: item.name,
+					secondaryLabel: item.seriesName,
+					data: item.data,
+				};
+			}
 			this.setValue(value);
 		}
 	};
