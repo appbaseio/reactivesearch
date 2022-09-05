@@ -25,7 +25,7 @@ const Main = () => (
 				<ReactiveChart
 					componentId="stackedBarChart"
 					dataField="release_year"
-					chartType="bar"
+					chartType="custom"
 					filterLabel="Language"
 					URLParams
 					title="Languages"
@@ -70,7 +70,9 @@ const Main = () => (
 							});
 							Object.keys(releaseYearGenresTable).forEach((year) => {
 								Object.keys(releaseYearGenresTable[year]).forEach((genre) => {
-									if (!genresReleaseYearTable[genre]) { genresReleaseYearTable[genre] = {}; }
+									if (!genresReleaseYearTable[genre]) {
+										genresReleaseYearTable[genre] = {};
+									}
 									genresReleaseYearTable[genre][year]
 										= releaseYearGenresTable[year][genre];
 								});
@@ -93,7 +95,7 @@ const Main = () => (
 						};
 					}}
 					customQuery={value =>
-						(value.secondaryLabel && value.mainLabel
+						(value && value.secondaryLabel && value.mainLabel
 							? {
 								query: {
 									bool: {
