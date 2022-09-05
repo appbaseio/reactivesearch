@@ -25,7 +25,7 @@ const Main = () => (
 				<ReactiveChart
 					componentId="stackedBarChart"
 					dataField="release_year"
-					chartType="bar"
+					chartType="custom"
 					filterLabel="Language"
 					URLParams
 					title="Languages"
@@ -58,18 +58,23 @@ const Main = () => (
 									genres.key.split(',').forEach((genre) => {
 										// genres might be a comma separated value
 										if (releaseYearGenresTable[releaseYear][genre]) {
-											releaseYearGenresTable[releaseYear][genre] += genres.doc_count;
+											releaseYearGenresTable[releaseYear][genre]
+												+= genres.doc_count;
 										} else {
 											releaseYearGenresTable[releaseYear][genre] = 0;
-											releaseYearGenresTable[releaseYear][genre] = genres.doc_count;
+											releaseYearGenresTable[releaseYear][genre]
+												= genres.doc_count;
 										}
 									});
 								});
 							});
 							Object.keys(releaseYearGenresTable).forEach((year) => {
 								Object.keys(releaseYearGenresTable[year]).forEach((genre) => {
-									if (!genresReleaseYearTable[genre]) genresReleaseYearTable[genre] = {};
-									genresReleaseYearTable[genre][year] = releaseYearGenresTable[year][genre];
+									if (!genresReleaseYearTable[genre]) {
+										genresReleaseYearTable[genre] = {};
+									}
+									genresReleaseYearTable[genre][year]
+										= releaseYearGenresTable[year][genre];
 								});
 							});
 						}
@@ -89,6 +94,32 @@ const Main = () => (
 							})),
 						};
 					}}
+					customQuery={value =>
+						(value && value.secondaryLabel && value.mainLabel
+							? {
+								query: {
+									bool: {
+										must: [
+											{
+												term: {
+													release_year: value.mainLabel,
+												},
+											},
+											{
+												term: {
+													'genres_data.keyword': value.secondaryLabel,
+												},
+											},
+										],
+									},
+								},
+							  }
+							: {
+								query: {
+									match_all: {},
+								},
+							  })
+					}
 				/>
 			</div>
 

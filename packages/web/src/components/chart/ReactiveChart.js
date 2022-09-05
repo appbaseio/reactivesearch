@@ -41,6 +41,7 @@ const ChartTypes = {
 	Histogram: 'histogram',
 	Line: 'line',
 	Bar: 'bar',
+	Custom: 'custom',
 };
 
 class ReactiveChart extends React.Component {
@@ -66,6 +67,15 @@ class ReactiveChart extends React.Component {
 		}
 		this.setReact(props, this.internalComponent);
 		this.handleRange = debounce(this.handleRange, 100);
+
+		if (props.chartType === ChartTypes.Custom) {
+			if (typeof props.defaultQuery !== 'function' || typeof props.setOption !== 'function') {
+				throw new Error('defaultQuery and setOption should be defined when chartType is custom');
+			}
+			if (props.useAsFilter && typeof props.customQuery !== 'function') {
+				throw new Error('customQuery should be defined when chartType is custom and useAsFilter is true');
+			}
+		}
 	}
 	componentDidUpdate(prevProps) {
 		if (!isEqual(prevProps.options, this.props.options)) {
@@ -181,6 +191,13 @@ class ReactiveChart extends React.Component {
 			}
 			if (!Number.isNaN(parseInt(value, 10))) {
 				value = parseInt(value, 10);
+			}
+			if (chartType === ChartTypes.Custom) {
+				value = {
+					mainLabel: item.name,
+					secondaryLabel: item.seriesName,
+					data: item.data,
+				};
 			}
 			this.setValue(value);
 		}
@@ -343,8 +360,7 @@ class ReactiveChart extends React.Component {
 
 ReactiveChart.generateQueryOptions = (props, after, value = {}) => {
 	const queryOptions = getQueryOptions(props);
-	const valueArray = Array.isArray(value) ? value : [value];
-	return getAggsQuery(valueArray, queryOptions, props);
+	return getAggsQuery(value, queryOptions, props);
 };
 
 ReactiveChart.defaultQuery = (value, props) => {
@@ -639,6 +655,7 @@ ReactiveChart.propTypes = {
 	onMouseOut: func,
 	onGlobalOut: func,
 	onContextMenu: func,
+	beforeValueChange: func,
 	onDataZoom: func,
 	// ---- user props ---
 	// props to configure query
