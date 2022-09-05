@@ -60,10 +60,10 @@
   dependencies:
     cross-fetch "^3.0.4"
 
-"@appbaseio/designkit@^0.13.0":
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.13.0.tgz#79e184cb7ed283c7a07ccc7c75d8a3236a58b7ea"
-  integrity sha512-qZSXG1vrhUflrQUFhEDxT/iAdBZc75YNhyEg69nzQipRkDJVvj0cRo2D4CSLHWBjznKB9eMAY8oNq/LmFAMBJQ==
+"@appbaseio/designkit@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.11.0.tgz#6f0fce707239a8255ef3127b5889703368773cb8"
+  integrity sha512-qX5Ych7sgPKl4IP7jWiT7ISalDpky7IMS9fNxDH/M9rDsJ46AZABaC8xnuODWQPWtA0qHbW35TWltFxjfQ5TJA==
   dependencies:
     "@storybook/react" "^3.2.19"
     prop-types "^15.6.0"
@@ -141,17 +141,6 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivecore@9.14.19":
-  version "9.14.19"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.19.tgz#bf7032f3ece40ed512b471a03280c68724b45249"
-  integrity sha512-hhg5NwmtqsWSJCPv4xb9mQ9rycVQqRMwDelKwEa1lFaCmuEGAfHuL+2OR021wbq36suiIXvX1eT9TFy4ZJGdZQ==
-  dependencies:
-    cross-fetch "^3.0.4"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    xdate "^0.8.2"
-
 "@appbaseio/reactivesearch-vue@1.16.0-alpha.63":
   version "1.16.0-alpha.63"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.63.tgz#6e8a131607c6d85d45a0ff966d6bea8cceb56544"
@@ -173,31 +162,6 @@
     vue-no-ssr "^1.1.0"
     vue-slider-component "^3.2.15"
     vue-types "^1.7.0"
-
-"@appbaseio/reactivesearch@3.38.2":
-  version "3.38.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.38.2.tgz#13124dafd71486075c835d7c867d3e2767b45e00"
-  integrity sha512-HUXw8leJMk5I5Eekipl9ny2mVu2KyLmmBxat/lRIM7YAdPqXTNrEA1zJEbIXDtXN4RKyK+4u+x+gF+vtUSmRgA==
-  dependencies:
-    "@appbaseio/reactivecore" "9.14.19"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "5.0.0"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    rheostat "^2.1.1"
-    url-search-params-polyfill "^7.0.0"
-    xdate "^0.8.2"
-    xss "^1.0.11"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -5225,19 +5189,6 @@
   resolved "https://registry.yarnpkg.com/@turist/time/-/time-0.0.2.tgz#32fe0ce708ea0f4512776bd313409f1459976dda"
   integrity sha512-qLOvfmlG2vCVw5fo/oz8WAZYlpe5a5OurgTj3diIxJCdjRHpapC+vQCz3er9LV79Vcat+DifBjeAhOAdmndtDQ==
 
-"@typeform/embed-react@^1.13.0":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@typeform/embed-react/-/embed-react-1.19.0.tgz#e67eefd10681d8a04672cacbf3395e862f93c470"
-  integrity sha512-mzcJrHOIgNh3Kr8HuOlG6IptoaDcFZ7QYy3ZI8KRMKEf8VlZyiMn6v0sRbgjpJV+V0v3gzKfhxBBu5KBZP1OMw==
-  dependencies:
-    "@typeform/embed" "1.37.0"
-    fast-deep-equal "^3.1.3"
-
-"@typeform/embed@1.37.0", "@typeform/embed@^1.34.1":
-  version "1.37.0"
-  resolved "https://registry.yarnpkg.com/@typeform/embed/-/embed-1.37.0.tgz#33ea95e30456568269735062c704597a9b443b03"
-  integrity sha512-8GcABMWz/hrMLojoumjnvZxPcANwvZqvXPKAinH6KGEKZw3RFni9zHdPNxl1cJoexuq09rBDIfRgNmvSU8EsUQ==
-
 "@types/babel__core@^7.1.0":
   version "7.1.19"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.19.tgz#7b497495b7d1b4812bdb9d02804d0576f43ee460"
@@ -6891,11 +6842,6 @@ acorn@^8.0.4, acorn@^8.5.0, acorn@^8.7.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.0.tgz#88c0187620435c7f6015803f5539dae05a9dbea8"
   integrity sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==
 
-add@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
-  integrity sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==
-
 address@1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/address/-/address-1.0.3.tgz#b5f50631f8d6cec8bd20c963963afb55e06cbce9"
@@ -7316,15 +7262,6 @@ app-root-dir@^1.0.2:
   resolved "https://registry.yarnpkg.com/app-root-dir/-/app-root-dir-1.0.2.tgz#38187ec2dea7577fff033ffcb12172692ff6e118"
   integrity sha512-jlpIfsOoNoafl92Sz//64uQHGSyMrD2vYG5d8o2a4qGvyNCvXur7bzIsWtAC/6flI2RYAp3kv8rsfBtaLm7w0g==
 
-appbase-js@5.0.0, appbase-js@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.0.0.tgz#9f3e25ad718251e153593f7559cfac7b4d4ac961"
-  integrity sha512-TOvBaXEpRd85Oo118X+NNQq7CMtZE3eyp7zYWZ7LO2o9mrdTQRUk+ADE0P8xFkga2c4WHHRyBhoeJglux12LZg==
-  dependencies:
-    cross-fetch "^3.1.5"
-    querystring "^0.2.0"
-    url-parser-lite "^0.1.0"
-
 appbase-js@5.1.0, appbase-js@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.1.0.tgz#6896fad28376ee4d43ca03042e7c426e767eeed0"
@@ -7340,6 +7277,15 @@ appbase-js@^4.0.2-beta.11:
   integrity sha512-IYShIL3J9PlyMcTEm35iPFSeQZBUW6pCJEwXKvUVjx89p/npA4UVlmYfEfRWweAJEaercbq3zhRskouEJLw2BA==
   dependencies:
     cross-fetch "^2.2.2"
+    querystring "^0.2.0"
+    url-parser-lite "^0.1.0"
+
+appbase-js@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.0.0.tgz#9f3e25ad718251e153593f7559cfac7b4d4ac961"
+  integrity sha512-TOvBaXEpRd85Oo118X+NNQq7CMtZE3eyp7zYWZ7LO2o9mrdTQRUk+ADE0P8xFkga2c4WHHRyBhoeJglux12LZg==
+  dependencies:
+    cross-fetch "^3.1.5"
     querystring "^0.2.0"
     url-parser-lite "^0.1.0"
 
@@ -16970,11 +16916,6 @@ gatsby-remark-images@6.9.0:
     query-string "^6.14.1"
     unist-util-select "^3.0.4"
     unist-util-visit-parents "^3.1.1"
-
-gatsby-remark-prismjs-copy-button@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/gatsby-remark-prismjs-copy-button/-/gatsby-remark-prismjs-copy-button-0.3.1.tgz#5d772d64b4fce0bee417c7ea7fe39b5a34403d62"
-  integrity sha512-/A3BuZSdmI62+uSitAbgqdoS3QtYX4kiz9DZZgc1qMqpPss07YTmU8dFuVNxnNDP13h9jAMfr3BxP7J60ATZSg==
 
 gatsby-remark-prismjs@6.9.0:
   version "6.9.0"
@@ -28940,7 +28881,7 @@ react-responsive-modal@^4.0.1:
     prop-types "^15.6.2"
     react-transition-group "^4.0.0"
 
-react-router-dom@^4.2.2, react-router-dom@^4.3.1:
+react-router-dom@4.3.1, react-router-dom@^4.2.2:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
   integrity sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
@@ -35674,11 +35615,6 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
-
-yarn@^1.22.18:
-  version "1.22.19"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.19.tgz#4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
-  integrity sha512-/0V5q0WbslqnwP91tirOvldvYISzaqhClxzyUKXYxs07yUILIs5jx/k6CFe8bvKSkds5w+eiOqta39Wk3WxdcQ==
 
 yeast@0.1.2:
   version "0.1.2"
