@@ -73,7 +73,7 @@ class ReactiveChart extends React.Component {
 				throw new Error('defaultQuery and setOption should be defined when chartType is custom');
 			}
 			if (props.useAsFilter && typeof props.customQuery !== 'function') {
-				throw new Error('customQuery should be function when chartType is custom and useAsFilter is true');
+				throw new Error('customQuery should be defined when chartType is custom and useAsFilter is true');
 			}
 		}
 	}
