@@ -108,7 +108,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				: 'https://scalr.api.appbase.io';
 
 		let transformRequest = settings.transformRequest || null;
-		if (settings.enableAppbase && settings.endpoint instanceof Object) {
+		if (settings.enableAppbase && settings.endpoint && settings.endpoint instanceof Object) {
 			if (settings.endpoint.url) url = settings.endpoint.url;
 			transformRequest = (request) => {
 				const modifiedRequest = transformRequestUsingEndpoint(request, settings.endpoint);
