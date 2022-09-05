@@ -83,13 +83,26 @@ class SelectedFilters extends Component {
 				label = `${value.location} - ${label}`;
 			}
 			// Detect if value is from a chart with chartType as custom
-			if (value && (value.mainLabel || value.secondaryLabel)) {
-				if (value.mainLabel && value.secondaryLabel) {
-					label = `${value.mainLabel}-${value.secondaryLabel}-${JSON.stringify(value.data)}`;
-				} else if (value.mainLabel) {
-					label = `${value.mainLabel}`;
-				} else {
-					label = `${value.secondaryLabel}`;
+			if (value && typeof value === 'object') {
+				if (value.mainLabel || value.secondaryLabel) {
+					let data = '';
+					try {
+						if (value.data) {
+							data = JSON.stringify(value.data);
+						}
+					} catch (e) {
+						data = String(value.data);
+					}
+					if (value.mainLabel && value.secondaryLabel) {
+						label = `${value.mainLabel}-${value.secondaryLabel}`;
+					} else if (value.mainLabel) {
+						label = `${value.mainLabel}`;
+					} else {
+						label = `${value.secondaryLabel}`;
+					}
+					if (data) {
+						label += `-${data}`;
+					}
 				}
 			}
 			return label;
