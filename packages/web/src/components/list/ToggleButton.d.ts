@@ -26,6 +26,7 @@ export interface ToggleButtonProps extends CommonProps {
 	style?: types.style;
 	URLParams?: boolean;
 	enableStrictSelection?: boolean;
+	endpoint?: types.endpointConfig;
 }
 
 declare const ToggleButton: React.ComponentClass<ToggleButtonProps>;

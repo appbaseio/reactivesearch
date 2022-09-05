@@ -86,6 +86,7 @@ export interface SearchBoxProps extends CommonProps {
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;
 	searchboxId?: string;
+	endpoint?: types.endpointConfig;
 	mode?: string;
 }
 

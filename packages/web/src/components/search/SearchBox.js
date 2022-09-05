@@ -1675,6 +1675,7 @@ SearchBox.propTypes = {
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
 	searchboxId: types.string,
+	endpoint: types.endpoint,
 	mode: oneOf(['select', 'tag']),
 	renderSelectedTags: types.func,
 };

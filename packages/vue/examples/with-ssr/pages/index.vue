@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <ReactiveBase 
-      v-bind="components.settings" 
+    <ReactiveBase
+      v-bind="components.settings"
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
         <DataSearch v-bind="components.datasearch" />
       </nav>
       <ReactiveList v-bind="components.result">
-        <div 
-          slot="render" 
+        <div
+          slot="render"
           slot-scope="{ data }">
           <ResultCardsWrapper>
             <ResultCard

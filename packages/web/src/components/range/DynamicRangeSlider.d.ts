@@ -31,6 +31,7 @@ export interface DynamicRangeSliderProps extends CommonProps {
 	preferencesPath?: string;
 	queryFormat?: types.queryFormatDate;
 	calendarInterval?: types.calendarInterval;
+	endpoint?: types.endpointConfig;
 }
 
 declare const DynamicRange: React.ComponentClass<DynamicRangeSliderProps>;

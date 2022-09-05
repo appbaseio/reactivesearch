@@ -31,6 +31,7 @@ export interface SingleDataList extends CommonProps {
 	index?: string;
 	preferencesPath?: string;
 	enableStrictSelection?: boolean;
+	endpoint?: types.endpointConfig;
 }
 
 declare const SingleDataList: React.ComponentClass<SingleDataList>;

@@ -682,6 +682,7 @@ ReactiveChart.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
+	endpoint: types.endpoint,
 };
 
 ReactiveChart.defaultProps = {

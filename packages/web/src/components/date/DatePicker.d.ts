@@ -26,6 +26,7 @@ export interface DatePickerProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	index?: string;
 	preferencesPath?: string;
+	endpoint?: types.endpointConfig;
 }
 
 declare const DatePicker: React.ComponentClass<DatePickerProps>;

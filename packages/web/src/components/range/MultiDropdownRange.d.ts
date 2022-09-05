@@ -24,6 +24,7 @@ export interface MultiDropdownRangeProps extends CommonProps {
 	includeNullValues?: boolean;
 	index?: string;
 	preferencesPath?: string;
+	endpoint?: types.endpointConfig;
 }
 
 declare const MultiDropdownRange: React.ComponentClass<MultiDropdownRangeProps>;

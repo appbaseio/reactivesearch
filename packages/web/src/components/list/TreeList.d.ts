@@ -31,6 +31,7 @@ export interface TreeListProps extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
+	endpoint?: types.endpointConfig;
 }
 
 declare const TreeList: React.ComponentClass<TreeListProps>;

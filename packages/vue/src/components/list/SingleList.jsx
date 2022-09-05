@@ -63,6 +63,7 @@ const SingleList = {
 		nestedField: types.string,
 		index: VueTypes.string,
 		enableStrictSelection: VueTypes.bool.def(false),
+		endpoint: types.endpointConfig,
 	},
 	data() {
 		const props = this.$props;
@@ -81,8 +82,8 @@ const SingleList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions =
-			this.options && this.options[props.dataField]
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -218,66 +219,66 @@ const SingleList = {
 								</label>
 							</li>
 						) : null}
-						{!this.hasCustomRenderer &&
-						filteredItemsToRender.length === 0 &&
-						!this.isLoading
+						{!this.hasCustomRenderer
+						&& filteredItemsToRender.length === 0
+						&& !this.isLoading
 							? this.renderNoResult()
 							: filteredItemsToRender.map((item) => (
-									<li
-										key={item.key}
-										class={`${
-											this.currentValue === String(item.key) ? 'active' : ''
-										}`}
+								<li
+									key={item.key}
+									class={`${
+										this.currentValue === String(item.key) ? 'active' : ''
+									}`}
+								>
+									<Radio
+										class={getClassName(this.$props.innerClass, 'radio')}
+										id={`${this.$props.componentId}-${item.key}`}
+										name={this.$props.componentId}
+										value={item.key}
+										readOnly
+										onClick={this.handleClick}
+										type="radio"
+										show={this.$props.showRadio}
+										{...{
+											domProps: {
+												checked: this.currentValue === String(item.key),
+											},
+										}}
+									/>
+									<label
+										class={
+											getClassName(this.$props.innerClass, 'label')
+												|| null
+										}
+										for={`${this.$props.componentId}-${item.key}`}
 									>
-										<Radio
-											class={getClassName(this.$props.innerClass, 'radio')}
-											id={`${this.$props.componentId}-${item.key}`}
-											name={this.$props.componentId}
-											value={item.key}
-											readOnly
-											onClick={this.handleClick}
-											type="radio"
-											show={this.$props.showRadio}
-											{...{
-												domProps: {
-													checked: this.currentValue === String(item.key),
-												},
-											}}
-										/>
-										<label
-											class={
-												getClassName(this.$props.innerClass, 'label') ||
-												null
-											}
-											for={`${this.$props.componentId}-${item.key}`}
-										>
-											{renderItemCalc ? (
-												renderItemCalc({
-													label: item.key,
-													count: item.doc_count,
-													isChecked:
+										{renderItemCalc ? (
+											renderItemCalc({
+												label: item.key,
+												count: item.doc_count,
+												isChecked:
 														this.currentValue === String(item.key),
-												})
-											) : (
-												<span>
-													{item.key}
-													{this.$props.showCount && (
-														<span
-															class={
-																getClassName(
-																	this.$props.innerClass,
-																	'count',
-																) || null
-															}
-														>
+											})
+										) : (
+											<span>
+												{item.key}
+												{this.$props.showCount && (
+													<span
+														class={
+															getClassName(
+																this.$props.innerClass,
+																'count',
+															) || null
+														}
+													>
 															&nbsp;(
-															{item.doc_count})
-														</span>
-													)}
-												</span>
-											)}
-										</label>
-									</li>
+														{item.doc_count})
+													</span>
+												)}
+											</span>
+										)}
+									</label>
+								</li>
 							  ))}
 					</UL>
 				)}
@@ -430,8 +431,8 @@ const SingleList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults =
-				this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -502,9 +503,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		'',
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| '',
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],

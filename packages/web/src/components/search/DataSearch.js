@@ -1704,6 +1704,7 @@ DataSearch.propTypes = {
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
 	enableDefaultSuggestions: types.bool,
+	endpoint: types.endpoint,
 	mode: oneOf(['select', 'tag']),
 	renderSelectedTags: types.func,
 };

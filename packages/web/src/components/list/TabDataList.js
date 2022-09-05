@@ -69,5 +69,6 @@ TabDataList.propTypes = {
 	renderItem: types.func,
 	renderNoResults: types.func,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 export default TabDataList;

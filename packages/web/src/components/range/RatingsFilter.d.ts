@@ -21,6 +21,7 @@ export interface RatingsFilterProps extends CommonProps {
 	includeNullValues?: boolean;
 	index?: string;
 	preferencesPath?: string;
+	endpoint?: types.endpointConfig;
 }
 
 declare const RatingsFilter: React.ComponentClass<RatingsFilterProps>;

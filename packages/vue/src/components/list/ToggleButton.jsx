@@ -31,6 +31,7 @@ const ToggleButton = {
 		renderItem: types.func,
 		index: VueTypes.string,
 		enableStrictSelection: VueTypes.bool,
+		endpoint: types.endpointConfig,
 	},
 	data() {
 		this.__state = {
@@ -109,11 +110,11 @@ const ToggleButton = {
 			if (isDefaultValue) {
 				finalValue = ToggleButton.parseValue(toggleValue, props);
 			} else if (this.$props.multiSelect) {
-				finalValue = currentValue.some(item => item.value === toggleValue.value)
-					? currentValue.filter(item => item.value !== toggleValue.value)
+				finalValue = currentValue.some((item) => item.value === toggleValue.value)
+					? currentValue.filter((item) => item.value !== toggleValue.value)
 					: currentValue.concat(toggleValue);
 			} else {
-				finalValue = currentValue.some(item => item.value === toggleValue.value)
+				finalValue = currentValue.some((item) => item.value === toggleValue.value)
 					? []
 					: [toggleValue];
 			}
@@ -166,7 +167,7 @@ const ToggleButton = {
 				this.setQueryOptions(
 					props.componentId,
 					getOptionsFromQuery(customQuery(value, props)),
-					false
+					false,
 				);
 				updateCustomQuery(props.componentId, this.setCustomQuery, props, value);
 			}
@@ -188,7 +189,7 @@ const ToggleButton = {
 			if (
 				enableStrictSelection
 				&& !multiSelect
-				&& this.$data.currentValue.find(stateItem => isEqual(item, stateItem))
+				&& this.$data.currentValue.find((stateItem) => isEqual(item, stateItem))
 			) {
 				return false;
 			}
@@ -203,7 +204,7 @@ const ToggleButton = {
 
 		renderButton(item) {
 			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
-			const isSelected = this.$data.currentValue.some(value => value.value === item.value);
+			const isSelected = this.$data.currentValue.some((value) => value.value === item.value);
 
 			return renderItem ? (
 				renderItem({ item, isSelected, handleClick: () => this.handleClick(item) })
@@ -217,7 +218,7 @@ const ToggleButton = {
 					primary={isSelected}
 					large
 					tabIndex={isSelected ? '-1' : '0'}
-					onKeypress={e => handleA11yAction(e, () => this.handleClick(item))}
+					onKeypress={(e) => handleA11yAction(e, () => this.handleClick(item))}
 				>
 					{item.label}
 				</Button>
@@ -233,7 +234,7 @@ const ToggleButton = {
 						{this.$props.title}
 					</Title>
 				)}
-				{this.$props.data.map(item => this.renderButton(item))}
+				{this.$props.data.map((item) => this.renderButton(item))}
 			</Container>
 		);
 	},
@@ -242,11 +243,11 @@ const ToggleButton = {
 ToggleButton.parseValue = (value, props) => {
 	if (Array.isArray(value)) {
 		if (typeof value[0] === 'string') {
-			return props.data.filter(item => value.includes(item.value));
+			return props.data.filter((item) => value.includes(item.value));
 		}
 		return value;
 	}
-	return props.data.filter(item => item.value === value);
+	return props.data.filter((item) => item.value === value);
 };
 
 ToggleButton.defaultQuery = (value, props) => {
@@ -256,7 +257,7 @@ ToggleButton.defaultQuery = (value, props) => {
 			bool: {
 				boost: 1.0,
 				minimum_should_match: 1,
-				should: value.map(item => ({
+				should: value.map((item) => ({
 					term: {
 						[props.dataField]: item.value,
 					},
@@ -297,7 +298,7 @@ const RcConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps
 	componentType: componentTypes.toggleButton,
 });
 
-ToggleButton.install = function(Vue) {
+ToggleButton.install = function (Vue) {
 	Vue.component(ToggleButton.name, RcConnected);
 };
 // Add componentType for SSR

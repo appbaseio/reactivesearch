@@ -26,10 +26,10 @@ const RangeInput = {
 		const state = {
 			currentValue: {
 				start: this.$props.range ? this.$props.range.start : 0,
-				end: this.$props.range ? this.$props.range.end : 10
+				end: this.$props.range ? this.$props.range.end : 10,
 			},
 			isStartValid: true,
-			isEndValid: true
+			isEndValid: true,
 		};
 		return state;
 	},
@@ -37,7 +37,7 @@ const RangeInput = {
 	props: {
 		className: {
 			types: types.string,
-			default: ''
+			default: '',
 		},
 		defaultValue: types.range,
 		validateRange: types.func,
@@ -49,9 +49,9 @@ const RangeInput = {
 			default() {
 				return {
 					start: 0,
-					end: 10
-				}
-			}
+					end: 10,
+				};
+			},
 		},
 		rangeLabels: types.rangeLabels,
 		stepValue: types.number,
@@ -69,6 +69,7 @@ const RangeInput = {
 		URLParams: VueTypes.bool.def(false),
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
+		endpoint: types.endpointConfig,
 	},
 
 	methods: {
@@ -93,13 +94,13 @@ const RangeInput = {
 			if (this.shouldUpdate(value) && !isEqual(value, this.currentValue)) {
 				switch (event) {
 					case 'change':
-						if(!value) {
+						if (!value) {
 							currentValue = {
 								start: this.$props.range ? this.$props.range.start : 0,
-								end: this.$props.range ? this.$props.range.end : 10
-							}
+								end: this.$props.range ? this.$props.range.end : 10,
+							};
 						}
-						this.$data.currentValue = {...currentValue};
+						this.$data.currentValue = { ...currentValue };
 						this.$emit('change', this.$data.currentValue);
 						break;
 					case 'value-change':
@@ -107,13 +108,13 @@ const RangeInput = {
 						this.$emit('value-change', this.$data.currentValue);
 						break;
 					default:
-						this.$data.currentValue = {...currentValue};
+						this.$data.currentValue = { ...currentValue };
 						break;
 				}
 			}
 		},
 		handleOnChange(value) {
-			this.handleChange(value || this.$props.range, 'change');			
+			this.handleChange(value || this.$props.range, 'change');
 		},
 		handleValueChange(value) {
 			this.handleChange(value, 'value-change');
@@ -134,23 +135,29 @@ const RangeInput = {
 
 			if (this.$data.isStartValid && this.$data.isEndValid) {
 				if (name === 'start') {
-					this.handleChange({
-						start: Number(value),
-						end: this.$data.currentValue.end
-					}, 'change');
+					this.handleChange(
+						{
+							start: Number(value),
+							end: this.$data.currentValue.end,
+						},
+						'change',
+					);
 				} else {
-					this.handleChange({
-						start: this.$data.currentValue.start,
-						end: Number(value)
-					}, 'change');
+					this.handleChange(
+						{
+							start: this.$data.currentValue.start,
+							end: Number(value),
+						},
+						'change',
+					);
 				}
 			}
-		}
+		},
 	},
 	watch: {
 		defaultValue(newVal, oldVal) {
 			if (oldVal.start !== newVal.start || oldVal.end !== newVal.end) {
-				this.handleChange(newVal)
+				this.handleChange(newVal);
 			}
 		},
 		value(newVal, oldVal) {
@@ -162,8 +169,12 @@ const RangeInput = {
 		},
 	},
 	created() {
-		if (this.$props.defaultValue && this.$props.defaultValue.start && this.$props.defaultValue.end) {
-			this.handleChange(this.$props.defaultValue)
+		if (
+			this.$props.defaultValue
+			&& this.$props.defaultValue.start
+			&& this.$props.defaultValue.end
+		) {
+			this.handleChange(this.$props.defaultValue);
 		}
 		if (this.isControlled()) {
 			this.handleChange(this.$props.value, 'change');
@@ -199,7 +210,7 @@ const RangeInput = {
 					componentId={componentId}
 					value={{
 						start: this.currentValue.start,
-						end: this.currentValue.end
+						end: this.currentValue.end,
 					}}
 					range={range}
 					dataField={dataField}
@@ -232,17 +243,13 @@ const RangeInput = {
 							min={this.$props.range ? this.$props.range.start : 0}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isStartValid}
-							{
-							...{
+							{...{
 								domProps: {
-									value: this.currentValue.start
-								}
-							}
-							}
+									value: this.currentValue.start,
+								},
+							}}
 						/>
-						{!this.isStartValid && (
-							<Content alert>Input range is invalid</Content>
-						)}
+						{!this.isStartValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
 					<Flex justifyContent="center" alignItems="center" flex={1}>
 						-
@@ -259,13 +266,11 @@ const RangeInput = {
 							max={this.$props.range ? this.$props.range.end : 10}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isEndValid}
-							{
-							...{
+							{...{
 								domProps: {
-									value: this.currentValue.end
-								}
-							}
-							}
+									value: this.currentValue.end,
+								},
+							}}
 						/>
 						{!this.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
@@ -283,7 +288,7 @@ const RangeConnected = ComponentWrapper(connect(mapStateToProps, {})(RangeInput)
 	componentType: componentTypes.rangeInput,
 });
 
-RangeInput.install = function(Vue) {
+RangeInput.install = function (Vue) {
 	Vue.component(RangeInput.name, RangeConnected);
 };
 

@@ -80,6 +80,7 @@ const MultiDropdownList = {
 		nestedField: types.string,
 		index: VueTypes.string,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
+		endpoint: types.endpointConfig,
 	},
 	created() {
 		if (!this.enableAppbase && this.$props.index) {
@@ -88,8 +89,8 @@ const MultiDropdownList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions =
-			this.options && this.options[props.dataField]
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -247,8 +248,8 @@ const MultiDropdownList = {
 					searchPlaceholder={this.$props.searchPlaceholder}
 					transformData={this.$props.transformData}
 					footer={
-						showLoadMore &&
-						!isLastBucket && (
+						showLoadMore
+						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
 								<Button onClick={this.handleLoadMore}>{loadMoreLabel}</Button>
 							</div>
@@ -386,9 +387,9 @@ const MultiDropdownList = {
 			const queryOptions = getQueryOptions(props);
 			return props.showLoadMore
 				? getCompositeAggsQuery({
-						query: queryOptions,
-						props,
-						after,
+					query: queryOptions,
+					props,
+					after,
 				  })
 				: getAggsQuery(queryOptions, props);
 		},
@@ -531,9 +532,9 @@ MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
 		? getCompositeAggsQuery({
-				query: queryOptions,
-				props,
-				after,
+			query: queryOptions,
+			props,
+			after,
 		  })
 		: getAggsQuery(queryOptions, props);
 };
@@ -547,9 +548,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],

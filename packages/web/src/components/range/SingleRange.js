@@ -41,7 +41,6 @@ class SingleRange extends Component {
 		}
 	}
 
-
 	componentDidMount() {
 		const { enableAppbase, index } = this.props;
 		if (!enableAppbase && index) {
@@ -227,6 +226,7 @@ SingleRange.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 SingleRange.defaultProps = {
@@ -252,10 +252,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

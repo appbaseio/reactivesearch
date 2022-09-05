@@ -20,13 +20,14 @@ export interface ReactiveBaseProps {
 	transformResponse?: (...args: any[]) => any;
 	transformRequest?: (...args: any[]) => any;
 	getSearchParams?: () => string;
-	setSearchParams?: (newURL: string) => void;	
+	setSearchParams?: (newURL: string) => void;
 	initialQueriesSyncTime?: number;
 	analyticsConfig?: types.analyticsConfig;
 	appbaseConfig?: types.appbaseConfig;
 	enableAppbase?: boolean;
 	initialState?: types.children;
 	analytics?: boolean;
+	endpoint?: types.endpointConfig;
 }
 
 declare const ReactiveBase: React.ComponentClass<ReactiveBaseProps>;
