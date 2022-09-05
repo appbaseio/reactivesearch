@@ -360,8 +360,7 @@ class ReactiveChart extends React.Component {
 
 ReactiveChart.generateQueryOptions = (props, after, value = {}) => {
 	const queryOptions = getQueryOptions(props);
-	const valueArray = Array.isArray(value) ? value : [value];
-	return getAggsQuery(valueArray, queryOptions, props);
+	return getAggsQuery(value, queryOptions, props);
 };
 
 ReactiveChart.defaultQuery = (value, props) => {
