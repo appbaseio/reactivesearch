@@ -6,7 +6,6 @@
       <nav class="nav">
         <div class="title">Airbeds</div>
         <DataSearch v-bind="components.datasearch" />
-        <SingleList v-bind="components.list" />
       </nav>
       <ReactiveList v-bind="components.result">
         <div 
@@ -18,7 +17,7 @@
               :key="result._id"
               :href="result.listing_url"
             >
-              <ResultCardImage :src="result.image" />
+              <ResultCardImage :src="result.picture_url" />
               <ResultCardTitle>
                 {{ result.name }}
               </ResultCardTitle>
@@ -37,12 +36,7 @@
 </template>
 
 <script>
-import {
-	initReactivesearch,
-	DataSearch,
-	ReactiveList,
-	SingleList,
-} from '@appbaseio/reactivesearch-vue';
+import { initReactivesearch, DataSearch, ReactiveList } from '@appbaseio/reactivesearch-vue';
 import './styles/airbnb.css';
 
 const components = {
@@ -55,10 +49,6 @@ const components = {
 				primaryColor: '#FF3A4E',
 			},
 		},
-	},
-	list: {
-		componentId: 'SearchSensor2',
-		dataField: 'room_type.keyword',
 	},
 	datasearch: {
 		componentId: 'SearchSensor',
@@ -107,10 +97,6 @@ export default {
 					{
 						...components.result,
 						source: ReactiveList,
-					},
-					{
-						...components.list,
-						source: SingleList,
 					},
 				],
 				query,

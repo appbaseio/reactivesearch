@@ -145,11 +145,19 @@ export default function initReactivesearch(componentCollection, searchState, set
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
-			endpoint: settings.endpoint,
 			enableAppbase: settings.enableAppbase,
+			endpoint: settings.endpoint,
 		};
 		const appbaseRef = Appbase(config);
-		appbaseRef.transformRequest = transformRequest;
+
+		if (config.transformRequest) {
+			appbaseRef.transformRequest = config.transformRequest;
+		}
+
+		if (config.transformResponse) {
+			appbaseRef.transformResponse = config.transformResponse;
+		}
+
 		let components = [];
 		let selectedValues = {};
 		const internalValues = {};
@@ -533,7 +541,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				resolve(state);
 			});
 		};
-
 		if (config.graphQLUrl) {
 			const handleTransformRequest = (res) => {
 				if (config.transformRequest && typeof config.transformRequest === 'function') {
