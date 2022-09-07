@@ -631,15 +631,15 @@ class DataSearch extends Component {
 		checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 	};
 
-	handleTextChange = debounce((value) => {
+	handleTextChange = (value) => {
 		if (this.props.autosuggest) {
 			this.updateDefaultQuery(value, this.props);
 		} else {
 			this.updateQuery(value, this.props);
 		}
-	}, this.props.debounce);
+	};
 
-	updateDefaultQuery = (value, props) => {
+	updateDefaultQuery = debounce((value, props) => {
 		const { defaultQuery, resetStore, enableDefaultSuggestions } = props;
 		if (!value && enableDefaultSuggestions === false) {
 			// clear Component data from store
@@ -671,9 +671,9 @@ class DataSearch extends Component {
 			value,
 			componentType: componentTypes.dataSearch,
 		});
-	};
+	}, this.props.debounce);
 
-	updateQuery = (value, props) => {
+	updateQuery = debounce((value, props) => {
 		const {
 			customQuery, filterLabel, showFilter, URLParams,
 		} = props;
@@ -711,7 +711,7 @@ class DataSearch extends Component {
 				componentType: componentTypes.dataSearch,
 			});
 		}
-	};
+	}, this.props.debounce);
 
 	handleFocus = (event) => {
 		this.setState({
@@ -794,7 +794,14 @@ class DataSearch extends Component {
 			this.updateQuery(this.state.selectedTags, this.props);
 			return;
 		}
-		this.setValue(this.props.value, !isOpen, this.props);
+		this.setValue(
+			this.props.value,
+			!isOpen,
+			this.props,
+			undefined,
+			true,
+			isOpen ? !this.state.isOpen : this.state.isOpen,
+		);
 	};
 
 	onSuggestionSelected = (suggestion) => {
