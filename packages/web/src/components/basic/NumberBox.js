@@ -243,6 +243,7 @@ NumberBox.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 NumberBox.defaultProps = {
@@ -269,10 +270,8 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

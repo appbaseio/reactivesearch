@@ -65,6 +65,7 @@ const MultiList = {
 		missingLabel: VueTypes.string.def('N/A'),
 		nestedField: types.string,
 		index: VueTypes.string,
+		endpoint: types.endpointConfig,
 	},
 	data() {
 		const props = this.$props;
@@ -83,8 +84,8 @@ const MultiList = {
 			);
 		}
 		const props = this.$props;
-		this.modifiedOptions =
-			this.options && this.options[props.dataField]
+		this.modifiedOptions
+			= this.options && this.options[props.dataField]
 				? this.options[props.dataField].buckets
 				: [];
 		// Set custom and default queries in store
@@ -232,59 +233,59 @@ const MultiList = {
 								</label>
 							</li>
 						) : null}
-						{!this.hasCustomRenderer &&
-						filteredItemsToRender.length === 0 &&
-						!this.isLoading
+						{!this.hasCustomRenderer
+						&& filteredItemsToRender.length === 0
+						&& !this.isLoading
 							? this.renderNoResult()
 							: filteredItemsToRender.map((item) => (
-									<li
-										key={item.key}
-										class={`${
-											this.$data.currentValue[item.key] ? 'active' : ''
-										}`}
+								<li
+									key={item.key}
+									class={`${
+										this.$data.currentValue[item.key] ? 'active' : ''
+									}`}
+								>
+									<Checkbox
+										type="checkbox"
+										class={getClassName(this.$props.innerClass, 'checkbox')}
+										id={`${this.$props.componentId}-${item.key}`}
+										name={this.$props.componentId}
+										value={item.key}
+										onClick={this.handleClick}
+										show={this.$props.showCheckbox}
+										{...{
+											domProps: {
+												checked: !!this.$data.currentValue[item.key],
+											},
+										}}
+									/>
+									<label
+										class={getClassName(this.$props.innerClass, 'label')}
+										for={`${this.$props.componentId}-${item.key}`}
 									>
-										<Checkbox
-											type="checkbox"
-											class={getClassName(this.$props.innerClass, 'checkbox')}
-											id={`${this.$props.componentId}-${item.key}`}
-											name={this.$props.componentId}
-											value={item.key}
-											onClick={this.handleClick}
-											show={this.$props.showCheckbox}
-											{...{
-												domProps: {
-													checked: !!this.$data.currentValue[item.key],
-												},
-											}}
-										/>
-										<label
-											class={getClassName(this.$props.innerClass, 'label')}
-											for={`${this.$props.componentId}-${item.key}`}
-										>
-											{renderItemCalc ? (
-												renderItemCalc({
-													label: item.key,
-													count: item.doc_count,
-													isChecked: !!this.$data.currentValue[item.key],
-												})
-											) : (
-												<span>
-													{item.key}
-													{this.$props.showCount && (
-														<span
-															class={getClassName(
-																this.$props.innerClass,
-																'count',
-															)}
-														>
+										{renderItemCalc ? (
+											renderItemCalc({
+												label: item.key,
+												count: item.doc_count,
+												isChecked: !!this.$data.currentValue[item.key],
+											})
+										) : (
+											<span>
+												{item.key}
+												{this.$props.showCount && (
+													<span
+														class={getClassName(
+															this.$props.innerClass,
+															'count',
+														)}
+													>
 															&nbsp;(
-															{item.doc_count})
-														</span>
-													)}
-												</span>
-											)}
-										</label>
-									</li>
+														{item.doc_count})
+													</span>
+												)}
+											</span>
+										)}
+									</label>
+								</li>
 							  ))}
 					</UL>
 				)}
@@ -298,9 +299,9 @@ const MultiList = {
 			let { currentValue } = this.$data;
 			let finalValues = null;
 			if (
-				selectAllLabel &&
-				((Array.isArray(value) && value.includes(selectAllLabel)) ||
-					(typeof value === 'string' && value === selectAllLabel))
+				selectAllLabel
+				&& ((Array.isArray(value) && value.includes(selectAllLabel))
+					|| (typeof value === 'string' && value === selectAllLabel))
 			) {
 				if (currentValue[selectAllLabel]) {
 					currentValue = {};
@@ -489,8 +490,8 @@ const MultiList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults =
-				this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults
+				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -601,9 +602,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],

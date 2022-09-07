@@ -233,14 +233,18 @@ class SingleList extends Component {
 			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
-		props.setQueryOptions(props.componentId, {
-			...SingleList.generateQueryOptions(
-				props,
-				this.state.prevAfter,
-				this.state.currentValue,
-			),
-			...customQueryOptions,
-		}, false);
+		props.setQueryOptions(
+			props.componentId,
+			{
+				...SingleList.generateQueryOptions(
+					props,
+					this.state.prevAfter,
+					this.state.currentValue,
+				),
+				...customQueryOptions,
+			},
+			false,
+		);
 		props.updateQuery({
 			componentId: props.componentId,
 			query,
@@ -571,6 +575,7 @@ SingleList.propTypes = {
 	nestedField: types.string,
 	index: types.string,
 	enableStrictSelection: types.bool,
+	endpoint: types.endpoint,
 };
 
 SingleList.defaultProps = {
@@ -619,7 +624,6 @@ const mapDispatchtoProps = dispatch => ({
 
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

@@ -729,6 +729,7 @@ MultiList.propTypes = {
 	showLoadMore: types.bool,
 	loadMoreLabel: types.title,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 MultiList.defaultProps = {
@@ -775,7 +776,6 @@ const mapDispatchtoProps = dispatch => ({
 	loadMore: (component, aggsQuery) => dispatch(loadMore(component, aggsQuery, true, true)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

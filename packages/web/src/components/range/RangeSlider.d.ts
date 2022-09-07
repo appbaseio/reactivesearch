@@ -33,6 +33,7 @@ export interface RangeSliderProps extends CommonProps {
 	preferencesPath?: string;
 	queryFormat?: types.queryFormatDate;
 	calendarInterval?: types.calendarInterval;
+	endpoint?: types.endpointConfig;
 }
 
 declare const RangeSlider: React.ComponentClass<RangeSliderProps>;

@@ -164,6 +164,12 @@ const types = {
 		db: VueTypes.string,
 		collection: VueTypes.string,
 	}),
+	endpointConfig: VueTypes.shape({
+		url: VueTypes.string.isRequired,
+		method: VueTypes.string,
+		headers: VueTypes.object,
+		body: VueTypes.object,
+	}),
 };
 
 export default types;

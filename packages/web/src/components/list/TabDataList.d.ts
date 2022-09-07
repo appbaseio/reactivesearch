@@ -16,6 +16,7 @@ export interface TabDataList extends CommonProps {
 	children?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	renderNoResults?: (...args: any[]) => any;
+	endpoint?: types.endpointConfig;
 }
 
 declare const TabDataList: React.ComponentClass<TabDataList>;

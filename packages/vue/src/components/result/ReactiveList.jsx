@@ -149,6 +149,7 @@ const ReactiveList = {
 		distinctField: types.string,
 		distinctFieldConfig: types.props,
 		index: VueTypes.string,
+		endpoint: types.endpointConfig,
 	},
 	computed: {
 		shouldRenderPagination() {

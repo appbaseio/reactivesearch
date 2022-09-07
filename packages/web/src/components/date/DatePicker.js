@@ -283,6 +283,7 @@ DatePicker.propTypes = {
 	theme: types.style,
 	title: types.string,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 DatePicker.defaultProps = {
@@ -310,11 +311,10 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptions(component, props)),
 });
 
-
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(withTheme(props => (<DatePicker ref={props.myForwardedRef} {...props} />)));
+)(withTheme(props => <DatePicker ref={props.myForwardedRef} {...props} />));
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

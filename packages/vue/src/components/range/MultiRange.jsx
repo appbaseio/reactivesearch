@@ -40,6 +40,7 @@ const MultiRange = {
 		URLParams: VueTypes.bool.def(false),
 		nestedField: types.string,
 		index: VueTypes.string,
+		endpoint: types.endpointConfig,
 	},
 	methods: {
 		handleClick(e) {
@@ -177,9 +178,9 @@ const MultiRange = {
 				)}
 				<UL class={getClassName(this.$props.innerClass, 'list')}>
 					{this.$props.data.map((item) => {
-						const selected =
-							!!this.$data.currentValue &&
-							this.$data.currentValue.label === item.label;
+						const selected
+							= !!this.$data.currentValue
+							&& this.$data.currentValue.label === item.label;
 						return (
 							<li key={item.label} class={`${selected ? 'active' : ''}`}>
 								<Checkbox
@@ -259,9 +260,9 @@ MultiRange.defaultQuery = (values, props) => {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	componentProps: state.props[props.componentId],
 	enableAppbase: state.config.enableAppbase,
 });

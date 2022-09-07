@@ -56,6 +56,7 @@ const DynamicRangeSlider = {
 		nestedField: types.string,
 		index: VueTypes.string,
 		value: types.range,
+		endpoint: types.endpointConfig,
 	},
 
 	data() {
@@ -351,16 +352,16 @@ const DynamicRangeSlider = {
 							<div class="label-container">
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label') ||
-										'range-label-left'
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-left'
 									}
 								>
 									{this.labels.start}
 								</label>
 								<label
 									class={
-										getClassName(this.$props.innerClass, 'label') ||
-										'range-label-right'
+										getClassName(this.$props.innerClass, 'label')
+										|| 'range-label-right'
 									}
 								>
 									{this.labels.end}
@@ -420,26 +421,26 @@ const mapStateToProps = (state, props) => {
 	let range = state.aggregations[`${props.componentId}__range__internal`];
 
 	if (props.nestedField) {
-		options =
-			options &&
-			componentId[props.dataField][props.nestedField] &&
-			componentId[props.dataField][props.nestedField].buckets
+		options
+			= options
+			&& componentId[props.dataField][props.nestedField]
+			&& componentId[props.dataField][props.nestedField].buckets
 				? componentId[props.dataField][props.nestedField].buckets
 				: [];
-		range =
-			range && internalRange[props.nestedField].min
+		range
+			= range && internalRange[props.nestedField].min
 				? {
-						start: internalRange[props.nestedField].min.value,
-						end: internalRange[props.nestedField].max.value,
+					start: internalRange[props.nestedField].min.value,
+					end: internalRange[props.nestedField].max.value,
 				  }
 				: null;
 	} else {
-		options =
-			options && componentId[props.dataField].buckets
+		options
+			= options && componentId[props.dataField].buckets
 				? componentId[props.dataField].buckets
 				: [];
-		range =
-			range && internalRange.min
+		range
+			= range && internalRange.min
 				? { start: internalRange.min.value, end: internalRange.max.value }
 				: null;
 	}

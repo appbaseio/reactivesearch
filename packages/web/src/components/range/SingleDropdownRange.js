@@ -211,6 +211,7 @@ SingleDropdownRange.propTypes = {
 	includeNullValues: types.bool,
 	renderLabel: types.func,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 SingleDropdownRange.defaultProps = {
@@ -221,7 +222,6 @@ SingleDropdownRange.defaultProps = {
 	URLParams: false,
 	includeNullValues: false,
 };
-
 
 // Add componentType for SSR
 SingleDropdownRange.componentType = componentTypes.singleDropdownRange;
@@ -238,10 +238,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

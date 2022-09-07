@@ -593,6 +593,7 @@ RangeSlider.propTypes = {
 	// RangeSlider bydefault supports yyyy-MM-dd'T'HH:mm:ss
 	// but this is not required for RangeInput
 	_dateFormat: types.string,
+	endpoint: types.endpoint,
 };
 
 RangeSlider.defaultProps = {
@@ -634,13 +635,11 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	updateComponentProps: (component, options, componentType) =>
 		dispatch(updateComponentProps(component, options, componentType)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

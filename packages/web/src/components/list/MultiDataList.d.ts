@@ -31,6 +31,7 @@ export interface MultiDataList extends CommonProps {
 	renderNoResults?: (...args: any[]) => any;
 	index?: string;
 	preferencesPath?: string;
+	endpoint?: types.endpointConfig;
 }
 
 declare const MultiDataList: React.ComponentClass<MultiDataList>;

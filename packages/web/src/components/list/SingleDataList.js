@@ -35,17 +35,16 @@ import { connect, isEvent, isQueryIdentical } from '../../utils';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
-
 const SingleDataListUL = styled(UL)`
 	display: ${({ displayAsVertical }) => (displayAsVertical ? 'block' : 'flex')};
-	white-space:nowrap;
+	white-space: nowrap;
 `;
 
 const Span = styled.span`
 	width: auto !important;
 `;
 const Label = styled.label`
-	::before{
+	::before {
 		width: 16px !important;
 	}
 	margin: 0.4rem !important;
@@ -512,6 +511,7 @@ SingleDataList.propTypes = {
 	index: types.string,
 	enableStrictSelection: types.bool,
 	displayAsVertical: types.bool,
+	endpoint: types.endpoint,
 };
 
 SingleDataList.defaultProps = {
@@ -552,7 +552,6 @@ const mapDispatchtoProps = dispatch => ({
 
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

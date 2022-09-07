@@ -490,6 +490,7 @@ RangeInput.propTypes = {
 	index: types.string,
 	queryFormat: oneOf([...Object.keys(dateFormats)]),
 	calendarInterval: types.calendarInterval,
+	endpoint: types.endpoint,
 };
 
 RangeInput.defaultProps = {

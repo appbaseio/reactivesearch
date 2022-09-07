@@ -35,6 +35,7 @@ const ReactiveComponent = {
 		distinctField: types.string,
 		distinctFieldConfig: types.props,
 		index: VueTypes.string,
+		endpoint: types.endpointConfig,
 	},
 	created() {
 		const props = this.$props;
@@ -324,9 +325,9 @@ const mapStateToProps = (state, props) => ({
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	promotedResults: state.promotedResults[props.componentId] || [],
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,

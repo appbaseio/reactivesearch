@@ -575,6 +575,7 @@ MultiDataList.propTypes = {
 	renderItem: types.func,
 	renderNoResults: types.func,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 MultiDataList.defaultProps = {
@@ -616,9 +617,7 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<MultiDataList ref={props.myForwardedRef} {...props} />
-));
+)(props => <MultiDataList ref={props.myForwardedRef} {...props} />);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
