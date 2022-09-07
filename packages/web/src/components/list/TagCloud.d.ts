@@ -27,6 +27,7 @@ export interface TagCloudProps extends CommonProps {
 	title?: types.title;
 	index?: string;
 	preferencesPath?: string;
+	endpoint?: types.endpointConfig;
 }
 
 declare const TagCloud: React.ComponentClass<TagCloudProps>;

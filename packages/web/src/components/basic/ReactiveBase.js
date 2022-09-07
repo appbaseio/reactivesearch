@@ -7,7 +7,10 @@ import 'url-search-params-polyfill';
 import { ThemeProvider } from 'emotion-theming';
 
 import configureStore from '@appbaseio/reactivecore';
-import { checkSomePropChange } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	checkSomePropChange,
+	transformRequestUsingEndpoint,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
@@ -44,6 +47,12 @@ class ReactiveBase extends Component {
 		if (analytics !== undefined) {
 			console.warn(
 				'Warning(ReactiveSearch): The `analytics` prop has been marked as deprecated, please set the `recordAnalytics` property as `true` in `appbaseConfig` prop instead.',
+			);
+		}
+
+		if (!this.props.enableAppbase && this.props.endpoint instanceof Object) {
+			console.warn(
+				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
 			);
 		}
 	}
@@ -95,7 +104,7 @@ class ReactiveBase extends Component {
 
 	get headers() {
 		const {
-			enableAppbase, headers, appbaseConfig, mongodb,
+			enableAppbase, headers, appbaseConfig, mongodb, endpoint,
 		} = this.props;
 		const { enableTelemetry } = appbaseConfig || {};
 		return {
@@ -105,6 +114,11 @@ class ReactiveBase extends Component {
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
 			...headers,
+			...(enableAppbase
+				&& endpoint
+				&& endpoint.headers && {
+				...endpoint.headers,
+			}),
 		};
 	}
 
@@ -118,8 +132,18 @@ class ReactiveBase extends Component {
 			...props.analyticsConfig, // TODO: remove in 4.0
 			...props.appbaseConfig,
 		};
+		let url = props.url && props.url.trim() !== '' ? props.url : '';
+		if (props.enableAppbase && props.endpoint instanceof Object) {
+			if (props.endpoint.url) {
+				url = props.endpoint.url;
+			} else {
+				throw Error(
+					'Error(ReactiveSearch): The `endpoint` prop object requires `url` property.',
+				);
+			}
+		}
 		const config = {
-			url: props.url && props.url.trim() !== '' ? props.url : '',
+			url,
 			app: props.app,
 			credentials,
 			type: this.type,
@@ -132,6 +156,8 @@ class ReactiveBase extends Component {
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 			mongodb: props.mongodb,
+			...(props.enableAppbase
+				&& props.endpoint instanceof Object && { endpoint: props.endpoint }),
 		};
 
 		let queryParams = '';
@@ -169,12 +195,17 @@ class ReactiveBase extends Component {
 			}
 		});
 
-		const { themePreset } = props;
+		const { themePreset, enableAppbase, endpoint } = props;
 
 		const appbaseRef = Appbase(config);
-		if (this.props.transformRequest) {
-			appbaseRef.transformRequest = this.props.transformRequest;
-		}
+
+		appbaseRef.transformRequest = (request) => {
+			const modifiedRequest = enableAppbase
+				? transformRequestUsingEndpoint(request, endpoint)
+				: request;
+			if (this.props.transformRequest) return this.props.transformRequest(modifiedRequest);
+			return modifiedRequest;
+		};
 
 		const initialState = {
 			config: {
@@ -228,6 +259,7 @@ ReactiveBase.defaultProps = {
 	graphQLUrl: '',
 	as: 'div',
 	enableAppbase: false,
+	endpoint: null,
 };
 
 ReactiveBase.propTypes = {
@@ -258,6 +290,7 @@ ReactiveBase.propTypes = {
 	setSearchParams: types.func,
 	mongodb: types.mongodb,
 	preferences: types.preferences,
+	endpoint: types.endpoint,
 };
 
 export default ReactiveBase;

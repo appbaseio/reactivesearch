@@ -392,17 +392,19 @@ const SearchBox = (props) => {
 			onValueSelected(valueSelected, cause, suggestion);
 		}
 	};
-	const handleTextChange = debounce((valueParam = undefined, cause = undefined) => {
-		const { enterButton } = props;
-		if (cause === causes.CLEAR_VALUE) {
-			triggerCustomQuery(valueParam);
-			triggerDefaultQuery(valueParam);
-		} else if (props.autosuggest) {
-			triggerDefaultQuery(valueParam);
-		} else if (value === undefined && !onChange && !enterButton) {
-			triggerCustomQuery(valueParam);
-		}
-	}, props.debounce);
+	const handleTextChange = useRef(
+		debounce((valueParam = undefined, cause = undefined) => {
+			const { enterButton } = props;
+			if (cause === causes.CLEAR_VALUE) {
+				triggerCustomQuery(valueParam);
+				triggerDefaultQuery(valueParam);
+			} else if (props.autosuggest) {
+				triggerDefaultQuery(valueParam);
+			} else if (value === undefined && !onChange && !enterButton) {
+				triggerCustomQuery(valueParam);
+			}
+		}, props.debounce),
+	);
 
 	const setValue = (
 		value,
@@ -490,7 +492,7 @@ const SearchBox = (props) => {
 					}
 				} else {
 					// debounce for handling text while typing
-					handleTextChange(value, cause);
+					handleTextChange.current(value, cause);
 				}
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
@@ -1675,6 +1677,7 @@ SearchBox.propTypes = {
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
 	searchboxId: types.string,
+	endpoint: types.endpoint,
 	mode: oneOf(['select', 'tag']),
 	renderSelectedTags: types.func,
 };

@@ -296,6 +296,7 @@ ToggleButton.propTypes = {
 	URLParams: types.bool,
 	index: types.string,
 	enableStrictSelection: types.bool,
+	endpoint: types.endpoint,
 };
 
 ToggleButton.defaultProps = {
@@ -323,7 +324,6 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

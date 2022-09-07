@@ -553,6 +553,7 @@ TreeList.propTypes = {
 	renderNoResults: types.func,
 	loader: types.title,
 	aggergationSize: types.number,
+	endpoint: types.endpoint,
 };
 
 TreeList.defaultProps = {

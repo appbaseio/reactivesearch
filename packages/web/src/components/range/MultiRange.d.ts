@@ -23,6 +23,7 @@ export interface MultiRangeProps extends CommonProps {
 	includeNullValues?: boolean;
 	index?: string;
 	preferencesPath?: string;
+	endpoint?: types.endpointConfig;
 }
 
 declare const MultiRange: React.ComponentClass<MultiRangeProps>;

@@ -34,10 +34,10 @@
 	],
 	"sideEffects": false,
 	"dependencies": {
-		"@appbaseio/reactivecore": "9.14.20",
+		"@appbaseio/reactivecore": "9.14.22",
 		"@appbaseio/vue-emotion": "0.4.4",
 		"@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
-		"appbase-js": "^5.0.0",
+		"appbase-js": "^5.1.0",
 		"compute-scroll-into-view": "^1.0.11",
 		"emotion": "9.2.12",
 		"gmap-vue": "^3.5.4",

@@ -620,10 +620,14 @@ class CategorySearch extends Component {
 			// execute the query on an uncontrolled component
 			// query options should be applied to the source component,
 			// not on internal component, hence using `this.props.componentId` here
-			props.setQueryOptions(props.componentId, {
-				...this.queryOptions,
-				...customQueryOptions,
-			}, false);
+			props.setQueryOptions(
+				props.componentId,
+				{
+					...this.queryOptions,
+					...customQueryOptions,
+				},
+				false,
+			);
 			props.updateQuery({
 				componentId: props.componentId,
 				query,
@@ -1572,6 +1576,7 @@ CategorySearch.propTypes = {
 	addonBefore: types.children,
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
+	endpoint: types.endpoint,
 };
 
 CategorySearch.defaultProps = {
@@ -1647,8 +1652,7 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setSuggestionsSearchValue: value => dispatch(setSuggestionsSearchValue(value)),
-	setQueryOptions: (...args) =>
-		dispatch(setQueryOptions(...args)),
+	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),

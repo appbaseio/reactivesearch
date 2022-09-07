@@ -302,6 +302,7 @@ MultiRange.propTypes = {
 	URLParams: types.bool,
 	includeNullValues: types.bool,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 MultiRange.defaultProps = {

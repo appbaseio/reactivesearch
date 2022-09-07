@@ -53,6 +53,7 @@ const RangeSlider = {
 		sliderOptions: VueTypes.object.def({}),
 		nestedField: types.string,
 		index: VueTypes.string,
+		endpoint: types.endpointConfig,
 	},
 
 	methods: {

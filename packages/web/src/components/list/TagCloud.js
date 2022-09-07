@@ -350,6 +350,7 @@ TagCloud.propTypes = {
 	title: types.title,
 	URLParams: types.bool,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 TagCloud.defaultProps = {
@@ -392,7 +393,6 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
 });
-
 
 const ConnectedComponent = connect(
 	mapStateToProps,

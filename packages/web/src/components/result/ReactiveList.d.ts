@@ -46,6 +46,7 @@ declare namespace ReactiveListTree {
 		preferencesPath?: string;
 		showExport?: boolean;
 		renderExport?: (paramObj?: object) => any;
+		endpoint?: types.endpointConfig;
 	}
 
 	interface CommonWrapperProps extends React.HTMLAttributes<HTMLDivElement> {

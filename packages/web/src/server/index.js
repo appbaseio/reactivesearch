@@ -4,7 +4,11 @@ import valueReducer from '@appbaseio/reactivecore/lib/reducers/valueReducer';
 import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
-import { buildQuery, pushToAndClause } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	buildQuery,
+	pushToAndClause,
+	transformRequestUsingEndpoint,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
 import { componentTypes, validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
@@ -94,20 +98,39 @@ export default function initReactivesearch(componentCollection, searchState, set
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
 			...settings.headers,
+			...(settings.enableAppbase && settings.endpoint && settings.endpoint.headers
+				? settings.endpoint.headers
+				: {}),
 		};
+		let url
+			= settings.url && settings.url.trim() !== ''
+				? settings.url
+				: 'https://scalr.api.appbase.io';
+
+		let transformRequest = settings.transformRequest || null;
+		if (settings.enableAppbase && settings.endpoint && settings.endpoint instanceof Object) {
+			if (settings.endpoint.url) url = settings.endpoint.url;
+			transformRequest = (request) => {
+				const modifiedRequest = transformRequestUsingEndpoint(request, settings.endpoint);
+
+				if (settings.transformRequest) {
+					return settings.transformRequest(modifiedRequest);
+				}
+				return modifiedRequest;
+			};
+		}
 		const config = {
-			url:
-				settings.url && settings.url.trim() !== ''
-					? settings.url
-					: 'https://scalr.api.appbase.io',
+			url,
 			app: settings.app,
 			credentials,
-			transformRequest: settings.transformRequest || null,
+			transformRequest,
 			type: settings.type ? settings.type : '*',
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
+			endpoint: settings.endpoint,
+			enableAppbase: settings.enableAppbase,
 		};
 		const appbaseRef = Appbase(config);
 
@@ -294,6 +317,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 			props: componentProps,
 			customQueries,
 			defaultQueries,
+			config,
 		};
 
 		// [5] Generate finalQuery for search
@@ -442,14 +466,17 @@ export default function initReactivesearch(componentCollection, searchState, set
 											[component]: response.aggregations,
 										};
 									}
+									const hitsObj = response.hits
+										? response.hits
+										: response[component].hits;
 									hits = {
 										...hits,
 										[component]: {
-											hits: response.hits.hits,
+											hits: hitsObj.hits,
 											total:
-												typeof response.hits.total === 'object'
-													? response.hits.total.value
-													: response.hits.total,
+												typeof hitsObj.total === 'object'
+													? hitsObj.total.value
+													: hitsObj.total,
 											time: response.took,
 										},
 									};
@@ -525,7 +552,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 				.then((res) => {
 					handleRSResponse(res);
 				})
-				.catch(err => reject(err));
+				.catch((err) => {
+					reject(err);
+				});
 		} else {
 			appbaseRef
 				.msearch({

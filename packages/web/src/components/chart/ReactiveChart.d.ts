@@ -17,6 +17,7 @@ export interface ReactiveChartProps extends CommonProps {
 	onGlobalOut?: (...args: any[]) => any;
 	onContextMenu?: (...args: any[]) => any;
 	onDataZoom?: (...args: any[]) => any;
+	beforeValueChange?: (...args: any[]) => any;
 	// ---- user props ---
 	// props to configure query
 	dataField: types.dataFieldArray;
@@ -45,6 +46,7 @@ export interface ReactiveChartProps extends CommonProps {
 	onError: (...args: any[]) => any;
 	renderError: types.title;
 	onChange: (...args: any[]) => any;
+	endpoint?: types.endpointConfig;
 }
 
 declare const ReactiveChart: React.ComponentClass<ReactiveChartProps>;

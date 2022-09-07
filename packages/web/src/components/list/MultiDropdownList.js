@@ -564,6 +564,7 @@ MultiDropdownList.propTypes = {
 	index: types.string,
 	showClear: types.bool,
 	isOpen: types.bool,
+	endpoint: types.endpoint,
 };
 
 MultiDropdownList.defaultProps = {
@@ -614,9 +615,7 @@ const mapDispatchtoProps = dispatch => ({
 const ConnectedComponent = connect(
 	mapStateToProps,
 	mapDispatchtoProps,
-)(props => (
-	<MultiDropdownList ref={props.myForwardedRef} {...props} />
-));
+)(props => <MultiDropdownList ref={props.myForwardedRef} {...props} />);
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (

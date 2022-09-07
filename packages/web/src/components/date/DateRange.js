@@ -77,10 +77,13 @@ class DateRange extends Component {
 			const { currentDate } = this.state;
 			const { selectedValue, value, onChange } = this.props;
 			// comparing array format of selectedValue with object form of the state if not null
-			const formattedSelectedValue = Array.isArray(selectedValue) && selectedValue.length ? [
-				this.formatInputDate(selectedValue[0]),
-				this.formatInputDate(selectedValue[1]),
-			] : [];
+			const formattedSelectedValue
+				= Array.isArray(selectedValue) && selectedValue.length
+					? [
+						this.formatInputDate(selectedValue[0]),
+						this.formatInputDate(selectedValue[1]),
+					  ]
+					: [];
 			if (
 				!isEqual(
 					currentDate
@@ -552,6 +555,7 @@ DateRange.propTypes = {
 	theme: types.style,
 	title: types.string,
 	index: types.string,
+	endpoint: types.endpoint,
 };
 
 DateRange.defaultProps = {

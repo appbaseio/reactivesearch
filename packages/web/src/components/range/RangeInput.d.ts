@@ -12,7 +12,7 @@ export interface RangeInputProps extends CommonProps {
 	validateRange?: (value: Array<number>) => boolean;
 	onChange?: (...args: any[]) => any;
 	range: types.range;
-	rangeLabels: types.rangeLabels,
+	rangeLabels: types.rangeLabels;
 	stepValue?: number;
 	style: types.style;
 	themePreset?: types.themePreset;
@@ -23,6 +23,7 @@ export interface RangeInputProps extends CommonProps {
 	preferencesPath?: string;
 	queryFormat?: types.queryFormatDate;
 	calendarInterval?: types.calendarInterval;
+	endpoint?: types.endpointConfig;
 }
 
 declare const RangeInput: React.ComponentClass<RangeInputProps>;
