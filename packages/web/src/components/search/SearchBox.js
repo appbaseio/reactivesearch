@@ -484,6 +484,7 @@ const SearchBox = (props) => {
 						props.value === undefined
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
+						|| cause === causes.ENTER_PRESS
 					) {
 						triggerCustomQuery(
 							queryHandlerValue,
@@ -649,7 +650,7 @@ const SearchBox = (props) => {
 					event.target.value,
 					true,
 					props,
-					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
+					isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
 				);
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
