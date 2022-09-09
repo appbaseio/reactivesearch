@@ -25,7 +25,7 @@
 						:style="{ height: '90vh', minWidth: '300px' }"
 						:react="{ and: 'places' }"
 						:defaultZoom="3"
-						:showMarkerClusters="true"
+						:showMarkerClusters="false"
 					>
 						<div
 							slot="renderItem"

@@ -1,5 +1,6 @@
 import VueTypes from 'vue-types';
 import { components } from 'gmap-vue';
+import ClusterManager from './ClusterManager.jsx';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import GoogleMapMarker from './GoogleMapMarker.jsx';
 
@@ -81,16 +82,20 @@ const GoogleMapMarkers = {
 						}}
 						ref="clusterRef"
 					>
-						{resultsToRender.map((marker, index) => (
-							<GoogleMapMarker
-								index={index}
-								marker={marker}
-								{...{
-									props: markerProps,
-									on: this.$listeners,
-								}}
-							/>
-						))}
+						<ClusterManager
+							getPosition={markerProps.getPosition}
+							markers={resultsToRender}
+							defaultPin={markerProps.defaultPin}
+							renderItem={markerProps.renderItem}
+							markerProps={markerProps.markerProps}
+							handlePreserveCenter={markerProps.handlePreserveCenter}
+							autoClosePopover={markerProps.autoClosePopover}
+							renderPopover={markerProps.renderPopover}
+							highlightMarkerOnHover={markerProps.highlightMarkerOnHover}
+							{...{
+								on: this.$listeners,
+							}}
+						/>
 					</Cluster>
 					{this.clickedCluster && this.renderClusterPopover ? (
 						<InfoWindowWrapper

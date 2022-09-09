@@ -26,14 +26,8 @@ const {
 	setMapData,
 } = Actions;
 
-const {
-	isEqual,
-	getQueryOptions,
-	getClassName,
-	parseHits,
-	getOptionsFromQuery,
-	getResultStats,
-} = helper;
+const { isEqual, getQueryOptions, getClassName, parseHits, getOptionsFromQuery, getResultStats }
+	= helper;
 
 // default map center
 const MAP_CENTER = {
@@ -133,7 +127,7 @@ const ReactiveMap = {
 		renderMap: VueTypes.func.isRequired,
 		renderPopover: VueTypes.func,
 		calculateMarkers: VueTypes.func,
-		searchAsMoveLabel: VueTypes.string.def('Search as I move the map')
+		searchAsMoveLabel: VueTypes.string.def('Search as I move the map'),
 	},
 	preserveCenter: false,
 	data() {
@@ -149,7 +143,7 @@ const ReactiveMap = {
 			searchAsMove: props.defaultSearchAsMove,
 			currentPageState,
 			mapBoxBounds: null,
-			markersData: null
+			markersData: null,
 		};
 		return this.__state;
 	},
@@ -239,27 +233,28 @@ const ReactiveMap = {
 				let filteredResults = results;
 
 				if (parsedPromotedResults.length) {
-					const ids = parsedPromotedResults.map(item => item._id).filter(Boolean);
+					const ids = parsedPromotedResults.map((item) => item._id).filter(Boolean);
 					if (ids) {
-						filteredResults = filteredResults.filter(item => !ids.includes(item._id));
+						filteredResults = filteredResults.filter((item) => !ids.includes(item._id));
 					}
 
 					filteredResults = [...parsedPromotedResults, ...filteredResults];
 				}
 
 				filteredResults = filteredResults
-					.filter(item => !!item[this.dataField])
-					.map(item => ({
+					.filter((item) => !!item[this.dataField])
+					.map((item) => ({
 						...item,
 						[this.dataField]: getLocationObject(item[this.dataField]),
 					}));
 
 				this.filteredResults = this.addNoise(filteredResults);
-				if(this.calculateMarkers) {
-					this.markersData = this.calculateMarkers({
-						data: this.filteredResults,
-						rawData: this.rawData,
-					}) || [];
+				if (this.calculateMarkers) {
+					this.markersData
+						= this.calculateMarkers({
+							data: this.filteredResults,
+							rawData: this.rawData,
+						}) || [];
 				}
 				this.$emit('data', this.getData());
 			}
@@ -302,7 +297,7 @@ const ReactiveMap = {
 			const hitMap = {};
 			let updatedHits = [];
 
-			hits.forEach(item => {
+			hits.forEach((item) => {
 				const updatedItem = { ...item };
 				const location = this.parseLocation(item[this.dataField]);
 				const key = JSON.stringify(location);
@@ -322,7 +317,7 @@ const ReactiveMap = {
 			return null;
 		},
 		getHitsCenter(hits) {
-			const data = hits.map(hit => hit[this.dataField]);
+			const data = hits.map((hit) => hit[this.dataField]);
 
 			if (data.length) {
 				const numCoords = data.length;
@@ -331,7 +326,7 @@ const ReactiveMap = {
 				let Y = 0.0;
 				let Z = 0.0;
 
-				data.forEach(location => {
+				data.forEach((location) => {
 					if (location) {
 						let lat = 0.0;
 						let lng = 0.0;
@@ -408,8 +403,8 @@ const ReactiveMap = {
 				} else {
 					this.zoom = zoom;
 				}
-				if(prevZoom !== zoom) {
-					this.$emit('zoom-changed', zoom)
+				if (prevZoom !== zoom) {
+					this.$emit('zoom-changed', zoom);
 				}
 			}
 		},
@@ -418,7 +413,7 @@ const ReactiveMap = {
 				this.$options.preserveCenter = true;
 				this.setGeoQuery(true);
 			}
-			this.$emit('drag-end')
+			this.$emit('drag-end');
 		},
 		handlePreserveCenter(preserveCenter) {
 			this.$options.preserveCenter = preserveCenter;
@@ -431,7 +426,7 @@ const ReactiveMap = {
 				const executeUpdate = !!this.center;
 				this.setGeoQuery(executeUpdate);
 			}
-			this.$emit('idle')
+			this.$emit('idle');
 		},
 		setGeoQuery(executeUpdate = false) {
 			// execute a new query on the initial mount
@@ -456,13 +451,7 @@ const ReactiveMap = {
 		},
 		getMapParams() {
 			const { data } = this.getData();
-			const {
-				showMarkers,
-				defaultPin,
-				renderPopover,
-				autoClosePopover,
-				renderItem,
-			} = this;
+			const { showMarkers, defaultPin, renderPopover, autoClosePopover, renderItem } = this;
 			return {
 				resultsToRender: data,
 				center: this.getCenter(data),
@@ -503,12 +492,8 @@ const ReactiveMap = {
 			};
 		},
 		getData() {
-			const {
-				promotedResults,
-				aggregationData,
-				customData,
-				resultsToRender,
-			} = this.getAllData();
+			const { promotedResults, aggregationData, customData, resultsToRender }
+				= this.getAllData();
 			return {
 				data: this.withClickIds(resultsToRender),
 				aggregationData: this.withClickIds(aggregationData || []),
@@ -642,7 +627,7 @@ const ReactiveMap = {
 			let docId = documentId;
 			if (!docId) {
 				const { data } = this.getData();
-				const hitData = data.find(hit => hit._click_id === searchPosition);
+				const hitData = data.find((hit) => hit._click_id === searchPosition);
 				if (hitData && hitData._id) {
 					docId = hitData._id;
 				}
@@ -785,7 +770,7 @@ const ReactiveMap = {
 				this.$defaultQuery.query,
 				persistMapQuery,
 				forceExecute,
-				meta
+				meta,
 			);
 		} else {
 			// only apply geo-distance when defaultQuery prop is not set
@@ -866,7 +851,7 @@ export const RMConnected = ComponentWrapper(
 	},
 );
 
-ReactiveMap.install = function(Vue) {
+ReactiveMap.install = function (Vue) {
 	Vue.component(ReactiveMap.name, RMConnected);
 };
 // Add componentType for SSR
