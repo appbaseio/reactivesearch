@@ -485,6 +485,7 @@ const SearchBox = (props) => {
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
 						|| cause === causes.ENTER_PRESS
+						|| cause === causes.SEARCH_ICON_CLICK
 					) {
 						triggerCustomQuery(
 							queryHandlerValue,
@@ -702,7 +703,7 @@ const SearchBox = (props) => {
 
 	const handleSearchIconClick = () => {
 		if (currentValue.trim()) {
-			setValue(currentValue, true);
+			setValue(currentValue, true, props, causes.SEARCH_ICON_CLICK);
 			onValueSelected(currentValue, causes.SEARCH_ICON_CLICK);
 		}
 	};
