@@ -111,6 +111,23 @@ const ReactiveGoogleMap = {
 		getMapRef() {
 			return this.mapRef;
 		},
+		removeMarkers() {
+			let clusterManagerInstance;
+			let currentInstance = this;
+			while (currentInstance) {
+				if (currentInstance && currentInstance._name === '<ConnectClusterMarkers>') {
+					clusterManagerInstance = currentInstance;
+					currentInstance = null;
+				} else if (currentInstance.$children) {
+					[currentInstance] = currentInstance.$children;
+				} else {
+					currentInstance = null;
+				}
+			}
+			if (clusterManagerInstance && clusterManagerInstance.removeMarkers) {
+				clusterManagerInstance.removeMarkers();
+			}
+		},
 	},
 	mounted() {
 		if (this.$refs.mapRef) {

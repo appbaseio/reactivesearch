@@ -72,6 +72,13 @@ const ClusterMarkers = {
 			this.triggerAnalytics(id, index);
 			this.$emit('open-marker-popover', marker.metaData);
 		},
+		removeMarkers() {
+			if (this.$clusterObject) {
+				// Remove old markers
+				this.$clusterObject.clearMarkers(true);
+				this.$markers = [];
+			}
+		},
 		buildMarkers(markersToRender) {
 			this.$mapPromise
 				.then((map) => {
