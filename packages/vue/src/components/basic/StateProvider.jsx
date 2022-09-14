@@ -27,6 +27,20 @@ const filterByComponentIds = (state, props = {}) => {
 		});
 		return filteredState;
 	}
+	if (!props.includeInternalComponents) {
+		const filteredState = {};
+		Object.keys(state).forEach((componentId) => {
+			if (
+				componentId.endsWith('internal')
+				|| componentId.endsWith('active')
+				|| componentId.endsWith('timestamp')
+			) {
+				return;
+			}
+			filteredState[componentId] = state[componentId];
+		});
+		return filteredState;
+	}
 	return state;
 };
 
@@ -51,6 +65,7 @@ const StateProvider = {
 		componentIds: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)]),
 		includeKeys: VueTypes.arrayOf(VueTypes.string).def(defaultKeys),
 		strict: VueTypes.bool.def(true),
+		includeInternalComponents: VueTypes.bool.def(false),
 	},
 	data() {
 		this.__state = {
@@ -68,21 +83,21 @@ const StateProvider = {
 		searchStateProps() {
 			return {
 				selectedValues: this.selectedValues || {},
-				queryLog: this.queryLog,
-				dependencyTree: this.dependencyTree,
-				componentProps: this.componentProps,
-				hits: this.hits,
-				aggregations: this.aggregations,
-				isLoading: this.isLoading,
-				error: this.error,
-				promotedResults: this.promotedResults,
-				rawData: this.rawData,
+				queryLog: this.queryLog || {},
+				dependencyTree: this.dependencyTree || {},
+				componentProps: this.componentProps || {},
+				hits: this.hits || {},
+				aggregations: this.aggregations || {},
+				isLoading: this.isLoading || {},
+				error: this.error || {},
+				promotedResults: this.promotedResults || {},
+				rawData: this.rawData || {},
 			};
 		},
 	},
 	watch: {
 		searchState(newVal, oldVal) {
-			if (this.isStateChanged(newVal, oldVal)) {
+			if (oldVal != null && this.isStateChanged(newVal, oldVal)) {
 				this.$emit('change', oldVal, newVal);
 			}
 		},
