@@ -141,18 +141,18 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivesearch-vue@1.16.0-alpha.63":
-  version "1.16.0-alpha.63"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.63.tgz#6e8a131607c6d85d45a0ff966d6bea8cceb56544"
-  integrity sha512-gqU0pH7eFA1lGJevIeSG9Ur45DxENcjL+2PuDfXa037xQ7mWyQV/8MqSKiCJ3OwGIv9WppYUJLvvlDEnY9MjEQ==
+"@appbaseio/reactivesearch-vue@2.0.0-alpha.3":
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-2.0.0-alpha.3.tgz#56e100cbe4850264b24e66e67e486761c0fd7a6c"
+  integrity sha512-NllCqFQVx2zykxR/j2rgL28GQ+EFRy3ci+pkIDCFPeM2rUpOO9if+M8nASTJL93je600m7u8bZh5zO3VCIMyiQ==
   dependencies:
-    "@appbaseio/reactivecore" "9.14.22"
+    "@appbaseio/reactivecore" "9.14.23"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.0.0"
+    appbase-js "^5.1.0"
     compute-scroll-into-view "^1.0.11"
     emotion "9.2.12"
-    gmap-vue "^1.5.0"
+    gmap-vue "^3.5.4"
     hotkeys-js "^3.8.7"
     ngeohash "^0.6.3"
     polished "^2.2.0"
@@ -2263,11 +2263,6 @@
     html-entities "^2.3.3"
     strip-ansi "^6.0.0"
 
-"@google/markerclustererplus@^5.1.0":
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/@google/markerclustererplus/-/markerclustererplus-5.1.3.tgz#dd7ddbb2a17c977e0b0252c3d8e61fcf502b1bf2"
-  integrity sha512-2wQGO6GGbKPC2tNmTz8ei1zBa64zV3QBBvgLHiPvYqUA63230qNqfQpN+nzsrl1RM40NJtty4Y1CEQKxq6MBGg==
-
 "@googlemaps/js-api-loader@1.14.3":
   version "1.14.3"
   resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.14.3.tgz#d7a161cd547be04ad46a1cb176e6c2647f6d74a7"
@@ -2279,6 +2274,14 @@
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-2.0.8.tgz#39f037e60a1c62cd9f04d529ea9c4f286af4ec6f"
   integrity sha512-l/Z3nxTE55iaWDB8NL/HpFdYht2x0khPaJI9pD7KDbfHeZaZyG8yT6xi2cZ0Lb2VvgKFb3OtNKRMpAuS4xm2rg==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+    supercluster "^7.1.3"
+
+"@googlemaps/markerclusterer@^2.0.4":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-2.0.11.tgz#38985ab79a309f4e54a419f0d1baa34a3015b3c3"
+  integrity sha512-/Rhqqq12vGwg+EuzaQtzjqrF5CFiGlJpPlC+bjVH/WYbZ4gPGARuEzWqRhY8m1u2cZDHF0yZrJKPOuYzc+2PcA==
   dependencies:
     fast-deep-equal "^3.1.3"
     supercluster "^7.1.3"
@@ -7277,15 +7280,6 @@ appbase-js@^4.0.2-beta.11:
   integrity sha512-IYShIL3J9PlyMcTEm35iPFSeQZBUW6pCJEwXKvUVjx89p/npA4UVlmYfEfRWweAJEaercbq3zhRskouEJLw2BA==
   dependencies:
     cross-fetch "^2.2.2"
-    querystring "^0.2.0"
-    url-parser-lite "^0.1.0"
-
-appbase-js@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.0.0.tgz#9f3e25ad718251e153593f7559cfac7b4d4ac961"
-  integrity sha512-TOvBaXEpRd85Oo118X+NNQq7CMtZE3eyp7zYWZ7LO2o9mrdTQRUk+ADE0P8xFkga2c4WHHRyBhoeJglux12LZg==
-  dependencies:
-    cross-fetch "^3.1.5"
     querystring "^0.2.0"
     url-parser-lite "^0.1.0"
 
@@ -17717,12 +17711,12 @@ globule@^1.0.0:
     lodash "^4.17.21"
     minimatch "~3.0.2"
 
-gmap-vue@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/gmap-vue/-/gmap-vue-1.5.0.tgz#43de7cba85c61280bfa65e6450b9d55657e9a82f"
-  integrity sha512-WE0VnSM1EsaTFVsnq53WGnre9cP1Q9DPCr0IiPmaoqsQioAKtTNBNyomrEvg0NIsVuxrdC2qvbgZPXCa8v/mBA==
+gmap-vue@^3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/gmap-vue/-/gmap-vue-3.5.4.tgz#53da5f3eb3f0e48aec49f463976ff1808593bc8b"
+  integrity sha512-NGqZbwUtCDWDGtbDF+bFs5slaGABbw6TEB+pdOYyWxN+81c5iRBuOV6iaQ61ilzk4ttUFLE7q6w9nDsNUpG7ig==
   dependencies:
-    "@google/markerclustererplus" "^5.1.0"
+    "@googlemaps/markerclusterer" "^2.0.4"
 
 good-listener@^1.2.2:
   version "1.2.2"
