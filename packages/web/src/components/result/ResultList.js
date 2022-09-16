@@ -39,12 +39,13 @@ class ResultList extends Component {
 
 	render() {
 		const {
-			children, id, href, target, ...props
+			children, id, href, target, as, ...props
 		} = this.props;
 		const { hasImage, isSmall } = this.state;
 		return (
 			<ListItem
 				id={id}
+				as={as}
 				href={href}
 				image={hasImage}
 				small={isSmall}
@@ -62,11 +63,13 @@ ResultList.propTypes = {
 	children: types.children,
 	target: types.stringRequired,
 	href: types.string,
+	as: types.string,
 	id: oneOfType([types.string, types.number]),
 };
 
 ResultList.defaultProps = {
 	target: '_blank',
+	as: 'a',
 };
 
 export default ResultList;
