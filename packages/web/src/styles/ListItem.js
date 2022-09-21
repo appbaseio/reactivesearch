@@ -1,6 +1,7 @@
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { lighten } from 'polished';
+import { RenderAsTagComponent } from './Base';
 
 import Title from './Title';
 
@@ -28,32 +29,32 @@ const Image = styled('div')`
 	background-image: ${props => `url(${props.src})`};
 `;
 
-const ListItem = styled('a')`
+const ListItem = styled(RenderAsTagComponent)`
 	width: 100%;
 	height: auto;
 	outline: none;
 	text-decoration: none;
 	border-radius: 0;
 	background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? lighten(0.1, theme.colors.backgroundColor)
-			: '#fff')};
+	(theme.colors.backgroundColor
+		? lighten(0.1, theme.colors.backgroundColor)
+		: '#fff')};
 	display: flex;
 	flex-direction: row;
 	margin: 0;
 	padding: 10px;
 	border-bottom: 1px solid ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? lighten(0.3, theme.colors.backgroundColor)
-			: lighten(0.68, theme.colors.textColor))};
+			(theme.colors.backgroundColor
+				? lighten(0.3, theme.colors.backgroundColor)
+				: lighten(0.68, theme.colors.textColor))};
 	color: ${({ theme }) => theme.colors.textColor};
 	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: ${({ theme }) =>
-		(theme.colors.backgroundColor
-			? lighten(0.2, theme.colors.backgroundColor)
-			: '#fdfefd')};
+					(theme.colors.backgroundColor
+						? lighten(0.2, theme.colors.backgroundColor)
+						: '#fdfefd')};
 	}
 
 	&:last-of-type {
@@ -76,11 +77,11 @@ const ListItem = styled('a')`
 
 	article {
 		width: ${(props) => {
-		if (props.image) {
-			return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
-		}
-		return '100%';
-	}};
+							if (props.image) {
+								return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
+							}
+							return '100%';
+						}};
 		padding-left: ${props => (props.image ? '10px' : 0)};
 		font-size: 0.9rem;
 	}
