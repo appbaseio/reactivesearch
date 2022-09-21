@@ -141,15 +141,26 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivesearch-vue@2.0.0-alpha.3":
-  version "2.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-2.0.0-alpha.3.tgz#56e100cbe4850264b24e66e67e486761c0fd7a6c"
-  integrity sha512-NllCqFQVx2zykxR/j2rgL28GQ+EFRy3ci+pkIDCFPeM2rUpOO9if+M8nASTJL93je600m7u8bZh5zO3VCIMyiQ==
+"@appbaseio/reactivecore@9.14.17":
+  version "9.14.17"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.17.tgz#2ff76f609f1f42cfd056aca1c248a1dd22b9f82c"
+  integrity sha512-A7RiITlyS6VuD9DAfw2+wuWq5rasnlwOl5dLHLXoiJYECKgSOCVWQKd9N7USgXJSVVrUoTJ2Vm3Lp8YYxlcu2g==
   dependencies:
-    "@appbaseio/reactivecore" "9.14.23"
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivesearch-vue@1.16.0-alpha.60":
+  version "1.16.0-alpha.60"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.16.0-alpha.60.tgz#4c8f26a3d18e9210623fa2863f2187394e6ff39e"
+  integrity sha512-7/hXgRHLIJJOHvuBL7o1Ataqy5gWsihuWAOENOFKJq5fiioxZEHrxHdf9BwkKHDZJgWlVGmIJ14XZ4KgnwvKkg==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.17"
     "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.1.0"
+    appbase-js "^5.0.0"
     compute-scroll-into-view "^1.0.11"
     emotion "9.2.12"
     gmap-vue "^3.5.4"
@@ -162,6 +173,31 @@
     vue-no-ssr "^1.1.0"
     vue-slider-component "^3.2.15"
     vue-types "^1.7.0"
+
+"@appbaseio/reactivesearch@3.39.4":
+  version "3.39.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.39.4.tgz#a2a8a4d2b1453820c1ae463daae84db5a06b51bd"
+  integrity sha512-lsoDjsGYSeNdgR3eyCon8lscp5hc1zm3KnwHNyLJeRb5rvTJaIDyZbt0cfSlw3WNUU8kwhqItnMPldRgaJtyjQ==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.24"
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    appbase-js "5.1.0"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    echarts "^5.3.3"
+    echarts-for-react "^3.0.2"
+    emotion-theming "^10.0.27"
+    hoist-non-react-statics "^3.2.1"
+    hotkeys-js "^3.8.7"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
+    xss "^1.0.11"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -7265,7 +7301,7 @@ app-root-dir@^1.0.2:
   resolved "https://registry.yarnpkg.com/app-root-dir/-/app-root-dir-1.0.2.tgz#38187ec2dea7577fff033ffcb12172692ff6e118"
   integrity sha512-jlpIfsOoNoafl92Sz//64uQHGSyMrD2vYG5d8o2a4qGvyNCvXur7bzIsWtAC/6flI2RYAp3kv8rsfBtaLm7w0g==
 
-appbase-js@5.1.0, appbase-js@^5.1.0:
+appbase-js@5.1.0, appbase-js@^5.0.0, appbase-js@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.1.0.tgz#6896fad28376ee4d43ca03042e7c426e767eeed0"
   integrity sha512-Nekeev62QtboYWtNp7L3GJgkavCYQNFzcDuyMAPgQ6ajr9Kp2xzM/xZT1KmAn97yk7TRcznjpvojMCH4zjv5eQ==
