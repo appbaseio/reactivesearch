@@ -44,7 +44,7 @@
         "react-native": "~0.62.3"
     },
     "dependencies": {
-        "@appbaseio/reactivecore": "9.14.23",
+        "@appbaseio/reactivecore": "9.14.24",
         "@babel/polyfill": "^7.0.0-rc.3",
         "@ptomasroos/react-native-multi-slider": "^1.0.0",
         "appbase-js": "^5.1.0",

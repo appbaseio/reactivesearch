@@ -1,7 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { string } from 'prop-types';
 
-const Base = styled(({ as: T = 'div', ...props }) => <T {...props} />)`
+export const RenderAsTagComponent = ({ as: Tag = 'div', ...props }) => <Tag {...props} />;
+
+RenderAsTagComponent.propTypes = {
+	as: string,
+};
+
+const Base = styled(RenderAsTagComponent)`
 	font-family: ${({ theme }) => theme.typography.fontFamily};
 	font-size: ${({ theme }) => theme.typography.fontSize};
 	color: ${({ theme }) => theme.colors.textColor};
