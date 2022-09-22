@@ -372,7 +372,17 @@ const DataSearch = {
 		},
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
-				this.setValue(newVal, true, this.$props, undefined, false);
+				if (this.isPending && this.$options.isTagsMode && Array.isArray(newVal)) {
+					this.isPending = false;
+				}
+				this.setValue(
+					newVal,
+					true,
+					this.$props,
+					undefined,
+					false,
+					typeof newVal !== 'string' && this.$options.isTagsMode,
+				);
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -516,9 +526,16 @@ const DataSearch = {
 				this.onValueSelectedHandler(currentValue, causes.SEARCH_ICON_CLICK);
 			}
 		},
-		setValue(value, isDefaultValue = false, props = this.$props, cause, toggleIsOpen = true) {
+		setValue(
+			value,
+			isDefaultValue = false,
+			props = this.$props,
+			cause,
+			toggleIsOpen = true,
+			isTagsMode = this.$options.isTagsMode,
+		) {
 			const performUpdate = () => {
-				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
+				if (isTagsMode && isEqual(value, this.selectedTags)) {
 					return;
 				}
 				// Refresh recent searches when value becomes empty
@@ -527,7 +544,7 @@ const DataSearch = {
 				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
-				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+				if (isTagsMode) {
 					if (Array.isArray(this.selectedTags) && this.selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && this.selectedTags.includes(value)) {
@@ -552,13 +569,12 @@ const DataSearch = {
 					this.currentValue = value;
 				}
 				let queryHandlerValue = value;
-				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+				if (isTagsMode) {
 					queryHandlerValue
 						= Array.isArray(this.selectedTags) && this.selectedTags.length
 							? this.selectedTags
 							: undefined;
 				}
-
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
@@ -746,12 +762,26 @@ const DataSearch = {
 				this.isOpen = true;
 			}
 
-			const { value } = this.$props;
+			const { value, autosuggest } = this.$props;
 			if (value === undefined) {
-				this.setValue(inputValue);
+				this.setValue(inputValue, false, this.$props, undefined, true, false);
 			} else {
 				this.isPending = true;
-				this.$emit('change', inputValue, this.triggerQuery, e);
+
+				this.$emit(
+					'change',
+					inputValue,
+					({ isOpen = false } = {}) => {
+						if (this.$options.isTagsMode && autosuggest) {
+							this.currentValue = value;
+							this.isOpen = isOpen;
+							this.updateDefaultQueryHandler(this.currentValue, this.$props);
+							return;
+						}
+						this.triggerQuery({ isOpen });
+					},
+					e,
+				);
 			}
 		},
 
