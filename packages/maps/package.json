@@ -12,7 +12,7 @@
 		"build": "babel src --out-dir lib",
 		"build:umd": "webpack --progress -p --config webpack.config.umd.js",
 		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
-		"prepublish": "yarn run build",
+		"prepublishOnly": "yarn run build",
 		"version-upgrade": "nps upgrade-maps -c ../../package-scripts.js",
 		"postpublish": "yarn run version-upgrade"
 	},
