@@ -174,6 +174,31 @@
     vue-slider-component "^3.2.15"
     vue-types "^1.7.0"
 
+"@appbaseio/reactivesearch@3.40.1":
+  version "3.40.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.40.1.tgz#4bff7c40cf32cff98d5aca74659454c2c7dccbf4"
+  integrity sha512-MNI6muAHpg11fNe1TdZlmYVq/82Paa4WlzPhDWS+bGfy7rudtRsHAoD6NAnOy88NC+eij2o0V6uAv7dmrx4ryw==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.24"
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    appbase-js "5.1.0"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    echarts "^5.3.3"
+    echarts-for-react "^3.0.2"
+    emotion-theming "^10.0.27"
+    hoist-non-react-statics "^3.2.1"
+    hotkeys-js "^3.8.7"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-redux "^6.0.1"
+    rheostat "^2.1.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
+    xss "^1.0.11"
+
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
