@@ -3,6 +3,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import { bool } from 'prop-types';
 import React from 'react';
 import { TabLink, TabContainer } from '../../styles/Tabs';
+import { getNestedProperty } from '../../utils';
 
 import SingleDataList from './SingleDataList';
 
@@ -27,7 +28,9 @@ const TabDataList = (props) => {
 		<SingleDataList
 			{...props}
 			showSearch={props.showSearch}
-			render={({ data, value, handleChange }) => (
+			render={({
+				data, value, handleChange, rawData,
+			}) => (
 				<TabContainer vertical={props.displayAsVertical}>
 					{props.selectAllLabel ? (
 						<TabLink
@@ -36,7 +39,11 @@ const TabDataList = (props) => {
 							vertical={props.displayAsVertical}
 							key={props.selectAllLabel}
 						>
-							{props.selectAllLabel}
+							{defaultItem({
+								label: props.selectAllLabel,
+								value: props.selectAllLabel,
+								count: props.showCount && getNestedProperty(rawData, 'hits.total.value'),
+							})}
 						</TabLink>
 					) : null}
 					{data.map(item => (

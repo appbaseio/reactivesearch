@@ -282,3 +282,16 @@ export function decodeHtml(str) {
 		return String.fromCharCode(num);
 	});
 }
+
+// Similar to lodash.get eg. a[0].b.c
+export function getNestedProperty(object, keys, defaultVal = null): any {
+	if (!object) {
+		return object;
+	}
+	const clonedKeys = Array.isArray(keys) ? keys : keys.replace(/(\[(\d)\])/g, '.$2').split('.');
+	const clonedObj = object[clonedKeys[0]];
+	if (clonedObj && clonedKeys.length > 1) {
+		return getNestedProperty(clonedObj, clonedKeys.slice(1), defaultVal);
+	}
+	return clonedObj === undefined ? defaultVal : clonedObj;
+}
