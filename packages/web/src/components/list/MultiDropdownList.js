@@ -458,6 +458,7 @@ class MultiDropdownList extends Component {
 			selectAll = [
 				{
 					key: this.props.selectAllLabel,
+					doc_count: this.props.showCount && this.props.total,
 				},
 			];
 		}
@@ -519,6 +520,7 @@ MultiDropdownList.propTypes = {
 	isLoading: types.bool,
 	error: types.title,
 	enableAppbase: types.bool,
+	total: types.number,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -599,6 +601,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
