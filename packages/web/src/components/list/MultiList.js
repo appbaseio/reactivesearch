@@ -543,6 +543,8 @@ class MultiList extends Component {
 			renderError,
 			error,
 			isLoading,
+			showCount,
+			total,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -600,7 +602,17 @@ class MultiList extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 								>
-									{selectAllLabel}
+									<span>
+
+										<span>
+											{selectAllLabel}
+										</span>
+										{showCount ? (
+											<span>
+												{total}
+											</span>)
+											: null}
+									</span>
 								</label>
 							</li>
 						) : null}
@@ -688,6 +700,7 @@ MultiList.propTypes = {
 	isLoading: types.bool,
 	error: types.title,
 	enableAppbase: types.bool,
+	total: types.number,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -762,6 +775,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
