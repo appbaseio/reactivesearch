@@ -215,6 +215,8 @@ class SingleDataList extends Component {
 		if (value !== props.selectAllLabel) {
 			currentValue = props.data.find(item => item.label === value);
 			currentValue = currentValue ? currentValue.value : null;
+		} else {
+			currentValue = props.selectAllLabel;
 		}
 		let query = SingleDataList.defaultQuery(currentValue, props);
 		if (customQuery) {
@@ -398,7 +400,7 @@ class SingleDataList extends Component {
 									id={`${this.props.componentId}-${selectAllLabel}`}
 									value={selectAllLabel}
 									tabIndex={isAllChecked ? '-1' : '0'}
-									onChange={this.handleClick}
+									onClick={this.handleClick}
 									checked={isAllChecked}
 									show={this.props.showRadio}
 								/>
