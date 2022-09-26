@@ -150,27 +150,6 @@ class ReactiveChart extends React.Component {
 			null,
 		);
 	};
-	histogramQuery = (props) => {
-		const query = {
-			[props.dataField]: {
-				histogram: {
-					field: props.dataField,
-					offset: getNumericRangeArray(props.range, props.queryFormat)[0],
-				},
-			},
-		};
-		if (props.nestedField) {
-			return {
-				inner: {
-					aggs: query,
-					nested: {
-						path: props.nestedField,
-					},
-				},
-			};
-		}
-		return query;
-	};
 	updateQueryOptions = (props, addAfterKey = false) => {
 		const queryOptions = ReactiveChart.generateQueryOptions(
 			props,
@@ -752,7 +731,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 			let type = preferenceProps.type;
 			if (!type) {
 				if (preferenceProps.chartType === ChartTypes.Scatter) {
-					type = 'search';
+					type = 'range';
 				}
 			}
 			let aggregationSize = preferenceProps.aggregationSize;
@@ -761,18 +740,40 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 					aggregationSize = preferenceProps.size;
 				}
 			}
+
+			let size = preferenceProps.size;
+			if (preferenceProps.chartType === ChartTypes.Scatter) {
+				size = 10;
+			}
+			let dataField = preferenceProps.dataField;
+			if (preferenceProps.chartType === ChartTypes.Scatter) {
+				if (!dataField) {
+					dataField = '_default';
+				}
+			}
 			return (
 				<ComponentWrapper
 					{...preferenceProps}
 					type={type}
 					internalComponent
 					componentType={componentTypes.reactiveChart}
-					showHistogram={type === 'range'}
+					showHistogram={
+						preferenceProps.chartType === ChartTypes.Scatter ? false : type === 'range'
+					}
 					setReact={false}
 					aggregationSize={aggregationSize}
+					size={size}
+					dataField={dataField}
 				>
 					{() => (
-						<ConnectedComponent {...preferenceProps} type={type} myForwardedRef={ref} />
+						<ConnectedComponent
+							{...preferenceProps}
+							size={size}
+							type={type}
+							aggregationSize={aggregationSize}
+							dataField={dataField}
+							myForwardedRef={ref}
+						/>
 					)}
 				</ComponentWrapper>
 			);
