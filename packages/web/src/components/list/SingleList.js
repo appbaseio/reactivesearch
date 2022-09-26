@@ -624,7 +624,6 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| '',
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],

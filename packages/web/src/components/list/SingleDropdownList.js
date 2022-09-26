@@ -334,6 +334,7 @@ class SingleDropdownList extends Component {
 			selectAll = [
 				{
 					key: this.props.selectAllLabel,
+					doc_count: this.props.showCount && this.props.total,
 				},
 			];
 		}
@@ -395,6 +396,7 @@ SingleDropdownList.propTypes = {
 	error: types.title,
 	isLoading: types.bool,
 	enableAppbase: types.bool,
+	total: types.number,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -474,6 +476,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| '',
 	isLoading: state.isLoading[props.componentId],
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	enableAppbase: state.config.enableAppbase,
