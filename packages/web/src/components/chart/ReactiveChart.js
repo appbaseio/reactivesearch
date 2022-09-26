@@ -395,13 +395,9 @@ ReactiveChart.defaultQuery = (value, props) => {
 	return query;
 };
 
-ReactiveChart.getOption = ({
-	chartType,
-	aggregationData,
+ReactiveChart.GetScatterChartOptions = `({
 	data,
-	value,
 	title,
-	labelFormatter,
 	xAxisName,
 	yAxisName,
 	xAxisField,
@@ -410,200 +406,272 @@ ReactiveChart.getOption = ({
 	let chartTitle;
 	if (title) {
 		if (typeof title === 'string') {
-			if (chartType === ChartTypes.Pie) {
-				chartTitle = {
-					text: title,
-					left: 'center',
-				};
-			} else {
-				chartTitle = {
-					text: title,
-				};
-			}
+			chartTitle = {
+				text: title,
+			};
 		} else {
 			chartTitle = title;
 		}
 	}
-	switch (chartType) {
-		case ChartTypes.Scatter:
-			return {
-				title: chartTitle,
-				tooltip: {
-					trigger: 'item',
-				},
-				xAxis: {
-					name: xAxisName,
-				},
-				yAxis: {
-					name: yAxisName,
-				},
-				series: [
-					{
-						symbolSize: 20,
-						data: data.map(d => [d[xAxisField], d[yAxisField]]),
-						type: 'scatter',
-					},
-				],
+	return {
+		title: chartTitle,
+		tooltip: {
+			trigger: 'item',
+		},
+		xAxis: {
+			name: xAxisName,
+		},
+		yAxis: {
+			name: yAxisName,
+		},
+		series: [
+			{
+				symbolSize: 20,
+				data: data.map(d => [d[xAxisField], d[yAxisField]]),
+				type: 'scatter',
+			},
+		],
+	};
+}`;
+
+ReactiveChart.GetPieChartOptions = `({ title, aggregationData }) => {
+	let chartTitle;
+	if (title) {
+		if (typeof title === 'string') {
+			chartTitle = {
+				text: title,
+				left: 'center',
 			};
-		case ChartTypes.Line:
-			return {
-				title: chartTitle,
-				tooltip: {
-					trigger: 'item',
-				},
-				xAxis: {
-					name: xAxisName,
-					type: 'category',
-					data: aggregationData.map(item => ({
-						value: item.key,
-						name: item.key,
-					})),
-				},
-				yAxis: {
-					type: 'value',
-					name: yAxisName,
-				},
-				series: [
-					{
-						data: aggregationData.map(item => ({
-							value: item.doc_count,
-							name: item.key,
-						})),
-						type: 'line',
+		} else {
+			chartTitle = title;
+		}
+	}
+	return {
+		title: chartTitle,
+		tooltip: {
+			trigger: 'item',
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: '50%',
+				data: aggregationData.map(item => ({
+					value: item.doc_count,
+					name: item.key,
+				})),
+				emphasis: {
+					itemStyle: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)',
 					},
-				],
+				},
+			},
+		],
+	};
+}`;
+
+ReactiveChart.GetHistogramChartOptions = `({
+	title,
+	xAxisName,
+	yAxisName,
+	aggregationData,
+	value,
+	labelFormatter,
+}) => {
+	let chartTitle;
+	if (title) {
+		if (typeof title === 'string') {
+			chartTitle = {
+				text: title,
 			};
-		case ChartTypes.Bar:
-			return {
-				title: chartTitle,
-				tooltip: {
-					trigger: 'item',
+		} else {
+			chartTitle = title;
+		}
+	}
+	const xAxisData = aggregationData.map(item => ({
+		value: item.key,
+		name: item.key,
+	}));
+	let startIndex = -1;
+	let endIndex = -1;
+	if (value && Array.isArray(value)) {
+		startIndex = xAxisData.findIndex(i => i.value === value[0]);
+		endIndex = xAxisData.findIndex(i => i.value === value[1]);
+	}
+	return {
+		title: chartTitle,
+		toolbox: {
+			feature: {
+				dataZoom: {
+					yAxisIndex: false,
+					labelFormatter,
 				},
-				xAxis: {
-					type: 'category',
-					name: xAxisName,
-					data: aggregationData.map(item => ({
-						value: item.key,
-						name: item.key,
-					})),
+				saveAsImage: {
+					pixelRatio: 2,
 				},
-				yAxis: {
-					type: 'value',
-					name: yAxisName,
-				},
-				series: [
-					{
-						data: aggregationData.map(item => ({
-							value: item.doc_count,
-							name: item.key,
-						})),
-						type: 'bar',
-						showBackground: true,
-						backgroundStyle: {
-							color: 'rgba(180, 180, 180, 0.2)',
-						},
-					},
-				],
+			},
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow',
+			},
+		},
+		grid: {
+			bottom: 90,
+		},
+		dataZoom: [
+			{
+				type: 'inside',
+				startValue: startIndex > -1 ? startIndex : undefined,
+				endValue: endIndex > -1 ? endIndex : undefined,
+			},
+			{
+				type: 'slider',
+				startValue: startIndex > -1 ? startIndex : undefined,
+				endValue: endIndex > -1 ? endIndex : undefined,
+			},
+		],
+		xAxis: {
+			data: xAxisData,
+			name: xAxisName,
+			silent: false,
+			splitLine: {
+				show: false,
+			},
+			splitArea: {
+				show: false,
+			},
+		},
+		yAxis: {
+			splitArea: {
+				show: false,
+			},
+			name: yAxisName,
+		},
+		series: [
+			{
+				type: 'bar',
+				data: aggregationData.map(item => ({
+					value: item.doc_count,
+				})),
+				// Set 'large' for large data amount
+				large: true,
+			},
+		],
+	};
+}`;
+
+ReactiveChart.GetBarChartOptions = `({
+	title, xAxisName, yAxisName, aggregationData,
+}) => {
+	let chartTitle;
+	if (title) {
+		if (typeof title === 'string') {
+			chartTitle = {
+				text: title,
 			};
-		case ChartTypes.Pie:
-			return {
-				title: chartTitle,
-				tooltip: {
-					trigger: 'item',
-				},
-				series: [
-					{
-						type: 'pie',
-						radius: '50%',
-						data: aggregationData.map(item => ({
-							value: item.doc_count,
-							name: item.key,
-						})),
-						emphasis: {
-							itemStyle: {
-								shadowBlur: 10,
-								shadowOffsetX: 0,
-								shadowColor: 'rgba(0, 0, 0, 0.5)',
-							},
-						},
-					},
-				],
-			};
-		case ChartTypes.Histogram: {
-			const xAxisData = aggregationData.map(item => ({
+		} else {
+			chartTitle = title;
+		}
+	}
+	return {
+		title: chartTitle,
+		tooltip: {
+			trigger: 'item',
+		},
+		xAxis: {
+			type: 'category',
+			name: xAxisName,
+			data: aggregationData.map(item => ({
 				value: item.key,
 				name: item.key,
-			}));
-			let startIndex = -1;
-			let endIndex = -1;
-			if (value && Array.isArray(value)) {
-				startIndex = xAxisData.findIndex(i => i.value === value[0]);
-				endIndex = xAxisData.findIndex(i => i.value === value[1]);
-			}
-			return {
-				title: chartTitle,
-				toolbox: {
-					feature: {
-						dataZoom: {
-							yAxisIndex: false,
-							labelFormatter,
-						},
-						saveAsImage: {
-							pixelRatio: 2,
-						},
-					},
+			})),
+		},
+		yAxis: {
+			type: 'value',
+			name: yAxisName,
+		},
+		series: [
+			{
+				data: aggregationData.map(item => ({
+					value: item.doc_count,
+					name: item.key,
+				})),
+				type: 'bar',
+				showBackground: true,
+				backgroundStyle: {
+					color: 'rgba(180, 180, 180, 0.2)',
 				},
-				tooltip: {
-					trigger: 'axis',
-					axisPointer: {
-						type: 'shadow',
-					},
-				},
-				grid: {
-					bottom: 90,
-				},
-				dataZoom: [
-					{
-						type: 'inside',
-						startValue: startIndex > -1 ? startIndex : undefined,
-						endValue: endIndex > -1 ? endIndex : undefined,
-					},
-					{
-						type: 'slider',
-						startValue: startIndex > -1 ? startIndex : undefined,
-						endValue: endIndex > -1 ? endIndex : undefined,
-					},
-				],
-				xAxis: {
-					data: xAxisData,
-					name: xAxisName,
-					silent: false,
-					splitLine: {
-						show: false,
-					},
-					splitArea: {
-						show: false,
-					},
-				},
-				yAxis: {
-					splitArea: {
-						show: false,
-					},
-					name: yAxisName,
-				},
-				series: [
-					{
-						type: 'bar',
-						data: aggregationData.map(item => ({
-							value: item.doc_count,
-						})),
-						// Set `large` for large data amount
-						large: true,
-					},
-				],
-			};
-		}
+			},
+		],
+	};
+}`;
 
+ReactiveChart.GetLineChartOptions = `({
+	title, xAxisName, yAxisName, aggregationData,
+}) => {
+	let chartTitle;
+	if (title) {
+		if (typeof title === 'string') {
+			chartTitle = {
+				text: title,
+			};
+		} else {
+			chartTitle = title;
+		}
+	}
+	return {
+		title: chartTitle,
+		tooltip: {
+			trigger: 'item',
+		},
+		xAxis: {
+			name: xAxisName,
+			type: 'category',
+			data: aggregationData.map(item => ({
+				value: item.key,
+				name: item.key,
+			})),
+		},
+		yAxis: {
+			type: 'value',
+			name: yAxisName,
+		},
+		series: [
+			{
+				data: aggregationData.map(item => ({
+					value: item.doc_count,
+					name: item.key,
+				})),
+				type: 'line',
+			},
+		],
+	};
+}`;
+
+ReactiveChart.getOption = ({ chartType, ...chartConfig }) => {
+	// eslint-disable-next-line
+	const chartConfigMethod = eval(ReactiveChart.getOptionAsString(chartType));
+	if (chartConfig) {
+		return chartConfigMethod(chartConfig);
+	}
+	return null;
+};
+
+ReactiveChart.getOptionAsString = (chartType) => {
+	switch (chartType) {
+		case ChartTypes.Scatter:
+			return ReactiveChart.GetScatterChartOptions;
+		case ChartTypes.Line:
+			return ReactiveChart.GetLineChartOptions;
+		case ChartTypes.Bar:
+			return ReactiveChart.GetBarChartOptions;
+		case ChartTypes.Pie:
+			return ReactiveChart.GetPieChartOptions;
+		case ChartTypes.Histogram:
+			return ReactiveChart.GetHistogramChartOptions;
 		default:
 			return null;
 	}
