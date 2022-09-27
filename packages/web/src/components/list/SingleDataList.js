@@ -338,6 +338,7 @@ class SingleDataList extends Component {
 			data: this.listItems,
 			handleChange: this.handleClick,
 			rawData: this.props.rawData,
+			total: this.props.total,
 		};
 		return getComponent(data, this.props);
 	}

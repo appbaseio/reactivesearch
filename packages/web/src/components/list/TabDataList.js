@@ -1,9 +1,8 @@
 import { hasCustomRenderer } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { bool, number } from 'prop-types';
+import { bool } from 'prop-types';
 import React from 'react';
 import { TabLink, TabContainer } from '../../styles/Tabs';
-import { connect } from '../../utils';
 
 import SingleDataList from './SingleDataList';
 
@@ -17,19 +16,20 @@ import SingleDataList from './SingleDataList';
  */
 
 const TabDataList = (props) => {
-	const { renderItem, totalDocs } = props;
+	const { renderItem } = props;
 	const defaultItem = item =>
 		`${item.label} ${props.showCount && item.count ? `(${item.count})` : ''}`;
 
 	if (hasCustomRenderer(props) || props.showRadio) {
 		return <SingleDataList {...props} />;
 	}
+
 	return (
 		<SingleDataList
 			{...props}
 			showSearch={props.showSearch}
 			render={({
-				data, value, handleChange,
+				data, value, handleChange, total,
 			}) => (
 				<TabContainer vertical={props.displayAsVertical}>
 					{props.selectAllLabel ? (
@@ -42,7 +42,7 @@ const TabDataList = (props) => {
 							{defaultItem({
 								label: props.selectAllLabel,
 								value: props.selectAllLabel,
-								count: totalDocs,
+								count: total,
 							})}
 						</TabLink>
 					) : null}
@@ -71,8 +71,6 @@ TabDataList.defaultProps = {
 };
 
 TabDataList.propTypes = {
-	totalDocs: number,
-	// componentProps
 	displayAsVertical: bool,
 	children: types.func,
 	componentId: types.stringRequired,
@@ -92,10 +90,4 @@ TabDataList.propTypes = {
 	selectAllLabel: types.string,
 };
 
-const mapStateToProps = (state, props) => ({
-	totalDocs: state.hits[props.componentId] && state.hits[props.componentId].total,
-});
-
-const ConnectedComponent = connect(mapStateToProps, null)(props => <TabDataList {...props} />);
-
-export default ConnectedComponent;
+export default TabDataList;
