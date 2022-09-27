@@ -402,7 +402,7 @@ class SingleDataList extends Component {
 									id={`${this.props.componentId}-${selectAllLabel}`}
 									value={selectAllLabel}
 									tabIndex={isAllChecked ? '-1' : '0'}
-									onClick={this.handleClick}
+									onChange={this.handleClick}
 									checked={isAllChecked}
 									show={this.props.showRadio}
 								/>
