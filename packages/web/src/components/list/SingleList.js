@@ -401,6 +401,7 @@ class SingleList extends Component {
 			renderError,
 			error,
 			isLoading,
+			total,
 		} = this.props;
 		const { isLastBucket } = this.state;
 
@@ -459,7 +460,19 @@ class SingleList extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 								>
-									{selectAllLabel}
+									<span>
+										<span>{selectAllLabel}</span>
+										{this.props.showCount && (
+											<span
+												className={
+													getClassName(this.props.innerClass, 'count')
+													|| null
+												}
+											>
+												{total}
+											</span>
+										)}
+									</span>
 								</label>
 							</li>
 						) : null}
@@ -533,6 +546,7 @@ SingleList.propTypes = {
 	isLoading: types.bool,
 	error: types.title,
 	enableAppbase: types.bool,
+	total: types.number,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -609,6 +623,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
