@@ -177,9 +177,7 @@ const MultiList = {
 				return null;
 			}
 		}
-
 		let itemsToRender = this.$data.modifiedOptions;
-
 		if (this.$props.transformData) {
 			itemsToRender = this.$props.transformData(itemsToRender);
 		}

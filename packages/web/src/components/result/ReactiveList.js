@@ -52,11 +52,13 @@ class ReactiveList extends Component {
 			{children}
 		</div>
 	);
+
 	static ResultListWrapper = ({ children, ...rest }) => (
 		<div css={listContainer} {...rest}>
 			{children}
 		</div>
 	);
+
 	constructor(props) {
 		super(props);
 
@@ -400,6 +402,7 @@ class ReactiveList extends Component {
 			triggerClickAnalytics: this.triggerClickAnalytics,
 		};
 	};
+
 	get stats() {
 		const { currentPage } = this.state;
 		const { filteredResults } = this.getAllData();
@@ -409,6 +412,7 @@ class ReactiveList extends Component {
 			displayedResults: filteredResults.length,
 		};
 	}
+
 	// Returns the props without default props to apply search relevancy settings for RS API
 	get absProps() {
 		const {
@@ -572,7 +576,7 @@ class ReactiveList extends Component {
 			= (hits && hits.length) || (promotedResults && promotedResults.length);
 		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
-		} else if (total) {
+		} if (total) {
 			return (
 				<p css={resultStats} className={getClassName(this.props.innerClass, 'resultStats')}>
 					{this.props.total} results found in {this.props.time || 0}ms
@@ -787,6 +791,7 @@ class ReactiveList extends Component {
 			_click_id: base + index,
 		}));
 	};
+
 	getData = () => {
 		const {
 			filteredResults, promotedResults, aggregationData, customData,
@@ -803,6 +808,7 @@ class ReactiveList extends Component {
 			triggerExportJSON: this.triggerExportJSON,
 		};
 	};
+
 	getComponent = () => {
 		const { error, isLoading } = this.props;
 		const data = {

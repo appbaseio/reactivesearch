@@ -32,5 +32,11 @@ export default {
 	modules: [],
 
 	// Build Configuration: https://go.nuxtjs.dev/config-build
-	build: {},
+	build: {
+		transpile: [/^gmap-vue($|\/)/, /^@appbaseio\/reactivesearch-vue($|\/)/],
+		babel: {
+			presets: [],
+			plugins: ['@babel/plugin-syntax-dynamic-import'],
+		},
+	},
 };
