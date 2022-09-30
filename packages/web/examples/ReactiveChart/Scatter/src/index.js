@@ -24,7 +24,6 @@ const Main = () => (
 			<div className="col">
 				<ReactiveChart
 					componentId="scatterChart"
-					dataField="ratings_count"
 					xAxisField="ratings_count"
 					yAxisField="average_rating"
 					chartType="scatter"

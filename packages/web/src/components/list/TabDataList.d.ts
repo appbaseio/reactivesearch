@@ -10,6 +10,7 @@ export interface TabDataList extends CommonProps {
 	placeholder?: string;
 	react?: types.react;
 	title?: types.title;
+	selectAllLabel: string;
 	showCount?: boolean;
 	render?: (...args: any[]) => any;
 	renderItem?: (...args: any[]) => any;
