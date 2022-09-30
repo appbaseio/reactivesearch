@@ -23,12 +23,29 @@ const TabDataList = (props) => {
 	if (hasCustomRenderer(props) || props.showRadio) {
 		return <SingleDataList {...props} />;
 	}
+
 	return (
 		<SingleDataList
 			{...props}
 			showSearch={props.showSearch}
-			render={({ data, value, handleChange }) => (
+			render={({
+				data, value, handleChange, total,
+			}) => (
 				<TabContainer vertical={props.displayAsVertical}>
+					{props.selectAllLabel ? (
+						<TabLink
+							onClick={() => handleChange(props.selectAllLabel)}
+							selected={props.selectAllLabel === value}
+							vertical={props.displayAsVertical}
+							key={props.selectAllLabel}
+						>
+							{defaultItem({
+								label: props.selectAllLabel,
+								value: props.selectAllLabel,
+								count: total,
+							})}
+						</TabLink>
+					) : null}
 					{data.map(item => (
 						<TabLink
 							onClick={() => handleChange(item.label)}
@@ -70,5 +87,7 @@ TabDataList.propTypes = {
 	renderNoResults: types.func,
 	index: types.string,
 	endpoint: types.endpoint,
+	selectAllLabel: types.string,
 };
+
 export default TabDataList;

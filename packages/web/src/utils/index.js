@@ -14,6 +14,10 @@ export const SearchPreferencesContext = React.createContext(null);
 
 export const ReduxGetStateContext = React.createContext(null);
 
+/**
+ * This exported connect expects two args (mapStateToProps, mapStateToDispatch).
+ * If we don't want to pass any of them, then we need to explicityly pass as null.
+*/
 export const connect = (...args) => connectToStore(...args, null, { context: ReactReduxContext });
 
 export const X_SEARCH_CLIENT = 'ReactiveSearch React';

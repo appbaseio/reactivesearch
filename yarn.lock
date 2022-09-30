@@ -158,6 +158,17 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+"@appbaseio/reactivecore@9.14.23":
+  version "9.14.23"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.23.tgz#840d852d808ac7520403fc8e672ab4d209a3c23d"
+  integrity sha512-7NM4QCo35qCYkY73LJtonYIGGgZ2VWyXghEQHFUXEEprZFumxYzVlenjiK4Zx0tJA8WxCtKv/jVCeQ7wtFnOiA==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
 "@appbaseio/reactivesearch-vue@2.0.0-alpha.3":
   version "2.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-2.0.0-alpha.3.tgz#56e100cbe4850264b24e66e67e486761c0fd7a6c"

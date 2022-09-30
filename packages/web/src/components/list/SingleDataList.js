@@ -215,6 +215,8 @@ class SingleDataList extends Component {
 		if (value !== props.selectAllLabel) {
 			currentValue = props.data.find(item => item.label === value);
 			currentValue = currentValue ? currentValue.value : null;
+		} else {
+			currentValue = props.selectAllLabel;
 		}
 		let query = SingleDataList.defaultQuery(currentValue, props);
 		if (customQuery) {
@@ -336,6 +338,7 @@ class SingleDataList extends Component {
 			data: this.listItems,
 			handleChange: this.handleClick,
 			rawData: this.props.rawData,
+			total: this.props.total,
 		};
 		return getComponent(data, this.props);
 	}
@@ -359,7 +362,9 @@ class SingleDataList extends Component {
 	}
 
 	render() {
-		const { selectAllLabel, showCount, renderItem } = this.props;
+		const {
+			selectAllLabel, showCount, renderItem, total,
+		} = this.props;
 		const { options } = this.state;
 
 		if (!this.hasCustomRenderer && options.length === 0) {
@@ -406,7 +411,19 @@ class SingleDataList extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 								>
-									{selectAllLabel}
+									<Span>
+										{selectAllLabel}
+										{showCount && total && (
+											<span
+												className={
+													getClassName(this.props.innerClass, 'count')
+													|| null
+												}
+											>
+												&nbsp;({total})
+											</span>
+										)}
+									</Span>
 								</Label>
 							</li>
 						)}
@@ -472,7 +489,7 @@ class SingleDataList extends Component {
 SingleDataList.propTypes = {
 	setQueryOptions: types.funcRequired,
 	updateQuery: types.funcRequired,
-
+	total: types.number,
 	selectedValue: types.selectedValue,
 	options: types.options,
 	rawData: types.rawData,
@@ -537,6 +554,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	options:
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested

@@ -419,7 +419,9 @@ class MultiDataList extends Component {
 	}
 
 	render() {
-		const { selectAllLabel, showCount, renderItem } = this.props;
+		const {
+			selectAllLabel, showCount, renderItem, total,
+		} = this.props;
 		const { options } = this.state;
 
 		if (!this.hasCustomRenderer && options.length === 0) {
@@ -469,7 +471,19 @@ class MultiDataList extends Component {
 									className={getClassName(this.props.innerClass, 'label') || null}
 									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 								>
-									{selectAllLabel}
+									<span>
+										<span>{selectAllLabel}</span>
+										{showCount && total && (
+											<span
+												className={
+													getClassName(this.props.innerClass, 'count')
+													|| null
+												}
+											>
+												{total}
+											</span>
+										)}
+									</span>
 								</label>
 							</li>
 						) : null}
@@ -540,7 +554,7 @@ MultiDataList.propTypes = {
 	rawData: types.rawData,
 	options: types.options,
 	enableAppbase: types.bool,
-
+	total: types.number,
 	setCustomQuery: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
@@ -604,6 +618,7 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
+	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	enableAppbase: state.config.enableAppbase,
 });
 
