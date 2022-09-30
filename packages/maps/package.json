@@ -37,8 +37,8 @@
 	},
 	"peerDependencies": {
 		"@appbaseio/reactivesearch": ">=3.30.1",
-		"react": ">=15",
-		"react-dom": ">=15"
+		"react": "^17.0.0",
+		"react-dom": "^17.0.0"
 	},
 	"devDependencies": {
 		"@appbaseio/reactivesearch": ">=3.30.1",
@@ -53,8 +53,8 @@
 		"babili-webpack-plugin": "^0.1.2",
 		"brotli-webpack-plugin": "^0.5.0",
 		"compression-webpack-plugin": "^1.0.1",
-		"react": "^16.1.1",
-		"react-dom": "^16.1.1",
+		"react": "^17.0.0",
+		"react-dom": "^17.0.0",
 		"webpack": "^4.18.0"
 	}
 }
