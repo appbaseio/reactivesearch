@@ -772,8 +772,6 @@ const ReactiveList = {
 				error,
 				loading: isLoading || false,
 				loadMore: this.loadMore,
-				// TODO: Remove in v2
-				triggerAnalytics: this.triggerClickAnalytics,
 				triggerClickAnalytics: this.triggerClickAnalytics,
 				setPage: this.setPage,
 				...this.getData(),

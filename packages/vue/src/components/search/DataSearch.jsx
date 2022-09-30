@@ -86,30 +86,10 @@ const DataSearch = {
 		},
 	},
 	created() {
-		const {
-			enableQuerySuggestions,
-			renderQuerySuggestions,
-			enableRecentSearches,
-			distinctField,
-			distinctFieldConfig,
-			index,
-			mode,
-		} = this.$props;
+		const { enableRecentSearches, distinctField, distinctFieldConfig, index, mode }
+			= this.$props;
 		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
 			this.$options.isTagsMode = true;
-		}
-
-		// TODO: Remove in 2.0
-		if (enableQuerySuggestions) {
-			console.warn(
-				'Warning(ReactiveSearch): The `enableQuerySuggestions` prop has been marked as deprecated, please use the `enablePopularSuggestions` prop instead.',
-			);
-		}
-		// TODO: Remove in 2.0
-		if (renderQuerySuggestions) {
-			console.warn(
-				'Warning(ReactiveSearch): The `renderQuerySuggestions` prop has been marked as deprecated, please use the `renderPopularSuggestions` prop instead.',
-			);
 		}
 		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
 			console.warn(
@@ -162,9 +142,7 @@ const DataSearch = {
 			if (!this.currentValue) {
 				return [];
 			}
-			return this.enableQuerySuggestions || this.enablePopularSuggestions
-				? this.normalizedPopularSuggestions
-				: [];
+			return this.enablePopularSuggestions ? this.normalizedPopularSuggestions : [];
 		},
 		normalizedRecentSearches() {
 			return this.recentSearches || [];
@@ -178,8 +156,7 @@ const DataSearch = {
 			);
 		},
 		defaultSearchSuggestions() {
-			const isPopularSuggestionsEnabled
-				= this.enableQuerySuggestions || this.enablePopularSuggestions;
+			const isPopularSuggestionsEnabled = this.enablePopularSuggestions;
 			if (this.currentValue || !this.enableDefaultSuggestions) {
 				return [];
 			}
@@ -239,7 +216,6 @@ const DataSearch = {
 		value: VueTypes.oneOfType([VueTypes.arrayOf(VueTypes.string), types.value]),
 		defaultSuggestions: types.suggestions,
 		enableSynonyms: VueTypes.bool.def(true),
-		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSearches: VueTypes.bool.def(false),
 		fieldWeights: types.fieldWeights,
@@ -253,7 +229,6 @@ const DataSearch = {
 		innerClass: types.style,
 		innerRef: VueTypes.string.def('searchInputField'),
 		render: types.func,
-		renderQuerySuggestions: types.func,
 		renderPopularSuggestions: types.func,
 		parseSuggestion: types.func,
 		renderNoSuggestion: types.title,
