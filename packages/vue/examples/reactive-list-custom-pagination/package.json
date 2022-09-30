@@ -8,7 +8,7 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
-		"vue": "^2.5.17",
+		"vue": "^2.7.7",
 		"@appbaseio/reactivesearch-vue": "2.0.0-alpha.4",
 		"vuejs-paginate": "^2.1.0"
 	},
