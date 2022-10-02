@@ -91,8 +91,8 @@
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/4ff44cfdb5a670adee21be3cf088df3e4d9f9b53"
   dependencies:
     "@appbaseio/designkit" "^0.13.0"
-    "@appbaseio/reactivemaps" "^3.0.0"
-    "@appbaseio/reactivesearch" "^3.30.3"
+    "@appbaseio/reactivemaps" "^3.0.0-beta.17"
+    "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
     "@typeform/embed" "^1.34.1"
@@ -133,7 +133,7 @@
     gatsby-transformer-yaml "4.9.0"
     hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    moment "^2.29.4"
+    moment "^2.29.2"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -8252,7 +8252,7 @@ babel-loader@8.0.5:
     mkdirp "^0.5.1"
     util.promisify "^1.0.0"
 
-babel-loader@^8.0.0, babel-loader@^8.0.5, babel-loader@^8.1.0, babel-loader@^8.2.2, babel-loader@^8.2.3:
+babel-loader@^8.0.5, babel-loader@^8.1.0, babel-loader@^8.2.2, babel-loader@^8.2.3:
   version "8.2.5"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.2.5.tgz#d45f585e654d5a5d90f5350a779d7647c5ed512e"
   integrity sha512-OSiFfH89LrEMiWd4pLNqGz4CwJDtbs2ZVc+iGu2HrkRfPxId9F2anQj38IxWpmRfsUY0aBZYi1EFcd3mhtRMLQ==
@@ -28084,7 +28084,7 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
