@@ -1,6 +1,6 @@
+import ReactDOM from 'react-dom/client';
 import { object, bool, string } from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useEffect, useRef, useState } from 'react';
 import { ReactiveBase, SearchBox, ReactiveList } from '@appbaseio/reactivesearch';
 import aa from '@appbaseio/analytics';
 import './index.css';
@@ -99,7 +99,7 @@ const RecentFavorites = () => {
 				<section>
 					<h3>Favorites</h3>
 					<ul>
-						{recentFavorites.map(s => (
+						{recentFavorites.map((s) => (
 							<BooksReactiveList key={s.id} data={s.source} showFavorite={false} />
 						))}
 					</ul>
@@ -137,7 +137,7 @@ const Main = () => {
 						dataField="original_title"
 						className="result-list-container"
 						size={5}
-						renderItem={data => (
+						renderItem={(data) => (
 							<BooksReactiveList
 								key={data._id}
 								data={data}
@@ -158,5 +158,5 @@ const Main = () => {
 		</ReactiveBase>
 	);
 };
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
