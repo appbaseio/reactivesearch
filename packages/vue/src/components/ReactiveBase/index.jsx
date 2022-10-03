@@ -32,6 +32,7 @@ const ReactiveBase = {
 	},
 	props: {
 		app: types.string,
+		analytics: VueTypes.bool,
 		appbaseConfig: types.appbaseConfig,
 		enableAppbase: VueTypes.bool.def(false),
 		credentials: types.string,
@@ -140,7 +141,9 @@ const ReactiveBase = {
 				transformRequest: props.transformRequest,
 				transformResponse: props.transformResponse,
 				enableAppbase: props.enableAppbase,
-				analytics: props.appbaseConfig ? props.appbaseConfig.recordAnalytics : false,
+				analytics: props.appbaseConfig
+					? props.appbaseConfig.recordAnalytics
+					: props.analytics,
 				analyticsConfig: props.appbaseConfig,
 				mongodb: props.mongodb,
 				endpoint: props.endpoint,
