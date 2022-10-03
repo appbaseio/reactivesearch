@@ -7,6 +7,33 @@
         <div class="title">Airbeds</div>
         <DataSearch v-bind="components.datasearch" />
       </nav>
+      <client-only>
+        <reactive-google-map
+          :size="50"
+          :style="{ height: '90vh', minWidth: '300px' }"
+          :react="{ and: 'places' }"
+          :default-zoom="3"
+          :show-marker-clusters="false"
+          component-id="map"
+          data-field="location"
+        >
+          <div
+            slot="renderItem"
+            slot-scope="{ magnitude }"
+            :style="{
+              background: 'dodgerblue',
+              color: '#fff',
+              paddingLeft: '5px',
+              paddingRight: '5px',
+              borderRadius: '3px',
+              padding: '10px',
+            }"
+          >
+            <i class="fas fa-globe-europe" />
+            &nbsp;{{ magnitude }}
+          </div>
+        </reactive-google-map>
+      </client-only>
       <ReactiveList v-bind="components.result">
         <div 
           slot="render" 
@@ -17,7 +44,7 @@
               :key="result._id"
               :href="result.listing_url"
             >
-              <ResultCardImage :src="result.picture_url" />
+              <ResultCardImage :src="result.picture_url || ''" />
               <ResultCardTitle>
                 {{ result.name }}
               </ResultCardTitle>

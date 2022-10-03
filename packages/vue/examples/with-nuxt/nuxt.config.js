@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const pkg = require('./package');
+const pkg = require('./package.json');
 
 module.exports = {
 	modulesDir: resolve(__dirname, '../../../../node_modules/'),
@@ -19,11 +19,4 @@ module.exports = {
 	 ** Plugins to load before mounting the App
 	 */
 	plugins: ['~/plugins/reactivesearch-vue'],
-	build: {
-		transpile: [/^gmap-vue($|\/)/, /^@appbaseio\/reactivesearch-vue($|\/)/],
-		babel: {
-			presets: [],
-			plugins: ['@babel/plugin-syntax-dynamic-import'],
-		},
-	},
 };
