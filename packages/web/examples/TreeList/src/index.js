@@ -73,4 +73,5 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

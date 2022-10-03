@@ -115,13 +115,13 @@ class Main extends Component {
 																		<a href="#">{pathItem}</a>{' '}
 																		{pathItemIndex
 																		!== pathParts.length - 1 ? (
-																				<span
-																				style={{
+																			<span
+																					style={{
 																						margin: '0 4px',
 																					}}
-																			>
+																				>
 																					➤
-                   </span>
+																				</span>
 																			) : (
 																				''
 																			)}
@@ -193,4 +193,5 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
