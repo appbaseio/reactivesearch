@@ -1,7 +1,8 @@
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { lighten } from 'polished';
-import { RenderAsTagComponent } from './Base';
+import { string, bool, object } from 'prop-types';
+import React from 'react';
 
 import Title from './Title';
 
@@ -29,79 +30,91 @@ const Image = styled('div')`
 	background-image: ${props => `url(${props.src})`};
 `;
 
-const ListItem = styled(RenderAsTagComponent)`
-	width: 100%;
-	height: auto;
-	outline: none;
-	text-decoration: none;
-	border-radius: 0;
-	background-color: ${({ theme }) =>
-	(theme.colors.backgroundColor
-		? lighten(0.1, theme.colors.backgroundColor)
-		: '#fff')};
-	display: flex;
-	flex-direction: row;
-	margin: 0;
-	padding: 10px;
-	border-bottom: 1px solid ${({ theme }) =>
+const ListItem = ({ as, ...mainProps }) => React.createElement(
+	styled(as)`
+		width: 100%;
+		height: auto;
+		outline: none;
+		text-decoration: none;
+		border-radius: 0;
+		background-color: ${({ theme }) =>
+		(theme.colors.backgroundColor ? lighten(0.1, theme.colors.backgroundColor) : '#fff')};
+		display: flex;
+		flex-direction: row;
+		margin: 0;
+		padding: 10px;
+		border-bottom: 1px solid ${({ theme }) =>
 			(theme.colors.backgroundColor
 				? lighten(0.3, theme.colors.backgroundColor)
 				: lighten(0.68, theme.colors.textColor))};
-	color: ${({ theme }) => theme.colors.textColor};
-	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
+		color: ${({ theme }) => theme.colors.textColor};
+		${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
-	&:hover, &:focus {
-		background-color: ${({ theme }) =>
+		&:hover, &:focus {
+			background-color: ${({ theme }) =>
 					(theme.colors.backgroundColor
 						? lighten(0.2, theme.colors.backgroundColor)
 						: '#fdfefd')};
-	}
+		}
 
-	&:last-of-type {
-		border: 0;
-	}
+		&:last-of-type {
+			border: 0;
+		}
 
-	h2 {
-		width: 100%;
-		line-height: 1.2rem;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		margin: 0;
-		padding: 0 0 8px;
-	}
+		h2 {
+			width: 100%;
+			line-height: 1.2rem;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin: 0;
+			padding: 0 0 8px;
+		}
 
-	p {
-		margin: 0;
-	}
+		p {
+			margin: 0;
+		}
 
-	article {
-		width: ${(props) => {
+		article {
+			width: ${(props) => {
 							if (props.image) {
 								return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
 							}
 							return '100%';
 						}};
-		padding-left: ${props => (props.image ? '10px' : 0)};
-		font-size: 0.9rem;
-	}
-
-	&:hover, &:focus {
-		box-shadow: 0 0 0 0 rgba(0,0,0,0.10);
-	}
-
-	@media (max-width: 420px) {
-		min-width: 0;
-		margin: 0;
-		border-radius: 0;
-		box-shadow: none;
-		border: 1px solid #eee;
+			padding-left: ${props => (props.image ? '10px' : 0)};
+			font-size: 0.9rem;
+		}
 
 		&:hover, &:focus {
-			box-shadow: 0;
+			box-shadow: 0 0 0 0 rgba(0,0,0,0.10);
 		}
-	}
-`;
 
+		@media (max-width: 420px) {
+			min-width: 0;
+			margin: 0;
+			border-radius: 0;
+			box-shadow: none;
+			border: 1px solid #eee;
+
+			&:hover, &:focus {
+				box-shadow: 0;
+			}
+		}
+	`,
+	mainProps,
+);
+
+ListItem.propTypes = {
+	as: string,
+	href: string,
+	image: bool,
+	small: bool,
+	// eslint-disable-next-line
+	theme: object,
+};
+ListItem.defaultProps = {
+	as: 'div',
+};
 export default ListItem;
 export { container, Title, Image };

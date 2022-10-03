@@ -29,6 +29,7 @@ const Main = () => (
 					{ label: 'Adventure', value: 'Adventure' },
 					{ label: 'Music', value: 'Music' },
 				]}
+				showCount
 			/>
 			<ReactiveList
 				componentId="SearchResult"
@@ -49,12 +50,12 @@ const Main = () => (
 					<ReactiveList.ResultListWrapper>
 						{data.map(item => (
 							<ResultList href={item.event.event_url} key={item._id}>
-								<ResultList.Image small src={item.member.photo} />
+								<ResultList.Image small src={item.member.photo || ''} />
 								<ResultList.Content>
 									<ResultList.Title>
 										<div className="meetup-title">
-											{item.member ? item.member.member_name : ''} is
-											going to ${item.event ? item.event.event_name : ''}
+											{item.member ? item.member.member_name : ''} is going to
+											${item.event ? item.event.event_name : ''}
 										</div>
 									</ResultList.Title>
 									<ResultList.Description>
@@ -66,16 +67,14 @@ const Main = () => (
 												{item.group ? item.group.group_city : ''}
 											</div>
 											<div className="flex wrap meetup-topics">
-												{item.group.group_topics
-													.slice(0, 4)
-													.map(tag => (
-														<div
-															className="meetup-topic"
-															key={tag.topic_name}
-														>
-															{tag.topic_name}
-														</div>
-													))}
+												{item.group.group_topics.slice(0, 4).map(tag => (
+													<div
+														className="meetup-topic"
+														key={tag.topic_name}
+													>
+														{tag.topic_name}
+													</div>
+												))}
 											</div>
 										</div>
 									</ResultList.Description>
