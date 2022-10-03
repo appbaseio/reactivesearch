@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
+import { useState } from 'react';
 import { MultiList, ReactiveBase, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -23,8 +22,7 @@ function booksReactiveList(data) {
 									.map((item, index) => (
 										// eslint-disable-next-line react/no-array-index-key
 										<i className="fas fa-star" key={index} />
-									))
-								}
+									))}
 							</span>
 							<span className="avg-rating">({data.average_rating} avg)</span>
 						</div>
@@ -73,5 +71,5 @@ function Main() {
 		</ReactiveBase>
 	);
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
