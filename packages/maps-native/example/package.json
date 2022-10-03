@@ -19,7 +19,7 @@
 		"expo": "^32.0.6",
 		"hoist-non-react-statics": "^3.3.0",
 		"native-base": "^2.4.2",
-		"react": "16.8.6",
+		"react": "^17.0.0",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
 		"react-native-calendars": "^1.18.2",
 		"react-native-gesture-handler": "^1.0.0-alpha.43",
