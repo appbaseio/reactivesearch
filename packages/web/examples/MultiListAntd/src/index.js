@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { List, Checkbox, Card, Row, Col } from 'antd';
 import { ReactiveBase, MultiList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 import 'antd/dist/antd.css';
@@ -27,9 +26,7 @@ const Main = () => (
 					title="Filter by Authors"
 					aggregationSize={10}
 					showSearch={false}
-					render={({
-						loading, error, data, value, handleChange,
-					}) => {
+					render={({ loading, error, data, value, handleChange }) => {
 						if (loading) {
 							return <div>Fetching Results.</div>;
 						}
@@ -44,7 +41,7 @@ const Main = () => (
 							<List
 								itemLayout="horizontal"
 								dataSource={data}
-								renderItem={item => (
+								renderItem={(item) => (
 									<List.Item>
 										<Checkbox
 											style={{
@@ -83,7 +80,7 @@ const Main = () => (
 					render={({ data }) => (
 						<div className="site-card-wrapper">
 							<Row gutter={16}>
-								{data.map(item => (
+								{data.map((item) => (
 									<Col key={item._id} span={12}>
 										<Card
 											hoverable
@@ -125,5 +122,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
