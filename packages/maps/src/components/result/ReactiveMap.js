@@ -7,6 +7,7 @@ import {
 	updateQuery,
 	loadMore,
 	setMapData,
+	setValue,
 	setQueryListener,
 	setDefaultQuery,
 	setComponentProps,
@@ -1106,6 +1107,8 @@ const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setComponentProps: (component, options, componentType) =>
 		dispatch(setComponentProps(component, options, componentType)),
+	setPageURL: (component, value, label, showFilter, URLParams) =>
+		dispatch(setValue(component, value, label, showFilter, URLParams)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options)),
 	triggerAnalytics: (searchPosition, docId) => dispatch(recordResultClick(searchPosition, docId)),

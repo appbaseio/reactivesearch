@@ -14,21 +14,23 @@ const filterProps = (props = {}) => ({
 });
 
 const filterByComponentIds = (state, props = {}) => {
-	const { componentIds } = props;
-	if (typeof componentIds === 'string') {
-		return {
-			[componentIds]: state[componentIds],
-		};
+	const { componentIds, excludeComponentIds } = props;
+	if (componentIds) {
+		if (typeof componentIds === 'string') {
+			return {
+				[componentIds]: state[componentIds],
+			};
+		}
+		if (Array.isArray(componentIds) && componentIds.length) {
+			const filteredState = {};
+			componentIds.forEach((componentId) => {
+				filteredState[componentId] = state[componentId];
+			});
+			return filteredState;
+		}
 	}
-	if (Array.isArray(componentIds)) {
-		const filteredState = {};
-		componentIds.forEach((componentId) => {
-			filteredState[componentId] = state[componentId];
-		});
-		return filteredState;
-	}
+	let filteredState = {};
 	if (!props.includeInternalComponents) {
-		const filteredState = {};
 		Object.keys(state).forEach((componentId) => {
 			if (
 				componentId.endsWith('internal')
@@ -39,9 +41,29 @@ const filterByComponentIds = (state, props = {}) => {
 			}
 			filteredState[componentId] = state[componentId];
 		});
-		return filteredState;
+	} else {
+		filteredState = state;
 	}
-	return state;
+	// Apply exclude component ids
+	if (excludeComponentIds) {
+		if (typeof excludeComponentIds === 'string') {
+			Object.keys(state).forEach((componentId) => {
+				if (componentId === excludeComponentIds) {
+					// Delete state
+					delete filteredState[componentId];
+				}
+			});
+		}
+		if (Array.isArray(excludeComponentIds) && excludeComponentIds.length) {
+			Object.keys(state).forEach((componentId) => {
+				if (excludeComponentIds.includes(componentId)) {
+					// Delete state
+					delete filteredState[componentId];
+				}
+			});
+		}
+	}
+	return filteredState;
 };
 
 const filterByKeys = (state, allowedKeys) =>
@@ -66,6 +88,10 @@ const StateProvider = {
 		includeKeys: VueTypes.arrayOf(VueTypes.string).def(defaultKeys),
 		strict: VueTypes.bool.def(true),
 		includeInternalComponents: VueTypes.bool.def(false),
+		excludeComponentIds: VueTypes.oneOfType([
+			VueTypes.string,
+			VueTypes.arrayOf(VueTypes.string),
+		]),
 	},
 	data() {
 		this.__state = {
@@ -126,6 +152,9 @@ const StateProvider = {
 			this.calculateSearchState(newVal, oldVal);
 		},
 		componentIds(newVal, oldVal) {
+			this.calculateSearchState(newVal, oldVal);
+		},
+		excludeComponentIds(newVal, oldVal) {
 			this.calculateSearchState(newVal, oldVal);
 		},
 		includeKeys(newVal, oldVal) {

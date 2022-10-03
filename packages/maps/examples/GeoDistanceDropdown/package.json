@@ -7,8 +7,8 @@
     "dependencies": {
         "@appbaseio/reactivemaps": "3.0.0",
         "@appbaseio/reactivesearch": "3.40.2",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0"
+        "react": "^17.0.0",
+        "react-dom": "^17.0.0"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",

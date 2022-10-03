@@ -29,7 +29,22 @@ const componentsWithoutFilters = [componentTypes.numberBox, componentTypes.ratin
 
 const resultComponents = [componentTypes.reactiveList, componentTypes.reactiveMap];
 
-function getValue(state, id, defaultValue) {
+export const componentTypeToDefaultValue = {
+	[componentTypes.singleList]: '',
+	[componentTypes.multiList]: [],
+	[componentTypes.singleDataList]: '',
+	[componentTypes.singleDropdownList]: '',
+	[componentTypes.multiDataList]: [],
+	[componentTypes.multiDropdownList]: [],
+	[componentTypes.tagCloud]: '',
+	[componentTypes.toggleButton]: '',
+	[componentTypes.singleDropdownRange]: '',
+	[componentTypes.multiDropdownRange]: [],
+	[componentTypes.singleRange]: '',
+	[componentTypes.multiRange]: [],
+};
+
+function getValue(state, id, defaultValue, componentType) {
 	if (state && state[id]) {
 		try {
 			// parsing for next.js - since it uses extra set of quotes to wrap params
@@ -47,7 +62,7 @@ function getValue(state, id, defaultValue) {
 		}
 	}
 	return {
-		value: defaultValue,
+		value: defaultValue || componentTypeToDefaultValue[componentType] || null,
 		reference: 'DEFAULT',
 	};
 }
@@ -196,6 +211,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				searchState,
 				component.componentId,
 				component.value || component.defaultValue,
+				componentType,
 			);
 			// [1] set selected values
 			let showFilter = component.showFilter !== undefined ? component.showFilter : true;

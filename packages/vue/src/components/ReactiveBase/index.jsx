@@ -23,13 +23,7 @@ const ReactiveBase = {
 		this.setStore(this.$props);
 	},
 	mounted() {
-		const { analyticsConfig, enableAppbase, endpoint } = this;
-		// TODO: Remove in 2.0
-		if (analyticsConfig !== undefined) {
-			console.warn(
-				'Warning(ReactiveSearch): The `analyticsConfig` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
-			);
-		}
+		const { enableAppbase, endpoint } = this;
 		if (!enableAppbase && endpoint) {
 			console.warn(
 				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
@@ -39,7 +33,6 @@ const ReactiveBase = {
 	props: {
 		app: types.string,
 		analytics: VueTypes.bool,
-		analyticsConfig: types.analyticsConfig,
 		appbaseConfig: types.appbaseConfig,
 		enableAppbase: VueTypes.bool.def(false),
 		credentials: types.string,
@@ -89,13 +82,6 @@ const ReactiveBase = {
 		headers() {
 			this.updateState(this.$props);
 		},
-		analyticsConfig(newVal, oldVal) {
-			if (!isEqual(newVal, oldVal)) {
-				if (this.store) {
-					this.store.dispatch(updateAnalyticsConfig(newVal));
-				}
-			}
-		},
 		appbaseConfig(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				if (this.store) {
@@ -136,10 +122,6 @@ const ReactiveBase = {
 				= props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
-			const appbaseConfig = {
-				...props.analyticsConfig,
-				...props.appbaseConfig,
-			};
 			let url = props.url && props.url.trim() !== '' ? props.url : '';
 			if (props.enableAppbase && props.endpoint) {
 				if (props.endpoint.url) {
@@ -162,7 +144,7 @@ const ReactiveBase = {
 				analytics: props.appbaseConfig
 					? props.appbaseConfig.recordAnalytics
 					: props.analytics,
-				analyticsConfig: appbaseConfig,
+				analyticsConfig: props.appbaseConfig,
 				mongodb: props.mongodb,
 				endpoint: props.endpoint,
 			};
