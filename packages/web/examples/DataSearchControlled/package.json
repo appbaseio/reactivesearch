@@ -1,6 +1,6 @@
 {
-	"name": "datasearch",
-	"description": "DataSearch example for ReactiveSearch",
+	"name": "datasearch-controlled",
+	"description": "DataSearch controlled example for ReactiveSearch",
 	"version": "0.1.0",
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.16.5",

@@ -1,7 +1,7 @@
 {
-	"name": "custom-selectedfilters",
+	"name": "customselectedfilters",
 	"version": "1.0.0",
-	"description": "Custom SelectedFilters example for ReactiveSearch",
+	"description": "Custom Selected Filters example for ReactiveSearch",
 	"dependencies": {
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.4.0",
