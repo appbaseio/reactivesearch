@@ -146,13 +146,13 @@ body {
 .col .meetup-list-image {
 	background-size: cover;
 }
-.badgeCrimson{
+.badgeCrimson {
 	background-color: crimson;
 	color: white;
 	padding: 0.25rem;
 	margin: 0.5rem;
 }
-.badgeAqua{
+.badgeAqua {
 	background-color: darkturquoise;
 	color: white;
 	padding: 0.25rem;
