@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { ReactiveBase, MultiDropdownList, ReactiveList } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	DataSearch,
+	MultiDropdownList,
+	ReactiveList,
+} from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -14,12 +19,31 @@ class Main extends Component {
 				enableAppbase
 			>
 				<div className="row">
-					<div className="col">
+					{/* <div className="col">
 						<MultiDropdownList
 							title="MultiDropdownList"
 							componentId="BookSensor"
 							dataField="original_series.keyword"
 							size={100}
+						/>
+					</div> */}
+					<div className="col">
+						<DataSearch
+							title="DataSearch"
+							dataField={['original_title', 'original_title.search']}
+							componentId="BookSensor"
+							URLParams
+							enableRecentSearches
+							enablePopularSuggestions
+							size={5}
+							highlight
+							highlightConfig={{
+								number_of_fragments: 3,
+								fragment_size: 150,
+								fields: {
+									original_title: { pre_tags: ['<em>'], post_tags: ['</em>'] },
+								},
+							}}
 						/>
 					</div>
 

@@ -1638,6 +1638,7 @@ DataSearch.propTypes = {
 	clearIcon: types.children,
 	componentId: types.stringRequired,
 	customHighlight: types.func,
+	highlightConfig: types.componentObject,
 	customQuery: types.func,
 	defaultQuery: types.func,
 	dataField: types.dataFieldValidator,

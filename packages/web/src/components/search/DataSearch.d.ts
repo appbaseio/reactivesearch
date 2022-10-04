@@ -9,6 +9,7 @@ export interface DataSearchProps extends CommonProps {
 	beforeValueChange?: (...args: any[]) => any;
 	children?: (data: any) => any;
 	customHighlight?: (...args: any[]) => any;
+	highlightConfig?: Object;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
 	excludeFields?: Array<string>;
