@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { Component } from 'react';
+import ReactDOM from 'react-dom/client';
 
 import { ReactiveBase, MultiDropdownList, ReactiveList } from '@appbaseio/reactivesearch';
 

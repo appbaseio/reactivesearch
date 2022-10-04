@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom/client';
+
 import { ReactiveBase, SearchBox, ReactiveList } from '@appbaseio/reactivesearch';
 import aa from '@appbaseio/analytics';
 import './index.css';
