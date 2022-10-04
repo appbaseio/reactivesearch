@@ -199,6 +199,18 @@ class DynamicRangeSlider extends Component {
 			const { start, end } = this.props.value(this.props.range.start, this.props.range.end);
 			this.handleChange([start, end]);
 		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.handleChange(this.props.selectedValue || null);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				this.handleChange(this.state.currentValue);
+			}
+		} else if (
 			this.props.range
 			&& this.props.selectedValue === null
 			&& prevProps.selectedValue
