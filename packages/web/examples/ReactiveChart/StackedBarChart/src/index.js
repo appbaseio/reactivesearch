@@ -25,7 +25,6 @@ const Main = () => (
 				<ReactiveChart
 					componentId="stackedBarChart"
 					dataField="release_year"
-					chartType="custom"
 					filterLabel="Language"
 					URLParams
 					title="Languages"

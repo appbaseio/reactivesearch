@@ -725,7 +725,7 @@ ReactiveChart.propTypes = {
 	// eslint-disable-next-line
 	value: any,
 	// props to configure chart
-	chartType: oneOf(Object.values(ChartTypes)).isRequired,
+	chartType: oneOf(Object.values(ChartTypes)),
 	setOption: func,
 	title: types.string,
 	useAsFilter: types.bool,
@@ -755,6 +755,7 @@ ReactiveChart.propTypes = {
 
 ReactiveChart.defaultProps = {
 	useAsFilter: true,
+	chartType: 'custom',
 };
 
 // Add componentType for SSR
