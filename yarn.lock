@@ -6128,15 +6128,15 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.23.tgz#75c580983846181ebe5f4abc40fe9dfb2d65665f"
   integrity sha512-DWNcCHolDq0ZKGizjx2DZjR/PqsYwAcYUJmfMWqtVU2MBMG5Mo+xFZrhGId5r/O5HOuMPyQEcM6KUBp5lBZZBg==
 
-"@types/node@11.13.7":
-  version "11.13.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.7.tgz#85dbb71c510442d00c0631f99dae957ce44fd104"
-  integrity sha512-suFHr6hcA9mp8vFrZTgrmqW2ZU3mbWsryQtQlY/QvwTISCw7nw/j+bCQPPohqmskhmqa5wLNuMHTTsc+xf1MQg==
-
 "@types/node@16.9.1":
   version "16.9.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.9.1.tgz#0611b37db4246c937feef529ddcc018cf8e35708"
   integrity sha512-QpLcX9ZSsq3YYUUnD3nFDY8H7wctAhQj/TFKL8Ya8v5fMm3CFXxo8zStsLAl780ltoYoo1WvKUVGBQK+1ifr7g==
+
+"@types/node@18.8.1":
+  version "18.8.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.8.1.tgz#33e6759935f7a82821b72fb936e66f6b99a36173"
+  integrity sha512-vuYaNuEIbOYLTLUAJh50ezEbvxrD43iby+lpUA2aa148Nh5kX/AVO/9m1Ahmbux2iU5uxJTNF9g2Y+31uml7RQ==
 
 "@types/node@^8.5.7":
   version "8.10.66"
@@ -6203,13 +6203,6 @@
     "@types/react" "*"
     "@types/reactcss" "*"
 
-"@types/react-dom@16.8.4":
-  version "16.8.4"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.8.4.tgz#7fb7ba368857c7aa0f4e4511c4710ca2c5a12a88"
-  integrity sha512-eIRpEW73DCzPIMaNBDP5pPIpK1KXyZwNgfxiVagb5iGiz6da+9A5hslSX6GAQKdO7SayVCS/Fr2kjqprgAvkfA==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-dom@^18.0.0":
   version "18.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
@@ -6241,7 +6234,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
+"@types/react@*", "@types/react@^18.0.0":
   version "18.0.21"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.21.tgz#b8209e9626bb00a34c76f55482697edd2b43cc67"
   integrity sha512-7QUCOxvFgnD5Jk8ZKlUAhVcRj7GuJRjnjjiY/IUBWKgOlnvDvTMLD4RTF7NPyVmbRhNrbomZiOepg7M/2Kj1mA==
@@ -6249,14 +6242,6 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
-
-"@types/react@16.8.14":
-  version "16.8.14"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.14.tgz#b561bfabeb8f60d12e6d4766367e7a9ae927aa18"
-  integrity sha512-26tFVJ1omGmzIdFTFmnC5zhz1GTaqCjxgUxV4KzWvsybF42P7/j4RBn6UeO3KbHPXqKWZszMXMoI65xIWm954A==
-  dependencies:
-    "@types/prop-types" "*"
-    csstype "^2.2.0"
 
 "@types/react@^16.3.8":
   version "16.14.32"
@@ -8206,15 +8191,6 @@ appbase-js@5.1.0, appbase-js@^5.1.0:
   integrity sha512-Nekeev62QtboYWtNp7L3GJgkavCYQNFzcDuyMAPgQ6ajr9Kp2xzM/xZT1KmAn97yk7TRcznjpvojMCH4zjv5eQ==
   dependencies:
     cross-fetch "^3.1.5"
-    querystring "^0.2.0"
-    url-parser-lite "^0.1.0"
-
-appbase-js@^4.0.2-beta.11:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.5.1.tgz#0b9eb0bcb6fdb8655b38066d3f21ef24427e3b9f"
-  integrity sha512-IYShIL3J9PlyMcTEm35iPFSeQZBUW6pCJEwXKvUVjx89p/npA4UVlmYfEfRWweAJEaercbq3zhRskouEJLw2BA==
-  dependencies:
-    cross-fetch "^2.2.2"
     querystring "^0.2.0"
     url-parser-lite "^0.1.0"
 
@@ -12948,14 +12924,6 @@ cross-env@^5.2.0:
   integrity sha512-1yHhtcfAd1r4nwQgknowuUNfIT9E8dOMMspC36g45dN+iD1blloi7xp8X/xAIDnjHWyt1uQ8PHk2fkNaym7soQ==
   dependencies:
     cross-spawn "^6.0.5"
-
-cross-fetch@^2.2.2:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.6.tgz#2ef0bb39a24ac034787965c457368a28730e220a"
-  integrity sha512-9JZz+vXCmfKUZ68zAptS7k4Nu8e2qcibe7WVZYps7sAgk5R8GYTc+T1WR0v1rlP9HxgARmOX1UTIJZFytajpNA==
-  dependencies:
-    node-fetch "^2.6.7"
-    whatwg-fetch "^2.0.4"
 
 cross-fetch@^3.0.4, cross-fetch@^3.1.5:
   version "3.1.5"
