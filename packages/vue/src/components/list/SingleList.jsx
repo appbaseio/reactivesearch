@@ -204,6 +204,7 @@ const SingleList = {
 									value={selectAllLabel}
 									onClick={this.handleClick}
 									readOnly
+									type="radio"
 									show={this.$props.showRadio}
 									{...{
 										domProps: {
