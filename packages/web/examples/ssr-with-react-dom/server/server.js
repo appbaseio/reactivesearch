@@ -93,9 +93,7 @@ async function handleRender(req, res) {
 					source: ReactiveList,
 				},
 			],
-			{
-				BookSensor: 'Rating 3 to 4',
-			},
+			null,
 			settings,
 		);
 		// Render the component to a string
