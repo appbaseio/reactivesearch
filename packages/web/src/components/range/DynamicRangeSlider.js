@@ -29,7 +29,7 @@ import {
 	getCalendarIntervalErrorMessage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import Rheostat from 'rheostat/lib/Slider';
+import Rheostat from '@appbaseio/rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import { oneOf } from 'prop-types';
