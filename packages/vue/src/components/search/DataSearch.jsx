@@ -346,7 +346,10 @@ const DataSearch = {
 			this.setValue(newVal, true, this.$props);
 		},
 		value(newVal, oldVal) {
-			if (!isEqual(newVal, oldVal)) {
+			if (
+				!isEqual(newVal, oldVal)
+				|| (this.$options.isTagsMode && !isEqual(newVal, this.selectedTags))
+			) {
 				if (this.isPending && this.$options.isTagsMode && Array.isArray(newVal)) {
 					this.isPending = false;
 				}
@@ -531,10 +534,7 @@ const DataSearch = {
 						if (typeof value === 'string' && !!value) {
 							this.selectedTags.push(value);
 						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
-							const mergedArray = Array.from(
-								new Set([...this.selectedTags, ...value]),
-							);
-							this.selectedTags = mergedArray;
+							this.selectedTags = value;
 						}
 					} else if (value) {
 						this.selectedTags = typeof value !== 'string' ? value : [...value];
@@ -918,7 +918,6 @@ const DataSearch = {
 			const shouldRenderClearAllTag = tagsList.length > 1;
 			const renderSelectedTags
 				= this.$scopedSlots.renderSelectedTags || this.$props.renderSelectedTags;
-
 			return renderSelectedTags ? (
 				renderSelectedTags({
 					values: this.selectedTags,
