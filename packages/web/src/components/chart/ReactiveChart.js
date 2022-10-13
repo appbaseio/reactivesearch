@@ -253,28 +253,23 @@ class ReactiveChart extends React.Component {
 		const { options, currentValue } = this.state;
 		const { setOption } = this.props;
 		const results = parseHits(hits) || [];
-		if (setOption) {
-			return setOption({
-				aggregationData: options,
-				rawData,
-				value: currentValue,
-				data: results,
-				xAxisField,
-				yAxisField,
-			});
-		}
-		return ReactiveChart.getOption({
-			chartType,
-			value: currentValue,
+		const chartOptions = {
 			aggregationData: options,
+			rawData,
+			value: currentValue,
+			data: results,
+			xAxisField,
+			yAxisField,
+			chartType,
 			title,
 			labelFormatter,
 			xAxisName,
 			yAxisName,
-			xAxisField,
-			yAxisField,
-			data: results,
-		});
+		};
+		if (setOption) {
+			return setOption(chartOptions);
+		}
+		return ReactiveChart.getOption(chartOptions);
 	};
 	handleRange = (...args) => {
 		const { useAsFilter, onDataZoom } = this.props;
