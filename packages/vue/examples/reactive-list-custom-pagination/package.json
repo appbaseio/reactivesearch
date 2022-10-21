@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"vue": "^2.7.7",
-		"@appbaseio/reactivesearch-vue": "1.32.1",
+		"@appbaseio/reactivesearch-vue": "1.32.3",
 		"vuejs-paginate": "^2.1.0"
 	},
 	"devDependencies": {
