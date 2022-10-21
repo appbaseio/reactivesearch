@@ -70,7 +70,7 @@ const ClusterMarkers = {
 			this.setOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
 			this.triggerAnalytics(id, index);
-			this.$emit('open-marker-popover', marker.metaData);
+			this.$emit('open-marker-popover', marker);
 		},
 		removeMarkers() {
 			if (this.$clusterObject) {
