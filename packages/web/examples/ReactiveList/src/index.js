@@ -15,35 +15,21 @@ class Main extends Component {
 		return (
 			<ReactiveBase
 				app="good-books-ds"
-				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io?preference=lded"
 				enableAppbase
+				appbaseConfig={{
+					queryParams: {
+						ded: true,
+					},
+				}}
 			>
 				<div className="row">
-					{/* <div className="col">
+					<div className="col">
 						<MultiDropdownList
 							title="MultiDropdownList"
 							componentId="BookSensor"
 							dataField="original_series.keyword"
 							size={100}
-						/>
-					</div> */}
-					<div className="col">
-						<DataSearch
-							title="DataSearch"
-							dataField={['original_title', 'original_title.search']}
-							componentId="BookSensor"
-							URLParams
-							enableRecentSearches
-							enablePopularSuggestions
-							size={5}
-							highlight
-							highlightConfig={{
-								number_of_fragments: 3,
-								fragment_size: 150,
-								fields: {
-									original_title: { pre_tags: ['<em>'], post_tags: ['</em>'] },
-								},
-							}}
 						/>
 					</div>
 
