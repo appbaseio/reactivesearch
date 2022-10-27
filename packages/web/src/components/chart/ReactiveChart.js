@@ -160,11 +160,13 @@ class ReactiveChart extends React.Component {
 		this.updateDefaultQuery(queryOptions);
 	};
 	handleClick = (...args) => {
-		const { onClick, useAsFilter, chartType } = this.props;
+		const {
+			onClick, useAsFilter, chartType, type,
+		} = this.props;
 		if (onClick) {
 			onClick(...args);
 		}
-		if (useAsFilter && ![ChartTypes.Histogram, ChartTypes.Scatter].includes(chartType)) {
+		if (useAsFilter && type !== 'range') {
 			const item = args[0];
 			let value;
 			if (item.data && item.data.name) {
@@ -610,9 +612,10 @@ ReactiveChart.GetBarChartOptions = `({
 }`;
 
 ReactiveChart.GetLineChartOptions = `({
-	title, xAxisName, yAxisName, aggregationData,
+	title, xAxisName, yAxisName, aggregationData, ...rest
 }) => {
 	let chartTitle;
+
 	if (title) {
 		if (typeof title === 'string') {
 			chartTitle = {
