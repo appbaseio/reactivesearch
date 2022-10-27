@@ -251,6 +251,7 @@ class ReactiveChart extends React.Component {
 			hits,
 			xAxisField,
 			yAxisField,
+			type,
 		} = this.props;
 		const { options, currentValue } = this.state;
 		const { setOption } = this.props;
@@ -263,6 +264,7 @@ class ReactiveChart extends React.Component {
 				data: results,
 				xAxisField,
 				yAxisField,
+				type,
 			});
 		}
 		return ReactiveChart.getOption({
@@ -612,7 +614,13 @@ ReactiveChart.GetBarChartOptions = `({
 }`;
 
 ReactiveChart.GetLineChartOptions = `({
-	title, xAxisName, yAxisName, aggregationData, ...rest
+	title,
+	type,
+	value,
+	xAxisName,
+	yAxisName,
+	aggregationData,
+	labelFormatter,
 }) => {
 	let chartTitle;
 
@@ -625,30 +633,75 @@ ReactiveChart.GetLineChartOptions = `({
 			chartTitle = title;
 		}
 	}
+	const xAxisData = aggregationData.map(item => ({
+		value: item.key,
+		name: item.key,
+	}));
+
+	let startIndex = -1;
+	let endIndex = -1;
+	const isValueArray = value && Array.isArray(value);
+	const isRangeType = type === 'range';
+	if (isValueArray && isRangeType) {
+		startIndex = xAxisData.findIndex(i => i.value === value[0]);
+		endIndex = xAxisData.findIndex(i => i.value === value[1]);
+	}
+
 	return {
 		title: chartTitle,
+		toolbox: {
+			feature: {
+				dataZoom: {
+					yAxisIndex: false,
+					labelFormatter,
+				},
+			},
+		},
 		tooltip: {
-			trigger: 'item',
+			trigger: isRangeType ? 'axis' : 'item',
+			axisPointer: {
+				type: 'shadow',
+			},
+		},
+		grid: {
+			bottom: 90,
 		},
 		xAxis: {
 			name: xAxisName,
-			type: 'category',
-			data: aggregationData.map(item => ({
-				value: item.key,
-				name: item.key,
-			})),
+			data: xAxisData,
+			silent: false,
+			splitLine: {
+				show: false,
+			},
+			splitArea: {
+				show: false,
+			},
 		},
 		yAxis: {
-			type: 'value',
+			splitArea: {
+				show: false,
+			},
 			name: yAxisName,
 		},
+		dataZoom: [
+			{
+				type: 'inside',
+				startValue: startIndex > -1 ? startIndex : undefined,
+				endValue: endIndex > -1 ? endIndex : undefined,
+			},
+			{
+				type: 'slider',
+				startValue: startIndex > -1 ? startIndex : undefined,
+				endValue: endIndex > -1 ? endIndex : undefined,
+			},
+		],
 		series: [
 			{
 				data: aggregationData.map(item => ({
 					value: item.doc_count,
-					name: item.key,
 				})),
 				type: 'line',
+				large: true,
 			},
 		],
 	};
