@@ -1548,6 +1548,7 @@ CategorySearch.propTypes = {
 	popularSuggestions: types.hits,
 	react: types.react,
 	renderError: types.title,
+	highlightConfig: types.componentObject,
 	// TODO: Remove in v4
 	renderQuerySuggestions: types.func,
 	renderPopularSuggestions: types.func,

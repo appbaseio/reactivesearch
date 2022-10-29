@@ -15,6 +15,7 @@ export interface CategorySearchProps extends CommonProps {
 	categoryField?: string;
 	children?: (data: any) => any;
 	customHighlight?: (...args: any[]) => any;
+	highlightConfig?: Object;
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
 	enableSynonyms?: boolean;

@@ -256,30 +256,24 @@ class ReactiveChart extends React.Component {
 		const { options, currentValue } = this.state;
 		const { setOption } = this.props;
 		const results = parseHits(hits) || [];
-		if (setOption) {
-			return setOption({
-				aggregationData: options,
-				rawData,
-				value: currentValue,
-				data: results,
-				xAxisField,
-				yAxisField,
-				type,
-			});
-		}
-		return ReactiveChart.getOption({
-			chartType,
-			value: currentValue,
+		const chartOptions = {
 			aggregationData: options,
+			rawData,
+			value: currentValue,
+			data: results,
+			xAxisField,
+			yAxisField,
+			chartType,
 			title,
 			labelFormatter,
 			xAxisName,
 			yAxisName,
-			xAxisField,
-			yAxisField,
-			data: results,
 			type,
-		});
+		};
+		if (setOption) {
+			return setOption(chartOptions);
+		}
+		return ReactiveChart.getOption(chartOptions);
 	};
 	handleRange = (...args) => {
 		const { useAsFilter, onDataZoom } = this.props;
@@ -765,7 +759,7 @@ ReactiveChart.propTypes = {
 	// eslint-disable-next-line
 	value: any,
 	// props to configure chart
-	chartType: oneOf(Object.values(ChartTypes)).isRequired,
+	chartType: oneOf(Object.values(ChartTypes)),
 	setOption: func,
 	title: types.string,
 	useAsFilter: types.bool,
@@ -795,6 +789,7 @@ ReactiveChart.propTypes = {
 
 ReactiveChart.defaultProps = {
 	useAsFilter: true,
+	chartType: 'custom',
 };
 
 // Add componentType for SSR

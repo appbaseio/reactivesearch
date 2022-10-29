@@ -13,13 +13,13 @@ export interface TreeListProps extends CommonProps {
 	showCount?: boolean;
 	showSearch?: boolean;
 	showIcon?: boolean;
-	icon: types.children;
+	icon?: types.children;
 	showLeafIcon?: boolean;
-	leafIcon: types.children;
+	leafIcon?: types.children;
 	showLine?: boolean;
-	switcherIcon: (expanded: boolean) => types.children;
+	switcherIcon?: (expanded: boolean) => types.children;
 	render?: (data: any) => any;
-	renderItem: (item: any, count?: number, isSelected?: boolean) => any;
+	renderItem?: (item: any, count?: number, isSelected?: boolean) => any;
 	dataField: types.stringArray;
 	showFilter?: boolean;
 	index?: string;
@@ -32,6 +32,7 @@ export interface TreeListProps extends CommonProps {
 	customQuery?: (...args: any[]) => any;
 	defaultQuery?: (...args: any[]) => any;
 	endpoint?: types.endpointConfig;
+	title?: types.title;
 }
 
 declare const TreeList: React.ComponentClass<TreeListProps>;
