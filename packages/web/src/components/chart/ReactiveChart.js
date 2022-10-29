@@ -278,6 +278,7 @@ class ReactiveChart extends React.Component {
 			xAxisField,
 			yAxisField,
 			data: results,
+			type,
 		});
 	};
 	handleRange = (...args) => {
@@ -649,41 +650,24 @@ ReactiveChart.GetLineChartOptions = `({
 
 	return {
 		title: chartTitle,
-		toolbox: {
+		toolbox: isRangeType ? {
 			feature: {
 				dataZoom: {
 					yAxisIndex: false,
 					labelFormatter,
 				},
 			},
-		},
-		tooltip: {
-			trigger: isRangeType ? 'axis' : 'item',
-			axisPointer: {
-				type: 'shadow',
-			},
-		},
-		grid: {
-			bottom: 90,
-		},
+		}: undefined,
 		xAxis: {
 			name: xAxisName,
-			data: xAxisData,
-			silent: false,
-			splitLine: {
-				show: false,
-			},
-			splitArea: {
-				show: false,
-			},
+			type: 'category',
+			data: xAxisData
 		},
 		yAxis: {
-			splitArea: {
-				show: false,
-			},
+			type: 'value',
 			name: yAxisName,
 		},
-		dataZoom: [
+		dataZoom: isRangeType ? [
 			{
 				type: 'inside',
 				startValue: startIndex > -1 ? startIndex : undefined,
@@ -694,14 +678,14 @@ ReactiveChart.GetLineChartOptions = `({
 				startValue: startIndex > -1 ? startIndex : undefined,
 				endValue: endIndex > -1 ? endIndex : undefined,
 			},
-		],
+		]: undefined,
 		series: [
 			{
 				data: aggregationData.map(item => ({
 					value: item.doc_count,
+					name: item.key,
 				})),
 				type: 'line',
-				large: true,
 			},
 		],
 	};
