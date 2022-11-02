@@ -85,12 +85,12 @@ class StateProvider extends Component {
 				if (component in valuesMap) {
 					computedValuesMap[component] = {
 						value: valuesMap[component],
-						componentProps,
+						componentProps: componentProps[component],
 					};
 				} else {
 					computedValuesMap[component] = {
 						value: null,
-						componentProps,
+						componentProps: componentProps[component],
 					};
 				}
 			});
