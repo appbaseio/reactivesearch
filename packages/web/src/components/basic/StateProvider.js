@@ -77,7 +77,7 @@ class StateProvider extends Component {
 	setSearchState = (valuesMap) => {
 		const { components, setSearchStateFn, componentProps } = this.props;
 
-		// computedValuesMap is a map of componentId vs and object of {value:... , componentType:...}
+		// computedValuesMap is a map of componentId vs and object of {value:... , componentProps:...}
 		const computedValuesMap = {};
 		components
 			.filter(component => !isInternalComponent(component))
@@ -85,12 +85,12 @@ class StateProvider extends Component {
 				if (component in valuesMap) {
 					computedValuesMap[component] = {
 						value: valuesMap[component],
-						componentType: componentProps[component].componentType,
+						componentType: componentProps,
 					};
 				} else {
 					computedValuesMap[component] = {
 						value: null,
-						componentType: componentProps[component].componentType,
+						componentType: componentProps,
 					};
 				}
 			});
