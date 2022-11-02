@@ -99,7 +99,8 @@ class SingleDropdownRange extends Component {
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let currentValue = value;
 		if (isDefaultValue) {
-			currentValue = SingleDropdownRange.parseValue(value, props);
+			currentValue
+				= typeof value === 'string' ? SingleDropdownRange.parseValue(value, props) : value;
 		}
 
 		const performUpdate = () => {
