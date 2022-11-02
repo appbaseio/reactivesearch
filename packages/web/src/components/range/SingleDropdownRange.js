@@ -253,7 +253,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 			<ComponentWrapper
 				{...preferenceProps}
 				internalComponent
-				componentType={componentTypes.singleDropDownRange}
+				componentType={componentTypes.singleDropdownRange}
 			>
 				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 			</ComponentWrapper>
