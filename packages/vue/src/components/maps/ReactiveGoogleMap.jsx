@@ -115,7 +115,11 @@ const ReactiveGoogleMap = {
 			let clusterManagerInstance;
 			let currentInstance = this;
 			while (currentInstance) {
-				if (currentInstance && currentInstance._name === '<ConnectClusterMarkers>') {
+				if (
+					currentInstance
+					&& currentInstance.$options
+					&& currentInstance.$options.name === 'connect-ClusterMarkers'
+				) {
 					clusterManagerInstance = currentInstance;
 					currentInstance = null;
 				} else if (currentInstance.$children) {
