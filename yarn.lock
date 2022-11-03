@@ -90,14 +90,11 @@
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/4ff44cfdb5a670adee21be3cf088df3e4d9f9b53"
   dependencies:
-    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/designkit" "^0.11.0"
     "@appbaseio/reactivemaps" "^3.0.0-beta.17"
     "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
-    "@typeform/embed" "^1.34.1"
-    "@typeform/embed-react" "^1.13.0"
-    add "^2.0.6"
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
@@ -125,15 +122,13 @@
     gatsby-remark-external-links "0.0.4"
     gatsby-remark-images "6.9.0"
     gatsby-remark-prismjs "6.9.0"
-    gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
     gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
-    hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    moment "^2.29.2"
+    moment "^2.24.0"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -143,14 +138,13 @@
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
-    react-router-dom "^4.3.1"
+    react-router-dom "4.3.1"
     tocbot "4.5.0"
-    yarn "^1.22.18"
 
-"@appbaseio/reactivecore@9.14.22":
-  version "9.14.22"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.22.tgz#3b15c0dd1776ed45a6f5fd626a550230370e1811"
-  integrity sha512-S2eXzxyvtn0I3jiKC79Ox3zbS9e2Fgu2OeZdJfiL4F8i8Y2hYC2Chg3U2Hrj73qNJsH1Zh9vGEhZQbqKB+3RuQ==
+"@appbaseio/reactivecore@9.14.28":
+  version "9.14.28"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.28.tgz#c5d9831f63826c2d768b3628544a8acfc58eab47"
+  integrity sha512-mhTgp6yvEGyDHAy7Tk81lY1jndyo/QGMEDIK70cpBKpVw0v5x4/pCrQBW71AF5fEMJisg9JRSs/+UfFl2YFZAQ==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -158,46 +152,15 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivecore@9.14.26":
-  version "9.14.26"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.26.tgz#3220f2db4d978842852feb0048c78fe793983844"
-  integrity sha512-ZAMn+AwZJu3LfxINh7+z3WhVLxGJNw2Pwb+Hmnuenlm7jE1MgYd/0pO6CER7HyIhQm3IkxGufNP2Kht7o1xRCw==
+"@appbaseio/reactivesearch@3.42.0":
+  version "3.42.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.42.0.tgz#92ad1a69234c3d7d3ea4f8694024d0bd2c028991"
+  integrity sha512-xJh0laVXNTlMyaLldOypzX/ddp5UohnDZmNG83RjGnMuLhWzMPddjofvoXZJipVDULvzkKqckx03Ccre79A1YA==
   dependencies:
-    cross-fetch "^3.0.4"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    xdate "^0.8.2"
-
-"@appbaseio/reactivesearch-vue@1.31.0":
-  version "1.31.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.31.0.tgz#917c276f8d49c8c9c5ccb5e5ae74b8fbe4d62338"
-  integrity sha512-s8FYop/7vAMf81CJhyzopK3tJGn9e4geCkNl5wsa4HM5OpmkyWQLA+i3JmeZMW5hlG584D4bsZn3OpK7TP2VBA==
-  dependencies:
-    "@appbaseio/reactivecore" "9.14.22"
-    "@appbaseio/vue-emotion" "0.4.4"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.1.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "9.2.12"
-    hotkeys-js "^3.8.7"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    url-search-params-polyfill "^7.0.0"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component "^3.2.15"
-    vue-types "^1.3.3"
-
-"@appbaseio/reactivesearch@3.41.1":
-  version "3.41.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.41.1.tgz#750a27f72268a4a284ecff08a0733bc0dccc973c"
-  integrity sha512-CG1TISHcQ0aMt9XmiFjcKxGrMso91FQl9IyYkOnLR+r9toTi2PBwp6j+peAAAA+ZaoAhx7wzNQQbrB0U+N5VTw==
-  dependencies:
-    "@appbaseio/reactivecore" "9.14.26"
+    "@appbaseio/reactivecore" "9.14.28"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
-    appbase-js "5.1.0"
+    appbase-js "^5.2.0"
     cross-env "^5.2.0"
     downshift "^1.31.2"
     echarts "^5.3.3"
@@ -7367,15 +7330,6 @@ app-root-dir@^1.0.2:
   resolved "https://registry.yarnpkg.com/app-root-dir/-/app-root-dir-1.0.2.tgz#38187ec2dea7577fff033ffcb12172692ff6e118"
   integrity sha512-jlpIfsOoNoafl92Sz//64uQHGSyMrD2vYG5d8o2a4qGvyNCvXur7bzIsWtAC/6flI2RYAp3kv8rsfBtaLm7w0g==
 
-appbase-js@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.1.0.tgz#6896fad28376ee4d43ca03042e7c426e767eeed0"
-  integrity sha512-Nekeev62QtboYWtNp7L3GJgkavCYQNFzcDuyMAPgQ6ajr9Kp2xzM/xZT1KmAn97yk7TRcznjpvojMCH4zjv5eQ==
-  dependencies:
-    cross-fetch "^3.1.5"
-    querystring "^0.2.0"
-    url-parser-lite "^0.1.0"
-
 appbase-js@^4.0.2-beta.11:
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-4.5.1.tgz#0b9eb0bcb6fdb8655b38066d3f21ef24427e3b9f"
@@ -7385,7 +7339,7 @@ appbase-js@^4.0.2-beta.11:
     querystring "^0.2.0"
     url-parser-lite "^0.1.0"
 
-appbase-js@^5.1.0, appbase-js@^5.2.0:
+appbase-js@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/appbase-js/-/appbase-js-5.2.0.tgz#990da7227ae89cd0a002fdfc85428a001306ac27"
   integrity sha512-4B/xXivn7i6CATxcRZauDplCL3m9imOmbLH7j+cW4xwkqSN3aHDtj/OuvJDQqaMG0Awon8HUiiuwdh0+yY9DAw==
@@ -33263,7 +33217,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue-types@^1.3.3, vue-types@^1.7.0:
+vue-types@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
   integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==

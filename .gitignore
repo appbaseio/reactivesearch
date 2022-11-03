@@ -9,3 +9,4 @@ stats.json
 *.swp
 .next/
 packages/web/src/types.js.map
+data
