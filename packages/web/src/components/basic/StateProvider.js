@@ -131,7 +131,7 @@ const mapStateToProps = (state, props) => ({
 	customData: filterByComponentIds(state.customData, props),
 	settings: filterByComponentIds(state.settings, props),
 	rawData: filterByComponentIds(state.rawData, props),
-	components: filterByComponentIds(state.components, props),
+	components: state.components,
 });
 
 const mapDispatchtoProps = dispatch => ({
