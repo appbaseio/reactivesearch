@@ -202,13 +202,11 @@ const StateProvider = {
 				.filter((component) => !isInternalComponent(component))
 				.forEach((component) => {
 					if (component in valuesMap) {
-						computedValuesMap[component] = valuesMap[component];
 						computedValuesMap[component] = {
 							value: valuesMap[component],
 							componentProps: this.componentProps[component],
 						};
 					} else {
-						computedValuesMap[component] = null;
 						computedValuesMap[component] = {
 							value: null,
 							componentProps: this.componentProps[component],
