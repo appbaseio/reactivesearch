@@ -10,30 +10,6 @@
 				componentId="BookSensor"
 				preferencesPath="pages.home.componentSettings.BookSensor"
 			/>
-			<ReactiveComponent componentId="CarSensorList" />
-			<ReactiveComponent
-				componentId="CarSensor"
-				index="carstore-dataset"
-				:defaultQuery="
-					() => ({
-						aggs: {
-							brand: {
-								terms: {
-									field: 'brand.keyword',
-									order: {
-										_count: 'desc',
-									},
-									size: 10,
-								},
-							},
-						},
-					})
-				"
-			>
-				<div slot-scope="{ aggregations, setQuery }">
-					<CustomComponent :aggregations="aggregations" :setQuery="setQuery" />
-				</div>
-			</ReactiveComponent>
 			<ReactiveComponent
 				componentId="SearchResult"
 				class="result-list-container"
@@ -84,12 +60,9 @@
 </template>
 <script>
 import './styles.css';
-import { componentTypes } from '@appbaseio/reactivesearch-vue';
-import CustomComponent from './CustomComponent.vue';
 
 export default {
 	name: 'app',
-	components: { CustomComponent },
 	computed: {
 		preferences() {
 			return {
@@ -103,7 +76,6 @@ export default {
 									dataField: ['original_title', 'original_title.search'],
 									URLParams: true,
 									size: 5,
-									componentType: componentTypes.searchBox,
 								},
 							},
 						},
@@ -118,21 +90,8 @@ export default {
 							className: 'result-list-container',
 							pagination: true,
 							URLParams: true,
-							componentType: componentTypes.reactiveList,
 							react: {
 								and: 'BookSensor',
-							},
-						},
-					},
-					CarSensorList: {
-						rsConfig: {
-							componentId: 'CarSensorList',
-							dataField: 'books_count',
-							size: 10,
-							componentType: componentTypes.rangeInput,
-							range: {
-								start: 100,
-								end: 200,
 							},
 						},
 					},
