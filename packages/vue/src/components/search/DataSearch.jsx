@@ -124,6 +124,8 @@ const DataSearch = {
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
+
+		this.updateDefaultQueryHandler(this.currentValue, this.$props, false);
 	},
 	computed: {
 		suggestionsList() {
@@ -597,7 +599,7 @@ const DataSearch = {
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		updateDefaultQueryHandler(value, props) {
+		updateDefaultQueryHandler(value, props, execute) {
 			if (!value && props.enableDefaultSuggestions === false) {
 				// clear Component data from store
 				this.resetStoreForComponent(props.componentId);
@@ -621,14 +623,17 @@ const DataSearch = {
 					...this.queryOptions,
 					...defaultQueryOptions,
 				},
-				false,
+				execute,
 			);
-			this.updateQuery({
-				componentId: this.internalComponent,
-				query,
-				value,
-				componentType: componentTypes.dataSearch,
-			});
+			this.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+					value,
+					componentType: componentTypes.dataSearch,
+				},
+				execute,
+			);
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
