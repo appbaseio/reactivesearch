@@ -128,18 +128,22 @@ const ComponentWrapper = (
 	},
 	methods: {
 		setReact(props) {
-			const { react } = props;
+			const { react, executeInitialQuery } = props;
 			if (this.internalComponent) {
 				if (react) {
 					const newReact = pushToAndClause(react, this.internalComponent);
-					this.watchComponent(props.componentId, newReact);
+					this.watchComponent(props.componentId, newReact, executeInitialQuery);
 				} else {
-					this.watchComponent(props.componentId, {
-						and: this.internalComponent,
-					});
+					this.watchComponent(
+						props.componentId,
+						{
+							and: this.internalComponent,
+						},
+						executeInitialQuery,
+					);
 				}
 			} else {
-				this.watchComponent(props.componentId, react);
+				this.watchComponent(props.componentId, react, executeInitialQuery);
 			}
 		},
 	},
