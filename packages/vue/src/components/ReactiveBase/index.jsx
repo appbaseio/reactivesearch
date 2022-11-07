@@ -53,6 +53,7 @@ const ReactiveBase = {
 		setSearchParams: types.func,
 		mongodb: types.mongodb,
 		endpoint: types.endpointConfig,
+		preferences: VueTypes.object,
 	},
 	provide() {
 		return {
@@ -61,6 +62,7 @@ const ReactiveBase = {
 				this.$props.theme,
 			),
 			store: this.store,
+			$searchPreferences: this.preferences,
 		};
 	},
 	watch: {

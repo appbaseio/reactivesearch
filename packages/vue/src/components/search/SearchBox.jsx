@@ -30,6 +30,7 @@ import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
@@ -1450,13 +1451,15 @@ const mapDispatchToProps = {
 	setDefaultQuery,
 	recordSuggestionClick,
 };
-const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(SearchBox), {
-	componentType: componentTypes.searchBox,
-	internalComponent: true,
-});
+export const SBConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(SearchBox), {
+		componentType: componentTypes.searchBox,
+		internalComponent: true,
+	}),
+);
 
 SearchBox.install = function (Vue) {
-	Vue.component(SearchBox.name, DSConnected);
+	Vue.component(SearchBox.name, SBConnected);
 };
 // Add componentType for SSR
 SearchBox.componentType = componentTypes.searchBox;

@@ -214,6 +214,8 @@ class ReactiveList extends Component {
 			|| !isEqual(this.props.dataField, prevProps.dataField)
 			|| !isEqual(this.props.includeFields, prevProps.includeFields)
 			|| !isEqual(this.props.excludeFields, prevProps.excludeFields)
+			|| !isEqual(this.props.highlight, prevProps.highlight)
+			|| !isEqual(this.props.highlightConfig, prevProps.highlightConfig)
 		) {
 			const options = getQueryOptions(this.props);
 			options.from = this.state.from;
@@ -576,7 +578,8 @@ class ReactiveList extends Component {
 			= (hits && hits.length) || (promotedResults && promotedResults.length);
 		if (this.props.renderResultStats && shouldStatsVisible) {
 			return this.props.renderResultStats(this.stats);
-		} if (total) {
+		}
+		if (total) {
 			return (
 				<p css={resultStats} className={getClassName(this.props.innerClass, 'resultStats')}>
 					{this.props.total} results found in {this.props.time || 0}ms
@@ -978,6 +981,8 @@ ReactiveList.propTypes = {
 	afterKey: types.props,
 	distinctField: types.string,
 	distinctFieldConfig: types.componentObject,
+	highlight: types.bool,
+	highlightConfig: types.componentObject,
 	// eslint-disable-next-line
 	originalProps: types.any,
 	index: types.string,

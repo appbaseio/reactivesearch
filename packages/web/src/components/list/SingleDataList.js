@@ -268,17 +268,18 @@ class SingleDataList extends Component {
 				}),
 				{},
 			);
-
 			const { options } = this.state;
 			const newOptions = options.map((item) => {
 				if (bucketDictionary[item.value]) {
 					return {
 						...item,
-						count: bucketDictionary[item.value],
+						count: bucketDictionary[item.value] || 0,
 					};
 				}
-
-				return item;
+				return {
+					...item,
+					count: 0,
+				};
 			});
 
 			this.setState({

@@ -1681,6 +1681,7 @@ SearchBox.propTypes = {
 	searchboxId: types.string,
 	endpoint: types.endpoint,
 	mode: oneOf(['select', 'tag']),
+	highlightConfig: types.componentObject,
 	renderSelectedTags: types.func,
 };
 

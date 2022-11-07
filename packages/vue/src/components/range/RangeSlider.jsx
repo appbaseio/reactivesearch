@@ -5,6 +5,7 @@ import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
 import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
 import types from '../../utils/vueTypes';
@@ -283,11 +284,10 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-export const RangeConnected = ComponentWrapper(
-	connect(mapStateToProps, mapDispatchtoProps)(RangeSlider),
-	{
+export const RangeConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(RangeSlider), {
 		componentType: componentTypes.rangeSlider,
-	},
+	}),
 );
 
 RangeSlider.install = function (Vue) {

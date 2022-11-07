@@ -3,6 +3,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import Title from '../../styles/Title';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
 import { connect, parseValueArray, updateCustomQuery, isQueryIdentical } from '../../utils/index';
@@ -273,9 +274,11 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiRange), {
-	componentType: componentTypes.multiRange,
-});
+export const RangeConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiRange), {
+		componentType: componentTypes.multiRange,
+	}),
+);
 
 MultiRange.install = function (Vue) {
 	Vue.component(MultiRange.name, RangeConnected);

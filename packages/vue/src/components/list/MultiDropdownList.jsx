@@ -6,8 +6,10 @@ import { getAggsQuery } from './utils';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Dropdown from '../shared/DropDown.jsx';
+
 import {
 	connect,
 	hasCustomRenderer,
@@ -208,6 +210,7 @@ const MultiDropdownList = {
 			selectAll = [
 				{
 					key: this.$props.selectAllLabel,
+					doc_count: this.totalDocumentCount
 				},
 			];
 		}
@@ -551,6 +554,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
@@ -564,12 +568,11 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-const ListConnected = ComponentWrapper(
-	connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList),
-	{
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiDropdownList), {
 		componentType: componentTypes.multiDropdownList,
 		internalComponent: MultiDropdownList.hasInternalComponent(),
-	},
+	}),
 );
 
 MultiDropdownList.install = function (Vue) {

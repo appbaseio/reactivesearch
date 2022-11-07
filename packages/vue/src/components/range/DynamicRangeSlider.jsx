@@ -3,6 +3,7 @@ import NoSSR from 'vue-no-ssr';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
@@ -468,7 +469,9 @@ const mapDispatchtoProps = {
 	updateComponentProps,
 };
 
-const RangeConnected = connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider);
+export const RangeConnected = PreferencesConsumer(
+	connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider),
+);
 
 DynamicRangeSlider.install = function (Vue) {
 	Vue.component(DynamicRangeSlider.name, RangeConnected);

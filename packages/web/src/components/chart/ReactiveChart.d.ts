@@ -32,7 +32,7 @@ export interface ReactiveChartProps extends CommonProps {
 	// eslint-disable-next-line
 	value?: any;
 	// props to configure chart
-	chartType: types.chartType;
+	chartType?: types.chartType;
 	setOption: (...args: any[]) => any;
 	title: string;
 	useAsFilter: boolean;

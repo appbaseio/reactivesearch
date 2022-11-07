@@ -340,8 +340,10 @@ class MultiDataList extends Component {
 						count: bucketDictionary[item.value],
 					};
 				}
-
-				return item;
+				return {
+					...item,
+					count: 0,
+				};
 			});
 
 			this.setState({
