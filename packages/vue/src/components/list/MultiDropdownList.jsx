@@ -208,6 +208,7 @@ const MultiDropdownList = {
 			selectAll = [
 				{
 					key: this.$props.selectAllLabel,
+					doc_count: this.totalDocumentCount
 				},
 			];
 		}
@@ -551,6 +552,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],

@@ -204,6 +204,7 @@ const SingleList = {
 									value={selectAllLabel}
 									onClick={this.handleClick}
 									readOnly
+									type="radio"
 									show={this.$props.showRadio}
 									{...{
 										domProps: {
@@ -215,7 +216,20 @@ const SingleList = {
 									class={getClassName(this.$props.innerClass, 'label') || null}
 									for={`${this.$props.componentId}-${selectAllLabel}`}
 								>
-									{selectAllLabel}
+									<span>
+										{selectAllLabel}
+										{this.$props.showCount && (
+											<span
+												class={
+													getClassName(this.$props.innerClass, 'count')
+													|| null
+												}
+											>
+												&nbsp;(
+												{this.totalDocumentCount})
+											</span>
+										)}
+									</span>
 								</label>
 							</li>
 						) : null}
@@ -506,6 +520,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
+	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
