@@ -633,7 +633,6 @@ const DataSearch = {
 				},
 				execute,
 			);
-			window.console.log('execute', execute);
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
