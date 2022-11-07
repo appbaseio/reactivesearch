@@ -3,6 +3,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import geohash from 'ngeohash';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import { Checkbox } from '../../styles/FormControlList';
 import Pagination from '../result/addons/Pagination.jsx';
 import {
@@ -843,13 +844,13 @@ const mapDispatchToProps = {
 	setMapData,
 };
 
-export const RMConnected = ComponentWrapper(
+export const RMConnected = PreferencesConsumer(ComponentWrapper(
 	connect(mapStateToProps, mapDispatchToProps)(ReactiveMap),
 	{
 		componentType: componentTypes.reactiveMap,
 		internalComponent: true,
 	},
-);
+));
 
 ReactiveMap.install = function (Vue) {
 	Vue.component(ReactiveMap.name, RMConnected);

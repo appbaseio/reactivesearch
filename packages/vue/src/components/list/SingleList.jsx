@@ -16,6 +16,7 @@ import {
 	isQueryIdentical,
 } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import types from '../../utils/vueTypes';
 import { UL, Radio } from '../../styles/FormControlList';
 import { getAggsQuery } from './utils';
@@ -519,10 +520,12 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleList), {
-	componentType: componentTypes.singleList,
-	internalComponent: SingleList.hasInternalComponent(),
-});
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleList), {
+		componentType: componentTypes.singleList,
+		internalComponent: SingleList.hasInternalComponent(),
+	}),
+);
 
 SingleList.install = function (Vue) {
 	Vue.component(SingleList.name, ListConnected);

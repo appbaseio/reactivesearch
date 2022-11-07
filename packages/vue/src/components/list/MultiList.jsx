@@ -3,6 +3,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import VueTypes from 'vue-types';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
@@ -620,10 +621,12 @@ const mapDispatchtoProps = {
 
 MultiList.hasInternalComponent = () => true;
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
-	componentType: componentTypes.multiList,
-	internalComponent: MultiList.hasInternalComponent(),
-});
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
+		componentType: componentTypes.multiList,
+		internalComponent: MultiList.hasInternalComponent(),
+	}),
+);
 
 MultiList.install = function (Vue) {
 	Vue.component(MultiList.name, ListConnected);

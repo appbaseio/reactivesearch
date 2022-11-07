@@ -31,6 +31,7 @@ import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
@@ -1591,10 +1592,12 @@ const mapDispatchToProps = {
 	getRecentSearches,
 	resetStoreForComponent,
 };
-const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
-	componentType: componentTypes.dataSearch,
-	internalComponent: DataSearch.hasInternalComponent(),
-});
+export const DSConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
+		componentType: componentTypes.dataSearch,
+		internalComponent: DataSearch.hasInternalComponent(),
+	}),
+);
 
 DataSearch.install = function (Vue) {
 	Vue.component(DataSearch.name, DSConnected);

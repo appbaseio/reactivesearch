@@ -4,6 +4,7 @@ import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
 import { getAggsQuery } from './utils';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -453,12 +454,11 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-const ListConnected = ComponentWrapper(
-	connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList),
-	{
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
 		componentType: componentTypes.singleDropdownList,
 		internalComponent: SingleDropdownList.hasInternalComponent(),
-	},
+	}),
 );
 
 SingleDropdownList.install = function (Vue) {

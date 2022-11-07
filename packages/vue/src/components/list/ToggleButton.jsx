@@ -5,6 +5,7 @@ import types from '../../utils/vueTypes';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Button, { toggleButtons } from '../../styles/Button';
 import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 
@@ -294,12 +295,14 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-const RcConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(ToggleButton), {
-	componentType: componentTypes.toggleButton,
-});
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(ToggleButton), {
+		componentType: componentTypes.toggleButton,
+	}),
+);
 
 ToggleButton.install = function (Vue) {
-	Vue.component(ToggleButton.name, RcConnected);
+	Vue.component(ToggleButton.name, ListConnected);
 };
 // Add componentType for SSR
 ToggleButton.componentType = componentTypes.toggleButton;

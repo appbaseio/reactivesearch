@@ -2,6 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Radio } from '../../styles/FormControlList';
@@ -221,9 +222,11 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-const RangeConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleRange), {
-	componentType: componentTypes.singleRange,
-});
+export const RangeConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleRange), {
+		componentType: componentTypes.singleRange,
+	}),
+);
 
 SingleRange.install = function (Vue) {
 	Vue.component(SingleRange.name, RangeConnected);
