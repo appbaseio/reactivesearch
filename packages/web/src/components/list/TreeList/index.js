@@ -167,6 +167,7 @@ const TreeList = (props) => {
 	const getDefaultQuery = (value) => {
 		let query = null;
 		const type = 'term';
+		const booleanAggregator = props.queryFormat === 'or' ? 'should' : 'must';
 
 		if (!Array.isArray(value) || value.length === 0) {
 			return null;
@@ -175,17 +176,30 @@ const TreeList = (props) => {
 		if (value) {
 			// adds a sub-query with must as an array of objects for each term/value
 			const queryArray = value.map(item => ({
-				[type]: {
-					[props.dataField]: item,
+				bool: {
+					must: item.split(' > ').map((subItem, i) => ({
+						[type]: {
+							[props.dataField[i]]: subItem,
+						},
+					})),
 				},
 			}));
 			const listQuery = {
 				bool: {
-					must: queryArray,
+					[booleanAggregator]: queryArray,
 				},
 			};
 
 			query = value.length ? listQuery : null;
+		}
+
+		if (query && props.nestedField) {
+			return {
+				nested: {
+					path: props.nestedField,
+					query,
+				},
+			};
 		}
 
 		return query;
@@ -554,6 +568,9 @@ TreeList.propTypes = {
 	loader: types.title,
 	aggergationSize: types.number,
 	endpoint: types.endpoint,
+	queryFormat: types.queryFormatSearch,
+	size: types.number,
+	nestedField: types.string,
 };
 
 TreeList.defaultProps = {
@@ -570,6 +587,8 @@ TreeList.defaultProps = {
 	showLine: false,
 	URLParams: false,
 	sortBy: 'count',
+	queryFormat: 'or',
+	size: 100,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -578,7 +597,10 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	rawData: state.rawData[props.componentId] || {},
-	aggregationData: state.aggregations[props.componentId] || {},
+	aggregationData:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId] || {},
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],
