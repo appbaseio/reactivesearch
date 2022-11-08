@@ -6,11 +6,12 @@
 			:enable-appbase="true"
 			:preferences="preferences"
 		>
-			<ReactiveComponent
+			<DataSearch
 				componentId="BookSensor"
 				preferencesPath="pages.home.componentSettings.BookSensor"
+				class="result-list-container"
 			/>
-			<ReactiveComponent
+			<ReactiveList
 				componentId="SearchResult"
 				class="result-list-container"
 				:react="{ and: ['BookSensor'] }"
@@ -54,7 +55,7 @@
 						</div>
 					</div>
 				</div>
-			</ReactiveComponent>
+			</ReactiveList>
 		</ReactiveBase>
 	</div>
 </template>
@@ -72,7 +73,7 @@ export default {
 							BookSensor: {
 								enabled: true,
 								rsConfig: {
-									title: 'DataSearch Path',
+									title: 'Search for Books',
 									dataField: ['original_title', 'original_title.search'],
 									URLParams: true,
 									size: 5,
