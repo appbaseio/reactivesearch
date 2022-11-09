@@ -134,6 +134,7 @@ class ReactiveBase extends Component {
 			...props.appbaseConfig,
 		};
 		let url = props.url && props.url.trim() !== '' ? props.url : '';
+		const parsedUrl = url && url.replace(/\/\/.*@/, '//');
 		if (props.enableAppbase && props.endpoint instanceof Object) {
 			if (props.endpoint.url) {
 				url = props.endpoint.url;
@@ -207,11 +208,10 @@ class ReactiveBase extends Component {
 			if (this.props.transformRequest) return this.props.transformRequest(modifiedRequest);
 			return modifiedRequest;
 		};
-
 		const analyticsRef = AppbaseAnalytics.init({
-			index: appbaseRef.index,
+			index: appbaseRef.app,
 			credentials: appbaseRef.credentials,
-			url: appbaseRef.url,
+			url: parsedUrl,
 		});
 
 		const initialState = {
