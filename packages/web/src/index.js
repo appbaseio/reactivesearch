@@ -41,7 +41,7 @@ import ResultList from './components/result/ResultList';
 
 import ReactiveChart from './components/chart/ReactiveChart';
 
-import { SearchPreferencesContext } from './utils';
+import { SearchPreferencesContext, useAnalytics } from './utils';
 
 export {
 	// basic
@@ -86,4 +86,6 @@ export {
 	// chart
 	ReactiveChart,
 	componentTypes,
+	// hooks
+	useAnalytics,
 };

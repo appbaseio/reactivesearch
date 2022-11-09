@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { SearchPreferencesContext } from './utils';
+import { SearchPreferencesContext, useAnalytics } from './utils';
 import * as types from './types';
 
 export interface CommonProps {
@@ -53,4 +53,4 @@ export { default as SearchBox } from './components/search/SearchBox';
 
 export { default as ReactiveChart } from './components/chart/ReactiveChart';
 
-export { componentTypes, SearchPreferencesContext };
+export { componentTypes, SearchPreferencesContext, useAnalytics };
