@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
-	DataSearch,
 	ReactiveList,
 	ResultCard,
 	SelectedFilters,
 	useAnalytics,
+	DataSearch,
 } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -16,9 +16,7 @@ const SaveSearchButton = () => {
 	const aaInstance = useAnalytics();
 	const handleSave = () => {
 		aaInstance.saveSearch({
-			queryID: aaInstance.GetQueryID(),
-		  saveSearchID: 'analytics-js-test',
-			customEvents: { platform: 'mac' },
+			queryID: aaInstance.getQueryID(),
 		});
 	};
 	return <button onClick={(handleSave)}>Save Search</button>;
@@ -38,12 +36,13 @@ const Main = () => (
 				<SaveSearchButton />
 				<DataSearch
 					title="DataSearch"
-					dataField={['original_title', 'original_title.search']}
+					dataField="original_title"
 					componentId="BookSensor"
 					URLParams
 					enableRecentSearches
 					enablePopularSuggestions
 					size={5}
+					appbaseConfig={{ recordAnalytics: true, suggestionAnalytics: true }}
 				/>
 			</div>
 
@@ -59,10 +58,15 @@ const Main = () => (
 					react={{
 						and: 'BookSensor',
 					}}
-					render={({ data }) => (
+					render={({ data, triggerClickAnalytics }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map(item => (
-								<ResultCard id={item._id} key={item._id}>
+							{data.map((item, idx) => (
+								<ResultCard
+									id={item._id}
+									key={item._id}
+									onClick={() =>
+										triggerClickAnalytics(idx, item._id)}
+								>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
 										<div
