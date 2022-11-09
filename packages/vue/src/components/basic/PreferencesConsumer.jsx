@@ -1,3 +1,5 @@
+import { getCamelCase } from '../../utils/index';
+
 const deepValue = (o, p) => p.split('.').reduce((a, v) => (a ? a[v] : null), o);
 /**
  * PreferencesConsumer reads the preferences from SearchPreferencesContext
@@ -12,7 +14,10 @@ const PreferencesConsumer = (component) => ({
 		},
 	},
 	render(h) {
-		const userProps = this.$attrs;
+		const userProps = Object.keys(this.$attrs).reduce(
+			(result, key) => ({ ...result, [getCamelCase(key)]: this.$attrs[key] }),
+			{},
+		);
 		const context = this.$searchPreferences;
 		if (!userProps || !userProps.componentId) {
 			throw Error('ReactiveSearch: componentId is required');
