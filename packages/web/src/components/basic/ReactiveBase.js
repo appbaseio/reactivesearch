@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Appbase from 'appbase-js';
+import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
 import { ThemeProvider } from 'emotion-theming';
 
@@ -207,6 +208,12 @@ class ReactiveBase extends Component {
 			return modifiedRequest;
 		};
 
+		const analyticsRef = AppbaseAnalytics.init({
+			index: appbaseRef.index,
+			credentials: appbaseRef.credentials,
+			url: appbaseRef.url,
+		});
+
 		const initialState = {
 			config: {
 				...config,
@@ -217,6 +224,7 @@ class ReactiveBase extends Component {
 				initialTimestamp: new Date().getTime(),
 			},
 			appbaseRef,
+			analyticsRef,
 			selectedValues,
 			urlValues,
 			headers: this.headers,
