@@ -3,8 +3,10 @@ import { isEqual, transformRequestUsingEndpoint } from '@appbaseio/reactivecore/
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
+import AppbaseAnalytics from '@appbaseio/analytics'
 import 'url-search-params-polyfill';
 
+import { computed } from 'vue';
 import Provider from '../Provider';
 import { composeThemeObject, X_SEARCH_CLIENT } from '../../utils/index';
 import types from '../../utils/vueTypes';
@@ -62,6 +64,7 @@ const ReactiveBase = {
 				this.$props.theme,
 			),
 			store: this.store,
+			$analytics: computed(()=>this.analyticsRef),
 			$searchPreferences: this.preferences,
 		};
 	},
@@ -201,6 +204,12 @@ const ReactiveBase = {
 			if (this.$props.transformResponse) {
 				appbaseRef.transformResponse = this.$props.transformResponse;
 			}
+			const parsedUrl = this.url && this.url.replace(/\/\/.*@/, '//');
+			this.analyticsRef = AppbaseAnalytics.init({
+				index: appbaseRef.app,
+				credentials: appbaseRef.credentials,
+				url: parsedUrl,
+			});
 
 			const initialState = {
 				config: {
@@ -211,6 +220,7 @@ const ReactiveBase = {
 					themePreset,
 				},
 				appbaseRef,
+				analyticsRef: this.analyticsRef,
 				selectedValues,
 				urlValues,
 				headers: this.getHeaders,
