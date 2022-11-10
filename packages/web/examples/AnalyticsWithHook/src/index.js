@@ -12,14 +12,29 @@ import {
 
 import './index.css';
 
-const SaveSearchButton = () => {
+const VisitStoreButton = () => {
 	const aaInstance = useAnalytics();
-	const handleSave = () => {
-		aaInstance.saveSearch({
+	const handleVisitStore = () => {
+		aaInstance.conversion({
 			queryID: aaInstance.getQueryID(),
+			objects: ['Harry Potter', 'Frankenstein'],
 		});
 	};
-	return <button onClick={(handleSave)}>Save Search</button>;
+	return (
+		<button
+			style={{
+				background: '#c5906c',
+				border: 'none',
+				padding: '5px',
+				color: 'white',
+				margin: '5px 0px',
+				cursor: 'pointer',
+			}}
+			onClick={handleVisitStore}
+		>
+			Visit Store
+		</button>
+	);
 };
 
 const Main = () => (
@@ -33,7 +48,7 @@ const Main = () => (
 	>
 		<div className="row">
 			<div className="col">
-				<SaveSearchButton />
+				<VisitStoreButton />
 				<DataSearch
 					title="DataSearch"
 					dataField="original_title"

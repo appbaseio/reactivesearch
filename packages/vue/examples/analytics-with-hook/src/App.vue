@@ -8,7 +8,6 @@
 			:enable-appbase="true"
 			:appbaseConfig="{recordAnalytics: true, suggestionAnalytics: true}"
 		>
-			<SaveSearchButton/>
 			<DataSearch
 				className="result-list-container"
 				componentId="BookSensor"
@@ -19,6 +18,7 @@
 				:enableRecentSearches="true"
 				:enableDefaultSuggestions="false"
 			/>
+			<VisitStoreButton/>
 			<ReactiveList
 				componentId="SearchResult"
 				dataField="original_title.keyword"
@@ -69,11 +69,11 @@
 
 <script>
 import './styles.css';
-import SaveSearchButton from './SaveSearchButton.vue';
+import VisitStoreButton from './VisitStoreButton.vue';
 export default {
 	name: 'app',
 	components: {
-		SaveSearchButton
+		VisitStoreButton
 	}
 };
 
