@@ -6,7 +6,9 @@
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 			:enable-appbase="true"
+			:appbaseConfig="{recordAnalytics: true, suggestionAnalytics: true}"
 		>
+			<SaveSearchButton/>
 			<DataSearch
 				className="result-list-container"
 				componentId="BookSensor"
@@ -16,7 +18,6 @@
 				:enablePopularSuggestions="true"
 				:enableRecentSearches="true"
 				:enableDefaultSuggestions="false"
-				:appbaseConfig="{recordAnalytics: true, suggestionAnalytics: true}"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
@@ -68,9 +69,14 @@
 
 <script>
 import './styles.css';
+import SaveSearchButton from './SaveSearchButton.vue';
 export default {
 	name: 'app',
+	components: {
+		SaveSearchButton
+	}
 };
+
 </script>
 
 <style>
