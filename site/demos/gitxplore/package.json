@@ -8,8 +8,8 @@
     "dependencies": {
         "@appbaseio/reactivesearch": "3.42.1",
         "prop-types": "^15.6.0",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "react-emotion": "^9.2.12"
     },
     "devDependencies": {

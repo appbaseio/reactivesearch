@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import { ReactiveBase, MultiList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -72,5 +71,5 @@ class Main extends Component {
 		);
 	}
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

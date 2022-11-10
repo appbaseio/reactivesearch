@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
 import {
 	ReactiveBase,
 	MultiDataList,
@@ -50,7 +48,7 @@ const Main = () => (
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
-							{data.map(item => (
+							{data.map((item) => (
 								<ResultList href={item.event.event_url} key={item._id}>
 									<ResultList.Image small src={item.member.photo} />
 									<ResultList.Content>
@@ -71,7 +69,7 @@ const Main = () => (
 												<div className="flex wrap meetup-topics">
 													{item.group.group_topics
 														.slice(0, 4)
-														.map(tag => (
+														.map((tag) => (
 															<div
 																className="meetup-topic"
 																key={tag.topic_name}
@@ -92,5 +90,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

@@ -1716,7 +1716,7 @@ SearchBox.defaultProps = {
 	isOpen: false,
 	enterButton: false,
 	type: 'search',
-	mode: 'single',
+	mode: 'select',
 };
 
 const mapStateToProps = (state, props) => ({

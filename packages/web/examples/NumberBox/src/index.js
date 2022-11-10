@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
 import { ReactiveBase, NumberBox, ResultList, ReactiveList } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -37,7 +35,7 @@ const Main = () => (
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
-							{data.map(item => (
+							{data.map((item) => (
 								<ResultList key={item._id}>
 									<ResultList.Image src={item.image} />
 									<ResultList.Content>
@@ -60,14 +58,15 @@ const Main = () => (
 													</div>
 													<div className="ratings-list flex align-center">
 														<span className="stars">
-															{Array(item.average_rating_rounded)
-																.fill('x')
-																.map((i, index) => (
-																	<i
-																		className="fas fa-star"
-																		key={index}
-																	/>
-																)) // eslint-disable-line
+															{
+																Array(item.average_rating_rounded)
+																	.fill('x')
+																	.map((i, index) => (
+																		<i
+																			className="fas fa-star"
+																			key={index}
+																		/>
+																	)) // eslint-disable-line
 															}
 														</span>
 														<span className="avg-rating">
@@ -90,5 +89,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

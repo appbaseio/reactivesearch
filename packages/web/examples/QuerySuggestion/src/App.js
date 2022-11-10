@@ -1,4 +1,3 @@
-import React from 'react';
 import { SearchBox, ReactiveList, ResultCard } from '@appbaseio/reactivesearch';
 
 import { magnifyingGlassIcon, trendingIcon } from './icons';
@@ -13,16 +12,15 @@ function getCategoryResults(data) {
 			// eslint-disable-next-line no-plusplus
 			for (let j = 0; j < category.length; j++) {
 				if (!results[category[j]]) {
-					results[category[j]] = Object.assign({},
-						result, {
-							_category: category[j],
-							value: category[j],
-						});
+					results[category[j]] = Object.assign({}, result, {
+						_category: category[j],
+						value: category[j],
+					});
 				}
 			}
 		}
 	}
-	return Object.keys(results).map(k => results[k]);
+	return Object.keys(results).map((k) => results[k]);
 }
 
 const App = () => (
@@ -51,112 +49,116 @@ const App = () => (
 				error,
 				data,
 				value,
-				downshiftProps: {
-					isOpen, getItemProps, highlightedIndex, selectedItem,
-				},
+				downshiftProps: { isOpen, getItemProps, highlightedIndex, selectedItem },
 			}) => {
 				if (error) {
 					return <div>Something went wrong! Error details {JSON.stringify(error)}</div>;
 				}
-				const popularResults = data.filter(res => res._suggestion_type === 'popular');
+				const popularResults = data.filter((res) => res._suggestion_type === 'popular');
 				const indexResults = data.filter(
-					res => res._suggestion_type === 'index' && !res._category,
+					(res) => res._suggestion_type === 'index' && !res._category,
 				);
-				const categoryResults = getCategoryResults(data.filter(res => res._category));
+				const categoryResults = getCategoryResults(data.filter((res) => res._category));
 
-				return isOpen
-					&& (indexResults.length || categoryResults.length || popularResults.length) ? (
-						<div className="result suggestions">
-							<div className="flex column">
-								{indexResults.length
-									? (
-										<div className="resultSuggestion list">
-											<div className="listHead">Suggestions</div>
-											{indexResults.map((item, index) => (
-												<div
-													/* eslint-disable-next-line react/no-array-index-key */
-													key={item._id + index}
-													{...getItemProps({
-														item,
-														style: {
-															backgroundColor:
-												highlightedIndex === index ? 'lightgray' : 'white',
-															fontWeight: selectedItem === item ? 'bold' : 'normal',
-														},
-													})}
-													className="listItem"
-												>
-													<span className="listIcon">{magnifyingGlassIcon}</span>
-													<span className="clipText">{item.value}</span>
-												</div>
-											))}
-										</div>
-									) : null}
-								{categoryResults.length
-									? (
-										<div className="resultCategory list">
-											<div className="listHead">Genres</div>
-											{categoryResults.map((item, index) => (
-												<div
-													key={item._category}
-													{...getItemProps({
-														item,
-														style: {
-															backgroundColor:
-														highlightedIndex
-														=== index + indexResults.length
+				return isOpen &&
+					(indexResults.length || categoryResults.length || popularResults.length) ? (
+					<div className="result suggestions">
+						<div className="flex column">
+							{indexResults.length ? (
+								<div className="resultSuggestion list">
+									<div className="listHead">Suggestions</div>
+									{indexResults.map((item, index) => (
+										<div
+											/* eslint-disable-next-line react/no-array-index-key */
+											key={item._id + index}
+											{...getItemProps({
+												item,
+												style: {
+													backgroundColor:
+														highlightedIndex === index
 															? 'lightgray'
 															: 'white',
-															fontWeight:
+													fontWeight:
 														selectedItem === item ? 'bold' : 'normal',
-														},
-													})}
-													className="listItem"
-												>
-													<span className="listIcon">{magnifyingGlassIcon}</span>
-													<span className="clipText">{item.value}</span>
-												</div>
-											))}
+												},
+											})}
+											className="listItem"
+										>
+											<span className="listIcon">{magnifyingGlassIcon}</span>
+											<span className="clipText">{item.value}</span>
 										</div>
-									) : null}
-							</div>
-							{((indexResults.length || categoryResults.length) && popularResults.length) ? <div className="divider" /> : null}
-							{popularResults.length
-								? (
-									<div className="resultPopular list">
-										<div className="listHead flex align-center">
-											{/* eslint-disable-next-line react/no-unescaped-entities */}
-											<span>Popular</span>{value ? <span className="clipText pad-l-1">in "{value}"</span> : null}
+									))}
+								</div>
+							) : null}
+							{categoryResults.length ? (
+								<div className="resultCategory list">
+									<div className="listHead">Genres</div>
+									{categoryResults.map((item, index) => (
+										<div
+											key={item._category}
+											{...getItemProps({
+												item,
+												style: {
+													backgroundColor:
+														highlightedIndex ===
+														index + indexResults.length
+															? 'lightgray'
+															: 'white',
+													fontWeight:
+														selectedItem === item ? 'bold' : 'normal',
+												},
+											})}
+											className="listItem"
+										>
+											<span className="listIcon">{magnifyingGlassIcon}</span>
+											<span className="clipText">{item.value}</span>
 										</div>
-										<div>
-											{popularResults.map((item, index) => (
-												<div
-													key={item._id}
-													{...getItemProps({
-														item,
-														style: {
-															backgroundColor:
-													highlightedIndex
-													=== index
-														+ indexResults.length
-														+ categoryResults.length
-														? 'lightgray'
-														: 'white',
-															fontWeight:
-													selectedItem === item ? 'bold' : 'normal',
-														},
-													})}
-													className="listItem"
-												>
-													<span className="listIcon">{trendingIcon}</span>
-													<span className="clipText">{item.value}</span>
-												</div>
-											))}
-										</div>
-									</div>
-								) : null}
+									))}
+								</div>
+							) : null}
 						</div>
-					) : null;
+						{(indexResults.length || categoryResults.length) &&
+						popularResults.length ? (
+							<div className="divider" />
+						) : null}
+						{popularResults.length ? (
+							<div className="resultPopular list">
+								<div className="listHead flex align-center">
+									{/* eslint-disable-next-line react/no-unescaped-entities */}
+									<span>Popular</span>
+									{value ? (
+										<span className="clipText pad-l-1">in "{value}"</span>
+									) : null}
+								</div>
+								<div>
+									{popularResults.map((item, index) => (
+										<div
+											key={item._id}
+											{...getItemProps({
+												item,
+												style: {
+													backgroundColor:
+														highlightedIndex ===
+														index +
+															indexResults.length +
+															categoryResults.length
+															? 'lightgray'
+															: 'white',
+													fontWeight:
+														selectedItem === item ? 'bold' : 'normal',
+												},
+											})}
+											className="listItem"
+										>
+											<span className="listIcon">{trendingIcon}</span>
+											<span className="clipText">{item.value}</span>
+										</div>
+									))}
+								</div>
+							</div>
+						) : null}
+					</div>
+				) : null;
 			}}
 		/>
 		<ReactiveList
@@ -167,7 +169,7 @@ const App = () => (
 			pagination
 			render={({ data }) => (
 				<ReactiveList.ResultCardsWrapper>
-					{data.map(item => (
+					{data.map((item) => (
 						<ResultCard id={item._id} key={item._id}>
 							<ResultCard.Image
 								src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}

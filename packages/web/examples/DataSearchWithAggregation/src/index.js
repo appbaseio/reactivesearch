@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import {
 	ReactiveBase,
@@ -49,7 +48,7 @@ const Main = () => (
 					renderNoResults={() => null}
 					render={({ aggregationData }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{aggregationData.map(item => (
+							{aggregationData.map((item) => (
 								<ResultCard key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title
@@ -69,7 +68,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
-export default Main;
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

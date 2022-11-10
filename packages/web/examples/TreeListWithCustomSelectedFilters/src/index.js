@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { Component } from 'react';
+import ReactDOM from 'react-dom/client';
 
 import {
 	ReactiveBase,
@@ -193,4 +193,5 @@ class Main extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
