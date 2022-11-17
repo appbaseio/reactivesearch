@@ -152,6 +152,28 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
+"@appbaseio/reactivesearch-vue@1.33.2":
+  version "1.33.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.33.2.tgz#fae7d246de86c9a6ea41ad9529c7892ac38eed14"
+  integrity sha512-kZ9Q360ACxqrER9sMBKBaQqjfEMMqoqqmKrtnhL9sxaQzHAsL+Kw0DJzPwC+diSCW6EzmDeSq8ue9aSbTvgEOQ==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.30"
+    "@appbaseio/vue-emotion" "0.4.4"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^5.2.0"
+    compute-scroll-into-view "^1.0.11"
+    emotion "9.2.12"
+    gmap-vue "^3.5.4"
+    hotkeys-js "^3.8.7"
+    ngeohash "^0.6.3"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    url-search-params-polyfill "^7.0.0"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component "^3.2.15"
+    vue-types "^1.7.0"
+
 "@appbaseio/reactivesearch@3.42.0":
   version "3.42.0"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.42.0.tgz#92ad1a69234c3d7d3ea4f8694024d0bd2c028991"

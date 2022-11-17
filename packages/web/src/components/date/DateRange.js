@@ -61,15 +61,6 @@ class DateRange extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		if (!isEqual(JSON.stringify(this.props.value), JSON.stringify(prevProps.value))) {
 			this.handleDateChange(this.props.value, false, this.props);
@@ -132,62 +123,14 @@ class DateRange extends Component {
 		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
 	};
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (value) {
-			if (Array.isArray(props.dataField) && props.dataField.length === 2) {
-				query = {
-					bool: {
-						must: [
-							{
-								range: {
-									[props.dataField[0]]: {
-										lte: formatDate(new XDate(value.start), props),
-									},
-								},
-							},
-							{
-								range: {
-									[props.dataField[1]]: {
-										gte: formatDate(new XDate(value.end), props),
-									},
-								},
-							},
-						],
-					},
-				};
-			} else if (Array.isArray(props.dataField)) {
-				query = {
-					range: {
-						[props.dataField[0]]: {
-							gte: formatDate(new XDate(value.start), props),
-							lte: formatDate(new XDate(value.end), props),
-						},
-					},
-				};
-			} else {
-				query = {
-					range: {
-						[props.dataField]: {
-							gte: formatDate(new XDate(value.start), props),
-							lte: formatDate(new XDate(value.end), props),
-						},
-					},
-				};
-			}
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+		},
+	});
 
 	getEndDateRef = (ref) => {
 		this.endDateRef = ref;
@@ -526,7 +469,6 @@ DateRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	autoFocusEnd: types.bool,
 	beforeValueChange: types.func,
@@ -577,7 +519,6 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

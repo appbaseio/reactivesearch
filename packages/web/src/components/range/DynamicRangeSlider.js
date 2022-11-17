@@ -237,12 +237,7 @@ class DynamicRangeSlider extends Component {
 	}
 
 	componentDidMount() {
-		const { enableAppbase, index, mode } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
+		const { mode } = this.props;
 		if (mode !== 'test') {
 			this.setReact(this.props);
 		}
@@ -317,23 +312,14 @@ class DynamicRangeSlider extends Component {
 			: null;
 	};
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (Array.isArray(value) && value.length) {
-			query = getRangeQueryWithNullValues(value, props);
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			showMissing: props.showMissing,
+		},
+	});
 
 	getSnapPoints = () => {
 		let snapPoints = [];
@@ -495,11 +481,9 @@ class DynamicRangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = DynamicRangeSlider.defaultQuery(value, props);
+		const query = DynamicRangeSlider.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		const { showFilter } = props;
@@ -681,7 +665,6 @@ DynamicRangeSlider.propTypes = {
 	updateComponentProps: types.funcRequired,
 	isLoading: types.bool,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	setTestData: types.funcRequired,
 	// component props
 	beforeValueChange: types.func,
@@ -779,7 +762,6 @@ const mapStateToProps = (state, props) => {
 		selectedValue: state.selectedValues[props.componentId]
 			? state.selectedValues[props.componentId].value
 			: null,
-		enableAppbase: state.config.enableAppbase,
 	};
 };
 

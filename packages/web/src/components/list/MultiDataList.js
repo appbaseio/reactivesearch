@@ -66,15 +66,6 @@ class MultiDataList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		const valueArray
 			= typeof this.state.currentValue === 'object' ? Object.keys(this.state.currentValue) : [];
@@ -137,51 +128,15 @@ class MultiDataList extends Component {
 		}
 	}
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-		if (props.selectAllLabel && Array.isArray(value) && value.includes(props.selectAllLabel)) {
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		} else if (value) {
-			let listQuery;
-			if (props.queryFormat === 'or') {
-				listQuery = {
-					[type]: {
-						[props.dataField]: value,
-					},
-				};
-			} else {
-				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => ({
-					[type]: {
-						[props.dataField]: item,
-					},
-				}));
-				listQuery = {
-					bool: {
-						must: queryArray,
-					},
-				};
-			}
-
-			query = value.length ? listQuery : null;
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			selectAllLabel: props.selectAllLabel,
+		},
+	});
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		const { selectAllLabel } = this.props;
@@ -311,11 +266,6 @@ class MultiDataList extends Component {
 		const queryOptions = MultiDataList.generateQueryOptions(props, this.state);
 		if (props.defaultQuery) {
 			const value = Object.keys(this.state.currentValue);
-			const defaultQueryOptions = getOptionsFromQuery(props.defaultQuery(value, props));
-			props.setQueryOptions(this.internalComponent, {
-				...queryOptions,
-				...defaultQueryOptions,
-			});
 			updateDefaultQuery(props.componentId, props, value);
 		} else {
 			props.setQueryOptions(this.internalComponent, queryOptions);
@@ -555,7 +505,6 @@ MultiDataList.propTypes = {
 	selectedValue: types.selectedValue,
 	rawData: types.rawData,
 	options: types.options,
-	enableAppbase: types.bool,
 	total: types.number,
 	setCustomQuery: types.funcRequired,
 	// component props
@@ -621,7 +570,6 @@ const mapStateToProps = (state, props) => ({
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

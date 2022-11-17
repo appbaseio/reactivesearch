@@ -66,15 +66,17 @@ const Main = () => (
 														<span className="stars">
 															{Array(item.average_rating_rounded)
 																.fill('x')
-																.map((
-																	item, // eslint-disable-line
-																	index,
-																) => (
-																	<i
-																		className="fas fa-star"
-																		key={index} // eslint-disable-line
-																	/>
-																))}
+																.map(
+																	(
+																		item, // eslint-disable-line
+																		index,
+																	) => (
+																		<i
+																			className="fas fa-star"
+																			key={index} // eslint-disable-line
+																		/>
+																	),
+																)}
 														</span>
 														<span className="avg-rating">
 															({item.average_rating} avg)

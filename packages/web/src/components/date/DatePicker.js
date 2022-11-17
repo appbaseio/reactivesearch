@@ -43,15 +43,6 @@ class DatePicker extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
 			this.updateQuery(
@@ -72,30 +63,14 @@ class DatePicker extends Component {
 
 	formatInputDate = date => new XDate(date).toString('yyyy-MM-dd');
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (value && props.queryFormat) {
-			query = {
-				range: {
-					[props.dataField]: {
-						gte: formatDate(new XDate(value).addHours(-24), props),
-						lte: formatDate(new XDate(value), props),
-					},
-				},
-			};
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+		},
+	});
 
 	clearDayPicker = () => {
 		if (this.state.currentDate !== '') {
@@ -255,7 +230,6 @@ DatePicker.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	clickUnselectsDay: types.bool,
@@ -302,7 +276,6 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

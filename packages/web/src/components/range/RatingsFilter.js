@@ -52,15 +52,6 @@ class RatingsFilter extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -103,26 +94,15 @@ class RatingsFilter extends Component {
 		return value ? [value.start, value.end] : null;
 	};
 
-	static defaultQuery = (value, props, includeUnrated = false) => {
-		let query = null;
-		if (value) {
-			query = getRangeQueryWithNullValues(value, {
-				dataField: props.dataField,
-				includeNullValues: props.includeNullValues || includeUnrated,
-			});
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props, includeUnrated = false) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			showMissing: props.showMissing,
+			includeUnrated,
+		},
+	});
 
 	setValue = ({
 		value, props = this.props, hasMounted = true, includeUnrated = false,
@@ -149,11 +129,9 @@ class RatingsFilter extends Component {
 
 	updateQuery = (value, props, includeUnrated) => {
 		const { customQuery } = props;
-		let query = RatingsFilter.defaultQuery(value, props, includeUnrated);
+		const query = RatingsFilter.defaultQuery(value, props, includeUnrated);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -226,7 +204,6 @@ RatingsFilter.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -268,7 +245,6 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

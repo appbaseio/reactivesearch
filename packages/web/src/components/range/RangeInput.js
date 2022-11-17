@@ -75,14 +75,7 @@ class RangeInput extends Component {
 		};
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
+
 	componentDidUpdate(prevProps) {
 		const prevValue
 			= prevProps.queryFormat && prevProps.value
@@ -486,7 +479,6 @@ RangeInput.propTypes = {
 	showHistogram: types.bool,
 	componentId: types.stringRequired,
 	includeNullValues: types.bool,
-	enableAppbase: types.bool,
 	index: types.string,
 	queryFormat: oneOf([...Object.keys(dateFormats)]),
 	calendarInterval: types.calendarInterval,
@@ -508,7 +500,6 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const ConnectedComponent = connect(

@@ -2,9 +2,9 @@
 import React, { Component } from 'react';
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	NumberBox,
-	// RangeSlider,
+	RangeSlider,
 	ReactiveList,
 	ResultCard,
 } from '@appbaseio/reactivesearch';
@@ -71,7 +71,7 @@ const components = {
 			<ReactiveList.ResultCardsWrapper>
 				{data.map((item) => (
 					<ResultCard href={item.listing_url} key={item._id}>
-						<ResultCard.Image src={item.image} />
+						<ResultCard.Image src={(item.images && item.images[0]) || ''} />
 						<ResultCard.Title>{item.name}</ResultCard.Title>
 						<ResultCard.Description>
 							<div>
@@ -96,19 +96,6 @@ const components = {
 			listItem: 'list-item',
 			image: 'image',
 		},
-		sortOptions: [
-			{
-				label: 'Bed Type',
-				dataField: 'bed_type',
-				sortBy: 'asc',
-			},
-			{
-				label: 'Bedrooms',
-				dataField: 'bedrooms',
-				sortBy: 'asc',
-			},
-		],
-		defaultSortOption: 'Bedrooms',
 	},
 };
 
@@ -119,16 +106,16 @@ export default class Main extends Component {
 				[
 					{
 						...components.datasearch,
-						source: DataSearch,
+						source: SearchBox,
 					},
 					{
 						...components.numberbox,
 						source: NumberBox,
 					},
-					// {
-					// 	...components.rangeslider,
-					// 	source: RangeSlider,
-					// },
+					{
+						...components.rangeslider,
+						source: RangeSlider,
+					},
 					{
 						...components.resultcard,
 						source: ReactiveList,
@@ -146,11 +133,11 @@ export default class Main extends Component {
 				<ReactiveBase {...components.settings} initialState={this.props.store}>
 					<nav className="nav">
 						<div className="title">Airbeds</div>
-						<DataSearch {...components.datasearch} />
+						<SearchBox {...components.datasearch} />
 					</nav>
 					<div className="left-col">
 						<NumberBox {...components.numberbox} />
-						{/* <RangeSlider {...components.rangeslider} /> */}
+						<RangeSlider {...components.rangeslider} />
 					</div>
 
 					<ReactiveList {...components.resultcard} />

@@ -24,7 +24,6 @@ export interface ReactiveBaseProps {
 	initialQueriesSyncTime?: number;
 	analyticsConfig?: types.analyticsConfig;
 	appbaseConfig?: types.appbaseConfig;
-	enableAppbase?: boolean;
 	initialState?: types.children;
 	analytics?: boolean;
 	endpoint?: types.endpointConfig;
