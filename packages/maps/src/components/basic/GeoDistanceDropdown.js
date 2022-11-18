@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 

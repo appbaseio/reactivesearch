@@ -11,7 +11,7 @@
 		"@appbaseio/analytics": "^1.0.0",
 		"react-scripts": "5.0.1",
 		"web-vitals": "^2.1.4",
-		"@appbaseio/reactivesearch": "3.42.1"
+		"@appbaseio/reactivesearch": "3.43.1"
 	},
 	"scripts": {
 		"start": "react-scripts start",

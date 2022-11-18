@@ -1,10 +1,10 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import {
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import { jsx } from '@emotion/core';
+
 import { withTheme } from 'emotion-theming';
 import { oneOf, oneOfType } from 'prop-types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
