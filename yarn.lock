@@ -53,10 +53,17 @@
     lodash "^4.17.21"
     resize-observer-polyfill "^1.5.1"
 
-"@appbaseio/analytics@^1.0.0", "@appbaseio/analytics@^1.1.0":
+"@appbaseio/analytics@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@appbaseio/analytics/-/analytics-1.1.0.tgz#96acccdbd0de240ab77ef9c818caf6101f1c962a"
   integrity sha512-OUNV9hQsIiSc6zUE5S7hh4aMBMU+y3n33u0YfIur5ZfwdFVdp+v0RRw+XZfMxGUcb7nM1NSPW6LYpmjTks6q7w==
+  dependencies:
+    cross-fetch "^3.0.4"
+
+"@appbaseio/analytics@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/analytics/-/analytics-1.1.1.tgz#398ff80ad3d7d20bc0e66efc1c0b2c50bb2a959e"
+  integrity sha512-8ydvIbn9otjldUHKuYg48nqUvpdC4jMUl6BZNxTWniBnFi5ihxWI94cKabu2+L65uNJR3Aioa1FV0t6d4am2oQ==
   dependencies:
     cross-fetch "^3.0.4"
 
