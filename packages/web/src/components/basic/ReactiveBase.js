@@ -134,7 +134,7 @@ class ReactiveBase extends Component {
 			...props.appbaseConfig,
 		};
 		let url = props.url && props.url.trim() !== '' ? props.url : '';
-		const parsedUrl = url && url.replace(/\/\/.*@/, '//');
+
 		if (props.enableAppbase && props.endpoint instanceof Object) {
 			if (props.endpoint.url) {
 				url = props.endpoint.url;
@@ -208,6 +208,17 @@ class ReactiveBase extends Component {
 			if (this.props.transformRequest) return this.props.transformRequest(modifiedRequest);
 			return modifiedRequest;
 		};
+
+		let parsedUrl = url && url.replace(/\/\/.*@/, '//');
+		try {
+			const { host, protocol } = new URL(parsedUrl);
+			parsedUrl = `${protocol}//${host}`;
+		} catch (error) {
+			console.error(
+				'Error(ReactiveSearch): error parsing url for initializing analytics service instance.',
+				error,
+			);
+		}
 		const analyticsRef = AppbaseAnalytics.init({
 			index: appbaseRef.app,
 			credentials: appbaseRef.credentials,
