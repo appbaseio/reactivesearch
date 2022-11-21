@@ -212,6 +212,7 @@ class ReactiveBase extends Component {
 			index: appbaseRef.app,
 			credentials: appbaseRef.credentials,
 			url: parsedUrl,
+			globalCustomEvents: appbaseConfig.customEvents,
 		});
 
 		const initialState = {

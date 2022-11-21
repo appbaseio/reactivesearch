@@ -207,6 +207,7 @@ const ReactiveBase = {
 				index: appbaseRef.app,
 				credentials: appbaseRef.credentials,
 				url: parsedUrl,
+				globalCustomEvents: this.$props.appbaseConfig.customEvents,
 			});
 
 			const initialState = {
