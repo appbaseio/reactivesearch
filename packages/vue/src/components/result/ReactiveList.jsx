@@ -309,8 +309,18 @@ const ReactiveList = {
 			}
 		},
 		infiniteScroll(newVal, oldVal) {
+			if (newVal !== oldVal)
+			{
+				if (newVal && !this.pagination) {
+					window.addEventListener('scroll', this.scrollHandler);
+				} else {
+					window.removeEventListener('scroll', this.scrollHandler);
+				}
+			}
+		},
+		pagination(newVal, oldVal) {
 			if (newVal !== oldVal) {
-				if (!newVal) {
+				if (!newVal && this.infiniteScroll) {
 					window.addEventListener('scroll', this.scrollHandler);
 				} else {
 					window.removeEventListener('scroll', this.scrollHandler);
