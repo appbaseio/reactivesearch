@@ -6,7 +6,6 @@ import Appbase from 'appbase-js';
 import AppbaseAnalytics from '@appbaseio/analytics'
 import 'url-search-params-polyfill';
 
-import { computed } from 'vue';
 import Provider from '../Provider';
 import { composeThemeObject, X_SEARCH_CLIENT } from '../../utils/index';
 import types from '../../utils/vueTypes';
@@ -64,7 +63,6 @@ const ReactiveBase = {
 				this.$props.theme,
 			),
 			store: this.store,
-			$analytics: computed(()=>this.analyticsRef),
 			$searchPreferences: this.preferences,
 		};
 	},
@@ -205,7 +203,7 @@ const ReactiveBase = {
 				appbaseRef.transformResponse = this.$props.transformResponse;
 			}
 			const parsedUrl = this.url && this.url.replace(/\/\/.*@/, '//');
-			this.analyticsRef = AppbaseAnalytics.init({
+			const analyticsRef = AppbaseAnalytics.init({
 				index: appbaseRef.app,
 				credentials: appbaseRef.credentials,
 				url: parsedUrl,
@@ -220,20 +218,21 @@ const ReactiveBase = {
 					themePreset,
 				},
 				appbaseRef,
-				analyticsRef: this.analyticsRef,
+				analyticsRef,
 				selectedValues,
 				urlValues,
 				headers: this.getHeaders,
 				...this.$props.initialState,
 			};
 			this.store = configureStore(initialState);
+			this.analyticsRef = analyticsRef;
 		},
 	},
 	render() {
 		const children = this.$slots.default;
 		const { style, className } = this.$props;
 		return (
-			<Provider store={this.store}>
+			<Provider store={this.store} analyticsRef={this.analyticsRef}>
 				<URLParamsProvider
 					as={this.$props.as}
 					headers={this.getHeaders}

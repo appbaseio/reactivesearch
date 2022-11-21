@@ -12,11 +12,16 @@ export default {
 				}
 				return true;
 			}
+		},
+		analyticsRef: {
+			type: Object,
+			required: true,
 		}
 	},
 	provide() {
 		return {
-			$$store: this.store
+			$$store: this.store,
+			$analytics: this.analyticsRef,
 		};
 	},
 	render(h) {
