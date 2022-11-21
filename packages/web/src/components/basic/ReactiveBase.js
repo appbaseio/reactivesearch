@@ -208,22 +208,29 @@ class ReactiveBase extends Component {
 			return modifiedRequest;
 		};
 
-		let parsedUrl = url && url.replace(/\/\/.*@/, "//");
-		try {
-			const { host, protocol } = new URL(parsedUrl);
-			parsedUrl = `${protocol}//${host}`;
-		} catch (error) {
-			console.error(
-				"Error(ReactiveSearch): error parsing url for initializing analytics service instance.",
-				error
-			);
-		}
-		const analyticsRef = AppbaseAnalytics.init({
-			index: appbaseRef.app,
+		const analyticsInitConfig = {
+			url: url && url.replace(/\/\/.*@/, '//'),
 			credentials: appbaseRef.credentials,
-			url: parsedUrl,
+			// When endpoint prop is used index is not defined, so we use _default
+			index: appbaseRef.app || '_default',
 			globalCustomEvents: appbaseConfig.customEvents,
-		});
+		};
+
+		try {
+			if (this.props.endpoint && this.props.endpoint.url) {
+				// Remove parts between '//' and first '/' in the url
+				analyticsInitConfig.url = this.props.endpoint.url.replace(/\/\/(.*?)\/.*/, '//$1');
+				const headerCredentials = this.props.endpoint.headers.Authorization;
+				analyticsInitConfig.credentials = headerCredentials.replace('Basic ', '');
+				// Decode the credentials
+				analyticsInitConfig.credentials = atob(analyticsInitConfig.credentials);
+			}
+		} catch (e) {
+			console.error('Endpoint not set correctly for analytics');
+			console.error(e);
+		}
+
+		const analyticsRef = AppbaseAnalytics.init(analyticsInitConfig);
 
 		const initialState = {
 			config: {
