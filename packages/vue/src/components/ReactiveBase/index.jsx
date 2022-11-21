@@ -202,7 +202,16 @@ const ReactiveBase = {
 			if (this.$props.transformResponse) {
 				appbaseRef.transformResponse = this.$props.transformResponse;
 			}
-			const parsedUrl = this.url && this.url.replace(/\/\/.*@/, '//');
+			let parsedUrl = url && url.replace(/\/\/.*@/, '//');
+			try {
+				const { host, protocol } = new URL(parsedUrl);
+				parsedUrl = `${protocol}//${host}`;
+			} catch (error) {
+				console.error(
+					'Error(ReactiveSearch): error parsing url for initializing analytics service instance.',
+					error,
+				);
+			}
 			const analyticsRef = AppbaseAnalytics.init({
 				index: appbaseRef.app,
 				credentials: appbaseRef.credentials,
