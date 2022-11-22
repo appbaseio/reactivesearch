@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+
 import React, { Component } from 'react';
 import XDate from 'xdate';
 import {
@@ -22,7 +22,7 @@ import {
 	getCalendarIntervalErrorMessage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import Rheostat from 'rheostat/lib/Slider';
+import Rheostat from '@appbaseio/rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { oneOf } from 'prop-types';

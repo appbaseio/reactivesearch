@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+
 import React from 'react';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';

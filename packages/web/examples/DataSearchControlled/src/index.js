@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
+import { Component } from 'react';
 import {
 	ReactiveBase,
 	DataSearch,
@@ -11,7 +11,7 @@ import {
 
 import './index.css';
 
-class Main extends React.Component {
+class Main extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -64,7 +64,7 @@ class Main extends React.Component {
 							}}
 							render={({ data }) => (
 								<ReactiveList.ResultCardsWrapper>
-									{data.map(item => (
+									{data.map((item) => (
 										<ResultCard key={item.id}>
 											<ResultCard.Image src={item.image} />
 											<ResultCard.Title>
@@ -87,15 +87,18 @@ class Main extends React.Component {
 														</div>
 														<div className="ratings-list flex align-center">
 															<span className="stars">
-																{Array(item.average_rating_rounded)
-																	.fill('x')
-																	// eslint-disable-next-line no-shadow
-																	.map((item, index) => (
-																		<i
-																			className="fas fa-star"
-																			key={index.toString()}
-																		/>
-																	)) // eslint-disable-line
+																{
+																	Array(
+																		item.average_rating_rounded,
+																	)
+																		.fill('x')
+																		// eslint-disable-next-line no-shadow
+																		.map((item, index) => (
+																			<i
+																				className="fas fa-star"
+																				key={index.toString()}
+																			/>
+																		)) // eslint-disable-line
 																}
 															</span>
 															<span className="avg-rating">
@@ -119,7 +122,5 @@ class Main extends React.Component {
 		);
 	}
 }
-
-export default Main;
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

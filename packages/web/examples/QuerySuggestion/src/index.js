@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import { ReactiveBase } from '@appbaseio/reactivesearch';
 
@@ -16,5 +15,5 @@ const Main = () => (
 		<App />
 	</ReactiveBase>
 );
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

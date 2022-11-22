@@ -32,6 +32,9 @@ const GoogleMapMarker = {
 		};
 	},
 	methods: {
+		setIcon(icon) {
+			this.markerIcon = icon;
+		},
 		increaseMarkerZIndex() {
 			const { handlePreserveCenter } = this.$props;
 			if (this.highlightMarkerOnHover) {
@@ -58,10 +61,10 @@ const GoogleMapMarker = {
 			const newOpenMarkers = autoClosePopover
 				? { [id]: true }
 				: { ...openMarkers, [id]: true };
-
 			handleOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
 			this.triggerAnalytics();
+			marker.setIcon = this.setIcon;
 			this.$emit('open-marker-popover', marker);
 		},
 		closeMarker() {
@@ -79,23 +82,22 @@ const GoogleMapMarker = {
 
 			handleOpenMarkers(newOpenMarkers);
 			handlePreserveCenter(true);
+			marker.setIcon = this.setIcon;
 			this.$emit('close-marker-popover', marker);
 		},
 		triggerAnalytics() {
 			this.recordResultClick(this.index, this.marker._id);
 		},
-		renderPopoverClick(item, includeExternalSettings = false) {
+		renderPopoverClick(item) {
 			let additionalProps = {};
 			const { getPosition, renderPopover, openMarkers } = this.$props;
-			if (includeExternalSettings) {
-				// to render pop-over correctly with MarkerWithLabel
-				additionalProps = {
-					position: getPosition(item),
-					defaultOptions: {
-						pixelOffset: new window.google.maps.Size(0, -30),
-					},
-				};
-			}
+
+			additionalProps = {
+				position: getPosition(item),
+				defaultOptions: {
+					pixelOffset: new window.google.maps.Size(0, -30),
+				},
+			};
 
 			if (item._id in openMarkers) {
 				return (
@@ -140,9 +142,7 @@ const GoogleMapMarker = {
 		}
 
 		if (renderItem) {
-			marker.setIcon = (icon) => {
-				this.markerIcon = icon;
-			};
+			marker.setIcon = this.setIcon;
 			const data = renderItem(marker);
 			if ('label' in data) {
 				return (

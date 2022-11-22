@@ -1,6 +1,6 @@
-/** @jsx jsx */
+/** @jsxImportSource @emotion/react */
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { jsx } from '@emotion/core';
+
 import { withTheme } from 'emotion-theming';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';

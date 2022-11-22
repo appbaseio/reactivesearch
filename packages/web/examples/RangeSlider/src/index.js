@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import {
 	ReactiveBase,
@@ -47,7 +46,7 @@ const Main = () => (
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultListWrapper>
-							{data.map(item => (
+							{data.map((item) => (
 								<ResultList key={item._id}>
 									<ResultList.Image src={item.image} />
 									<ResultList.Content>
@@ -72,15 +71,17 @@ const Main = () => (
 														<span className="stars">
 															{Array(item.average_rating_rounded)
 																.fill('x')
-																.map((
-																	item, // eslint-disable-line
-																	index,
-																) => (
-																	<i
-																		className="fas fa-star"
-																		key={index} // eslint-disable-line
-																	/>
-																))}
+																.map(
+																	(
+																		item, // eslint-disable-line
+																		index,
+																	) => (
+																		<i
+																			className="fas fa-star"
+																			key={index} // eslint-disable-line
+																		/>
+																	),
+																)}
 														</span>
 														<span className="avg-rating">
 															({item.average_rating} avg)
@@ -102,5 +103,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
