@@ -56,6 +56,10 @@ export const HierarchicalMenuListItem = styled('li')`
 					display: none;
 				`};
 		}
+
+		&.--show-switcher-icon {
+			padding-left: 36px;
+		}
 	}
 	.--list-item-label {
 	}

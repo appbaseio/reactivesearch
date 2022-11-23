@@ -177,7 +177,7 @@ const HierarchicalMenuListItemComponent = ({
 				)}
 			</Button>
 			{isLeafNode === false && (
-				<div className="--list-child">
+				<div className={`--list-child ${showSwitcherIcon ? ' --show-switcher-icon' : ''}`}>
 					{/* eslint-disable-next-line no-use-before-define */}
 					<HierarchicalMenuComponent
 						key={`${newParentPath}-${listItemLabel}-${listItemCount}`}
