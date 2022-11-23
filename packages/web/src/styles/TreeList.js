@@ -62,6 +62,7 @@ export const HierarchicalMenuListItem = styled('li')`
 		}
 	}
 	.--list-item-label {
+		line-height: 100%;
 	}
 	.--list-item-count {
 		margin-left: 10px;
@@ -82,6 +83,8 @@ export const HierarchicalMenuListItem = styled('li')`
 		}
 	}
 	.--list-item-label-count-wrapper {
+		display: flex;
+		align-items: center;
 		&:hover {
 			.--list-item-count,
 			.--list-item-label {
