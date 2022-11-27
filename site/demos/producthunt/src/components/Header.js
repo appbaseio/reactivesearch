@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataSearch } from '@appbaseio/reactivesearch';
+import { SearchBox } from '@appbaseio/reactivesearch';
 
 import Navbar, { title, navbarContent } from '../styles/Navbar';
 import Flex, { FlexChild } from '../styles/Flex';
@@ -10,7 +10,7 @@ const Header = () => (
 		<Flex alignCenter responsive justifyContent="space-between" className={navbarContent}>
 			<FlexChild className={title}>Product Search</FlexChild>
 			<FlexChild className={dataSearchContainer}>
-				<DataSearch
+				<SearchBox
 					componentId="search"
 					dataField={[
 						'name',
