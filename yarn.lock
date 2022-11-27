@@ -90,11 +90,14 @@
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/4ff44cfdb5a670adee21be3cf088df3e4d9f9b53"
   dependencies:
-    "@appbaseio/designkit" "^0.11.0"
+    "@appbaseio/designkit" "^0.13.0"
     "@appbaseio/reactivemaps" "^3.0.0-beta.17"
     "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
+    "@typeform/embed" "^1.34.1"
+    "@typeform/embed-react" "^1.13.0"
+    add "^2.0.6"
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
@@ -122,13 +125,15 @@
     gatsby-remark-external-links "0.0.4"
     gatsby-remark-images "6.9.0"
     gatsby-remark-prismjs "6.9.0"
+    gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
     gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
+    hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    moment "^2.24.0"
+    moment "^2.29.2"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -138,13 +143,36 @@
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
-    react-router-dom "4.3.1"
+    react-router-dom "^4.3.1"
     tocbot "4.5.0"
+    yarn "^1.22.18"
 
 "@appbaseio/reactivecore@9.14.28":
   version "9.14.28"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.28.tgz#c5d9831f63826c2d768b3628544a8acfc58eab47"
   integrity sha512-mhTgp6yvEGyDHAy7Tk81lY1jndyo/QGMEDIK70cpBKpVw0v5x4/pCrQBW71AF5fEMJisg9JRSs/+UfFl2YFZAQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivecore@9.14.30":
+  version "9.14.30"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.30.tgz#93d0d6a8dd1af48d8e476ea8e48d65e1b127e359"
+  integrity sha512-l1csJ9PMZorvAFk0Yo8HrrUzu4P+7cg5ieEh28Z7cOeNjJcmbqolOWxK5E3clGOYibu59XlEVxYrFX37EhjAXw==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivecore@9.14.31":
+  version "9.14.31"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.31.tgz#8f7c35a77f2efe08f2163d1264faf9280fb36cc0"
+  integrity sha512-rgtfJiIWtFF/ZwVRiNG/fHGmpMtYJzOnm9Wr1RfoPt3uzPfblnGY/Mmq4KLz9U4ig9JQfqFvf2kN4a1+kORJbw==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -198,6 +226,39 @@
     url-search-params-polyfill "^7.0.0"
     xdate "^0.8.2"
     xss "^1.0.11"
+
+"@appbaseio/reactivesearch@>=3.30.1", "@appbaseio/reactivesearch@^3.29.0":
+  version "3.43.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.1.tgz#9c28b9dc6856a980031e897531124a164b2431e2"
+  integrity sha512-SxQXpnElzRALTGN2/8SpF+rQQTbTGwOGYqKWVdWg3Hm7aCdKdLMTBwb8NDQl1AMOw6OiRmdtaJ0gVgzAIyw+UQ==
+  dependencies:
+    "@appbaseio/reactivecore" "9.14.31"
+    "@appbaseio/rheostat" "^1.0.0-alpha.2"
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    appbase-js "^5.2.0"
+    cross-env "^5.2.0"
+    downshift "^1.31.2"
+    echarts "^5.3.3"
+    echarts-for-react "^3.0.2"
+    emotion-theming "^10.0.27"
+    hoist-non-react-statics "^3.2.1"
+    hotkeys-js "^3.8.7"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-redux "^6.0.1"
+    url-search-params-polyfill "^7.0.0"
+    xdate "^0.8.2"
+    xss "^1.0.11"
+
+"@appbaseio/rheostat@^1.0.0-alpha.2":
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/rheostat/-/rheostat-1.0.0-alpha.2.tgz#f2e00549a3f72c6d7ec9cb34c13808fe9c431d58"
+  integrity sha512-00FqByMxBAk0fxZnHiLVSA1vsQyPcPdfSSVZbmFfaZBh4QsectBnN05X4zLp3PkY4uB3azneCtSNeKFICGHf4w==
+  dependencies:
+    object.assign "^4.0.4"
+    prop-types "^15.5.10"
 
 "@appbaseio/vue-emotion@0.4.4":
   version "0.4.4"
@@ -23958,7 +24019,7 @@ object-visit@^1.0.0:
   dependencies:
     isobject "^3.0.0"
 
-object.assign@^4.1.0, object.assign@^4.1.3, object.assign@^4.1.4:
+object.assign@^4.0.4, object.assign@^4.1.0, object.assign@^4.1.3, object.assign@^4.1.4:
   version "4.1.4"
   resolved "https://registry.yarnpkg.com/object.assign/-/object.assign-4.1.4.tgz#9673c7c7c351ab8c4d0b516f4343ebf4dfb7799f"
   integrity sha512-1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==
