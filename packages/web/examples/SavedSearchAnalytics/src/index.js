@@ -96,10 +96,9 @@ const Main = () => {
 	return (
 		<ReactiveBase
 			{...AppbaseConfig}
-			appbaseConfig={{
+			reactivesearchAPIConfig={{
 				recordAnalytics: true,
 			}}
-			enableAppbase
 		>
 			<div className="row">
 				<div className="col">

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	ResultList,
 	SelectedFilters,
 	ReactiveList,
@@ -15,11 +15,10 @@ const Main = () => (
 	<ReactiveBase
 		app="good-books-ds"
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-		enableAppbase
 	>
 		<div className="row">
 			<div className="col">
-				<DataSearch
+				<SearchBox
 					dataField="original_title"
 					componentId="BookSensor"
 					defaultValue="Artemis Fowl"

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	ReactiveList,
 	ResultCard,
 	SelectedFilters,
@@ -15,8 +15,7 @@ const Main = () => (
 	<ReactiveBase
 		app="good-books-ds"
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-		enableAppbase
-		appbaseConfig={{
+		reactivesearchAPIConfig={{
 			recordAnalytics: true,
 		}}
 		preferences={{
@@ -26,7 +25,7 @@ const Main = () => (
 						BookSensor: {
 							enabled: true,
 							rsConfig: {
-								title: 'DataSearch Path',
+								title: 'SearchBox Path',
 								dataField: ['original_title', 'original_title.search'],
 								URLParams: true,
 								size: 5,
@@ -54,7 +53,7 @@ const Main = () => (
 	>
 		<div className="row">
 			<div className="col">
-				<DataSearch
+				<SearchBox
 					componentId="BookSensor"
 					preferencesPath="pages.home.componentSettings.BookSensor"
 				/>
