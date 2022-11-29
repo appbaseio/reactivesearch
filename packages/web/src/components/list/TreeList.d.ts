@@ -17,6 +17,7 @@ export interface TreeListProps extends CommonProps {
 	showLeafIcon?: boolean;
 	leafIcon?: types.children;
 	showLine?: boolean;
+	showSwitcherIcon?: boolean;
 	switcherIcon?: (expanded: boolean) => types.children;
 	render?: (data: any) => any;
 	renderItem?: (item: any, count?: number, isSelected?: boolean) => any;

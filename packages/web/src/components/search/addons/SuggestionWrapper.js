@@ -1,4 +1,5 @@
-/** @jsxImportSource @emotion/react */
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
