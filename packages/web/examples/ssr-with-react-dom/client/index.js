@@ -1,5 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { hydrate } from 'react-dom';
+import React from 'react'
 
 import App from '../common/App';
 import BookCard from '../common/BookCard';
@@ -22,9 +23,21 @@ const singleRangeProps = {
 	componentId: 'BookSensor',
 	dataField: 'average_rating',
 	data: [
-		{ start: 0, end: 3, label: 'Rating < 3' },
-		{ start: 3, end: 4, label: 'Rating 3 to 4' },
-		{ start: 4, end: 5, label: 'Rating > 4' },
+		{
+			start: 0,
+			end: 3,
+			label: 'Rating < 3',
+		},
+		{
+			start: 3,
+			end: 4,
+			label: 'Rating 3 to 4',
+		},
+		{
+			start: 4,
+			end: 5,
+			label: 'Rating > 4',
+		},
 	],
 	URLParams: true,
 };
@@ -34,13 +47,13 @@ const reactiveListProps = {
 	dataField: 'original_title',
 	from: 0,
 	size: 10,
-	renderItem: data => <BookCard key={data._id} data={data} />,
+	renderItem: (data) => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
 };
 
-ReactDOM.hydrate(
+hydrate(
 	<App
 		store={store}
 		settings={settings}

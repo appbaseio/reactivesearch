@@ -4,6 +4,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
 import { connect } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import types from '../../utils/vueTypes';
 import { RangeConnected as RangeSlider } from './RangeSlider.jsx';
 import Input from '../../styles/Input';
@@ -284,9 +285,11 @@ const mapStateToProps = (state) => ({
 	themePreset: state.config.themePreset,
 });
 
-const RangeConnected = ComponentWrapper(connect(mapStateToProps, {})(RangeInput), {
-	componentType: componentTypes.rangeInput,
-});
+export const RangeConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, {})(RangeInput), {
+		componentType: componentTypes.rangeInput,
+	}),
+);
 
 RangeInput.install = function (Vue) {
 	Vue.component(RangeInput.name, RangeConnected);

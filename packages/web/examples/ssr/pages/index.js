@@ -71,7 +71,7 @@ const components = {
 			<ReactiveList.ResultCardsWrapper>
 				{data.map((item) => (
 					<ResultCard href={item.listing_url} key={item._id}>
-						<ResultCard.Image src={item.image} />
+						<ResultCard.Image src={item.images ? item.images[0] : ''} />
 						<ResultCard.Title>{item.name}</ResultCard.Title>
 						<ResultCard.Description>
 							<div>

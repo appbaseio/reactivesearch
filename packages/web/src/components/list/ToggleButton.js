@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+
 import React, { Component } from 'react';
 
 import { updateQuery, setQueryOptions, setCustomQuery } from '@appbaseio/reactivecore/lib/actions';
@@ -274,7 +274,7 @@ ToggleButton.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.props.enableAppbase,
+	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,

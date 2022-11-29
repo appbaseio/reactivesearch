@@ -8,7 +8,21 @@ import {
 	isQueryIdentical,
 } from '../../utils/index';
 import ComponentWrapper from './ComponentWrapper.jsx';
+import PreferencesConsumer from './PreferencesConsumer.jsx';
 import types from '../../utils/vueTypes';
+import { RLConnected as ReactiveList } from '../result/ReactiveList.jsx';
+import { DSConnected as DataSearch } from '../search/DataSearch.jsx';
+import { SBConnected as SearchBox } from '../search/SearchBox.jsx';
+import { ListConnected as SingleList } from '../list/SingleList.jsx';
+import { ListConnected as MultiList } from '../list/MultiList.jsx';
+import { ListConnected as SingleDropdownList } from '../list/SingleDropdownList.jsx';
+import { ListConnected as MultiDropdownList } from '../list/MultiDropdownList.jsx';
+import { ListConnected as ToggleButton } from '../list/ToggleButton.jsx';
+import { RangeConnected as DynamicRangeSlider } from '../range/DynamicRangeSlider.jsx';
+import { RangeConnected as SingleRange } from '../range/SingleRange.jsx';
+import { RangeConnected as MultiRange } from '../range/MultiRange.jsx';
+import { RangeConnected as RangeSlider } from '../range/RangeSlider.jsx';
+import { RangeConnected as RangeInput } from '../range/RangeInput.jsx';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const {
@@ -342,13 +356,70 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 	setDefaultQuery,
 };
-
-const RcConnected = ComponentWrapper(
+const ConnectedComponent = ComponentWrapper(
 	connect(mapStateToProps, mapDispatchtoProps)(ReactiveComponent),
 	{
 		componentType: componentTypes.reactiveComponent,
 	},
 );
+
+const RcConnected = PreferencesConsumer({
+	name: 'RcConnected',
+	render(h) {
+		let component = ConnectedComponent;
+		switch (this.$attrs.componentType) {
+			case componentTypes.reactiveList:
+				component = ReactiveList;
+				break;
+			case componentTypes.dataSearch:
+				component = DataSearch;
+				break;
+			case componentTypes.searchBox:
+				component = SearchBox;
+				break;
+			// list components
+			case componentTypes.singleList:
+				component = SingleList;
+				break;
+			case componentTypes.multiList:
+				component = MultiList;
+				break;
+			case componentTypes.singleDropdownList:
+				component = SingleDropdownList;
+				break;
+			case componentTypes.multiDropdownList:
+				component = MultiDropdownList;
+				break;
+			// basic components
+			case componentTypes.toggleButton:
+				component = ToggleButton;
+				break;
+			// range components
+			case componentTypes.dynamicRangeSlider:
+				component = DynamicRangeSlider;
+				break;
+			case componentTypes.singleRange:
+				component = SingleRange;
+				break;
+			case componentTypes.multiRange:
+				component = MultiRange;
+				break;
+			case componentTypes.rangeSlider:
+				component = RangeSlider;
+				break;
+			case componentTypes.rangeInput:
+				component = RangeInput;
+				break;
+			default:
+		}
+		return h(component, {
+			attrs: this.$attrs,
+			on: this.$listeners,
+			scopedSlots: this.$scopedSlots,
+			slots: this.$slots,
+		});
+	},
+});
 
 ReactiveComponent.install = function (Vue) {
 	Vue.component(ReactiveComponent.name, RcConnected);

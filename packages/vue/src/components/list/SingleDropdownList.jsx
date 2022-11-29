@@ -4,6 +4,7 @@ import VueTypes from 'vue-types';
 import types from '../../utils/vueTypes';
 import { getAggsQuery } from './utils';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import Button, { loadMoreContainer } from '../../styles/Button';
@@ -199,6 +200,7 @@ const SingleDropdownList = {
 			selectAll = [
 				{
 					key: this.$props.selectAllLabel,
+					doc_count: this.totalDocumentCount
 				},
 			];
 		}
@@ -440,6 +442,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| '',
+	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
@@ -453,12 +456,11 @@ const mapDispatchtoProps = {
 	setDefaultQuery,
 };
 
-const ListConnected = ComponentWrapper(
-	connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList),
-	{
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(SingleDropdownList), {
 		componentType: componentTypes.singleDropdownList,
 		internalComponent: SingleDropdownList.hasInternalComponent(),
-	},
+	}),
 );
 
 SingleDropdownList.install = function (Vue) {

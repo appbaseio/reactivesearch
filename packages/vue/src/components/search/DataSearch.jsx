@@ -31,6 +31,7 @@ import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import SuggestionWrapper from './addons/SuggestionWrapper.jsx';
 import SuggestionItem from './addons/SuggestionItem.jsx';
 import SearchSvg from '../shared/SearchSvg';
@@ -123,6 +124,8 @@ const DataSearch = {
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
+
+		this.updateDefaultQueryHandler(this.currentValue, this.$props, false);
 	},
 	computed: {
 		suggestionsList() {
@@ -596,7 +599,7 @@ const DataSearch = {
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		updateDefaultQueryHandler(value, props) {
+		updateDefaultQueryHandler(value, props, execute) {
 			if (!value && props.enableDefaultSuggestions === false) {
 				// clear Component data from store
 				this.resetStoreForComponent(props.componentId);
@@ -620,14 +623,17 @@ const DataSearch = {
 					...this.queryOptions,
 					...defaultQueryOptions,
 				},
-				false,
+				execute,
 			);
-			this.updateQuery({
-				componentId: this.internalComponent,
-				query,
-				value,
-				componentType: componentTypes.dataSearch,
-			});
+			this.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+					value,
+					componentType: componentTypes.dataSearch,
+				},
+				execute,
+			);
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
@@ -1591,10 +1597,12 @@ const mapDispatchToProps = {
 	getRecentSearches,
 	resetStoreForComponent,
 };
-const DSConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
-	componentType: componentTypes.dataSearch,
-	internalComponent: DataSearch.hasInternalComponent(),
-});
+export const DSConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(DataSearch), {
+		componentType: componentTypes.dataSearch,
+		internalComponent: DataSearch.hasInternalComponent(),
+	}),
+);
 
 DataSearch.install = function (Vue) {
 	Vue.component(DataSearch.name, DSConnected);

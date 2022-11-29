@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import moment from 'moment';
-
 import {
 	ReactiveBase,
 	DateRange,
@@ -15,24 +14,25 @@ import './index.css';
 class Main extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { date: { start: new Date(), end: new Date() } };
+		this.state = { date: { start: new Date('2021-12-05'), end: new Date('2022-02-05') } };
 	}
 
 	dateQuery(value) {
+		console.log('dateQuery', value);
 		let query = null;
 		if (value) {
 			query = [
 				{
 					range: {
-						date_from: {
-							gte: moment(value.start).format('YYYYMMDD'),
+						available_from: {
+							gte: moment(value.start).valueOf(),
 						},
 					},
 				},
 				{
 					range: {
-						date_to: {
-							lte: moment(value.end).format('YYYYMMDD'),
+						available_to: {
+							lte: moment(value.end).valueOf(),
 						},
 					},
 				},
@@ -42,29 +42,31 @@ class Main extends Component {
 	}
 
 	render() {
+		console.log('rerender');
 		return (
 			<ReactiveBase
-				app="airbeds-test-app"
-				credentials="X8RsOu0Lp:9b4fe1a4-58c6-4089-a042-505d86d9da30"
-				type="listing"
+				app="airbnb-dev"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+				enableAppbase
 			>
 				<div className="row">
 					<div className="col">
 						<DateRange
-							value={this.state.date}
+							value={{ ...this.state.date }}
 							onChange={(value) => {
 								// setting end date equal to start date
+								console.log('value', value);
 								this.setState({
 									date: {
 										start: value.start,
-										end: value.start,
+										end: value.end,
 									},
 								});
 							}}
 							componentId="DateSensor"
-							dataField="date_from"
+							dataField="available_from"
 							customQuery={this.dateQuery}
-							initialMonth={new Date('2017-05-05')}
+							initialMonth={new Date('2021-05-05')}
 						/>
 					</div>
 
@@ -81,9 +83,9 @@ class Main extends Component {
 							}}
 							render={({ data }) => (
 								<ReactiveList.ResultCardsWrapper>
-									{data.map(item => (
+									{data.map((item) => (
 										<ResultCard href={item.listing_url} key={item.id}>
-											<ResultCard.Image src={item.image} />
+											<ResultCard.Image src={item.picture_url} />
 											<ResultCard.Title>
 												<div
 													className="book-title"
@@ -118,5 +120,5 @@ class Main extends Component {
 		);
 	}
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

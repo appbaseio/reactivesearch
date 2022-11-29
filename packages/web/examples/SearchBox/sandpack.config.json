@@ -1,6 +1,0 @@
-{
-  "infiniteLoopProtection": true,
-  "hardReloadOnChange": false,
-  "template": "create-react-app",
-  "view": "browser"
-}

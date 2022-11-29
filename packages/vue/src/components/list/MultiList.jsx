@@ -3,6 +3,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import VueTypes from 'vue-types';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Input from '../../styles/Input';
 import Container from '../../styles/Container';
@@ -229,7 +230,20 @@ const MultiList = {
 									class={getClassName(this.$props.innerClass, 'label')}
 									for={`${this.$props.componentId}-${selectAllLabel}`}
 								>
-									{selectAllLabel}
+									<span>
+										{selectAllLabel}
+										{this.$props.showCount && (
+											<span
+												class={getClassName(
+													this.$props.innerClass,
+													'count',
+												)}
+											>
+												&nbsp;(
+												{this.totalDocumentCount})
+											</span>
+										)}
+									</span>
 								</label>
 							</li>
 						) : null}
@@ -606,6 +620,7 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	themePreset: state.config.themePreset,
+	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
 	enableAppbase: state.config.enableAppbase,
@@ -620,10 +635,12 @@ const mapDispatchtoProps = {
 
 MultiList.hasInternalComponent = () => true;
 
-const ListConnected = ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
-	componentType: componentTypes.multiList,
-	internalComponent: MultiList.hasInternalComponent(),
-});
+export const ListConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(MultiList), {
+		componentType: componentTypes.multiList,
+		internalComponent: MultiList.hasInternalComponent(),
+	}),
+);
 
 MultiList.install = function (Vue) {
 	Vue.component(MultiList.name, ListConnected);

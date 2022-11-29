@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import moment from 'moment';
-
 import {
 	ReactiveBase,
 	DateRange,
@@ -19,15 +18,15 @@ class Main extends Component {
 			query = [
 				{
 					range: {
-						date_from: {
-							gte: moment(value.start).format('YYYYMMDD'),
+						available_from: {
+							gte: moment(value.start).valueOf(),
 						},
 					},
 				},
 				{
 					range: {
-						date_to: {
-							lte: moment(value.end).format('YYYYMMDD'),
+						available_to: {
+							lte: moment(value.end).valueOf(),
 						},
 					},
 				},
@@ -39,18 +38,17 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="airbeds-test-app"
+				app="airbnb-dev"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				enableAppbase
-				type="listing"
 			>
 				<div className="row">
 					<div className="col">
 						<DateRange
 							componentId="DateSensor"
-							dataField="date_from"
+							dataField="available_from"
 							customQuery={this.dateQuery}
-							initialMonth={new Date('2017-05-05')}
+							initialMonth={new Date('2021-05-05')}
 						/>
 					</div>
 
@@ -67,9 +65,9 @@ class Main extends Component {
 							}}
 							render={({ data }) => (
 								<ReactiveList.ResultCardsWrapper>
-									{data.map(item => (
+									{data.map((item) => (
 										<ResultCard href={item.listing_url} key={item.id}>
-											<ResultCard.Image src={item.image} />
+											<ResultCard.Image src={item.picture_url} />
 											<ResultCard.Title>
 												<div
 													className="book-title"
@@ -104,5 +102,5 @@ class Main extends Component {
 		);
 	}
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

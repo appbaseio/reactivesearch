@@ -5,6 +5,7 @@ import { withClickIds } from '@appbaseio/reactivecore/lib/utils/helper';
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import ResultListWrapper from './addons/ResultListWrapper.jsx';
 import ResultCardsWrapper from './addons/ResultCardsWrapper.jsx';
 import {
@@ -864,12 +865,11 @@ ReactiveList.generateQueryOptions = (props) => {
 
 ReactiveList.hasInternalComponent = () => true;
 
-export const RLConnected = ComponentWrapper(
-	connect(mapStateToProps, mapDispatchtoProps)(ReactiveList),
-	{
+export const RLConnected = PreferencesConsumer(
+	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(ReactiveList), {
 		componentType: componentTypes.reactiveList,
 		internalComponent: ReactiveList.hasInternalComponent(),
-	},
+	}),
 );
 
 ReactiveList.install = function (Vue) {

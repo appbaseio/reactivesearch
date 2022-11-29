@@ -160,11 +160,13 @@ class ReactiveChart extends React.Component {
 		this.updateDefaultQuery(queryOptions);
 	};
 	handleClick = (...args) => {
-		const { onClick, useAsFilter, chartType } = this.props;
+		const {
+			onClick, useAsFilter, chartType, type,
+		} = this.props;
 		if (onClick) {
 			onClick(...args);
 		}
-		if (useAsFilter && ![ChartTypes.Histogram, ChartTypes.Scatter].includes(chartType)) {
+		if (useAsFilter && type !== 'range') {
 			const item = args[0];
 			let value;
 			if (item.data && item.data.name) {
@@ -249,6 +251,7 @@ class ReactiveChart extends React.Component {
 			hits,
 			xAxisField,
 			yAxisField,
+			type,
 		} = this.props;
 		const { options, currentValue } = this.state;
 		const { setOption } = this.props;
@@ -265,6 +268,7 @@ class ReactiveChart extends React.Component {
 			labelFormatter,
 			xAxisName,
 			yAxisName,
+			type,
 		};
 		if (setOption) {
 			return setOption(chartOptions);
@@ -605,9 +609,16 @@ ReactiveChart.GetBarChartOptions = `({
 }`;
 
 ReactiveChart.GetLineChartOptions = `({
-	title, xAxisName, yAxisName, aggregationData,
+	title,
+	type,
+	value,
+	xAxisName,
+	yAxisName,
+	aggregationData,
+	labelFormatter,
 }) => {
 	let chartTitle;
+
 	if (title) {
 		if (typeof title === 'string') {
 			chartTitle = {
@@ -617,23 +628,51 @@ ReactiveChart.GetLineChartOptions = `({
 			chartTitle = title;
 		}
 	}
+	const xAxisData = aggregationData.map(item => ({
+		value: item.key,
+		name: item.key,
+	}));
+
+	let startIndex = -1;
+	let endIndex = -1;
+	const isValueArray = value && Array.isArray(value);
+	const isRangeType = type === 'range';
+	if (isValueArray && isRangeType) {
+		startIndex = xAxisData.findIndex(i => i.value === value[0]);
+		endIndex = xAxisData.findIndex(i => i.value === value[1]);
+	}
+
 	return {
 		title: chartTitle,
-		tooltip: {
-			trigger: 'item',
-		},
+		toolbox: isRangeType ? {
+			feature: {
+				dataZoom: {
+					yAxisIndex: false,
+					labelFormatter,
+				},
+			},
+		}: undefined,
 		xAxis: {
 			name: xAxisName,
 			type: 'category',
-			data: aggregationData.map(item => ({
-				value: item.key,
-				name: item.key,
-			})),
+			data: xAxisData
 		},
 		yAxis: {
 			type: 'value',
 			name: yAxisName,
 		},
+		dataZoom: isRangeType ? [
+			{
+				type: 'inside',
+				startValue: startIndex > -1 ? startIndex : undefined,
+				endValue: endIndex > -1 ? endIndex : undefined,
+			},
+			{
+				type: 'slider',
+				startValue: startIndex > -1 ? startIndex : undefined,
+				endValue: endIndex > -1 ? endIndex : undefined,
+			},
+		]: undefined,
 		series: [
 			{
 				data: aggregationData.map(item => ({

@@ -33,6 +33,14 @@ export interface TreeListProps extends CommonProps {
 	defaultQuery?: (...args: any[]) => any;
 	endpoint?: types.endpointConfig;
 	title?: types.title;
+	queryFormat?: types.queryFormatSearch;
+	sortBy?: types.sortByWithCount;
+	size?: number;
+	nestedField?: string;
+	URLParams?: boolean;
+	innerClass?: types.style;
+	placeholder?: string;
+	react?: types.react;
 }
 
 declare const TreeList: React.ComponentClass<TreeListProps>;
