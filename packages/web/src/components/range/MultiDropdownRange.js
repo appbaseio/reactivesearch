@@ -138,23 +138,35 @@ class MultiDropdownRange extends Component {
 			this.selectedValues = {};
 		} else if (isDefaultValue) {
 			// checking if the items in defaultSeleted exist in the data prop
-			currentValue = MultiDropdownRange.parseValue(item, props);
+			currentValue
+				= Array.isArray(item) && typeof item[0] === 'string'
+					? MultiDropdownRange.parseValue(item, props)
+					: item;
 			currentValue.forEach((value) => {
 				this.selectedValues = {
 					...this.selectedValues,
 					[value.label]: true,
 				};
 			});
-		} else if (Array.isArray(item) && item.length && typeof item[0] === 'string') {
-			currentValue = props.data.filter(dataItem => item.includes(dataItem.label));
-			this.selectedValues = {};
-			item.forEach((value) => {
-				this.selectedValues = {
-					...this.selectedValues,
-					[value]: true,
-				};
-				return true;
-			});
+		} else if (Array.isArray(item) && item.length) {
+			if (typeof item[0] === 'string') {
+				currentValue = props.data.filter(dataItem => item.includes(dataItem.label));
+				this.selectedValues = {};
+				item.forEach((value) => {
+					this.selectedValues = {
+						...this.selectedValues,
+						[value]: true,
+					};
+				});
+			} else if (item.every(t => !!t.label)) {
+				currentValue = [...item];
+				item.forEach((value) => {
+					this.selectedValues = {
+						...this.selectedValues,
+						[value.label]: true,
+					};
+				});
+			}
 		} else if (this.selectedValues[item.label]) {
 			currentValue = currentValue.filter(value => value.label !== item.label);
 			const { [item.label]: del, ...selectedValues } = this.selectedValues;

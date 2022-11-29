@@ -1,6 +1,6 @@
 import { helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import { setValues } from '@appbaseio/reactivecore/lib/actions/value';
+import { setSearchState as setSearchStateAction } from '@appbaseio/reactivecore/lib/actions/misc';
 import { isInternalComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import { connect } from '../../utils/index';
 
@@ -12,6 +12,15 @@ const filterProps = (props = {}) => ({
 	...props,
 	props: props.componentProps,
 });
+const convertArrayLike = (arrayLike) => {
+	const arr = []
+	let i =0
+	while (arrayLike[i]) {
+		arr[i] = arrayLike[i]
+		i += 1
+	}
+	return arr
+}
 
 const filterByComponentIds = (state, props = {}) => {
 	const { componentIds, excludeComponentIds } = props;
@@ -187,17 +196,25 @@ const StateProvider = {
 		},
 		setSearchState(valuesMap = {}) {
 			const { components } = this;
+
 			const computedValuesMap = {};
-			components
+			convertArrayLike(components)
 				.filter((component) => !isInternalComponent(component))
 				.forEach((component) => {
 					if (component in valuesMap) {
-						computedValuesMap[component] = valuesMap[component];
+						computedValuesMap[component] = {
+							value: valuesMap[component],
+							componentProps: this.componentProps[component],
+						};
 					} else {
-						computedValuesMap[component] = null;
+						computedValuesMap[component] = {
+							value: null,
+							componentProps: this.componentProps[component],
+						};
 					}
 				});
-			this.setValues(computedValuesMap);
+
+			this.setSearchStateFn(computedValuesMap);
 		},
 	},
 	render() {
@@ -223,7 +240,9 @@ const mapStateToProps = (state, props) => ({
 	components: state.components,
 });
 
-const mapDispatchtoProps = { setValues };
+const mapDispatchtoProps = {
+	setSearchStateFn: setSearchStateAction
+};
 
 const StateProviderConnected = connect(mapStateToProps, mapDispatchtoProps)(StateProvider);
 

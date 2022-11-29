@@ -141,7 +141,15 @@ const MultiRange = {
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
-				this.selectItem(newVal, true, undefined, true);
+				const processSelectedValues = newVal
+					? newVal.map((item) => {
+						if (typeof item === 'object' && 'label' in item) {
+							return item.label;
+						}
+						return item;
+					  })
+					: null;
+				this.selectItem(processSelectedValues, true, undefined, true);
 			}
 		},
 		customQuery(newVal, oldVal) {
