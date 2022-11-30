@@ -74,6 +74,13 @@
   dependencies:
     cross-fetch "^3.0.4"
 
+"@appbaseio/analytics@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/analytics/-/analytics-1.1.1.tgz#398ff80ad3d7d20bc0e66efc1c0b2c50bb2a959e"
+  integrity sha512-8ydvIbn9otjldUHKuYg48nqUvpdC4jMUl6BZNxTWniBnFi5ihxWI94cKabu2+L65uNJR3Aioa1FV0t6d4am2oQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+
 "@appbaseio/designkit@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.13.0.tgz#79e184cb7ed283c7a07ccc7c75d8a3236a58b7ea"
@@ -7063,19 +7070,26 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.0":
-  version "18.0.25"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.25.tgz#8b1dcd7e56fe7315535a4af25435e0bb55c8ae44"
-  integrity sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==
+"@types/react@*":
+  version "16.3.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.7.tgz#3b90fc4c8382fc55f4d18a8d487dbd314eb6ec4c"
+  integrity sha512-7V1OfJvx2jKSBfBEDdjpozPzxPJN9ruzR1GtfDE7HmZymmvjMQqFHfHbiI4zzVzU09Yieg9B7ur0wPCu1edfQA==
   dependencies:
-    "@types/prop-types" "*"
-    "@types/scheduler" "*"
-    csstype "^3.0.2"
+    csstype "^2.0.0"
 
 "@types/react@^16.3.8":
   version "16.14.34"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.34.tgz#d129324ffda312044e1c47aab18696e4ed493282"
   integrity sha512-b99nWeGGReLh6aKBppghVqp93dFJtgtDOzc8NXM6hewD8PQ2zZG5kBLgbx+VJr7Q7WBMjHxaIl3dwpwwPIUgyA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.0.0":
+  version "18.0.25"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.25.tgz#8b1dcd7e56fe7315535a4af25435e0bb55c8ae44"
+  integrity sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -14489,7 +14503,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7:
+csstype@^2.0.0, csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7:
   version "2.6.21"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.21.tgz#2efb85b7cc55c80017c66a5ad7cbd931fda3a90e"
   integrity sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==
