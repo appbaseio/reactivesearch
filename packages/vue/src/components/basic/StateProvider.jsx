@@ -1,8 +1,9 @@
-import { helper } from '@appbaseio/reactivecore';
+import { helper, Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
-import { setSearchState as setSearchStateAction } from '@appbaseio/reactivecore/lib/actions/misc';
 import { isInternalComponent } from '@appbaseio/reactivecore/lib/utils/transform';
 import { connect } from '../../utils/index';
+
+const { setSearchState } = Actions;
 
 const { getSearchState } = helper;
 
@@ -13,14 +14,14 @@ const filterProps = (props = {}) => ({
 	props: props.componentProps,
 });
 const convertArrayLike = (arrayLike) => {
-	const arr = []
-	let i =0
+	const arr = [];
+	let i = 0;
 	while (arrayLike[i]) {
-		arr[i] = arrayLike[i]
-		i += 1
+		arr[i] = arrayLike[i];
+		i += 1;
 	}
-	return arr
-}
+	return arr;
+};
 
 const filterByComponentIds = (state, props = {}) => {
 	const { componentIds, excludeComponentIds } = props;
@@ -241,7 +242,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = {
-	setSearchStateFn: setSearchStateAction
+	setSearchStateFn: setSearchState,
 };
 
 const StateProviderConnected = connect(mapStateToProps, mapDispatchtoProps)(StateProvider);
