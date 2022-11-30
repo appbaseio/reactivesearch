@@ -207,7 +207,7 @@ const ReactiveBase = {
 				credentials: appbaseRef.credentials,
 				// When endpoint prop is used index is not defined, so we use _default
 				index: appbaseRef.app || '_default',
-				globalCustomEvents: this.$props.appbaseConfig.customEvents,
+				globalCustomEvents: this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
 			};
 
 			try {
@@ -217,10 +217,10 @@ const ReactiveBase = {
 						/\/\/(.*?)\/.*/,
 						'//$1',
 					);
-					const headerCredentials = this.$props.endpoint.headers.Authorization;
-					analyticsInitConfig.credentials = headerCredentials.replace('Basic ', '');
+					const headerCredentials = this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
+					analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
 					// Decode the credentials
-					analyticsInitConfig.credentials = atob(analyticsInitConfig.credentials);
+					analyticsInitConfig.credentials = analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 				}
 			} catch (e) {
 				console.error('Endpoint not set correctly for analytics');
