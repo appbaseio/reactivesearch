@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+
 import {
 	componentTypes,
 	TREELIST_VALUES_PATH_SEPARATOR,

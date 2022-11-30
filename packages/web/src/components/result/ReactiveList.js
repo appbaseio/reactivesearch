@@ -1,5 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+/** @jsxImportSource @emotion/react */
+
 
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';

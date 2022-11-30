@@ -10,7 +10,7 @@
 		"react-dom": "^18.2.0",
 		"react-scripts": "5.0.1",
 		"web-vitals": "^2.1.4",
-		"@appbaseio/reactivesearch": "3.43.1"
+		"@appbaseio/reactivesearch": "3.43.3"
 	},
 	"scripts": {
 		"start": "react-scripts start",
