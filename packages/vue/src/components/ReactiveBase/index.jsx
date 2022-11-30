@@ -3,6 +3,7 @@ import { isEqual, transformRequestUsingEndpoint } from '@appbaseio/reactivecore/
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
+import AppbaseAnalytics from '@appbaseio/analytics'
 import 'url-search-params-polyfill';
 
 import Provider from '../Provider';
@@ -201,6 +202,32 @@ const ReactiveBase = {
 			if (this.$props.transformResponse) {
 				appbaseRef.transformResponse = this.$props.transformResponse;
 			}
+			const analyticsInitConfig = {
+				url: url && url.replace(/\/\/.*@/, '//'),
+				credentials: appbaseRef.credentials,
+				// When endpoint prop is used index is not defined, so we use _default
+				index: appbaseRef.app || '_default',
+				globalCustomEvents: this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
+			};
+
+			try {
+				if (this.$props.endpoint && this.$props.endpoint.url) {
+					// Remove parts between '//' and first '/' in the url
+					analyticsInitConfig.url = this.$props.endpoint.url.replace(
+						/\/\/(.*?)\/.*/,
+						'//$1',
+					);
+					const headerCredentials = this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
+					analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
+					// Decode the credentials
+					analyticsInitConfig.credentials = analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
+				}
+			} catch (e) {
+				console.error('Endpoint not set correctly for analytics');
+				console.error(e);
+			}
+
+			const analyticsRef = AppbaseAnalytics.init(analyticsInitConfig);
 
 			const initialState = {
 				config: {
@@ -211,19 +238,21 @@ const ReactiveBase = {
 					themePreset,
 				},
 				appbaseRef,
+				analyticsRef,
 				selectedValues,
 				urlValues,
 				headers: this.getHeaders,
 				...this.$props.initialState,
 			};
 			this.store = configureStore(initialState);
+			this.analyticsRef = analyticsRef;
 		},
 	},
 	render() {
 		const children = this.$slots.default;
 		const { style, className } = this.$props;
 		return (
-			<Provider store={this.store}>
+			<Provider store={this.store} analyticsRef={this.analyticsRef}>
 				<URLParamsProvider
 					as={this.$props.as}
 					headers={this.getHeaders}

@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Appbase from 'appbase-js';
+import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
 import { ThemeProvider } from 'emotion-theming';
 
@@ -207,6 +208,32 @@ class ReactiveBase extends Component {
 			return modifiedRequest;
 		};
 
+		const analyticsInitConfig = {
+			url: url && url.replace(/\/\/.*@/, '//'),
+			credentials: appbaseRef.credentials,
+			// When endpoint prop is used index is not defined, so we use _default
+			index: appbaseRef.app || '_default',
+			globalCustomEvents: appbaseConfig && appbaseConfig.customEvents,
+		};
+
+		try {
+			if (this.props.endpoint && this.props.endpoint.url) {
+				// Remove parts between '//' and first '/' in the url
+				analyticsInitConfig.url = this.props.endpoint.url.replace(/\/\/(.*?)\/.*/, '//$1');
+				const headerCredentials = this.props.endpoint.headers
+										&& this.props.endpoint.headers.Authorization;
+				analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
+				// Decode the credentials
+				analyticsInitConfig.credentials = analyticsInitConfig.credentials
+												&& atob(analyticsInitConfig.credentials);
+			}
+		} catch (e) {
+			console.error('Endpoint not set correctly for analytics');
+			console.error(e);
+		}
+
+		const analyticsRef = AppbaseAnalytics.init(analyticsInitConfig);
+
 		const initialState = {
 			config: {
 				...config,
@@ -217,6 +244,7 @@ class ReactiveBase extends Component {
 				initialTimestamp: new Date().getTime(),
 			},
 			appbaseRef,
+			analyticsRef,
 			selectedValues,
 			urlValues,
 			headers: this.headers,
