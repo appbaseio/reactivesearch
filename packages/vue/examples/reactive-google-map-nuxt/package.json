@@ -11,7 +11,7 @@
 		"generate": "nuxt generate"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "1.33.2",
+		"@appbaseio/reactivesearch-vue": "1.33.3",
 		"cross-env": "^5.2.0",
 		"nuxt": "^2.0.0"
 	},
