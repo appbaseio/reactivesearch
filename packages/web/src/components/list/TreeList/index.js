@@ -1,5 +1,9 @@
-/** @jsxImportSource @emotion/react */
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+import {
+	componentTypes,
+	TREELIST_VALUES_PATH_SEPARATOR,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 
 import { withTheme } from 'emotion-theming';
 import PropTypes from 'prop-types';
@@ -30,6 +34,7 @@ import {
 	updateQuery as updateQueryAction,
 } from '@appbaseio/reactivecore/lib/actions/query';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
+
 import PreferencesConsumer from '../../basic/PreferencesConsumer';
 import ComponentWrapper from '../../basic/ComponentWrapper';
 
@@ -55,7 +60,11 @@ const transformValueIntoLocalState = (valueArray) => {
 			setDeep(
 				newSelectedValues,
 				valueItem.split(' > '),
-				!recLookup(newSelectedValues, valueItem.split(' > ')),
+				!recLookup(
+					newSelectedValues,
+					valueItem.split(' > '),
+					TREELIST_VALUES_PATH_SEPARATOR,
+				),
 				true,
 			);
 		});
@@ -113,7 +122,7 @@ const TreeList = (props) => {
 				= replaceDiacritics(ele.key)
 					.toLowerCase()
 					.includes(replaceDiacritics(searchTerm).toLowerCase())
-				|| recLookup(selectedValues, newParentPath);
+				|| recLookup(selectedValues, newParentPath, TREELIST_VALUES_PATH_SEPARATOR);
 
 			if (isLeafItem && keyHasSearchTerm) {
 				result.push({
@@ -388,16 +397,16 @@ const TreeList = (props) => {
 	const handleListItemClick = (key, parentPath) => {
 		let path = key;
 		if (parentPath) {
-			path = `${parentPath}.${key}`;
+			path = `${parentPath}${TREELIST_VALUES_PATH_SEPARATOR}${key}`;
 		}
 		let newSelectedValues = { ...selectedValues };
 		if (mode === 'single') {
 			newSelectedValues = {};
-			setDeep(newSelectedValues, path.split('.'), true, true);
+			setDeep(newSelectedValues, path.split(TREELIST_VALUES_PATH_SEPARATOR), true, true);
 		} else {
-			const newValue = !recLookup(newSelectedValues, path);
+			const newValue = !recLookup(newSelectedValues, path, TREELIST_VALUES_PATH_SEPARATOR);
 
-			setDeep(newSelectedValues, path.split('.'), newValue, true);
+			setDeep(newSelectedValues, path.split(TREELIST_VALUES_PATH_SEPARATOR), newValue, true);
 		}
 		newSelectedValues = sanitizeObject({ ...newSelectedValues });
 		if (props.value === undefined) {

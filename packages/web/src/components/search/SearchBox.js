@@ -1,4 +1,5 @@
-/** @jsxImportSource @emotion/react */
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import {
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
