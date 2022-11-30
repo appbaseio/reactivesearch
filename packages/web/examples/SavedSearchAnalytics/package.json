@@ -1,38 +1,38 @@
 {
-	"name": "saved-search-analytics",
-	"version": "1.0.0",
-	"description": "ReactiveSearch example with Analytics.js to save search state",
-	"main": "index.js",
-	"license": "Apache-2.0",
-	"dependencies": {
-		"@appbaseio/analytics": "^1.0.0",
-		"@appbaseio/reactivesearch": "3.43.3",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-scripts": "5.0.1"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
-	}
+    "name": "saved-search-analytics",
+    "version": "1.0.0",
+    "description": "ReactiveSearch example with Analytics.js to save search state",
+    "main": "index.js",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@appbaseio/analytics": "^1.0.0",
+        "@appbaseio/reactivesearch": "3.43.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-scripts": "5.0.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    }
 }

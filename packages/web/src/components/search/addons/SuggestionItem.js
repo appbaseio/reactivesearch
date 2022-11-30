@@ -1,5 +1,7 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
 import Flex from '../../../styles/Flex';
 import Highlight from './Highlight';
 

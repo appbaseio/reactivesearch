@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-// /** @jsx jsx */
+// /** @jsxRuntime classic */
+/** @jsx jsx */
 import { jsx } from '@emotion/core';
 
 import React, { Component } from 'react';
