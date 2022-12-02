@@ -227,7 +227,10 @@ const ReactiveBase = {
 				console.error(e);
 			}
 
-			const analyticsRef = AppbaseAnalytics.init(analyticsInitConfig);
+			let analyticsRef = null;
+			if (config.analytics) {
+				analyticsRef = AppbaseAnalytics.init(analyticsInitConfig);
+			}
 
 			const initialState = {
 				config: {
