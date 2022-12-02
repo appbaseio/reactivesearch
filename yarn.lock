@@ -104,14 +104,11 @@
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/c49ea48a74592f27b82c39e112b7a9e063fcd697"
   dependencies:
-    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/designkit" "^0.11.0"
     "@appbaseio/reactivemaps" "^3.0.0-beta.17"
     "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
-    "@typeform/embed" "^1.34.1"
-    "@typeform/embed-react" "^1.13.0"
-    add "^2.0.6"
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
@@ -139,15 +136,13 @@
     gatsby-remark-external-links "0.0.4"
     gatsby-remark-images "6.9.0"
     gatsby-remark-prismjs "6.9.0"
-    gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
     gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
-    hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    moment "^2.29.2"
+    moment "^2.24.0"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -157,14 +152,24 @@
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
-    react-router-dom "^4.3.1"
+    react-router-dom "4.3.1"
     tocbot "4.5.0"
-    yarn "^1.22.18"
 
-"@appbaseio/reactivesearch@3.43.3":
-  version "3.43.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.3.tgz#04514704323250f42a8ab15bf20f3bdd6ef07a7b"
-  integrity sha512-Y8ABigrW2IbFEXfeScruyVSQNa3D6tjYNdh24c9fga+4u3UDHJtzPk8kOPP4ZMy0/kpGsu+9TPKTBc81dXH8Rg==
+"@appbaseio/reactivecore@9.14.32":
+  version "9.14.32"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.32.tgz#cc37a3ab6c6feb10c6cb16aa4d40c76c8e294c6d"
+  integrity sha512-Of8r0Z3nSgcCymKRlIDkL8QsXknEO0aDhMeCbzY6reLyC4Pnt4Txucvmx+p1uHJ/ITIkZPOukgPlzGohzUo4EQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+    xdate "^0.8.2"
+
+"@appbaseio/reactivesearch@3.43.5":
+  version "3.43.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.5.tgz#6834c007f3ee950c2a52b738ca1a693a3bcd81d8"
+  integrity sha512-pjywNcf4PrOgVcgBykt74RNwJ52qhyBaXQbdxYXTjgHK6R+y0brxqT6BCSlwo+6eUZMfYIELoe28Qv1czMheeQ==
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
     "@appbaseio/reactivecore" "9.14.32"
@@ -186,17 +191,6 @@
     url-search-params-polyfill "^7.0.0"
     xdate "^0.8.2"
     xss "^1.0.11"
-
-"@appbaseio/reactivecore@9.14.32":
-  version "9.14.32"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.32.tgz#cc37a3ab6c6feb10c6cb16aa4d40c76c8e294c6d"
-  integrity sha512-Of8r0Z3nSgcCymKRlIDkL8QsXknEO0aDhMeCbzY6reLyC4Pnt4Txucvmx+p1uHJ/ITIkZPOukgPlzGohzUo4EQ==
-  dependencies:
-    cross-fetch "^3.0.4"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    xdate "^0.8.2"
 
 "@appbaseio/rheostat@^1.0.0-alpha.2":
   version "1.0.0-alpha.2"
@@ -36109,10 +36103,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tocbot@^4.18.0:
-  version "4.19.0"
-  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.19.0.tgz#8b7433d63be9f52f8e9823641813bc1db7329df4"
-  integrity sha512-sI/+XAh+Byn/zRSlmJnTJW37iqpRZc2RugnHCbQh4dBGOM3MYAlg2X7iXaWI9vrUhesC+SkPYerIP7nhs1X+4A==
+tocbot@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.5.0.tgz#55ba16887742acc1ce37b19171c76b9a40aabfa7"
+  integrity sha512-JwTyKlU2JgkmGJqxKJkiizlLwjQJ+f3WnDG08+DrWhrPgsVVjMh3quq3Apx09DCvulKbtYoxBT/c3HfkGWyZhw==
 
 toggle-selection@^1.0.6:
   version "1.0.6"

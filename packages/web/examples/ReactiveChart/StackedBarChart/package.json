@@ -1,31 +1,31 @@
 {
-    "name": "reactivechartstackedbar",
-    "version": "1.0.0",
-    "description": "Stacked bar chart example for ReactiveSearch",
-    "main": "index.js",
-    "license": "Apache-2.0",
-    "dependencies": {
-        "@appbaseio/reactivesearch": "3.43.5",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-scripts": "5.0.1"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+	"name": "reactivechartstackedbar",
+	"version": "1.0.0",
+	"description": "Stacked bar chart example for ReactiveSearch",
+	"main": "index.js",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"@appbaseio/reactivesearch": "3.43.6",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-scripts": "5.0.1"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }
