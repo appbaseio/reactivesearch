@@ -3,11 +3,13 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { renderToString } from 'react-dom/server';
 
 export default class MyDocument extends Document {
-	static getInitialProps({ renderPage }) {
+	static async getInitialProps(ctx) {
+		const initialProps = await Document.getInitialProps(ctx);
+		const { renderPage } = ctx;
 		// for emotion-js
 		const page = renderPage();
 		const styles = renderToString(page.html);
-		return { ...page, ...styles };
+		return { ...initialProps, ...page, ...styles };
 	}
 
 	constructor(props) {

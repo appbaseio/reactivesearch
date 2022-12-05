@@ -1,6 +1,12 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
-import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { jsx } from '@emotion/core';
+
+import {
+	componentTypes,
+	TREELIST_VALUES_PATH_SEPARATOR,
+} from '@appbaseio/reactivecore/lib/utils/constants';
+
 import { withTheme } from 'emotion-theming';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -30,6 +36,7 @@ import {
 	updateQuery as updateQueryAction,
 } from '@appbaseio/reactivecore/lib/actions/query';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
+
 import PreferencesConsumer from '../../basic/PreferencesConsumer';
 import ComponentWrapper from '../../basic/ComponentWrapper';
 
@@ -55,7 +62,11 @@ const transformValueIntoLocalState = (valueArray) => {
 			setDeep(
 				newSelectedValues,
 				valueItem.split(' > '),
-				!recLookup(newSelectedValues, valueItem.split(' > ')),
+				!recLookup(
+					newSelectedValues,
+					valueItem.split(' > '),
+					TREELIST_VALUES_PATH_SEPARATOR,
+				),
 				true,
 			);
 		});
@@ -112,7 +123,7 @@ const TreeList = (props) => {
 				= replaceDiacritics(ele.key)
 					.toLowerCase()
 					.includes(replaceDiacritics(searchTerm).toLowerCase())
-				|| recLookup(selectedValues, newParentPath);
+				|| recLookup(selectedValues, newParentPath, TREELIST_VALUES_PATH_SEPARATOR);
 
 			if (isLeafItem && keyHasSearchTerm) {
 				result.push({
@@ -166,6 +177,7 @@ const TreeList = (props) => {
 	const getDefaultQuery = (value) => {
 		let query = null;
 		const type = 'term';
+		const booleanAggregator = props.queryFormat === 'or' ? 'should' : 'must';
 
 		if (!Array.isArray(value) || value.length === 0) {
 			return null;
@@ -174,17 +186,30 @@ const TreeList = (props) => {
 		if (value) {
 			// adds a sub-query with must as an array of objects for each term/value
 			const queryArray = value.map(item => ({
-				[type]: {
-					[props.dataField]: item,
+				bool: {
+					must: item.split(' > ').map((subItem, i) => ({
+						[type]: {
+							[props.dataField[i]]: subItem,
+						},
+					})),
 				},
 			}));
 			const listQuery = {
 				bool: {
-					must: queryArray,
+					[booleanAggregator]: queryArray,
 				},
 			};
 
 			query = value.length ? listQuery : null;
+		}
+
+		if (query && props.nestedField) {
+			return {
+				nested: {
+					path: props.nestedField,
+					query,
+				},
+			};
 		}
 
 		return query;
@@ -367,16 +392,16 @@ const TreeList = (props) => {
 	const handleListItemClick = (key, parentPath) => {
 		let path = key;
 		if (parentPath) {
-			path = `${parentPath}.${key}`;
+			path = `${parentPath}${TREELIST_VALUES_PATH_SEPARATOR}${key}`;
 		}
 		let newSelectedValues = { ...selectedValues };
 		if (mode === 'single') {
 			newSelectedValues = {};
-			setDeep(newSelectedValues, path.split('.'), true, true);
+			setDeep(newSelectedValues, path.split(TREELIST_VALUES_PATH_SEPARATOR), true, true);
 		} else {
-			const newValue = !recLookup(newSelectedValues, path);
+			const newValue = !recLookup(newSelectedValues, path, TREELIST_VALUES_PATH_SEPARATOR);
 
-			setDeep(newSelectedValues, path.split('.'), newValue, true);
+			setDeep(newSelectedValues, path.split(TREELIST_VALUES_PATH_SEPARATOR), newValue, true);
 		}
 		newSelectedValues = sanitizeObject({ ...newSelectedValues });
 		if (props.value === undefined) {
@@ -546,6 +571,9 @@ TreeList.propTypes = {
 	loader: types.title,
 	aggergationSize: types.number,
 	endpoint: types.endpoint,
+	queryFormat: types.queryFormatSearch,
+	size: types.number,
+	nestedField: types.string,
 };
 
 TreeList.defaultProps = {
@@ -562,6 +590,8 @@ TreeList.defaultProps = {
 	showLine: false,
 	URLParams: false,
 	sortBy: 'count',
+	queryFormat: 'or',
+	size: 100,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -570,7 +600,10 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	rawData: state.rawData[props.componentId] || {},
-	aggregationData: state.aggregations[props.componentId] || {},
+	aggregationData:
+		props.nestedField && state.aggregations[props.componentId]
+			? state.aggregations[props.componentId].reactivesearch_nested
+			: state.aggregations[props.componentId] || {},
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],

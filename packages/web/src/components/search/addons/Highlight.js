@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
@@ -34,7 +35,7 @@ const Highlight = (props) => {
 					: textToHighlight.replace(
 						new RegExp(stringToReplace, 'ig'),
 						matched => `<mark class="highlight">${matched}</mark>`,
-					),
+					  ),
 			}}
 		/>
 	);

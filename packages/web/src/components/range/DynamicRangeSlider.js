@@ -1,5 +1,8 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
+
 import React, { Component } from 'react';
 import {
 	addComponent,
@@ -29,7 +32,7 @@ import {
 	getCalendarIntervalErrorMessage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import Rheostat from 'rheostat/lib/Slider';
+import Rheostat from '@appbaseio/rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import { oneOf } from 'prop-types';
@@ -198,6 +201,18 @@ class DynamicRangeSlider extends Component {
 			// when value prop is changed
 			const { start, end } = this.props.value(this.props.range.start, this.props.range.end);
 			this.handleChange([start, end]);
+		} else if (
+			!isEqual(this.state.currentValue, this.props.selectedValue)
+			&& !isEqual(this.props.selectedValue, prevProps.selectedValue)
+		) {
+			const { value, onChange } = this.props;
+			if (value === undefined) {
+				this.handleChange(this.props.selectedValue || null);
+			} else if (onChange) {
+				onChange(this.props.selectedValue || null);
+			} else {
+				this.handleChange(this.state.currentValue);
+			}
 		} else if (
 			this.props.range
 			&& this.props.selectedValue === null

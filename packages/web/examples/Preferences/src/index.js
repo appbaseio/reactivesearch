@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
 import {
 	ReactiveBase,
 	DataSearch,
@@ -66,7 +64,7 @@ const Main = () => (
 					componentId="SearchResult"
 					render={({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
-							{data.map(item => (
+							{data.map((item) => (
 								<ResultCard id={item._id} key={item._id}>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
@@ -121,7 +119,5 @@ const Main = () => (
 		</div>
 	</ReactiveBase>
 );
-
-export default Main;
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

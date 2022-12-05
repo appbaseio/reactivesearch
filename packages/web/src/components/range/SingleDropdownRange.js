@@ -80,7 +80,8 @@ class SingleDropdownRange extends Component {
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let currentValue = value;
 		if (isDefaultValue) {
-			currentValue = SingleDropdownRange.parseValue(value, props);
+			currentValue
+				= typeof value === 'string' ? SingleDropdownRange.parseValue(value, props) : value;
 		}
 
 		const performUpdate = () => {
@@ -232,7 +233,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 			<ComponentWrapper
 				{...preferenceProps}
 				internalComponent
-				componentType={componentTypes.singleDropDownRange}
+				componentType={componentTypes.singleDropdownRange}
 			>
 				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
 			</ComponentWrapper>

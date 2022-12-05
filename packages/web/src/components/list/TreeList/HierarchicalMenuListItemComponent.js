@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getClassName, recLookup } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { TREELIST_VALUES_PATH_SEPARATOR } from '@appbaseio/reactivecore/lib/utils/constants';
 import { HierarchicalMenuListItem } from '../../../styles/TreeList';
 import Button from '../../../styles/Button';
 import { Checkbox, Radio } from '../../../styles/FormControlList';
@@ -34,21 +35,23 @@ const HierarchicalMenuListItemComponent = ({
 
 	let newParentPath = listItemLabel;
 	if (parentPath) {
-		newParentPath = `${parentPath}.${listItemLabel}`;
+		newParentPath = `${parentPath}${TREELIST_VALUES_PATH_SEPARATOR}${listItemLabel}`;
 	}
 	let isSelected = false;
 	if (mode === 'single') {
-		if (recLookup(selectedValues, newParentPath) === true) {
+		if (recLookup(selectedValues, newParentPath, TREELIST_VALUES_PATH_SEPARATOR) === true) {
 			isSelected = true;
 		}
 	} else {
-		isSelected = !!recLookup(selectedValues, newParentPath);
+		isSelected = !!recLookup(selectedValues, newParentPath, TREELIST_VALUES_PATH_SEPARATOR);
 	}
 
-	const [isExpanded, setIsExpanded] = useState(!!recLookup(selectedValues, newParentPath));
+	const [isExpanded, setIsExpanded] = useState(
+		!!recLookup(selectedValues, newParentPath, TREELIST_VALUES_PATH_SEPARATOR),
+	);
 
 	useEffect(() => {
-		setIsExpanded(!!recLookup(selectedValues, newParentPath));
+		setIsExpanded(!!recLookup(selectedValues, newParentPath, TREELIST_VALUES_PATH_SEPARATOR));
 	}, [selectedValues]);
 
 	useEffect(() => {
@@ -177,7 +180,7 @@ const HierarchicalMenuListItemComponent = ({
 				)}
 			</Button>
 			{isLeafNode === false && (
-				<div className="--list-child">
+				<div className={`--list-child ${showSwitcherIcon ? ' --show-switcher-icon' : ''}`}>
 					{/* eslint-disable-next-line no-use-before-define */}
 					<HierarchicalMenuComponent
 						key={`${newParentPath}-${listItemLabel}-${listItemCount}`}
