@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect as connectToStore } from 'react-redux';
 import { isEqual, isValidDateRangeQueryFormat } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -234,4 +234,9 @@ export function decodeHtml(str) {
 		const num = parseInt(numStr, 10); // read num as normal number
 		return String.fromCharCode(num);
 	});
+}
+
+export function useAnalytics() {
+	const ctx = useContext(ReactReduxContext);
+	return ctx && ctx.storeState.analyticsRef;
 }

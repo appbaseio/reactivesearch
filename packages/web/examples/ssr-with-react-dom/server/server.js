@@ -79,43 +79,45 @@ function renderFullPage(html, preloadedState) {
 }
 
 async function handleRender(req, res) {
-	// Create a new store instance and wait for results
-	const store = await initReactivesearch(
-		[
-			{
-				...singleRangeProps,
-				type: 'SingleRange',
-				source: SingleRange,
-			},
-			{
-				...reactiveListProps,
-				type: 'ReactiveList',
-				source: ReactiveList,
-			},
-		],
-		{
-			BookSensor: 'Rating 3 to 4',
-		},
-		settings,
-	);
-	// Render the component to a string
-	// renderStylesToString is from emotion
-	// ReactiveSearch uses emotion and this will inline the styles
-	// so you can get the correct styles for ReactiveSearch's components
-	// on the first load
-	const html = renderStylesToString(
-		renderToString(
-			<App
-				store={store}
-				settings={settings}
-				singleRangeProps={singleRangeProps}
-				reactiveListProps={reactiveListProps}
-			/>,
-		),
-	);
+	try {
 
-	// Send the rendered page back to the client
-	res.send(renderFullPage(html, store));
+		// Create a new store instance and wait for results
+		const store = await initReactivesearch(
+			[
+				{
+					...singleRangeProps,
+					source: SingleRange,
+				},
+				{
+					...reactiveListProps,
+					source: ReactiveList,
+				},
+			],
+			null,
+			settings,
+		);
+		// Render the component to a string
+		// renderStylesToString is from emotion
+		// ReactiveSearch uses emotion and this will inline the styles
+		// so you can get the correct styles for ReactiveSearch's components
+		// on the first load
+		const html = renderStylesToString(
+			renderToString(
+				<App
+					store={store}
+					settings={settings}
+					singleRangeProps={singleRangeProps}
+					reactiveListProps={reactiveListProps}
+				/>,
+			),
+		);
+
+		// Send the rendered page back to the client
+		res.send(renderFullPage(html, store));
+	} catch (err) {
+		console.error(err)
+		res.status(500).end()
+	}
 }
 
 // This is fired every time the server side receives a request

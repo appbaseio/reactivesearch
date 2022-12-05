@@ -1,5 +1,8 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
+
 import React, { Component } from 'react';
 import { object } from 'prop-types';
 import { withTheme } from 'emotion-theming';

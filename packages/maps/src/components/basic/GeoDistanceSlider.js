@@ -1,5 +1,7 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 
@@ -25,7 +27,7 @@ import {
 	updateCustomQuery,
 	updateDefaultQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import Rheostat from 'rheostat/lib/Slider';
+import Rheostat from '@appbaseio/rheostat/lib/Slider';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 

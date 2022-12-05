@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import { ReactiveBase, MultiList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -53,11 +53,12 @@ class Main extends Component {
 							</div>
 							<div className="ratings-list flex align-center">
 								<span className="stars">
-									{Array(data.average_rating_rounded)
-										.fill('x')
-										.map(item => (
-											<i className="fas fa-star" key={item._id} />
-										)) // eslint-disable-line
+									{
+										Array(data.average_rating_rounded)
+											.fill('x')
+											.map((item) => (
+												<i className="fas fa-star" key={item._id} />
+											)) // eslint-disable-line
 									}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>
@@ -70,5 +71,5 @@ class Main extends Component {
 		);
 	}
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

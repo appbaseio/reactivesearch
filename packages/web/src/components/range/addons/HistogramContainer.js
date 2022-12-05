@@ -1,5 +1,8 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
+
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
 import Histogram, { histogramContainer } from '../../../styles/Histogram';

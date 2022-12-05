@@ -3,7 +3,8 @@
 		"commonjs": {
 			"presets": [
 				[
-					"env", {
+					"env",
+					{
 						"targets": {
 							"browsers": ["last 2 versions", "safari >= 7"]
 						},
@@ -12,19 +13,14 @@
 				],
 				"react"
 			],
-			"plugins": [
-				"emotion",
-				"transform-class-properties",
-				"transform-object-rest-spread"
-			],
-			"ignore": [
-				"**/*.test.js"
-			]
+			"plugins": ["emotion", "transform-class-properties", "transform-object-rest-spread"],
+			"ignore": ["**/*.test.js"]
 		},
 		"test": {
 			"presets": [
 				[
-					"env", {
+					"env",
+					{
 						"targets": {
 							"browsers": ["last 2 versions", "safari >= 7"]
 						},
@@ -33,16 +29,13 @@
 				],
 				"react"
 			],
-			"plugins": [
-				"emotion",
-				"transform-class-properties",
-				"transform-object-rest-spread"
-			]
+			"plugins": ["emotion", "transform-class-properties", "transform-object-rest-spread"]
 		},
 		"es": {
 			"presets": [
 				[
-					"env", {
+					"env",
+					{
 						"targets": {
 							"browsers": ["last 2 versions", "safari >= 7"]
 						},
@@ -52,14 +45,8 @@
 				],
 				"react"
 			],
-			"plugins": [
-				"emotion",
-				"transform-class-properties",
-				"transform-object-rest-spread"
-			],
-			"ignore": [
-				"**/*.test.js"
-			]
+			"plugins": ["emotion", "transform-class-properties", "transform-object-rest-spread"],
+			"ignore": ["**/*.test.js"]
 		}
 	}
 }

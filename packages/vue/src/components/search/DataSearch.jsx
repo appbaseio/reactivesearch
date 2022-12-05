@@ -121,11 +121,15 @@ const DataSearch = {
 			}
 		}
 		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
+		this.updateDefaultQueryHandlerDebounced = debounce(
+			this.updateDefaultQueryHandler,
+			this.$props.debounce,
+		);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 
-		this.updateDefaultQueryHandler(this.currentValue, this.$props, false);
+		this.updateDefaultQueryHandlerDebounced(this.currentValue, this.$props, false);
 	},
 	computed: {
 		suggestionsList() {
@@ -368,7 +372,7 @@ const DataSearch = {
 		},
 		defaultQuery(newVal, oldVal) {
 			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
-				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+				this.updateDefaultQueryHandlerDebounced(this.$data.currentValue, this.$props);
 			}
 		},
 		customQuery(newVal, oldVal) {
@@ -414,9 +418,13 @@ const DataSearch = {
 	methods: {
 		handleText(value) {
 			if (this.$props.autosuggest) {
-				this.updateDefaultQueryHandler(value, this.$props);
+				this.updateDefaultQueryHandlerDebounced(value, this.$props);
 			} else {
-				this.updateQueryHandler(this.$props.componentId, value, this.$props);
+				this.updateDefaultQueryHandlerDebounced(
+					this.$props.componentId,
+					value,
+					this.$props,
+				);
 			}
 		},
 		validateDataField() {
@@ -559,7 +567,7 @@ const DataSearch = {
 							this.isOpen = false;
 						}
 						if (typeof value === 'string')
-							this.updateDefaultQueryHandler(value, this.$props);
+							this.updateDefaultQueryHandlerDebounced(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
@@ -599,7 +607,7 @@ const DataSearch = {
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		updateDefaultQueryHandler(value, props, execute) {
+		updateDefaultQueryHandler(value, props = this.$props, execute) {
 			if (!value && props.enableDefaultSuggestions === false) {
 				// clear Component data from store
 				this.resetStoreForComponent(props.componentId);
@@ -756,7 +764,7 @@ const DataSearch = {
 						if (this.$options.isTagsMode && autosuggest) {
 							this.currentValue = value;
 							this.isOpen = isOpen;
-							this.updateDefaultQueryHandler(this.currentValue, this.$props);
+							this.updateDefaultQueryHandlerDebounced(this.currentValue, this.$props);
 							return;
 						}
 						this.triggerQuery({ isOpen });

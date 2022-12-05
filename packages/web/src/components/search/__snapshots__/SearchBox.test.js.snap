@@ -518,9 +518,7 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -1007,9 +1005,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
           <div>
             <div
               className="emotion-13 emotion-14"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-15 emotion-14"
             >
@@ -1724,9 +1720,7 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
           <div>
             <div
               className="emotion-13 emotion-14"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-15 emotion-14"
             >
@@ -2010,9 +2004,7 @@ exports[`should render SearchBox 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -2463,9 +2455,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -3315,9 +3305,7 @@ exports[`should render SearchBox with tags 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -3640,9 +3628,7 @@ exports[`should render SearchBox with title 1`] = `
           <div>
             <div
               className="emotion-13 emotion-14"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-15 emotion-14"
             >
@@ -4749,9 +4735,7 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -5115,9 +5099,7 @@ exports[`should render custom enterButton 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -5479,9 +5461,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >
@@ -5772,7 +5752,6 @@ exports[`should render search icon on the right 1`] = `
             <div
               className="emotion-11 emotion-12"
             >
-              
               <div
                 className="emotion-13 emotion-14"
                 onClick={[Function]}
@@ -6326,9 +6305,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            >
-              
-            </div>
+            />
             <div
               className="emotion-13 emotion-12"
             >

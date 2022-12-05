@@ -1,6 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
 import {
 	ReactiveBase,
 	DynamicRangeSlider,
@@ -18,7 +16,7 @@ const Main = () => (
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 	>
 		<ErrorBoundary
-			renderError={error => (
+			renderError={(error) => (
 				<div>
 					<h1>Oops! Error occured.</h1>
 					<p>{error.message}</p>
@@ -51,7 +49,7 @@ const Main = () => (
 						}}
 						render={({ data }) => (
 							<ReactiveList.ResultListWrapper>
-								{data.map(item => (
+								{data.map((item) => (
 									<ResultList key={item._id}>
 										<ResultList.Image src={item.image} />
 										<ResultList.Content>
@@ -79,7 +77,7 @@ const Main = () => (
 																	.map((_, index) => (
 																		<i
 																			className="fas fa-star"
-																	key={index} // eslint-disable-line
+																			key={index} // eslint-disable-line
 																		/>
 																	))}
 															</span>
@@ -104,7 +102,5 @@ const Main = () => (
 		</ErrorBoundary>
 	</ReactiveBase>
 );
-
-export default Main;
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

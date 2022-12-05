@@ -1,3 +1,4 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -9,10 +10,7 @@ const SuggestionWrapper = ({
 }) => (
 	<div
 		css={noSuggestions(themePreset, theme)}
-		className={getClassName(
-			innerClass,
-			innerClassName || '',
-		)}
+		className={getClassName(innerClass, innerClassName || '')}
 	>
 		<li>{children}</li>
 	</div>

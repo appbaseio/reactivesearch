@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 
 import {
 	ReactiveBase,
@@ -62,7 +62,7 @@ class Main extends Component {
 							}}
 							render={({ data }) => (
 								<ReactiveList.ResultListWrapper>
-									{data.map(item => (
+									{data.map((item) => (
 										<ResultList key={item._id}>
 											<ResultList.Image src={item.image} />
 											<ResultList.Content>
@@ -85,16 +85,17 @@ class Main extends Component {
 															</div>
 															<div className="ratings-list flex align-center">
 																<span className="stars">
-																	{Array(
-																		item.average_rating_rounded,
-																	)
-																		.fill('x')
-																		.map((item, index) => (
-																			<i
-																				className="fas fa-star"
-																				key={index}
-																			/>
-																		)) // eslint-disable-line
+																	{
+																		Array(
+																			item.average_rating_rounded,
+																		)
+																			.fill('x')
+																			.map((item, index) => (
+																				<i
+																					className="fas fa-star"
+																					key={index}
+																				/>
+																			)) // eslint-disable-line
 																	}
 																</span>
 																<span className="avg-rating">
@@ -119,7 +120,5 @@ class Main extends Component {
 		);
 	}
 }
-
-export default Main;
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

@@ -1,5 +1,7 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
 import { Component } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import types from '@appbaseio/reactivecore/lib/utils/types';

@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import { ReactiveBase, MultiList, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -19,17 +18,21 @@ class Main extends Component {
 							dataField="author_name.keyword"
 							index="good-books-authors"
 							// customQuery: If none is selected then match all documents else match selected
-							customQuery={value => (value.length ? ({
-								query: {
-									terms: {
-										'authors.keyword': value,
-									},
-								},
-							}) : ({
-								query: {
-									match_all: {},
-								},
-							}))}
+							customQuery={(value) =>
+								value.length
+									? {
+											query: {
+												terms: {
+													'authors.keyword': value,
+												},
+											},
+									  }
+									: {
+											query: {
+												match_all: {},
+											},
+									  }
+							}
 							aggregationSize={100}
 						/>
 					</div>
@@ -72,8 +75,7 @@ class Main extends Component {
 										.map((item, index) => (
 											/* eslint-disable-next-line */
 											<i className="fas fa-star" key={index} />
-										))
-									}
+										))}
 								</span>
 								<span className="avg-rating">({data.average_rating} avg)</span>
 							</div>
@@ -85,5 +87,5 @@ class Main extends Component {
 		);
 	}
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);
