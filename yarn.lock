@@ -172,37 +172,13 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch@3.43.6", "@appbaseio/reactivesearch@>=3.43.1", "@appbaseio/reactivesearch@^3.29.0":
+"@appbaseio/reactivesearch@3.43.6", "@appbaseio/reactivesearch@^3.29.0":
   version "3.43.6"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.6.tgz#c7f6b892bd200b6ed84b47d2edf4377ca8a8534d"
   integrity sha512-bFinH+q+wSAyBS39Uu/3ZG9usmsIQ0Sh7JKV0bUc9QcPLL1hDalUgS9cZXTQ9GQOD8ppoQ4v3t0RLw4GkSTdZw==
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
     "@appbaseio/reactivecore" "9.14.33"
-    "@appbaseio/rheostat" "^1.0.0-alpha.2"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^5.2.0"
-    cross-env "^5.2.0"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    url-search-params-polyfill "^7.0.0"
-    xdate "^0.8.2"
-    xss "^1.0.11"
-
-"@appbaseio/reactivesearch@4.0.0-alpha":
-  version "4.0.0-alpha.0"
-  dependencies:
-    "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.0"
     "@appbaseio/rheostat" "^1.0.0-alpha.2"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -2326,7 +2302,7 @@
     "@emotion/utils" "0.11.3"
     babel-plugin-emotion "^10.0.27"
 
-"@emotion/css@^11.9.0":
+"@emotion/css@^11.10.5", "@emotion/css@^11.9.0":
   version "11.10.5"
   resolved "https://registry.yarnpkg.com/@emotion/css/-/css-11.10.5.tgz#ca01bb83ce60517bc3a5c01d27ccf552fed84d9d"
   integrity sha512-maJy0wG82hWsiwfJpc3WrYsyVwUbdu+sdIseKUB+/OLjB8zgc3tqkT6eO0Yt0AhIkJwGGnmMY/xmQwEAgQ4JHA==
