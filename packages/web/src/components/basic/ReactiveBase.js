@@ -161,7 +161,7 @@ class ReactiveBase extends Component {
 			}
 		});
 
-		const { themePreset, endpoint } = props;
+		const { themePreset, endpoint, reactivesearchAPIConfig } = props;
 
 		const appbaseRef = Appbase(config);
 
@@ -176,7 +176,7 @@ class ReactiveBase extends Component {
 			credentials: appbaseRef.credentials,
 			// When endpoint prop is used index is not defined, so we use _default
 			index: appbaseRef.app || '_default',
-			globalCustomEvents: appbaseConfig && appbaseConfig.customEvents,
+			globalCustomEvents: reactivesearchAPIConfig && reactivesearchAPIConfig.customEvents,
 		};
 
 		try {
