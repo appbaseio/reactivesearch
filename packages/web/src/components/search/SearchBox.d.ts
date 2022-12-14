@@ -89,7 +89,11 @@ export interface SearchBoxProps extends CommonProps {
 	searchboxId?: string;
 	endpoint?: types.endpointConfig;
 	mode?: string;
-	renderSelectedTags?: (...args: any[]) => any;
+	renderSelectedTags?: (paramObject: {
+		values: Array<string>;
+		handleClear: (val: string) => void;
+		handleClearAll: () => void;
+	}) => any;
 }
 
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;
