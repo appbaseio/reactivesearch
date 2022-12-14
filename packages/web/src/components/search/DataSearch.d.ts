@@ -85,6 +85,7 @@ export interface DataSearchProps extends CommonProps {
 	enableDefaultSuggestions?: boolean;
 	endpoint?: types.endpointConfig;
 	mode?: string;
+	renderSelectedTags?: (...args: any[]) => any;
 }
 declare const DataSearch: React.ComponentClass<DataSearchProps>;
 
