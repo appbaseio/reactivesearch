@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 
-
 import React, { Component } from 'react';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { withTheme } from 'emotion-theming';
@@ -812,6 +811,7 @@ class ReactiveList extends Component {
 			settings: this.props.settings,
 			triggerExportCSV: this.triggerExportCSV,
 			triggerExportJSON: this.triggerExportJSON,
+			setPage: this.setPage,
 		};
 	};
 
