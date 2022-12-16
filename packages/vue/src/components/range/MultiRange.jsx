@@ -287,11 +287,12 @@ export const RangeConnected = PreferencesConsumer(
 		componentType: componentTypes.multiRange,
 	}),
 );
+RangeConnected.name = MultiRange.name;
 
-MultiRange.install = function (Vue) {
-	Vue.component(MultiRange.name, RangeConnected);
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
 };
 // Add componentType for SSR
-MultiRange.componentType = componentTypes.multiRange;
+RangeConnected.componentType = componentTypes.multiRange;
 
-export default MultiRange;
+export default RangeConnected;
