@@ -246,8 +246,8 @@ const mapDispatchtoProps = {
 };
 
 const StateProviderConnected = connect(mapStateToProps, mapDispatchtoProps)(StateProvider);
-
-StateProvider.install = function (Vue) {
-	Vue.component(StateProvider.name, StateProviderConnected);
+StateProviderConnected.name = StateProvider.name;
+StateProviderConnected.install = function (Vue) {
+	Vue.component(StateProviderConnected.name, StateProviderConnected);
 };
-export default StateProvider;
+export default StateProviderConnected;
