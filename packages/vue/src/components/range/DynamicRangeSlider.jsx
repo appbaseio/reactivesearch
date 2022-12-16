@@ -473,11 +473,13 @@ export const RangeConnected = PreferencesConsumer(
 	connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider),
 );
 
-DynamicRangeSlider.install = function (Vue) {
-	Vue.component(DynamicRangeSlider.name, RangeConnected);
+RangeConnected.name = DynamicRangeSlider.name;
+
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
 };
 
 // Add componentType for SSR
-DynamicRangeSlider.componentType = componentTypes.dynamicRangeSlider;
+RangeConnected.componentType = componentTypes.dynamicRangeSlider;
 
-export default DynamicRangeSlider;
+export default RangeConnected;
