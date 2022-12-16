@@ -641,12 +641,12 @@ export const ListConnected = PreferencesConsumer(
 		internalComponent: MultiList.hasInternalComponent(),
 	}),
 );
-
-MultiList.install = function (Vue) {
-	Vue.component(MultiList.name, ListConnected);
+ListConnected.name = MultiList.name;
+ListConnected.install = function (Vue) {
+	Vue.component(ListConnected.name, ListConnected);
 };
 
 // Add componentType for SSR
-MultiList.componentType = componentTypes.multiList;
+ListConnected.componentType = componentTypes.multiList;
 
-export default MultiList;
+export default ListConnected;
