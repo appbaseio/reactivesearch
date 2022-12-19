@@ -446,7 +446,10 @@ class RangeInput extends Component {
 		);
 		const computeSliderRangeValues = {
 			...(this.props.queryFormat
-				? { start: dayjs(new Date((rangeStart))), end: dayjs(new Date((rangeEnd))) }
+				? {
+					start: unwrapToNativeDate(dayjs(new Date((rangeStart)))),
+					end: unwrapToNativeDate(dayjs(new Date((rangeEnd)))),
+				}
 				: this.props.range),
 		};
 
