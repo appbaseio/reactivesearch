@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 
 
 import React, { Component } from 'react';
-import XDate from 'xdate';
+import dayjs from 'dayjs';
 import {
 	updateQuery,
 	setQueryOptions,
@@ -23,6 +23,7 @@ import {
 	isValidDateRangeQueryFormat,
 	queryFormatMillisecondsMap,
 	getCalendarIntervalErrorMessage,
+	unwrapToNativeDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from '@appbaseio/rheostat/lib/Slider';
@@ -57,9 +58,9 @@ class RangeSlider extends Component {
 			if (!isValidDateRangeQueryFormat(queryFormat)) {
 				throw new Error('queryFormat is not supported. Try with a valid queryFormat.');
 			}
-			if (!XDate(range.start).valid() || !XDate(range.end).valid()) {
+			if (!dayjs(new Date(range.start)).isValid() || !dayjs(new Date(range.end)).isValid()) {
 				throw new Error(
-					'`reactivesearch` uses XDate for processing date-types, Try passing valid value(s) accepted by the XDate constructor. XDate ref: https://arshaw.com/xdate/#Parsing',
+					'`reactivesearch` uses dayjs for processing date-types, Try passing valid value(s) accepted by the dayjs constructor. Dayjs ref: https://day.js.org/docs/en/parse/parse',
 				);
 			}
 		} else if (typeof range.start !== 'number' || typeof range.end !== 'number') {
@@ -82,7 +83,7 @@ class RangeSlider extends Component {
 		this.state = {
 			currentValue: inRangeValueArray,
 			stats: [],
-			dateFormat: props._dateFormat || "yyyy-MM-dd'T'HH:mm:ss",
+			dateFormat: props._dateFormat || 'YYYY-MM-DD[T]HH:mm:ss',
 		};
 
 		this.internalComponent = getInternalComponentID(props.componentId);
@@ -175,7 +176,7 @@ class RangeSlider extends Component {
 			!isEqual(
 				this.state.currentValue
 					? this.state.currentValue.map(val =>
-						formatDateString(new XDate(val), this.state.dateFormat),
+						formatDateString(dayjs(new Date(val)), this.state.dateFormat),
 					  )
 					: null,
 				Array.isArray(this.props.selectedValue) ? this.props.selectedValue : null,
@@ -487,6 +488,8 @@ class RangeSlider extends Component {
 			this.props.range,
 			this.props.queryFormat,
 		);
+		const currentValue = this.state.currentValue
+			&& this.state.currentValue.map(val => unwrapToNativeDate(val));
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -508,7 +511,7 @@ class RangeSlider extends Component {
 					<Rheostat
 						min={startRangeValue}
 						max={endRangeValue}
-						values={this.state.currentValue || [startRangeValue, endRangeValue]}
+						values={currentValue || [startRangeValue, endRangeValue]}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
@@ -593,7 +596,7 @@ RangeSlider.propTypes = {
 	// introduced specifically to control the
 	// dateformat for the RS-components using RangeSlider
 	// ex: RangeInput
-	// RangeSlider bydefault supports yyyy-MM-dd'T'HH:mm:ss
+	// RangeSlider bydefault supports YYYY-MM-DD[T]HH:mm:ss
 	// but this is not required for RangeInput
 	_dateFormat: types.string,
 	endpoint: types.endpoint,
