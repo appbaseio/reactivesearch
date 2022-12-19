@@ -23,7 +23,6 @@ import {
 	isValidDateRangeQueryFormat,
 	queryFormatMillisecondsMap,
 	getCalendarIntervalErrorMessage,
-	unwrapToNativeDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import Rheostat from '@appbaseio/rheostat/lib/Slider';
@@ -488,8 +487,6 @@ class RangeSlider extends Component {
 			this.props.range,
 			this.props.queryFormat,
 		);
-		const currentValue = this.state.currentValue
-			&& this.state.currentValue.map(val => unwrapToNativeDate(val));
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -511,7 +508,7 @@ class RangeSlider extends Component {
 					<Rheostat
 						min={startRangeValue}
 						max={endRangeValue}
-						values={currentValue || [startRangeValue, endRangeValue]}
+						values={this.state.currentValue || [startRangeValue, endRangeValue]}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
