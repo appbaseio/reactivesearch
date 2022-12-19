@@ -344,11 +344,12 @@ class RangeInput extends Component {
 
 	displayDateInputs() {
 		const { start, end, dateHovered } = this.state;
-		const startDate = dayjs(new Date((start))) || '';
-		const endDate = dayjs(new Date((end))) || '';
+		const startDate = unwrapToNativeDate(dayjs(new Date((start)))) || '';
+		const endDate = unwrapToNativeDate(dayjs(new Date((end)))) || '';
 		const endDay = start && end ? dateHovered : '';
 		const selectedDays = { from: startDate, to: endDay };
-		const modifiers = { start: new Date(start), end: endDay };
+		const modifiers = { start: startDate, end: endDay };
+
 		return (
 			<DateContainer range>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
@@ -363,18 +364,19 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getStartDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
-							value={unwrapToNativeDate(formatDateString(startDate, DATE_FORMAT))}
+							value={unwrapToNativeDate(startDate)}
 							key={this.state.startKey}
 							placeholder="YYYY-MM-DD"
 							dayPickerProps={{
-								initialMonth: dayjs(new Date(this.state.start || '')),
+								initialMonth: unwrapToNativeDate(startDate),
 								numberOfMonths: 2,
 								disabledDays: {
 									before:
-										(this.props.range.start && dayjs(new Date(this.props.range.start)))
+										(this.props.range.start
+											&& unwrapToNativeDate(dayjs(new Date(this.props.range.start))))
 										|| '',
 									after:
-										(this.props.range.end && dayjs(new Date(this.props.range.end))) || '',
+										(this.props.range.end && unwrapToNativeDate(dayjs(new Date(this.props.range.end)))) || '',
 								},
 								selectedDays,
 								modifiers,
@@ -404,18 +406,20 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getEndDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
-							value={unwrapToNativeDate(formatDateString(endDate, DATE_FORMAT))}
+							value={unwrapToNativeDate(endDate)}
 							key={this.state.endKey}
 							placeholder="YYYY-MM-DD"
 							dayPickerProps={{
-								initialMonth: dayjs(new Date(this.state.end || '')),
+								initialMonth: unwrapToNativeDate(endDate),
 								numberOfMonths: 2,
 								onDayMouseEnter: this.handleDayMouseEnter,
 								disabledDays: {
 									after:
-										(this.props.range.end && dayjs(new Date(this.props.range.end))) || '',
+										(this.props.range.end
+											&& unwrapToNativeDate(dayjs(new Date(this.props.range.end)))) || '',
 									before:
-										(this.props.range.start && dayjs(new Date(this.props.range.start)))
+										(this.props.range.start
+											&& unwrapToNativeDate(dayjs(new Date(this.props.range.start))))
 										|| '',
 								},
 								selectedDays,
