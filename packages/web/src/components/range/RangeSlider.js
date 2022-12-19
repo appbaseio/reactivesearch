@@ -487,6 +487,11 @@ class RangeSlider extends Component {
 			this.props.range,
 			this.props.queryFormat,
 		);
+		// Account for the controlled usage if value is passed as prop
+		const currentValue = this.props.value
+			? getNumericRangeArray(this.props.value, this.props.queryFormat)
+			: this.state.currentValue;
+
 		return (
 			<Slider primary style={this.props.style} className={this.props.className}>
 				{this.props.title && (
@@ -508,7 +513,7 @@ class RangeSlider extends Component {
 					<Rheostat
 						min={startRangeValue}
 						max={endRangeValue}
-						values={this.state.currentValue || [startRangeValue, endRangeValue]}
+						values={currentValue || [startRangeValue, endRangeValue]}
 						onChange={this.handleSlider}
 						onValuesUpdated={this.handleDrag}
 						snap={this.props.snap}
