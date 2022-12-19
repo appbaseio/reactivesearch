@@ -363,7 +363,7 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getStartDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
-							value={formatDateString(startDate, DATE_FORMAT)}
+							value={unwrapToNativeDate(formatDateString(startDate, DATE_FORMAT))}
 							key={this.state.startKey}
 							placeholder="YYYY-MM-DD"
 							dayPickerProps={{
