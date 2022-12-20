@@ -48,11 +48,11 @@
         "@babel/polyfill": "^7.0.0-rc.3",
         "@ptomasroos/react-native-multi-slider": "^1.0.0",
         "appbase-js": "^5.2.0",
+		"dayjs": "^1.11.7",
         "hoist-non-react-statics": "^3.3.0",
         "native-base": "^2.4.2",
         "prop-types": "^15.6.1",
         "react-native-calendars": "^1.18.2",
-        "react-redux": "^5.0.7",
-        "xdate": "^0.8.2"
+        "react-redux": "^5.0.7"
     }
 }
