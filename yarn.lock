@@ -172,17 +172,6 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivecore@9.14.34":
-  version "9.14.34"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.34.tgz#25759a89b3ec21ba27372b73306b8c9f38900b75"
-  integrity sha512-q0qqYLtbi1Dw5budG/zMgx10Shg/TxHBUSNCSlXFYTgq2E1+yNt4Ui/BUUV9QHzozx4brgD6TYN1cMNMQP8aRw==
-  dependencies:
-    cross-fetch "^3.0.4"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-    xdate "^0.8.2"
-
 "@appbaseio/reactivesearch-vue@1.33.3":
   version "1.33.3"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.33.3.tgz#a6f95c2779b60f181806b5226769ebf6f6b4f8eb"
@@ -39195,6 +39184,11 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+yarn@^1.22.18:
+  version "1.22.19"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.19.tgz#4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  integrity sha512-/0V5q0WbslqnwP91tirOvldvYISzaqhClxzyUKXYxs07yUILIs5jx/k6CFe8bvKSkds5w+eiOqta39Wk3WxdcQ==
 
 yeast@0.1.2:
   version "0.1.2"
