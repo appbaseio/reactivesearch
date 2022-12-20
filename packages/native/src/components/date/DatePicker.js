@@ -22,7 +22,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import withTheme from '../../theme/withTheme';
 import { connect } from '../../utils';
 
-const XDate = require('xdate');
+const dayjs = require('dayjs');
 
 class DatePicker extends Component {
 	constructor(props) {
@@ -42,14 +42,14 @@ class DatePicker extends Component {
 
 		if (this.props.selectedValue) {
 			const currentDate = {
-				dateString: new XDate(this.props.selectedValue).toString('yyyy-MM-dd'),
-				timestamp: new XDate(this.props.selectedValue).getTime(),
+				dateString: dayjs(new Date(this.props.selectedValue)).format('YYYY-MM-DD'),
+				timestamp: dayjs(new Date(this.props.selectedValue)).valueOf(),
 			};
 			this.handleDateChange(currentDate);
 		} else if (this.props.defaultSelected) {
 			const currentDate = {
-				dateString: new XDate(this.props.defaultSelected).toString('yyyy-MM-dd'),
-				timestamp: new XDate(this.props.defaultSelected).getTime(),
+				dateString: dayjs(new Date(this.props.defaultSelected)).format('YYYY-MM-DD'),
+				timestamp: dayjs(new Date(this.props.defaultSelected)).valueOf(),
 			};
 			this.handleDateChange(currentDate);
 		}
@@ -60,8 +60,8 @@ class DatePicker extends Component {
 
 		if (!isEqual(this.props.defaultSelected, nextProps.defaultSelected)) {
 			const currentDate = {
-				dateString: new XDate(nextProps.defaultSelected).toString('yyyy-MM-dd'),
-				timestamp: new XDate(nextProps.defaultSelected).getTime(),
+				dateString: dayjs(new Date(nextProps.defaultSelected)).format('YYYY-MM-DD'),
+				timestamp: dayjs(new Date(nextProps.defaultSelected)).valueOf(),
 			};
 			this.handleDateChange(currentDate, nextProps);
 		} else if (
@@ -88,8 +88,8 @@ class DatePicker extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: formatDate(new XDate(value).addHours(-24), props),
-						lte: formatDate(new XDate(value), props),
+						gte: formatDate(dayjs(new Date(value)).subtract(24, 'hour'), props),
+						lte: formatDate(dayjs(new Date(value)), props),
 					},
 				},
 			};
@@ -102,7 +102,7 @@ class DatePicker extends Component {
 		let date = null;
 		if (currentDate) {
 			value = currentDate.timestamp;
-			date = formatDate(new XDate(value), props);
+			date = formatDate(dayjs(new Date(value)), props);
 		}
 
 		const performUpdate = () => {
@@ -121,7 +121,7 @@ class DatePicker extends Component {
 
 	updateQuery = (value, props) => {
 		const query = props.customQuery || this.defaultQuery;
-		const date = value ? formatDate(new XDate(value), props) : null;
+		const date = value ? formatDate(dayjs(new Date(value)), props) : null;
 
 		props.updateQuery({
 			componentId: props.componentId,
