@@ -34,8 +34,9 @@ const ComponentWrapper = (
 	},
 ) => ({
 	name: 'ComponentWrapper',
+	$timestamp: null,
 	props: {
-		destroyOnUnmount: VueTypes.bool.def(false),
+		destroyOnUnmount: VueTypes.bool.def(true),
 	},
 	created() {
 		// clone the props for component it is needed because attrs gets changed on time
@@ -48,6 +49,7 @@ const ComponentWrapper = (
 		this.componentProps = parsedProps;
 		this.componentId = this.componentProps.componentId;
 		this.react = this.componentProps.react;
+		this.$timestamp = new Date().getTime();
 	},
 	beforeMount() {
 		let components = [];
@@ -100,10 +102,16 @@ const ComponentWrapper = (
 	},
 	beforeDestroy() {
 		if (this.destroyOnUnmount) {
+			let registeredComponentsTimestamps = {};
+			if (this.$$store) {
+				({ registeredComponentsTimestamps } = this.$$store.getState());
+			}
 			// Unregister components
-			this.removeComponent(this.componentId);
-			if (this.internalComponent) {
-				this.removeComponent(this.internalComponent);
+			if (registeredComponentsTimestamps[this.componentId] === this.$timestamp) {
+				this.removeComponent(this.componentId);
+				if (this.internalComponent) {
+					this.removeComponent(this.internalComponent);
+				}
 			}
 		}
 	},

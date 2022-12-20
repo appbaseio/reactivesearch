@@ -37,6 +37,7 @@ class ComponentWrapper extends React.Component {
 
 	constructor(props, context) {
 		super(props, context);
+		this._timestamp = new Date().getTime();
 		// Register a component only when `destroyOnUnmount` is `true`
 		// or component is not present in store
 		let components = [];
@@ -102,9 +103,16 @@ class ComponentWrapper extends React.Component {
 		// Unregister components
 		const { componentId, destroyOnUnmount } = this.props;
 		if (destroyOnUnmount) {
-			this.props.removeComponent(componentId);
-			if (this.internalComponent) {
-				this.props.removeComponent(this.internalComponent);
+			let registeredComponentsTimestamps = {};
+			if (this.context && this.context.getState) {
+				({ registeredComponentsTimestamps } = this.context.getState());
+			}
+			// Unregister components
+			if (registeredComponentsTimestamps[componentId] === this.$timestamp) {
+				this.props.removeComponent(componentId);
+				if (this.internalComponent) {
+					this.props.removeComponent(this.internalComponent);
+				}
 			}
 		}
 	}
@@ -155,6 +163,7 @@ ComponentWrapper.propTypes = {
 
 ComponentWrapper.defaultProps = {
 	setReact: true,
+	destroyOnUnmount: true,
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
