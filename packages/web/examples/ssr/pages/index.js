@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
 	ReactiveBase,
 	DataSearch,
@@ -88,7 +88,10 @@ const components = {
 									/>
 								</div>
 								<div className="info colored">
-									<h3 className="overlay-title">{item.original_title}</h3>
+									<h3
+										className="overlay-title"
+										dangerouslySetInnerHTML={{ __html: item.original_title }}
+									/>
 
 									<div className="overlay-description">{item.overview}</div>
 
@@ -142,7 +145,7 @@ const components = {
 				))}
 			</ReactiveList.ResultCardsWrapper>
 		),
-		pagination: true,
+
 		URLParams: true,
 		react: {
 			and: ['SearchSensor', 'vote-average', 'genres-list'],
@@ -156,108 +159,89 @@ const components = {
 	},
 };
 
-export default class Main extends Component {
-	static async getInitialProps({ pathname, query }) {
-		return {
-			store: await initReactivesearch(
-				[
-					{
-						...components.datasearch,
-						source: DataSearch,
-					},
-					{
-						...components.multiList,
-						source: MultiList,
-					},
-					{
-						...components.rangeSlider,
-						source: RangeSlider,
-					},
-					{
-						...components.resultcard,
-						source: ReactiveList,
-					},
-				],
-				query,
-				components.settings,
-			),
-		};
-	}
+const Main = ({ store }) => {
+	const [isClicked, setIsClicked] = useState(false);
+	const [message, setMessage] = useState('🔬 Show Filters');
 
-	constructor(props) {
-		super(props);
+	const handleClick = () => {
+		setIsClicked(!isClicked);
+		setMessage(isClicked ? '🔬 Show Filters' : '🎬 Show Movies');
+	};
 
-		this.state = {
-			isClicked: false,
-			message: '🔬 Show Filters',
-		};
-	}
+	return (
+		<div className="main-container">
+			<ReactiveBase {...components.settings} initialState={store}>
+				<div className="navbar">
+					<div className="header-container">🎥 MovieSearch</div>
 
-	handleClick() {
-		this.setState({
-			isClicked: !this.state.isClicked,
-			message: this.state.isClicked ? '🔬 Show Filters' : '🎬 Show Movies',
-		});
-	}
+					<div className="search-container">
+						<DataSearch {...components.datasearch} />
+					</div>
+					<div className="sub-container">
+						<div className={isClicked ? 'left-bar-optional' : 'left-bar'}>
+							<div className="filter-heading center">
+								<b>
+									{' '}
+									<i className="fa fa-pied-piper-alt" /> Genres{' '}
+								</b>
+							</div>
 
-	render() {
-		console.log(components.rangeSlider);
+							<MultiList {...components.multiList} className="genres-filter" />
+							<hr className="blue" />
 
-		return (
-			<div className="main-container">
-				<ReactiveBase {...components.settings} initialState={this.props.store}>
-					<div className="navbar">
-						<div className="header-container">🎥 MovieSearch</div>
-
-						<div className="search-container">
-							<DataSearch {...components.datasearch} />
+							<div className="filter-heading center">
+								<b>
+									<i className="fa fa-star" /> Ratings
+								</b>
+							</div>
+							<RangeSlider {...components.rangeSlider} className="review-filter" />
 						</div>
-						<div className="sub-container">
-							<div
-								className={this.state.isClicked ? 'left-bar-optional' : 'left-bar'}
-							>
-								<div className="filter-heading center">
-									<b>
-										{' '}
-										<i className="fa fa-pied-piper-alt" /> Genres{' '}
-									</b>
-								</div>
 
-								<MultiList {...components.multiList} className="genres-filter" />
-								<hr className="blue" />
-
-								<div className="filter-heading center">
-									<b>
-										<i className="fa fa-star" /> Ratings
-									</b>
-								</div>
-								<RangeSlider
-									{...components.rangeSlider}
-									className="review-filter"
-								/>
-							</div>
-
-							<div
-								className={
-									this.state.isClicked
-										? 'result-container-optional'
-										: 'result-container'
-								}
-							>
-								<SelectedFilters
-									showClearAll={true}
-									clearAllLabel="Clear filters"
-									className="selected-filters"
-								/>
-								<ReactiveList {...components.resultcard} />
-							</div>
+						<div
+							className={isClicked ? 'result-container-optional' : 'result-container'}
+						>
+							<SelectedFilters
+								showClearAll={true}
+								clearAllLabel="Clear filters"
+								className="selected-filters"
+							/>
+							<ReactiveList {...components.resultcard} />
 						</div>
 					</div>
-				</ReactiveBase>
-				<button className="toggle-button" onClick={this.handleClick.bind(this)}>
-					{this.state.message}
-				</button>
-			</div>
-		);
-	}
-}
+				</div>
+			</ReactiveBase>
+			<button className="toggle-button" onClick={handleClick.bind(this)}>
+				{message}
+			</button>
+		</div>
+	);
+};
+
+Main.getInitialProps = async ({ pathname, query }) => {
+	return {
+		store: await initReactivesearch(
+			[
+				{
+					...components.datasearch,
+					source: DataSearch,
+				},
+				{
+					...components.multiList,
+					source: MultiList,
+				},
+				{
+					...components.rangeSlider,
+					source: RangeSlider,
+				},
+				{
+					...components.resultcard,
+					source: ReactiveList,
+				},
+			],
+			query,
+			components.settings,
+		),
+	};
+};
+
+export default Main;
