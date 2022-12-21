@@ -1,4 +1,4 @@
-import { ReactiveBase, ReactiveChart, SingleList } from '@appbaseio/reactivesearch';
+import { ReactiveBase, ReactiveChart, ReactiveList } from '@appbaseio/reactivesearch';
 import { Card, Col, Row } from 'antd';
 import React from 'react';
 
@@ -57,6 +57,35 @@ export default function Explore() {
 							URLParams
 						/>
 					</Card>
+				</Col>
+			</Row>
+			<Row>
+				<Col md={24}>
+					<ReactiveList
+						componentId="ListComponent"
+						dataField="albumTitle"
+						pagination={false}
+						infiniteScroll={false}
+						showResultStats={false}
+						renderNoResults={()=>null}
+						render={({ data, ...props }) => {
+							return (
+								<Card style={{width: "100%"}}>
+									<h1 style={{
+											padding: 10,
+											textAlign: 'center',
+											cursor: 'pointer',
+											color: '#00a',
+										}}
+									>
+										{!props.loading
+											? `${props.resultStats.numberOfResults} matched the above criteria. View now.`
+											: 'View Search Results'}
+									</h1>
+								</Card>
+							);
+						}}
+					/>
 				</Col>
 			</Row>
 		</ReactiveBase>
