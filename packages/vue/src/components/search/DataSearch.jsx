@@ -572,15 +572,10 @@ const DataSearch = {
 					// to set the query otherwise the value should reset
 
 					if (props.strictSelection) {
-						if (
-							cause === causes.SUGGESTION_SELECT
-							|| (this.$options.isTagsMode
-								? this.selectedTags.length === 0
-								: value === '')
-						) {
+						if (cause === causes.SUGGESTION_SELECT) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 						} else {
-							this.setValue('', true);
+							this.setValue('', true, props, undefined, true, false);
 						}
 					} else {
 						this.updateQueryHandler(props.componentId, queryHandlerValue, props);
@@ -730,13 +725,8 @@ const DataSearch = {
 			}
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
-			if (event.key === 'Enter' && highlightedIndex === null) {
-				this.setValue(
-					event.target.value,
-					true,
-					this.$props,
-					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
-				);
+			if (event.key === 'Enter' && (highlightedIndex === null || highlightedIndex < 0)) {
+				this.setValue(event.target.value, true, this.$props, undefined, false, false);
 				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 			}
 			// Need to review
