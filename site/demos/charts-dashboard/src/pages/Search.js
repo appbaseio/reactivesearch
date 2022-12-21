@@ -1,9 +1,13 @@
 import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters } from '@appbaseio/reactivesearch';
-import { Col, Row } from 'antd';
+import { Col, Grid, Row } from 'antd';
 import React from 'react';
 import CollapsibleFacets from '../components/CollapsibleFacets';
 
+const { useBreakpoint } = Grid;
+
 export default function Search() {
+	const breakpointActive = useBreakpoint();
+
 	return (
 		<ReactiveBase
 			app="best-buy-dataset"
@@ -20,7 +24,7 @@ export default function Search() {
 			</Row>
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
-					<CollapsibleFacets />
+					{breakpointActive.md && <CollapsibleFacets />}
 				</Col>
 				<Col xs={24} md={16} style={{ padding: 10 }}>
 					<ReactiveList
