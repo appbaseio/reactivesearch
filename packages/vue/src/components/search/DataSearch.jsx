@@ -420,8 +420,10 @@ const DataSearch = {
 		handleText(value) {
 			if (this.$props.autosuggest) {
 				this.updateDefaultQueryHandlerDebounced(value, this.$props);
-			} else {
+			} else if (!this.$options.isTagsMode) {
 				this.updateQueryHandlerDebounced(this.$props.componentId, value, this.$props);
+			} else if (this.$options.isTagsMode) {
+				this.$data.currentValue = value;
 			}
 		},
 		validateDataField() {
@@ -568,7 +570,7 @@ const DataSearch = {
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
-					if (props.strictSelection) {
+					if (props.strictSelection && props.autosuggest) {
 						if (cause === causes.SUGGESTION_SELECT) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
 						} else {
@@ -716,6 +718,7 @@ const DataSearch = {
 		},
 
 		handleKeyDown(event, highlightedIndex) {
+			const { value: targetValue } = event.target;
 			const { value } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
@@ -723,8 +726,8 @@ const DataSearch = {
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
 			if (event.key === 'Enter' && (highlightedIndex === null || highlightedIndex < 0)) {
-				this.setValue(event.target.value, true, this.$props, undefined, false, false);
-				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
+				this.setValue(targetValue, true, this.$props, undefined, false, false);
+				this.onValueSelectedHandler(targetValue, causes.ENTER_PRESS);
 			}
 			// Need to review
 			this.$emit('keyDown', event, this.triggerQuery);
@@ -1373,6 +1376,27 @@ const DataSearch = {
 												this.$emit('focus', e, this.triggerQuery);
 											},
 											keydown: (e) => {
+												const { value } = this.$props;
+												if (value !== undefined) {
+													this.isPending = true;
+												}
+
+												// if a suggestion was selected, delegate the handling to suggestion handler
+												if (e.key === 'Enter' && this.$options.isTagsMode) {
+													const { value: targetValue } = e.target;
+													this.setValue(
+														targetValue,
+														true,
+														this.$props,
+														undefined,
+														false,
+														true,
+													);
+													this.onValueSelectedHandler(
+														targetValue,
+														causes.ENTER_PRESS,
+													);
+												}
 												this.$emit('keyDown', e, this.triggerQuery);
 												this.$emit('key-down', e, this.triggerQuery);
 											},
@@ -1400,6 +1424,7 @@ const DataSearch = {
 							</InputWrapper>
 							{this.renderInputAddonAfter()}
 						</InputGroup>
+						{this.renderTags()}
 					</div>
 				)}
 			</Container>
