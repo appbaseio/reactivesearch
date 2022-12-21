@@ -1,5 +1,14 @@
-import { DynamicRangeSlider, ReactiveBase, ReactiveChart, ReactiveList, SearchBox, SelectedFilters, SingleDropdownList, SingleList } from '@appbaseio/reactivesearch';
-import { Card, Col, Row } from 'antd';
+import {
+	DynamicRangeSlider,
+	ReactiveBase,
+	ReactiveChart,
+	ReactiveList,
+	SearchBox,
+	SelectedFilters,
+	SingleDropdownList,
+	SingleList,
+} from '@appbaseio/reactivesearch';
+import { Card, Col, Collapse, Row } from 'antd';
 import React from 'react';
 
 export default function Search() {
@@ -18,48 +27,54 @@ export default function Search() {
 				</Col>
 			</Row>
 			<Row>
-				<Col xs={24} md={8} style={{ padding: 10 }}>
-					<Card>
-						<h3>Category</h3>
-						<SingleList componentId="Category" dataField="class.keyword" URLParams />
-					</Card>
-					<Card>
-						<h3>Sub-Category</h3>
-						<ReactiveChart
-							componentId="SubCategory"
-							dataField="subclass.keyword"
-							chartType="bar"
-							type="term"
-							URLParams
-							useAsFilter
-						/>
-					</Card>
-					<Card>
-						<h3>Ratings</h3>
-						<DynamicRangeSlider
-							componentId="ReviewAverage"
-							dataField="customerReviewAverage"
-							range={{ start: 0, end: 5 }}
-							rangeLabels={(min, max) => ({
-								start: min + ' ⭐️',
-								end: max + ' ⭐️',
-							})}
-							showHistogram
-							URLParams
-						/>
-					</Card>
-					<Card>
-						<h3>Color</h3>
-						<ReactiveChart
-							componentId="Color"
-							dataField="color.keyword"
-							chartType="line"
-							type="term"
-							URLParams
-							useAsFilter
-						/>
-					</Card>
-				</Col>
+				<Collapse>
+					<Col xs={24} md={8} style={{ padding: 10 }}>
+						<Card>
+							<h3>Category</h3>
+							<SingleList
+								componentId="Category"
+								dataField="class.keyword"
+								URLParams
+							/>
+						</Card>
+						<Card>
+							<h3>Sub-Category</h3>
+							<ReactiveChart
+								componentId="SubCategory"
+								dataField="subclass.keyword"
+								chartType="bar"
+								type="term"
+								URLParams
+								useAsFilter
+							/>
+						</Card>
+						<Card>
+							<h3>Ratings</h3>
+							<DynamicRangeSlider
+								componentId="ReviewAverage"
+								dataField="customerReviewAverage"
+								range={{ start: 0, end: 5 }}
+								rangeLabels={(min, max) => ({
+									start: min + ' ⭐️',
+									end: max + ' ⭐️',
+								})}
+								showHistogram
+								URLParams
+							/>
+						</Card>
+						<Card>
+							<h3>Color</h3>
+							<ReactiveChart
+								componentId="Color"
+								dataField="color.keyword"
+								chartType="line"
+								type="term"
+								URLParams
+								useAsFilter
+							/>
+						</Card>
+					</Col>
+				</Collapse>
 				<Col xs={24} md={16} style={{ padding: 10 }}>
 					<ReactiveList
 						componentId="SearchResult"
