@@ -10,7 +10,9 @@ export default function Explore() {
 			enableAppbase
 		>
 			<Row>
-				<SelectedFilters/>
+				<Col md={24} style={{ padding: 10 }}>
+					<SelectedFilters />
+				</Col>
 			</Row>
 			<Row>
 				<Col xs={24} md={12} style={{ padding: 10 }}>
@@ -72,11 +74,12 @@ export default function Explore() {
 						pagination={false}
 						infiniteScroll={false}
 						showResultStats={false}
-						renderNoResults={()=>null}
+						renderNoResults={() => null}
 						render={({ data, ...props }) => {
 							return (
-								<Card style={{width: "100%"}}>
-									<h1 style={{
+								<Card style={{ width: '100%' }}>
+									<h1
+										style={{
 											padding: 10,
 											textAlign: 'center',
 											cursor: 'pointer',
