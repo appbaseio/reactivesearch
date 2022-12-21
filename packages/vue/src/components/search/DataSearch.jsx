@@ -639,7 +639,6 @@ const DataSearch = {
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
-
 			let customQueryOptions;
 			const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
 			let query = defaultQueryTobeSet;
@@ -719,13 +718,24 @@ const DataSearch = {
 
 		handleKeyDown(event, highlightedIndex) {
 			const { value: targetValue } = event.target;
-			const { value, strictSelection } = this.$props;
+			const { value, strictSelection, size } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
 			}
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
-			if (event.key === 'Enter' && (highlightedIndex === null || highlightedIndex < 0)) {
+			if (
+				event.key === 'Enter'
+				&& (highlightedIndex === null
+					|| highlightedIndex < 0
+					|| highlightedIndex
+						=== [
+							...[...this.suggestionsList].slice(0, size || 10),
+							...this.defaultSearchSuggestions,
+							...this.topSuggestions,
+						].length)
+			) {
+				this.isPending = false;
 				this.setValue(
 					this.$options.isTagsMode && strictSelection ? '' : targetValue,
 					true,
