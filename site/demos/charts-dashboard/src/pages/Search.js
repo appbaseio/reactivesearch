@@ -1,17 +1,7 @@
-import {
-	DynamicRangeSlider,
-	ReactiveBase,
-	ReactiveChart,
-	ReactiveList,
-	SearchBox,
-	SelectedFilters,
-	SingleDropdownList,
-	SingleList,
-} from '@appbaseio/reactivesearch';
-import { Card, Col, Collapse, Row } from 'antd';
+import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters } from '@appbaseio/reactivesearch';
+import { Col, Row } from 'antd';
 import React from 'react';
-
-const { Panel: CollapsePanel } = Collapse;
+import CollapsibleFacets from '../components/CollapsibleFacets';
 
 export default function Search() {
 	return (
@@ -30,52 +20,7 @@ export default function Search() {
 			</Row>
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
-					<Collapse defaultActiveKey={['Category', 'Sub-Category', 'Ratings', 'Color']}>
-						<CollapsePanel header={<h3>Category</h3>} key="Category">
-							<SingleList
-								componentId="Category"
-								dataField="class.keyword"
-								URLParams
-								loader="Loading..."
-							/>
-						</CollapsePanel>
-						<CollapsePanel header={<h3>Sub-Category</h3>} key="Sub-Category">
-							<ReactiveChart
-								componentId="SubCategory"
-								dataField="subclass.keyword"
-								chartType="bar"
-								type="term"
-								URLParams
-								useAsFilter
-								loader="Loading..."
-							/>
-						</CollapsePanel>
-						<CollapsePanel header={<h3>Ratings</h3>} key="Ratings">
-							<DynamicRangeSlider
-								componentId="ReviewAverage"
-								dataField="customerReviewAverage"
-								range={{ start: 0, end: 5 }}
-								rangeLabels={(min, max) => ({
-									start: min + ' ⭐️',
-									end: max + ' ⭐️',
-								})}
-								loader="Loading..."
-								showHistogram
-								URLParams
-							/>
-						</CollapsePanel>
-						<CollapsePanel header={<h3>Color</h3>} key="Color">
-							<ReactiveChart
-								componentId="Color"
-								dataField="color.keyword"
-								chartType="line"
-								type="term"
-								URLParams
-								useAsFilter
-								loader="Loading..."
-							/>
-						</CollapsePanel>
-					</Collapse>
+					<CollapsibleFacets />
 				</Col>
 				<Col xs={24} md={16} style={{ padding: 10 }}>
 					<ReactiveList
