@@ -52,6 +52,7 @@ function Explore({history}) {
 							componentId="ReviewAverage"
 							dataField="customerReviewAverage"
 							chartType="histogram"
+							title="Ratings"
 							react={{ and: ['Category', 'SubCategory', 'Color'] }}
 							type="range"
 							URLParams
