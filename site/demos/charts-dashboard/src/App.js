@@ -4,7 +4,7 @@ import Explore from './pages/Explore';
 import Search from './pages/Search';
 import reactivesearchLogo from '../src/reactivesearch-icon.png'
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 const MenuBar = ({history}) => {
   return <Menu

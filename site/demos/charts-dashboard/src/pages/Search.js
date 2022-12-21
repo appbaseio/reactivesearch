@@ -1,4 +1,4 @@
-import { DynamicRangeSlider, ReactiveBase, ReactiveChart, ReactiveList, SingleDropdownList, SingleList } from '@appbaseio/reactivesearch';
+import { DynamicRangeSlider, ReactiveBase, ReactiveChart, ReactiveList, SelectedFilters, SingleDropdownList, SingleList } from '@appbaseio/reactivesearch';
 import { Card, Col, Row } from 'antd';
 import React from 'react';
 
@@ -9,6 +9,11 @@ export default function Search() {
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 			enableAppbase
 		>
+            <Row>
+                <Col md={24} style={{ padding: 10 }}>
+                    <SelectedFilters />
+                </Col>
+			</Row>
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
 					<Card>
@@ -44,7 +49,7 @@ export default function Search() {
 							chartType="line"
 							type="term"
 							URLParams
-                            useAsFilter
+							useAsFilter
 						/>
 					</Card>
 				</Col>

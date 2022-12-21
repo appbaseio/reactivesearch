@@ -1,4 +1,4 @@
-import { ReactiveBase, ReactiveChart, ReactiveList } from '@appbaseio/reactivesearch';
+import { ReactiveBase, ReactiveChart, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 import { Card, Col, Row } from 'antd';
 import React from 'react';
 
@@ -10,6 +10,9 @@ export default function Explore() {
 			enableAppbase
 		>
 			<Row>
+				<SelectedFilters/>
+			</Row>
+			<Row>
 				<Col xs={24} md={12} style={{ padding: 10 }}>
 					<Card>
 						<ReactiveChart
@@ -17,7 +20,7 @@ export default function Explore() {
 							dataField="class.keyword"
 							chartType="pie"
 							type="term"
-							title="Categories"
+							title="Category"
 							URLParams
 						/>
 					</Card>
@@ -29,8 +32,9 @@ export default function Explore() {
 							dataField="subclass.keyword"
 							chartType="bar"
 							type="term"
-							title="Sub-Categories"
+							title="Sub-Category"
 							URLParams
+							useAsFilter
 						/>
 					</Card>
 				</Col>
@@ -55,6 +59,7 @@ export default function Explore() {
 							type="term"
 							title="Color"
 							URLParams
+							useAsFilter
 						/>
 					</Card>
 				</Col>
