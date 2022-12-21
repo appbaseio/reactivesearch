@@ -125,6 +125,7 @@ const DataSearch = {
 			this.updateDefaultQueryHandler,
 			this.$props.debounce,
 		);
+		this.updateQueryHandlerDebounced = debounce(this.updateQueryHandler, this.$props.debounce);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -364,7 +365,7 @@ const DataSearch = {
 					newVal,
 					true,
 					this.$props,
-					undefined,
+					newVal === '' ? causes.CLEAR_VALUE : undefined,
 					false,
 					typeof newVal !== 'string' && this.$options.isTagsMode,
 				);
@@ -420,11 +421,7 @@ const DataSearch = {
 			if (this.$props.autosuggest) {
 				this.updateDefaultQueryHandlerDebounced(value, this.$props);
 			} else {
-				this.updateDefaultQueryHandlerDebounced(
-					this.$props.componentId,
-					value,
-					this.$props,
-				);
+				this.updateQueryHandlerDebounced(this.$props.componentId, value, this.$props);
 			}
 		},
 		validateDataField() {
