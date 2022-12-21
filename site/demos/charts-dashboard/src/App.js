@@ -45,7 +45,6 @@ function App({history}) {
 						</Switch>
 					</Content>
 				</Layout>
-				<Footer>footer</Footer>
 			</Layout>
 		</Router>
 	);
