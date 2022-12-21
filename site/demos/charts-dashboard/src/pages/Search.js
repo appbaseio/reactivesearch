@@ -1,4 +1,4 @@
-import { DynamicRangeSlider, ReactiveBase, ReactiveChart, ReactiveList, SelectedFilters, SingleDropdownList, SingleList } from '@appbaseio/reactivesearch';
+import { DynamicRangeSlider, ReactiveBase, ReactiveChart, ReactiveList, SearchBox, SelectedFilters, SingleDropdownList, SingleList } from '@appbaseio/reactivesearch';
 import { Card, Col, Row } from 'antd';
 import React from 'react';
 
@@ -9,10 +9,13 @@ export default function Search() {
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 			enableAppbase
 		>
-            <Row>
-                <Col md={24} style={{ padding: 10 }}>
-                    <SelectedFilters />
-                </Col>
+			<Row>
+				<Col md={24} style={{ padding: 10 }}>
+					<SelectedFilters />
+				</Col>
+				<Col md={24} style={{ padding: 10 }}>
+					<SearchBox dataField="albumTitle" componentId="SearchBox" />
+				</Col>
 			</Row>
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
@@ -37,6 +40,10 @@ export default function Search() {
 							componentId="ReviewAverage"
 							dataField="customerReviewAverage"
 							range={{ start: 0, end: 5 }}
+							rangeLabels={(min, max) => ({
+								start: min + ' ⭐️',
+								end: max + ' ⭐️',
+							})}
 							showHistogram
 							URLParams
 						/>
@@ -91,7 +98,7 @@ export default function Search() {
 							);
 						}}
 						react={{
-							and: ['Category', 'SubCategory', 'Color', 'ReviewAverage'],
+							and: ['Category', 'SubCategory', 'Color', 'ReviewAverage', 'SearchBox'],
 						}}
 						includeFields={[
 							'class',

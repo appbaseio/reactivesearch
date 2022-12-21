@@ -1,8 +1,9 @@
 import { ReactiveBase, ReactiveChart, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
 import { Card, Col, Row } from 'antd';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-export default function Explore() {
+function Explore({history}) {
 	return (
 		<ReactiveBase
 			app="best-buy-dataset"
@@ -24,6 +25,8 @@ export default function Explore() {
 							type="term"
 							title="Category"
 							URLParams
+							react={{ and: ['SubCategory', 'ReviewAverage', 'Color'] }}
+							useAsFilter
 						/>
 					</Card>
 				</Col>
@@ -35,6 +38,7 @@ export default function Explore() {
 							chartType="bar"
 							type="term"
 							title="Sub-Category"
+							react={{ and: ['Category', 'ReviewAverage', 'Color'] }}
 							URLParams
 							useAsFilter
 						/>
@@ -48,7 +52,10 @@ export default function Explore() {
 							componentId="ReviewAverage"
 							dataField="customerReviewAverage"
 							chartType="histogram"
+							react={{ and: ['Category', 'SubCategory', 'Color'] }}
 							type="range"
+							URLParams
+							useAsFilter
 						/>
 					</Card>
 				</Col>
@@ -60,6 +67,7 @@ export default function Explore() {
 							chartType="line"
 							type="term"
 							title="Color"
+							react={{ and: ['Category', 'ReviewAverage', 'SubCategory'] }}
 							URLParams
 							useAsFilter
 						/>
@@ -75,9 +83,17 @@ export default function Explore() {
 						infiniteScroll={false}
 						showResultStats={false}
 						renderNoResults={() => null}
+						react={{ and: ['Category', "SubCategory", 'ReviewAverage', 'Color'] }}
 						render={({ data, ...props }) => {
 							return (
-								<Card style={{ width: '100%' }}>
+								<Card
+									style={{ width: '100%' }}
+									onClick={() => {
+										const urlLocation = new URL(window.location.href)
+										const urlSearchParams = new URLSearchParams(urlLocation.search)
+										history.push(`/search?${urlSearchParams}`)
+									}}
+								>
 									<h1
 										style={{
 											padding: 10,
@@ -99,3 +115,6 @@ export default function Explore() {
 		</ReactiveBase>
 	);
 }
+
+
+export default withRouter(Explore)

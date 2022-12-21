@@ -10,11 +10,11 @@ const MenuBar = ({history}) => {
   return <Menu
 			onClick={({key}) => history.push(key)}
 			mode="horizontal"
+			style={{display: "flex", justifyContent: "flex-end", flex: 1}}
 			items={[
 				{ key: '/', label: 'Explore' },
 				{ key: '/search', label: 'Search' },
 			]}
-			style={{flex: 1}}
 		/>
 }
 const MenuBarWithRouter = withRouter(MenuBar)
