@@ -11,6 +11,8 @@ import {
 import { Card, Col, Collapse, Row } from 'antd';
 import React from 'react';
 
+const { Panel: CollapsePanel } = Collapse;
+
 export default function Search() {
 	return (
 		<ReactiveBase
@@ -27,18 +29,17 @@ export default function Search() {
 				</Col>
 			</Row>
 			<Row>
-				<Collapse>
-					<Col xs={24} md={8} style={{ padding: 10 }}>
-						<Card>
-							<h3>Category</h3>
+				<Col xs={24} md={8} style={{ padding: 10 }}>
+					<Collapse defaultActiveKey={['Category', 'Sub-Category', 'Ratings', 'Color']}>
+						<CollapsePanel header={<h3>Category</h3>} key="Category">
 							<SingleList
 								componentId="Category"
 								dataField="class.keyword"
 								URLParams
+								loader="Loading..."
 							/>
-						</Card>
-						<Card>
-							<h3>Sub-Category</h3>
+						</CollapsePanel>
+						<CollapsePanel header={<h3>Sub-Category</h3>} key="Sub-Category">
 							<ReactiveChart
 								componentId="SubCategory"
 								dataField="subclass.keyword"
@@ -46,10 +47,10 @@ export default function Search() {
 								type="term"
 								URLParams
 								useAsFilter
+								loader="Loading..."
 							/>
-						</Card>
-						<Card>
-							<h3>Ratings</h3>
+						</CollapsePanel>
+						<CollapsePanel header={<h3>Ratings</h3>} key="Ratings">
 							<DynamicRangeSlider
 								componentId="ReviewAverage"
 								dataField="customerReviewAverage"
@@ -58,12 +59,12 @@ export default function Search() {
 									start: min + ' ⭐️',
 									end: max + ' ⭐️',
 								})}
+								loader="Loading..."
 								showHistogram
 								URLParams
 							/>
-						</Card>
-						<Card>
-							<h3>Color</h3>
+						</CollapsePanel>
+						<CollapsePanel header={<h3>Color</h3>} key="Color">
 							<ReactiveChart
 								componentId="Color"
 								dataField="color.keyword"
@@ -71,10 +72,11 @@ export default function Search() {
 								type="term"
 								URLParams
 								useAsFilter
+								loader="Loading..."
 							/>
-						</Card>
-					</Col>
-				</Collapse>
+						</CollapsePanel>
+					</Collapse>
+				</Col>
 				<Col xs={24} md={16} style={{ padding: 10 }}>
 					<ReactiveList
 						componentId="SearchResult"
