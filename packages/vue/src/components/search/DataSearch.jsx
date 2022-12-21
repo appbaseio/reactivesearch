@@ -571,10 +571,10 @@ const DataSearch = {
 					// to set the query otherwise the value should reset
 
 					if (props.strictSelection && props.autosuggest) {
-						if (cause === causes.SUGGESTION_SELECT) {
+						if (cause === causes.SUGGESTION_SELECT || props.value !== undefined) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
-						} else {
-							this.setValue('', true, props, undefined, true, false);
+						} else if (this.currentValue !== '') {
+							this.setValue('', true);
 						}
 					} else {
 						this.updateQueryHandler(props.componentId, queryHandlerValue, props);
@@ -719,14 +719,20 @@ const DataSearch = {
 
 		handleKeyDown(event, highlightedIndex) {
 			const { value: targetValue } = event.target;
-			const { value } = this.$props;
+			const { value, strictSelection } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
 			}
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
 			if (event.key === 'Enter' && (highlightedIndex === null || highlightedIndex < 0)) {
-				this.setValue(targetValue, true, this.$props, undefined, false, false);
+				this.setValue(
+					this.$options.isTagsMode && strictSelection ? '' : targetValue,
+					true,
+					this.$props,
+					undefined,
+					false,
+				);
 				this.onValueSelectedHandler(targetValue, causes.ENTER_PRESS);
 			}
 			// Need to review
@@ -746,13 +752,12 @@ const DataSearch = {
 				this.setValue(inputValue, false, this.$props, undefined, true, false);
 			} else {
 				this.isPending = true;
-
+				this.currentValue = inputValue;
 				this.$emit(
 					'change',
 					inputValue,
 					({ isOpen = false } = {}) => {
 						if (this.$options.isTagsMode && autosuggest) {
-							this.currentValue = value;
 							this.isOpen = isOpen;
 							this.updateDefaultQueryHandlerDebounced(this.currentValue, this.$props);
 							return;
@@ -1334,6 +1339,8 @@ const DataSearch = {
 														domProps: getInputProps({
 															value:
 																this.$data.currentValue === null
+																|| typeof this.$data.currentValue
+																	!== 'string'
 																	? ''
 																	: this.$data.currentValue,
 														}),
@@ -1376,27 +1383,6 @@ const DataSearch = {
 												this.$emit('focus', e, this.triggerQuery);
 											},
 											keydown: (e) => {
-												const { value } = this.$props;
-												if (value !== undefined) {
-													this.isPending = true;
-												}
-
-												// if a suggestion was selected, delegate the handling to suggestion handler
-												if (e.key === 'Enter' && this.$options.isTagsMode) {
-													const { value: targetValue } = e.target;
-													this.setValue(
-														targetValue,
-														true,
-														this.$props,
-														undefined,
-														false,
-														true,
-													);
-													this.onValueSelectedHandler(
-														targetValue,
-														causes.ENTER_PRESS,
-													);
-												}
 												this.$emit('keyDown', e, this.triggerQuery);
 												this.$emit('key-down', e, this.triggerQuery);
 											},
