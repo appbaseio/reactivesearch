@@ -16,17 +16,21 @@ function App({ history }) {
 			enableAppbase
 		>
 			<Layout>
-				<Header style={{ padding: 0, display: 'flex', height: 'max-content' }}>
-					<div
-						style={{
-							paddingLeft: 10,
-							boxSizing: 'border-box',
-							background: '#',
-							width: '100%',
-						}}
-					>
+				<Header
+					style={{
+						padding: 0,
+						display: 'flex',
+						height: 'max-content',
+					}}
+				>
+					<div style={{ paddingLeft: 10, boxSizing: 'border-box' }}>
 						<img style={{ width: 30 }} src={reactivesearchLogo} alt="logo" />
 					</div>
+					<Typography.Text
+						style={{ color: '#fff', marginLeft: 10, justifySelf: 'flex-start' }}
+					>
+						Reactivesearch
+					</Typography.Text>
 				</Header>
 				<Layout>
 					<Content style={{ padding: 15 }}>
@@ -39,6 +43,7 @@ function App({ history }) {
 									dataField="albumTitle"
 									componentId="SearchBox"
 									style={{ width: '100%' }}
+									placeholder="Try searching for 'Tech Toys'"
 								/>
 							</Row>
 						</Row>

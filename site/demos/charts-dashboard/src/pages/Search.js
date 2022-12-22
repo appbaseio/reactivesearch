@@ -24,6 +24,7 @@ export default function Search() {
 						dataField="albumTitle"
 						componentId="SearchBox"
 						style={{ width: '100%' }}
+						placeholder="Try searching for 'Tech Toys'"
 					/>
 				</Row>
 			</Row>
