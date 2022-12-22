@@ -2,6 +2,7 @@ import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters } from '@appbase
 import { Col, Grid, Row } from 'antd';
 import React from 'react';
 import CollapsibleFacets from '../components/CollapsibleFacets';
+import MobileFacets from '../components/MobileFacets';
 
 const { useBreakpoint } = Grid;
 
@@ -25,6 +26,7 @@ export default function Search() {
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
 					{breakpointActive.md && <CollapsibleFacets />}
+					{breakpointActive.xs && <MobileFacets />}
 				</Col>
 				<Col xs={24} md={16} style={{ padding: 10 }}>
 					<ReactiveList
