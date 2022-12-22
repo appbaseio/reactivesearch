@@ -12,7 +12,8 @@ export default function MobileFacets() {
 					position: 'fixed',
 					width: '100%',
 					zIndex: '2',
-					bottom: '0px',
+					bottom: 0,
+					left: 0,
 				}}
 			>
 				<Button onClick={() => setOpen(true)} style={{ width: '100%' }} type="primary">
