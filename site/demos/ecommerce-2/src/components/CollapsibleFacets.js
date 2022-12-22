@@ -1,4 +1,4 @@
-import { DynamicRangeSlider, ReactiveChart, SingleList, TreeList } from '@appbaseio/reactivesearch';
+import { ReactiveChart, TreeList } from '@appbaseio/reactivesearch';
 import { Collapse } from 'antd';
 
 const { Panel: CollapsePanel } = Collapse;
