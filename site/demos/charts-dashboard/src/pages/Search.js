@@ -1,5 +1,5 @@
 import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters } from '@appbaseio/reactivesearch';
-import { Col, Grid, Row } from 'antd';
+import { Col, Grid, Row, BackTop } from 'antd';
 import React from 'react';
 import CollapsibleFacets from '../components/CollapsibleFacets';
 import MobileFacets from '../components/MobileFacets';
@@ -16,12 +16,16 @@ export default function Search() {
 			enableAppbase
 		>
 			<Row>
-				<Col md={24} style={{ padding: 10 }}>
+				<Row style={{ padding: 10, width: '100%' }}>
 					<SelectedFilters />
-				</Col>
-				<Col md={24} style={{ padding: 10 }}>
-					<SearchBox dataField="albumTitle" componentId="SearchBox" />
-				</Col>
+				</Row>
+				<Row style={{ padding: 10, width: '100%' }}>
+					<SearchBox
+						dataField="albumTitle"
+						componentId="SearchBox"
+						style={{ width: '100%' }}
+					/>
+				</Row>
 			</Row>
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
@@ -79,6 +83,16 @@ export default function Search() {
 					/>
 				</Col>
 			</Row>
+			<BackTop
+				style={{
+					boxShadow: 'black 0px 0px 5px',
+					borderRadius: '3px',
+					width: 'max-content',
+					background: '#fff',
+				}}
+			>
+				<div style={{ padding: 10 }}>Back to top</div>
+			</BackTop>
 		</ReactiveBase>
 	);
 }
