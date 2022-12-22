@@ -4,6 +4,8 @@ import CollapsibleFacets from './components/CollapsibleFacets';
 import MobileFacets from './components/MobileFacets';
 import reactivesearchLogo from './reactivesearch-icon.png';
 
+import './App.css';
+
 const { Header, Content } = Layout;
 const { useBreakpoint } = Grid;
 
@@ -59,6 +61,8 @@ function App({ history }) {
 									className="result-list-container"
 									from={0}
 									size={5}
+									showExport
+									innerClass={{ resultStats: 'result-stats' }}
 									renderItem={(data) => {
 										return (
 											<div
