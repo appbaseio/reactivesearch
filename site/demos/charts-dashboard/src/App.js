@@ -13,7 +13,7 @@ const MenuBar = ({ history, location }) => {
 			mode="horizontal"
 			style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}
 			items={[
-				{ key: '/', label: 'Explore' },
+				{ key: '/explore', label: 'Explore' },
 				{ key: '/search', label: 'Search' },
 			]}
 			defaultSelectedKeys={[location.pathname]}
@@ -23,7 +23,19 @@ const MenuBar = ({ history, location }) => {
 };
 const MenuBarWithRouter = withRouter(MenuBar);
 
-function App({ history }) {
+const Logo = ({ history }) => (
+	<div onClick={() => history.push('/explore')} style={{ display: 'flex', cursor: 'pointer' }}>
+		<div style={{ paddingLeft: 10, boxSizing: 'border-box' }}>
+			<img style={{ width: 30 }} src={reactivesearchLogo} alt="logo" />
+		</div>
+		<Typography.Text style={{ background: '#fff', marginLeft: 10 }}>
+			Reactivesearch
+		</Typography.Text>
+	</div>
+);
+const LogoWithRouter = withRouter(Logo);
+
+function App() {
 	return (
 		<Router>
 			<Layout>
@@ -35,25 +47,20 @@ function App({ history }) {
 						background: '#fff',
 					}}
 				>
-					<div style={{ paddingLeft: 10, boxSizing: 'border-box' }}>
-						<img style={{ width: 30 }} src={reactivesearchLogo} alt="logo" />
-					</div>
-					<Typography.Text style={{ background: '#fff', marginLeft: 10 }}>
-						Reactivesearch
-					</Typography.Text>
+					<LogoWithRouter />
 					<MenuBarWithRouter />
 				</Header>
 				<Layout>
 					<Content>
 						<Switch>
-							<Route exact path="/">
+							<Route exact path="/explore">
 								<Explore />
 							</Route>
 							<Route path="/search">
 								<Search />
 							</Route>
 							<Route path="/">
-								<Redirect to="/" />
+								<Redirect to="/explore" />
 							</Route>
 						</Switch>
 					</Content>
