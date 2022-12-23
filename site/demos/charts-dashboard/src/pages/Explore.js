@@ -1,9 +1,14 @@
-import { ReactiveBase, ReactiveChart, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	ReactiveChart,
+	ReactiveList,
+	SelectedFilters,
+} from '@appbaseio/reactivesearch';
 import { Card, Col, Row } from 'antd';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-function Explore({history}) {
+function Explore({ history }) {
 	return (
 		<ReactiveBase
 			app="best-buy-dataset"
@@ -76,46 +81,44 @@ function Explore({history}) {
 				</Col>
 			</Row>
 			<Row>
-				<Col md={24}>
-					<ReactiveList
-						componentId="ListComponent"
-						dataField="albumTitle"
-						pagination={false}
-						infiniteScroll={false}
-						showResultStats={false}
-						renderNoResults={() => null}
-						react={{ and: ['Category', "SubCategory", 'ReviewAverage', 'Color'] }}
-						render={({ data, ...props }) => {
-							return (
-								<Card
-									style={{ width: '100%' }}
-									onClick={() => {
-										const urlLocation = new URL(window.location.href)
-										const urlSearchParams = new URLSearchParams(urlLocation.search)
-										history.push(`/search?${urlSearchParams}`)
+				<ReactiveList
+					componentId="ListComponent"
+					dataField="albumTitle"
+					pagination={false}
+					infiniteScroll={false}
+					showResultStats={false}
+					renderNoResults={() => null}
+					react={{ and: ['Category', 'SubCategory', 'ReviewAverage', 'Color'] }}
+					style={{ width: '100%' }}
+					render={({ data, ...props }) => {
+						return (
+							<Card
+								style={{ width: '100%' }}
+								onClick={() => {
+									const urlLocation = new URL(window.location.href);
+									const urlSearchParams = new URLSearchParams(urlLocation.search);
+									history.push(`/search?${urlSearchParams}`);
+								}}
+							>
+								<h1
+									style={{
+										padding: 10,
+										textAlign: 'center',
+										cursor: 'pointer',
+										color: '#00a',
 									}}
 								>
-									<h1
-										style={{
-											padding: 10,
-											textAlign: 'center',
-											cursor: 'pointer',
-											color: '#00a',
-										}}
-									>
-										{!props.loading
-											? `${props.resultStats.numberOfResults} matched the above criteria. View now.`
-											: 'View Search Results'}
-									</h1>
-								</Card>
-							);
-						}}
-					/>
-				</Col>
+									{!props.loading
+										? `${props.resultStats.numberOfResults} matched the above criteria. View now.`
+										: 'View Search Results'}
+								</h1>
+							</Card>
+						);
+					}}
+				/>
 			</Row>
 		</ReactiveBase>
 	);
 }
 
-
-export default withRouter(Explore)
+export default withRouter(Explore);
