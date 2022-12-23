@@ -1,3 +1,4 @@
+import { SelectedFilters } from '@appbaseio/reactivesearch';
 import { Button, Modal } from 'antd';
 import { useState } from 'react';
 import CollapsibleFacets from './CollapsibleFacets';
@@ -31,7 +32,9 @@ export default function MobileFacets() {
 						marginTop: '1rem',
 					}}
 				>
-					<CollapsibleFacets />
+					<SelectedFilters />
+					<br />
+					<CollapsibleFacets isMobile />
 				</div>
 			</Modal>
 		</>

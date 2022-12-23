@@ -3,9 +3,13 @@ import { Collapse } from 'antd';
 
 const { Panel: CollapsePanel } = Collapse;
 
-export default function CollapsibleFacets() {
+export default function CollapsibleFacets({ isMobile }) {
 	return (
-		<Collapse defaultActiveKey={['Category', 'Sub-Category', 'Ratings', 'Color']}>
+		<Collapse
+			defaultActiveKey={
+				isMobile ? ['Category'] : ['Category', 'Sub-Category', 'Ratings', 'Color']
+			}
+		>
 			<CollapsePanel header={<h3>Category</h3>} key="Category">
 				<TreeList
 					componentId="Category"
