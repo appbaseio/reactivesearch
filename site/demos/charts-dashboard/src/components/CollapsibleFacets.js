@@ -12,6 +12,7 @@ export default function CollapsibleFacets() {
 					dataField="class.keyword"
 					URLParams
 					loader="Loading..."
+					react={{ and: ['SubCategory', 'ReviewAverage', 'Color', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 			<CollapsePanel header={<h3>Sub-Category</h3>} key="Sub-Category">
@@ -23,6 +24,7 @@ export default function CollapsibleFacets() {
 					URLParams
 					useAsFilter
 					loader="Loading..."
+					react={{ and: ['Category', 'ReviewAverage', 'Color', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 			<CollapsePanel header={<h3>Ratings</h3>} key="Ratings">
@@ -37,6 +39,7 @@ export default function CollapsibleFacets() {
 					loader="Loading..."
 					showHistogram
 					URLParams
+					react={{ and: ['Category', 'SubCategory', 'Color', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 			<CollapsePanel header={<h3>Color</h3>} key="Color">
@@ -48,6 +51,7 @@ export default function CollapsibleFacets() {
 					URLParams
 					useAsFilter
 					loader="Loading..."
+					react={{ and: ['Category', 'SubCategory', 'ReviewAverage', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 		</Collapse>

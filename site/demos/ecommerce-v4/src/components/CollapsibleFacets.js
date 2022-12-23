@@ -15,6 +15,7 @@ export default function CollapsibleFacets() {
 					mode="multiple"
 					URLParams
 					dataField={['class.keyword', 'subclass.keyword']}
+					react={{ and: ['SubCategory', 'Color', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 			<CollapsePanel header={<h3>Color</h3>} key="Color">
@@ -26,6 +27,7 @@ export default function CollapsibleFacets() {
 					URLParams
 					useAsFilter
 					loader="Loading..."
+					react={{ and: ['Category', 'SubCategory', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 			<CollapsePanel header={<h3>Alternate categories</h3>} key="Sub-Category">
@@ -37,6 +39,7 @@ export default function CollapsibleFacets() {
 					URLParams
 					useAsFilter
 					loader="Loading..."
+					react={{ and: ['Category', 'Color', 'SearchBox'] }}
 				/>
 			</CollapsePanel>
 		</Collapse>
