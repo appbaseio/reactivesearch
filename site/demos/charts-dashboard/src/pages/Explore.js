@@ -46,6 +46,20 @@ function Explore({ history }) {
 							react={{ and: ['Category', 'ReviewAverage', 'Color'] }}
 							URLParams
 							useAsFilter
+							setOption={(data) => {
+								let options = ReactiveChart.getOption(data);
+								let xAxis = options && options.xAxis;
+								let yAxis = options && options.yAxis;
+								xAxis.axisLabel = {
+									rotate: 90,
+									fontSize: 7,
+								};
+								yAxis.axisLabel = {
+									fontSize: 10,
+								};
+								options.xAxis = xAxis;
+								return options;
+							}}
 						/>
 					</Card>
 				</Col>
