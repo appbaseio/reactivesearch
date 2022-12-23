@@ -39,6 +39,20 @@ export default function CollapsibleFacets() {
 					URLParams
 					useAsFilter
 					loader="Loading..."
+					setOption={(data) => {
+						let options = ReactiveChart.getOption(data);
+						let xAxis = options && options.xAxis;
+						let yAxis = options && options.yAxis;
+						xAxis.axisLabel = {
+							rotate: 90,
+							fontSize: 7,
+						};
+						yAxis.axisLabel = {
+							fontSize: 8,
+						};
+						options.xAxis = xAxis;
+						return options;
+					}}
 					react={{ and: ['Category', 'Color', 'SearchBox'] }}
 				/>
 			</CollapsePanel>

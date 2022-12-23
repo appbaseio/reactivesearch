@@ -3,9 +3,13 @@ import { Collapse } from 'antd';
 
 const { Panel: CollapsePanel } = Collapse;
 
-export default function CollapsibleFacets() {
+export default function CollapsibleFacets({ isMobile }) {
 	return (
-		<Collapse defaultActiveKey={['Category', 'Sub-Category', 'Ratings', 'Color']}>
+		<Collapse
+			defaultActiveKey={
+				isMobile ? ['Category'] : ['Category', 'Sub-Category', 'Ratings', 'Color']
+			}
+		>
 			<CollapsePanel header={<h3>Category</h3>} key="Category">
 				<SingleList
 					componentId="Category"
@@ -24,7 +28,22 @@ export default function CollapsibleFacets() {
 					URLParams
 					useAsFilter
 					loader="Loading..."
+					style={{ padding: 20 }}
 					react={{ and: ['Category', 'ReviewAverage', 'Color', 'SearchBox'] }}
+					setOption={(data) => {
+						let options = ReactiveChart.getOption(data);
+						let xAxis = options && options.xAxis;
+						let yAxis = options && options.yAxis;
+						xAxis.axisLabel = {
+							rotate: 90,
+							fontSize: 7,
+						};
+						yAxis.axisLabel = {
+							fontSize: 8,
+						};
+						options.xAxis = xAxis;
+						return options;
+					}}
 				/>
 			</CollapsePanel>
 			<CollapsePanel header={<h3>Ratings</h3>} key="Ratings">
