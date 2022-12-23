@@ -1,5 +1,5 @@
 import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters } from '@appbaseio/reactivesearch';
-import { Col, Grid, Layout, Row, Typography } from 'antd';
+import { BackTop, Col, Grid, Layout, Row, Typography } from 'antd';
 import CollapsibleFacets from './components/CollapsibleFacets';
 import MobileFacets from './components/MobileFacets';
 import reactivesearchLogo from './reactivesearch-icon.png';
@@ -123,6 +123,16 @@ function App({ history }) {
 								/>
 							</Col>
 						</Row>
+						<BackTop
+							style={{
+								boxShadow: 'black 0px 0px 5px',
+								borderRadius: '3px',
+								width: 'max-content',
+								background: '#fff',
+							}}
+						>
+							<div style={{ padding: 10 }}>&#11014;</div>
+						</BackTop>
 					</Content>
 				</Layout>
 			</Layout>

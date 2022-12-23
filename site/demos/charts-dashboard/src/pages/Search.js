@@ -92,7 +92,7 @@ export default function Search() {
 					background: '#fff',
 				}}
 			>
-				<div style={{ padding: 10 }}>Back to top</div>
+				<div style={{ padding: 10 }}>&#11014;</div>
 			</BackTop>
 		</ReactiveBase>
 	);
