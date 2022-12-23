@@ -21,7 +21,7 @@ export default function Search() {
 				</Row>
 				<Row style={{ padding: 10, width: '100%' }}>
 					<SearchBox
-						dataField="albumTitle"
+						dataField={['albumTitle', 'name']}
 						componentId="SearchBox"
 						style={{ width: '100%' }}
 						placeholder="Try searching for 'Tech Toys'"

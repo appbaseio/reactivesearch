@@ -42,14 +42,14 @@ function App({ history }) {
 							</Row>
 							<Row style={{ padding: 10, width: '100%' }}>
 								<SearchBox
-									dataField="albumTitle"
+									dataField={['albumTitle', 'name']}
 									componentId="SearchBox"
 									style={{ width: '100%' }}
 									placeholder="Try searching for 'Tech Toys'"
 								/>
 							</Row>
 						</Row>
-						<Row>
+						<Row style={{ position: 'relative' }}>
 							<Col xs={24} md={8} style={{ padding: 10 }}>
 								{breakpointActive.md && <CollapsibleFacets />}
 								{breakpointActive.xs && <MobileFacets />}
