@@ -30,7 +30,7 @@ export default function Search() {
 			</Row>
 			<Row>
 				<Col xs={24} md={8} style={{ padding: 10 }}>
-					{breakpointActive.md && <CollapsibleFacets />}
+					{breakpointActive.sm && <CollapsibleFacets />}
 					{breakpointActive.xs && <MobileFacets />}
 				</Col>
 				<Col xs={24} md={16} style={{ padding: 10 }}>
