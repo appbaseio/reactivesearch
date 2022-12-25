@@ -4,6 +4,8 @@ import Explore from './pages/Explore';
 import Search from './pages/Search';
 import reactivesearchLogo from '../src/reactivesearch-icon.png';
 
+import './App.css';
+
 const { Header, Content } = Layout;
 
 const MenuBar = ({ history, location }) => {
@@ -11,7 +13,7 @@ const MenuBar = ({ history, location }) => {
 		<Menu
 			onClick={({ key }) => history.push(key)}
 			mode="horizontal"
-			style={{ display: 'flex', justifyContent: 'flex-end', flex: 1 }}
+			className="headerMenu"
 			items={[
 				{ key: '/explore', label: 'Explore' },
 				{ key: '/search', label: 'Search' },
@@ -24,13 +26,11 @@ const MenuBar = ({ history, location }) => {
 const MenuBarWithRouter = withRouter(MenuBar);
 
 const Logo = ({ history }) => (
-	<div onClick={() => history.push('/explore')} style={{ display: 'flex', cursor: 'pointer' }}>
-		<div style={{ paddingLeft: 10, boxSizing: 'border-box' }}>
-			<img style={{ width: 30 }} src={reactivesearchLogo} alt="logo" />
+	<div onClick={() => history.push('/explore')} className="logo">
+		<div className="logo__container">
+			<img className="logo__img" src={reactivesearchLogo} alt="logo" />
 		</div>
-		<Typography.Text style={{ background: '#fff', marginLeft: 10 }}>
-			Reactivesearch
-		</Typography.Text>
+		<Typography.Text className="logo__text">Reactivesearch</Typography.Text>
 	</div>
 );
 const LogoWithRouter = withRouter(Logo);
@@ -39,14 +39,7 @@ function App() {
 	return (
 		<Router>
 			<Layout>
-				<Header
-					style={{
-						padding: 0,
-						display: 'flex',
-						height: 'max-content',
-						background: '#fff',
-					}}
-				>
+				<Header className="header">
 					<LogoWithRouter />
 					<MenuBarWithRouter />
 				</Header>

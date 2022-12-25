@@ -28,7 +28,7 @@ export default function CollapsibleFacets({ isMobile }) {
 					URLParams
 					useAsFilter
 					loader="Loading..."
-					style={{ padding: 20 }}
+					className="chart--line"
 					react={{ and: ['Category', 'ReviewAverage', 'Color', 'SearchBox'] }}
 					setOption={(data) => {
 						let options = ReactiveChart.getOption(data);

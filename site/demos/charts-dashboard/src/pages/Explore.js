@@ -16,12 +16,12 @@ function Explore({ history }) {
 			enableAppbase
 		>
 			<Row>
-				<Col md={24} style={{ padding: 10 }}>
+				<Col md={24} className="p10">
 					<SelectedFilters />
 				</Col>
 			</Row>
 			<Row>
-				<Col xs={24} md={12} style={{ padding: 10 }}>
+				<Col xs={24} md={12} className="p10">
 					<Card>
 						<ReactiveChart
 							componentId="Category"
@@ -35,7 +35,7 @@ function Explore({ history }) {
 						/>
 					</Card>
 				</Col>
-				<Col xs={24} md={12} style={{ padding: 10 }}>
+				<Col xs={24} md={12} className="p10">
 					<Card>
 						<ReactiveChart
 							componentId="SubCategory"
@@ -65,7 +65,7 @@ function Explore({ history }) {
 				</Col>
 			</Row>
 			<Row>
-				<Col xs={24} md={12} style={{ padding: 10 }}>
+				<Col xs={24} md={12} className="p10">
 					<Card>
 						<ReactiveChart
 							componentId="ReviewAverage"
@@ -79,7 +79,7 @@ function Explore({ history }) {
 						/>
 					</Card>
 				</Col>
-				<Col xs={24} md={12} style={{ padding: 10 }}>
+				<Col xs={24} md={12} className="p10">
 					<Card>
 						<ReactiveChart
 							componentId="Color"
@@ -103,25 +103,18 @@ function Explore({ history }) {
 					showResultStats={false}
 					renderNoResults={() => null}
 					react={{ and: ['Category', 'SubCategory', 'ReviewAverage', 'Color'] }}
-					style={{ width: '100%' }}
+					className="fullWidth"
 					render={({ data, ...props }) => {
 						return (
 							<Card
-								style={{ width: '100%' }}
+								className="fullWidth"
 								onClick={() => {
 									const urlLocation = new URL(window.location.href);
 									const urlSearchParams = new URLSearchParams(urlLocation.search);
 									history.push(`/search?${urlSearchParams}`);
 								}}
 							>
-								<h1
-									style={{
-										padding: 10,
-										textAlign: 'center',
-										cursor: 'pointer',
-										color: '#00a',
-									}}
-								>
+								<h1 className="resultsCard">
 									{!props.loading
 										? `${props.resultStats.numberOfResults} matched the above criteria. View now.`
 										: 'View Search Results'}

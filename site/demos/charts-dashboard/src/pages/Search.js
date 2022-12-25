@@ -17,24 +17,24 @@ export default function Search() {
 			initialQueriesSyncTime={1000}
 		>
 			<Row>
-				<Row style={{ padding: 10, width: '100%' }}>
+				<Row className="p10 fullWidth">
 					<SelectedFilters />
 				</Row>
-				<Row style={{ padding: 10, width: '100%' }}>
+				<Row className="p10 fullWidth">
 					<SearchBox
 						dataField={['albumTitle', 'name']}
 						componentId="SearchBox"
-						style={{ width: '100%' }}
+						className="fullWidth"
 						placeholder="Try searching for 'Tech Toys'"
 					/>
 				</Row>
 			</Row>
 			<Row>
-				<Col xs={24} md={8} style={{ padding: 10 }}>
+				<Col xs={24} md={8} className="p10">
 					{breakpointActive.sm && <CollapsibleFacets />}
 					{breakpointActive.xs && <MobileFacets />}
 				</Col>
-				<Col xs={24} md={16} style={{ padding: 10 }}>
+				<Col xs={24} md={16} className="p10">
 					<ReactiveList
 						componentId="SearchResult"
 						dataField="original_title"
@@ -43,23 +43,24 @@ export default function Search() {
 						size={5}
 						renderItem={(data) => {
 							return (
-								<div
-									style={{ display: 'flex', padding: 20, background: '#fff' }}
-									key={data._id}
-								>
-									<img src={data.image} alt="Book Cover" style={{ width: 100 }} />
-									<div
-										style={{
-											display: 'flex',
-											flexDirection: 'column',
-											marginLeft: 20,
-										}}
-									>
+								<div className="resultItem" key={data._id}>
+									<img
+										src={data.image}
+										alt="Book Cover"
+										className="resultItem__img"
+									/>
+									<div className="resultItem__body">
 										<div className="book-header">{data.name}</div>
 										<div className="flex column justify-space-between">
 											<div>
 												<div>
-													{data.class} > {data.subclass}
+													<span className="resultItem__category">
+														{data.class}
+													</span>{' '}
+													<span>></span>{' '}
+													<span className="resultItem__subCategory">
+														{data.subclass}
+													</span>
 												</div>
 												<div className="ratings-list flex align-center">
 													Sale price:{' '}
@@ -93,7 +94,7 @@ export default function Search() {
 					background: '#fff',
 				}}
 			>
-				<div style={{ padding: 10 }}>&#11014;</div>
+				<div className="p10">&#11014;</div>
 			</BackTop>
 		</ReactiveBase>
 	);
