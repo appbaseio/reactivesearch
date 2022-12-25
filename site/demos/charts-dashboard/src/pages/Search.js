@@ -86,15 +86,8 @@ export default function Search() {
 					/>
 				</Col>
 			</Row>
-			<BackTop
-				style={{
-					boxShadow: 'black 0px 0px 5px',
-					borderRadius: '3px',
-					width: 'max-content',
-					background: '#fff',
-				}}
-			>
-				<div className="p10">&#11014;</div>
+			<BackTop className="backToTop">
+				<div className="p10 text-center">&#11014;</div>
 			</BackTop>
 		</ReactiveBase>
 	);

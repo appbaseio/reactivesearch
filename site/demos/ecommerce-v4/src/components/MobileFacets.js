@@ -8,16 +8,8 @@ export default function MobileFacets() {
 
 	return (
 		<>
-			<div
-				style={{
-					position: 'fixed',
-					width: '100%',
-					zIndex: '2',
-					bottom: 0,
-					left: 0,
-				}}
-			>
-				<Button onClick={() => setOpen(true)} style={{ width: '100%' }} type="primary">
+			<div className="showFilters">
+				<Button onClick={() => setOpen(true)} className="fullWidth" type="primary">
 					Show Facets
 				</Button>
 			</div>
@@ -27,11 +19,7 @@ export default function MobileFacets() {
 				onCancel={() => setOpen(false)}
 				onOk={() => setOpen(false)}
 			>
-				<div
-					style={{
-						marginTop: '1rem',
-					}}
-				>
+				<div className="mobileFacetModal">
 					<SelectedFilters />
 					<br />
 					<CollapsibleFacets isMobile />

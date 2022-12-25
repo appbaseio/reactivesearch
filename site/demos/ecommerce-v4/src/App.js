@@ -19,39 +19,29 @@ function App({ history }) {
 			initialQueriesSyncTime={1000}
 		>
 			<Layout>
-				<Header
-					style={{
-						padding: 0,
-						display: 'flex',
-						height: 'max-content',
-					}}
-				>
-					<div style={{ paddingLeft: 10, boxSizing: 'border-box' }}>
-						<img style={{ width: 30 }} src={reactivesearchLogo} alt="logo" />
+				<Header className="header">
+					<div className="logo">
+						<img className="logo__img" src={reactivesearchLogo} alt="logo" />
 					</div>
-					<Typography.Text
-						style={{ color: '#fff', marginLeft: 10, justifySelf: 'flex-start' }}
-					>
-						Reactivesearch
-					</Typography.Text>
+					<Typography.Text className="header__text">Reactivesearch</Typography.Text>
 				</Header>
 				<Layout>
-					<Content style={{ padding: 15 }}>
+					<Content className="p10">
 						<Row>
-							<Row style={{ padding: 10, width: '100%' }}>
+							<Row className="p10 fullWidth">
 								<SelectedFilters />
 							</Row>
-							<Row style={{ padding: 10, width: '100%' }}>
+							<Row className="p10 fullWidth">
 								<SearchBox
 									dataField={['albumTitle', 'name']}
 									componentId="SearchBox"
-									style={{ width: '100%' }}
+									className="fullWidth"
 									placeholder="Try searching for 'Tech Toys'"
 								/>
 							</Row>
 						</Row>
-						<Row style={{ position: 'relative' }}>
-							<Col xs={24} md={8} style={{ padding: 10 }}>
+						<Row className="relative">
+							<Col xs={24} md={8} className="p10">
 								{breakpointActive.sm && <CollapsibleFacets />}
 								{breakpointActive.xs && <MobileFacets />}
 							</Col>
@@ -66,31 +56,24 @@ function App({ history }) {
 									innerClass={{ resultStats: 'result-stats' }}
 									renderItem={(data) => {
 										return (
-											<div
-												style={{
-													display: 'flex',
-													padding: 20,
-													background: '#fff',
-												}}
-												key={data._id}
-											>
+											<div className="resultItem" key={data._id}>
 												<img
 													src={data.image}
 													alt="Book Cover"
-													style={{ width: 100 }}
+													className="resultItem__img"
 												/>
-												<div
-													style={{
-														display: 'flex',
-														flexDirection: 'column',
-														marginLeft: 20,
-													}}
-												>
+												<div className="resultItem__body">
 													<div className="book-header">{data.name}</div>
 													<div className="flex column justify-space-between">
 														<div>
 															<div>
-																{data.class} > {data.subclass}
+																<span className="resultItem__category">
+																	{data.class}
+																</span>{' '}
+																<span>></span>{' '}
+																<span className="resultItem__subCategory">
+																	{data.subclass}
+																</span>
 															</div>
 															<div className="ratings-list flex align-center">
 																Sale price:{' '}
@@ -124,15 +107,8 @@ function App({ history }) {
 								/>
 							</Col>
 						</Row>
-						<BackTop
-							style={{
-								boxShadow: 'black 0px 0px 5px',
-								borderRadius: '3px',
-								width: 'max-content',
-								background: '#fff',
-							}}
-						>
-							<div style={{ padding: 10 }}>&#11014;</div>
+						<BackTop className="backToTop">
+							<div className="p10 text-center">&#11014;</div>
 						</BackTop>
 					</Content>
 				</Layout>
