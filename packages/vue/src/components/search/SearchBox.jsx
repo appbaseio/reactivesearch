@@ -1457,11 +1457,11 @@ export const SBConnected = PreferencesConsumer(
 		internalComponent: true,
 	}),
 );
-
-SearchBox.install = function (Vue) {
-	Vue.component(SearchBox.name, SBConnected);
+SBConnected.name = SearchBox.name;
+SBConnected.install = function (Vue) {
+	Vue.component(SBConnected.name, SBConnected);
 };
 // Add componentType for SSR
-SearchBox.componentType = componentTypes.searchBox;
+SBConnected.componentType = componentTypes.searchBox;
 
-export default SearchBox;
+export default SBConnected;

@@ -1612,10 +1612,13 @@ export const DSConnected = PreferencesConsumer(
 	}),
 );
 
-DataSearch.install = function (Vue) {
-	Vue.component(DataSearch.name, DSConnected);
+DSConnected.name = DataSearch.name;
+
+// plugins usage
+DSConnected.install = function (Vue) {
+	Vue.component(DSConnected.name, DSConnected);
 };
 // Add componentType for SSR
-DataSearch.componentType = componentTypes.dataSearch;
+DSConnected.componentType = componentTypes.dataSearch;
 
-export default DataSearch;
+export default DSConnected;
