@@ -125,6 +125,7 @@ const DataSearch = {
 			this.updateDefaultQueryHandler,
 			this.$props.debounce,
 		);
+		this.updateQueryHandlerDebounced = debounce(this.updateQueryHandler, this.$props.debounce);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
@@ -364,7 +365,7 @@ const DataSearch = {
 					newVal,
 					true,
 					this.$props,
-					undefined,
+					newVal === '' ? causes.CLEAR_VALUE : undefined,
 					false,
 					typeof newVal !== 'string' && this.$options.isTagsMode,
 				);
@@ -419,12 +420,10 @@ const DataSearch = {
 		handleText(value) {
 			if (this.$props.autosuggest) {
 				this.updateDefaultQueryHandlerDebounced(value, this.$props);
-			} else {
-				this.updateDefaultQueryHandlerDebounced(
-					this.$props.componentId,
-					value,
-					this.$props,
-				);
+			} else if (!this.$options.isTagsMode) {
+				this.updateQueryHandlerDebounced(this.$props.componentId, value, this.$props);
+			} else if (this.$options.isTagsMode) {
+				this.$data.currentValue = value;
 			}
 		},
 		validateDataField() {
@@ -571,15 +570,10 @@ const DataSearch = {
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
-					if (props.strictSelection) {
-						if (
-							cause === causes.SUGGESTION_SELECT
-							|| (this.$options.isTagsMode
-								? this.selectedTags.length === 0
-								: value === '')
-						) {
+					if (props.strictSelection && props.autosuggest) {
+						if (cause === causes.SUGGESTION_SELECT || props.value !== undefined) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
-						} else {
+						} else if (this.currentValue !== '') {
 							this.setValue('', true);
 						}
 					} else {
@@ -645,7 +639,6 @@ const DataSearch = {
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
-
 			let customQueryOptions;
 			const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
 			let query = defaultQueryTobeSet;
@@ -724,20 +717,33 @@ const DataSearch = {
 		},
 
 		handleKeyDown(event, highlightedIndex) {
-			const { value } = this.$props;
+			const { value: targetValue } = event.target;
+			const { value, strictSelection, size } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
 			}
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
-			if (event.key === 'Enter' && highlightedIndex === null) {
+			if (
+				event.key === 'Enter'
+				&& (highlightedIndex === null
+					|| highlightedIndex < 0
+					|| highlightedIndex
+						=== [
+							...[...this.suggestionsList].slice(0, size || 10),
+							...this.defaultSearchSuggestions,
+							...this.topSuggestions,
+						].length)
+			) {
+				this.isPending = false;
 				this.setValue(
-					event.target.value,
+					this.$options.isTagsMode && strictSelection ? '' : targetValue,
 					true,
 					this.$props,
-					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+					undefined,
+					false,
 				);
-				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
+				this.onValueSelectedHandler(targetValue, causes.ENTER_PRESS);
 			}
 			// Need to review
 			this.$emit('keyDown', event, this.triggerQuery);
@@ -756,13 +762,12 @@ const DataSearch = {
 				this.setValue(inputValue, false, this.$props, undefined, true, false);
 			} else {
 				this.isPending = true;
-
+				this.currentValue = inputValue;
 				this.$emit(
 					'change',
 					inputValue,
 					({ isOpen = false } = {}) => {
 						if (this.$options.isTagsMode && autosuggest) {
-							this.currentValue = value;
 							this.isOpen = isOpen;
 							this.updateDefaultQueryHandlerDebounced(this.currentValue, this.$props);
 							return;
@@ -1344,6 +1349,8 @@ const DataSearch = {
 														domProps: getInputProps({
 															value:
 																this.$data.currentValue === null
+																|| typeof this.$data.currentValue
+																	!== 'string'
 																	? ''
 																	: this.$data.currentValue,
 														}),
@@ -1413,6 +1420,7 @@ const DataSearch = {
 							</InputWrapper>
 							{this.renderInputAddonAfter()}
 						</InputGroup>
+						{this.renderTags()}
 					</div>
 				)}
 			</Container>

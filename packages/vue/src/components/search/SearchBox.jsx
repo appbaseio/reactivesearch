@@ -297,7 +297,7 @@ const SearchBox = {
 					// selected value is cleared, call onValueSelected
 					this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 				}
-				// if (this.$props.value === undefined) {
+
 				if (this.$options.isTagsMode) {
 					// handling reset of tags through SelectedFilters or URL
 					this.selectedTags = [];
@@ -307,7 +307,6 @@ const SearchBox = {
 					cause = causes.SUGGESTION_SELECT;
 				}
 				this.setValue(newVal || '', true, this.$props, cause);
-				// }
 			}
 		},
 		focusShortcuts() {
@@ -448,10 +447,7 @@ const SearchBox = {
 						if (typeof value === 'string' && !!value) {
 							this.selectedTags.push(value);
 						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
-							const mergedArray = Array.from(
-								new Set([...this.selectedTags, ...value]),
-							);
-							this.selectedTags = mergedArray;
+							this.selectedTags = value;
 						}
 					} else if (value) {
 						this.selectedTags = typeof value !== 'string' ? value : [...value];
