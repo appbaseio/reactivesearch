@@ -49,11 +49,11 @@
 		"url-search-params-polyfill": "^7.0.0",
 		"vue-highlight-words": "^1.2.0",
 		"vue-no-ssr": "^1.1.0",
-		"vue-slider-component": "^3.2.15",
-		"vue-types": "^1.7.0"
+		"vue-slider-component": "next",
+		"vue-types": "^5.0.2"
 	},
 	"peerDependencies": {
-		"vue": "^2.6.10"
+		"vue": "^3.1.0"
 	},
 	"devDependencies": {
 		"@babel/plugin-external-helpers": "^7.2.0",
@@ -64,7 +64,8 @@
 		"@babel/plugin-syntax-jsx": "^7.2.0",
 		"@babel/preset-env": "^7.5.5",
 		"@babel/preset-stage-2": "^7.0.0",
-		"@vue/babel-preset-jsx": "^1.1.0",
+		"@vue/babel-plugin-jsx": "^1.1.1",
+		"@vue/babel-preset-jsx": "^1.4.0",
 		"@vue/compiler-sfc": "^3.0.11",
 		"eslint": "^4.12.0",
 		"eslint-config-airbnb-base": "^13.1.0",

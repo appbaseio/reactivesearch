@@ -96,7 +96,7 @@ export default {
 	plugins: [
 		json(),
 		vuePlugin({
-			preprocessStyles: true
+			preprocessStyles: true,
 		}),
 		postCSS(),
 		umd
@@ -139,6 +139,7 @@ export default {
 				['@babel/plugin-proposal-private-methods', { loose: true }],
 				['@babel/plugin-proposal-class-properties', { loose: true }],
 				'@babel/plugin-proposal-json-strings',
+				'@vue/babel-plugin-jsx',
 			],
 		}),
 		umd
