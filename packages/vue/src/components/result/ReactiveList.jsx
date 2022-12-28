@@ -160,10 +160,10 @@ const ReactiveList = {
 			return Math.ceil(this.total / this.$props.size) || 0;
 		},
 		hasPageChangeListener() {
-			return this.$listeners && this.$listeners.pageChange;
+			return this.$attrs && this.$attrs.pageChange;
 		},
 		hasResultStatsListener() {
-			return this.$listeners && this.$listeners.resultStats;
+			return this.$attrs && this.$attrs.resultStats;
 		},
 		stats() {
 			return {
@@ -418,7 +418,7 @@ const ReactiveList = {
 				{this.isLoading
 					&& this.shouldRenderPagination
 					&& this.showInfiniteScroll
-					&& (this.$scopedSlots.loader || this.$props.loader)}
+					&& (this.$slots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
 					labelPosition={this.sortOptions ? 'right' : 'left'}
@@ -442,7 +442,7 @@ const ReactiveList = {
 					) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
-					? this.$scopedSlots.loader
+					? this.$slots.loader
 					  || this.$props.loader || (
 						<div
 							style={{
@@ -482,7 +482,7 @@ const ReactiveList = {
 
 	methods: {
 		renderErrorComponent() {
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			if (renderError && this.error && !this.isLoading) {
 				return isFunction(renderError) ? renderError(this.error) : renderError;
 			}
@@ -491,7 +491,7 @@ const ReactiveList = {
 		renderResults() {
 			const { size } = this.$props;
 
-			const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
+			const renderItem = this.$slots.renderItem || this.$props.renderItem;
 
 			const element = this.hasCustomRender ? (
 				this.getComponent()
@@ -634,7 +634,7 @@ const ReactiveList = {
 
 		renderStats() {
 			const renderResultStats
-				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
+				= this.$slots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
 			}
@@ -656,8 +656,8 @@ const ReactiveList = {
 
 		renderNoResult() {
 			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
-			if (this.$scopedSlots.renderNoResults) {
+				= this.$slots.renderNoResults || this.$props.renderNoResults;
+			if (this.$slots.renderNoResults) {
 				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults;
 			}
 			return (

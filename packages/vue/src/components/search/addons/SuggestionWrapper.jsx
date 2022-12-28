@@ -20,7 +20,7 @@ const SuggestionWrapper = {
 					innerClassName || '',
 				)}`}
 			>
-				<li>{this.$scopedSlots.default()}</li>
+				<li>{this.$slots.default()}</li>
 			</div>
 		);
 	},

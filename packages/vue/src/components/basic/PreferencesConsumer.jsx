@@ -57,8 +57,8 @@ const PreferencesConsumer = (component) => ({
 		});
 		return h(component, {
 			attrs: componentProps,
-			on: this.$listeners,
-			scopedSlots: this.$scopedSlots,
+			on: this.$attrs,
+			scopedSlots: this.$slots,
 			slots: this.$slots,
 		});
 	},

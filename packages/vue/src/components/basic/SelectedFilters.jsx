@@ -27,8 +27,8 @@ const SelectedFilters = {
 		},
 	},
 	render() {
-		if (this.$scopedSlots.default) {
-			return this.$scopedSlots.default({
+		if (this.$slots.default) {
+			return this.$slots.default({
 				components: this.components,
 				selectedValues: this.selectedValues,
 				clearValues: this.clearValues,

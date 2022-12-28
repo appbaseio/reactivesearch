@@ -158,8 +158,7 @@ const ComponentWrapper = (
 	render(h) {
 		return h(component, {
 			attrs: this.$attrs,
-			on: this.$listeners,
-			scopedSlots: this.$scopedSlots,
+			on: this.$attrs,
 			slots: this.$slots,
 		});
 	},

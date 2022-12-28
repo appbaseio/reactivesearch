@@ -29,7 +29,7 @@ export const infoWindowMappedProps = {
  */
 export function bindEvents(vueInst, googleMapsInst, events) {
 	events.forEach((eventName) => {
-		if (vueInst.$gmapOptions.autoBindAllEvents || vueInst.$listeners[eventName]) {
+		if (vueInst.$gmapOptions.autoBindAllEvents || vueInst.$attrs[eventName]) {
 			googleMapsInst.addListener(eventName, (ev) => {
 				vueInst.$emit(eventName, ev);
 			});
@@ -310,7 +310,7 @@ export function bindProps(vueInst, googleMapsInst, props) {
 
 			if (
 				twoWay
-				&& (vueInst.$gmapOptions.autoBindAllEvents || vueInst.$listeners[eventName])
+				&& (vueInst.$gmapOptions.autoBindAllEvents || vueInst.$attrs[eventName])
 			) {
 				googleMapsInst.addListener(eventName, () => {
 					vueInst.$emit(eventName, googleMapsInst[getMethodName]());

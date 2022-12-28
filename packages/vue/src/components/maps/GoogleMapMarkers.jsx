@@ -93,7 +93,7 @@ const GoogleMapMarkers = {
 							renderPopover={markerProps.renderPopover}
 							highlightMarkerOnHover={markerProps.highlightMarkerOnHover}
 							{...{
-								on: this.$listeners,
+								on: this.$attrs,
 							}}
 						/>
 					</Cluster>
@@ -131,7 +131,7 @@ const GoogleMapMarkers = {
 						marker={marker}
 						{...{
 							props: markerProps,
-							on: this.$listeners,
+							on: this.$attrs,
 						}}
 					/>
 				))}

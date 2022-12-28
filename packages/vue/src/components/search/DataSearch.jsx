@@ -836,7 +836,7 @@ const DataSearch = {
 		},
 
 		renderErrorComponent() {
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
 				return (
 					<SuggestionWrapper
@@ -862,8 +862,8 @@ const DataSearch = {
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
 			const renderNoSuggestion
-				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+				= this.$slots.renderNoSuggestion() || this.$props.renderNoSuggestion;
+			const renderError = this.$slots.renderError() || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
 				renderNoSuggestion
@@ -891,7 +891,7 @@ const DataSearch = {
 			return null;
 		},
 		renderInputAddonBefore() {
-			const { addonBefore } = this.$scopedSlots;
+			const { addonBefore } = this.$slots;
 			if (addonBefore) {
 				return <InputAddon>{addonBefore()}</InputAddon>;
 			}
@@ -936,7 +936,7 @@ const DataSearch = {
 			const tagsList = [...this.selectedTags];
 			const shouldRenderClearAllTag = tagsList.length > 1;
 			const renderSelectedTags
-				= this.$scopedSlots.renderSelectedTags || this.$props.renderSelectedTags;
+				= this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
 			return renderSelectedTags ? (
 				renderSelectedTags({
 					values: this.selectedTags,
@@ -963,7 +963,7 @@ const DataSearch = {
 			);
 		},
 		renderInputAddonAfter() {
-			const { addonAfter } = this.$scopedSlots;
+			const { addonAfter } = this.$slots;
 			if (addonAfter) {
 				return <InputAddon>{addonAfter()}</InputAddon>;
 			}
@@ -979,7 +979,7 @@ const DataSearch = {
 				showVoiceSearch,
 				showIcon,
 			} = this.$props;
-			const renderMic = this.$scopedSlots.renderMic || this.$props.renderMic;
+			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
 			return (
 				<div>
@@ -1065,7 +1065,7 @@ const DataSearch = {
 	},
 	render() {
 		const { theme, size, expandSuggestionsContainer, enableDefaultSuggestions } = this.$props;
-		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
+		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		let hasSuggestions = this.currentValue
 			? this.suggestionsList.length || this.topSuggestions.length
 			: this.defaultSearchSuggestions.length;

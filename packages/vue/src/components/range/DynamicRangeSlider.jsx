@@ -130,7 +130,7 @@ const DynamicRangeSlider = {
 
 	methods: {
 		isControlled() {
-			if (this.$props.value && this.$listeners) {
+			if (this.$props.value && this.$attrs) {
 				return true;
 			}
 			return false;

@@ -360,8 +360,8 @@ export default {
 
 		return (
 			<div ref="rootNode">
-				{this.$scopedSlots.default
-					&& this.$scopedSlots.default({
+				{this.$slots.default
+					&& this.$slots.default({
 						...this.getHelpersAndState(),
 					})}
 			</div>

@@ -164,8 +164,8 @@ const MultiList = {
 	render() {
 		const { selectAllLabel, renderItem, renderError } = this.$props;
 
-		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
-		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
+		const renderItemCalc = this.$slots.renderItem || renderItem;
+		const renderErrorCalc = this.$slots.renderError || renderError;
 
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
@@ -505,7 +505,7 @@ const MultiList = {
 
 		renderNoResult() {
 			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+				= this.$slots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}

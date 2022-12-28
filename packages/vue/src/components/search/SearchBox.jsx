@@ -751,7 +751,7 @@ const SearchBox = {
 		},
 
 		renderErrorComponent() {
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
 				return (
 					<SuggestionWrapper
@@ -777,8 +777,8 @@ const SearchBox = {
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
 			const renderNoSuggestion
-				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+				= this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
 				renderNoSuggestion
@@ -806,7 +806,7 @@ const SearchBox = {
 			return null;
 		},
 		renderInputAddonBefore() {
-			const { addonBefore } = this.$scopedSlots;
+			const { addonBefore } = this.$slots;
 			if (addonBefore) {
 				return <InputAddon class="addon-before">{addonBefore()}</InputAddon>;
 			}
@@ -814,7 +814,7 @@ const SearchBox = {
 			return null;
 		},
 		renderInputAddonAfter() {
-			const { addonAfter } = this.$scopedSlots;
+			const { addonAfter } = this.$slots;
 			if (addonAfter) {
 				return <InputAddon class="addon-after">{addonAfter()}</InputAddon>;
 			}
@@ -826,7 +826,7 @@ const SearchBox = {
 		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
-			const { renderEnterButton } = this.$scopedSlots;
+			const { renderEnterButton } = this.$slots;
 
 			if (enterButton) {
 				const getEnterButtonMarkup = () => {
@@ -859,7 +859,7 @@ const SearchBox = {
 				showVoiceSearch,
 				showIcon,
 			} = this.$props;
-			const renderMic = this.$scopedSlots.renderMic || this.$props.renderMic;
+			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
 			return (
 				<div>
@@ -994,7 +994,7 @@ const SearchBox = {
 			const tagsList = [...this.selectedTags];
 			const shouldRenderClearAllTag = tagsList.length > 1;
 			const renderSelectedTags
-				= this.$scopedSlots.renderSelectedTags || this.$props.renderSelectedTags;
+				= this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
 
 			return renderSelectedTags ? (
 				renderSelectedTags({
@@ -1024,10 +1024,10 @@ const SearchBox = {
 	},
 	render() {
 		const { theme, expandSuggestionsContainer } = this.$props;
-		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
+		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		const hasSuggestions
 			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
-		const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
+		const renderItem = this.$slots.renderItem || this.$props.renderItem;
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (

@@ -273,7 +273,7 @@ const ReactiveComponent = {
 
 	render() {
 		try {
-			const dom = this.$scopedSlots.default;
+			const dom = this.$slots.default;
 			const { error, isLoading, selectedValue } = this;
 			const propsToBePassed = {
 				error,
@@ -414,8 +414,8 @@ const RcConnected = PreferencesConsumer({
 		}
 		return h(component, {
 			attrs: this.$attrs,
-			on: this.$listeners,
-			scopedSlots: this.$scopedSlots,
+			on: this.$attrs,
+			scopedSlots: this.$slots,
 			slots: this.$slots,
 		});
 	},

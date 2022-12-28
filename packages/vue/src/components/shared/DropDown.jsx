@@ -323,7 +323,7 @@ const Dropdown = {
 
 		renderNoResult() {
 			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+				= this.$slots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}

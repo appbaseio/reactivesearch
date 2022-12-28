@@ -185,11 +185,11 @@ const MultiDropdownList = {
 
 	render() {
 		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
-		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
-		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
-		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
+		const renderItemCalc = this.$slots.renderItem || renderItem;
+		const renderErrorCalc = this.$slots.renderError || renderError;
+		const renderLabelCalc = this.$slots.renderLabel || renderLabel;
 		const { isLastBucket } = this.$data;
-		const renderNoResults = this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+		const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 		let selectAll = [];
 
 		if (renderErrorCalc && this.error) {
@@ -244,7 +244,7 @@ const MultiDropdownList = {
 					themePreset={this.themePreset}
 					renderItem={renderItemCalc}
 					renderNoResults={
-						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+						this.$slots.renderNoResults || this.$props.renderNoResults
 					}
 					showSearch={this.$props.showSearch}
 					showClear={this.$props.showClear}

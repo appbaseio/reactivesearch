@@ -177,10 +177,10 @@ const SingleDropdownList = {
 		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
-		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
-		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
-		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
-		const renderNoResults = this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+		const renderItemCalc = this.$slots.renderItem || renderItem;
+		const renderErrorCalc = this.$slots.renderError || renderError;
+		const renderLabelCalc = this.$slots.renderLabel || renderLabel;
+		const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
@@ -232,7 +232,7 @@ const SingleDropdownList = {
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
 					renderNoResults={
-						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
+						this.$slots.renderNoResults || this.$props.renderNoResults
 					}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}

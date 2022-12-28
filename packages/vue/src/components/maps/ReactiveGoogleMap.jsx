@@ -87,19 +87,19 @@ const ReactiveGoogleMap = {
 								handlePreserveCenter={handlePreserveCenter}
 								highlightMarkerOnHover={this.highlightMarkerOnHover}
 								renderItem={
-									this.$scopedSlots.renderItem
+									this.$slots.renderItem
 										? () => ({
-											custom: this.$scopedSlots.renderItem,
+											custom: this.$slots.renderItem,
 										  })
 										: this.renderItem
 								}
 								defaultPin={defaultPin}
 								autoClosePopover={autoClosePopover}
-								renderPopover={this.$scopedSlots.renderPopover}
-								renderClusterPopover={this.$scopedSlots.renderClusterPopover}
+								renderPopover={this.$slots.renderPopover}
+								renderClusterPopover={this.$slots.renderClusterPopover}
 								showMarkerClusters={this.showMarkerClusters}
 								{...{
-									on: this.$listeners,
+									on: this.$attrs,
 								}}
 							/>
 						) : null}
@@ -171,8 +171,8 @@ const ReactiveGoogleMap = {
 				loader={this.loader}
 				calculateMarkers={this.calculateMarkers}
 				{...{
-					scopedSlots: this.$scopedSlots,
-					on: this.$listeners,
+					scopedSlots: this.$slots,
+					on: this.$attrs,
 				}}
 			/>
 		);
