@@ -12,7 +12,6 @@ function getStartPage(totalPages, currentPage, showEndPage) {
 }
 
 const Pagination = {
-
 	name: 'Pagination',
 	functional: true,
 	props: {

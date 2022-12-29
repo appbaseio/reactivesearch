@@ -41,7 +41,7 @@ const filters = ({ colors: { borderColor } }) => `
 	}
 `;
 
-const pagination = `
+const pagination = css`
 	margin: 10px -3px;
 	max-width: 100%;
 	text-align: center;
