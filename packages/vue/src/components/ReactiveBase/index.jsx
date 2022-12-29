@@ -6,6 +6,7 @@ import Appbase from 'appbase-js';
 import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
 
+import { createCache } from '@appbaseio/vue-emotion';
 import Provider from '../Provider';
 import { composeThemeObject, X_SEARCH_CLIENT } from '../../utils/index';
 import types from '../../utils/vueTypes';
@@ -64,6 +65,8 @@ const ReactiveBase = {
 			),
 			store: this.store,
 			$searchPreferences: this.preferences,
+			$emotionCache:
+				(this.$parent && this.$parent.$emotionCache) || createCache({ key: 'css' }),
 		};
 	},
 	watch: {

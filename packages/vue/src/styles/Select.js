@@ -1,7 +1,7 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
 
-const small = css`
+import { styled } from '@appbaseio/vue-emotion';
+
+const small = `
 	min-height: 0;
 	height: 30px;
 	border: 0;
@@ -9,14 +9,14 @@ const small = css`
 	border-radius: 2px;
 `;
 
-const dark = ({ theme }) => css`
-	background-color: ${theme.colors.backgroundColor};
-	border-color: ${theme.colors.borderColor};
-	color: ${theme.colors.textColor};
+const dark = ({ theme }) => `
+	background-color: ${theme.colors ? theme.colors.backgroundColor : ''};
+	border-color: ${theme.colors ? theme.colors.borderColor : ''};
+	color: ${theme.colors ? theme.colors.textColor : ''};
 
 	&:hover,
 	&:focus {
-		background-color: ${theme.colors.backgroundColor};
+		background-color: ${theme.colors ? theme.colors.backgroundColor : ''};
 	}
 `;
 
@@ -38,7 +38,7 @@ const Select = styled('button')`
 	user-select: none;
 	transition: all 0.3s ease;
 
-	${props => (props.small ? small : null)};
+	${(props) => (props.small ? small : null)};
 
 	& > div {
 		width: calc(100% - 24px);

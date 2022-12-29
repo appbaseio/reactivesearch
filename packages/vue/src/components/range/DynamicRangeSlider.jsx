@@ -121,7 +121,7 @@ const DynamicRangeSlider = {
 		}
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.destroyOnUnmount) {
 			this.removeComponent(this.$props.componentId);
 			this.removeComponent(this.internalRangeComponent);

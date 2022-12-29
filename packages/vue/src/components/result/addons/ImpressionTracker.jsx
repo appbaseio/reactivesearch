@@ -1,4 +1,5 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
+
 import VueTypes from '../../../utils/vueTypes';
 import { connect } from '../../../utils/index';
 
@@ -16,21 +17,22 @@ const debounce = (method, delay) => {
 
 const ImpressionTracker = {
 	name: 'ImpressionTracker',
+
 	inject: ['$$store'],
 	props: {
 		hits: VueTypes.hits,
 	},
 	created() {
 		// Represents the list of hits returned by the query
-		this.currentHits= []; // An array of hits objects
+		this.currentHits = []; // An array of hits objects
 		// An object to track the recorded impressions
 		// It can have the values in following shape
 		// { "hit_id": { "index": "test" }}
-		this.trackedIds= {};
+		this.trackedIds = {};
 		// An object to know the the un-tracked impression i.e not recorded by BE
 		// It can have the values in following shape
 		// { "query_id": [{ "id": "hit_id", "index": "test"}]}
-		this.waitingToBeTracked= {};
+		this.waitingToBeTracked = {};
 	},
 	mounted() {
 		this.setCurrentHits(this.hits);
@@ -47,8 +49,8 @@ const ImpressionTracker = {
 		hits(newVal, oldVal) {
 			if (newVal && newVal !== oldVal) {
 				// Only compare hit ids for performance reasons
-				const prevHitIds = oldVal.map(hit => hit._id);
-				const currentHitIds = newVal.map(hit => hit._id);
+				const prevHitIds = oldVal.map((hit) => hit._id);
+				const currentHitIds = newVal.map((hit) => hit._id);
 				if (!isEqual(currentHitIds, prevHitIds)) {
 					this.setCurrentHits(newVal);
 				}
@@ -79,7 +81,7 @@ const ImpressionTracker = {
 		recordImpression() {
 			if (Object.keys(this.waitingToBeTracked).length) {
 				const unTrackedHits = { ...this.waitingToBeTracked };
-				Object.keys(unTrackedHits).forEach(queryId => {
+				Object.keys(unTrackedHits).forEach((queryId) => {
 					if (unTrackedHits[queryId] && unTrackedHits[queryId].length) {
 						this.trackImpressions(queryId, unTrackedHits[queryId]);
 						// Removed tracked impressions from waiting list
@@ -110,12 +112,12 @@ const ImpressionTracker = {
 			}
 			// only run at client-side
 			if (window && document) {
-				this.getHitIds().forEach(id => {
+				this.getHitIds().forEach((id) => {
 					const element = document.getElementById(id);
 					if (element) {
 						if (this.inViewPort(element)) {
 							// Add the hit id in the list of tracked ids
-							const hitObject = this.currentHits.find(hit => hit._id === id);
+							const hitObject = this.currentHits.find((hit) => hit._id === id);
 							this.trackedIds[id] = true;
 							// Add hit to waiting list to be recorded
 							this.addToWaitingList(hitObject);
@@ -140,8 +142,8 @@ const ImpressionTracker = {
 			return state ? state.analytics.searchId : null;
 		},
 		getHitIds() {
-			return this.currentHits.map(hit => hit._id).filter(id => !this.trackedIds[id]);
-		}
+			return this.currentHits.map((hit) => hit._id).filter((id) => !this.trackedIds[id]);
+		},
 	},
 	render() {
 		return this.$slots.default;
@@ -152,7 +154,4 @@ const mapDispatchToProps = {
 	trackImpressions: recordImpressions,
 };
 
-export default connect(
-	() => null,
-	mapDispatchToProps,
-)(ImpressionTracker);
+export default connect(() => null, mapDispatchToProps)(ImpressionTracker);

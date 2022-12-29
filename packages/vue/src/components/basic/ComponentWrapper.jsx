@@ -2,6 +2,8 @@ import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transf
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
+import { h } from 'vue';
+
 import { connect, getValidPropsKeys, getCamelCase } from '../../utils/index';
 
 const {
@@ -35,6 +37,7 @@ const ComponentWrapper = (
 ) => ({
 	name: 'ComponentWrapper',
 	$timestamp: null,
+
 	props: {
 		destroyOnUnmount: VueTypes.bool.def(true),
 	},
@@ -155,7 +158,7 @@ const ComponentWrapper = (
 			}
 		},
 	},
-	render(h) {
+	render() {
 		return h(component, {
 			attrs: this.$attrs,
 			on: this.$attrs,

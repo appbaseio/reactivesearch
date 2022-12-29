@@ -1,11 +1,11 @@
+import { styled } from '@appbaseio/vue-emotion';
 import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
 
-const alertBorder = ({ theme }) => css`
+const alertBorder = ({ theme }) => `
 	border: 1px solid ${theme.colors.alertColor};
 `;
 
-const input = css`
+const input = `
 	width: 100%;
 	line-height: 1.5;
 	min-height: 42px;
@@ -21,11 +21,11 @@ const input = css`
 	}
 `;
 
-const dark = (theme) => css`
+const dark = (theme) => `
 	border-color: ${theme.colors.borderColor};
 `;
 
-const darkInput = ({ theme }) => css`
+const darkInput = ({ theme }) => `
 	background-color: ${theme.colors.backgroundColor};
 	color: ${theme.colors.textColor};
 	${dark(theme)};
@@ -37,32 +37,36 @@ const darkInput = ({ theme }) => css`
 
 const Input = styled('input')`
 	${input};
+
+	&:focus {
+		background-color: #fff;
+	}
 	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
 
 	${(props) =>
 		props.showIcon
 		&& props.iconPosition === 'left'
-		&& css`
+		&& `
 			padding-left: 36px;
 		`};
 
 	${(props) =>
 		props.showIcon
 		&& props.iconPosition === 'right'
-		&& css`
+		&& `
 			padding-right: 36px;
 		`};
 
 	${(props) =>
 		// for clear icon
 		props.showClear
-		&& css`
+		&& `
 			padding-right: 36px;
 		`};
 	${(props) =>
 		// for voice search icon
 		props.showVoiceSearch
-		&& css`
+		&& `
 			padding-right: 36px;
 		`};
 
@@ -71,7 +75,7 @@ const Input = styled('input')`
 		props.showClear
 		&& props.showIcon
 		&& props.iconPosition === 'right'
-		&& css`
+		&& `
 			padding-right: 66px;
 		`};
 
@@ -80,14 +84,14 @@ const Input = styled('input')`
 		props.showVoiceSearch
 		&& props.showIcon
 		&& props.iconPosition === 'right'
-		&& css`
+		&& `
 			padding-right: 66px;
 		`};
 	${(props) =>
 		// for voice search icon with clear icon
 		props.showVoiceSearch
 		&& props.showIcon
-		&& css`
+		&& `
 			padding-right: 66px;
 		`};
 	${(props) =>
@@ -96,7 +100,7 @@ const Input = styled('input')`
 		&& props.showIcon
 		&& props.showVoiceSearch
 		&& props.iconPosition === 'right'
-		&& css`
+		&& `
 			padding-right: 90px;
 		`};
 
@@ -158,7 +162,7 @@ const suggestionsContainer = css`
 	}
 `;
 
-const noSuggestions = (themePreset, theme) => css`
+const noSuggestions = (themePreset, theme) => `
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;

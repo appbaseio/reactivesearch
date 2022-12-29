@@ -1,10 +1,10 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
+
+import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
 import Title from './Title';
 
-const container = css`
+const container = `
 	display: flex;
 	flex-direction: column;
 	margin: 0;
@@ -12,7 +12,7 @@ const container = css`
 	overflow: hidden;
 `;
 
-const smallImage = css`
+const smallImage = `
 	width: 100px;
 	height: 100px;
 `;

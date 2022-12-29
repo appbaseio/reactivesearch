@@ -2,6 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { withClickIds } from '@appbaseio/reactivecore/lib/utils/helper';
+
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -44,6 +45,11 @@ const {
 
 const ReactiveList = {
 	name: 'ReactiveList',
+	inject: {
+		$emotionCache: {
+			default: undefined,
+		},
+	},
 	components: {
 		ResultListWrapper,
 		ResultCardsWrapper,
@@ -404,7 +410,7 @@ const ReactiveList = {
 		}
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.showInfiniteScroll) {
 			window.removeEventListener('scroll', this.scrollHandler);
 		}
@@ -490,9 +496,7 @@ const ReactiveList = {
 		},
 		renderResults() {
 			const { size } = this.$props;
-
-			const renderItem = this.$slots.renderItem || this.$props.renderItem;
-
+			const renderItem = this.$attrs.slots.renderItem || this.$props.renderItem;
 			const element = this.hasCustomRender ? (
 				this.getComponent()
 			) : (
@@ -655,8 +659,7 @@ const ReactiveList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$slots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 			if (this.$slots.renderNoResults) {
 				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults;
 			}

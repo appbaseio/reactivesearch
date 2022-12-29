@@ -1,3 +1,4 @@
+import { h } from 'vue';
 import { getCamelCase } from '../../utils/index';
 
 const deepValue = (o, p) => p.split('.').reduce((a, v) => (a ? a[v] : null), o);
@@ -13,7 +14,7 @@ const PreferencesConsumer = (component) => ({
 			default: null,
 		},
 	},
-	render(h) {
+	render() {
 		const userProps = Object.keys(this.$attrs).reduce(
 			(result, key) => ({ ...result, [getCamelCase(key)]: this.$attrs[key] }),
 			{},

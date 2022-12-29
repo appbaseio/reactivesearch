@@ -1,16 +1,17 @@
-import styled, { css } from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
-const left = css`
+
+const left = `
 	padding-left: 12px;
 	left: 0;
 `;
 
-const right = css`
+const right = `
 	padding-right: 12px;
 	right: 0;
 `;
 
-const clear = css`
+const clear = `
 	padding-right: 29px;
 	right: 0;
 `;
@@ -22,7 +23,8 @@ const InputIcon = styled('div')`
 	${({ iconPosition }) => {
 		if (iconPosition === 'left') {
 			return left;
-		} else if (iconPosition === 'right') {
+		}
+		if (iconPosition === 'right') {
 			return right;
 		}
 		return null;
@@ -30,10 +32,10 @@ const InputIcon = styled('div')`
 	${({ clearIcon }) => clearIcon && clear};
 	${({ showIcon }) => !showIcon && 'padding-right:10px'};
 	svg.search-icon {
-		fill: ${({ theme }) => theme.colors.primaryColor};
+		fill: ${({ theme }) => (theme.colors ? theme.colors.primaryColor : '')};
 	}
 	svg.cancel-icon {
-		fill: ${({ theme }) => theme.colors.borderColor};
+		fill: ${({ theme }) => (theme.colors ? theme.colors.borderColor : '')};
 	}
 `;
 

@@ -1,10 +1,12 @@
 import { helper } from '@appbaseio/reactivecore';
+
 import { noSuggestions } from '../../../styles/Input';
 import types from '../../../utils/vueTypes';
 
 const { getClassName } = helper;
 
 const SuggestionWrapper = {
+
 	name: 'SuggestionWrapper',
 	props: {
 		innerClassName: types.string,

@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
+import { h } from 'vue';
 import {
 	connect,
 	updateCustomQuery,
@@ -365,7 +366,7 @@ const ConnectedComponent = ComponentWrapper(
 
 const RcConnected = PreferencesConsumer({
 	name: 'RcConnected',
-	render(h) {
+	render() {
 		let component = ConnectedComponent;
 		switch (this.$attrs.componentType) {
 			case componentTypes.reactiveList:

@@ -1,7 +1,7 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
 
-const alert = ({ theme }) => css`
+import { styled } from '@appbaseio/vue-emotion';
+
+const alert = ({ theme }) => `
 	color: ${theme.colors.alertColor};
 `;
 

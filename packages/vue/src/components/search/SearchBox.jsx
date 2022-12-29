@@ -6,6 +6,7 @@ import {
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
+import { defineComponent } from 'vue';
 import {
 	connect,
 	getComponent,
@@ -53,7 +54,7 @@ const {
 	normalizeDataField,
 } = helper;
 
-const SearchBox = {
+const SearchBox = defineComponent({
 	name: 'SearchBox',
 	isTagsMode: false,
 	data() {
@@ -1028,6 +1029,7 @@ const SearchBox = {
 		const hasSuggestions
 			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
 		const renderItem = this.$slots.renderItem || this.$props.renderItem;
+
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -1041,7 +1043,8 @@ const SearchBox = {
 						handleChange={this.onSuggestionSelected}
 						handleMouseup={this.handleStateChange}
 						isOpen={this.$data.isOpen}
-						scopedSlots={{
+					>
+						{{
 							default: ({
 								getInputEvents,
 								getInputProps,
@@ -1085,16 +1088,12 @@ const SearchBox = {
 													{this.normalizedSuggestions.map((item, index) =>
 														renderItem ? (
 															<li
-																{...{
-																	domProps: getItemProps({
-																		item,
-																	}),
-																}}
-																{...{
-																	on: getItemEvents({
-																		item,
-																	}),
-																}}
+																{...getItemProps({
+																	item,
+																})}
+																{...getItemEvents({
+																	item,
+																})}
 																key={`${index + 1}-${item.value}`}
 																style={{
 																	backgroundColor:
@@ -1110,16 +1109,12 @@ const SearchBox = {
 															</li>
 														) : (
 															<li
-																{...{
-																	domProps: getItemProps({
-																		item,
-																	}),
-																}}
-																{...{
-																	on: getItemEvents({
-																		item,
-																	}),
-																}}
+																{...getItemProps({
+																	item,
+																})}
+																on={getItemEvents({
+																	item,
+																})}
 																key={`${index + 1}-${item.value}`}
 																style={{
 																	backgroundColor:
@@ -1183,59 +1178,52 @@ const SearchBox = {
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
-													{...{
-														on: getInputEvents({
-															onInput: this.onInputChange,
-															onBlur: (e) => {
-																this.$emit(
-																	'blur',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onFocus: this.handleFocus,
-															onKeyPress: (e) => {
-																this.$emit(
-																	'keyPress',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-press',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onKeyDown: (e) =>
-																this.handleKeyDown(
-																	e,
-																	highlightedIndex,
-																),
-															onKeyUp: (e) => {
-																this.$emit(
-																	'keyUp',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-up',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onClick: () => {
-																setHighlightedIndex(null);
-															},
-														}),
-													}}
-													{...{
-														domProps: getInputProps({
-															value:
-																this.$data.currentValue === null
-																	? ''
-																	: this.$data.currentValue,
-														}),
-													}}
+													on={getInputEvents({
+														onInput: this.onInputChange,
+														onBlur: (e) => {
+															this.$emit(
+																'blur',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onFocus: this.handleFocus,
+														onKeyPress: (e) => {
+															this.$emit(
+																'keyPress',
+																e,
+																this.triggerQuery,
+															);
+															this.$emit(
+																'key-press',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onKeyDown: (e) =>
+															this.handleKeyDown(e, highlightedIndex),
+														onKeyUp: (e) => {
+															this.$emit(
+																'keyUp',
+																e,
+																this.triggerQuery,
+															);
+															this.$emit(
+																'key-up',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onClick: () => {
+															setHighlightedIndex(null);
+														},
+													})}
+													{...getInputProps({
+														value:
+															this.$data.currentValue === null
+																? ''
+																: this.$data.currentValue,
+													})}
 													themePreset={this.themePreset}
 													autocomplete="off"
 												/>
@@ -1252,7 +1240,7 @@ const SearchBox = {
 								);
 							},
 						}}
-					/>
+					</Downshift>
 				) : (
 					<div class={suggestionsContainer}>
 						<InputGroup>
@@ -1261,34 +1249,26 @@ const SearchBox = {
 								<Input
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
-									{...{
-										on: {
-											blur: (e) => {
-												this.$emit('blur', e, this.triggerQuery);
-											},
-											keypress: (e) => {
-												this.$emit('keyPress', e, this.triggerQuery);
-												this.$emit('key-press', e, this.triggerQuery);
-											},
-											input: this.onInputChange,
-											focus: (e) => {
-												this.$emit('focus', e, this.triggerQuery);
-											},
-											keydown: this.handleKeyDown,
-											keyup: (e) => {
-												this.$emit('keyUp', e, this.triggerQuery);
-												this.$emit('key-up', e, this.triggerQuery);
-											},
+									on={{
+										blur: (e) => {
+											this.$emit('blur', e, this.triggerQuery);
+										},
+										keypress: (e) => {
+											this.$emit('keyPress', e, this.triggerQuery);
+											this.$emit('key-press', e, this.triggerQuery);
+										},
+										input: this.onInputChange,
+										focus: (e) => {
+											this.$emit('focus', e, this.triggerQuery);
+										},
+										keydown: this.handleKeyDown,
+										keyup: (e) => {
+											this.$emit('keyUp', e, this.triggerQuery);
+											this.$emit('key-up', e, this.triggerQuery);
 										},
 									}}
-									{...{
-										domProps: {
-											autofocus: this.$props.autoFocus,
-											value: this.$data.currentValue
-												? this.$data.currentValue
-												: '',
-										},
-									}}
+									autofocus={this.$props.autoFocus}
+									value={this.$data.currentValue ? this.$data.currentValue : ''}
 									iconPosition={this.$props.iconPosition}
 									showIcon={this.$props.showIcon}
 									showClear={this.$props.showClear}
@@ -1308,7 +1288,7 @@ const SearchBox = {
 	destroyed() {
 		document.removeEventListener('keydown', this.onKeyDown);
 	},
-};
+});
 
 SearchBox.defaultQuery = (value, props) => {
 	let finalQuery = null;

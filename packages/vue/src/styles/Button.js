@@ -1,8 +1,8 @@
+import { styled } from '@appbaseio/vue-emotion';
 import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
 import { darken, lighten, rgba } from 'polished';
 
-const filters = ({ colors: { borderColor } }) => css`
+const filters = ({ colors: { borderColor } }) => `
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -41,7 +41,7 @@ const filters = ({ colors: { borderColor } }) => css`
 	}
 `;
 
-const pagination = css`
+const pagination = `
 	margin: 10px -3px;
 	max-width: 100%;
 	text-align: center;
@@ -51,7 +51,7 @@ const pagination = css`
 	}
 `;
 
-const toggleButtons = css`
+const toggleButtons = `
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -60,7 +60,7 @@ const toggleButtons = css`
 	}
 `;
 
-const numberBoxContainer = css`
+const numberBoxContainer = `
 	margin: 0 -5px;
 	button {
 		margin: 5px;
@@ -70,7 +70,7 @@ const numberBoxContainer = css`
 	}
 `;
 
-const primary = ({ theme }) => css`
+const primary = ({ theme }) => `
 	background-color: ${theme.colors.primaryColor};
 	color: ${theme.colors.primaryTextColor};
 
@@ -80,23 +80,23 @@ const primary = ({ theme }) => css`
 	}
 `;
 
-const large = () => css`
+const large = () => `
 	min-height: 40px;
 	padding: 10px 20px;
 `;
 
-const disabled = ({ theme }) => css`
-	background-color: ${theme.colors.backgroundColor
-		? lighten(0.1, theme.colors.backgroundColor)
-		: '#fafafa'};
+const disabled = ({ theme }) => `
+	background-color: ${
+	theme.colors.backgroundColor ? lighten(0.1, theme.colors.backgroundColor) : '#fafafa'
+};
 	color: #ccc;
 	cursor: not-allowed;
 
 	&:hover,
 	&:focus {
-		background-color: ${theme.colors.backgroundColor
-		? lighten(0.2, theme.colors.backgroundColor)
-		: '#fafafa'};
+		background-color: ${
+	theme.colors.backgroundColor ? lighten(0.2, theme.colors.backgroundColor) : '#fafafa'
+};
 	}
 `;
 
@@ -110,8 +110,8 @@ const Button = styled('button')`
 	word-wrap: break-word;
 	padding: 5px 12px;
 	line-height: 1.2rem;
-	background-color: ${({ theme }) => theme.colors.backgroundColor || '#eee'};
-	color: ${({ theme }) => theme.colors.textColor};
+	background-color: ${({ theme }) => (theme.colors ? theme.colors.backgroundColor : '#eee')};
+	color: ${({ theme }) => (theme.colors ? theme.colors.textColor : '')};
 	cursor: pointer;
 	user-select: none;
 	transition: all 0.3s ease;
@@ -119,13 +119,21 @@ const Button = styled('button')`
 	&:hover,
 	&:focus {
 		background-color: ${({ theme }) =>
-		theme.colors.backgroundColor ? darken(0.1, theme.colors.backgroundColor) : '#ccc'};
+		theme.colors && theme.colors.backgroundColor
+			? darken(0.1, theme.colors.backgroundColor)
+			: '#ccc'};
 	}
 
 	&:focus {
 		outline: 0;
-		border-color: ${({ theme }) => rgba(theme.colors.primaryColor, 0.6)};
-		box-shadow: ${({ theme }) => `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
+		border-color: ${({ theme }) =>
+		theme.colors && theme.colors.primaryColor
+			? rgba(theme.colors.primaryColor, 0.6)
+			: 'unset'};
+		box-shadow: ${({ theme }) =>
+		theme.colors && theme.colors.primaryColor
+			? `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`
+			: ''};
 	}
 
 	${(props) => (props.primary ? primary : null)};

@@ -1,6 +1,7 @@
-import styled, { css } from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
-const right = css`
+
+const right = `
 	right: 35px;
 `;
 

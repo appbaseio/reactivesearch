@@ -1,5 +1,6 @@
 import VueTypes from 'vue-types';
 import { helper } from '@appbaseio/reactivecore';
+
 import Button, { pagination } from '../../../styles/Button';
 import types from '../../../utils/vueTypes';
 
@@ -11,6 +12,7 @@ function getStartPage(totalPages, currentPage, showEndPage) {
 }
 
 const Pagination = {
+
 	name: 'Pagination',
 	functional: true,
 	props: {
@@ -23,9 +25,8 @@ const Pagination = {
 		prevLabel: types.string,
 		nextLabel: types.string,
 	},
-	render(createElement, context) {
-		const { props } = context;
-
+	render() {
+		const props = this.$props;
 		const onPrevPage = () => {
 			if (props.currentPage) {
 				props.setPage(props.currentPage - 1);

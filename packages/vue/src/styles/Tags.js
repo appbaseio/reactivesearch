@@ -1,4 +1,4 @@
-import styled from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
 export const TagsContainer = styled('div')`
 	display: flex;

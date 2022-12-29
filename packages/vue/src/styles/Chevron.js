@@ -1,7 +1,7 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
 
-const open = css`
+import { styled } from '@appbaseio/vue-emotion';
+
+const open = `
 	top: 0.55em;
 	transform: rotate(-45deg);
 `;

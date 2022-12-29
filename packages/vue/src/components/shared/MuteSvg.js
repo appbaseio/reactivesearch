@@ -1,7 +1,7 @@
-import { injectGlobal } from '@appbaseio/vue-emotion';
+import { createGlobalStyle } from '@appbaseio/vue-emotion';
 
 // eslint-disable-next-line
-injectGlobal`
+createGlobalStyle`
 	#el_X81iT9kZYo {
 		stroke: none;
 		stroke-width: 1;

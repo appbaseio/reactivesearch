@@ -39,7 +39,7 @@ export default {
 		window.addEventListener('mouseup', this.handleWindowMouseup);
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		window.removeEventListener('mousedown', this.handleWindowMousedown);
 		window.removeEventListener('mouseup', this.handleWindowMouseup);
 	},
@@ -357,7 +357,6 @@ export default {
 
 	render() {
 		this.items = [];
-
 		return (
 			<div ref="rootNode">
 				{this.$slots.default

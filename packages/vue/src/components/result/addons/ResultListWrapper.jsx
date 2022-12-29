@@ -1,7 +1,9 @@
+
 import { container } from '../../../styles/ListItem';
 
 const ResultListWrapper = {
 	name: 'ResultListWrapper',
+
 	functional: true,
 	render(_, { props, children }) {
 		return (
@@ -11,7 +13,7 @@ const ResultListWrapper = {
 		);
 	},
 };
-ResultListWrapper.install = function(Vue) {
+ResultListWrapper.install = function (Vue) {
 	Vue.component(ResultListWrapper.name, ResultListWrapper);
 };
 export default ResultListWrapper;

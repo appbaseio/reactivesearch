@@ -1,10 +1,10 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
+
+import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
 import Title from './Title';
 
-const container = css`
+const container = `
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
