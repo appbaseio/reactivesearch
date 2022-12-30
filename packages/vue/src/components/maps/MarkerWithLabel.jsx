@@ -1,7 +1,5 @@
-import { components } from 'gmap-vue';
 import VueTypes from 'vue-types';
-
-const { MapElementMixin } = components;
+import { MapElementMixin } from 'vue-google-maps-community-fork';
 
 // Note: This file has been taken from https://github.com/eregnier/vue2-gmap-custom-marker/blob/master/gmap-custom-marker.vue
 const MarkerWithLabel = {
