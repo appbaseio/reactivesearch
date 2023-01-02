@@ -118,7 +118,7 @@ const types = {
 	params: VueTypes.object.isRequired,
 	props: VueTypes.object,
 	rangeLabelsAlign: VueTypes.oneOf(['left', 'right']),
-	title: VueTypes.oneOfType([VueTypes.string, VueTypes.any]),
+	title: VueTypes.oneOfType([VueTypes.string, VueTypes.nullable]),
 	tooltipTrigger: VueTypes.oneOf(['always', 'none', 'hover']),
 	location: VueTypes.custom(validateLocation),
 	unit: VueTypes.oneOf([

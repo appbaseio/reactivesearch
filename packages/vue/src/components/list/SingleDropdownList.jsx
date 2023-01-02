@@ -75,7 +75,7 @@ const SingleDropdownList = {
 		showSearch: VueTypes.bool.def(false),
 		showClear: VueTypes.bool.def(false),
 		showLoadMore: VueTypes.bool.def(false),
-		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
+		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.nullable]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
@@ -231,9 +231,7 @@ const SingleDropdownList = {
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
-					renderNoResults={
-						this.$slots.renderNoResults || this.$props.renderNoResults
-					}
+					renderNoResults={this.$slots.renderNoResults || this.$props.renderNoResults}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
 					showClear={this.$props.showClear}

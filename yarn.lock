@@ -6540,9 +6540,9 @@
     "@types/yargs-parser" "*"
 
 "@types/yargs@^17.0.8":
-  version "17.0.17"
-  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.17.tgz#5672e5621f8e0fca13f433a8017aae4b7a2a03e7"
-  integrity sha512-72bWxFKTK6uwWJAVT+3rF6Jo6RTojiJ27FQo8Rf60AL+VZbzoVPnMFhKsUnbjR8A3BTCYQ7Mv3hnl8T0A+CX9g==
+  version "17.0.18"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-17.0.18.tgz#466225ab4fbabb9aa711f5b406796daf1374a5b7"
+  integrity sha512-eIJR1UER6ur3EpKM3d+2Pgd+ET+k6Kn9B4ZItX0oPjjVI5PrfaRjKyLT5UYendDpLuoiJMNJvovLQbEXqhsPaw==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -12350,16 +12350,16 @@ core-js-compat@3.9.0:
     semver "7.0.0"
 
 core-js-compat@^3.25.1, core-js-compat@^3.6.2, core-js-compat@^3.6.5, core-js-compat@^3.8.1:
-  version "3.27.0"
-  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.27.0.tgz#e2c58a89df6432a5f36f3fa34097e9e83e709fb6"
-  integrity sha512-spN2H4E/wocMML7XtbKuqttHHM+zbF3bAdl9mT4/iyFaF33bowQGjxiWNWyvUJGH9F+hTgnhWziiLtwu3oC/Qg==
+  version "3.27.1"
+  resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.27.1.tgz#b5695eb25c602d72b1d30cbfba3cb7e5e4cf0a67"
+  integrity sha512-Dg91JFeCDA17FKnneN7oCMz4BkQ4TcffkgHP4OWwp9yx3pi7ubqMDXXSacfNak1PQqjc95skyt+YBLHQJnkJwA==
   dependencies:
     browserslist "^4.21.4"
 
 core-js-pure@^3.23.3, core-js-pure@^3.25.1:
-  version "3.27.0"
-  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.27.0.tgz#091dce4799a5aad4cfde930ea747b0a1962388c5"
-  integrity sha512-fJml7FM6v1HI3Gkg5/Ifc/7Y2qXcJxaDwSROeZGAZfNykSTvUk94WT55TYzJ2lFHK0voSr/d4nOVChLuNCWNpA==
+  version "3.27.1"
+  resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.27.1.tgz#ede4a6b8440585c7190062757069c01d37a19dca"
+  integrity sha512-BS2NHgwwUppfeoqOXqi08mUqS5FiZpuRuJJpKsaME7kJz0xxuk0xkhDdfMIlP/zLa80krBqss1LtD7f889heAw==
 
 core-js@^1.0.0:
   version "1.2.7"
@@ -12372,9 +12372,9 @@ core-js@^2.2.2, core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0, core-js@^2.5.3, 
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.0.1, core-js@^3.0.4, core-js@^3.19.2, core-js@^3.22.3, core-js@^3.5.0, core-js@^3.6.5, core-js@^3.8.2:
-  version "3.27.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.27.0.tgz#a343bc614f29d9dcffa7616e65e10f9001cdd332"
-  integrity sha512-wY6cKosevs430KRkHUIsvepDXHGjlXOZO3hYXNyqpD6JvB0X28aXyv0t1Y1vZMwE7SoKmtfa6IASHCPN52FwBQ==
+  version "3.27.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.27.1.tgz#23cc909b315a6bb4e418bf40a52758af2103ba46"
+  integrity sha512-GutwJLBChfGCpwwhbYoqfv03LAfmiz7e7D/BNxzeMxwQf10GRSzqiOjx7AmtEk+heiD/JWmBuyBPgFtx0Sg1ww==
 
 core-util-is@1.0.2:
   version "1.0.2"
@@ -17016,6 +17016,11 @@ fuse.js@^3.0.1, fuse.js@^3.2.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.6.1.tgz#7de85fdd6e1b3377c23ce010892656385fd9b10c"
   integrity sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw==
+
+fuse.js@^6.0.0:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.6.2.tgz#fe463fed4b98c0226ac3da2856a415576dc9a111"
+  integrity sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==
 
 fwd-stream@^1.0.4:
   version "1.0.4"
@@ -29842,6 +29847,14 @@ react-tween-state@^0.1.5:
     raf "^3.1.0"
     tween-functions "^1.0.1"
 
+react-use-fusejs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-use-fusejs/-/react-use-fusejs-1.0.1.tgz#38430b83077a599960c4c307cc2eb550d799a8dd"
+  integrity sha512-Tt1KRnfr9tnDDej/n1f2yFXBGLTvyI1dAz9q0ga7Y49Msfa4RaRetaRC8TAUeBYTsN8DugJk+tBJKbaZzJKAIA==
+  dependencies:
+    fuse.js "^6.0.0"
+    react "^18.0.0"
+
 react@16.8.4:
   version "16.8.4"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"
@@ -29869,7 +29882,7 @@ react@^17.0.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-react@^18.0.2, react@^18.2.0:
+react@^18.0.0, react@^18.0.2, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -33412,10 +33425,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tocbot@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.5.0.tgz#55ba16887742acc1ce37b19171c76b9a40aabfa7"
-  integrity sha512-JwTyKlU2JgkmGJqxKJkiizlLwjQJ+f3WnDG08+DrWhrPgsVVjMh3quq3Apx09DCvulKbtYoxBT/c3HfkGWyZhw==
+tocbot@^4.18.0:
+  version "4.19.0"
+  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.19.0.tgz#8b7433d63be9f52f8e9823641813bc1db7329df4"
+  integrity sha512-sI/+XAh+Byn/zRSlmJnTJW37iqpRZc2RugnHCbQh4dBGOM3MYAlg2X7iXaWI9vrUhesC+SkPYerIP7nhs1X+4A==
 
 toggle-selection@^1.0.6:
   version "1.0.6"
@@ -34649,7 +34662,7 @@ vue-types@^5.0.2:
   dependencies:
     is-plain-object "5.0.0"
 
-vue@^3.1.0:
+vue@^3.2.5:
   version "3.2.45"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.45.tgz#94a116784447eb7dbd892167784619fef379b3c8"
   integrity sha512-9Nx/Mg2b2xWlXykmCwiTUCWHbWIj53bnkizBxKai1g61f2Xit700A1ljowpTIM11e3uipOeiPcSqnmBg6gyiaA==
