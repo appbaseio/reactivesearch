@@ -26,22 +26,39 @@
 						:react="{ and: 'places' }"
 						:defaultZoom="3"
 						:showMarkerClusters="false"
+						@open-marker-popover="handleOpen"
+						@close-marker-popover="handleClose"
 					>
-						<div
-							slot="renderItem"
-							slot-scope="{ magnitude }"
-							:style="{
-								background: 'dodgerblue',
-								color: '#fff',
-								paddingLeft: '5px',
-								paddingRight: '5px',
-								borderRadius: '3px',
-								padding: '10px',
-							}"
-						>
-							<i class="fas fa-globe-europe" />
-							&nbsp;{{ magnitude }}
-						</div>
+						<template #renderItem="{ magnitude }">
+							<div
+								:style="{
+									background: 'dodgerblue',
+									color: '#fff',
+									paddingLeft: '5px',
+									paddingRight: '5px',
+									borderRadius: '3px',
+									padding: '10px',
+								}"
+							>
+								<i class="fas fa-globe-europe" />
+								&nbsp;{{ magnitude }}
+							</div>
+						</template>
+						<template #renderPopover="{ item }">
+							<div
+								:style="{
+									background: 'dodgerblue',
+									color: '#fff',
+									paddingLeft: '5px',
+									paddingRight: '5px',
+									borderRadius: '3px',
+									padding: '10px',
+								}"
+							>
+								Place: &nbsp;{{ item.place }}
+								<div>Year: &nbsp;{{ new Date(item.time).getFullYear() }}</div>
+							</div>
+						</template>
 					</reactive-google-map>
 				</div>
 			</div>
@@ -53,6 +70,14 @@ import './styles.css';
 
 export default {
 	name: 'app',
+	methods: {
+		handleOpen() {
+			console.log('open');
+		},
+		handleClose() {
+			console.log('close');
+		},
+	},
 };
 </script>
 

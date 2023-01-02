@@ -1,11 +1,10 @@
-import GmapVue, { components } from 'gmap-vue';
+import VueGoogleMaps, { Map } from 'vue-google-maps-community-fork';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { RMConnected } from './ReactiveMap.jsx';
 import GoogleMapMarkers from './GoogleMapMarkers.jsx';
 import types from '../../utils/vueTypes';
-
-const { MapLayer: Map } = components;
+import { css } from 'emotion';
 
 const ReactiveGoogleMap = {
 	name: 'ReactiveGoogleMap',
@@ -41,6 +40,20 @@ const ReactiveGoogleMap = {
 		calculateMarkers: VueTypes.func,
 		highlightMarkerOnHover: VueTypes.bool.def(true),
 	},
+	computed: {
+		listeners() {
+			const onRE = /^on[^a-z]/;
+			const attributes = {};
+			const listeners = {};
+			const { $attrs } = this;
+			for (const property in $attrs) {
+				if (onRE.test(property)) {
+					listeners[property] = $attrs[property];
+				}
+			}
+			return listeners;
+		},
+	},
 	methods: {
 		renderMap({
 			resultsToRender,
@@ -68,12 +81,15 @@ const ReactiveGoogleMap = {
 						style={{
 							height: '100%',
 						}}
+						class={css`
+							height: 100%;
+						`}
 						options={{
 							zoomControl: true,
 						}}
 						center={center}
 						zoom={zoom}
-						{...{ props: this.mapProps }}
+						{...this.mapProps}
 						onzoom_changed={handleZoomChange}
 						ondragend={handleOnDragEnd}
 						onidle={handleOnIdle}
@@ -89,7 +105,7 @@ const ReactiveGoogleMap = {
 								renderItem={
 									this.$slots.renderItem
 										? () => ({
-											custom: this.$slots.renderItem,
+												custom: this.$slots.renderItem,
 										  })
 										: this.renderItem
 								}
@@ -98,9 +114,7 @@ const ReactiveGoogleMap = {
 								renderPopover={this.$slots.renderPopover}
 								renderClusterPopover={this.$slots.renderClusterPopover}
 								showMarkerClusters={this.showMarkerClusters}
-								{...{
-									on: this.$attrs,
-								}}
+								{...this.listeners}
 							/>
 						) : null}
 					</Map>
@@ -116,12 +130,13 @@ const ReactiveGoogleMap = {
 			let currentInstance = this;
 			while (currentInstance) {
 				if (
-					currentInstance
-					&& currentInstance.$options
-					&& currentInstance.$options.name === 'connect-ClusterMarkers'
+					currentInstance &&
+					currentInstance.$options &&
+					currentInstance.$options.name === 'connect-ClusterMarkers'
 				) {
 					clusterManagerInstance = currentInstance;
 					currentInstance = null;
+					// TODO: Check if $children works in vue 3
 				} else if (currentInstance.$children) {
 					[currentInstance] = currentInstance.$children;
 				} else {
@@ -184,7 +199,7 @@ ReactiveGoogleMap.install = function (Vue, options) {
 	if (!options || !options.key) {
 		console.error('ReactiveSearch: map key is required to use ReactiveGoogleMap component');
 	}
-	Vue.use(GmapVue, {
+	Vue.use(VueGoogleMaps, {
 		load: {
 			key: options.key,
 			libraries: 'places',
