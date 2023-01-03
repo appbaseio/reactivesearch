@@ -160,11 +160,6 @@ const MultiRange = {
 	},
 
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
@@ -228,44 +223,14 @@ const MultiRange = {
 MultiRange.parseValue = (value, props) =>
 	value ? props.data.filter((item) => value.includes(item.label)) : null;
 
-MultiRange.defaultQuery = (values, props) => {
-	const generateRangeQuery = (dataField, items) => {
-		if (items.length > 0) {
-			return items.map((value) => ({
-				range: {
-					[dataField]: {
-						gte: value.start,
-						lte: value.end,
-						boost: 2.0,
-					},
-				},
-			}));
-		}
-		return null;
-	};
-	let query = null;
-	if (values && values.length) {
-		query = {
-			bool: {
-				should: generateRangeQuery(props.dataField, values),
-				minimum_should_match: 1,
-				boost: 1.0,
-			},
-		};
-	}
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-
-	return query;
-};
+MultiRange.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		showMissing: props.showMissing,
+	},
+});
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
@@ -273,7 +238,6 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

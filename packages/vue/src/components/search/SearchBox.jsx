@@ -51,7 +51,6 @@ const {
 	getCompositeAggsQuery,
 	withClickIds,
 	getResultStats,
-	normalizeDataField,
 } = helper;
 
 const SearchBox = defineComponent({
@@ -74,7 +73,7 @@ const SearchBox = defineComponent({
 		},
 	},
 	created() {
-		const { distinctField, distinctFieldConfig, index, mode } = this.$props;
+		const { mode } = this.$props;
 		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
 			this.$options.isTagsMode = true;
 		}
@@ -82,22 +81,6 @@ const SearchBox = defineComponent({
 		if (this.$options.isTagsMode) {
 			console.warn(
 				'Warning(ReactiveSearch): The `categoryField` prop is not supported when `mode` prop is set to `tag`',
-			);
-		}
-
-		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!this.enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -280,8 +263,8 @@ const SearchBox = defineComponent({
 			if (Array.isArray(newVal) && newVal.length) {
 				suggestionsList = [...withClickIds(newVal)];
 			} else if (
-				Array.isArray(this.$props.defaultSuggestions)
-				&& this.$props.defaultSuggestions.length
+				Array.isArray(this.$props.defaultSuggestions) &&
+				this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
@@ -289,8 +272,8 @@ const SearchBox = defineComponent({
 		},
 		selectedValue(newVal, oldVal) {
 			if (
-				!isEqual(newVal, oldVal)
-				&& (this.$options.isTagsMode
+				!isEqual(newVal, oldVal) &&
+				(this.$options.isTagsMode
 					? !isEqual(this.$data.selectedTags, newVal)
 					: this.$data.currentValue !== newVal)
 			) {
@@ -366,32 +349,6 @@ const SearchBox = defineComponent({
 				this.triggerCustomQuery(value);
 			}
 		},
-		validateDataField() {
-			const propName = 'dataField';
-			const componentName = SearchBox.name;
-			const props = this.$props;
-			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
-			const propValue = props[propName];
-			if (!this.enableAppbase) {
-				if (!propValue) {
-					console.error(requiredError);
-					return;
-				}
-				if (
-					typeof propValue !== 'string'
-					&& typeof propValue !== 'object'
-					&& !Array.isArray(propValue)
-				) {
-					console.error(
-						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
-					);
-					return;
-				}
-				if (Array.isArray(propValue) && propValue.length === 0) {
-					console.error(requiredError);
-				}
-			}
-		},
 		getComponent(downshiftProps = {}) {
 			const { currentValue } = this.$data;
 			const data = {
@@ -460,8 +417,8 @@ const SearchBox = defineComponent({
 
 				let queryHandlerValue = value;
 				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
-					queryHandlerValue
-						= Array.isArray(this.selectedTags) && this.selectedTags.length
+					queryHandlerValue =
+						Array.isArray(this.selectedTags) && this.selectedTags.length
 							? this.selectedTags
 							: undefined;
 				}
@@ -477,8 +434,8 @@ const SearchBox = defineComponent({
 					// to set the query otherwise the value should reset
 					if (props.strictSelection) {
 						if (
-							cause === causes.SUGGESTION_SELECT
-							|| (this.$options.isTagsMode
+							cause === causes.SUGGESTION_SELECT ||
+							(this.$options.isTagsMode
 								? this.selectedTags.length === 0
 								: value === '')
 						) {
@@ -490,9 +447,9 @@ const SearchBox = defineComponent({
 							this.setValue('', true);
 						}
 					} else if (
-						props.value === undefined
-						|| cause === causes.SUGGESTION_SELECT
-						|| cause === causes.CLEAR_VALUE
+						props.value === undefined ||
+						cause === causes.SUGGESTION_SELECT ||
+						cause === causes.CLEAR_VALUE
 					) {
 						this.triggerCustomQuery(
 							queryHandlerValue,
@@ -575,12 +532,12 @@ const SearchBox = defineComponent({
 		},
 		handleVoiceResults({ results }) {
 			if (
-				results
-				&& results[0]
-				&& results[0].isFinal
-				&& results[0][0]
-				&& results[0][0].transcript
-				&& results[0][0].transcript.trim()
+				results &&
+				results[0] &&
+				results[0].isFinal &&
+				results[0][0] &&
+				results[0][0].transcript &&
+				results[0][0].transcript.trim()
 			) {
 				this.setValue(results[0][0].transcript.trim(), true);
 			}
@@ -777,17 +734,17 @@ const SearchBox = defineComponent({
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
-			const renderNoSuggestion
-				= this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderNoSuggestion =
+				this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$slots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
-				renderNoSuggestion
-				&& isOpen
-				&& !finalSuggestionsList.length
-				&& !this.isLoading
-				&& currentValue
-				&& !(renderError && this.error)
+				renderNoSuggestion &&
+				isOpen &&
+				!finalSuggestionsList.length &&
+				!this.isLoading &&
+				currentValue &&
+				!(renderError && this.error)
 			) {
 				return (
 					<SuggestionWrapper
@@ -899,10 +856,10 @@ const SearchBox = defineComponent({
 			const elt = event.target || event.srcElement;
 			const { tagName } = elt;
 			if (
-				elt.isContentEditable
-				|| tagName === 'INPUT'
-				|| tagName === 'SELECT'
-				|| tagName === 'TEXTAREA'
+				elt.isContentEditable ||
+				tagName === 'INPUT' ||
+				tagName === 'SELECT' ||
+				tagName === 'TEXTAREA'
 			) {
 				// already in an input
 				return;
@@ -994,8 +951,8 @@ const SearchBox = defineComponent({
 			}
 			const tagsList = [...this.selectedTags];
 			const shouldRenderClearAllTag = tagsList.length > 1;
-			const renderSelectedTags
-				= this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
+			const renderSelectedTags =
+				this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
 
 			return renderSelectedTags ? (
 				renderSelectedTags({
@@ -1026,8 +983,8 @@ const SearchBox = defineComponent({
 	render() {
 		const { theme, expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
-		const hasSuggestions
-			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+		const hasSuggestions =
+			Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
 		const renderItem = this.$slots.renderItem || this.$props.renderItem;
 
 		return (
@@ -1067,8 +1024,8 @@ const SearchBox = defineComponent({
 									};
 									return (
 										<div>
-											{this.hasCustomRenderer
-												&& this.getComponent({
+											{this.hasCustomRenderer &&
+												this.getComponent({
 													isOpen,
 													getItemProps,
 													getItemEvents,
@@ -1228,8 +1185,8 @@ const SearchBox = defineComponent({
 													autocomplete="off"
 												/>
 												{this.renderIcons()}
-												{!expandSuggestionsContainer
-													&& renderSuggestionsDropdown()}
+												{!expandSuggestionsContainer &&
+													renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
 											{this.renderEnterButtonElement()}
@@ -1293,10 +1250,9 @@ const SearchBox = defineComponent({
 SearchBox.defaultQuery = (value, props) => {
 	let finalQuery = null;
 
-	const fields = normalizeDataField(props.dataField, props.fieldWeights);
 	finalQuery = {
 		bool: {
-			should: SearchBox.shouldQuery(value, fields, props),
+			should: SearchBox.shouldQuery(value, props),
 			minimum_should_match: '1',
 		},
 	};
@@ -1314,109 +1270,33 @@ SearchBox.defaultQuery = (value, props) => {
 
 	return finalQuery;
 };
-SearchBox.shouldQuery = (value, dataFields, props) => {
-	const finalQuery = [];
-	const phrasePrefixFields = [];
-	const fields = dataFields.map((dataField) => {
-		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
-		if (
-			!(
-				dataField.field.endsWith('.keyword')
-				|| dataField.field.endsWith('.autosuggest')
-				|| dataField.field.endsWith('.search')
-			)
-		) {
-			phrasePrefixFields.push(queryField);
-		}
-		return queryField;
-	});
-	if (props.searchOperators || props.queryString) {
-		return {
-			query: value,
-			fields,
-			default_operator: props.queryFormat,
-		};
-	}
-
-	if (props.queryFormat === 'and') {
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'cross_fields',
-				operator: 'and',
-			},
-		});
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'phrase',
-				operator: 'and',
-			},
-		});
-		if (phrasePrefixFields.length > 0) {
-			finalQuery.push({
-				multi_match: {
-					query: value,
-					fields: phrasePrefixFields,
-					type: 'phrase_prefix',
-					operator: 'and',
-				},
-			});
-		}
-		return finalQuery;
-	}
-
-	finalQuery.push({
-		multi_match: {
-			query: value,
-			fields,
-			type: 'best_fields',
-			operator: 'or',
-			fuzziness: props.fuzziness ? props.fuzziness : 0,
-		},
-	});
-
-	finalQuery.push({
-		multi_match: {
-			query: value,
-			fields,
-			type: 'phrase',
-			operator: 'or',
-		},
-	});
-
-	if (phrasePrefixFields.length > 0) {
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields: phrasePrefixFields,
-				type: 'phrase_prefix',
-				operator: 'or',
-			},
-		});
-	}
-
-	return finalQuery;
-};
+SearchBox.shouldQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		queryString: props.queryString,
+		searchOperators: props.searchOperators,
+	},
+});
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	selectedCategory:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].category)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].category) ||
+		null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
+
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,

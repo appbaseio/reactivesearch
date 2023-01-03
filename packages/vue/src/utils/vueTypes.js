@@ -143,13 +143,7 @@ const types = {
 		'nauticalmiles',
 	]),
 	value: VueTypes.string.def(undefined),
-	analyticsConfig: VueTypes.shape({
-		emptyQuery: VueTypes.bool,
-		suggestionAnalytics: VueTypes.bool,
-		userId: VueTypes.string,
-		customEvents: VueTypes.object,
-	}),
-	appbaseConfig: VueTypes.shape({
+	reactivesearchAPIConfig: VueTypes.shape({
 		recordAnalytics: VueTypes.bool,
 		emptyQuery: VueTypes.bool,
 		suggestionAnalytics: VueTypes.bool,

@@ -70,28 +70,13 @@ const ReactiveList = {
 		return this.__state;
 	},
 	created() {
-		const { distinctField, distinctFieldConfig, index } = this.$props;
 		// no support for pagination and aggregationField together
 		if (this.pagination && this.aggregationField) {
 			console.warn(
 				'Pagination is not supported when aggregationField is present. The list will be rendered with infinite scroll',
 			);
 		}
-		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!this.enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
+
 		const defaultPage = this.defaultPage || -1;
 		if (defaultPage >= 0) {
 			this.currentPageState = defaultPage;
@@ -105,8 +90,8 @@ const ReactiveList = {
 			);
 		}
 		if (this.urlSortOption) {
-			this.sortOptionIndex
-				= this.$props.sortOptions.findIndex((s) => s.label === this.urlSortOption) || 0;
+			this.sortOptionIndex =
+				this.$props.sortOptions.findIndex((s) => s.label === this.urlSortOption) || 0;
 		}
 		this.updateComponentProps(
 			this.componentId,
@@ -421,10 +406,10 @@ const ReactiveList = {
 		const results = parseHits(hits) || [];
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
-				{this.isLoading
-					&& this.shouldRenderPagination
-					&& this.showInfiniteScroll
-					&& (this.$slots.loader || this.$props.loader)}
+				{this.isLoading &&
+					this.shouldRenderPagination &&
+					this.showInfiniteScroll &&
+					(this.$slots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
 					labelPosition={this.sortOptions ? 'right' : 'left'}
@@ -434,46 +419,46 @@ const ReactiveList = {
 					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && hits && hits.length === 0 ? this.renderNoResult() : null}
-				{this.shouldRenderPagination
-				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
-						<Pagination
-							pages={this.$props.pages}
-							totalPages={this.totalPages}
-							currentPage={this.currentPageState}
-							setPage={this.setPage}
-							innerClass={this.$props.innerClass}
-							prevLabel={this.$props.prevLabel}
-							nextLabel={this.$props.nextLabel}
-						/>
-					) : null}
+				{this.shouldRenderPagination &&
+				(this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
+					<Pagination
+						pages={this.$props.pages}
+						totalPages={this.totalPages}
+						currentPage={this.currentPageState}
+						setPage={this.setPage}
+						innerClass={this.$props.innerClass}
+						prevLabel={this.$props.prevLabel}
+						nextLabel={this.$props.nextLabel}
+					/>
+				) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
-					? this.$slots.loader
-					  || this.$props.loader || (
-						<div
-							style={{
-								textAlign: 'center',
-								margin: '20px 0',
-								color: '#666',
-							}}
-						>
+					? this.$slots.loader ||
+					  this.$props.loader || (
+							<div
+								style={{
+									textAlign: 'center',
+									margin: '20px 0',
+									color: '#666',
+								}}
+							>
 								Loading...
-						</div>
+							</div>
 					  )
 					: null}
-				{this.shouldRenderPagination
-				&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
-						<Pagination
-							pages={this.$props.pages}
-							totalPages={Math.ceil(this.$data.total / this.$props.size)}
-							currentPage={this.currentPageState}
-							setPage={this.setPage}
-							showEndPage={this.$props.showEndPage}
-							innerClass={this.$props.innerClass}
-							prevLabel={this.$props.prevLabel}
-							nextLabel={this.$props.nextLabel}
-						/>
-					) : null}
+				{this.shouldRenderPagination &&
+				(this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
+					<Pagination
+						pages={this.$props.pages}
+						totalPages={Math.ceil(this.$data.total / this.$props.size)}
+						currentPage={this.currentPageState}
+						setPage={this.setPage}
+						showEndPage={this.$props.showEndPage}
+						innerClass={this.$props.innerClass}
+						prevLabel={this.$props.prevLabel}
+						nextLabel={this.$props.nextLabel}
+					/>
+				) : null}
 				{this.url.endsWith('appbase.io') && results.length ? (
 					<Flex
 						direction="row-reverse"
@@ -571,8 +556,8 @@ const ReactiveList = {
 
 		scrollHandler() {
 			if (
-				!this.isLoading
-				&& window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight
+				!this.isLoading &&
+				window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight
 			) {
 				this.loadMore();
 			}
@@ -637,8 +622,8 @@ const ReactiveList = {
 		},
 
 		renderStats() {
-			const renderResultStats
-				= this.$slots.renderResultStats || this.$props.renderResultStats;
+			const renderResultStats =
+				this.$slots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
 			}
@@ -786,11 +771,11 @@ const ReactiveList = {
 };
 const mapStateToProps = (state, props) => ({
 	defaultPage:
-		state.selectedValues[props.componentId]
-		&& state.selectedValues[props.componentId].value - 1,
+		state.selectedValues[props.componentId] &&
+		state.selectedValues[props.componentId].value - 1,
 	urlSortOption:
-		state.selectedValues[`${props.componentId}sortOption`]
-		&& state.selectedValues[`${props.componentId}sortOption`].value,
+		state.selectedValues[`${props.componentId}sortOption`] &&
+		state.selectedValues[`${props.componentId}sortOption`].value,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
@@ -800,13 +785,13 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.config && state.config.analytics,
-	enableAppbase: state.config.enableAppbase,
+
 	url: state.config.url,
 	error: state.error[props.componentId],
 	afterKey:
-		state.aggregations[props.componentId]
-		&& state.aggregations[props.componentId][props.aggregationField]
-		&& state.aggregations[props.componentId][props.aggregationField].after_key,
+		state.aggregations[props.componentId] &&
+		state.aggregations[props.componentId][props.aggregationField] &&
+		state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 });

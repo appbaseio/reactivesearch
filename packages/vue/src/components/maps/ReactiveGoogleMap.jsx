@@ -1,10 +1,10 @@
 import VueGoogleMaps, { Map } from 'vue-google-maps-community-fork';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { css } from 'emotion';
 import { RMConnected } from './ReactiveMap.jsx';
 import GoogleMapMarkers from './GoogleMapMarkers.jsx';
 import types from '../../utils/vueTypes';
-import { css } from 'emotion';
 
 const ReactiveGoogleMap = {
 	name: 'ReactiveGoogleMap',
@@ -43,14 +43,13 @@ const ReactiveGoogleMap = {
 	computed: {
 		listeners() {
 			const onRE = /^on[^a-z]/;
-			const attributes = {};
 			const listeners = {};
 			const { $attrs } = this;
-			for (const property in $attrs) {
+			Object.keys($attrs).forEach((property) => {
 				if (onRE.test(property)) {
 					listeners[property] = $attrs[property];
 				}
-			}
+			});
 			return listeners;
 		},
 	},
@@ -105,7 +104,7 @@ const ReactiveGoogleMap = {
 								renderItem={
 									this.$slots.renderItem
 										? () => ({
-												custom: this.$slots.renderItem,
+											custom: this.$slots.renderItem,
 										  })
 										: this.renderItem
 								}
@@ -130,9 +129,9 @@ const ReactiveGoogleMap = {
 			let currentInstance = this;
 			while (currentInstance) {
 				if (
-					currentInstance &&
-					currentInstance.$options &&
-					currentInstance.$options.name === 'connect-ClusterMarkers'
+					currentInstance
+					&& currentInstance.$options
+					&& currentInstance.$options.name === 'connect-ClusterMarkers'
 				) {
 					clusterManagerInstance = currentInstance;
 					currentInstance = null;

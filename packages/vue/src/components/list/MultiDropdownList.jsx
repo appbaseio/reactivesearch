@@ -85,11 +85,6 @@ const MultiDropdownList = {
 		endpoint: types.endpointConfig,
 	},
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		const props = this.$props;
 		this.modifiedOptions
 			= this.options && this.options[props.dataField]
@@ -444,90 +439,16 @@ const MultiDropdownList = {
 	},
 };
 
-MultiDropdownList.defaultQuery = (value, props) => {
-	let query = null;
-	let { queryFormat } = props;
-	if (queryFormat === undefined) {
-		queryFormat = 'or';
-	}
-	const type = queryFormat === 'or' ? 'terms' : 'term';
-
-	if (!Array.isArray(value) || value.length === 0) {
-		return null;
-	}
-
-	if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
-		if (props.showMissing) {
-			query = { match_all: {} };
-		} else {
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		}
-	} else if (value) {
-		let listQuery;
-		if (queryFormat === 'or') {
-			if (props.showMissing) {
-				const hasMissingTerm = value.includes(props.missingLabel);
-				let should = [
-					{
-						[type]: {
-							[props.dataField]: value.filter((item) => item !== props.missingLabel),
-						},
-					},
-				];
-				if (hasMissingTerm) {
-					should = should.concat({
-						bool: {
-							must_not: {
-								exists: { field: props.dataField },
-							},
-						},
-					});
-				}
-				listQuery = {
-					bool: {
-						should,
-					},
-				};
-			} else {
-				listQuery = {
-					[type]: {
-						[props.dataField]: value,
-					},
-				};
-			}
-		} else {
-			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = value.map((item) => ({
-				[type]: {
-					[props.dataField]: item,
-				},
-			}));
-			listQuery = {
-				bool: {
-					must: queryArray,
-				},
-			};
-		}
-
-		query = value.length ? listQuery : null;
-	}
-
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-	return query;
-};
+MultiDropdownList.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		selectAllLabel: props.selectAllLabel,
+		showMissing: props.showMissing,
+	},
+});
 
 MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
@@ -556,7 +477,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {
