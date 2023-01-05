@@ -200,7 +200,7 @@ const SingleDropdownList = {
 			selectAll = [
 				{
 					key: this.$props.selectAllLabel,
-					doc_count: this.totalDocumentCount
+					doc_count: this.totalDocumentCount,
 				},
 			];
 		}
@@ -462,12 +462,12 @@ export const ListConnected = PreferencesConsumer(
 		internalComponent: SingleDropdownList.hasInternalComponent(),
 	}),
 );
-
-SingleDropdownList.install = function (Vue) {
-	Vue.component(SingleDropdownList.name, ListConnected);
+ListConnected.name = SingleDropdownList.name;
+ListConnected.install = function (Vue) {
+	Vue.component(ListConnected.name, ListConnected);
 };
 
 // Add componentType for SSR
-SingleDropdownList.componentType = componentTypes.singleDropdownList;
+ListConnected.componentType = componentTypes.singleDropdownList;
 
-export default SingleDropdownList;
+export default ListConnected;
