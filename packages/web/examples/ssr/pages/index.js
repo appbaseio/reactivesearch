@@ -21,7 +21,7 @@ const components = {
 		},
 		enableAppbase: true,
 	},
-	datasearch: {
+	searchbox: {
 		componentId: 'SearchSensor',
 		dataField: ['name', 'name.search'],
 		autosuggest: false,
@@ -71,7 +71,7 @@ const components = {
 			<ReactiveList.ResultCardsWrapper>
 				{data.map((item) => (
 					<ResultCard href={item.listing_url} key={item._id}>
-						<ResultCard.Image src={(item.images && item.images[0]) || ''} />
+						<ResultCard.Image src={item.images ? item.images[0] : ''} />
 						<ResultCard.Title>{item.name}</ResultCard.Title>
 						<ResultCard.Description>
 							<div>
@@ -105,7 +105,7 @@ export default class Main extends Component {
 			store: await initReactivesearch(
 				[
 					{
-						...components.datasearch,
+						...components.searchbox,
 						source: SearchBox,
 					},
 					{
@@ -133,7 +133,7 @@ export default class Main extends Component {
 				<ReactiveBase {...components.settings} initialState={this.props.store}>
 					<nav className="nav">
 						<div className="title">Airbeds</div>
-						<SearchBox {...components.datasearch} />
+						<SearchBox {...components.searchbox} />
 					</nav>
 					<div className="left-col">
 						<NumberBox {...components.numberbox} />

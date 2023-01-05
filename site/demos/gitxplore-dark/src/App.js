@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
+import { ReactiveBase, SearchBox } from '@appbaseio/reactivesearch';
 
 import theme from './styles/theme';
 
@@ -39,14 +39,13 @@ class App extends Component {
 				<ReactiveBase
 					app="gitxplore-app"
 					url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-					enableAppbase
 					theme={theme}
 					themePreset="dark"
 				>
 					<Flex direction="row-reverse" className={appContainer}>
 						<Header currentTopics={this.state.currentTopics} setTopics={this.setTopics} />
 						<FlexChild className={resultsContainer}>
-							<DataSearch
+							<SearchBox
 								componentId="repo"
 								dataField={['name', 'description', 'name.keyword', 'fullname', 'owner', 'topics']}
 								placeholder="Search Repos"

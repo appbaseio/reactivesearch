@@ -6,7 +6,6 @@ import './index.css';
 
 const Main = () => (
 	<ReactiveBase
-		enableAppbase
 		app="default"
 		url="https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/public-demo-skxjb/service/http_endpoint/incoming_webhook/reactivesearch"
 		mongodb={{

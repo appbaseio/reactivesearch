@@ -6,7 +6,7 @@ import {
 	ResultCard,
 	SelectedFilters,
 	ReactiveChart,
-	DataSearch,
+	SearchBox,
 } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -15,15 +15,14 @@ const Main = () => (
 	<ReactiveBase
 		app="good-books-ds"
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-		enableAppbase
-		appbaseConfig={{
+		reactivesearchAPIConfig={{
 			recordAnalytics: true,
 		}}
 	>
 		<div className="row">
 			<div className="col">
-				<DataSearch
-					title="DataSearch"
+				<SearchBox
+					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
 					URLParams

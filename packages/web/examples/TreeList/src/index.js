@@ -11,7 +11,6 @@ class Main extends Component {
 			<ReactiveBase
 				app="best-buy-dataset"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-				enableAppbase
 			>
 				<div className="row">
 					<div className="col">
