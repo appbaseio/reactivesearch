@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import moment from 'moment';
-
 import {
 	ReactiveBase,
 	DatePicker,
@@ -16,18 +15,18 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="airbeds-test-app"
+				app="airbnb-dev"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				enableAppbase
-				type="listing"
 			>
 				<div className="row">
 					<div className="col">
 						<DatePicker
 							componentId="DateSensor"
-							dataField="date_from"
+							dataField="available_from"
 							customQuery={this.dateQuery}
-							initialMonth={new Date('2017-05-05')}
+							initialMonth={new Date('2016-05-05')}
+							placeholder="Available From - YYYY-MM-DD"
 						/>
 					</div>
 
@@ -44,9 +43,9 @@ class Main extends Component {
 							}}
 							render={({ data }) => (
 								<ReactiveList.ResultCardsWrapper>
-									{data.map(item => (
+									{data.map((item) => (
 										<ResultCard href={item.listing_url} key={item.id}>
-											<ResultCard.Image src={item.image} />
+											<ResultCard.Image src={item.picture_url} />
 											<ResultCard.Title>
 												<div
 													className="book-title"
@@ -88,7 +87,7 @@ class Main extends Component {
 				{
 					range: {
 						[props.dataField]: {
-							lte: moment(value).format('YYYYMMDD'),
+							gte: moment(value).valueOf(),
 						},
 					},
 				},
@@ -97,5 +96,5 @@ class Main extends Component {
 		return query ? { query: { bool: { must: query } } } : null;
 	}
 }
-
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

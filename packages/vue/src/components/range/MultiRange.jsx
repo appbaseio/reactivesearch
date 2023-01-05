@@ -141,7 +141,15 @@ const MultiRange = {
 		},
 		selectedValue(newVal) {
 			if (!isEqual(this.$data.currentValue, newVal)) {
-				this.selectItem(newVal, true, undefined, true);
+				const processSelectedValues = newVal
+					? newVal.map((item) => {
+						if (typeof item === 'object' && 'label' in item) {
+							return item.label;
+						}
+						return item;
+					  })
+					: null;
+				this.selectItem(processSelectedValues, true, undefined, true);
 			}
 		},
 		customQuery(newVal, oldVal) {
@@ -279,11 +287,12 @@ export const RangeConnected = PreferencesConsumer(
 		componentType: componentTypes.multiRange,
 	}),
 );
+RangeConnected.name = MultiRange.name;
 
-MultiRange.install = function (Vue) {
-	Vue.component(MultiRange.name, RangeConnected);
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
 };
 // Add componentType for SSR
-MultiRange.componentType = componentTypes.multiRange;
+RangeConnected.componentType = componentTypes.multiRange;
 
-export default MultiRange;
+export default RangeConnected;

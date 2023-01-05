@@ -1,6 +1,6 @@
 /* eslint react/prop-types: 0 */
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import { Component } from 'react';
+import ReactDOM from 'react-dom/client';
 
 import {
 	ReactiveBase,
@@ -123,4 +123,5 @@ class CustomComponent extends Component {
 	}
 }
 
-ReactDOM.render(<Main />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Main />);

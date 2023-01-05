@@ -541,12 +541,13 @@ export const ListConnected = PreferencesConsumer(
 		internalComponent: SingleList.hasInternalComponent(),
 	}),
 );
+ListConnected.name = SingleList.name;
 
-SingleList.install = function (Vue) {
-	Vue.component(SingleList.name, ListConnected);
+ListConnected.install = function (Vue) {
+	Vue.component(ListConnected.name, ListConnected);
 };
 
 // Add componentType for SSR
-SingleList.componentType = componentTypes.singleList;
+ListConnected.componentType = componentTypes.singleList;
 
-export default SingleList;
+export default ListConnected;

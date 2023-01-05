@@ -121,11 +121,16 @@ const DataSearch = {
 			}
 		}
 		this.handleTextChange = debounce(this.handleText, this.$props.debounce);
+		this.updateDefaultQueryHandlerDebounced = debounce(
+			this.updateDefaultQueryHandler,
+			this.$props.debounce,
+		);
+		this.updateQueryHandlerDebounced = debounce(this.updateQueryHandler, this.$props.debounce);
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
 
-		this.updateDefaultQueryHandler(this.currentValue, this.$props, false);
+		this.updateDefaultQueryHandlerDebounced(this.currentValue, this.$props, false);
 	},
 	computed: {
 		suggestionsList() {
@@ -360,7 +365,7 @@ const DataSearch = {
 					newVal,
 					true,
 					this.$props,
-					undefined,
+					newVal === '' ? causes.CLEAR_VALUE : undefined,
 					false,
 					typeof newVal !== 'string' && this.$options.isTagsMode,
 				);
@@ -368,7 +373,7 @@ const DataSearch = {
 		},
 		defaultQuery(newVal, oldVal) {
 			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
-				this.updateDefaultQueryHandler(this.$data.currentValue, this.$props);
+				this.updateDefaultQueryHandlerDebounced(this.$data.currentValue, this.$props);
 			}
 		},
 		customQuery(newVal, oldVal) {
@@ -414,9 +419,11 @@ const DataSearch = {
 	methods: {
 		handleText(value) {
 			if (this.$props.autosuggest) {
-				this.updateDefaultQueryHandler(value, this.$props);
-			} else {
-				this.updateQueryHandler(this.$props.componentId, value, this.$props);
+				this.updateDefaultQueryHandlerDebounced(value, this.$props);
+			} else if (!this.$options.isTagsMode) {
+				this.updateQueryHandlerDebounced(this.$props.componentId, value, this.$props);
+			} else if (this.$options.isTagsMode) {
+				this.$data.currentValue = value;
 			}
 		},
 		validateDataField() {
@@ -559,19 +566,14 @@ const DataSearch = {
 							this.isOpen = false;
 						}
 						if (typeof value === 'string')
-							this.updateDefaultQueryHandler(value, this.$props);
+							this.updateDefaultQueryHandlerDebounced(value, this.$props);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 
-					if (props.strictSelection) {
-						if (
-							cause === causes.SUGGESTION_SELECT
-							|| (this.$options.isTagsMode
-								? this.selectedTags.length === 0
-								: value === '')
-						) {
+					if (props.strictSelection && props.autosuggest) {
+						if (cause === causes.SUGGESTION_SELECT || props.value !== undefined) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
-						} else {
+						} else if (this.currentValue !== '') {
 							this.setValue('', true);
 						}
 					} else {
@@ -599,7 +601,7 @@ const DataSearch = {
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		updateDefaultQueryHandler(value, props, execute) {
+		updateDefaultQueryHandler(value, props = this.$props, execute) {
 			if (!value && props.enableDefaultSuggestions === false) {
 				// clear Component data from store
 				this.resetStoreForComponent(props.componentId);
@@ -637,7 +639,6 @@ const DataSearch = {
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
-
 			let customQueryOptions;
 			const defaultQueryTobeSet = DataSearch.defaultQuery(value, props);
 			let query = defaultQueryTobeSet;
@@ -716,20 +717,33 @@ const DataSearch = {
 		},
 
 		handleKeyDown(event, highlightedIndex) {
-			const { value } = this.$props;
+			const { value: targetValue } = event.target;
+			const { value, strictSelection, size } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
 			}
 
 			// if a suggestion was selected, delegate the handling to suggestion handler
-			if (event.key === 'Enter' && highlightedIndex === null) {
+			if (
+				event.key === 'Enter'
+				&& (highlightedIndex === null
+					|| highlightedIndex < 0
+					|| highlightedIndex
+						=== [
+							...[...this.suggestionsList].slice(0, size || 10),
+							...this.defaultSearchSuggestions,
+							...this.topSuggestions,
+						].length)
+			) {
+				this.isPending = false;
 				this.setValue(
-					event.target.value,
+					this.$options.isTagsMode && strictSelection ? '' : targetValue,
 					true,
 					this.$props,
-					this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+					undefined,
+					false,
 				);
-				this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
+				this.onValueSelectedHandler(targetValue, causes.ENTER_PRESS);
 			}
 			// Need to review
 			this.$emit('keyDown', event, this.triggerQuery);
@@ -748,15 +762,14 @@ const DataSearch = {
 				this.setValue(inputValue, false, this.$props, undefined, true, false);
 			} else {
 				this.isPending = true;
-
+				this.currentValue = inputValue;
 				this.$emit(
 					'change',
 					inputValue,
 					({ isOpen = false } = {}) => {
 						if (this.$options.isTagsMode && autosuggest) {
-							this.currentValue = value;
 							this.isOpen = isOpen;
-							this.updateDefaultQueryHandler(this.currentValue, this.$props);
+							this.updateDefaultQueryHandlerDebounced(this.currentValue, this.$props);
 							return;
 						}
 						this.triggerQuery({ isOpen });
@@ -1336,6 +1349,8 @@ const DataSearch = {
 														domProps: getInputProps({
 															value:
 																this.$data.currentValue === null
+																|| typeof this.$data.currentValue
+																	!== 'string'
 																	? ''
 																	: this.$data.currentValue,
 														}),
@@ -1405,6 +1420,7 @@ const DataSearch = {
 							</InputWrapper>
 							{this.renderInputAddonAfter()}
 						</InputGroup>
+						{this.renderTags()}
 					</div>
 				)}
 			</Container>
@@ -1604,10 +1620,13 @@ export const DSConnected = PreferencesConsumer(
 	}),
 );
 
-DataSearch.install = function (Vue) {
-	Vue.component(DataSearch.name, DSConnected);
+DSConnected.name = DataSearch.name;
+
+// plugins usage
+DSConnected.install = function (Vue) {
+	Vue.component(DSConnected.name, DSConnected);
 };
 // Add componentType for SSR
-DataSearch.componentType = componentTypes.dataSearch;
+DSConnected.componentType = componentTypes.dataSearch;
 
-export default DataSearch;
+export default DSConnected;

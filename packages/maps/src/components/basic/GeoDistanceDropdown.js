@@ -1,5 +1,7 @@
+/** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+
 import Downshift from 'downshift';
 import { withTheme } from 'emotion-theming';
 

@@ -290,12 +290,13 @@ export const RangeConnected = PreferencesConsumer(
 		componentType: componentTypes.rangeInput,
 	}),
 );
+RangeConnected.name = RangeInput.name;
 
-RangeInput.install = function (Vue) {
-	Vue.component(RangeInput.name, RangeConnected);
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
 };
 
 // Add componentType for SSR
-RangeInput.componentType = componentTypes.rangeInput;
+RangeConnected.componentType = componentTypes.rangeInput;
 
-export default RangeInput;
+export default RangeConnected;
