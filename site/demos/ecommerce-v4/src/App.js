@@ -9,7 +9,7 @@ import './App.css';
 const { Header, Content } = Layout;
 const { useBreakpoint } = Grid;
 
-function App({ history }) {
+function App() {
 	const breakpointActive = useBreakpoint();
 	return (
 		<ReactiveBase
