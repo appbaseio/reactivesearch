@@ -162,7 +162,7 @@ const suggestionsContainer = css`
 	}
 `;
 
-const noSuggestions = (themePreset, theme) => `
+const noSuggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
 	border: 1px solid #ccc;

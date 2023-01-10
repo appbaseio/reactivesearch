@@ -1,6 +1,5 @@
 import { styled } from '@appbaseio/vue-emotion';
 
-
 const right = `
 	right: 35px;
 `;

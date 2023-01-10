@@ -201,7 +201,7 @@ const MultiList = {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL class={getClassName(this.$props.innerClass, 'list')}>
+					<UL>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
@@ -214,11 +214,7 @@ const MultiList = {
 									name={selectAllLabel}
 									value={selectAllLabel}
 									onClick={this.handleClick}
-									{...{
-										domProps: {
-											checked: !!this.currentValue[selectAllLabel],
-										},
-									}}
+									checked={!!this.currentValue[selectAllLabel]}
 									show={this.$props.showCheckbox}
 								/>
 								<label
@@ -261,11 +257,7 @@ const MultiList = {
 										value={item.key}
 										onClick={this.handleClick}
 										show={this.$props.showCheckbox}
-										{...{
-											domProps: {
-												checked: !!this.$data.currentValue[item.key],
-											},
-										}}
+										checked={!!this.$data.currentValue[item.key]}
 									/>
 									<label
 										class={getClassName(this.$props.innerClass, 'label')}

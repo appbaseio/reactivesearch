@@ -1,10 +1,10 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
 import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import NoSSR from '../basic/NoSSR.jsx';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
@@ -188,7 +188,7 @@ const RangeSlider = {
 						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 							<vue-slider-component
 								ref="slider"
-								value={this.currentValue}
+								modelValue={this.currentValue}
 								min={this.$props.range.start}
 								max={this.$props.range.end}
 								dotSize={20}
@@ -196,7 +196,7 @@ const RangeSlider = {
 								enable-cross={false}
 								onDrag-end={this.handleSlider}
 								tooltip="always"
-								{...{ props: this.$props.sliderOptions }}
+								{...this.$props.sliderOptions}
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">

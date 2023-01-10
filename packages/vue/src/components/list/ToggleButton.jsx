@@ -201,7 +201,6 @@ const ToggleButton = {
 		renderButton(item) {
 			const renderItem = this.$slots.renderItem || this.renderItem;
 			const isSelected = this.$data.currentValue.some((value) => value.value === item.value);
-
 			return renderItem ? (
 				renderItem({ item, isSelected, handleClick: () => this.handleClick(item) })
 			) : (

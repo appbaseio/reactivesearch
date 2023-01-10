@@ -383,12 +383,7 @@ const RcConnected = PreferencesConsumer({
 				break;
 			default:
 		}
-		return h(component, {
-			attrs: this.$attrs,
-			on: this.$attrs,
-			scopedSlots: this.$slots,
-			slots: this.$slots,
-		});
+		return h(component, null, this.$slots);
 	},
 });
 RcConnected.name = ReactiveComponent.name;

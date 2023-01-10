@@ -1,9 +1,9 @@
 import VueTypes from 'vue-types';
-import NoSSR from 'vue-no-ssr';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
+import NoSSR from '../basic/NoSSR.jsx';
 import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
@@ -331,7 +331,7 @@ const DynamicRangeSlider = {
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider-component
 							ref="slider"
-							value={[
+							modelValue={[
 								Math.floor(Math.max(start, this.currentValue[0])),
 								Math.ceil(Math.min(end, this.currentValue[1])),
 							]}
@@ -342,7 +342,7 @@ const DynamicRangeSlider = {
 							height={4}
 							enable-cross={false}
 							tooltip="always"
-							{...{ props: this.$props.sliderOptions }}
+							{...this.$props.sliderOptions}
 						/>
 
 						{this.labels ? (

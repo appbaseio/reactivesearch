@@ -45,11 +45,6 @@ const {
 
 const ReactiveList = {
 	name: 'ReactiveList',
-	inject: {
-		$emotionCache: {
-			default: undefined,
-		},
-	},
 	components: {
 		ResultListWrapper,
 		ResultCardsWrapper,
@@ -90,8 +85,8 @@ const ReactiveList = {
 			);
 		}
 		if (this.urlSortOption) {
-			this.sortOptionIndex =
-				this.$props.sortOptions.findIndex((s) => s.label === this.urlSortOption) || 0;
+			this.sortOptionIndex
+				= this.$props.sortOptions.findIndex((s) => s.label === this.urlSortOption) || 0;
 		}
 		this.updateComponentProps(
 			this.componentId,
@@ -406,10 +401,10 @@ const ReactiveList = {
 		const results = parseHits(hits) || [];
 		return (
 			<div style={this.$props.style} class={this.$props.className}>
-				{this.isLoading &&
-					this.shouldRenderPagination &&
-					this.showInfiniteScroll &&
-					(this.$slots.loader || this.$props.loader)}
+				{this.isLoading
+					&& this.shouldRenderPagination
+					&& this.showInfiniteScroll
+					&& (this.$slots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
 					labelPosition={this.sortOptions ? 'right' : 'left'}
@@ -419,46 +414,46 @@ const ReactiveList = {
 					{this.$props.showResultStats && results.length ? this.renderStats() : null}
 				</Flex>
 				{!this.isLoading && hits && hits.length === 0 ? this.renderNoResult() : null}
-				{this.shouldRenderPagination &&
-				(this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
-					<Pagination
-						pages={this.$props.pages}
-						totalPages={this.totalPages}
-						currentPage={this.currentPageState}
-						setPage={this.setPage}
-						innerClass={this.$props.innerClass}
-						prevLabel={this.$props.prevLabel}
-						nextLabel={this.$props.nextLabel}
-					/>
-				) : null}
+				{this.shouldRenderPagination
+				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
+						<Pagination
+							pages={this.$props.pages}
+							totalPages={this.totalPages}
+							currentPage={this.currentPageState}
+							setPage={this.setPage}
+							innerClass={this.$props.innerClass}
+							prevLabel={this.$props.prevLabel}
+							nextLabel={this.$props.nextLabel}
+						/>
+					) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
-					? this.$slots.loader ||
-					  this.$props.loader || (
-							<div
-								style={{
-									textAlign: 'center',
-									margin: '20px 0',
-									color: '#666',
-								}}
-							>
+					? this.$slots.loader
+					  || this.$props.loader || (
+						<div
+							style={{
+								textAlign: 'center',
+								margin: '20px 0',
+								color: '#666',
+							}}
+						>
 								Loading...
-							</div>
+						</div>
 					  )
 					: null}
-				{this.shouldRenderPagination &&
-				(this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
-					<Pagination
-						pages={this.$props.pages}
-						totalPages={Math.ceil(this.$data.total / this.$props.size)}
-						currentPage={this.currentPageState}
-						setPage={this.setPage}
-						showEndPage={this.$props.showEndPage}
-						innerClass={this.$props.innerClass}
-						prevLabel={this.$props.prevLabel}
-						nextLabel={this.$props.nextLabel}
-					/>
-				) : null}
+				{this.shouldRenderPagination
+				&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
+						<Pagination
+							pages={this.$props.pages}
+							totalPages={Math.ceil(this.$data.total / this.$props.size)}
+							currentPage={this.currentPageState}
+							setPage={this.setPage}
+							showEndPage={this.$props.showEndPage}
+							innerClass={this.$props.innerClass}
+							prevLabel={this.$props.prevLabel}
+							nextLabel={this.$props.nextLabel}
+						/>
+					) : null}
 				{this.url.endsWith('appbase.io') && results.length ? (
 					<Flex
 						direction="row-reverse"
@@ -481,7 +476,7 @@ const ReactiveList = {
 		},
 		renderResults() {
 			const { size } = this.$props;
-			const renderItem = this.$attrs.slots.renderItem || this.$props.renderItem;
+			const renderItem = this.$slots.renderItem || this.$props.renderItem;
 			const element = this.hasCustomRender ? (
 				this.getComponent()
 			) : (
@@ -556,8 +551,8 @@ const ReactiveList = {
 
 		scrollHandler() {
 			if (
-				!this.isLoading &&
-				window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight
+				!this.isLoading
+				&& window.innerHeight + window.pageYOffset + 300 >= document.body.scrollHeight
 			) {
 				this.loadMore();
 			}
@@ -622,8 +617,8 @@ const ReactiveList = {
 		},
 
 		renderStats() {
-			const renderResultStats =
-				this.$slots.renderResultStats || this.$props.renderResultStats;
+			const renderResultStats
+				= this.$slots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
 			}
@@ -710,7 +705,9 @@ const ReactiveList = {
 					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
 					aria-label="Sort options"
-					onChange={this.handleSortChange}
+					on={{
+						change: this.handleSortChange,
+					}}
 					value={this.sortOptionIndex}
 				>
 					{this.sortOptions.map((sort, index) => (
@@ -771,11 +768,11 @@ const ReactiveList = {
 };
 const mapStateToProps = (state, props) => ({
 	defaultPage:
-		state.selectedValues[props.componentId] &&
-		state.selectedValues[props.componentId].value - 1,
+		state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].value - 1,
 	urlSortOption:
-		state.selectedValues[`${props.componentId}sortOption`] &&
-		state.selectedValues[`${props.componentId}sortOption`].value,
+		state.selectedValues[`${props.componentId}sortOption`]
+		&& state.selectedValues[`${props.componentId}sortOption`].value,
 	hits: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
@@ -789,9 +786,9 @@ const mapStateToProps = (state, props) => ({
 	url: state.config.url,
 	error: state.error[props.componentId],
 	afterKey:
-		state.aggregations[props.componentId] &&
-		state.aggregations[props.componentId][props.aggregationField] &&
-		state.aggregations[props.componentId][props.aggregationField].after_key,
+		state.aggregations[props.componentId]
+		&& state.aggregations[props.componentId][props.aggregationField]
+		&& state.aggregations[props.componentId][props.aggregationField].after_key,
 	componentProps: state.props[props.componentId],
 	isLoading: state.isLoading[props.componentId],
 });

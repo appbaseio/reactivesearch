@@ -1,4 +1,3 @@
-
 import { styled } from '@appbaseio/vue-emotion';
 
 const small = `

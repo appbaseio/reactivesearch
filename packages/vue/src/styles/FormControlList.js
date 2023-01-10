@@ -1,4 +1,3 @@
-
 import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
@@ -199,7 +198,7 @@ const UL = styled('ul')`
 	padding-bottom: 12px;
 
 	li {
-		height 30px;
+		height: 30px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;

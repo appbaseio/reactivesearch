@@ -1,5 +1,4 @@
 import { styled } from '@appbaseio/vue-emotion';
-
 import { lighten } from 'polished';
 
 const leftLabel = `

@@ -1,4 +1,4 @@
-import NoSSR from 'vue-no-ssr';
+import NoSSR from '../../basic/NoSSR.jsx';
 /**
  * Caution: Please do not change this file without having a discussion with the Team.
  * Any change may break the umd build, we're directly replacing the line no: 14

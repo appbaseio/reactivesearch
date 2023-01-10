@@ -263,8 +263,8 @@ const SearchBox = defineComponent({
 			if (Array.isArray(newVal) && newVal.length) {
 				suggestionsList = [...withClickIds(newVal)];
 			} else if (
-				Array.isArray(this.$props.defaultSuggestions) &&
-				this.$props.defaultSuggestions.length
+				Array.isArray(this.$props.defaultSuggestions)
+				&& this.$props.defaultSuggestions.length
 			) {
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
@@ -272,8 +272,8 @@ const SearchBox = defineComponent({
 		},
 		selectedValue(newVal, oldVal) {
 			if (
-				!isEqual(newVal, oldVal) &&
-				(this.$options.isTagsMode
+				!isEqual(newVal, oldVal)
+				&& (this.$options.isTagsMode
 					? !isEqual(this.$data.selectedTags, newVal)
 					: this.$data.currentValue !== newVal)
 			) {
@@ -417,8 +417,8 @@ const SearchBox = defineComponent({
 
 				let queryHandlerValue = value;
 				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
-					queryHandlerValue =
-						Array.isArray(this.selectedTags) && this.selectedTags.length
+					queryHandlerValue
+						= Array.isArray(this.selectedTags) && this.selectedTags.length
 							? this.selectedTags
 							: undefined;
 				}
@@ -434,8 +434,8 @@ const SearchBox = defineComponent({
 					// to set the query otherwise the value should reset
 					if (props.strictSelection) {
 						if (
-							cause === causes.SUGGESTION_SELECT ||
-							(this.$options.isTagsMode
+							cause === causes.SUGGESTION_SELECT
+							|| (this.$options.isTagsMode
 								? this.selectedTags.length === 0
 								: value === '')
 						) {
@@ -447,9 +447,9 @@ const SearchBox = defineComponent({
 							this.setValue('', true);
 						}
 					} else if (
-						props.value === undefined ||
-						cause === causes.SUGGESTION_SELECT ||
-						cause === causes.CLEAR_VALUE
+						props.value === undefined
+						|| cause === causes.SUGGESTION_SELECT
+						|| cause === causes.CLEAR_VALUE
 					) {
 						this.triggerCustomQuery(
 							queryHandlerValue,
@@ -532,12 +532,12 @@ const SearchBox = defineComponent({
 		},
 		handleVoiceResults({ results }) {
 			if (
-				results &&
-				results[0] &&
-				results[0].isFinal &&
-				results[0][0] &&
-				results[0][0].transcript &&
-				results[0][0].transcript.trim()
+				results
+				&& results[0]
+				&& results[0].isFinal
+				&& results[0][0]
+				&& results[0][0].transcript
+				&& results[0][0].transcript.trim()
 			) {
 				this.setValue(results[0][0].transcript.trim(), true);
 			}
@@ -734,17 +734,17 @@ const SearchBox = defineComponent({
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
 			const { theme, innerClass } = this.$props;
-			const renderNoSuggestion =
-				this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderNoSuggestion
+				= this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$slots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
-				renderNoSuggestion &&
-				isOpen &&
-				!finalSuggestionsList.length &&
-				!this.isLoading &&
-				currentValue &&
-				!(renderError && this.error)
+				renderNoSuggestion
+				&& isOpen
+				&& !finalSuggestionsList.length
+				&& !this.isLoading
+				&& currentValue
+				&& !(renderError && this.error)
 			) {
 				return (
 					<SuggestionWrapper
@@ -752,13 +752,14 @@ const SearchBox = defineComponent({
 						themePreset={this.themePreset}
 						theme={theme}
 						innerClassName="noSuggestion"
-						scopedSlots={{
+					>
+						{{
 							default: () =>
 								typeof renderNoSuggestion === 'function'
 									? renderNoSuggestion(currentValue)
 									: renderNoSuggestion,
 						}}
-					/>
+					</SuggestionWrapper>
 				);
 			}
 			return null;
@@ -856,10 +857,10 @@ const SearchBox = defineComponent({
 			const elt = event.target || event.srcElement;
 			const { tagName } = elt;
 			if (
-				elt.isContentEditable ||
-				tagName === 'INPUT' ||
-				tagName === 'SELECT' ||
-				tagName === 'TEXTAREA'
+				elt.isContentEditable
+				|| tagName === 'INPUT'
+				|| tagName === 'SELECT'
+				|| tagName === 'TEXTAREA'
 			) {
 				// already in an input
 				return;
@@ -951,8 +952,8 @@ const SearchBox = defineComponent({
 			}
 			const tagsList = [...this.selectedTags];
 			const shouldRenderClearAllTag = tagsList.length > 1;
-			const renderSelectedTags =
-				this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
+			const renderSelectedTags
+				= this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
 
 			return renderSelectedTags ? (
 				renderSelectedTags({
@@ -983,8 +984,8 @@ const SearchBox = defineComponent({
 	render() {
 		const { theme, expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
-		const hasSuggestions =
-			Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+		const hasSuggestions
+			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
 		const renderItem = this.$slots.renderItem || this.$props.renderItem;
 
 		return (
@@ -1024,8 +1025,8 @@ const SearchBox = defineComponent({
 									};
 									return (
 										<div>
-											{this.hasCustomRenderer &&
-												this.getComponent({
+											{this.hasCustomRenderer
+												&& this.getComponent({
 													isOpen,
 													getItemProps,
 													getItemEvents,
@@ -1185,8 +1186,8 @@ const SearchBox = defineComponent({
 													autocomplete="off"
 												/>
 												{this.renderIcons()}
-												{!expandSuggestionsContainer &&
-													renderSuggestionsDropdown()}
+												{!expandSuggestionsContainer
+													&& renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
 											{this.renderEnterButtonElement()}
@@ -1283,13 +1284,13 @@ SearchBox.shouldQuery = (value, props) => ({
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	selectedCategory:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].category) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],

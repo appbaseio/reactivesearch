@@ -1,11 +1,11 @@
+import { css } from 'emotion';
 
-
-const resultStats = `
+const resultStats = css`
 	flex-grow: 1;
 	font-size: 0.82rem;
 `;
 
-const sortOptions = `
+const sortOptions = css`
 	color: #424242;
 	height: 32px;
 	font-size: 0.82rem;

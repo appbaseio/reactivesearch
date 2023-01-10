@@ -159,11 +159,7 @@ const ComponentWrapper = (
 		},
 	},
 	render() {
-		return h(component, {
-			attrs: this.$attrs,
-			on: this.$attrs,
-			slots: this.$slots,
-		});
+		return h(component, null, this.$slots);
 	},
 });
 const mapStateToProps = (state, props) => ({

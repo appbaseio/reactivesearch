@@ -98,7 +98,9 @@ const SingleRange = {
 									id={`${this.$props.componentId}-${item.label}`}
 									name={this.$props.componentId}
 									value={item.label}
-									onChange={this.handleChange}
+									on={{
+										change: this.handleChange,
+									}}
 									type="radio"
 									checked={selected}
 									show={this.$props.showRadio}

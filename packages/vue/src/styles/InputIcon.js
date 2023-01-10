@@ -1,6 +1,5 @@
 import { styled } from '@appbaseio/vue-emotion';
 
-
 const left = `
 	padding-left: 12px;
 	left: 0;

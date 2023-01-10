@@ -185,7 +185,6 @@ const ReactiveGoogleMap = {
 				loader={this.loader}
 				calculateMarkers={this.calculateMarkers}
 				{...{
-					scopedSlots: this.$slots,
 					on: this.$attrs,
 				}}
 			/>

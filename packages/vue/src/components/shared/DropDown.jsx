@@ -72,48 +72,40 @@ const Dropdown = {
 			itemsToRender = transformData(itemsToRender);
 		}
 
-		const filteredItemsToRender = itemsToRender.filter(item => {
+		const filteredItemsToRender = itemsToRender.filter((item) => {
 			if (String(item[labelField]).length) {
-				if (
-					this.$props.showSearch
-					&& this.$data.searchTerm
-				) {
+				if (this.$props.showSearch && this.$data.searchTerm) {
 					return replaceDiacritics(String(item[labelField]))
 						.toLowerCase()
-						.includes(
-							replaceDiacritics(this.$data.searchTerm.toLowerCase()),
-						);
+						.includes(replaceDiacritics(this.$data.searchTerm.toLowerCase()));
 				}
 
 				return true;
 			}
 
 			return false;
-		})
+		});
 		return (
 			<Downshift
 				isOpen={this.$data.isOpen}
 				selectedItem={selectedItem}
 				handleChange={this.onChange}
 				handleMouseup={this.handleStateChange}
-				scopedSlots={{
+			>
+				{{
 					default: ({
 						getItemProps,
 						isOpen,
 						highlightedIndex,
 						getButtonProps,
 						getItemEvents,
-						getInputEvents
+						getInputEvents,
 					}) => (
 						<div class={suggestionsContainer}>
 							<Select
-								{...{
-									on: {
-										...getButtonProps({
-											onClick: this.toggle,
-										}),
-									},
-								}}
+								on={getButtonProps({
+									onClick: this.toggle,
+								})}
 								class={getClassName(this.$props.innerClass, 'select') || ''}
 								title={
 									selectedItem ? this.renderToString(selectedItem) : placeholder
@@ -147,46 +139,44 @@ const Dropdown = {
 										this.$props.small ? 'small' : ''
 									} ${getClassName(this.$props.innerClass, 'list')}`}
 								>
-									{this.$props.showSearch ? (
-										this.renderSearchbox({
+									{this.$props.showSearch
+										? this.renderSearchbox({
 											on: {
 												input: getInputEvents({
 													onInput: this.handleInputChange,
 												}).input,
 											},
-										})
-									) : null}
-									{(!hasCustomRenderer && filteredItemsToRender.length === 0 )
+										  })
+										: null}
+									{!hasCustomRenderer && filteredItemsToRender.length === 0
 										? this.renderNoResult()
 										: filteredItemsToRender.map((item, index) => {
 											let selected
-												= this.$props.multi // MultiDropdownList
-												&& ((selectedItem && !!selectedItem[item[keyField]]) // MultiDropdownRange
-													|| (Array.isArray(selectedItem)
-														&& selectedItem.find(
-															value =>
-																value[labelField]
-																=== item[labelField],
-														)));
+													= this.$props.multi // MultiDropdownList
+													&& ((selectedItem
+														&& !!selectedItem[item[keyField]]) // MultiDropdownRange
+														|| (Array.isArray(selectedItem)
+															&& selectedItem.find(
+																(value) =>
+																	value[labelField]
+																	=== item[labelField],
+															)));
 											if (!this.$props.multi)
 												selected = item.key === selectedItem;
 											return (
 												<li
-													{...{
-														domProps: getItemProps({ item }),
-													}}
-													{...{
-														on: getItemEvents({
-															item,
-														}),
-													}}
+													{...getItemProps({ item })}
+													on={getItemEvents({
+														item,
+													})}
 													key={item[keyField]}
 													class={`${selected ? 'active' : ''}`}
 													style={{
-														backgroundColor: this.getBackgroundColor(
-															highlightedIndex === index,
-															selected,
-														),
+														backgroundColor:
+																this.getBackgroundColor(
+																	highlightedIndex === index,
+																	selected,
+																),
 													}}
 												>
 													{renderItem ? (
@@ -194,22 +184,20 @@ const Dropdown = {
 															label: item[labelField],
 															count: item.doc_count,
 															isChecked:
-																selected && this.$props.multi,
+																	selected && this.$props.multi,
 														})
 													) : (
 														<div>
 															{typeof item[labelField]
-															=== 'string' ? (
+																=== 'string' ? (
 																	<span
-																		domPropsInnerHTML={
-																			item[labelField]
-																		}
+																		innerHTML={item[labelField]}
 																	/>
 																) : (
 																	item[labelField]
 																)}
 															{this.$props.showCount
-																&& item.doc_count && (
+																	&& item.doc_count && (
 																<span
 																	class={
 																		getClassName(
@@ -219,7 +207,7 @@ const Dropdown = {
 																		) || ''
 																	}
 																>
-																		&nbsp;(
+																			&nbsp;(
 																	{item.doc_count})
 																</span>
 															)}
@@ -237,14 +225,14 @@ const Dropdown = {
 													) : null}
 												</li>
 											);
-										})}
+										  })}
 									{footer}
 								</ul>
 							) : null}
 						</div>
 					),
 				}}
-			/>
+			</Downshift>
 		);
 	},
 
@@ -304,7 +292,7 @@ const Dropdown = {
 				}
 			}
 			if (Array.isArray(value) && value.length) {
-				const arrayToRender = value.map(item => this.renderToString(item));
+				const arrayToRender = value.map((item) => this.renderToString(item));
 				return arrayToRender.join(', ');
 			}
 			if (value && typeof value === 'object') {
@@ -322,8 +310,7 @@ const Dropdown = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$slots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}

@@ -194,15 +194,9 @@ const MultiRange = {
 									value={item.label}
 									type="Checkbox"
 									show={this.$props.showCheckbox}
-									{...{
-										domProps: {
-											checked: this.selectedValues[item.label],
-										},
-									}}
-									{...{
-										on: {
-											click: this.handleClick,
-										},
+									checked={this.selectedValues[item.label]}
+									on={{
+										click: this.handleClick,
 									}}
 								/>
 								<label
