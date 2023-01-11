@@ -74,10 +74,10 @@
   dependencies:
     cross-fetch "^3.0.4"
 
-"@appbaseio/designkit@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.11.0.tgz#6f0fce707239a8255ef3127b5889703368773cb8"
-  integrity sha512-qX5Ych7sgPKl4IP7jWiT7ISalDpky7IMS9fNxDH/M9rDsJ46AZABaC8xnuODWQPWtA0qHbW35TWltFxjfQ5TJA==
+"@appbaseio/designkit@^0.13.0":
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.13.0.tgz#79e184cb7ed283c7a07ccc7c75d8a3236a58b7ea"
+  integrity sha512-qZSXG1vrhUflrQUFhEDxT/iAdBZc75YNhyEg69nzQipRkDJVvj0cRo2D4CSLHWBjznKB9eMAY8oNq/LmFAMBJQ==
   dependencies:
     "@storybook/react" "^3.2.19"
     prop-types "^15.6.0"
@@ -102,13 +102,16 @@
 
 "@appbaseio/docs@appbaseio/Docs#dev":
   version "0.0.2"
-  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/66053b47195bc3439af70249f165a31d712d3f4d"
+  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/419db334ae75f398381b6589da445e831d9db252"
   dependencies:
-    "@appbaseio/designkit" "^0.11.0"
-    "@appbaseio/reactivemaps" "^3.0.0-beta.17"
-    "@appbaseio/reactivesearch" "^3.29.0"
+    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/reactivemaps" "^3.0.0"
+    "@appbaseio/reactivesearch" "^3.30.3"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
+    "@typeform/embed" "^1.34.1"
+    "@typeform/embed-react" "^1.13.0"
+    add "^2.0.6"
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
@@ -136,13 +139,16 @@
     gatsby-remark-external-links "0.0.4"
     gatsby-remark-images "6.9.0"
     gatsby-remark-prismjs "6.9.0"
+    gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
     gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
+    hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    moment "^2.24.0"
+    lodash "^4.17.21"
+    moment "^2.29.4"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -152,8 +158,10 @@
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
-    react-router-dom "4.3.1"
-    tocbot "4.5.0"
+    react-router-dom "^4.3.1"
+    react-use-fusejs "^1.0.1"
+    tocbot "^4.18.0"
+    yarn "^1.22.18"
 
 "@appbaseio/reactivecore@9.14.35":
   version "9.14.35"
@@ -166,29 +174,6 @@
     redux-thunk "^2.3.0"
     xdate "^0.8.2"
 
-"@appbaseio/reactivesearch-vue@1.33.5":
-  version "1.33.5"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.33.5.tgz#f999850d2e9a844750c8fbf3e2ea7131a22584d7"
-  integrity sha512-h+bJ+LsjeO+h36pLMbnFy4IfmIKigxJYkFTosHnZ8kTR3+P1zADvWtGwGEOD2k3Z0OGaU9k2DlzEcMqjXCaxDQ==
-  dependencies:
-    "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "9.14.35"
-    "@appbaseio/vue-emotion" "0.4.4"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.2.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "9.2.12"
-    gmap-vue "^3.5.4"
-    hotkeys-js "^3.8.7"
-    ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    url-search-params-polyfill "^7.0.0"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component "^3.2.15"
-    vue-types "^1.7.0"
-
 "@appbaseio/rheostat@^1.0.0-alpha.2":
   version "1.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@appbaseio/rheostat/-/rheostat-1.0.0-alpha.2.tgz#f2e00549a3f72c6d7ec9cb34c13808fe9c431d58"
@@ -197,13 +182,23 @@
     object.assign "^4.0.4"
     prop-types "^15.5.10"
 
-"@appbaseio/vue-emotion@0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/vue-emotion/-/vue-emotion-0.4.4.tgz#a2187691a5dce090a8571250c1a7911d2ceee58a"
-  integrity sha512-ljbCeLozV+5O9lOaJc67gvhdz3RTLYwZj6aRpYRvXgcIIAtSOTT1TBdvCoORoCEYCfOseicv+TxKbOSGiopjBw==
+"@appbaseio/storybook-readme@5.0.12":
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@appbaseio/storybook-readme/-/storybook-readme-5.0.12.tgz#d90b37286a6d622825e62a55c084b896fbcf8ee2"
+  integrity sha512-K6YM1dmJREhaWgPuazBiV4su7LRBEPj4j59jD+zqxcerZvZXHlZxz1L2Stxxlt9nAZchhI9gsk5hSrXCnb9ZCg==
   dependencies:
-    emotion-utils "^9.1.0"
-    nano-assign "^1.0.0"
+    "@storybook/components" "^5.0.6"
+    "@storybook/core-events" "^5.0.6"
+    html-loader "^0.5.5"
+    lodash "^4.17.11"
+    markdown-loader "^5.0.0"
+    marked "^0.7.0"
+    node-emoji "1.10.0"
+    prism-themes "^1.1.0"
+    prismjs "^1.16.0"
+    react-element-to-jsx-string "^14.0.2"
+    string-raw "^1.0.1"
+    vuex "^4.1.0"
 
 "@appbaseio/vue-emotion@0.6.0-alpha.6":
   version "0.6.0-alpha.6"
@@ -2574,14 +2569,6 @@
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-2.0.14.tgz#803dee96260feb26a3e75fb865125f8f3fbd5c29"
   integrity sha512-/AKSz4kqMKOGc1ByPK4FWygOi0SHE2MjZdueelx4oShagcR5d9eIz77YMxcyxOUIc/dI0x5/Y0VoUTn+aWEUtQ==
-  dependencies:
-    fast-deep-equal "^3.1.3"
-    supercluster "^7.1.3"
-
-"@googlemaps/markerclusterer@^2.0.4":
-  version "2.0.15"
-  resolved "https://registry.yarnpkg.com/@googlemaps/markerclusterer/-/markerclusterer-2.0.15.tgz#72052a23a061789c6055a13713b8852359cc03a9"
-  integrity sha512-/I6Esi5FtyeVHsezN9Kut8zRJoqe7KkTIJXGVqpKFf6BjC7qQ1xRajLMkOz0s8XKgLevbr+KdYjuvmj+LohOGg==
   dependencies:
     fast-deep-equal "^3.1.3"
     supercluster "^7.1.3"
@@ -6747,6 +6734,19 @@
   resolved "https://registry.yarnpkg.com/@turist/time/-/time-0.0.2.tgz#32fe0ce708ea0f4512776bd313409f1459976dda"
   integrity sha512-qLOvfmlG2vCVw5fo/oz8WAZYlpe5a5OurgTj3diIxJCdjRHpapC+vQCz3er9LV79Vcat+DifBjeAhOAdmndtDQ==
 
+"@typeform/embed-react@^1.13.0":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@typeform/embed-react/-/embed-react-1.21.0.tgz#2e7148ebe614f68a15d8a78b581b0bc82e1c5e0d"
+  integrity sha512-nZi7OD5mxZUKQjkzxAll05JU6QNWuHuCE+L/S1Vagy7fgb/rdx4iEIfvqFogTcrVw61bCS6TaAJ+ateD7vR7sw==
+  dependencies:
+    "@typeform/embed" "1.38.0"
+    fast-deep-equal "^3.1.3"
+
+"@typeform/embed@1.38.0", "@typeform/embed@^1.34.1":
+  version "1.38.0"
+  resolved "https://registry.yarnpkg.com/@typeform/embed/-/embed-1.38.0.tgz#c9f95faddc8eb7a6602bafcf9a22c21b8c79349e"
+  integrity sha512-qYxtwckEcRt++F1sUeILb/qmUFQ3PwcUxKedCBSseC8lFo1ukD1wmsBf+Il8YSRPKPqhTrGUG5WPaJg83n1xuw==
+
 "@types/aria-query@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-5.0.1.tgz#3286741fb8f1e1580ac28784add4c7a1d49bdfbc"
@@ -8169,6 +8169,11 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
+"@vue/devtools-api@^6.0.0-beta.11":
+  version "6.4.5"
+  resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.4.5.tgz#d54e844c1adbb1e677c81c665ecef1a2b4bb8380"
+  integrity sha512-JD5fcdIuFxU4fQyXUu3w2KpAJHzTVdN+p4iOX2lMWSHMOoQdMAcpFLZzm9Z/2nmsoZ1a96QEhZ26e50xLBsgOQ==
+
 "@vue/preload-webpack-plugin@^1.1.0":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@vue/preload-webpack-plugin/-/preload-webpack-plugin-1.1.2.tgz#ceb924b4ecb3b9c43871c7a429a02f8423e621ab"
@@ -8804,6 +8809,11 @@ acorn@^8.0.4, acorn@^8.2.4, acorn@^8.5.0, acorn@^8.7.1, acorn@^8.8.0:
   version "8.8.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.1.tgz#0a3f9cbecc4ec3bea6f0a80b66ae8dd2da250b73"
   integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
+
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==
 
 address@1.0.3:
   version "1.0.3"
@@ -15640,11 +15650,6 @@ emotion-utils@^8.0.12:
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.12.tgz#5e0fd72db3008f26ce4f80b1972df08841df2168"
   integrity sha512-rEW3CSWnSh+7yD9sF9aniSCQFVDGG+iW7vM/0LpaavmtK3by8hG7cAcr5cMISQf4MxAFwv0nijZMSR5Fftjw+A==
 
-emotion-utils@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-9.1.0.tgz#7484dbf18f3b1dc1de68559d1ff35a74caa998dc"
-  integrity sha512-Zdy9TiZzMDRsCufivL/ZhQ0JdfGGSOc20opRjaBOemF5h2kYI/MD/bLcXfAZgzYVL12WNQegZIme6l+N/JFE4Q==
-
 emotion@*:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-11.0.0.tgz#e33353668e72f0adea1f6fba790dc6c5b05b45d9"
@@ -18574,6 +18579,11 @@ fuse.js@^3.0.1, fuse.js@^3.2.0:
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.6.1.tgz#7de85fdd6e1b3377c23ce010892656385fd9b10c"
   integrity sha512-hT9yh/tiinkmirKrlv4KWOjztdoZo1mx9Qh4KvWqC7isoXwdUY3PNWUxceF4/qO9R6riA2C29jdTOeQOIROjgw==
 
+fuse.js@^6.0.0:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-6.6.2.tgz#fe463fed4b98c0226ac3da2856a415576dc9a111"
+  integrity sha512-cJaJkxCCxC8qIIcPBF9yGxY0W/tVZS3uEISDxhYIdtk8OL93pe+6Zj7LjCqVV4dzbqcriOZ+kQ/NE4RXZHsIGA==
+
 fwd-stream@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/fwd-stream/-/fwd-stream-1.0.4.tgz#ed281cabed46feecf921ee32dc4c50b372ac7cfa"
@@ -18993,6 +19003,11 @@ gatsby-remark-images@6.9.0:
     query-string "^6.14.1"
     unist-util-select "^3.0.4"
     unist-util-visit-parents "^3.1.1"
+
+gatsby-remark-prismjs-copy-button@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-prismjs-copy-button/-/gatsby-remark-prismjs-copy-button-0.3.1.tgz#5d772d64b4fce0bee417c7ea7fe39b5a34403d62"
+  integrity sha512-/A3BuZSdmI62+uSitAbgqdoS3QtYX4kiz9DZZgc1qMqpPss07YTmU8dFuVNxnNDP13h9jAMfr3BxP7J60ATZSg==
 
 gatsby-remark-prismjs@6.9.0:
   version "6.9.0"
@@ -19824,13 +19839,6 @@ globule@^1.0.0:
     glob "~7.1.1"
     lodash "^4.17.21"
     minimatch "~3.0.2"
-
-gmap-vue@^3.5.4:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/gmap-vue/-/gmap-vue-3.5.4.tgz#53da5f3eb3f0e48aec49f463976ff1808593bc8b"
-  integrity sha512-NGqZbwUtCDWDGtbDF+bFs5slaGABbw6TEB+pdOYyWxN+81c5iRBuOV6iaQ61ilzk4ttUFLE7q6w9nDsNUpG7ig==
-  dependencies:
-    "@googlemaps/markerclusterer" "^2.0.4"
 
 good-listener@^1.2.2:
   version "1.2.2"
@@ -21822,13 +21830,6 @@ is-plain-obj@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-3.0.0.tgz#af6f2ea14ac5a646183a5bbdb5baabbc156ad9d7"
   integrity sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==
-
-is-plain-object@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-3.0.0.tgz#47bfc5da1b5d50d64110806c199359482e75a928"
-  integrity sha512-tZIpofR+P05k8Aocp7UI/2UTa9lTJSebCXpFFoR9aibpokDj/uXBsJ8luUu0tTVYKkMU6URDUuOfJZ7koewXvg==
-  dependencies:
-    isobject "^4.0.0"
 
 is-plain-object@5.0.0:
   version "5.0.0"
@@ -26498,11 +26499,6 @@ nan@^2.12.1, nan@^2.13.2, nan@^2.14.0:
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
   integrity sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==
-
-nano-assign@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/nano-assign/-/nano-assign-1.0.1.tgz#abb1c50d0416b865fb37bbd155c5368bb54378e5"
-  integrity sha512-1K8ncUoAYFPYcCZqrB+K2XQaFCmA35rryJCtPkGrG3zYkwm+iIUZRIHyaAfuy6zxaK9siPdjeJq7+Inijm6xhw==
 
 nanoid@^3.1.23, nanoid@^3.3.1, nanoid@^3.3.4:
   version "3.3.4"
@@ -31953,7 +31949,7 @@ react-responsive-modal@^4.0.1:
     prop-types "^15.6.2"
     react-transition-group "^4.0.0"
 
-react-router-dom@4.3.1, react-router-dom@^4.2.2:
+react-router-dom@^4.2.2, react-router-dom@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.1.tgz#4c2619fc24c4fa87c9fd18f4fb4a43fe63fbd5c6"
   integrity sha512-c/MlywfxDdCp7EnB7YfPMOfMD3tOtIjrQlj/CKfNMBxdmpJP8xcz5P/UAFn3JbnQCNUxsHyVVqllF9LhgVyFCA==
@@ -32265,6 +32261,14 @@ react-tween-state@^0.1.5:
     raf "^3.1.0"
     tween-functions "^1.0.1"
 
+react-use-fusejs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-use-fusejs/-/react-use-fusejs-1.0.1.tgz#38430b83077a599960c4c307cc2eb550d799a8dd"
+  integrity sha512-Tt1KRnfr9tnDDej/n1f2yFXBGLTvyI1dAz9q0ga7Y49Msfa4RaRetaRC8TAUeBYTsN8DugJk+tBJKbaZzJKAIA==
+  dependencies:
+    fuse.js "^6.0.0"
+    react "^18.0.0"
+
 react@16.14.0, react@^16.8.3:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
@@ -32292,7 +32296,7 @@ react@^17.0.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-react@^18.0.2, react@^18.2.0:
+react@^18.0.0, react@^18.0.2, react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -36095,10 +36099,10 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
-tocbot@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.5.0.tgz#55ba16887742acc1ce37b19171c76b9a40aabfa7"
-  integrity sha512-JwTyKlU2JgkmGJqxKJkiizlLwjQJ+f3WnDG08+DrWhrPgsVVjMh3quq3Apx09DCvulKbtYoxBT/c3HfkGWyZhw==
+tocbot@^4.18.0:
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.20.0.tgz#862137da17ffdf7a61b614d4bc7f3c8fb349a057"
+  integrity sha512-iSPKsVZ9W0zGI3XkEadFEJNSxQf/jjzWDQROnQitAKe7DX48lNk6CwLXKTol1qG8I5Hm6wM+tpzcDrkcyt3sXA==
 
 toggle-selection@^1.0.6:
   version "1.0.6"
@@ -37346,11 +37350,6 @@ void-elements@^3.1.0:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
   integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
-vue-class-component@^7.1.0:
-  version "7.2.6"
-  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
-  integrity sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w==
-
 vue-client-only@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-client-only/-/vue-client-only-2.1.0.tgz#1a67a47b8ecacfa86d75830173fffee3bf8a4ee3"
@@ -37476,13 +37475,6 @@ vue-no-ssr@^1.1.0, vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-property-decorator@^8.0.0:
-  version "8.5.1"
-  resolved "https://registry.yarnpkg.com/vue-property-decorator/-/vue-property-decorator-8.5.1.tgz#571a91cf8d2b507f537d79bf8275af3184572fff"
-  integrity sha512-O6OUN2OMsYTGPvgFtXeBU3jPnX5ffQ9V4I1WfxFQ6dqz6cOUbR3Usou7kgFpfiXDvV7dJQSFcJ5yUPgOtPPm1Q==
-  dependencies:
-    vue-class-component "^7.1.0"
-
 vue-router@^3.5.1:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.6.5.tgz#95847d52b9a7e3f1361cb605c8e6441f202afad8"
@@ -37501,14 +37493,6 @@ vue-server-renderer@^2.6.12:
     resolve "^1.22.0"
     serialize-javascript "^6.0.0"
     source-map "0.5.6"
-
-vue-slider-component@^3.2.15:
-  version "3.2.24"
-  resolved "https://registry.yarnpkg.com/vue-slider-component/-/vue-slider-component-3.2.24.tgz#9c931da3d10d0efde361138626a76d21c4359fd5"
-  integrity sha512-28hfotAL/CPXPwqHgVFyUwUEV0zweoc2wW0bgraGkoIcRZGlFjk8caYJLE8+Luug5t3b9tJm/NyDXpyIdmcYZg==
-  dependencies:
-    core-js "^3.6.5"
-    vue-property-decorator "^8.0.0"
 
 vue-slider-component@next:
   version "4.1.0-beta.7"
@@ -37535,13 +37519,6 @@ vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
-
-vue-types@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/vue-types/-/vue-types-1.7.0.tgz#07b273342aba7cc43d9460d9c4f4a4cf5eeb00b1"
-  integrity sha512-MbhuWukmcBJHdfXAdLerbP29i3j2HAJoKwEv7No2Jh/YNl9dOKsNBfvMOkf0SS8VCuWd1/JBX4NnGaGUojbkUA==
-  dependencies:
-    is-plain-object "3.0.0"
 
 vue-types@^5.0.2:
   version "5.0.2"
@@ -37578,6 +37555,13 @@ vuex@^3.1.0, vuex@^3.6.2:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.6.2.tgz#236bc086a870c3ae79946f107f16de59d5895e71"
   integrity sha512-ETW44IqCgBpVomy520DT5jf8n0zoCac+sxWnn+hMe/CzaSejb/eVw2YToiXYX+Ex/AuHHia28vWTq4goAexFbw==
+
+vuex@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-4.1.0.tgz#aa1b3ea5c7385812b074c86faeeec2217872e36c"
+  integrity sha512-hmV6UerDrPcgbSy9ORAtNXDr9M4wlNP4pEFKye4ujJF8oqgFFuxDCdOLS3eNoRTtq5O3hoBDh9Doj1bQMYHRbQ==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.11"
 
 w3c-hr-time@^1.0.1, w3c-hr-time@^1.0.2:
   version "1.0.2"
@@ -39231,6 +39215,11 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+yarn@^1.22.18:
+  version "1.22.19"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.19.tgz#4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  integrity sha512-/0V5q0WbslqnwP91tirOvldvYISzaqhClxzyUKXYxs07yUILIs5jx/k6CFe8bvKSkds5w+eiOqta39Wk3WxdcQ==
 
 yeast@0.1.2:
   version "0.1.2"
