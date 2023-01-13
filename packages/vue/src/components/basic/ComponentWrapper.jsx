@@ -60,7 +60,7 @@ const ComponentWrapper = (
 		// or component is not present in store
 		if (this.destroyOnUnmount || components.indexOf(this.componentProps.componentId) === -1) {
 			// Register  component
-			this.addComponent(this.componentId);
+			this.addComponent(this.componentId, this.$timestamp);
 			const onQueryChange = (...args) => {
 				this.$emit('queryChange', ...args);
 				this.$emit('query-change', ...args);
@@ -86,7 +86,7 @@ const ComponentWrapper = (
 			this.internalComponent
 			&& (this.destroyOnUnmount || components.indexOf(this.internalComponent) === -1)
 		) {
-			this.addComponent(this.internalComponent);
+			this.addComponent(this.internalComponent, this.$timestamp);
 			this.setComponentProps(
 				this.internalComponent,
 				this.componentProps,
