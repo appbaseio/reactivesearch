@@ -176,8 +176,9 @@ const mapDispatchtoProps = {
 };
 
 const RcConnected = connect(mapStateToProps, mapDispatchtoProps)(SelectedFilters);
+RcConnected.name = SelectedFilters.name;
 
-SelectedFilters.install = function (Vue) {
-	Vue.component(SelectedFilters.name, RcConnected);
+RcConnected.install = function (Vue) {
+	Vue.component(RcConnected.name, RcConnected);
 };
-export default SelectedFilters;
+export default RcConnected;
