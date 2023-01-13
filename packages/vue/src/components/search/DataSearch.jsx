@@ -718,11 +718,10 @@ const DataSearch = {
 
 		handleKeyDown(event, highlightedIndex) {
 			const { value: targetValue } = event.target;
-			const { value, strictSelection, size } = this.$props;
+			const { value, strictSelection, size, autosuggest } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
 			}
-
 			// if a suggestion was selected, delegate the handling to suggestion handler
 			if (
 				event.key === 'Enter'
@@ -737,7 +736,7 @@ const DataSearch = {
 			) {
 				this.isPending = false;
 				this.setValue(
-					this.$options.isTagsMode && strictSelection ? '' : targetValue,
+					this.$options.isTagsMode && autosuggest && strictSelection ? '' : targetValue,
 					true,
 					this.$props,
 					undefined,
@@ -1393,8 +1392,7 @@ const DataSearch = {
 												this.$emit('focus', e, this.triggerQuery);
 											},
 											keydown: (e) => {
-												this.$emit('keyDown', e, this.triggerQuery);
-												this.$emit('key-down', e, this.triggerQuery);
+												this.handleKeyDown(e, null);
 											},
 											keyup: (e) => {
 												this.$emit('keyUp', e, this.triggerQuery);
