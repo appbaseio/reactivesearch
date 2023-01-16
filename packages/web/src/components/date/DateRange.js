@@ -9,9 +9,10 @@ import {
 	formatDate,
 	updateCustomQuery,
 	checkSomePropChange,
+	unwrapToNativeDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import XDate from 'xdate';
+import dayjs from 'dayjs';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
@@ -33,14 +34,14 @@ class DateRange extends Component {
 		if (props.selectedValue) {
 			if (Array.isArray(props.selectedValue)) {
 				currentDate = {
-					start: new XDate(props.selectedValue[0])[0],
-					end: new XDate(props.selectedValue[1])[0],
+					start: dayjs(new Date((props.selectedValue[0]))).toISOString(),
+					end: dayjs(new Date((props.selectedValue[1]))).toISOString(),
 				};
 			} else {
 				const { start, end } = props.selectedValue;
 				currentDate = {
-					start: new XDate(start)[0],
-					end: new XDate(end)[0],
+					start: dayjs(new Date(start)).toISOString(),
+					end: dayjs(new Date(end)).toISOString(),
 				};
 			}
 		}
@@ -128,8 +129,8 @@ class DateRange extends Component {
 	}
 
 	formatInputDate = (date) => {
-		const xdate = new XDate(date);
-		return xdate.valid() ? xdate.toString('yyyy-MM-dd') : '';
+		const dayjsDate = dayjs(new Date((date)));
+		return dayjsDate.isValid() ? dayjsDate.format('YYYY-MM-DD') : '';
 	};
 
 	static defaultQuery = (value, props) => {
@@ -142,14 +143,14 @@ class DateRange extends Component {
 							{
 								range: {
 									[props.dataField[0]]: {
-										lte: formatDate(new XDate(value.start), props),
+										lte: formatDate(dayjs(new Date((value.start))), props),
 									},
 								},
 							},
 							{
 								range: {
 									[props.dataField[1]]: {
-										gte: formatDate(new XDate(value.end), props),
+										gte: formatDate(dayjs(new Date((value.end))), props),
 									},
 								},
 							},
@@ -160,8 +161,8 @@ class DateRange extends Component {
 				query = {
 					range: {
 						[props.dataField[0]]: {
-							gte: formatDate(new XDate(value.start), props),
-							lte: formatDate(new XDate(value.end), props),
+							gte: formatDate(dayjs(new Date((value.start))), props),
+							lte: formatDate(dayjs(new Date((value.end))), props),
 						},
 					},
 				};
@@ -169,8 +170,8 @@ class DateRange extends Component {
 				query = {
 					range: {
 						[props.dataField]: {
-							gte: formatDate(new XDate(value.start), props),
-							lte: formatDate(new XDate(value.end), props),
+							gte: formatDate(dayjs(new Date((value.start))), props),
+							lte: formatDate(dayjs(new Date((value.end))), props),
 						},
 					},
 				};
@@ -336,8 +337,8 @@ class DateRange extends Component {
 		let modCurrentDate = currentDate;
 		if (typeof currentDate.start === 'string' || typeof currentDate.end === 'string') {
 			modCurrentDate = {
-				start: currentDate.start ? new XDate(currentDate.start)[0] : '',
-				end: currentDate.end ? new XDate(currentDate.end)[0] : '',
+				start: currentDate.start ? dayjs(new Date((currentDate.start))).toISOString() : '',
+				end: currentDate.end ? dayjs(new Date((currentDate.end))).toISOString() : '',
 			};
 		}
 		if (modCurrentDate && !(modCurrentDate.start === '' && modCurrentDate.end === '')) {
@@ -393,11 +394,13 @@ class DateRange extends Component {
 
 	render() {
 		const { currentDate, dateHovered } = this.state;
-		const start = currentDate ? currentDate.start : '';
-		const end = currentDate ? currentDate.end : '';
+		const start = currentDate ? unwrapToNativeDate(currentDate.start) : '';
+		const end = currentDate ? unwrapToNativeDate(currentDate.end) : '';
 		const endDay = currentDate ? dateHovered : '';
 		const selectedDays = [start, { from: start, to: endDay }];
 		const modifiers = { start, end: endDay };
+
+
 		return (
 			<DateContainer
 				range
@@ -430,7 +433,7 @@ class DateRange extends Component {
 								numberOfMonths: this.props.numberOfMonths,
 								initialMonth: this.props.initialMonth,
 								disabledDays: {
-									after: this.state.currentDate ? this.state.currentDate.end : '',
+									after: end || '',
 								},
 								selectedDays,
 								modifiers,
@@ -483,9 +486,7 @@ class DateRange extends Component {
 								initialMonth: this.props.initialMonth,
 								onDayMouseEnter: this.handleDayMouseEnter,
 								disabledDays: {
-									before: this.state.currentDate
-										? this.state.currentDate.start
-										: '',
+									before: start || '',
 								},
 								selectedDays,
 								modifiers,
