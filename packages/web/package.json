@@ -38,7 +38,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@appbaseio/analytics": "^1.1.1",
-        "@appbaseio/reactivecore": "9.14.35",
+        "@appbaseio/reactivecore": "9.14.36",
         "@appbaseio/rheostat": "^1.0.0-alpha.2",
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
