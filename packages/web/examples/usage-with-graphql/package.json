@@ -1,5 +1,5 @@
 {
-	"name": "graphQl",
+	"name": "usage-with-graphql",
 	"description": "graphQl example for ReactiveSearch",
 	"version": "0.1.0",
 	"dependencies": {

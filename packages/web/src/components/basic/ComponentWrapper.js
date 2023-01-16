@@ -46,7 +46,7 @@ class ComponentWrapper extends React.Component {
 		}
 		if (props.destroyOnUnmount || components.indexOf(props.componentId) === -1) {
 			// Register  component
-			props.addComponent(props.componentId);
+			props.addComponent(props.componentId, this._timestamp);
 			props.setQueryListener(props.componentId, props.onQueryChange, props.onError);
 			// Update props in store
 			props.setComponentProps(props.componentId, props);
@@ -61,7 +61,7 @@ class ComponentWrapper extends React.Component {
 			this.internalComponent
 			&& (props.destroyOnUnmount || components.indexOf(this.internalComponent) === -1)
 		) {
-			props.addComponent(this.internalComponent);
+			props.addComponent(this.internalComponent, this._timestamp);
 			props.setComponentProps(this.internalComponent, props);
 		}
 		if (props.mockData) {
@@ -173,7 +173,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 		dispatch(setComponentProps(component, options, ownProps.componentType)),
 	updateComponentProps: (component, options) =>
 		dispatch(updateComponentProps(component, options, ownProps.componentType)),
-	addComponent: component => dispatch(addComponent(component)),
+	addComponent: (component, timestamp) => dispatch(addComponent(component, timestamp)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
