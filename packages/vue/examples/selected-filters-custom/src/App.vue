@@ -1,15 +1,12 @@
-
-
 <template>
 	<div id="app">
 		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
 			<div class="row">
 				<div class="col">
-					<data-search
+					<search-box
 						className="result-list-container"
 						componentId="BookSensor"
 						:dataField="['original_title', 'original_title.search']"
@@ -30,7 +27,7 @@
 				</div>
 				<div class="col">
 					<selected-filters>
-						<div slot-scope="{ selectedValues, setValue, clearValues }">
+						<template #default="{ selectedValues, setValue, clearValues }">
 							<div
 								v-for="componentId in Object.keys(
 									getFilteredValues(selectedValues),
@@ -51,7 +48,7 @@
 							>
 								Clear All
 							</button>
-						</div>
+						</template>
 					</selected-filters>
 					<reactive-list
 						componentId="SearchResult"
@@ -61,7 +58,7 @@
 						:size="5"
 						:react="{ and: ['BookSensor', 'Authors'] }"
 					>
-						<div slot="renderItem" slot-scope="{ item }">
+						<template #renderItem="{ item }">
 							<div :id="item._id" class="flex book-content" :key="item._id">
 								<img :src="item.image" alt="Book Cover" class="book-image" />
 								<div class="flex column justify-center ml20">
@@ -93,7 +90,7 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</template>
 					</reactive-list>
 				</div>
 			</div>
@@ -105,8 +102,16 @@
 
 <script>
 import './styles.css';
+import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters  } from '@appbaseio/reactivesearch-vue'
+
 export default {
 	name: 'app',
+	components: {
+		ReactiveBase,
+		ReactiveList,
+		SearchBox,
+		SelectedFilters
+	},
 	methods: {
 		getFilteredValues(values = {}) {
 			const filteredValues = {};

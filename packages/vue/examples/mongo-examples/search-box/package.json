@@ -1,5 +1,5 @@
 {
-	"name": "data-search-example-mongo",
+	"name": "search-box-example-mongo",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {

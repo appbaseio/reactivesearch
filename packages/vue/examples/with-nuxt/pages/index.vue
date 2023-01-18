@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <ReactiveBase
+    <reactive-base
       :enable-appbase="true"
       app="good-books-ds"
       url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
     >
-      <DataSearch
+      <search-box
         :data-field="['original_title', 'original_title.search']"
         :urlparams="true"
         category-field="authors.keyword"
@@ -29,7 +29,7 @@
         data-field="authors.keyword"
         class="single-list-container"
       />
-      <ReactiveList
+      <reactive-list
         :pagination="true"
         :from="0"
         :size="5"
@@ -38,9 +38,8 @@
         data-field="original_title.keyword"
         class="result-list-container"
       >
-        <div
-          slot="renderItem"
-          slot-scope="{ item }">
+        <template
+          #renderItem="{ item }">
           <div
             key="item._id"
             class="flex book-content">
@@ -79,9 +78,9 @@
               </div>
             </div>
           </div>
-        </div>
-      </ReactiveList>
-    </ReactiveBase>
+        </template>
+      </reactive-list>
+    </reactive-base>
   </div>
 </template>
 

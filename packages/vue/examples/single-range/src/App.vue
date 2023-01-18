@@ -1,11 +1,10 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
-			<SingleRange
+			<single-range
 				componentId="Ratings"
 				dataField="average_rating"
 				:data="[
@@ -16,7 +15,7 @@
 				title="Filter Ratings"
 				class="ratings-container"
 			/>
-			<ReactiveList
+			<reactive-list
 				componentId="SearchResult"
 				dataField="original_title.keyword"
 				className="result-list-container"
@@ -25,7 +24,7 @@
 				:size="5"
 				:react="{ and: ['BookSensor', 'Ratings'] }"
 			>
-				<div slot="renderItem" slot-scope="{ item }">
+				<template #renderItem="{ item }">
 					<div class="flex book-content" key="item._id">
 						<img :src="item.image" alt="Book Cover" class="book-image" />
 						<div class="flex column justify-center ml20">
@@ -56,17 +55,23 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import { ReactiveBase, ReactiveList, SingleRange } from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components: {
+		ReactiveBase,
+		ReactiveList,
+		SingleRange
+	},
 };
 </script>
 
