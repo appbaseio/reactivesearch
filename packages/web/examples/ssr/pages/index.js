@@ -1,163 +1,15 @@
-/* eslint-disable */
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	MultiList,
 	RangeSlider,
 	ReactiveList,
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
-
-const components = {
-	settings: {
-		app: 'movies-demo-app',
-		url: 'https://81719ecd9552:e06db001-a6d8-4cc2-bc43-9c15b1c0c987@appbase-demo-ansible-abxiydt-arc.searchbase.io',
-		theme: {
-			colors: {
-				backgroundColor: '#212121',
-				primaryTextColor: '#fff',
-				primaryColor: '#2196F3',
-				titleColor: '#fff',
-				alertColor: '#d9534f',
-				borderColor: '#666',
-			},
-		},
-		enableAppbase: true,
-	},
-	datasearch: {
-		componentId: 'SearchSensor',
-		dataField: ['original_title', 'original_title.search'],
-		autosuggest: true,
-		placeholder: 'Search for movies...',
-		iconPosition: 'left',
-		className: 'search',
-		highlight: true,
-		URLParams: true,
-	},
-	multiList: {
-		componentId: 'genres-list',
-		dataField: 'genres.keyword',
-
-		react: {
-			and: ['SearchSensor', 'results', 'vote-average'],
-		},
-		innerClass: {
-			label: 'list-item',
-			input: 'list-input',
-		},
-		URLParams: true,
-	},
-	rangeSlider: {
-		componentId: 'vote-average',
-		dataField: 'vote_average',
-		range: {
-			start: 0,
-			end: 10,
-		},
-		rangeLabels: {
-			start: '0',
-			end: '10',
-		},
-		react: {
-			and: ['SearchSensor', 'results', 'genres-list'],
-		},
-		showHistogram: true,
-		URLParams: true,
-	},
-	resultcard: {
-		className: 'right-col',
-		componentId: 'results',
-		dataField: 'name',
-		size: 12,
-		render: ({ data }) => (
-			<ReactiveList.ResultCardsWrapper style={{ margin: '8px 0 0' }}>
-				{data.map((item) => (
-					<div style={{ marginRight: '15px' }} className="main-description">
-						<div className="ih-item square effect6 top_to_bottom">
-							<a
-								target="#"
-								href={'https://www.google.com/search?q=' + item.original_title}
-							>
-								<div className="img">
-									<img
-										src={item.poster_path}
-										alt={item.original_title}
-										className="result-image"
-									/>
-								</div>
-								<div className="info colored">
-									<h3
-										className="overlay-title"
-										dangerouslySetInnerHTML={{ __html: item.original_title }}
-									/>
-
-									<div className="overlay-description">{item.overview}</div>
-
-									<div className="overlay-info">
-										<div className="rating-time-score-container">
-											<div className="sub-title Rating-data">
-												<b>
-													Ratings
-													<span className="details">
-														{' '}
-														{item.vote_average}
-													</span>
-												</b>
-											</div>
-											<div className="time-data">
-												<b>
-													<span className="time">
-														<i className="fa fa-clock-o" />{' '}
-													</span>{' '}
-													<span className="details">
-														{item.release_date}
-													</span>
-												</b>
-											</div>
-											<div className="sub-title Score-data">
-												<b>
-													Popularity:
-													<span className="details">
-														{' '}
-														{item.popularity}
-													</span>
-												</b>
-											</div>
-										</div>
-										<div className="vote-average-lang-container">
-											<div className="sub-title language-data">
-												<b>
-													Language:
-													<span className="details">
-														{' '}
-														{item.original_language}
-													</span>
-												</b>
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-					</div>
-				))}
-			</ReactiveList.ResultCardsWrapper>
-		),
-
-		URLParams: true,
-		react: {
-			and: ['SearchSensor', 'vote-average', 'genres-list'],
-		},
-		innerClass: {
-			resultStats: 'result-stats',
-			list: 'list',
-			listItem: 'list-item',
-			image: 'image',
-		},
-	},
-};
+import { components } from './utils/index';
 
 const Main = ({ store }) => {
 	const [isClicked, setIsClicked] = useState(false);
@@ -172,10 +24,15 @@ const Main = ({ store }) => {
 		<div className="main-container">
 			<ReactiveBase {...components.settings} initialState={store}>
 				<div className="navbar">
-					<div className="header-container">🎥 MovieSearch</div>
+					<div className="header-container">
+						<span role="img" aria-label="movies-emoji">
+							🎥
+						</span>{' '}
+						MovieSearch
+					</div>
 
 					<div className="search-container">
-						<DataSearch {...components.datasearch} />
+						<SearchBox {...components.searchbox} />
 					</div>
 					<div className="sub-container">
 						<div className={isClicked ? 'left-bar-optional' : 'left-bar'}>
@@ -201,7 +58,7 @@ const Main = ({ store }) => {
 							className={isClicked ? 'result-container-optional' : 'result-container'}
 						>
 							<SelectedFilters
-								showClearAll={true}
+								showClearAll
 								clearAllLabel="Clear filters"
 								className="selected-filters"
 							/>
@@ -210,20 +67,21 @@ const Main = ({ store }) => {
 					</div>
 				</div>
 			</ReactiveBase>
-			<button className="toggle-button" onClick={handleClick.bind(this)}>
+			<button className="toggle-button" onClick={handleClick}>
 				{message}
 			</button>
 		</div>
 	);
 };
 
-Main.getInitialProps = async ({ pathname, query }) => {
+// eslint-disable-next-line
+Main.getInitialProps = async ({ query }) => {
 	return {
 		store: await initReactivesearch(
 			[
 				{
-					...components.datasearch,
-					source: DataSearch,
+					...components.searchbox,
+					source: SearchBox,
 				},
 				{
 					...components.multiList,
@@ -242,6 +100,10 @@ Main.getInitialProps = async ({ pathname, query }) => {
 			components.settings,
 		),
 	};
+};
+
+Main.propTypes = {
+	store: PropTypes.oneOf([PropTypes.object]),
 };
 
 export default Main;
