@@ -9,7 +9,6 @@
 	},
 	"dependencies": {
 		"vue": "^3.2.5",
-
 		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.0"
 	},
 	"devDependencies": {
