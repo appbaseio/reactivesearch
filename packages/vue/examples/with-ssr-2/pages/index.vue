@@ -62,7 +62,7 @@
 
 <script>
 import { initReactivesearch, SearchBox, ReactiveList } from '@appbaseio/reactivesearch-vue';
-import './styles/airbnb.css';
+import '../styles/airbnb.css';
 
 const components = {
 	settings: {
@@ -104,7 +104,7 @@ const components = {
 	},
 };
 
-export default defineNuxtComponent({
+export default {
 	name: 'App',
 	data() {
 		return {
@@ -137,5 +137,5 @@ export default defineNuxtComponent({
 			};
 		}
 	},
-});
+};
 </script>
