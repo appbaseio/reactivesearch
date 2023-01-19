@@ -5,7 +5,7 @@
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
-        <search-box v-bind="components.datasearch" />
+        <search-box v-bind="components.SearchBox" />
       </nav>
       <client-only>
         <reactive-google-map
@@ -33,12 +33,35 @@
           </template>
         </reactive-google-map>
       </client-only>
+      <reactive-list v-bind="components.result">
+        <template
+          #render="{ data }">
+          <ResultCardsWrapper>
+            <ResultCard
+              v-for="result in data"
+              :key="result._id"
+              :href="result.listing_url"
+            >
+              <ResultCardImage :src="result.picture_url || ''" />
+              <ResultCardTitle>
+                {{ result.name }}
+              </ResultCardTitle>
+              <ResultCardDescription>
+                <div className="price">{{ result.price }}</div>
+                <p className="info">
+                  {{ result.room_type }} · {{ result.accommodates }} guests
+                </p>
+              </ResultCardDescription>
+            </ResultCard>
+          </ResultCardsWrapper>
+        </template>
+      </reactive-list>
     </reactive-base>
   </div>
 </template>
 
 <script>
-import { initReactivesearch, SearchBox, ReactiveBase, SelectedFilters, ResultCard, ReactiveGoogleMap, ReactiveList } from '@appbaseio/reactivesearch-vue';
+import { initReactivesearch, SearchBox, ReactiveList } from '@appbaseio/reactivesearch-vue';
 import './styles/airbnb.css';
 
 const components = {
@@ -52,7 +75,7 @@ const components = {
 			},
 		},
 	},
-	datasearch: {
+	SearchBox: {
 		componentId: 'SearchSensor',
 		dataField: ['name', 'name.search'],
 		autosuggest: false,
@@ -81,15 +104,8 @@ const components = {
 	},
 };
 
-export default {
+export default defineNuxtComponent({
 	name: 'App',
-	components: {
-		SearchBox,
-		ReactiveGoogleMap,
-		ReactiveBase,
-		SelectedFilters,
-		ReactiveList,
-	},
 	data() {
 		return {
 			components,
@@ -100,7 +116,7 @@ export default {
 			const store = await initReactivesearch(
 				[
 					{
-						...components.datasearch,
+						...components.SearchBox,
 						source: SearchBox,
 					},
 					{
@@ -121,5 +137,5 @@ export default {
 			};
 		}
 	},
-};
+});
 </script>
