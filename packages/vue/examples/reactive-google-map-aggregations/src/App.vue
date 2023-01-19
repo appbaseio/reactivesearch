@@ -60,8 +60,8 @@ export default {
 	name: 'app',
 	methods: {
 		handleCalculateMarkers({ rawData }) {
-			const markers = rawData?.aggregations?.results?.buckets?.map(bucket => ({
-				...bucket,
+			const markers = rawData && rawData.aggregations && rawData.aggregations.results.buckets.map(bucket => ({
+			...bucket,
 				_id: bucket.key,
 				location: bucket.cetroid.location
 			}))
