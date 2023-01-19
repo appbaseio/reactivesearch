@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 
-
 import React, { Component } from 'react';
 import {
 	addComponent,
@@ -78,16 +77,16 @@ class DynamicRangeSlider extends Component {
 			range: null,
 			stats: [],
 		};
-
+		this._timestamp = new Date().getTime();
 		// Caution: Don't change the ids unnecessarily.
 		// If it's required then you need to update it in reactivecore(transform.js) too.
 		this.internalHistogramComponent = `${this.props.componentId}__histogram__internal`;
 		this.internalRangeComponent = `${this.props.componentId}__range__internal`;
 		this.internalMatchAllComponent = `${this.props.componentId}__match_all__internal`;
 
-		props.addComponent(props.componentId);
-		props.addComponent(this.internalHistogramComponent);
-		props.addComponent(this.internalRangeComponent);
+		props.addComponent(props.componentId, this._timestamp);
+		props.addComponent(this.internalHistogramComponent, this._timestamp);
+		props.addComponent(this.internalRangeComponent, this._timestamp);
 		props.setQueryListener(props.componentId, props.onQueryChange, null);
 		// Update props in store
 		props.setComponentProps(props.componentId, props, componentTypes.dynamicRangeSlider);
@@ -309,7 +308,7 @@ class DynamicRangeSlider extends Component {
 		} else {
 			// internalRangeComponent watches internalMatchAll component allowing execution of query
 			// in case of no react prop
-			this.props.addComponent(this.internalMatchAllComponent);
+			this.props.addComponent(this.internalMatchAllComponent, this._timestamp);
 			props.setQueryOptions(
 				this.internalMatchAllComponent,
 				{ aggs: { match_all: {} } },
@@ -805,7 +804,7 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	updateComponentProps: (component, options, componentType) =>
 		dispatch(updateComponentProps(component, options, componentType)),
-	addComponent: component => dispatch(addComponent(component)),
+	addComponent: (component, timestamp) => dispatch(addComponent(component, timestamp)),
 	removeComponent: component => dispatch(removeComponent(component)),
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>

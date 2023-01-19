@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import { connect as connectToStore } from 'react-redux';
+import dayjs from 'dayjs';
 import {
 	isEqual,
 	isValidDateRangeQueryFormat,
 	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
-import XDate from 'xdate';
 
 export const ReactReduxContext = React.createContext(null);
 
@@ -226,8 +226,8 @@ export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 // this pertains to the convention that internally our components uses numerics for local state
 export function getNumericRangeValue(value, isDateType) {
 	try {
-		if (isDateType && value !== undefined && value !== null && new XDate(value).valid()) {
-			return new XDate(value).getTime();
+		if (isDateType && value !== undefined && value !== null && dayjs(new Date((value))).isValid()) {
+			return dayjs(new Date((value))).valueOf();
 		}
 		return parseFloat(value);
 	} catch (e) {
@@ -238,7 +238,7 @@ export function getNumericRangeValue(value, isDateType) {
 
 export const formatDateString = (date, format) => {
 	try {
-		return new XDate(date).toString(format || "yyyy-MM-dd'T'HH:mm:ss");
+		return dayjs(new Date((date))).format(format || 'YYYY-MM-DD[T]HH:mm:ss');
 	} catch (e) {
 		return date;
 	}
