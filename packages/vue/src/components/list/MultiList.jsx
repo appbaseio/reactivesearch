@@ -79,11 +79,6 @@ const MultiList = {
 		return this.__state;
 	},
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		const props = this.$props;
 		this.modifiedOptions
 			= this.options && this.options[props.dataField]
@@ -206,7 +201,7 @@ const MultiList = {
 				{this.hasCustomRenderer ? (
 					this.getComponent()
 				) : (
-					<UL class={getClassName(this.$props.innerClass, 'list')}>
+					<UL>
 						{selectAllLabel ? (
 							<li
 								key={selectAllLabel}
@@ -219,11 +214,7 @@ const MultiList = {
 									name={selectAllLabel}
 									value={selectAllLabel}
 									onClick={this.handleClick}
-									{...{
-										domProps: {
-											checked: !!this.currentValue[selectAllLabel],
-										},
-									}}
+									checked={!!this.currentValue[selectAllLabel]}
 									show={this.$props.showCheckbox}
 								/>
 								<label
@@ -266,11 +257,7 @@ const MultiList = {
 										value={item.key}
 										onClick={this.handleClick}
 										show={this.$props.showCheckbox}
-										{...{
-											domProps: {
-												checked: !!this.$data.currentValue[item.key],
-											},
-										}}
+										checked={!!this.$data.currentValue[item.key]}
 									/>
 									<label
 										class={getClassName(this.$props.innerClass, 'label')}
@@ -504,8 +491,7 @@ const MultiList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$slots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -519,91 +505,16 @@ const MultiList = {
 		},
 	},
 };
-MultiList.defaultQuery = (value, props) => {
-	let query = null;
-	let { queryFormat } = props;
-	if (queryFormat === undefined) {
-		queryFormat = 'or';
-	}
-	const type = queryFormat === 'or' ? 'terms' : 'term';
-
-	if (!Array.isArray(value) || value.length === 0) {
-		return null;
-	}
-
-	if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
-		if (props.showMissing) {
-			query = { match_all: {} };
-		} else {
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		}
-	} else if (value) {
-		let listQuery;
-		if (queryFormat === 'or') {
-			if (props.showMissing) {
-				const hasMissingTerm = value.includes(props.missingLabel);
-				let should = [
-					{
-						[type]: {
-							[props.dataField]: value.filter((item) => item !== props.missingLabel),
-						},
-					},
-				];
-				if (hasMissingTerm) {
-					should = should.concat({
-						bool: {
-							must_not: {
-								exists: { field: props.dataField },
-							},
-						},
-					});
-				}
-				listQuery = {
-					bool: {
-						should,
-					},
-				};
-			} else {
-				listQuery = {
-					[type]: {
-						[props.dataField]: value,
-					},
-				};
-			}
-		} else {
-			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = value.map((item) => ({
-				[type]: {
-					[props.dataField]: item,
-				},
-			}));
-			listQuery = {
-				bool: {
-					must: queryArray,
-				},
-			};
-		}
-
-		query = value.length ? listQuery : null;
-	}
-
-	if (query && props.nestedField) {
-		query = {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-
-	return query;
-};
+MultiList.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		selectAllLabel: props.selectAllLabel,
+		showMissing: props.showMissing,
+	},
+});
 MultiList.generateQueryOptions = (props) => {
 	const queryOptions = getQueryOptions(props);
 	return getAggsQuery(queryOptions, props);
@@ -623,7 +534,6 @@ const mapStateToProps = (state, props) => ({
 	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

@@ -1,10 +1,10 @@
-
 import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
+import { css } from 'emotion';
 
 import Title from './Title';
 
-const container = `
+const container = css`
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -45,7 +45,7 @@ const Card = styled('a')`
 	overflow: hidden;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
 	color: ${({ theme }) => theme.colors.textColor};
-	${props => (props.href ? 'cursor: pointer' : null)};
+	${(props) => (props.href ? 'cursor: pointer' : null)};
 	transition: all 0.3s ease;
 
 	h2 {

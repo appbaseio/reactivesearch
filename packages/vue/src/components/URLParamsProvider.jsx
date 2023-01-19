@@ -237,7 +237,6 @@ const URLParamsProvider = {
 	},
 	render() {
 		const children = this.$slots.default();
-
 		return (
 			<Base as={this.$props.as} class={this.$props.className}>
 				{children}

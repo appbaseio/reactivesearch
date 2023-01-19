@@ -1,10 +1,10 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
-			><SearchBox
+		>
+			<search-box
 				className="result-list-container"
 				componentId="BookSensor"
 				:dataField="['original_title', 'original_title.search']"
@@ -19,9 +19,8 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
-			>
-			</SearchBox>
-			<ReactiveList
+			/>
+			<reactive-list
 				componentId="SearchResult"
 				dataField="original_title.keyword"
 				className="result-list-container"
@@ -61,8 +60,8 @@
 						</div>
 					</div>
 				</template>
-			</ReactiveList>
-		</ReactiveBase>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 

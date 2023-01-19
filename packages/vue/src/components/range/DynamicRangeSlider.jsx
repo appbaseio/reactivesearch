@@ -1,9 +1,9 @@
 import VueTypes from 'vue-types';
-import NoSSR from 'vue-no-ssr';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import Container from '../../styles/Container';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
+import NoSSR from '../basic/NoSSR.jsx';
 import { connect, updateCustomQuery, getValidPropsKeys, isQueryIdentical } from '../../utils/index';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
@@ -82,11 +82,7 @@ const DynamicRangeSlider = {
 			this.$props,
 			componentTypes.dynamicRangeSlider,
 		);
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
+
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
@@ -335,7 +331,7 @@ const DynamicRangeSlider = {
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider-component
 							ref="slider"
-							value={[
+							modelValue={[
 								Math.floor(Math.max(start, this.currentValue[0])),
 								Math.ceil(Math.min(end, this.currentValue[1])),
 							]}
@@ -346,7 +342,7 @@ const DynamicRangeSlider = {
 							height={4}
 							enable-cross={false}
 							tooltip="always"
-							{...{ props: this.$props.sliderOptions }}
+							{...this.$props.sliderOptions}
 						/>
 
 						{this.labels ? (
@@ -376,34 +372,14 @@ const DynamicRangeSlider = {
 	},
 };
 
-DynamicRangeSlider.defaultQuery = (values, props) => {
-	let query = null;
-
-	if (Array.isArray(values) && values.length) {
-		query = {
-			range: {
-				[props.dataField]: {
-					gte: values[0],
-					lte: values[1],
-					boost: 2.0,
-				},
-			},
-		};
-	}
-
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-
-	return query;
-};
+DynamicRangeSlider.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		showMissing: props.showMissing,
+	},
+});
 
 DynamicRangeSlider.parseValue = (value) => {
 	if (value) {
@@ -453,7 +429,6 @@ const mapStateToProps = (state, props) => {
 			? state.selectedValues[props.componentId].value
 			: null,
 		componentProps: state.props[props.componentId],
-		enableAppbase: state.config.enableAppbase,
 	};
 };
 

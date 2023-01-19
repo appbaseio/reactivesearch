@@ -3,15 +3,15 @@ import { container } from '../../../styles/Card';
 const ResultCardsWrapper = {
 	name: 'ResultCardsWrapper',
 	functional: true,
-	render(_, { props, children }) {
+	render(context) {
 		return (
-			<div className={container} {...props}>
-				{children}
+			<div className={container} {...context.$props}>
+				{context.$slots.default()}
 			</div>
 		);
 	},
 };
-ResultCardsWrapper.install = function(Vue) {
+ResultCardsWrapper.install = function (Vue) {
 	Vue.component(ResultCardsWrapper.name, ResultCardsWrapper);
 };
 export default ResultCardsWrapper;

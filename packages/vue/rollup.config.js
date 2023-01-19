@@ -27,7 +27,6 @@ const inputChunks = {
 	ResultCard: 'src/components/result/ResultCard.jsx',
 	ResultList: 'src/components/result/ResultList.jsx',
 	ReactiveBase: 'src/components/ReactiveBase/index.jsx',
-	DataSearch: 'src/components/search/DataSearch.jsx',
 	SingleList: 'src/components/list/SingleList.jsx',
 	MultiList: 'src/components/list/MultiList.jsx',
 	SingleRange: 'src/components/range/SingleRange.jsx',

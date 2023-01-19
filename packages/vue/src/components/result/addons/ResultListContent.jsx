@@ -1,11 +1,11 @@
 const ResultListContent = {
 	name: 'ResultListContent',
 	functional: true,
-	render(_, { props, children }) {
-		return <article {...props}>{children}</article>;
+	render(context) {
+		return <article {...context.$props}>{context.$slots.default()}</article>;
 	},
 };
-ResultListContent.install = function(Vue) {
+ResultListContent.install = function (Vue) {
 	Vue.component(ResultListContent.name, ResultListContent);
 };
 export default ResultListContent;

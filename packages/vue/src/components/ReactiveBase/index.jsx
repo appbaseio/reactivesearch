@@ -24,19 +24,10 @@ const ReactiveBase = {
 	created() {
 		this.setStore(this.$props);
 	},
-	mounted() {
-		const { enableAppbase, endpoint } = this;
-		if (!enableAppbase && endpoint) {
-			console.warn(
-				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
-			);
-		}
-	},
 	props: {
 		app: types.string,
 		analytics: VueTypes.bool,
-		appbaseConfig: types.appbaseConfig,
-		enableAppbase: VueTypes.bool.def(false),
+		reactivesearchAPIConfig: types.reactivesearchAPIConfig,
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
@@ -88,7 +79,7 @@ const ReactiveBase = {
 		headers() {
 			this.updateState(this.$props);
 		},
-		appbaseConfig(newVal, oldVal) {
+		reactivesearchAPIConfig(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				if (this.store) {
 					this.store.dispatch(updateAnalyticsConfig(newVal));
@@ -101,17 +92,15 @@ const ReactiveBase = {
 	},
 	computed: {
 		getHeaders() {
-			const { enableAppbase, headers, appbaseConfig, mongodb, endpoint } = this.$props;
-			const { enableTelemetry } = appbaseConfig || {};
+			const { headers, reactivesearchAPIConfig, mongodb, endpoint } = this.$props;
+			const { enableTelemetry } = reactivesearchAPIConfig || {};
 			return {
-				...(enableAppbase
-					&& !mongodb && {
+				...(!mongodb && {
 					'X-Search-Client': X_SEARCH_CLIENT,
 					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 				}),
 				...headers,
-				...(enableAppbase
-					&& endpoint
+				...(endpoint
 					&& endpoint.headers && {
 					...endpoint.headers,
 				}),
@@ -129,7 +118,7 @@ const ReactiveBase = {
 					? null
 					: props.credentials;
 			let url = props.url && props.url.trim() !== '' ? props.url : '';
-			if (props.enableAppbase && props.endpoint) {
+			if (props.endpoint) {
 				if (props.endpoint.url) {
 					// eslint-disable-next-line prefer-destructuring
 					url = props.endpoint.url;
@@ -146,11 +135,11 @@ const ReactiveBase = {
 				type: props.type ? props.type : '*',
 				transformRequest: props.transformRequest,
 				transformResponse: props.transformResponse,
-				enableAppbase: props.enableAppbase,
-				analytics: props.appbaseConfig
-					? props.appbaseConfig.recordAnalytics
+				enableAppbase: true,
+				analytics: props.reactivesearchAPIConfig
+					? props.reactivesearchAPIConfig.recordAnalytics
 					: props.analytics,
-				analyticsConfig: props.appbaseConfig,
+				analyticsConfig: props.reactivesearchAPIConfig,
 				mongodb: props.mongodb,
 				endpoint: props.endpoint,
 			};
@@ -190,14 +179,12 @@ const ReactiveBase = {
 				}
 			});
 
-			const { themePreset, enableAppbase, endpoint } = props;
+			const { themePreset, endpoint } = props;
 
 			const appbaseRef = Appbase(config);
 
 			appbaseRef.transformRequest = (request) => {
-				const modifiedRequest = enableAppbase
-					? transformRequestUsingEndpoint(request, endpoint)
-					: request;
+				const modifiedRequest = transformRequestUsingEndpoint(request, endpoint);
 				if (props.transformRequest) return props.transformRequest(modifiedRequest);
 				return modifiedRequest;
 			};
@@ -211,7 +198,8 @@ const ReactiveBase = {
 				// When endpoint prop is used index is not defined, so we use _default
 				index: appbaseRef.app || '_default',
 				globalCustomEvents:
-					this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
+					this.$props.reactivesearchAPIConfig
+					&& this.$props.reactivesearchAPIConfig.customEvents,
 			};
 
 			try {

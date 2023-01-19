@@ -77,11 +77,6 @@ const SingleList = {
 		return this.__state;
 	},
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		const props = this.$props;
 		this.modifiedOptions
 			= this.options && this.options[props.dataField]
@@ -207,11 +202,7 @@ const SingleList = {
 									readOnly
 									type="radio"
 									show={this.$props.showRadio}
-									{...{
-										domProps: {
-											checked: this.$data.currentValue === selectAllLabel,
-										},
-									}}
+									checked={this.$data.currentValue === selectAllLabel}
 								/>
 								<label
 									class={getClassName(this.$props.innerClass, 'label') || null}
@@ -254,11 +245,7 @@ const SingleList = {
 										onClick={this.handleClick}
 										type="radio"
 										show={this.$props.showRadio}
-										{...{
-											domProps: {
-												checked: this.currentValue === String(item.key),
-											},
-										}}
+										checked={this.currentValue === String(item.key)}
 									/>
 									<label
 										class={
@@ -446,8 +433,7 @@ const SingleList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$slots.renderNoResults || this.$props.renderNoResults;
+			const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 			return (
 				<p class={getClassName(this.$props.innerClass, 'noResults') || null}>
 					{isFunction(renderNoResults) ? renderNoResults() : renderNoResults}
@@ -466,48 +452,16 @@ SingleList.generateQueryOptions = (props) => {
 	const queryOptions = getQueryOptions(props);
 	return getAggsQuery(queryOptions, props);
 };
-SingleList.defaultQuery = (value, props) => {
-	let query = null;
-	if (props.selectAllLabel && props.selectAllLabel === value) {
-		if (props.showMissing) {
-			query = { match_all: {} };
-		}
-		query = {
-			exists: {
-				field: props.dataField,
-			},
-		};
-	}
-	if (value) {
-		query = {
-			term: {
-				[props.dataField]: value,
-			},
-		};
-		if (props.showMissing && props.missingLabel === value) {
-			query = {
-				bool: {
-					must_not: {
-						exists: { field: props.dataField },
-					},
-				},
-			};
-		}
-	}
-
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-
-	return query;
-};
+SingleList.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		selectAllLabel: props.selectAllLabel,
+		showMissing: props.showMissing,
+	},
+});
 SingleList.hasInternalComponent = () => true;
 
 const mapStateToProps = (state, props) => ({
@@ -525,7 +479,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

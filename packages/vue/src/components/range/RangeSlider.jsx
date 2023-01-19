@@ -1,10 +1,10 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import NoSSR from 'vue-no-ssr';
 import Container from '../../styles/Container';
 import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
+import NoSSR from '../basic/NoSSR.jsx';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import Title from '../../styles/Title';
 import Slider from '../../styles/Slider';
@@ -156,11 +156,7 @@ const RangeSlider = {
 				'font-size: 12.5px;',
 			);
 		}
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
+
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
@@ -192,7 +188,7 @@ const RangeSlider = {
 						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 							<vue-slider-component
 								ref="slider"
-								value={this.currentValue}
+								modelValue={this.currentValue}
 								min={this.$props.range.start}
 								max={this.$props.range.end}
 								dotSize={20}
@@ -200,7 +196,7 @@ const RangeSlider = {
 								enable-cross={false}
 								onDrag-end={this.handleSlider}
 								tooltip="always"
-								{...{ props: this.$props.sliderOptions }}
+								{...this.$props.sliderOptions}
 							/>
 							{this.$props.rangeLabels && (
 								<div class="label-container">
@@ -230,31 +226,14 @@ const RangeSlider = {
 	},
 };
 
-RangeSlider.defaultQuery = (values, props) => {
-	let query = null;
-	if (Array.isArray(values) && values.length) {
-		query = {
-			range: {
-				[props.dataField]: {
-					gte: values[0],
-					lte: values[1],
-					boost: 2.0,
-				},
-			},
-		};
-	}
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-	return query;
-};
+RangeSlider.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		showMissing: props.showMissing,
+	},
+});
 
 RangeSlider.parseValue = (value, props) => {
 	if (value) {
@@ -275,7 +254,6 @@ const mapStateToProps = (state, props) => ({
 		? state.selectedValues[props.componentId].value
 		: null,
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

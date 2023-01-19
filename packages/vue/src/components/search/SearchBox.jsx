@@ -51,7 +51,6 @@ const {
 	getCompositeAggsQuery,
 	withClickIds,
 	getResultStats,
-	normalizeDataField,
 } = helper;
 
 const SearchBox = defineComponent({
@@ -74,7 +73,7 @@ const SearchBox = defineComponent({
 		},
 	},
 	created() {
-		const { distinctField, distinctFieldConfig, index, mode } = this.$props;
+		const { mode } = this.$props;
 		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
 			this.$options.isTagsMode = true;
 		}
@@ -82,22 +81,6 @@ const SearchBox = defineComponent({
 		if (this.$options.isTagsMode) {
 			console.warn(
 				'Warning(ReactiveSearch): The `categoryField` prop is not supported when `mode` prop is set to `tag`',
-			);
-		}
-
-		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!this.enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -364,32 +347,6 @@ const SearchBox = defineComponent({
 				this.triggerDefaultQuery(value);
 			} else if (!this.$props.enterButton) {
 				this.triggerCustomQuery(value);
-			}
-		},
-		validateDataField() {
-			const propName = 'dataField';
-			const componentName = SearchBox.name;
-			const props = this.$props;
-			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
-			const propValue = props[propName];
-			if (!this.enableAppbase) {
-				if (!propValue) {
-					console.error(requiredError);
-					return;
-				}
-				if (
-					typeof propValue !== 'string'
-					&& typeof propValue !== 'object'
-					&& !Array.isArray(propValue)
-				) {
-					console.error(
-						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
-					);
-					return;
-				}
-				if (Array.isArray(propValue) && propValue.length === 0) {
-					console.error(requiredError);
-				}
 			}
 		},
 		getComponent(downshiftProps = {}) {
@@ -795,13 +752,14 @@ const SearchBox = defineComponent({
 						themePreset={this.themePreset}
 						theme={theme}
 						innerClassName="noSuggestion"
-						scopedSlots={{
+					>
+						{{
 							default: () =>
 								typeof renderNoSuggestion === 'function'
 									? renderNoSuggestion(currentValue)
 									: renderNoSuggestion,
 						}}
-					/>
+					</SuggestionWrapper>
 				);
 			}
 			return null;
@@ -1293,10 +1251,9 @@ const SearchBox = defineComponent({
 SearchBox.defaultQuery = (value, props) => {
 	let finalQuery = null;
 
-	const fields = normalizeDataField(props.dataField, props.fieldWeights);
 	finalQuery = {
 		bool: {
-			should: SearchBox.shouldQuery(value, fields, props),
+			should: SearchBox.shouldQuery(value, props),
 			minimum_should_match: '1',
 		},
 	};
@@ -1314,92 +1271,16 @@ SearchBox.defaultQuery = (value, props) => {
 
 	return finalQuery;
 };
-SearchBox.shouldQuery = (value, dataFields, props) => {
-	const finalQuery = [];
-	const phrasePrefixFields = [];
-	const fields = dataFields.map((dataField) => {
-		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
-		if (
-			!(
-				dataField.field.endsWith('.keyword')
-				|| dataField.field.endsWith('.autosuggest')
-				|| dataField.field.endsWith('.search')
-			)
-		) {
-			phrasePrefixFields.push(queryField);
-		}
-		return queryField;
-	});
-	if (props.searchOperators || props.queryString) {
-		return {
-			query: value,
-			fields,
-			default_operator: props.queryFormat,
-		};
-	}
-
-	if (props.queryFormat === 'and') {
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'cross_fields',
-				operator: 'and',
-			},
-		});
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'phrase',
-				operator: 'and',
-			},
-		});
-		if (phrasePrefixFields.length > 0) {
-			finalQuery.push({
-				multi_match: {
-					query: value,
-					fields: phrasePrefixFields,
-					type: 'phrase_prefix',
-					operator: 'and',
-				},
-			});
-		}
-		return finalQuery;
-	}
-
-	finalQuery.push({
-		multi_match: {
-			query: value,
-			fields,
-			type: 'best_fields',
-			operator: 'or',
-			fuzziness: props.fuzziness ? props.fuzziness : 0,
-		},
-	});
-
-	finalQuery.push({
-		multi_match: {
-			query: value,
-			fields,
-			type: 'phrase',
-			operator: 'or',
-		},
-	});
-
-	if (phrasePrefixFields.length > 0) {
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields: phrasePrefixFields,
-				type: 'phrase_prefix',
-				operator: 'or',
-			},
-		});
-	}
-
-	return finalQuery;
-};
+SearchBox.shouldQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		queryString: props.queryString,
+		searchOperators: props.searchOperators,
+	},
+});
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
@@ -1416,7 +1297,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
+
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,

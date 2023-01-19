@@ -1,4 +1,5 @@
 import { styled } from '@appbaseio/vue-emotion';
+import { css } from 'emotion';
 
 const MapPin = styled('div')`
 	height: 24px;
@@ -25,7 +26,7 @@ const MapPinArrow = styled('div')`
 	transform: rotate(45deg);
 `;
 
-const mapPinWrapper = `
+const mapPinWrapper = css`
 	&:hover,
 	&:focus {
 		z-index: 200;

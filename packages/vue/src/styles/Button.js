@@ -2,7 +2,7 @@ import { styled } from '@appbaseio/vue-emotion';
 import { css } from 'emotion';
 import { darken, lighten, rgba } from 'polished';
 
-const filters = ({ colors: { borderColor } }) => `
+const filters = ({ colors: { borderColor } }) => css`
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -51,7 +51,7 @@ const pagination = css`
 	}
 `;
 
-const toggleButtons = `
+const toggleButtons = css`
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -60,7 +60,7 @@ const toggleButtons = `
 	}
 `;
 
-const numberBoxContainer = `
+const numberBoxContainer = css`
 	margin: 0 -5px;
 	button {
 		margin: 5px;
