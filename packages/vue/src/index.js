@@ -8,6 +8,7 @@ import ReactiveBase from './components/ReactiveBase/index.jsx';
 import SearchBox from './components/search/SearchBox.jsx';
 import SingleList from './components/list/SingleList.jsx';
 import MultiList from './components/list/MultiList.jsx';
+import TreeList from './components/list/TreeList/index.jsx';
 import SingleDropdownList from './components/list/SingleDropdownList.jsx';
 import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ToggleButton from './components/list/ToggleButton.jsx';
@@ -40,6 +41,7 @@ export {
 	SearchBox,
 	SingleList,
 	MultiList,
+	TreeList,
 	SingleRange,
 	MultiRange,
 	RangeSlider,
