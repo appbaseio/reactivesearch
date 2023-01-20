@@ -172,7 +172,7 @@ const MultiList = {
 		}
 
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
-			if (this.renderNoResult) {
+			if (this.renderNoResults) {
 				this.renderNoResult();
 			} else {
 				return null;
