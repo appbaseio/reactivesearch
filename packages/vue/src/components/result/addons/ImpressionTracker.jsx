@@ -17,7 +17,6 @@ const debounce = (method, delay) => {
 
 const ImpressionTracker = {
 	name: 'ImpressionTracker',
-
 	inject: ['$$store'],
 	props: {
 		hits: VueTypes.hits,
@@ -146,7 +145,7 @@ const ImpressionTracker = {
 		},
 	},
 	render() {
-		return this.$slots.default;
+		return this.$slots.default();
 	},
 };
 
