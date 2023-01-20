@@ -7,61 +7,12 @@
         <div class="title">Airbeds</div>
         <search-box v-bind="components.SearchBox" />
       </nav>
-      <client-only>
-        <reactive-google-map
-          :size="50"
-          :style="{ height: '90vh', minWidth: '300px' }"
-          :react="{ and: 'places' }"
-          :default-zoom="3"
-          :show-marker-clusters="false"
-          component-id="map"
-          data-field="location"
-        >
-          <template
-            :style="{
-              background: 'dodgerblue',
-              color: '#fff',
-              paddingLeft: '5px',
-              paddingRight: '5px',
-              borderRadius: '3px',
-              padding: '10px',
-            }"
-            #renderItem="{ magnitude }"
-          >
-            <i class="fas fa-globe-europe" />
-            &nbsp;{{ magnitude }}
-          </template>
-        </reactive-google-map>
-      </client-only>
-      <reactive-list v-bind="components.result">
-        <template
-          #render="{ data }">
-          <ResultCardsWrapper>
-            <ResultCard
-              v-for="result in data"
-              :key="result._id"
-              :href="result.listing_url"
-            >
-              <ResultCardImage :src="result.picture_url || ''" />
-              <ResultCardTitle>
-                {{ result.name }}
-              </ResultCardTitle>
-              <ResultCardDescription>
-                <div className="price">{{ result.price }}</div>
-                <p className="info">
-                  {{ result.room_type }} · {{ result.accommodates }} guests
-                </p>
-              </ResultCardDescription>
-            </ResultCard>
-          </ResultCardsWrapper>
-        </template>
-      </reactive-list>
     </reactive-base>
   </div>
 </template>
 
 <script>
-import { initReactivesearch, SearchBox, ReactiveList } from '@appbaseio/reactivesearch-vue';
+import { initReactivesearch, SearchBox, ReactiveBase } from '@appbaseio/reactivesearch-vue';
 import '../styles/airbnb.css';
 
 const components = {
@@ -85,57 +36,36 @@ const components = {
 		highlight: true,
 		URLParams: true,
 	},
-	result: {
-		className: 'right-col',
-		componentId: 'SearchResult',
-		dataField: 'name',
-		size: 12,
-		pagination: true,
-		URLParams: true,
-		react: {
-			and: ['SearchSensor'],
-		},
-		innerClass: {
-			resultStats: 'result-stats',
-			list: 'list',
-			listItem: 'list-item',
-			image: 'image',
-		},
-	},
 };
 
-export default {
-	name: 'App',
-	data() {
-		return {
-			components,
-		};
-	},
-	async asyncData({ query }) {
+export default defineNuxtComponent({
+	name: 'AfreshComponent',
+	components: {ReactiveBase, SearchBox},
+	async asyncData() {
 		try {
 			const store = await initReactivesearch(
 				[
 					{
 						...components.SearchBox,
 						source: SearchBox,
-					},
-					{
-						...components.result,
-						source: ReactiveList,
-					},
+					}
 				],
-				query,
+				null,
 				components.settings,
 			);
 			return {
+				components,
 				store,
 			};
 		} catch (error) {
 			return {
-				store: null,
-				error,
+				data: {
+					components,
+					store: null,
+					error,
+				}
 			};
 		}
 	},
-};
+});
 </script>
