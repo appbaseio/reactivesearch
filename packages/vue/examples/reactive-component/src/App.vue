@@ -1,12 +1,12 @@
 <template>
-	<ReactiveBase
+	<reactive-base
 		app="carstore-dataset"
 		url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 		:enable-appbase="true"
 	>
 		<div class="row">
 			<div class="col">
-				<ReactiveComponent
+				<reactive-component
 					componentId="CarSensor"
 					:defaultQuery="
 						() => ({
@@ -24,14 +24,14 @@
 						})
 					"
 				>
-					<div slot-scope="{ aggregations, setQuery }">
+					<template #default="{ aggregations, setQuery }">
 						<CustomComponent :aggregations="aggregations" :setQuery="setQuery" />
-					</div>
-				</ReactiveComponent>
+					</template>
+				</reactive-component>
 			</div>
 
 			<div class="col">
-				<ReactiveList
+				<reactive-list
 					componentId="SearchResult"
 					dataField="model.keyword"
 					title="ReactiveList"
@@ -42,19 +42,27 @@
 						and: 'CarSensor',
 					}"
 				>
-					<div slot="renderItem" slot-scope="{ item }">
+					<template #renderItem="{ item }">
 						<h2>{{ item.model }}</h2>
 						<p>{{ item.price }} - {{ item.rating }} stars rated</p>
-					</div>
-				</ReactiveList>
+					</template>
+				</reactive-list>
 			</div>
 		</div>
-	</ReactiveBase>
+	</reactive-base>
 </template>
 <script>
+import { ReactiveComponent, ReactiveList, ReactiveBase } from '@appbaseio/reactivesearch-vue'
 import CustomComponent from './CustomComponent.vue';
+import './styles.css';
+
 export default {
-	name: 'App',
-	components: { CustomComponent },
+	name: 'app',
+	components:{
+		ReactiveComponent,
+		CustomComponent,
+		ReactiveList,
+		ReactiveBase
+	}
 };
 </script>

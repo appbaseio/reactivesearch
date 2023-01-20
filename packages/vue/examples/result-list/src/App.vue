@@ -1,12 +1,11 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="meetup_dataset"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
 			<div class="row">
-				<ReactiveList
+				<reactive-list
 					componentId="SearchResult"
 					dataField="group.group_topics.topic_name_raw.keyword"
 					title="Results"
@@ -19,38 +18,46 @@
 					}"
 					:pagination="true"
 				>
-					<div slot="render" slot-scope="{ data }">
-						<ResultListWrapper>
-							<ResultList
+					<template #render="{ data }">
+						<result-list-wrapper>
+							<result-list
 								v-bind:key="result._id"
 								v-for="result in data"
 								:href="result.event.event_url"
 							>
-								<ResultListImage :small="true" :src="result.member.photo" />
-								<ResultListContent>
-									<ResultListTitle>
+								<result-list-image :small="true" :src="result.member.photo" />
+								<result-list-content>
+									<result-list-title>
 										{{ result.member ? result.member.member_name : '' }} is
 										going to
 										{{ result.event ? result.event.event_name : '' }}
-									</ResultListTitle>
-									<ResultListDescription>
+									</result-list-title>
+									<result-list-description>
 										{{ result.group ? result.group.group_city : '' }}
-									</ResultListDescription>
-								</ResultListContent>
-							</ResultList>
-						</ResultListWrapper>
-					</div>
-				</ReactiveList>
+									</result-list-description>
+								</result-list-content>
+							</result-list>
+						</result-list-wrapper>
+					</template>
+				</reactive-list>
 			</div>
-		</ReactiveBase>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import { ReactiveBase, ReactiveList, SearchBox, SelectedFilters, ResultList  } from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components: {
+		ReactiveBase,
+		ReactiveList,
+		SearchBox,
+		SelectedFilters,
+		ResultList
+	},
 };
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <ReactiveBase 
-      v-bind="components.settings" 
+    <reactive-base
+      v-bind="components.settings"
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
-        <DataSearch v-bind="components.datasearch" />
+        <search-box v-bind="components.datasearch" />
       </nav>
       <client-only>
         <reactive-google-map
@@ -17,9 +17,7 @@
           component-id="map"
           data-field="location"
         >
-          <div
-            slot="renderItem"
-            slot-scope="{ magnitude }"
+          <template
             :style="{
               background: 'dodgerblue',
               color: '#fff',
@@ -28,16 +26,16 @@
               borderRadius: '3px',
               padding: '10px',
             }"
+            #renderItem="{ magnitude }"
           >
             <i class="fas fa-globe-europe" />
             &nbsp;{{ magnitude }}
-          </div>
+          </template>
         </reactive-google-map>
       </client-only>
-      <ReactiveList v-bind="components.result">
-        <div 
-          slot="render" 
-          slot-scope="{ data }">
+      <reactive-list v-bind="components.result">
+        <template
+          #render="{ data }">
           <ResultCardsWrapper>
             <ResultCard
               v-for="result in data"
@@ -56,9 +54,9 @@
               </ResultCardDescription>
             </ResultCard>
           </ResultCardsWrapper>
-        </div>
-      </ReactiveList>
-    </ReactiveBase>
+        </template>
+      </reactive-list>
+    </reactive-base>
   </div>
 </template>
 

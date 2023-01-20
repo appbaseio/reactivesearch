@@ -3,8 +3,7 @@
 		<reactive-base
 			app="default"
 			url="https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/public-demo-skxjb/service/http_endpoint/incoming_webhook/reactivesearch"
-			:enable-appbase="true"
-			:mongodb="{ db: 'sample_airbnb', collection: 'listingsAndReviews' }"
+						:mongodb="{ db: 'sample_airbnb', collection: 'listingsAndReviews' }"
 		>
 			<div class="row">
 				<div class="col">
@@ -32,7 +31,7 @@
 						:size="5"
 						:react="{ and: ['accomodation_filter'] }"
 					>
-						<div class="cards-wrapper" slot="render" slot-scope="{ data }">
+						<template class="cards-wrapper" #render="{ data }">
 							<result-cards-wrapper>
 								<result-card
 									class="card"
@@ -55,7 +54,7 @@
 									</result-card-description>
 								</result-card>
 							</result-cards-wrapper>
-						</div>
+						</template>
 					</reactive-list>
 				</div>
 			</div>
@@ -65,9 +64,15 @@
 
 <script>
 import './styles.css';
+import { RangeInput, ReactiveList, ReactiveBase} from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components:{
+		RangeInput,
+		ReactiveList,
+		ReactiveBase
+	}
 };
 </script>
 

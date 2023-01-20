@@ -1,12 +1,11 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="default"
 			url="https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/public-demo-skxjb/service/http_endpoint/incoming_webhook/reactivesearch"
-			:enable-appbase="true"
 			:mongodb="{ db: 'sample_airbnb', collection: 'listingsAndReviews' }"
 		>
-			<DataSearch
+			<search-box
 				class="result-list-container"
 				componentId="search-component"
 				:dataField="[
@@ -22,7 +21,7 @@
 				:URLParams="true"
 				:size="5"
 			/>
-			<ReactiveList
+			<reactive-list
 				componentId="SearchResult"
 				dataField="property_type"
 				class="result-list-container"
@@ -30,7 +29,7 @@
 				:size="5"
 				:react="{ and: ['search-component'] }"
 			>
-				<div class="cards-wrapper" slot="render" slot-scope="{ data }">
+				<template class="cards-wrapper" #render="{ data }">
 					<result-cards-wrapper>
 						<result-card class="card" v-bind:key="result._id" v-for="result in data">
 							<result-card-image :src="result.images.picture_url" />
@@ -49,16 +48,23 @@
 							</result-card-description>
 						</result-card>
 					</result-cards-wrapper>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import {SearchBox, ReactiveList, ReactiveBase} from '@appbaseio/reactivesearch-vue'
+
 export default {
 	name: 'app',
+	components:{
+		SearchBox,
+		ReactiveList,
+		ReactiveBase
+	}
 };
 </script>
 
