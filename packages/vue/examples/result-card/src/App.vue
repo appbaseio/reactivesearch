@@ -1,12 +1,11 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="meetup_dataset"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
 			<div class="row">
-				<ReactiveList
+				<reactive-list
 					componentId="SearchResult"
 					dataField="group.group_topics.topic_name_raw.keyword"
 					title="Results"
@@ -19,7 +18,7 @@
 					}"
 					:pagination="true"
 				>
-					<div slot="render" slot-scope="{ data }">
+					<template #render="{ data }">
 						<ResultCardsWrapper>
 							<ResultCard
 								v-bind:key="result._id"
@@ -37,18 +36,24 @@
 								</ResultCardDescription>
 							</ResultCard>
 						</ResultCardsWrapper>
-					</div>
-				</ReactiveList>
+					</template>
+				</reactive-list>
 			</div>
-		</ReactiveBase>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
+import { ReactiveBase, ReactiveList, ResultCard  } from '@appbaseio/reactivesearch-vue'
 import './styles.css';
 
 export default {
 	name: 'app',
+	components: {
+		ReactiveBase,
+		ReactiveList,
+		ResultCard
+	},
 };
 </script>
 

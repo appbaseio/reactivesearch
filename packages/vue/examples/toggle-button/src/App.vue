@@ -1,13 +1,12 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="meetup_dataset"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
 			<div class="row">
 				<div class="col">
-					<ToggleButton
+					<toggle-button
 						componentId="CitySensor"
 						dataField="group.group_topics.topic_name_raw.keyword"
 						:data="[
@@ -18,8 +17,8 @@
 					/>
 				</div>
 				<div class="col">
-					<SelectedFilters componentId="CitySensor" />
-					<ReactiveList
+					<selected-filters componentId="CitySensor" />
+					<reactive-list
 						componentId="SearchResult"
 						dataField="group.group_topics.topic_name_raw.keyword"
 						title="Results"
@@ -35,7 +34,7 @@
 						}"
 						:pagination="true"
 					>
-						<div slot="render" slot-scope="{ data }">
+						<template #render="{ data }">
 							<ResultListWrapper>
 								<ResultList
 									v-bind:key="result._id"
@@ -55,19 +54,27 @@
 									</ResultListContent>
 								</ResultList>
 							</ResultListWrapper>
-						</div>
-					</ReactiveList>
+						</template>
+					</reactive-list>
 				</div>
 			</div>
-		</ReactiveBase>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import { ReactiveBase, ReactiveList, ToggleButton, SelectedFilters, ResultList  } from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components: {
+		ReactiveBase,
+		ReactiveList,
+		ToggleButton,
+		SelectedFilters,
+		ResultList
+	},
 };
 </script>
 

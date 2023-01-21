@@ -1,13 +1,12 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
 			<div class="row">
 				<div class="col">
-					<MultiRange
+					<multi-range
 						componentId="BookSensor"
 						dataField="average_rating"
 						:data="[
@@ -18,8 +17,8 @@
 					/>
 				</div>
 				<div class="col">
-					<SelectedFilters />
-					<ReactiveList
+					<selected-filters />
+					<reactive-list
 						componentId="SearchResult"
 						dataField="original_title.keyword"
 						className="result-list-container"
@@ -28,16 +27,15 @@
 						:size="5"
 						:react="{ and: ['BookSensor'] }"
 					>
-						<div slot="renderItem" slot-scope="{ item }">
-							<div class="flex book-content" key="item._id">
+						<template #renderItem="{ item }">
+							<div :id="item._id" class="flex book-content" :key="item._id">
 								<img :src="item.image" alt="Book Cover" class="book-image" />
 								<div class="flex column justify-center ml20">
 									<div class="book-header">{{ item.original_title }}</div>
 									<div class="flex column justify-space-between">
 										<div>
 											<div>
-												by
-												<span class="authors-list">{{ item.authors }}</span>
+												by <span class="authors-list">{{ item.authors }}</span>
 											</div>
 											<div class="ratings-list flex align-center">
 												<span class="stars">
@@ -60,19 +58,26 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</ReactiveList>
+						</template>
+					</reactive-list>
 				</div>
 			</div>
-		</ReactiveBase>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import {MultiRange, SelectedFilters, ReactiveList, ReactiveBase} from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components:{
+		MultiRange,
+		SelectedFilters,
+		ReactiveList,
+		ReactiveBase
+	}
 };
 </script>
 

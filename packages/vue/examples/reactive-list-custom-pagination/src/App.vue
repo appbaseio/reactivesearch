@@ -1,11 +1,10 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
-			<ReactiveList
+			<reactive-list
 				componentId="SearchResult"
 				data-field="original_title.keyword"
 				class="result-list-container"
@@ -18,7 +17,7 @@
 					pagination: 'rs-pagination'
 				}"
 			>
-				<div slot="render" slot-scope="{ loading, error, data, resultStats, setPage }">
+				<template #render="{ loading, error, data, resultStats, setPage }">
 					<div v-if="loading">Fetching Results.</div>
 					<div v-if="Boolean(error)">Something went wrong! Error details {JSON.stringify(error)}</div>
 					<div v-bind:key="item._id" v-for="item in data">
@@ -60,21 +59,20 @@
 							:container-class="'pagination'"
 						></paginate>
 					</div>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
+import { ReactiveBase, ReactiveList, SearchBox } from '@appbaseio/reactivesearch-vue';
 import Paginate from 'vuejs-paginate';
 import './styles.css';
 
 export default {
 	name: 'app',
-	components: {
-		Paginate,
-	},
+	components: { ReactiveBase, ReactiveList, SearchBox, Paginate },
 };
 </script>
 

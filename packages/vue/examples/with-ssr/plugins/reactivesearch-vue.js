@@ -5,11 +5,9 @@ import {
 	ReactiveGoogleMap,
 	SelectedFilters,
 	SingleList,
-	DataSearch,
 } from '@appbaseio/reactivesearch-vue';
 
 Vue.use(ReactiveBase);
-Vue.use(DataSearch);
 Vue.use(SingleList);
 Vue.use(SelectedFilters);
 Vue.use(ReactiveGoogleMap, {
