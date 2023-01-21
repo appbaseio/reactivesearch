@@ -533,7 +533,6 @@ const TreeList = {
 				{props.title && (
 					<Title class={getClassName(innerClass, 'title') || null}>{title}</Title>
 				)}
-				hey
 				{this.renderSearch()}
 				{this.hasCustomRenderer ? (
 					this.getComponent()
