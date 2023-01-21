@@ -104,14 +104,11 @@
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/77c45d960aa662a296b865a273b3ca479ffcdabe"
   dependencies:
-    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/designkit" "^0.11.0"
     "@appbaseio/reactivemaps" "^3.0.0-beta.17"
     "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
-    "@typeform/embed" "^1.34.1"
-    "@typeform/embed-react" "^1.13.0"
-    add "^2.0.6"
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
@@ -139,15 +136,13 @@
     gatsby-remark-external-links "0.0.4"
     gatsby-remark-images "6.9.0"
     gatsby-remark-prismjs "6.9.0"
-    gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
     gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
-    hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    moment "^2.29.2"
+    moment "^2.24.0"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -157,14 +152,13 @@
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
-    react-router-dom "^4.3.1"
+    react-router-dom "4.3.1"
     tocbot "4.5.0"
-    yarn "^1.22.18"
 
-"@appbaseio/reactivecore@9.14.35":
-  version "9.14.35"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.35.tgz#111fa296686b70b9c57e1357672078391756c2e5"
-  integrity sha512-xysDGrZ3Sl/Tfs35z7sDlttvKbloJu/OhaqFrjC8dmQ2vxJMQ4CmxuUV8uKzXnsndb628f1AB09BFwkvQKXCvg==
+"@appbaseio/reactivecore@9.14.36":
+  version "9.14.36"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.36.tgz#a4e6b77a7215d20264ad724bcdcfe31a1bb0d33c"
+  integrity sha512-Q9PQ8wUWZi54pBCfAQPf1P/leq5d5j4nTMSSpbADS7XzUoeIRbagYxN13drQaPSyJAMmOinCOc/g/NMjy6dgHg==
   dependencies:
     cross-fetch "^3.0.4"
     prop-types "^15.6.0"
@@ -32625,12 +32619,27 @@ react-router-dom@^4.2.2, react-router-dom@^4.3.1:
     react-router "^4.3.1"
     warning "^4.0.1"
 
+react-router-dom@^6.0.0:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.6.2.tgz#bbf1f9b45855b218d22fc2d294b79408a084740a"
+  integrity sha512-6SCDXxRQqW5af8ImOqKza7icmQ47/EMbz572uFjzvcArg3lZ+04PxSPp8qGs+p2Y+q+b+S/AjXv8m8dyLndIIA==
+  dependencies:
+    "@remix-run/router" "1.2.1"
+    react-router "6.6.2"
+
 react-router-hash-link@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-router-hash-link/-/react-router-hash-link-1.2.2.tgz#7a0ad5e925d49596d19554de8bc6c554ce4f8099"
   integrity sha512-LBthLVHdqPeKDVt3+cFRhy15Z7veikOvdKRZRfyBR2vjqIE7rxn+tKLjb6DOmLm6JpoQVemVDnxQ35RVnEHdQA==
   dependencies:
     prop-types "^15.6.0"
+
+react-router@6.6.2, react-router@^6.0.1:
+  version "6.6.2"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.6.2.tgz#556f7b56cff7fe32c5c02429fef3fcb2ecd08111"
+  integrity sha512-uJPG55Pek3orClbURDvfljhqFvMgJRo59Pktywkk8hUUkTY2aRfza8Yhl/vZQXs+TNQyr6tu+uqz/fLxPICOGQ==
+  dependencies:
+    "@remix-run/router" "1.2.1"
 
 react-router@^4.3.1:
   version "4.3.1"
@@ -32644,13 +32653,6 @@ react-router@^4.3.1:
     path-to-regexp "^1.7.0"
     prop-types "^15.6.1"
     warning "^4.0.1"
-
-react-router@^6.0.1:
-  version "6.6.2"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.6.2.tgz#556f7b56cff7fe32c5c02429fef3fcb2ecd08111"
-  integrity sha512-uJPG55Pek3orClbURDvfljhqFvMgJRo59Pktywkk8hUUkTY2aRfza8Yhl/vZQXs+TNQyr6tu+uqz/fLxPICOGQ==
-  dependencies:
-    "@remix-run/router" "1.2.1"
 
 react-scripts@3.0.1:
   version "3.0.1"

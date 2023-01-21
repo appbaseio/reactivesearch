@@ -38,12 +38,13 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@appbaseio/analytics": "^1.1.1",
-        "@appbaseio/reactivecore": "9.14.35",
+        "@appbaseio/reactivecore": "9.14.36",
         "@appbaseio/rheostat": "^1.0.0-alpha.2",
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
         "appbase-js": "^5.2.0",
         "cross-env": "^5.2.0",
+        "dayjs": "^1.11.7",
         "downshift": "^1.31.2",
         "echarts": "^5.3.3",
         "echarts-for-react": "^3.0.2",
@@ -55,7 +56,6 @@
         "react-day-picker": "^7.0.5",
         "react-redux": "^6.0.1",
         "url-search-params-polyfill": "^7.0.0",
-        "xdate": "^0.8.2",
         "xss": "^1.0.11"
     },
     "peerDependencies": {

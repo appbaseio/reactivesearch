@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <reactive-base
-      v-bind="components.settings"
+    <reactive-base 
+      v-bind="components.settings" 
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
-        <search-box v-bind="components.datasearch" />
+        <search-box v-bind="components.searchbox" />
       </nav>
       <client-only>
         <reactive-google-map
@@ -34,8 +34,7 @@
         </reactive-google-map>
       </client-only>
       <reactive-list v-bind="components.result">
-        <template
-          #render="{ data }">
+        <template #render="{ data }">
           <ResultCardsWrapper>
             <ResultCard
               v-for="result in data"
@@ -61,7 +60,7 @@
 </template>
 
 <script>
-import { initReactivesearch, DataSearch, ReactiveList } from '@appbaseio/reactivesearch-vue';
+import { initReactivesearch, SearchBox, ReactiveList } from '@appbaseio/reactivesearch-vue';
 import './styles/airbnb.css';
 
 const components = {
@@ -75,7 +74,7 @@ const components = {
 			},
 		},
 	},
-	datasearch: {
+	searchbox: {
 		componentId: 'SearchSensor',
 		dataField: ['name', 'name.search'],
 		autosuggest: false,
@@ -116,8 +115,8 @@ export default {
 			const store = await initReactivesearch(
 				[
 					{
-						...components.datasearch,
-						source: DataSearch,
+						...components.searchbox,
+						source: SearchBox,
 					},
 					{
 						...components.result,

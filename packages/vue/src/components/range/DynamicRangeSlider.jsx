@@ -70,6 +70,7 @@ const DynamicRangeSlider = {
 	},
 
 	created() {
+		this.$timestamp = new Date().getTime();
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 			this.$emit('query-change', ...args);
@@ -96,8 +97,8 @@ const DynamicRangeSlider = {
 		}
 		const { value } = this.$props;
 		if (this.destroyOnUnmount || components.indexOf(this.componentId) === -1) {
-			this.addComponent(this.componentId);
-			this.addComponent(this.internalRangeComponent);
+			this.addComponent(this.componentId, this.$timestamp);
+			this.addComponent(this.internalRangeComponent, this.$timestamp);
 			if (Array.isArray(this.selectedValue)) {
 				this.handleChange(this.selectedValue);
 			} else if (this.selectedValue) {
