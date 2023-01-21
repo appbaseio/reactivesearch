@@ -2,7 +2,7 @@ import { helper } from '@appbaseio/reactivecore';
 
 const { getAggsOrder } = helper;
 
-const extractQuery = props => {
+const extractQuery = (props) => {
 	const queryToBeReturned = {};
 	if (props.defaultQuery) {
 		const evaluateQuery = props.defaultQuery([], props);
@@ -45,3 +45,11 @@ export const getAggsQuery = (query, props) => {
 	}
 	return { ...clonedQuery, ...extractQuery(props) };
 };
+
+export const sanitizeObject = (obj) =>
+	JSON.parse(
+		JSON.stringify(obj, (key, value) =>
+			// eslint-disable-next-line eqeqeq
+			value === null || value == {} || value === false ? undefined : value,
+		),
+	);
