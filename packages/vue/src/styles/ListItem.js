@@ -95,6 +95,13 @@ const ListItem = styled('a')`
 			box-shadow: 0;
 		}
 	}
+
+	${(props) => {
+		if (props.isTreeListItem) {
+			return 'border-bottom: none; width:max-content; cursor:pointer;     padding: 5px 12px;';
+		}
+		return '';
+	}}
 `;
 
 export default ListItem;
