@@ -10,14 +10,16 @@
 							<button @click="() => setSearchState(savedState)">Replay Search</button>
 						</template>
 					</state-provider>
-					<multi-list
-						componentId="Authors"
-						dataField="authors.keyword"
-						className="multi-list-container"
-						:showCount="true"
-						:URLParams="true"
-					/>
-					<SingleRange
+					<div>
+						<multi-list
+							componentId="Authors"
+							dataField="authors.keyword"
+							className="multi-list-container"
+							:showCount="true"
+							:URLParams="true"
+						/>
+					</div>
+					<single-range
 						componentId="Ratings"
 						dataField="average_rating"
 						:data="[
@@ -49,7 +51,8 @@
 									<div class="flex column justify-space-between">
 										<div>
 											<div>
-												by <span class="authors-list">{{ item.authors }}</span>
+												by
+												<span class="authors-list">{{ item.authors }}</span>
 											</div>
 											<div class="ratings-list flex align-center">
 												<span class="stars">
@@ -81,10 +84,24 @@
 </template>
 
 <script>
+import {
+	StateProvider,
+	ReactiveBase,
+	ReactiveList,
+	SingleRange,
+	MultiList,
+} from '@appbaseio/reactivesearch-vue';
 import './styles.css';
 
 export default {
 	name: 'app',
+	components: {
+		ReactiveBase,
+		StateProvider,
+		ReactiveList,
+		SingleRange,
+		MultiList,
+	},
 	data() {
 		return {
 			savedState: {

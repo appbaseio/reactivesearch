@@ -3,7 +3,9 @@
 		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:reactivesearchAPIConfig="{recordAnalytics: true, suggestionAnalytics: true}"
+			:reactivesearchAPIConfig="{
+				recordAnalytics: true,
+			}"
 		>
 			<search-box
 				className="result-list-container"
@@ -15,7 +17,7 @@
 				:enableRecentSearches="true"
 				:enableDefaultSuggestions="false"
 			/>
-			<VisitStoreButton/>
+			<VisitStoreButton />
 			<reactive-list
 				componentId="SearchResult"
 				dataField="original_title.keyword"
@@ -73,10 +75,9 @@ export default {
 		VisitStoreButton,
 		ReactiveBase,
 		ReactiveList,
-		SearchBox
-	}
+		SearchBox,
+	},
 };
-
 </script>
 
 <style>

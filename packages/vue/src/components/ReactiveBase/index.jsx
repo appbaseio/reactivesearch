@@ -247,7 +247,7 @@ const ReactiveBase = {
 		},
 	},
 	render() {
-		const children = this.$slots.default();
+		const children = this.$slots.default;
 		const { style, className } = this.$props;
 		return (
 			<Provider store={this.store} analyticsRef={this.analyticsRef}>
@@ -259,7 +259,7 @@ const ReactiveBase = {
 					getSearchParams={this.getSearchParams}
 					setSearchParams={this.setSearchParams}
 				>
-					{children}
+					{children()}
 				</URLParamsProvider>
 			</Provider>
 		);
