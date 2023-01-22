@@ -30,6 +30,7 @@ import Container from '../../../styles/Container';
 import { connect, hasCustomRenderer } from '../../../utils/index';
 import types from '../../../utils/vueTypes';
 import Title from '../../../styles/Title';
+import Input from '../../../styles/Input';
 import { sanitizeObject } from '../utils';
 import HierarchicalMenuComponent from './HierarchicalMenuComponent.jsx';
 
@@ -72,7 +73,7 @@ const TreeList = {
 		style: types.style,
 		showRadio: types.bool,
 		showCheckbox: types.bool,
-		mode: VueTypes.oneOf(['single', 'multiple']),
+		mode: VueTypes.oneOf(['single', 'multiple']).def('multiple'),
 		showCount: types.bool,
 		showSearch: types.bool,
 		showIcon: types.bool,
@@ -101,16 +102,16 @@ const TreeList = {
 		onChange: types.func,
 		onValueChange: types.func,
 		beforeValueChange: types.func,
-		sortBy: types.sortByWithCount,
+		sortBy: types.sortByWithCount.def('count'),
 		onError: types.func,
-		showSwitcherIcon: types.bool,
+		showSwitcherIcon: types.bool.def(true),
 		renderError: types.title,
 		renderNoResults: types.func,
 		loader: types.title,
 		aggergationSize: types.number,
 		endpoint: types.endpoint,
-		queryFormat: types.queryFormatSearch,
-		size: types.number,
+		queryFormat: types.queryFormatSearch.def('or'),
+		size: types.number.def(100),
 		nestedField: types.string,
 		react: types.react,
 		transformData: types.func,
