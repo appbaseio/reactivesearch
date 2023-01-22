@@ -76,7 +76,7 @@ export const HierarchicalMenuListItem = styled('li')`
 	}
 	&.-expanded-item {
 		& > a {
-			& > .--switcher-icon {
+			& div > .--switcher-icon {
 				transform: rotate(90deg);
 			}
 		}
