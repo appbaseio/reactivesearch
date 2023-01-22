@@ -299,7 +299,7 @@ const TreeList = {
 			if (parentPath) {
 				path = `${parentPath}${TREELIST_VALUES_PATH_SEPARATOR}${key}`;
 			}
-			let newSelectedValues = { ...this.$data.selectedValues };
+			let newSelectedValues = { ...this.selectedValues };
 			if (this.$props.mode === 'single') {
 				newSelectedValues = {};
 				setDeep(newSelectedValues, path.split(TREELIST_VALUES_PATH_SEPARATOR), true, true);
