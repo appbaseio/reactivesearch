@@ -153,6 +153,7 @@ const HierarchicalMenuListItemComponent = {
 							{mode === 'multiple' && showCheckbox && (
 								<div>
 									<Checkbox
+										type="checkbox"
 										class={getClassName(innerClass, 'checkbox') || null}
 										checked={isSelected}
 										id={`${listItemLabel}-checkbox-${this.newParentPath}`}
