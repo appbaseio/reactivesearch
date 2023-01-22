@@ -4,6 +4,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import VueTypes from 'vue-types';
 import { HierarchicalMenuListItem } from '../../../styles/TreeList';
 import { Checkbox, Radio } from '../../../styles/FormControlList';
+import Flex from '../../../styles/Flex';
 
 // eslint-disable-next-line import/no-cycle
 import HierarchicalMenuComponent from './HierarchicalMenuComponent.jsx';
@@ -146,12 +147,12 @@ const HierarchicalMenuListItemComponent = {
 					{typeof renderItem === 'function' ? (
 						renderItem(listItemLabel, listItemCount, isSelected)
 					) : (
-						<div>
+						<Flex alignItems="center" gap="5px">
 							{!isLeafNode && renderSwitcherIcon(isSelected)}
 							{/* eslint-disable jsx-a11y/click-events-have-key-events */}
 							{/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */}
 							{mode === 'multiple' && showCheckbox && (
-								<div>
+								<Flex alignItems="center" gap="5px">
 									<Checkbox
 										type="checkbox"
 										class={getClassName(innerClass, 'checkbox') || null}
@@ -174,10 +175,10 @@ const HierarchicalMenuListItemComponent = {
 											e.stopPropagation();
 										}}
 									/>
-								</div>
+								</Flex>
 							)}
 							{mode === 'single' && showRadio && (
-								<div>
+								<Flex alignItems="center" gap="5px">
 									<Radio
 										checked={isSelected}
 										class={getClassName(innerClass, 'radio') || null}
@@ -185,6 +186,7 @@ const HierarchicalMenuListItemComponent = {
 										name={`${listItemLabel}-radio-${this.newParentPath}`}
 										show
 										readOnly
+										type="radio"
 									/>
 
 									<label
@@ -200,7 +202,7 @@ const HierarchicalMenuListItemComponent = {
 											e.stopPropagation();
 										}}
 									/>
-								</div>
+								</Flex>
 							)}{' '}
 							{/* eslint-enable jsx-a11y/click-events-have-key-events */}
 							{/* eslint-enable jsx-a11y/no-noninteractive-element-interactions */}
@@ -223,7 +225,7 @@ const HierarchicalMenuListItemComponent = {
 									</span>
 								)}
 							</div>
-						</div>
+						</Flex>
 					)}
 				</ListItem>
 				{isLeafNode === false && (
