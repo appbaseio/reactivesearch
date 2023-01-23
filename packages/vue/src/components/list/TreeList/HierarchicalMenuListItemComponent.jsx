@@ -80,7 +80,6 @@ const HierarchicalMenuListItemComponent = {
 			renderIcon,
 			showCount,
 			showSwitcherIcon,
-			switcherIcon,
 		} = this.$props;
 
 		if (!(listItem instanceof Object) || Object.keys(listItem).length === 0) {
@@ -94,9 +93,8 @@ const HierarchicalMenuListItemComponent = {
 			if (showSwitcherIcon === false) {
 				return null;
 			}
-			if (typeof switcherIcon === 'function') {
-				return switcherIcon(isExpandedProp);
-			}
+			const { switcherIcon } = this.$props;
+			if (switcherIcon) return switcherIcon(isExpandedProp);
 
 			return (
 				/* eslint-disable jsx-a11y/click-events-have-key-events
@@ -250,7 +248,7 @@ const HierarchicalMenuListItemComponent = {
 								renderIcon,
 								showCount,
 								showSwitcherIcon,
-								switcherIcon,
+								switcherIcon: this.$props.switcherIcon,
 							}}
 						/>
 					</div>

@@ -71,28 +71,16 @@ const TreeList = {
 		componentId: types.string.isRequired,
 		className: types.string,
 		style: types.style,
-		showRadio: {
-			type: types.bool,
-		},
+		showRadio: VueTypes.bool.def(false),
 		showCheckbox: types.bool.def(false),
 		mode: VueTypes.oneOf(['single', 'multiple']).def('multiple'),
-		showCount: {
-			type: types.bool,
-		},
-		showSearch: {
-			type: types.bool,
-		},
-		showIcon: {
-			type: types.bool,
-		},
+		showCount: VueTypes.bool.def(false),
+		showSearch: VueTypes.bool.def(false),
+		showIcon: VueTypes.bool.def(false),
 		icon: types.children,
-		showLeafIcon: {
-			type: types.bool,
-		},
+		showLeafIcon: VueTypes.bool.def(false),
 		leafIcon: types.children,
-		showLine: {
-			type: types.bool,
-		},
+		showLine: VueTypes.bool.def(false),
 		switcherIcon: types.func,
 		render: types.func,
 		renderItem: types.func,
@@ -172,18 +160,18 @@ const TreeList = {
 			this.updateQuery([]);
 		},
 		customQuery() {
-			const valueArray
-				= transformTreeListLocalStateIntoQueryComptaibleFormat(this.$data.selectedValues)
-				|| [];
+			const valueArray =
+				transformTreeListLocalStateIntoQueryComptaibleFormat(this.$data.selectedValues) ||
+				[];
 			this.updateQuery(valueArray);
 		},
 		sortBy() {
 			this.updateQueryOptions();
 		},
 		dataField() {
-			const valueArray
-				= transformTreeListLocalStateIntoQueryComptaibleFormat(this.$data.selectedValues)
-				|| [];
+			const valueArray =
+				transformTreeListLocalStateIntoQueryComptaibleFormat(this.$data.selectedValues) ||
+				[];
 			this.updateQueryOptions();
 			this.updateQuery(valueArray);
 		},
@@ -332,8 +320,8 @@ const TreeList = {
 			if (this.$props.value === undefined) {
 				this.setValue(newSelectedValues);
 			} else if (this.$props.onChange) {
-				const valueToSet
-					= transformTreeListLocalStateIntoQueryComptaibleFormat(newSelectedValues);
+				const valueToSet =
+					transformTreeListLocalStateIntoQueryComptaibleFormat(newSelectedValues);
 
 				this.$props.onChange(valueToSet);
 			}
@@ -349,11 +337,11 @@ const TreeList = {
 				if (parentPath) {
 					newParentPath = `${parentPath}.${ele.key}`;
 				}
-				const keyHasSearchTerm
-					= replaceDiacritics(ele.key)
+				const keyHasSearchTerm =
+					replaceDiacritics(ele.key)
 						.toLowerCase()
-						.includes(replaceDiacritics(this.$data.searchTerm).toLowerCase())
-					|| recLookup(
+						.includes(replaceDiacritics(this.$data.searchTerm).toLowerCase()) ||
+					recLookup(
 						this.$data.selectedValues,
 						newParentPath,
 						TREELIST_VALUES_PATH_SEPARATOR,
@@ -458,8 +446,8 @@ const TreeList = {
 			});
 		},
 		setValue(value, hasMountedParam = true) {
-			const finalValues
-				= Array.isArray(value) === false
+			const finalValues =
+				Array.isArray(value) === false
 					? transformTreeListLocalStateIntoQueryComptaibleFormat(value)
 					: value;
 			const performUpdate = () => {
@@ -566,7 +554,7 @@ const TreeList = {
 							renderIcon: this.renderIcon,
 							showCount,
 							showSwitcherIcon,
-							switcherIcon,
+							switcherIcon: switcherIcon ?? this.$slots.switcherIcon,
 						}}
 					/>
 				)}
@@ -577,9 +565,9 @@ const TreeList = {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	rawData: state.rawData[props.componentId] || {},
 	aggregationData:
 		props.nestedField && state.aggregations[props.componentId]
