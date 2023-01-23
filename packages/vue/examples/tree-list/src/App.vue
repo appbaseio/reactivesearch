@@ -7,10 +7,9 @@
 		>
 			<TreeList
 				componentId="TreeListComponent"
-				mode="multiple"
+				mode="single"
 				:URLParams="true"
 				:dataField="['class.keyword', 'subclass.keyword']"
-				:showCount="true"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
@@ -20,6 +19,7 @@
 				:from="0"
 				:size="5"
 				:react="{ and: ['TreeListComponent'] }"
+				:includeFields="['*']"
 			>
 				<template #renderItem="{ item: data }">
 					<div className="flex book-content" :key="data._id">
