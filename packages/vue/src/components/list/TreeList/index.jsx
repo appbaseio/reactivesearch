@@ -71,10 +71,14 @@ const TreeList = {
 		componentId: types.string.isRequired,
 		className: types.string,
 		style: types.style,
-		showRadio: types.bool.def(false),
+		showRadio: {
+			type: types.bool,
+		},
 		showCheckbox: types.bool.def(false),
 		mode: VueTypes.oneOf(['single', 'multiple']).def('multiple'),
-		showCount: types.bool,
+		showCount: {
+			type: types.bool,
+		},
 		showSearch: {
 			type: types.bool,
 		},
@@ -86,7 +90,9 @@ const TreeList = {
 			type: types.bool,
 		},
 		leafIcon: types.children,
-		showLine: types.bool,
+		showLine: {
+			type: types.bool,
+		},
 		switcherIcon: types.func,
 		render: types.func,
 		renderItem: types.func,
@@ -282,7 +288,6 @@ const TreeList = {
 		},
 		renderSearch() {
 			const { showSearch, innerClass, placeholder, componentId, themePreset } = this.$props;
-			console.log('showSearch', showSearch);
 			if (showSearch) {
 				return (
 					<Input
