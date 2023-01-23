@@ -9,7 +9,7 @@ import {
 	hasCustomRenderer,
 	getComponent,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import { string } from 'prop-types';
+import { object, string } from 'prop-types';
 import {
 	addComponent,
 	removeComponent,
@@ -131,7 +131,7 @@ class ComponentWrapper extends React.Component {
 
 	render() {
 		if (this.hasCustomRenderer) {
-			return getComponent({}, this.props);
+			return getComponent(this.props.componentProps, this.props);
 		}
 		return null;
 	}
@@ -156,6 +156,7 @@ ComponentWrapper.propTypes = {
 	react: types.react,
 	render: types.func,
 	setReact: types.bool,
+	componentProps: object, // eslint-disable-line
 	// props to test the components
 	mockData: types.any, // eslint-disable-line
 	mode: string,
@@ -165,6 +166,10 @@ ComponentWrapper.defaultProps = {
 	setReact: true,
 	destroyOnUnmount: true,
 };
+
+const mapStateToProps = (state, ownProps) => ({
+	componentProps: state.props[ownProps.componentId],
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	setTestData: (component, data) => dispatch(mockDataForTesting(component, data)),
@@ -180,4 +185,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
 
-export default connect(null, mapDispatchToProps)(ComponentWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(ComponentWrapper);
