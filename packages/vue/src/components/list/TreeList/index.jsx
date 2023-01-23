@@ -71,14 +71,20 @@ const TreeList = {
 		componentId: types.string.isRequired,
 		className: types.string,
 		style: types.style,
-		showRadio: types.bool,
-		showCheckbox: types.bool,
+		showRadio: types.bool.def(false),
+		showCheckbox: types.bool.def(false),
 		mode: VueTypes.oneOf(['single', 'multiple']).def('multiple'),
 		showCount: types.bool,
-		showSearch: types.bool,
-		showIcon: types.bool,
+		showSearch: {
+			type: types.bool,
+		},
+		showIcon: {
+			type: types.bool,
+		},
 		icon: types.children,
-		showLeafIcon: types.bool,
+		showLeafIcon: {
+			type: types.bool,
+		},
 		leafIcon: types.children,
 		showLine: types.bool,
 		switcherIcon: types.func,
@@ -146,7 +152,6 @@ const TreeList = {
 
 		this.updateQueryOptions();
 	},
-	beforeMount() {},
 	mounted() {
 		const { enableAppbase, index } = this.$props;
 		if (!enableAppbase && index) {
@@ -213,14 +218,13 @@ const TreeList = {
 	},
 	methods: {
 		renderIcon(isLeafNode) {
-			const { showIcon, showLeafIcon, icon, leafIcon } = this.$props;
+			const { showIcon, showLeafIcon, icon } = this.$props;
 
 			if (isLeafNode) {
 				if (!showLeafIcon) return null;
 
-				if (leafIcon) {
-					return leafIcon;
-				}
+				const { leafIcon } = this.$slots || this.$props;
+				if (leafIcon) return leafIcon();
 
 				return (
 					<span role="img" aria-label="file" class="--leaf-icon">
@@ -278,6 +282,7 @@ const TreeList = {
 		},
 		renderSearch() {
 			const { showSearch, innerClass, placeholder, componentId, themePreset } = this.$props;
+			console.log('showSearch', showSearch);
 			if (showSearch) {
 				return (
 					<Input
