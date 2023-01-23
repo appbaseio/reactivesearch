@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 
-
 import React, { Component } from 'react';
 import dayjs from 'dayjs';
 import {
