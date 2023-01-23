@@ -142,7 +142,7 @@ const HierarchicalMenuListItemComponent = {
 					}}
 					style={{ textDecoration: 'none' }}
 				>
-					{typeof renderItem === 'function' ? (
+					{renderItem ? (
 						renderItem(listItemLabel, listItemCount, isSelected)
 					) : (
 						<Flex alignItems="center" gap="5px">

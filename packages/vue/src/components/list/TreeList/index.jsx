@@ -546,7 +546,7 @@ const TreeList = {
 							selectedValues: this.selectedValues,
 							searchTerm,
 							showLine,
-							renderItem,
+							renderItem: renderItem ?? this.$slots.renderItem,
 							handleListItemClick: this.handleListItemClick,
 							showCheckbox,
 							innerClass,
