@@ -51,8 +51,7 @@
 									<div class="flex column justify-space-between">
 										<div>
 											<div>
-												by
-												<span class="authors-list">{{ item.authors }}</span>
+												by <span class="authors-list">{{ item.authors }}</span>
 											</div>
 											<div class="ratings-list flex align-center">
 												<span class="stars">
