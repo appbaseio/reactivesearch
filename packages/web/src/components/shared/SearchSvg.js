@@ -1,4 +1,4 @@
-import { style } from '@appbaseio/reactivecore/lib/utils/types';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 import React from 'react';
 
 const SearchSvg = (props = {}) => (
@@ -26,7 +26,7 @@ const SearchSvg = (props = {}) => (
 	</svg>
 );
 SearchSvg.propTypes = {
-	style,
+	style: types.style,
 };
 
 export default SearchSvg;

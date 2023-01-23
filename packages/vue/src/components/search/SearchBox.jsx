@@ -158,7 +158,6 @@ const SearchBox = defineComponent({
 		showFilter: VueTypes.bool.def(true),
 		showIcon: VueTypes.bool.def(true),
 		title: types.title,
-		theme: types.style,
 		URLParams: VueTypes.bool.def(false),
 		strictSelection: VueTypes.bool.def(false),
 		nestedField: types.string,
@@ -733,7 +732,7 @@ const SearchBox = defineComponent({
 			return null;
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
-			const { theme, innerClass } = this.$props;
+			const { innerClass } = this.$props;
 			const renderNoSuggestion
 				= this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
 			const renderError = this.$slots.renderError || this.$props.renderError;
@@ -750,7 +749,7 @@ const SearchBox = defineComponent({
 					<SuggestionWrapper
 						innerClass={innerClass}
 						themePreset={this.themePreset}
-						theme={theme}
+						theme={this.theme}
 						innerClassName="noSuggestion"
 					>
 						{{
@@ -982,7 +981,7 @@ const SearchBox = defineComponent({
 		},
 	},
 	render() {
-		const { theme, expandSuggestionsContainer } = this.$props;
+		const { expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		const hasSuggestions
 			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
@@ -1037,7 +1036,7 @@ const SearchBox = defineComponent({
 												<ul
 													class={`${suggestions(
 														this.themePreset,
-														theme,
+														this.theme,
 													)} ${getClassName(
 														this.$props.innerClass,
 														'list',

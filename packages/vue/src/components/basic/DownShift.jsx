@@ -8,7 +8,7 @@ export default {
 		'selectedItem',
 		'highlightedIndex',
 		'handleChange',
-		'itemToString',
+		// 'itemToString',
 		'handleMouseup',
 	],
 	data: () => ({

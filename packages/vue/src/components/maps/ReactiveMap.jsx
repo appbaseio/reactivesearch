@@ -577,7 +577,7 @@ const ReactiveMap = {
 				};
 
 				if (this.$defaultQuery) {
-					const { query } = this.$defaultQuery;
+					const { query } = this.$defaultQuery || {};
 
 					if (query) {
 						// adds defaultQuery's query to geo-query
@@ -745,7 +745,7 @@ const ReactiveMap = {
 		}
 		this.$defaultQuery = null;
 		if (this.$props.defaultQuery) {
-			this.$defaultQuery = this.$props.defaultQuery();
+			this.$defaultQuery = this.$props.defaultQuery() || {};
 			options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 
 			// Override sort query with defaultQuery's sort if defined

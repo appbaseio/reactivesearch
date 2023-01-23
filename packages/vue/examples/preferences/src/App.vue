@@ -60,12 +60,14 @@
 </template>
 <script>
 import './styles.css';
-import {SearchBox, ReactiveBase, ReactiveList} from '@appbaseio/reactivesearch-vue'
+import { SearchBox, ReactiveBase, ReactiveList } from '@appbaseio/reactivesearch-vue';
 
 export default {
 	name: 'app',
-	components:{
-		SearchBox, ReactiveBase, ReactiveList
+	components: {
+		SearchBox,
+		ReactiveBase,
+		ReactiveList,
 	},
 	computed: {
 		preferences() {

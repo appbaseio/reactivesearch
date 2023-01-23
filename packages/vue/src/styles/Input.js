@@ -135,7 +135,7 @@ const suggestions = (themePreset, theme) => css`
 
 		& > .trim {
 			display: -webkit-box;
-			display: block;
+			display: flex;
 			width: 100%;
 			max-height: 2.3rem;
 			line-height: 1.2rem;
