@@ -1,6 +1,12 @@
 import ReactDOM from 'react-dom/client';
 
-import { ReactiveBase, RangeInput, ResultList, ReactiveList } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	RangeInput,
+	ResultList,
+	ReactiveList,
+	SelectedFilters,
+} from '@appbaseio/reactivesearch';
 
 import './index.css';
 
@@ -28,6 +34,7 @@ const Main = () => (
 			</div>
 
 			<div className="col">
+				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"

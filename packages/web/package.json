@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "3.43.7-alpha.3",
+	"version": "3.43.6",
 	"description": "A React UI components library for building search experiences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -20,6 +20,7 @@
 		"build:umd": "cross-env BABEL_ENV=commonjs webpack --progress -p --config webpack.config.umd.js",
 		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
 		"version-upgrade": "nps upgrade -c ../../package-scripts.js",
+		"postpublish": "yarn run version-upgrade",
 		"prepublishOnly": "yarn run build",
 		"test": "jest",
 		"clear-cache-test": "jest --clearCache",
