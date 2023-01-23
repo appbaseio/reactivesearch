@@ -5,7 +5,7 @@
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
-        <search-box v-bind="components.datasearch" />
+        <search-box v-bind="components.SearchBox" />
       </nav>
       <client-only>
         <reactive-google-map
@@ -61,81 +61,81 @@
 </template>
 
 <script>
-import { initReactivesearch, DataSearch, ReactiveList } from '@appbaseio/reactivesearch-vue';
-import './styles/airbnb.css';
+import { initReactivesearch, SearchBox, ReactiveList } from '@appbaseio/reactivesearch-vue';
+import '../styles/airbnb.css';
 
 const components = {
-	settings: {
-		app: 'airbnb-dev',
-		url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
-		enableAppbase: true,
-		theme: {
-			colors: {
-				primaryColor: '#FF3A4E',
-			},
-		},
-	},
-	datasearch: {
-		componentId: 'SearchSensor',
-		dataField: ['name', 'name.search'],
-		autosuggest: false,
-		placeholder: 'Search by house names',
-		iconPosition: 'left',
-		className: 'search',
-		highlight: true,
-		URLParams: true,
-	},
-	result: {
-		className: 'right-col',
-		componentId: 'SearchResult',
-		dataField: 'name',
-		size: 12,
-		pagination: true,
-		URLParams: true,
-		react: {
-			and: ['SearchSensor'],
-		},
-		innerClass: {
-			resultStats: 'result-stats',
-			list: 'list',
-			listItem: 'list-item',
-			image: 'image',
-		},
-	},
+	  settings: {
+		  app: 'airbnb-dev',
+		  url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
+		  enableAppbase: true,
+		  theme: {
+			  colors: {
+				  primaryColor: '#FF3A4E',
+			  },
+		  },
+	  },
+	  SearchBox: {
+		  componentId: 'SearchSensor',
+		  dataField: ['name', 'name.search'],
+		  autosuggest: false,
+		  placeholder: 'Search by house names',
+		  iconPosition: 'left',
+		  className: 'search',
+		  highlight: true,
+		  URLParams: true,
+	  },
+	  result: {
+		  className: 'right-col',
+		  componentId: 'SearchResult',
+		  dataField: 'name',
+		  size: 12,
+		  pagination: true,
+		  URLParams: true,
+		  react: {
+			  and: ['SearchSensor'],
+		  },
+		  innerClass: {
+			  resultStats: 'result-stats',
+			  list: 'list',
+			  listItem: 'list-item',
+			  image: 'image',
+		  },
+	  },
 };
 
 export default {
-	name: 'App',
-	data() {
-		return {
-			components,
-		};
-	},
-	async asyncData({ query }) {
-		try {
-			const store = await initReactivesearch(
-				[
-					{
-						...components.datasearch,
-						source: DataSearch,
-					},
-					{
-						...components.result,
-						source: ReactiveList,
-					},
-				],
-				query,
-				components.settings,
-			);
-			return {
-				store,
-			};
-		} catch (error) {
-			return {
-				store: null,
-				error,
-			};
-		}
-	},
+	  name: 'App',
+	  data() {
+		  return {
+			  components,
+		  };
+	  },
+	  async asyncData({ query }) {
+		  try {
+			  const store = await initReactivesearch(
+				  [
+					  {
+						  ...components.SearchBox,
+						  source: SearchBox,
+					  },
+					  {
+						  ...components.result,
+						  source: ReactiveList,
+					  },
+				  ],
+				  query,
+				  components.settings,
+			  );
+			  return {
+				  store,
+			  };
+		  } catch (error) {
+			  return {
+				  store: null,
+				  error,
+			  };
+		  }
+	  },
 };
 </script>
