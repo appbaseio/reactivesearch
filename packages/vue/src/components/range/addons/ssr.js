@@ -7,14 +7,14 @@ import NoSSR from '../../basic/NoSSR.jsx';
 // eslint-disable-next-line
 export const getComponents = () => {
 	const components = { NoSSR };
-	if (process.browser) {
-		try {
+	try {
+		if (typeof window !== 'undefined') {
 			// in older versions of nuxt, it's process.BROWSER_BUILD
 			// eslint-disable-next-line
 			components['vue-slider-component'] = require('vue-slider-component');
-		} catch (e) {
-			console.error('Unable to load vue-slider', e);
 		}
+	} catch (e) {
+		console.error('Unable to load vue-slider', e);
 	}
 	return components;
 };
