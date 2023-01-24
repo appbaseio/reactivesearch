@@ -114,7 +114,7 @@ class DateRange extends Component {
 			}
 		}
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () =>
 			this.updateQuery(
 				this.state.currentDate
 					? {

@@ -90,7 +90,7 @@ class ReactiveChart extends React.Component {
 				options: this.transformOptions(this.props.options, this.props),
 			});
 		}
-		checkSomePropChange(this.props, prevProps, ['dataField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'aggregationSize'], () => {
 			this.updateDefaultQuery();
 			this.updateQuery(this.state.currentValue, this.props);
 		});

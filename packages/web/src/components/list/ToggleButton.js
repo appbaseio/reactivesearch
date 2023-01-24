@@ -56,7 +56,7 @@ class ToggleButton extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 

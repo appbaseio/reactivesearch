@@ -54,7 +54,7 @@ class DatePicker extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				this.props,
