@@ -340,6 +340,7 @@ class ReactiveChart extends React.Component {
 					contextmenu: onContextMenu,
 					datazoom: this.handleRange,
 				}}
+				notMerge
 			/>
 		);
 	}
