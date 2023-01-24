@@ -125,7 +125,7 @@ class SingleList extends Component {
 			this.updateQueryOptions(this.props),
 		);
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQueryOptions(this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		});
