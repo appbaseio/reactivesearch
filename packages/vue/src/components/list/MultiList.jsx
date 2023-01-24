@@ -642,11 +642,14 @@ export const ListConnected = PreferencesConsumer(
 	}),
 );
 ListConnected.name = MultiList.name;
+ListConnected.defaultQuery = MultiList.defaultQuery;
+ListConnected.generateQueryOptions = MultiList.generateQueryOptions;
+ListConnected.hasInternalComponent = MultiList.hasInternalComponent;
+// Add componentType for SSR
+ListConnected.componentType = componentTypes.multiList;
+
 ListConnected.install = function (Vue) {
 	Vue.component(ListConnected.name, ListConnected);
 };
-
-// Add componentType for SSR
-ListConnected.componentType = componentTypes.multiList;
 
 export default ListConnected;
