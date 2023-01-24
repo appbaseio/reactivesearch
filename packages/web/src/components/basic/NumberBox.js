@@ -289,7 +289,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.numberBox}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

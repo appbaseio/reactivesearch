@@ -487,7 +487,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 							internalComponent={!!props.defaultQuery}
 							componentType={componentTypes.reactiveComponent}
 						>
-							{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+							{
+								componentProps =>
+									(<ConnectedComponent
+										{...preferenceProps}
+										{...componentProps}
+										myForwardedRef={ref}
+									/>)
+							}
 						</ComponentWrapper>
 					);
 			}

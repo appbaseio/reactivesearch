@@ -805,7 +805,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.multiList}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
