@@ -39,7 +39,7 @@
     "dependencies": {
         "@appbaseio/analytics": "^1.1.1",
         "@appbaseio/reactivecore": "9.14.36",
-        "@appbaseio/rheostat": "^1.0.0-alpha.2",
+        "@appbaseio/rheostat": "^1.0.0-alpha.15",
         "@emotion/core": "^10.0.28",
         "@emotion/styled": "^10.0.27",
         "appbase-js": "^5.2.0",
