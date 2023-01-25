@@ -11,7 +11,7 @@
 		"react-scripts": "5.0.1",
 		"antd": "^4.18.4",
 		"web-vitals": "^2.1.4",
-		"@appbaseio/reactivesearch": "3.43.6"
+		"@appbaseio/reactivesearch": "3.43.7"
 	},
 	"scripts": {
 		"start": "react-scripts start",
