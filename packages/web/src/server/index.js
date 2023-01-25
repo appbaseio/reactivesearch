@@ -1,5 +1,5 @@
 import Appbase from 'appbase-js';
-
+import { renderToStaticMarkup } from 'react-dom/server';
 import valueReducer from '@appbaseio/reactivecore/lib/reducers/valueReducer';
 import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
@@ -22,6 +22,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
 import { X_SEARCH_CLIENT } from '../utils';
+import getServerResults from '@appbaseio/reactivecore/src/utils/server';
 
 const componentsWithInternalComponent = {
 	// search components
@@ -531,3 +532,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 		}
 	});
 }
+
+export const getServerState = (App, queryString) => {
+	const renderFunction = renderToStaticMarkup;
+	return getServerResults()(App, queryString, renderFunction);
+};
