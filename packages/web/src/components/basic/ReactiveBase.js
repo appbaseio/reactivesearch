@@ -221,6 +221,7 @@ class ReactiveBase extends Component {
 			console.log('🚀 ', this.props.initialState);
 		}
 		this.store = configureStore(initialState);
+
 		// server side rendered app to collect context
 		if (
 			typeof window === 'undefined'

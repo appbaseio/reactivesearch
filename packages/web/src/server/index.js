@@ -533,7 +533,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 	});
 }
 
-export const getServerState = (App, queryString) => {
+export function getServerState(App, queryString) {
 	const renderFunction = renderToStaticMarkup;
 	return getServerResults()(App, queryString, renderFunction);
-};
+}
