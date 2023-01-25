@@ -21,8 +21,8 @@ import {
 	componentToTypeMap,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
-import { X_SEARCH_CLIENT } from '../utils';
 import getServerResults from '@appbaseio/reactivecore/src/utils/server';
+import { X_SEARCH_CLIENT } from '../utils';
 
 const componentsWithInternalComponent = {
 	// search components
