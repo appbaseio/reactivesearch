@@ -245,7 +245,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				});
 			}
 
-			// [4] set query list
 			if (isResultComponent) {
 				const { query } = getQuery(component, value, componentType);
 				queryList = queryReducer(queryList, {
