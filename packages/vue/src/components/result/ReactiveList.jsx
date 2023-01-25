@@ -874,6 +874,9 @@ export const RLConnected = PreferencesConsumer(
 
 RLConnected.name = ReactiveList.name;
 
+RLConnected.generateQueryOptions = ReactiveList.generateQueryOptions;
+RLConnected.hasInternalComponent = ReactiveList.hasInternalComponent;
+
 RLConnected.install = function (Vue) {
 	Vue.component(RLConnected.name, RLConnected);
 	Vue.component(ResultListWrapper.name, ResultListWrapper);

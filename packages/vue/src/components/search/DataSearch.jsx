@@ -1618,6 +1618,11 @@ export const DSConnected = PreferencesConsumer(
 	}),
 );
 
+DSConnected.defaultQuery = DataSearch.defaultQuery;
+DSConnected.shouldQuery = DataSearch.shouldQuery;
+DSConnected.highlightQuery = DataSearch.highlightQuery;
+DSConnected.hasInternalComponent = DataSearch.hasInternalComponent;
+
 DSConnected.name = DataSearch.name;
 
 // plugins usage

@@ -474,13 +474,16 @@ export const RangeConnected = PreferencesConsumer(
 	connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider),
 );
 
-RangeConnected.name = DynamicRangeSlider.name;
+RangeConnected.defaultQuery = DynamicRangeSlider.defaultQuery;
+RangeConnected.parseValue = DynamicRangeSlider.parseValue;
+RangeConnected.hasInternalComponent = DynamicRangeSlider.hasInternalComponent;
 
-RangeConnected.install = function (Vue) {
-	Vue.component(RangeConnected.name, RangeConnected);
-};
+RangeConnected.name = DynamicRangeSlider.name;
 
 // Add componentType for SSR
 RangeConnected.componentType = componentTypes.dynamicRangeSlider;
 
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
+};
 export default RangeConnected;
