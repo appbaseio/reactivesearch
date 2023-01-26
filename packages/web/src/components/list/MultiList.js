@@ -17,7 +17,6 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
-	getOptionsFromQuery,
 	getAggsQuery,
 	getCompositeAggsQuery,
 	updateInternalQuery,

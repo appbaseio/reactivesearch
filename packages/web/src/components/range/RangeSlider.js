@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 
-
 import React, { Component } from 'react';
 import XDate from 'xdate';
 import {
@@ -40,7 +39,6 @@ import {
 	connect,
 	formatDateString,
 	getNumericRangeArray,
-	getRangeQueryWithNullValues,
 	getValueArrayWithinLimits,
 } from '../../utils';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
