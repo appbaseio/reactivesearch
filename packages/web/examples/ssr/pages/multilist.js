@@ -1,8 +1,7 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React from 'react';
 import { ReactiveBase, MultiList, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
-
-import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
+import PropTypes from 'prop-types';
+import { getServerState } from '@appbaseio/reactivesearch/lib/server';
 
 import Layout from '../components/Layout';
 import BookCard from '../components/BookCard';
@@ -18,6 +17,7 @@ const multiListProps = {
 	dataField: 'original_series.keyword',
 	defaultValue: ['In Death'],
 	size: 100,
+	URLParams: true,
 };
 
 const reactiveListProps = {
@@ -32,42 +32,36 @@ const reactiveListProps = {
 	},
 };
 
-export default class Main extends Component {
-	static async getInitialProps() {
-		return {
-			store: await initReactivesearch(
-				[
-					{
-						...multiListProps,
-						source: MultiList,
-					},
-					{
-						...reactiveListProps,
-						source: ReactiveList,
-					},
-				],
-				null,
-				settings,
-			),
-		};
-	}
+const Main = props => (
+	<Layout title="SSR | MultiList">
+		<ReactiveBase
+			{...settings}
+			{...(props.contextCollector ? { contextCollector: props.contextCollector } : {})}
+			initialState={props.initialState}
+		>
+			<div className="row">
+				<div className="col">
+					<MultiList {...multiListProps} />
+				</div>
 
-	render() {
-		return (
-			<Layout title="SSR | MultiList">
-				<ReactiveBase {...settings} initialState={this.props.store}>
-					<div className="row">
-						<div className="col">
-							<MultiList {...multiListProps} />
-						</div>
-
-						<div className="col">
-							<SelectedFilters />
-							<ReactiveList {...reactiveListProps} />
-						</div>
-					</div>
-				</ReactiveBase>
-			</Layout>
-		);
-	}
+				<div className="col">
+					<SelectedFilters />
+					<ReactiveList {...reactiveListProps} />
+				</div>
+			</div>
+		</ReactiveBase>
+	</Layout>
+);
+export async function getServerSideProps(context) {
+	const initialState = await getServerState(Main, context.resolvedUrl);
+	return {
+		props: { initialState },
+		// will be passed to the page component as props
+	};
 }
+Main.propTypes = {
+	// eslint-disable-next-line
+	initialState: PropTypes.object,
+	contextCollector: PropTypes.func,
+};
+export default Main;

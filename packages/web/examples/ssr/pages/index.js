@@ -76,7 +76,7 @@ const Main = (props) => {
 export async function getServerSideProps(context) {
 	const initialState = await getServerState(Main, context.resolvedUrl);
 	return {
-		props: { initialState, queryString: context.resolvedUrl },
+		props: { initialState },
 		// will be passed to the page component as props
 	};
 }

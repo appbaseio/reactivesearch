@@ -1,33 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
 	ReactiveBase,
-	DateRange,
 	SelectedFilters,
-	ResultCard,
 	ReactiveList,
+	ResultCard,
+	DateRange,
 } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
-import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
+import { getServerState } from '@appbaseio/reactivesearch/lib/server';
 import moment from 'moment';
 
 import Layout from '../components/Layout';
 
-const dateQuery = (value) => {
+const dateQuery = (value, props) => {
 	let query = null;
 	if (value) {
 		query = [
 			{
 				range: {
-					date_from: {
-						gte: moment(value.start).format('YYYYMMDD'),
-					},
-				},
-			},
-			{
-				range: {
-					date_to: {
-						lte: moment(value.end).format('YYYYMMDD'),
+					[props.dataField]: {
+						lte: moment(value).format('YYYYMMDD'),
 					},
 				},
 			},
@@ -40,92 +33,84 @@ const settings = {
 	app: 'airbeds-test-app',
 	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
 	enableAppbase: true,
-	type: 'listing',
 };
 
-const dateRangeProps = {
-	componentId: 'DateSensor',
-	dataField: 'date_from',
-	initialMonth: new Date('2017-05-05'),
-	customQuery: dateQuery,
-	defaultValue: {
-		start: '2017-05-05',
-		end: '2017-05-10',
-	},
-};
+// eslint-disable-next-line no-return-assign
+const Main = props => (
+	<Layout title="SSR | DateRange">
+		<ReactiveBase
+			{...settings}
+			{...(props.contextCollector ? { contextCollector: props.contextCollector } : {})}
+			initialState={props.initialState}
+		>
+			<div className="row">
+				<div className="col">
+					<DateRange
+						componentId="DateSensor"
+						dataField="date_from"
+						initialMonth={new Date('2017-05-05')}
+						customQuery={dateQuery}
+						defaultValue={{
+							start: '2017-05-05',
+							end: '2017-05-10',
+						}}
+					/>
+				</div>
 
-const resultCardProps = {
-	componentId: 'SearchResult',
-	dataField: 'name',
-	className: 'result-list-container',
-	from: 0,
-	size: 40,
-	render: ({ data }) => (
-		<ReactiveList.ResultCardsWrapper>
-			{data.map(item => (
-				<ResultCard href={item.listing_url} key={item._id}>
-					<ResultCard.Image src={item.image} />
-					<ResultCard.Title>{item.name}</ResultCard.Title>
-					<ResultCard.Description>
-						<div>
-							<div>${item.price}</div>
-							<span style={{ backgroundImage: `url(${item.host_image})` }} />
-							<p>
-								{item.room_type} · {item.accommodates} guests
-							</p>
-						</div>
-					</ResultCard.Description>
-				</ResultCard>
-			))}
-		</ReactiveList.ResultCardsWrapper>
-	),
-	react: {
-		and: ['DateSensor'],
-	},
-	showPagination: true,
-};
-
-export default class Main extends Component {
-	static async getInitialProps() {
-		return {
-			store: await initReactivesearch(
-				[
-					{
-						...dateRangeProps,
-						source: DateRange,
-					},
-					{
-						...resultCardProps,
-						source: ReactiveList,
-					},
-				],
-				null,
-				settings,
-			),
-		};
-	}
-
-	render() {
-		return (
-			<Layout title="SSR | DateRange">
-				<ReactiveBase {...settings} initialState={this.props.store}>
-					<div className="row">
-						<div className="col">
-							<DateRange {...dateRangeProps} />
-						</div>
-
-						<div className="col">
-							<SelectedFilters />
-							<ReactiveList {...resultCardProps} />
-						</div>
-					</div>
-				</ReactiveBase>
-			</Layout>
-		);
-	}
+				<div className="col">
+					<SelectedFilters />
+					<ReactiveList
+						componentId="SearchResult"
+						dataField="name"
+						className="result-list-container"
+						from={0}
+						size={40}
+						// eslint-disable-next-line react/jsx-no-bind, func-names
+						render={function ({ data }) {
+							return (
+								<ReactiveList.ResultCardsWrapper>
+									{data.map(item => (
+										<ResultCard href={item.listing_url} key={item._id}>
+											<ResultCard.Image src={item.image} />
+											<ResultCard.Title>{item.name}</ResultCard.Title>
+											<ResultCard.Description>
+												<div>
+													<div>${item.price}</div>
+													<span
+														style={{
+															backgroundImage: `url(${item.host_image})`,
+														}}
+													/>
+													<p>
+														{item.room_type} · {item.accommodates}{' '}
+														guests
+													</p>
+												</div>
+											</ResultCard.Description>
+										</ResultCard>
+									))}
+								</ReactiveList.ResultCardsWrapper>
+							);
+						}}
+						react={{ and: ['DateSensor'] }}
+						showPagination
+					/>
+				</div>
+			</div>
+		</ReactiveBase>
+	</Layout>
+);
+export async function getServerSideProps(context) {
+	const initialState = await getServerState(Main, context.resolvedUrl);
+	return {
+		props: { initialState },
+		// will be passed to the page component as props
+	};
 }
 
 Main.propTypes = {
 	// eslint-disable-next-line
-	store: PropTypes.object,
+	initialState: PropTypes.object,
+	contextCollector: PropTypes.func,
 };
+export default Main;
