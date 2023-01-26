@@ -1,6 +1,5 @@
-import ReactDOM from 'react-dom/client';
 import { hydrate } from 'react-dom';
-import React from 'react'
+import React from 'react';
 
 import App from '../common/App';
 import BookCard from '../common/BookCard';
@@ -47,7 +46,7 @@ const reactiveListProps = {
 	dataField: 'original_title',
 	from: 0,
 	size: 10,
-	renderItem: (data) => <BookCard key={data._id} data={data} />,
+	renderItem: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},

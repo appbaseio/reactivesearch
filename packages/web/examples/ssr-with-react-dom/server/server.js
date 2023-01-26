@@ -2,8 +2,7 @@ import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { renderStylesToString } from 'emotion-server';
-import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
-import { SingleRange, ReactiveList } from '@appbaseio/reactivesearch';
+import { getServerState } from '@appbaseio/reactivesearch/lib/server';
 
 import App from '../common/App';
 import BookCard from '../common/BookCard';
@@ -80,21 +79,29 @@ function renderFullPage(html, preloadedState) {
 
 async function handleRender(req, res) {
 	try {
-
+		// extracting query params
+		const queryParams = { ...req.query };
+		Object.keys((paramKey) => {
+			try {
+				if (JSON.parse(queryParams[paramKey])) {
+					queryParams[paramKey] = JSON.parse(queryParams[paramKey]);
+				}
+			} catch (error) {
+				// not JSON parsable, do nothing
+			}
+		});
 		// Create a new store instance and wait for results
-		const store = await initReactivesearch(
-			[
-				{
-					...singleRangeProps,
-					source: SingleRange,
-				},
-				{
-					...reactiveListProps,
-					source: ReactiveList,
-				},
-			],
-			null,
-			settings,
+		const store = await getServerState(
+			props => (
+				<App
+					settings={settings}
+					singleRangeProps={singleRangeProps}
+					reactiveListProps={reactiveListProps}
+					{...props}
+				/>
+			),
+
+			queryParams,
 		);
 		// Render the component to a string
 		// renderStylesToString is from emotion
@@ -115,8 +122,8 @@ async function handleRender(req, res) {
 		// Send the rendered page back to the client
 		res.send(renderFullPage(html, store));
 	} catch (err) {
-		console.error(err)
-		res.status(500).end()
+		console.error(err);
+		res.status(500).end();
 	}
 }
 

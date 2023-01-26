@@ -1,11 +1,16 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ReactiveBase, SingleRange, ReactiveList } from '@appbaseio/reactivesearch';
 
 const App = ({
-	settings, store, singleRangeProps, reactiveListProps,
+	settings, store, singleRangeProps, reactiveListProps, contextCollector,
 }) => (
-	<ReactiveBase {...settings} initialState={store}>
+	<ReactiveBase
+		{...settings}
+		initialState={store}
+		{...(contextCollector ? { contextCollector } : {})}
+	>
 		<div className="row">
 			<div className="col">
 				<SingleRange {...singleRangeProps} />
@@ -19,10 +24,11 @@ const App = ({
 );
 
 App.propTypes = {
-	settings: PropTypes.object, // eslint-disable-line
-	store: PropTypes.object, // eslint-disable-line
-	singleRangeProps: PropTypes.object, // eslint-disable-line
-	reactiveListProps: PropTypes.object, // eslint-disable-line
+	settings: PropTypes.object,
+	store: PropTypes.object,
+	singleRangeProps: PropTypes.object,
+	reactiveListProps: PropTypes.object,
+	contextCollector: PropTypes.func,
 };
 
 export default App;
