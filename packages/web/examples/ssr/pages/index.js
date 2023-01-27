@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { MultiList, ReactiveBase, ReactiveList, SelectedFilters } from '@appbaseio/reactivesearch';
+import {
+	MultiList,
+	ReactiveBase,
+	ReactiveList,
+	SearchBox,
+	SelectedFilters,
+} from '@appbaseio/reactivesearch';
 import { getServerState } from '@appbaseio/reactivesearch/lib/server';
 
 const Main = (props) => {
@@ -46,11 +52,20 @@ const Main = (props) => {
 		>
 			<div className="row">
 				<div className="col">
+					<SearchBox
+						componentId="SearchBox"
+						dataField="original_title"
+						URLParams
+						defaultValue="harry"
+					/>
 					<MultiList
 						componentId="BookSensor"
 						dataField="original_series.keyword"
 						aggregationSize={100}
 						URLParams
+						react={{
+							and: ['SearchBox'],
+						}}
 					/>
 				</div>
 
@@ -65,7 +80,7 @@ const Main = (props) => {
 						// eslint-disable-next-line react/jsx-no-bind
 						renderItem={booksReactiveList}
 						react={{
-							and: ['BookSensor'],
+							and: ['BookSensor', 'SearchBox'],
 						}}
 					/>
 				</div>
