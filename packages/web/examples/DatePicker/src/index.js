@@ -15,7 +15,7 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="clone-airbeds"
+				app="airbnb-dev"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 				type="listing"
 			>
@@ -24,7 +24,6 @@ class Main extends Component {
 						<DatePicker
 							componentId="DateSensor"
 							dataField="available_from"
-							customQuery={this.dateQuery}
 							initialMonth={new Date('2016-05-05')}
 							placeholder="Available From - YYYY-MM-DD"
 						/>
