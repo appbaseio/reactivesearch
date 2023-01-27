@@ -1,8 +1,13 @@
 import React from 'react';
 
 const SliderHandle = ({
-	// eslint-disable-next-line react/prop-types
-	className, style, tooltipTrigger, renderTooltipData, ...passProps
+	/* eslint-disable react/prop-types */
+	className,
+	style,
+	tooltipTrigger,
+	renderTooltipData,
+	...passProps
+	/* eslint-enable react/prop-types */
 }) => {
 	if (tooltipTrigger) {
 		let tooltipClassname = '';
@@ -19,7 +24,7 @@ const SliderHandle = ({
 			case 'none':
 			default:
 				return (
-					<button
+					<div
 						style={style}
 						aria-label="slider-button"
 						className={className}
@@ -29,14 +34,14 @@ const SliderHandle = ({
 		}
 		const tooltipContent = passProps['aria-valuenow'];
 		return (
-			<button style={style} className={className} aria-label="slider-button" {...passProps}>
+			<div style={style} className={className} aria-label="slider-button" {...passProps}>
 				<span className={tooltipClassname}>
 					{renderTooltipData ? renderTooltipData(tooltipContent) : tooltipContent}
 				</span>
-			</button>
+			</div>
 		);
 	}
-	return <button style={style} className={className} {...passProps} />;
+	return <div style={style} className={className} {...passProps} />;
 };
 
 export default SliderHandle;

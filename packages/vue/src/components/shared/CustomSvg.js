@@ -1,7 +1,9 @@
+
 import SearchSvg from './SearchSvg';
 
 const CustomSvg = {
 	name: 'CustomSvg',
+
 	props: {
 		className: String,
 		icon: Function,

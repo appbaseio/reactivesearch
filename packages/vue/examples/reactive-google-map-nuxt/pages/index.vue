@@ -27,9 +27,7 @@
             component-id="map"
             data-field="location"
           >
-            <div
-              slot="renderItem"
-              slot-scope="{ magnitude }"
+            <template
               :style="{
                 background: 'dodgerblue',
                 color: '#fff',
@@ -38,10 +36,11 @@
                 borderRadius: '3px',
                 padding: '10px',
               }"
+              #renderItem="{ magnitude }"
             >
               <i class="fas fa-globe-europe" />
               &nbsp;{{ magnitude }}
-            </div>
+            </template>
           </reactive-google-map>
         </div>
       </div>

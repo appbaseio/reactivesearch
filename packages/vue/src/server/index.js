@@ -103,38 +103,37 @@ function getCustomQuery(component, value) {
 	}
 	return component.source.defaultQuery
 		? {
-			query: component.source.defaultQuery(currentValue, component),
+				query: component.source.defaultQuery(currentValue, component),
 		  }
 		: null;
 }
 
 export default function initReactivesearch(componentCollection, searchState, settings) {
 	return new Promise((resolve, reject) => {
-		const credentials
-			= settings.url && settings.url.trim() !== '' && !settings.credentials
+		const credentials =
+			settings.url && settings.url.trim() !== '' && !settings.credentials
 				? null
 				: settings.credentials;
-		const enableTelemetry
-			= settings.appbaseConfig && settings.appbaseConfig.enableTelemetry !== undefined
-				? settings.appbaseConfig.enableTelemetry
+		const enableTelemetry =
+			settings.reactivesearchAPIConfig &&
+			settings.reactivesearchAPIConfig.enableTelemetry !== undefined
+				? settings.reactivesearchAPIConfig.enableTelemetry
 				: true;
 		const headers = {
-			...(settings.enableAppbase && {
+			...{
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-			}),
+			},
 			...settings.headers,
-			...(settings.enableAppbase && settings.endpoint && settings.endpoint.headers
-				? settings.endpoint.headers
-				: {}),
+			...(settings.endpoint && settings.endpoint.headers ? settings.endpoint.headers : {}),
 		};
-		let url
-			= settings.url && settings.url.trim() !== ''
+		let url =
+			settings.url && settings.url.trim() !== ''
 				? settings.url
 				: 'https://scalr.api.appbase.io';
 		let transformRequest = settings.transformRequest || null;
 
-		if (settings.enableAppbase && settings.endpoint) {
+		if (settings.endpoint) {
 			if (settings.endpoint.url) {
 				// eslint-disable-next-line prefer-destructuring
 				url = settings.endpoint.url;
@@ -159,8 +158,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 			transformResponse: settings.transformResponse || null,
 			graphQLUrl: settings.graphQLUrl || '',
 			headers,
-			analyticsConfig: settings.appbaseConfig || null,
-			enableAppbase: settings.enableAppbase,
+			analyticsConfig: settings.reactivesearchAPIConfig || null,
+			enableAppbase: true,
 			endpoint: settings.endpoint,
 		};
 		const appbaseRef = Appbase(config);
@@ -249,8 +248,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 				highlightQuery = component.source.highlightQuery(component);
 			}
 			if (
-				(componentQueryOptions && Object.keys(componentQueryOptions).length)
-				|| (highlightQuery && Object.keys(highlightQuery).length)
+				(componentQueryOptions && Object.keys(componentQueryOptions).length) ||
+				(highlightQuery && Object.keys(highlightQuery).length)
 			) {
 				// eslint-disable-next-line
 				let { aggs, size, ...otherQueryOptions } = componentQueryOptions || {};
@@ -265,8 +264,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 
 				// sort, highlight, size, from - query should be applied on the main component
 				if (
-					(otherQueryOptions && Object.keys(otherQueryOptions).length)
-					|| (highlightQuery && Object.keys(highlightQuery).length)
+					(otherQueryOptions && Object.keys(otherQueryOptions).length) ||
+					(highlightQuery && Object.keys(highlightQuery).length)
 				) {
 					if (!otherQueryOptions) otherQueryOptions = {};
 					if (!highlightQuery) highlightQuery = {};
@@ -278,8 +277,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 					if (isResultComponent) {
 						let currentPage = component.currentPage ? component.currentPage - 1 : 0;
 						if (
-							selectedValues[component.componentId]
-							&& selectedValues[component.componentId].value
+							selectedValues[component.componentId] &&
+							selectedValues[component.componentId].value
 						) {
 							currentPage = selectedValues[component.componentId].value - 1 || 0;
 						}
@@ -313,8 +312,8 @@ export default function initReactivesearch(componentCollection, searchState, set
 			// [4] set query list
 			// Do not set default query for suggestions
 			if (isInternalComponentPresent && !isSearchComponent(component.componentType)) {
-				const { query: defaultQuery, ...defaultQueryOptions }
-					= getDefaultQuery(component, value) || {};
+				const { query: defaultQuery, ...defaultQueryOptions } =
+					getDefaultQuery(component, value) || {};
 				queryList = queryReducer(queryList, {
 					type: 'SET_QUERY',
 					component: internalComponent,
@@ -372,9 +371,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const validOptions = ['aggs', 'from', 'sort'];
 			// check if query or componentQueryOptions are valid - non-empty
 			if (
-				(queryObj && !!Object.keys(queryObj).length)
-				|| (componentQueryOptions
-					&& Object.keys(componentQueryOptions).some((item) => validOptions.includes(item)))
+				(queryObj && !!Object.keys(queryObj).length) ||
+				(componentQueryOptions &&
+					Object.keys(componentQueryOptions).some((item) => validOptions.includes(item)))
 			) {
 				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
 					queryObj = { match_all: {} };
@@ -392,37 +391,23 @@ export default function initReactivesearch(componentCollection, searchState, set
 					[component.componentId]: currentQuery,
 				};
 
-				if (settings.enableAppbase) {
-					const query = getRSQuery(
+				const query = getRSQuery(
+					component.componentId,
+					extractPropsFromState(
+						state,
 						component.componentId,
-						extractPropsFromState(
-							state,
-							component.componentId,
-							queryOptions && Object.keys(queryOptions[component.componentId]).length
-								? { from: queryOptions[component.componentId].from }
-								: null,
-						),
-					);
-					if (query) {
-						// Apply dependent queries
-						appbaseQuery = {
-							...appbaseQuery,
-							...{ [component.componentId]: query },
-							...getDependentQueries(state, component.componentId, orderOfQueries),
-						};
-					}
-				} else {
-					const preference
-						= config && config.analyticsConfig && config.analyticsConfig.userId
-							? `${config.analyticsConfig.userId}_${component}`
-							: component;
-					finalQuery = [
-						...finalQuery,
-						{
-							preference,
-						},
-						currentQuery,
-					];
+						queryOptions && Object.keys(queryOptions[component.componentId]).length
+							? { from: queryOptions[component.componentId].from }
+							: null,
+					),
+				);
+				if (query) {
+					// Apply dependent queries
+					appbaseQuery = {
+						...appbaseQuery,
+						...{ [component.componentId]: query },
+						...getDependentQueries(state, component.componentId, orderOfQueries),
+					};
 				}
 			}
 		});
@@ -582,7 +567,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 						.catch((err) => reject(err));
 				})
 				.catch((err) => reject(err));
-		} else if (settings.enableAppbase && Object.keys(appbaseQuery).length) {
+		} else if (Object.keys(appbaseQuery).length) {
 			finalQuery = Object.keys(appbaseQuery).map((c) => appbaseQuery[c]);
 			// Call RS API
 			const rsAPISettings = {};
@@ -608,16 +593,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				.reactiveSearchv3(finalQuery, rsAPISettings)
 				.then((res) => {
 					handleRSResponse(res);
-				})
-				.catch((err) => reject(err));
-		} else {
-			appbaseRef
-				.msearch({
-					type: config.type === '*' ? '' : config.type,
-					body: finalQuery,
-				})
-				.then((res) => {
-					handleResponse(res);
 				})
 				.catch((err) => reject(err));
 		}

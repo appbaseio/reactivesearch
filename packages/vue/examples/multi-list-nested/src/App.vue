@@ -1,18 +1,17 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="algolia-movies"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
-			<MultiList
+			<multi-list
 				componentId="Authors"
 				dataField="genre_nested.genre.keyword"
 				nestedField="genre_nested"
 				className="multi-list-container"
 				:showCount="true"
 			/>
-			<ReactiveList
+			<reactive-list
 				componentId="SearchResult"
 				dataField="_score"
 				className="result-list-container"
@@ -21,7 +20,7 @@
 				:size="5"
 				:react="{ and: ['BookSensor', 'Authors'] }"
 			>
-				<div slot="renderItem" slot-scope="{ item }">
+				<template #renderItem="{ item }">
 					<div class="flex book-content" key="item._id">
 						<img :src="item.image" alt="Book Cover" class="book-image" />
 						<div class="flex column justify-center ml20">
@@ -52,17 +51,23 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import {MultiList, ReactiveList, ReactiveBase} from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components:{
+		MultiList,
+		ReactiveList,
+		ReactiveBase
+	}
 };
 </script>
 

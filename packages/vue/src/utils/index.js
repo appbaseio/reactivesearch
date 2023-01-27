@@ -60,7 +60,7 @@ export function parseValueArray(objectValues, currentValue) {
  * @param _ref
  */
 export const getComponent = (data = {}, _ref = {}) => {
-	const { render } = _ref.$scopedSlots || _ref.$props;
+	const { render } = _ref.$slots || _ref.$props;
 	if (render) return render(data);
 	return null;
 };
@@ -69,7 +69,7 @@ export const getComponent = (data = {}, _ref = {}) => {
  * @returns {Boolean}
  */
 export const hasCustomRenderer = (_ref = {}) => {
-	const { render } = _ref.$scopedSlots || _ref.$props;
+	const { render } = _ref.$slots || _ref.$props;
 	return Boolean(render);
 };
 
@@ -104,7 +104,7 @@ export const isQueryIdentical = (newVal, oldVal, value, props) => {
  * @param _ref
  */
 export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
-	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$scopedSlots || _ref.$props;
+	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$slots || _ref.$props;
 	const render = renderPopularSuggestions || renderQuerySuggestions;
 	if (render) return render(data);
 	return null;
@@ -114,7 +114,7 @@ export const getQuerySuggestionsComponent = (data = {}, _ref = {}) => {
  * @returns {Boolean}
  */
 export const hasQuerySuggestionsRenderer = (_ref = {}) => {
-	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$scopedSlots || _ref.$props;
+	const { renderQuerySuggestions, renderPopularSuggestions } = _ref.$slots || _ref.$props;
 	return Boolean(renderPopularSuggestions) || Boolean(renderQuerySuggestions);
 };
 

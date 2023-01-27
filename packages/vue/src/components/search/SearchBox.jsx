@@ -6,6 +6,7 @@ import {
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
+import { defineComponent } from 'vue';
 import {
 	connect,
 	getComponent,
@@ -50,10 +51,9 @@ const {
 	getCompositeAggsQuery,
 	withClickIds,
 	getResultStats,
-	normalizeDataField,
 } = helper;
 
-const SearchBox = {
+const SearchBox = defineComponent({
 	name: 'SearchBox',
 	isTagsMode: false,
 	data() {
@@ -73,7 +73,7 @@ const SearchBox = {
 		},
 	},
 	created() {
-		const { distinctField, distinctFieldConfig, index, mode } = this.$props;
+		const { mode } = this.$props;
 		if (mode === SEARCH_COMPONENTS_MODES.TAG) {
 			this.$options.isTagsMode = true;
 		}
@@ -81,22 +81,6 @@ const SearchBox = {
 		if (this.$options.isTagsMode) {
 			console.warn(
 				'Warning(ReactiveSearch): The `categoryField` prop is not supported when `mode` prop is set to `tag`',
-			);
-		}
-
-		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!this.enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
 			);
 		}
 
@@ -174,7 +158,6 @@ const SearchBox = {
 		showFilter: VueTypes.bool.def(true),
 		showIcon: VueTypes.bool.def(true),
 		title: types.title,
-		theme: types.style,
 		URLParams: VueTypes.bool.def(false),
 		strictSelection: VueTypes.bool.def(false),
 		nestedField: types.string,
@@ -363,32 +346,6 @@ const SearchBox = {
 				this.triggerDefaultQuery(value);
 			} else if (!this.$props.enterButton) {
 				this.triggerCustomQuery(value);
-			}
-		},
-		validateDataField() {
-			const propName = 'dataField';
-			const componentName = SearchBox.name;
-			const props = this.$props;
-			const requiredError = `${propName} supplied to ${componentName} is required. Validation failed.`;
-			const propValue = props[propName];
-			if (!this.enableAppbase) {
-				if (!propValue) {
-					console.error(requiredError);
-					return;
-				}
-				if (
-					typeof propValue !== 'string'
-					&& typeof propValue !== 'object'
-					&& !Array.isArray(propValue)
-				) {
-					console.error(
-						`Invalid ${propName} supplied to ${componentName}. Validation failed.`,
-					);
-					return;
-				}
-				if (Array.isArray(propValue) && propValue.length === 0) {
-					console.error(requiredError);
-				}
 			}
 		},
 		getComponent(downshiftProps = {}) {
@@ -751,7 +708,7 @@ const SearchBox = {
 		},
 
 		renderErrorComponent() {
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
 				return (
 					<SuggestionWrapper
@@ -775,10 +732,10 @@ const SearchBox = {
 			return null;
 		},
 		renderNoSuggestions(finalSuggestionsList = []) {
-			const { theme, innerClass } = this.$props;
+			const { innerClass } = this.$props;
 			const renderNoSuggestion
-				= this.$scopedSlots.renderNoSuggestion || this.$props.renderNoSuggestion;
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+				= this.$slots.renderNoSuggestion || this.$props.renderNoSuggestion;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			const { isOpen, currentValue } = this.$data;
 			if (
 				renderNoSuggestion
@@ -792,21 +749,22 @@ const SearchBox = {
 					<SuggestionWrapper
 						innerClass={innerClass}
 						themePreset={this.themePreset}
-						theme={theme}
+						theme={this.theme}
 						innerClassName="noSuggestion"
-						scopedSlots={{
+					>
+						{{
 							default: () =>
 								typeof renderNoSuggestion === 'function'
 									? renderNoSuggestion(currentValue)
 									: renderNoSuggestion,
 						}}
-					/>
+					</SuggestionWrapper>
 				);
 			}
 			return null;
 		},
 		renderInputAddonBefore() {
-			const { addonBefore } = this.$scopedSlots;
+			const { addonBefore } = this.$slots;
 			if (addonBefore) {
 				return <InputAddon class="addon-before">{addonBefore()}</InputAddon>;
 			}
@@ -814,7 +772,7 @@ const SearchBox = {
 			return null;
 		},
 		renderInputAddonAfter() {
-			const { addonAfter } = this.$scopedSlots;
+			const { addonAfter } = this.$slots;
 			if (addonAfter) {
 				return <InputAddon class="addon-after">{addonAfter()}</InputAddon>;
 			}
@@ -826,7 +784,7 @@ const SearchBox = {
 		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
-			const { renderEnterButton } = this.$scopedSlots;
+			const { renderEnterButton } = this.$slots;
 
 			if (enterButton) {
 				const getEnterButtonMarkup = () => {
@@ -859,7 +817,7 @@ const SearchBox = {
 				showVoiceSearch,
 				showIcon,
 			} = this.$props;
-			const renderMic = this.$scopedSlots.renderMic || this.$props.renderMic;
+			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
 			return (
 				<div>
@@ -994,7 +952,7 @@ const SearchBox = {
 			const tagsList = [...this.selectedTags];
 			const shouldRenderClearAllTag = tagsList.length > 1;
 			const renderSelectedTags
-				= this.$scopedSlots.renderSelectedTags || this.$props.renderSelectedTags;
+				= this.$slots.renderSelectedTags || this.$props.renderSelectedTags;
 
 			return renderSelectedTags ? (
 				renderSelectedTags({
@@ -1023,11 +981,12 @@ const SearchBox = {
 		},
 	},
 	render() {
-		const { theme, expandSuggestionsContainer } = this.$props;
-		const { recentSearchesIcon, popularSearchesIcon } = this.$scopedSlots;
+		const { expandSuggestionsContainer } = this.$props;
+		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		const hasSuggestions
 			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
-		const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
+		const renderItem = this.$slots.renderItem || this.$props.renderItem;
+
 		return (
 			<Container class={this.$props.className}>
 				{this.$props.title && (
@@ -1041,7 +1000,8 @@ const SearchBox = {
 						handleChange={this.onSuggestionSelected}
 						handleMouseup={this.handleStateChange}
 						isOpen={this.$data.isOpen}
-						scopedSlots={{
+					>
+						{{
 							default: ({
 								getInputEvents,
 								getInputProps,
@@ -1076,7 +1036,7 @@ const SearchBox = {
 												<ul
 													class={`${suggestions(
 														this.themePreset,
-														theme,
+														this.theme,
 													)} ${getClassName(
 														this.$props.innerClass,
 														'list',
@@ -1085,16 +1045,12 @@ const SearchBox = {
 													{this.normalizedSuggestions.map((item, index) =>
 														renderItem ? (
 															<li
-																{...{
-																	domProps: getItemProps({
-																		item,
-																	}),
-																}}
-																{...{
-																	on: getItemEvents({
-																		item,
-																	}),
-																}}
+																{...getItemProps({
+																	item,
+																})}
+																{...getItemEvents({
+																	item,
+																})}
 																key={`${index + 1}-${item.value}`}
 																style={{
 																	backgroundColor:
@@ -1110,16 +1066,12 @@ const SearchBox = {
 															</li>
 														) : (
 															<li
-																{...{
-																	domProps: getItemProps({
-																		item,
-																	}),
-																}}
-																{...{
-																	on: getItemEvents({
-																		item,
-																	}),
-																}}
+																{...getItemProps({
+																	item,
+																})}
+																on={getItemEvents({
+																	item,
+																})}
 																key={`${index + 1}-${item.value}`}
 																style={{
 																	backgroundColor:
@@ -1183,59 +1135,52 @@ const SearchBox = {
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
-													{...{
-														on: getInputEvents({
-															onInput: this.onInputChange,
-															onBlur: (e) => {
-																this.$emit(
-																	'blur',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onFocus: this.handleFocus,
-															onKeyPress: (e) => {
-																this.$emit(
-																	'keyPress',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-press',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onKeyDown: (e) =>
-																this.handleKeyDown(
-																	e,
-																	highlightedIndex,
-																),
-															onKeyUp: (e) => {
-																this.$emit(
-																	'keyUp',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-up',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onClick: () => {
-																setHighlightedIndex(null);
-															},
-														}),
-													}}
-													{...{
-														domProps: getInputProps({
-															value:
-																this.$data.currentValue === null
-																	? ''
-																	: this.$data.currentValue,
-														}),
-													}}
+													on={getInputEvents({
+														onInput: this.onInputChange,
+														onBlur: (e) => {
+															this.$emit(
+																'blur',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onFocus: this.handleFocus,
+														onKeyPress: (e) => {
+															this.$emit(
+																'keyPress',
+																e,
+																this.triggerQuery,
+															);
+															this.$emit(
+																'key-press',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onKeyDown: (e) =>
+															this.handleKeyDown(e, highlightedIndex),
+														onKeyUp: (e) => {
+															this.$emit(
+																'keyUp',
+																e,
+																this.triggerQuery,
+															);
+															this.$emit(
+																'key-up',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onClick: () => {
+															setHighlightedIndex(null);
+														},
+													})}
+													{...getInputProps({
+														value:
+															this.$data.currentValue === null
+																? ''
+																: this.$data.currentValue,
+													})}
 													themePreset={this.themePreset}
 													autocomplete="off"
 												/>
@@ -1252,7 +1197,7 @@ const SearchBox = {
 								);
 							},
 						}}
-					/>
+					</Downshift>
 				) : (
 					<div class={suggestionsContainer}>
 						<InputGroup>
@@ -1261,34 +1206,26 @@ const SearchBox = {
 								<Input
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
-									{...{
-										on: {
-											blur: (e) => {
-												this.$emit('blur', e, this.triggerQuery);
-											},
-											keypress: (e) => {
-												this.$emit('keyPress', e, this.triggerQuery);
-												this.$emit('key-press', e, this.triggerQuery);
-											},
-											input: this.onInputChange,
-											focus: (e) => {
-												this.$emit('focus', e, this.triggerQuery);
-											},
-											keydown: this.handleKeyDown,
-											keyup: (e) => {
-												this.$emit('keyUp', e, this.triggerQuery);
-												this.$emit('key-up', e, this.triggerQuery);
-											},
+									on={{
+										blur: (e) => {
+											this.$emit('blur', e, this.triggerQuery);
+										},
+										keypress: (e) => {
+											this.$emit('keyPress', e, this.triggerQuery);
+											this.$emit('key-press', e, this.triggerQuery);
+										},
+										input: this.onInputChange,
+										focus: (e) => {
+											this.$emit('focus', e, this.triggerQuery);
+										},
+										keydown: this.handleKeyDown,
+										keyup: (e) => {
+											this.$emit('keyUp', e, this.triggerQuery);
+											this.$emit('key-up', e, this.triggerQuery);
 										},
 									}}
-									{...{
-										domProps: {
-											autofocus: this.$props.autoFocus,
-											value: this.$data.currentValue
-												? this.$data.currentValue
-												: '',
-										},
-									}}
+									autofocus={this.$props.autoFocus}
+									value={this.$data.currentValue ? this.$data.currentValue : ''}
 									iconPosition={this.$props.iconPosition}
 									showIcon={this.$props.showIcon}
 									showClear={this.$props.showClear}
@@ -1308,17 +1245,16 @@ const SearchBox = {
 	destroyed() {
 		document.removeEventListener('keydown', this.onKeyDown);
 	},
-};
+});
 
 SearchBox.hasInternalComponent = () => true;
 
 SearchBox.defaultQuery = (value, props) => {
 	let finalQuery = null;
 
-	const fields = normalizeDataField(props.dataField, props.fieldWeights);
 	finalQuery = {
 		bool: {
-			should: SearchBox.shouldQuery(value, fields, props),
+			should: SearchBox.shouldQuery(value, props),
 			minimum_should_match: '1',
 		},
 	};
@@ -1336,92 +1272,16 @@ SearchBox.defaultQuery = (value, props) => {
 
 	return finalQuery;
 };
-SearchBox.shouldQuery = (value, dataFields, props) => {
-	const finalQuery = [];
-	const phrasePrefixFields = [];
-	const fields = dataFields.map((dataField) => {
-		const queryField = `${dataField.field}${dataField.weight ? `^${dataField.weight}` : ''}`;
-		if (
-			!(
-				dataField.field.endsWith('.keyword')
-				|| dataField.field.endsWith('.autosuggest')
-				|| dataField.field.endsWith('.search')
-			)
-		) {
-			phrasePrefixFields.push(queryField);
-		}
-		return queryField;
-	});
-	if (props.searchOperators || props.queryString) {
-		return {
-			query: value,
-			fields,
-			default_operator: props.queryFormat,
-		};
-	}
-
-	if (props.queryFormat === 'and') {
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'cross_fields',
-				operator: 'and',
-			},
-		});
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'phrase',
-				operator: 'and',
-			},
-		});
-		if (phrasePrefixFields.length > 0) {
-			finalQuery.push({
-				multi_match: {
-					query: value,
-					fields: phrasePrefixFields,
-					type: 'phrase_prefix',
-					operator: 'and',
-				},
-			});
-		}
-		return finalQuery;
-	}
-
-	finalQuery.push({
-		multi_match: {
-			query: value,
-			fields,
-			type: 'best_fields',
-			operator: 'or',
-			fuzziness: props.fuzziness ? props.fuzziness : 0,
-		},
-	});
-
-	finalQuery.push({
-		multi_match: {
-			query: value,
-			fields,
-			type: 'phrase',
-			operator: 'or',
-		},
-	});
-
-	if (phrasePrefixFields.length > 0) {
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields: phrasePrefixFields,
-				type: 'phrase_prefix',
-				operator: 'or',
-			},
-		});
-	}
-
-	return finalQuery;
-};
+SearchBox.shouldQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		queryString: props.queryString,
+		searchOperators: props.searchOperators,
+	},
+});
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
@@ -1438,7 +1298,7 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
+
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,

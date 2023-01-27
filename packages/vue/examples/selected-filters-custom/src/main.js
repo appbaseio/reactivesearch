@@ -1,14 +1,5 @@
-import Vue from "vue";
-import App from "./App.vue";
-import { ReactiveBase, ReactiveList, DataSearch, SelectedFilters, MultiList } from "@appbaseio/reactivesearch-vue";
+import { createApp } from 'vue';
+import App from './App.vue';
 
-Vue.use(ReactiveBase);
-Vue.use(ReactiveList);
-Vue.use(DataSearch);
-Vue.use(SelectedFilters);
-Vue.use(MultiList);
-Vue.config.productionTip = false;
-
-new Vue({
-  render: h => h(App)
-}).$mount("#app");
+const app = createApp(App);
+app.mount('#app'); // Vue Instance - Root component

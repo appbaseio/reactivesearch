@@ -1,4 +1,4 @@
-import styled from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
 const InputWrapper = styled('span')`
   flex: 1;

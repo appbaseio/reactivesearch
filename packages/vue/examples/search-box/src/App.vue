@@ -1,11 +1,10 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
-			<SearchBox
+			<search-box
 				className="result-list-container"
 				componentId="BookSensor"
 				:dataField="['original_title', 'original_title.search']"
@@ -20,37 +19,8 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
-			>
-				<!-- <div class="suggestions" slot="renderItem" slot-scope="item">
-					👋 &nbsp; {{ item.label }}
-				</div> -->
-
-				<!-- <div
-					class="suggestions"
-					slot="render"
-					slot-scope="{
-						error,
-						loading,
-						downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
-						data: suggestions,
-					}"
-				>
-					<div v-if="loading">loading...</div>
-					<ul v-if="isOpen">
-						<template v-for="suggestion in suggestions">
-							<li
-								style="{ background-color: highlightedIndex ? 'grey' : 'transparent' }"
-								v-bind="getItemProps({ item: suggestion })"
-								v-on="getItemEvents({ item: suggestion })"
-								:key="suggestion._id"
-							>
-								{{ suggestion.label }}
-							</li>
-						</template>
-					</ul>
-				</div> -->
-			</SearchBox>
-			<ReactiveList
+			/>
+			<reactive-list
 				componentId="SearchResult"
 				dataField="original_title.keyword"
 				className="result-list-container"
@@ -58,7 +28,7 @@
 				:size="5"
 				:react="{ and: ['BookSensor'] }"
 			>
-				<div slot="renderItem" slot-scope="{ item }">
+				<template #renderItem="{ item }">
 					<div :id="item._id" class="flex book-content" :key="item._id">
 						<img :src="item.image" alt="Book Cover" class="book-image" />
 						<div class="flex column justify-center ml20">
@@ -89,16 +59,19 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import { ReactiveBase, ReactiveList, SearchBox } from '@appbaseio/reactivesearch-vue';
+
 export default {
 	name: 'app',
+	components: { ReactiveBase, ReactiveList, SearchBox },
 };
 </script>
 

@@ -1,11 +1,11 @@
 const ResultCardDescription = {
 	name: 'ResultCardDescription',
 	functional: true,
-	render(_, { props, children }) {
-		return <article {...props}>{children}</article>;
+	render(context) {
+		return <article {...context.$props}>{context.$slots.default()}</article>;
 	},
 };
-ResultCardDescription.install = function(Vue) {
+ResultCardDescription.install = function (Vue) {
 	Vue.component(ResultCardDescription.name, ResultCardDescription);
 };
 export default ResultCardDescription;

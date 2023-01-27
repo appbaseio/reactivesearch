@@ -1071,14 +1071,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.reactiveList}
 				{...preferenceProps}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
