@@ -38,6 +38,7 @@ import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
 
 import ReactiveChart from './components/chart/ReactiveChart';
+import getServerState from './server';
 
 import { SearchPreferencesContext, useAnalytics } from './utils';
 
@@ -83,4 +84,6 @@ export {
 	componentTypes,
 	// hooks
 	useAnalytics,
+	// server
+	getServerState,
 };
