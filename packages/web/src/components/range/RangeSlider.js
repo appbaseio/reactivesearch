@@ -86,13 +86,6 @@ class RangeSlider extends Component {
 		this.internalComponent = getInternalComponentID(props.componentId);
 		// Set custom query in store
 		updateCustomQuery(props.componentId, props, currentValue);
-
-		this.updateQueryOptions(props);
-		const hasMounted = false;
-		if (currentValue) {
-			this.handleChange(inRangeValueArray, props, hasMounted);
-		}
-
 		props.updateComponentProps(
 			props.componentId,
 			{
@@ -107,6 +100,11 @@ class RangeSlider extends Component {
 			},
 			componentTypes.rangeSlider,
 		);
+		this.updateQueryOptions(props);
+		const hasMounted = false;
+		if (currentValue) {
+			this.handleChange(inRangeValueArray, props, hasMounted);
+		}
 	}
 
 	componentDidUpdate(prevProps) {
@@ -130,10 +128,15 @@ class RangeSlider extends Component {
 			});
 		});
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
-			this.updateQueryOptions(this.props);
-			this.handleChange(this.state.currentValue, this.props);
-		});
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField', 'aggregationSize'],
+			() => {
+				this.updateQueryOptions(this.props);
+				this.handleChange(this.state.currentValue, this.props);
+			},
+		);
 		if (
 			!isEqual(
 				getNumericRangeArray(this.props.value, this.props.queryFormat),
@@ -640,14 +643,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.rangeSlider}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
