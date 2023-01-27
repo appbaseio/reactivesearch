@@ -25,6 +25,7 @@ import {
 	isFunction,
 	debounce,
 	parseHits,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import {
 	connect,
@@ -89,6 +90,10 @@ class ReactiveChart extends React.Component {
 				options: this.transformOptions(this.props.options, this.props),
 			});
 		}
+		checkSomePropChange(this.props, prevProps, ['dataField', 'aggregationSize'], () => {
+			this.updateDefaultQuery();
+			this.updateQuery(this.state.currentValue, this.props);
+		});
 		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
@@ -333,6 +338,7 @@ class ReactiveChart extends React.Component {
 					contextmenu: onContextMenu,
 					datazoom: this.handleRange,
 				}}
+				notMerge
 			/>
 		);
 	}
@@ -826,7 +832,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 					size={size}
 					dataField={dataField}
 				>
-					{() => (
+					{componentProps => (
 						<ConnectedComponent
 							{...preferenceProps}
 							size={size}
@@ -834,6 +840,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 							aggregationSize={aggregationSize}
 							dataField={dataField}
 							myForwardedRef={ref}
+							{...componentProps}
 						/>
 					)}
 				</ComponentWrapper>

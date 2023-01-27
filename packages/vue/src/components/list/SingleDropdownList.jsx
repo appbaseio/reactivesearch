@@ -462,12 +462,14 @@ export const ListConnected = PreferencesConsumer(
 		internalComponent: SingleDropdownList.hasInternalComponent(),
 	}),
 );
+ListConnected.defaultQuery = SingleDropdownList.defaultQuery;
+ListConnected.generateQueryOptions = SingleDropdownList.generateQueryOptions;
+ListConnected.hasInternalComponent = SingleDropdownList.hasInternalComponent;
 ListConnected.name = SingleDropdownList.name;
+// Add componentType for SSR
+ListConnected.componentType = componentTypes.singleDropdownList;
 ListConnected.install = function (Vue) {
 	Vue.component(ListConnected.name, ListConnected);
 };
-
-// Add componentType for SSR
-ListConnected.componentType = componentTypes.singleDropdownList;
 
 export default ListConnected;
