@@ -70,6 +70,7 @@ const Main = (props) => {
 						componentId="SearchResult"
 						dataField="original_title"
 						className="result-list-container"
+						URLParams
 						from={0}
 						size={5}
 						// eslint-disable-next-line react/jsx-no-bind
@@ -77,6 +78,7 @@ const Main = (props) => {
 						react={{
 							and: ['BookSensor', 'SearchBox'],
 						}}
+						pagination
 					/>
 				</div>
 			</div>
