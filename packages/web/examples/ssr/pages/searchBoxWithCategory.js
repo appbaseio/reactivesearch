@@ -16,7 +16,7 @@ const searchBoxProps = {
 	dataField: ['original_title', 'original_title.search'],
 	categoryField: 'authors.keyword',
 	componentId: 'BookSensor',
-	defaultValue: 'Harry',
+	URLParams: true,
 };
 
 const reactiveListProps = {

@@ -2,7 +2,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 
-
 import React, { Component } from 'react';
 import {
 	addComponent,
@@ -43,13 +42,7 @@ import SliderHandle from './addons/SliderHandle';
 import Slider from '../../styles/Slider';
 import Title from '../../styles/Title';
 import { rangeLabelsContainer } from '../../styles/Label';
-import {
-	connect,
-	formatDateString,
-	getNumericRangeArray,
-	getRangeQueryWithNullValues,
-	getValidPropsKeys,
-} from '../../utils';
+import { connect, formatDateString, getNumericRangeArray, getValidPropsKeys } from '../../utils';
 
 // the formatRange() function formats the range value received from props
 // when dealing with dates we are always storing
@@ -112,6 +105,11 @@ class DynamicRangeSlider extends Component {
 		} else {
 			// get range before executing other queries
 			this.updateRangeQueryOptions(props);
+		}
+
+		const { mode } = this.props;
+		if (mode !== 'test') {
+			this.setReact(this.props, false);
 		}
 	}
 
@@ -295,12 +293,12 @@ class DynamicRangeSlider extends Component {
 		this.props.removeComponent(this.internalMatchAllComponent);
 	}
 
-	setReact = (props) => {
+	setReact = (props, shouldExecuteQuery = true) => {
 		const { react } = props;
 		if (react) {
-			props.watchComponent(this.internalRangeComponent, props.react);
+			props.watchComponent(this.internalRangeComponent, props.react, shouldExecuteQuery);
 			const newReact = pushToAndClause(react, this.internalHistogramComponent);
-			props.watchComponent(props.componentId, newReact);
+			props.watchComponent(props.componentId, newReact, shouldExecuteQuery);
 		} else {
 			// internalRangeComponent watches internalMatchAll component allowing execution of query
 			// in case of no react prop
@@ -310,12 +308,20 @@ class DynamicRangeSlider extends Component {
 				{ aggs: { match_all: {} } },
 				false,
 			);
-			props.watchComponent(this.internalRangeComponent, {
-				and: this.internalMatchAllComponent,
-			});
-			props.watchComponent(props.componentId, {
-				and: this.internalHistogramComponent,
-			});
+			props.watchComponent(
+				this.internalRangeComponent,
+				{
+					and: this.internalMatchAllComponent,
+				},
+				shouldExecuteQuery,
+			);
+			props.watchComponent(
+				props.componentId,
+				{
+					and: this.internalHistogramComponent,
+				},
+				shouldExecuteQuery,
+			);
 		}
 	};
 
@@ -793,7 +799,8 @@ const mapDispatchtoProps = dispatch => ({
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react, shouldExecute) =>
+		dispatch(watchComponent(component, react, shouldExecute)),
 });
 
 const ConnectedComponent = connect(

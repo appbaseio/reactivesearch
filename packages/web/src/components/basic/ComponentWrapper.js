@@ -187,7 +187,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 		dispatch(updateComponentProps(component, options, ownProps.componentType)),
 	addComponent: component => dispatch(addComponent(component)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react, execute) =>
+		dispatch(watchComponent(component, react, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });
