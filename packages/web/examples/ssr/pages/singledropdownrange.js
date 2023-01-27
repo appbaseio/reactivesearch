@@ -4,9 +4,9 @@ import {
 	SelectedFilters,
 	ReactiveList,
 	SingleDropdownRange,
+	getServerState,
 } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
-import getServerState from '@appbaseio/reactivesearch/lib/server';
 
 import Layout from '../components/Layout';
 import BookCard from '../components/BookCard';

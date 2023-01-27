@@ -4,10 +4,9 @@ import {
 	SingleDataList,
 	SelectedFilters,
 	ReactiveList,
+	getServerState,
 } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
-
-import getServerState from '@appbaseio/reactivesearch/lib/server';
 
 import Layout from '../components/Layout';
 import ListItemView from '../components/ListItemView';
