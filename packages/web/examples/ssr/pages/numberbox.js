@@ -1,7 +1,12 @@
 import React from 'react';
-import { ReactiveBase, NumberBox, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
+import {
+	ReactiveBase,
+	NumberBox,
+	SelectedFilters,
+	ReactiveList,
+	getServerState,
+} from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
-import getServerState from '@appbaseio/reactivesearch/lib/server';
 
 import Layout from '../components/Layout';
 import BookCard from '../components/BookCard';

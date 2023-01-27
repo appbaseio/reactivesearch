@@ -5,10 +5,10 @@ import {
 	ReactiveList,
 	ResultCard,
 	DateRange,
+	getServerState,
 } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
-import getServerState from '@appbaseio/reactivesearch/lib/server';
 import moment from 'moment';
 
 import Layout from '../components/Layout';
