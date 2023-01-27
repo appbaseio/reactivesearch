@@ -71,14 +71,14 @@ const Main = props => (
 								<ReactiveList.ResultCardsWrapper>
 									{data.map(item => (
 										<ResultCard href={item.listing_url} key={item._id}>
-											<ResultCard.Image src={item.image} />
+											<ResultCard.Image src={item.picture_url} />
 											<ResultCard.Title>{item.name}</ResultCard.Title>
 											<ResultCard.Description>
 												<div>
 													<div>${item.price}</div>
 													<span
 														style={{
-															backgroundImage: `url(${item.host_image})`,
+															backgroundImage: `url(${item.picture_url})`,
 														}}
 													/>
 													<p>

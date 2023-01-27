@@ -20,17 +20,17 @@ const dateQuery = (value, props) => {
 			{
 				range: {
 					[props.dataField]: {
-						lte: moment(value).format('YYYYMMDD'),
+						gte: moment(value).valueOf(),
 					},
 				},
 			},
 		];
 	}
-	return query;
+	return query ? { query: { bool: { must: query } } } : null;
 };
 
 const settings = {
-	app: 'airbeds-test-app',
+	app: 'airbnb-dev',
 	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
 	enableAppbase: true,
 };
@@ -47,9 +47,11 @@ const Main = props => (
 				<div className="col">
 					<DatePicker
 						componentId="DateSensor"
-						dataField="date_from"
-						initialMonth={new Date('2017-05-05')}
+						dataField="available_from"
 						customQuery={dateQuery}
+						initialMonth={new Date('2017-05-05')}
+						placeholder="Available From - YYYY-MM-DD"
+						URLParams
 						defaultValue="2017-05-05"
 					/>
 				</div>
@@ -68,14 +70,14 @@ const Main = props => (
 								<ReactiveList.ResultCardsWrapper>
 									{data.map(item => (
 										<ResultCard href={item.listing_url} key={item._id}>
-											<ResultCard.Image src={item.image} />
+											<ResultCard.Image src={item.picture_url} />
 											<ResultCard.Title>{item.name}</ResultCard.Title>
 											<ResultCard.Description>
 												<div>
 													<div>${item.price}</div>
 													<span
 														style={{
-															backgroundImage: `url(${item.host_image})`,
+															backgroundImage: `url(${item.picture_url})`,
 														}}
 													/>
 													<p>
@@ -90,7 +92,8 @@ const Main = props => (
 							);
 						}}
 						react={{ and: ['DateSensor'] }}
-						showPagination
+						pagination
+						URLParams
 					/>
 				</div>
 			</div>
