@@ -1,7 +1,5 @@
 import VueTypes from 'vue-types';
-import { components } from 'gmap-vue';
-
-const { InfoWindow } = components;
+import { InfoWindow } from 'vue-google-maps-community-fork';
 
 const InfoWindowWrapper = {
 	name: 'InfoWindowWrapper',
@@ -28,11 +26,10 @@ const InfoWindowWrapper = {
 		const { renderPopover, events } = this;
 		return (
 			<InfoWindow
+				closeclick="true"
 				ref={`${this.id}-Info-Window`}
-				{...{
-					props: this.infoWindowProps,
-					on: events,
-				}}
+				{...this.infoWindowProps}
+				on={events}
 			>
 				<div>{renderPopover(this.handleClose)}</div>
 			</InfoWindow>

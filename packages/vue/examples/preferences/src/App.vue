@@ -1,22 +1,21 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 			:preferences="preferences"
 		>
-			<DataSearch
+			<search-box
 				componentId="BookSensor"
 				preferencesPath="pages.home.componentSettings.BookSensor"
 				class="result-list-container"
 			/>
-			<ReactiveList
+			<reactive-list
 				componentId="SearchResult"
 				class="result-list-container"
 				:react="{ and: ['BookSensor'] }"
 			>
-				<div slot="render" slot-scope="{ loading, error, data }">
+				<template #render="{ loading, error, data }">
 					<div v-if="loading">Fetching Results.</div>
 					<div v-if="Boolean(error)">
 						Something went wrong! Error details {JSON.stringify(error)}
@@ -54,16 +53,22 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 <script>
 import './styles.css';
+import { SearchBox, ReactiveBase, ReactiveList } from '@appbaseio/reactivesearch-vue';
 
 export default {
 	name: 'app',
+	components: {
+		SearchBox,
+		ReactiveBase,
+		ReactiveList,
+	},
 	computed: {
 		preferences() {
 			return {

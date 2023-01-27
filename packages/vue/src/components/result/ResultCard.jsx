@@ -26,13 +26,13 @@ const ResultCard = {
 				rel={target === '_blank' ? 'noopener noreferrer' : null}
 				{...rest}
 			>
-				{children}
+				{children()}
 			</Card>
 		);
 	},
 };
 
-ResultCard.install = function(Vue) {
+ResultCard.install = function (Vue) {
 	Vue.component(ResultCard.name, ResultCard);
 	Vue.component(ResultCardTitle.name, ResultCardTitle);
 	Vue.component(ResultCardImage.name, ResultCardImage);

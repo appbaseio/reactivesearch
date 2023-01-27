@@ -1,4 +1,4 @@
-import styled, { css } from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
 const IconGroup = styled('div')`
 	display: flex;
@@ -10,7 +10,7 @@ const IconGroup = styled('div')`
 
 	${({ positionType }) => {
 		if (positionType === 'absolute') {
-			return css`
+			return `
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
@@ -19,15 +19,14 @@ const IconGroup = styled('div')`
 		return null;
 	}};
 
-	${({ groupPosition }) => {
-		return groupPosition === 'right'
-			? css`
+	${({ groupPosition }) =>
+		groupPosition === 'right'
+			? `
 					right: 0;
 			  `
-			: css`
+			: `
 					left: 0;
-			  `;
-	}};
+			  `};
 `;
 
 export default IconGroup;

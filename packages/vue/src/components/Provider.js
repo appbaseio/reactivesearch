@@ -1,3 +1,5 @@
+import { h } from 'vue';
+
 export default {
 	name: 'Provider',
 	props: {
@@ -24,10 +26,11 @@ export default {
 			$analytics: this.analyticsRef,
 		};
 	},
-	render(h) {
-		if (this.$slots.default.length > 1) {
-			return h('div', this.$slots.default);
+	render() {
+		if (this.$slots.default().length > 1) {
+			return h('div', this.$slots.default());
 		}
-		return this.$slots.default[0];
+
+		return this.$slots.default()[0];
 	},
 };

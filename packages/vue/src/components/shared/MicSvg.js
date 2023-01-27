@@ -1,7 +1,7 @@
-import { injectGlobal } from '@appbaseio/vue-emotion';
+import { createGlobalStyle } from '@appbaseio/vue-emotion';
 
 // eslint-disable-next-line
-injectGlobal`
+createGlobalStyle`
 	#el_TvxDfTAtKp {
 		stroke: none;
 		stroke-width: 1;

@@ -1,4 +1,5 @@
-import styled, { css } from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
+import { css } from 'emotion';
 
 const MapPin = styled('div')`
 	height: 24px;

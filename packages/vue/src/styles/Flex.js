@@ -1,71 +1,71 @@
-import styled from '@appbaseio/vue-emotion';
-import { css } from 'emotion';
+import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
-const leftLabel = css`
+const leftLabel = `
 	flex-direction: row;
 	align-items: center;
 `;
 
-const rightLabel = css`
+const rightLabel = `
 	flex-direction: row-reverse;
 	align-items: center;
 `;
 
-const topLabel = css`
+const topLabel = `
 	flex-direction: column;
 `;
 
-const bottomLabel = css`
+const bottomLabel = `
 	flex-direction: column-reverse;
 `;
 
-const border = ({ theme: { colors } }) => css`
+const border = ({ theme: { colors = {} } }) => `
 	border: 1px solid ${colors.borderColor || '#ccc'};
 `;
 
 const Flex = styled('div')`
-	display: ${props => (props.inline ? 'inline-flex' : 'flex')};
-	${props => (props.labelPosition === 'left' || props.iconPosition === 'right') && leftLabel};
-	${props => (props.labelPosition === 'right' || props.iconPosition === 'left') && rightLabel};
-	${props => props.labelPosition === 'top' && topLabel};
-	${props => props.labelPosition === 'bottom' && bottomLabel};
-	${props => props.showBorder && border};
+	display: ${(props) => (props.inline ? 'inline-flex' : 'flex')};
+	${(props) => (props.labelPosition === 'left' || props.iconPosition === 'right') && leftLabel};
+	${(props) => (props.labelPosition === 'right' || props.iconPosition === 'left') && rightLabel};
+	${(props) => props.labelPosition === 'top' && topLabel};
+	${(props) => props.labelPosition === 'bottom' && bottomLabel};
+	${(props) => props.showBorder && border};
 
-	${props =>
+	${(props) =>
 		props.justifyContent
-		&& css`
+		&& `
 			justify-content: ${props.justifyContent};
 		`};
-	${props =>
+	${(props) =>
 		props.alignItems
-		&& css`
+		&& `
 			align-items: ${props.alignItems};
 		`};
 
-	${props =>
+	${(props) =>
 		props.flex
-		&& css`
+		&& `
 			flex: ${props.flex};
 		`};
-	${props =>
+	${(props) =>
 		props.direction
-		&& css`
+		&& `
 			flex-direction: ${props.direction};
 		`};
-	${props =>
+	${(props) =>
 		props.basis
-		&& css`
+		&& `
 			flex-basis: ${props.basis};
 		`};
 
 	svg.cancel-icon {
 		cursor: pointer;
-		fill: ${({ theme: { colors } }) => colors.borderColor || lighten(0.3, colors.textColor)};
+		fill: ${({ theme: { colors = {} } }) =>
+		colors.borderColor || lighten(0.3, colors.textColor || '#fff')};
 		flex-basis: 30px;
 
 		&:hover {
-			fill: ${({ theme }) => theme.colors.textColor};
+			fill: ${({ theme }) => (theme.colors ? theme.colors.textColor : '')};
 		}
 	}
 `;

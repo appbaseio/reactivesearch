@@ -27,8 +27,8 @@ const SelectedFilters = {
 		},
 	},
 	render() {
-		if (this.$scopedSlots.default) {
-			return this.$scopedSlots.default({
+		if (this.$slots.default) {
+			return this.$slots.default({
 				components: this.components,
 				selectedValues: this.selectedValues,
 				clearValues: this.clearValues,
@@ -50,12 +50,9 @@ const SelectedFilters = {
 				{this.$props.showClearAll && hasValues && filtersToRender.length > 1 ? (
 					<Button
 						class={getClassName(this.$props.innerClass, 'button') || ''}
-						{...{
-							on: {
-								click: this.clearValues,
-								keypress: (event) =>
-									handleA11yAction(event, () => this.clearValues()),
-							},
+						on={{
+							click: this.clearValues,
+							keypress: (event) => handleA11yAction(event, () => this.clearValues()),
 						}}
 						tabIndex="0"
 					>
@@ -118,11 +115,9 @@ const SelectedFilters = {
 				<Button
 					class={getClassName(this.$props.innerClass, 'button') || ''}
 					key={keyProp}
-					{...{
-						on: {
-							click: handleRemove,
-							keypress: (event) => handleA11yAction(event, handleRemove),
-						},
+					on={{
+						click: handleRemove,
+						keypress: (event) => handleA11yAction(event, handleRemove),
 					}}
 					tabIndex="0"
 				>
