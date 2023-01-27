@@ -32,6 +32,7 @@ const rangeSliderProps = {
 		start: 4000,
 		end: 8000,
 	},
+	URLParams: true,
 };
 
 const reactiveListProps = {
