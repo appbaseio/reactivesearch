@@ -154,7 +154,7 @@ const SingleList = {
 		}
 
 		if (!this.hasCustomRenderer && this.modifiedOptions.length === 0 && !this.isLoading) {
-			if (this.renderNoResult) {
+			if (this.renderNoResults) {
 				this.renderNoResult();
 			} else {
 				return null;
@@ -541,12 +541,16 @@ export const ListConnected = PreferencesConsumer(
 		internalComponent: SingleList.hasInternalComponent(),
 	}),
 );
+ListConnected.name = SingleList.name;
 
-SingleList.install = function (Vue) {
-	Vue.component(SingleList.name, ListConnected);
+ListConnected.defaultQuery = SingleList.defaultQuery;
+ListConnected.generateQueryOptions = SingleList.generateQueryOptions;
+ListConnected.hasInternalComponent = SingleList.hasInternalComponent;
+// Add componentType for SSR
+ListConnected.componentType = componentTypes.singleList;
+
+ListConnected.install = function (Vue) {
+	Vue.component(ListConnected.name, ListConnected);
 };
 
-// Add componentType for SSR
-SingleList.componentType = componentTypes.singleList;
-
-export default SingleList;
+export default ListConnected;

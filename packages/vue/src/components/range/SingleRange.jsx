@@ -227,11 +227,16 @@ export const RangeConnected = PreferencesConsumer(
 		componentType: componentTypes.singleRange,
 	}),
 );
+RangeConnected.name = SingleRange.name;
 
-SingleRange.install = function (Vue) {
-	Vue.component(SingleRange.name, RangeConnected);
+RangeConnected.defaultQuery = SingleRange.defaultQuery;
+RangeConnected.parseValue = SingleRange.parseValue;
+RangeConnected.hasInternalComponent = SingleRange.hasInternalComponent;
+
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
 };
 // Add componentType for SSR
-SingleRange.componentType = componentTypes.singleRange;
+RangeConnected.componentType = componentTypes.singleRange;
 
-export default SingleRange;
+export default RangeConnected;

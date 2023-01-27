@@ -22,7 +22,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import withTheme from '../../theme/withTheme';
 import { connect } from '../../utils';
 
-const XDate = require('xdate');
+const dayjs = require('dayjs');
 
 class DateRange extends Component {
 	constructor(props) {
@@ -53,14 +53,14 @@ class DateRange extends Component {
 		if (startDate) {
 			this.handleDateChange(
 				{
-					dateString: new XDate(startDate).toString('yyyy-MM-dd'),
-					timestamp: new XDate(startDate).getTime(),
+					dateString: dayjs(new Date(startDate)).format('YYYY-MM-DD'),
+					timestamp: dayjs(new Date(startDate)).valueOf(),
 				},
 				() => {
 					if (this.props.defaultSelected.end) {
 						this.handleDateChange({
-							dateString: new XDate(endDate).toString('yyyy-MM-dd'),
-							timestamp: new XDate(endDate).getTime(),
+							dateString: dayjs(new Date(endDate)).format('YYYY-MM-DD'),
+							timestamp: dayjs(new Date(endDate)).valueOf(),
 						});
 					}
 				},
@@ -88,14 +88,14 @@ class DateRange extends Component {
 		if (startDate) {
 			this.handleDateChange(
 				{
-					dateString: new XDate(startDate).toString('yyyy-MM-dd'),
-					timestamp: new XDate(startDate).getTime(),
+					dateString: dayjs(new Date(startDate)).format('YYYY-MM-DD'),
+					timestamp: dayjs(new Date(startDate)).valueOf(),
 				},
 				() => {
 					if (this.props.defaultSelected.end) {
 						this.handleDateChange({
-							dateString: new XDate(endDate).toString('yyyy-MM-dd'),
-							timestamp: new XDate(endDate).getTime(),
+							dateString: dayjs(new Date(endDate)).format('YYYY-MM-DD'),
+							timestamp: dayjs(new Date(endDate)).valueOf(),
 						});
 					}
 				},
@@ -135,14 +135,14 @@ class DateRange extends Component {
 						{
 							range: {
 								[props.dataField[0]]: {
-									lte: formatDate(new XDate(value.start), props),
+									lte: formatDate(dayjs(new Date(value.start)), props),
 								},
 							},
 						},
 						{
 							range: {
 								[props.dataField[1]]: {
-									gte: formatDate(new XDate(value.end), props),
+									gte: formatDate(dayjs(new Date(value.end)), props),
 								},
 							},
 						},
@@ -153,8 +153,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[props.dataField[0]]: {
-						gte: formatDate(new XDate(value.start), props),
-						lte: formatDate(new XDate(value.end), props),
+						gte: formatDate(dayjs(new Date(value.start)), props),
+						lte: formatDate(dayjs(new Date(value.end)), props),
 					},
 				},
 			};
@@ -162,8 +162,8 @@ class DateRange extends Component {
 			query = {
 				range: {
 					[props.dataField]: {
-						gte: formatDate(new XDate(value.start), props),
-						lte: formatDate(new XDate(value.end), props),
+						gte: formatDate(dayjs(new Date(value.start)), props),
+						lte: formatDate(dayjs(new Date(value.end)), props),
 					},
 				},
 			};
@@ -204,8 +204,8 @@ class DateRange extends Component {
 				};
 
 				date = {
-					start: formatDate(new XDate(value.start), props),
-					end: formatDate(new XDate(value.end), props),
+					start: formatDate(dayjs(new Date(value.start)), props),
+					end: formatDate(dayjs(new Date(value.end)), props),
 				};
 
 				checkValueChange(props.componentId, date, props.beforeValueChange, performUpdate);
@@ -251,9 +251,11 @@ class DateRange extends Component {
 
 	getDateRange = (start, end) => {
 		const range = [];
-		const endTime = end.getTime();
-		for (let current = start.addHours(24); current.getTime() < endTime; current.addHours(24)) {
-			range.push(current.toString('yyyy-MM-dd'));
+		const endTime = end.valueOf();
+		let current = start.add(24, 'hour');
+		while (current.valueOf() < endTime) {
+			range.push(current.format('YYYY-MM-DD'));
+			current = current.add(24, 'hour');
 		}
 		return range;
 	};
@@ -288,8 +290,8 @@ class DateRange extends Component {
 			};
 			if (this.state.currentDate.end) {
 				const range = this.getDateRange(
-					new XDate(this.state.currentDate.start.timestamp),
-					new XDate(this.state.currentDate.end.timestamp),
+					dayjs(new Date(this.state.currentDate.start.timestamp)),
+					dayjs(new Date(this.state.currentDate.end.timestamp)),
 				);
 				range.forEach((date) => {
 					markedDates[date] = {

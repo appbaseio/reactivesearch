@@ -210,7 +210,7 @@ const MultiDropdownList = {
 			selectAll = [
 				{
 					key: this.$props.selectAllLabel,
-					doc_count: this.totalDocumentCount
+					doc_count: this.totalDocumentCount,
 				},
 			];
 		}
@@ -574,12 +574,17 @@ export const ListConnected = PreferencesConsumer(
 		internalComponent: MultiDropdownList.hasInternalComponent(),
 	}),
 );
-
-MultiDropdownList.install = function (Vue) {
-	Vue.component(MultiDropdownList.name, ListConnected);
-};
+ListConnected.name = MultiDropdownList.name;
 
 // Add componentType for SSR
-MultiDropdownList.componentType = componentTypes.multiDropdownList;
+ListConnected.componentType = componentTypes.multiDropdownList;
 
-export default MultiDropdownList;
+ListConnected.defaultQuery = MultiDropdownList.defaultQuery;
+ListConnected.generateQueryOptions = MultiDropdownList.generateQueryOptions;
+ListConnected.hasInternalComponent = MultiDropdownList.hasInternalComponent;
+
+ListConnected.install = function (Vue) {
+	Vue.component(ListConnected.name, ListConnected);
+};
+
+export default ListConnected;

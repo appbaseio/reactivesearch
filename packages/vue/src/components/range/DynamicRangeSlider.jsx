@@ -70,6 +70,7 @@ const DynamicRangeSlider = {
 	},
 
 	created() {
+		this.$timestamp = new Date().getTime();
 		const onQueryChange = (...args) => {
 			this.$emit('queryChange', ...args);
 			this.$emit('query-change', ...args);
@@ -100,8 +101,8 @@ const DynamicRangeSlider = {
 		}
 		const { value } = this.$props;
 		if (this.destroyOnUnmount || components.indexOf(this.componentId) === -1) {
-			this.addComponent(this.componentId);
-			this.addComponent(this.internalRangeComponent);
+			this.addComponent(this.componentId, this.$timestamp);
+			this.addComponent(this.internalRangeComponent, this.$timestamp);
 			if (Array.isArray(this.selectedValue)) {
 				this.handleChange(this.selectedValue);
 			} else if (this.selectedValue) {
@@ -473,11 +474,16 @@ export const RangeConnected = PreferencesConsumer(
 	connect(mapStateToProps, mapDispatchtoProps)(DynamicRangeSlider),
 );
 
-DynamicRangeSlider.install = function (Vue) {
-	Vue.component(DynamicRangeSlider.name, RangeConnected);
-};
+RangeConnected.defaultQuery = DynamicRangeSlider.defaultQuery;
+RangeConnected.parseValue = DynamicRangeSlider.parseValue;
+RangeConnected.hasInternalComponent = DynamicRangeSlider.hasInternalComponent;
+
+RangeConnected.name = DynamicRangeSlider.name;
 
 // Add componentType for SSR
-DynamicRangeSlider.componentType = componentTypes.dynamicRangeSlider;
+RangeConnected.componentType = componentTypes.dynamicRangeSlider;
 
-export default DynamicRangeSlider;
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
+};
+export default RangeConnected;

@@ -64,7 +64,7 @@ class NumberBox extends Component {
 		checkPropChange(this.props.queryFormat, this.props.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 	}
@@ -289,7 +289,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.numberBox}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

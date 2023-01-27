@@ -4,12 +4,13 @@ import {
 	isEqual,
 	getClassName,
 	isValidDateRangeQueryFormat,
+	unwrapToNativeDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import dayjs from 'dayjs';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { oneOf } from 'prop-types';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
-import XDate from 'xdate';
 import RangeSlider from './RangeSlider';
 import Input from '../../styles/Input';
 import Flex from '../../styles/Flex';
@@ -26,7 +27,7 @@ import {
 import DateContainer from '../../styles/DateContainer';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 
-const DATE_FORMAT = 'yyyy-MM-dd';
+const DATE_FORMAT = 'YYYY-MM-DD';
 class RangeInput extends Component {
 	constructor(props) {
 		super(props);
@@ -36,9 +37,9 @@ class RangeInput extends Component {
 			if (!isValidDateRangeQueryFormat(queryFormat)) {
 				throw new Error('queryFormat is not supported. Try with a valid queryFormat.');
 			}
-			if (!XDate(range.start).valid() || !XDate(range.end).valid()) {
+			if (!dayjs(new Date(range.start)).isValid() || !dayjs(new Date(range.end)).isValid()) {
 				throw new Error(
-					'`reactivesearch` uses XDate for processing date-types, Try passing valid value(s) accepted by the XDate constructor. XDate ref: https://arshaw.com/xdate/#Parsing',
+					'`reactivesearch` uses dayjs for processing date-types, Try passing valid value(s) accepted by the dayjs constructor. Dayjs ref: https://day.js.org/docs/en/parse/parse',
 				);
 			}
 		} else if (typeof range.start !== 'number' || typeof range.end !== 'number') {
@@ -255,7 +256,7 @@ class RangeInput extends Component {
 				this.setState(state => ({
 					startKey: state.startKey === 'on-start' ? 'off-start' : 'on-start',
 					start: getValueArrayWithinLimits(
-						[XDate(date).getTime(), end],
+						[dayjs(new Date((date))).valueOf(), end],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
 					)[0],
 					end,
@@ -269,10 +270,10 @@ class RangeInput extends Component {
 			if (this.startDateRef.getInput().value.length === 10) {
 				onChange({
 					start: getValueArrayWithinLimits(
-						[XDate(date).getTime(), currentDateEnd],
+						[dayjs(new Date((date))).valueOf(), currentDateEnd],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
 					)[0],
-					...(end && XDate(end).valid() ? { end: new Date(end) } : {}),
+					...(end && dayjs(new Date((end))).isValid() ? { end: new Date(end) } : {}),
 				});
 				// focus the end date DayPicker if its empty
 				if (autoFocus) {
@@ -305,7 +306,7 @@ class RangeInput extends Component {
 					endKey: state.endKey === 'on-end' ? 'off-end' : 'on-end',
 					start,
 					end: getValueArrayWithinLimits(
-						[start, XDate(selectedDay).getTime()],
+						[start, dayjs(new Date((selectedDay))).valueOf()],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
 					)[1],
 				}));
@@ -313,9 +314,10 @@ class RangeInput extends Component {
 		} else if (onChange) {
 			if (this.endDateRef.getInput().value.length === 10) {
 				onChange({
-					...(start && new XDate(start).valid() ? { start: new XDate(start) } : {}),
+					...(start && dayjs(new Date((start))).isValid()
+						? { start: dayjs(new Date((start))) } : {}),
 					end: getValueArrayWithinLimits(
-						[currentDateStart, XDate(selectedDay).getTime()],
+						[currentDateStart, dayjs(new Date((selectedDay))).valueOf()],
 						getNumericRangeArray(this.props.range, this.props.queryFormat),
 					)[1],
 				});
@@ -342,11 +344,12 @@ class RangeInput extends Component {
 
 	displayDateInputs() {
 		const { start, end, dateHovered } = this.state;
-		const startDate = XDate(start) || '';
-		const endDate = XDate(end) || '';
+		const startDate = unwrapToNativeDate(dayjs(new Date((start)))) || '';
+		const endDate = unwrapToNativeDate(dayjs(new Date((end)))) || '';
 		const endDay = start && end ? dateHovered : '';
 		const selectedDays = { from: startDate, to: endDay };
-		const modifiers = { start: new Date(start), end: endDay };
+		const modifiers = { start: startDate, end: endDay };
+
 		return (
 			<DateContainer range>
 				<Flex className={getClassName(this.props.innerClass, 'input-container') || null}>
@@ -361,18 +364,19 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getStartDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
-							value={formatDateString(startDate, DATE_FORMAT)}
+							value={unwrapToNativeDate(startDate)}
 							key={this.state.startKey}
-							placeholder="yyyy-MM-dd"
+							placeholder="YYYY-MM-DD"
 							dayPickerProps={{
-								initialMonth: new XDate(this.state.start || ''),
+								initialMonth: unwrapToNativeDate(startDate),
 								numberOfMonths: 2,
 								disabledDays: {
 									before:
-										(this.props.range.start && XDate(this.props.range.start))
+										(this.props.range.start
+											&& unwrapToNativeDate(dayjs(new Date(this.props.range.start))))
 										|| '',
 									after:
-										(this.props.range.end && XDate(this.props.range.end)) || '',
+										(this.props.range.end && unwrapToNativeDate(dayjs(new Date(this.props.range.end)))) || '',
 								},
 								selectedDays,
 								modifiers,
@@ -402,18 +406,20 @@ class RangeInput extends Component {
 						<DayPickerInput
 							ref={this.getEndDateRef}
 							formatDate={date => formatDateString(date, DATE_FORMAT)}
-							value={formatDateString(endDate, DATE_FORMAT)}
+							value={unwrapToNativeDate(endDate)}
 							key={this.state.endKey}
-							placeholder="yyyy-MM-dd"
+							placeholder="YYYY-MM-DD"
 							dayPickerProps={{
-								initialMonth: new XDate(this.state.end || ''),
+								initialMonth: unwrapToNativeDate(endDate),
 								numberOfMonths: 2,
 								onDayMouseEnter: this.handleDayMouseEnter,
 								disabledDays: {
 									after:
-										(this.props.range.end && XDate(this.props.range.end)) || '',
+										(this.props.range.end
+											&& unwrapToNativeDate(dayjs(new Date(this.props.range.end)))) || '',
 									before:
-										(this.props.range.start && XDate(this.props.range.start))
+										(this.props.range.start
+											&& unwrapToNativeDate(dayjs(new Date(this.props.range.start))))
 										|| '',
 								},
 								selectedDays,
@@ -444,7 +450,10 @@ class RangeInput extends Component {
 		);
 		const computeSliderRangeValues = {
 			...(this.props.queryFormat
-				? { start: new XDate(rangeStart), end: new XDate(rangeEnd) }
+				? {
+					start: unwrapToNativeDate(dayjs(new Date((rangeStart)))),
+					end: unwrapToNativeDate(dayjs(new Date((rangeEnd)))),
+				}
 				: this.props.range),
 		};
 

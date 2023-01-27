@@ -88,7 +88,7 @@ class SingleDataList extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 
 			if (this.props.showCount) {
@@ -586,7 +586,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.singleDataList}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

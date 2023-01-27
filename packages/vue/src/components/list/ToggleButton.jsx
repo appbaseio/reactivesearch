@@ -295,16 +295,19 @@ const mapDispatchtoProps = {
 	setCustomQuery,
 };
 
-export const ListConnected = PreferencesConsumer(
+export const TBConnected = PreferencesConsumer(
 	ComponentWrapper(connect(mapStateToProps, mapDispatchtoProps)(ToggleButton), {
 		componentType: componentTypes.toggleButton,
 	}),
 );
+TBConnected.parseValue = ToggleButton.parseValue;
+TBConnected.defaultQuery = ToggleButton.defaultQuery;
+TBConnected.name = ToggleButton.name;
 
-ToggleButton.install = function (Vue) {
-	Vue.component(ToggleButton.name, ListConnected);
+TBConnected.install = function (Vue) {
+	Vue.component(TBConnected.name, TBConnected);
 };
 // Add componentType for SSR
-ToggleButton.componentType = componentTypes.toggleButton;
+TBConnected.componentType = componentTypes.toggleButton;
 
-export default ToggleButton;
+export default TBConnected;

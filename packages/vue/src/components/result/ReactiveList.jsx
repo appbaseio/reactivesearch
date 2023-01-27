@@ -872,12 +872,17 @@ export const RLConnected = PreferencesConsumer(
 	}),
 );
 
-ReactiveList.install = function (Vue) {
-	Vue.component(ReactiveList.name, RLConnected);
+RLConnected.name = ReactiveList.name;
+
+RLConnected.generateQueryOptions = ReactiveList.generateQueryOptions;
+RLConnected.hasInternalComponent = ReactiveList.hasInternalComponent;
+
+RLConnected.install = function (Vue) {
+	Vue.component(RLConnected.name, RLConnected);
 	Vue.component(ResultListWrapper.name, ResultListWrapper);
 	Vue.component(ResultCardsWrapper.name, ResultCardsWrapper);
 };
 // Add componentType for SSR
-ReactiveList.componentType = componentTypes.reactiveList;
+RLConnected.componentType = componentTypes.reactiveList;
 
-export default ReactiveList;
+export default RLConnected;

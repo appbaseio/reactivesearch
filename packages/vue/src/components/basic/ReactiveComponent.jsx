@@ -17,7 +17,7 @@ import { ListConnected as SingleList } from '../list/SingleList.jsx';
 import { ListConnected as MultiList } from '../list/MultiList.jsx';
 import { ListConnected as SingleDropdownList } from '../list/SingleDropdownList.jsx';
 import { ListConnected as MultiDropdownList } from '../list/MultiDropdownList.jsx';
-import { ListConnected as ToggleButton } from '../list/ToggleButton.jsx';
+import { TBConnected as ToggleButton } from '../list/ToggleButton.jsx';
 import { RangeConnected as DynamicRangeSlider } from '../range/DynamicRangeSlider.jsx';
 import { RangeConnected as SingleRange } from '../range/SingleRange.jsx';
 import { RangeConnected as MultiRange } from '../range/MultiRange.jsx';
@@ -420,12 +420,11 @@ const RcConnected = PreferencesConsumer({
 		});
 	},
 });
-
-ReactiveComponent.install = function (Vue) {
-	Vue.component(ReactiveComponent.name, RcConnected);
-};
-
+RcConnected.name = ReactiveComponent.name;
+RcConnected.hasInternalComponent = ReactiveComponent.hasInternalComponent;
 // Add componentType for SSR
-ReactiveComponent.componentType = componentTypes.reactiveComponent;
-
-export default ReactiveComponent;
+RcConnected.componentType = componentTypes.reactiveComponent;
+RcConnected.install = function (Vue) {
+	Vue.component(RcConnected.name, RcConnected);
+};
+export default RcConnected;

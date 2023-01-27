@@ -1767,7 +1767,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.searchBox}
 				mode={preferenceProps.testMode ? 'test' : ''}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

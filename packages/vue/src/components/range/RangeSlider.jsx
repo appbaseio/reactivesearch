@@ -289,12 +289,17 @@ export const RangeConnected = PreferencesConsumer(
 		componentType: componentTypes.rangeSlider,
 	}),
 );
+RangeConnected.name = RangeSlider.name;
 
-RangeSlider.install = function (Vue) {
-	Vue.component(RangeSlider.name, RangeConnected);
+RangeConnected.defaultQuery = RangeSlider.defaultQuery;
+RangeConnected.parseValue = RangeSlider.parseValue;
+RangeConnected.hasInternalComponent = RangeSlider.hasInternalComponent;
+
+RangeConnected.install = function (Vue) {
+	Vue.component(RangeConnected.name, RangeConnected);
 };
 
 // Add componentType for SSR
-RangeSlider.componentType = componentTypes.rangeSlider;
+RangeConnected.componentType = componentTypes.rangeSlider;
 
-export default RangeSlider;
+export default RangeConnected;
