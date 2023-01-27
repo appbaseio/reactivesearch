@@ -18,8 +18,7 @@ const Main = () => (
 	<ReactiveBase
 		app="good-books,good-books-ds"
 		url="https://b59ca4ceab0d:00a2085f-8794-4a7e-96af-041f45332f0e@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-		enableAppbase
-		appbaseConfig={{
+		reactivesearchAPIConfig={{
 			recordAnalytics: true,
 			userId: 'jon',
 		}}

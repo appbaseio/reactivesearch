@@ -8,7 +8,6 @@ import {
 	checkSomePropChange,
 	getClassName,
 	updateCustomQuery,
-	getOptionsFromQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -16,7 +15,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import Title from '../../styles/Title';
 import Container from '../../styles/Container';
 import { UL, Checkbox } from '../../styles/FormControlList';
-import { connect, getRangeQueryWithNullValues, parseValueArray } from '../../utils';
+import { connect, parseValueArray } from '../../utils';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
@@ -54,17 +53,8 @@ class MultiRange extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
 
@@ -108,39 +98,14 @@ class MultiRange extends Component {
 	static parseValue = (value, props) =>
 		(value ? props.data.filter(item => value.includes(item.label)) : null);
 
-	static defaultQuery = (values, props) => {
-		const generateRangeQuery = (dataField, items) => {
-			if (items.length > 0) {
-				return items.map(value =>
-					getRangeQueryWithNullValues([value.start, value.end], props),
-				);
-			}
-			return null;
-		};
-
-		let query = null;
-
-		if (values && values.length) {
-			query = {
-				bool: {
-					should: generateRangeQuery(props.dataField, values),
-					minimum_should_match: 1,
-					boost: 1.0,
-				},
-			};
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			showMissing: props.showMissing,
+		},
+	});
 
 	selectItem = ({
 		item, isDefaultValue = false, props = this.props, hasMounted = true,
@@ -191,11 +156,9 @@ class MultiRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = MultiRange.defaultQuery(value, props);
+		const query = MultiRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 
@@ -276,7 +239,6 @@ MultiRange.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -321,7 +283,6 @@ const mapStateToProps = (state, props) => ({
 	selectedValue: state.selectedValues[props.componentId]
 		? state.selectedValues[props.componentId].value
 		: null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -344,7 +305,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.multiRange}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

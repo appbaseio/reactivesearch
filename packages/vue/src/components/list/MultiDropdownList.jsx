@@ -494,11 +494,15 @@ export const ListConnected = PreferencesConsumer(
 );
 ListConnected.name = MultiDropdownList.name;
 
+// Add componentType for SSR
+ListConnected.componentType = componentTypes.multiDropdownList;
+
+ListConnected.defaultQuery = MultiDropdownList.defaultQuery;
+ListConnected.generateQueryOptions = MultiDropdownList.generateQueryOptions;
+ListConnected.hasInternalComponent = MultiDropdownList.hasInternalComponent;
+
 ListConnected.install = function (Vue) {
 	Vue.component(ListConnected.name, ListConnected);
 };
-
-// Add componentType for SSR
-ListConnected.componentType = componentTypes.multiDropdownList;
 
 export default ListConnected;

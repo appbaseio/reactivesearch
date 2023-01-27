@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
+import { ReactiveBase, SearchBox } from '@appbaseio/reactivesearch';
 import { GeoDistanceDropdown, ReactiveGoogleMap } from '@appbaseio/reactivemaps';
 
 import { header, filters, listContainer, mapContainer } from '../styles';
@@ -10,7 +10,6 @@ export default () => (
 		<ReactiveBase
 			app="meetup_dataset"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			enableAppbase
 			mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			theme={{
 				typography: {
@@ -26,7 +25,7 @@ export default () => (
 				<h1>Who&apos;s in town</h1>
 
 				<div className={filters}>
-					<DataSearch
+					<SearchBox
 						componentId="search"
 						dataField={['group.group_topics.topic_name_raw', 'venue_name_ngrams']}
 						autosuggest={false}

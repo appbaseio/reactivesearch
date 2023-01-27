@@ -95,27 +95,6 @@ class ReactiveList extends Component {
 	}
 
 	componentDidMount() {
-		const {
-			aggregationField, distinctField, distinctFieldConfig, index, enableAppbase,
-		}
-			= this.props;
-
-		if (enableAppbase && aggregationField) {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-
 		let options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
@@ -821,8 +800,6 @@ class ReactiveList extends Component {
 			error,
 			loading: isLoading,
 			loadMore: this.loadMore,
-			// TODO: Remove in v4
-			triggerAnalytics: this.triggerClickAnalytics,
 			triggerClickAnalytics: this.triggerClickAnalytics,
 			...this.getData(),
 		};
@@ -940,7 +917,6 @@ ReactiveList.propTypes = {
 	settings: types.props,
 	error: types.title,
 	headers: types.headers,
-	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -1040,8 +1016,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
-	enableAppbase: state.config.enableAppbase,
-	queryLog: state.queryLog[props.componentId],
+	queryLog: state.queryLog[props.componentId] && state.queryLog[props.componentId][props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
@@ -1096,7 +1071,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.reactiveList}
 				{...preferenceProps}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

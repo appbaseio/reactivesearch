@@ -387,11 +387,10 @@ const RcConnected = PreferencesConsumer({
 	},
 });
 RcConnected.name = ReactiveComponent.name;
+RcConnected.hasInternalComponent = ReactiveComponent.hasInternalComponent;
+// Add componentType for SSR
+RcConnected.componentType = componentTypes.reactiveComponent;
 RcConnected.install = function (Vue) {
 	Vue.component(RcConnected.name, RcConnected);
 };
-
-// Add componentType for SSR
-RcConnected.componentType = componentTypes.reactiveComponent;
-
 export default RcConnected;

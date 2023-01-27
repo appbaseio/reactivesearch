@@ -1,14 +1,15 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	NumberBox,
-	// RangeSlider,
+	RangeSlider,
 	ReactiveList,
-	ResultCard,
+	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
+import { components } from './utils/index';
 
 const components = {
 	settings: {
@@ -21,7 +22,7 @@ const components = {
 		},
 		enableAppbase: true,
 	},
-	datasearch: {
+	searchbox: {
 		componentId: 'SearchSensor',
 		dataField: ['name', 'name.search'],
 		autosuggest: false,
@@ -96,19 +97,6 @@ const components = {
 			listItem: 'list-item',
 			image: 'image',
 		},
-		sortOptions: [
-			{
-				label: 'Bed Type',
-				dataField: 'bed_type',
-				sortBy: 'asc',
-			},
-			{
-				label: 'Bedrooms',
-				dataField: 'bedrooms',
-				sortBy: 'asc',
-			},
-		],
-		defaultSortOption: 'Bedrooms',
 	},
 };
 
@@ -118,17 +106,17 @@ export default class Main extends Component {
 			store: await initReactivesearch(
 				[
 					{
-						...components.datasearch,
-						source: DataSearch,
+						...components.searchbox,
+						source: SearchBox,
 					},
 					{
 						...components.numberbox,
 						source: NumberBox,
 					},
-					// {
-					// 	...components.rangeslider,
-					// 	source: RangeSlider,
-					// },
+					{
+						...components.rangeslider,
+						source: RangeSlider,
+					},
 					{
 						...components.resultcard,
 						source: ReactiveList,
@@ -146,16 +134,86 @@ export default class Main extends Component {
 				<ReactiveBase {...components.settings} initialState={this.props.store}>
 					<nav className="nav">
 						<div className="title">Airbeds</div>
-						<DataSearch {...components.datasearch} />
+						<SearchBox {...components.searchbox} />
 					</nav>
 					<div className="left-col">
 						<NumberBox {...components.numberbox} />
-						{/* <RangeSlider {...components.rangeslider} /> */}
+						<RangeSlider {...components.rangeslider} />
 					</div>
 
-					<ReactiveList {...components.resultcard} />
-				</ReactiveBase>
-			</div>
-		);
-	}
-}
+					<div className="search-container">
+						<SearchBox {...components.searchbox} />
+					</div>
+					<div className="sub-container">
+						<div className={isClicked ? 'left-bar-optional' : 'left-bar'}>
+							<div className="filter-heading center">
+								<b>
+									{' '}
+									<i className="fa fa-pied-piper-alt" /> Genres{' '}
+								</b>
+							</div>
+
+							<MultiList {...components.multiList} className="genres-filter" />
+							<hr className="blue" />
+
+							<div className="filter-heading center">
+								<b>
+									<i className="fa fa-star" /> Ratings
+								</b>
+							</div>
+							<RangeSlider {...components.rangeSlider} className="review-filter" />
+						</div>
+
+						<div
+							className={isClicked ? 'result-container-optional' : 'result-container'}
+						>
+							<SelectedFilters
+								showClearAll
+								clearAllLabel="Clear filters"
+								className="selected-filters"
+							/>
+							<ReactiveList {...components.resultcard} />
+						</div>
+					</div>
+				</div>
+			</ReactiveBase>
+			<button className="toggle-button" onClick={handleClick}>
+				{message}
+			</button>
+		</div>
+	);
+};
+
+// eslint-disable-next-line
+Main.getInitialProps = async ({ query }) => {
+	return {
+		store: await initReactivesearch(
+			[
+				{
+					...components.searchbox,
+					source: SearchBox,
+				},
+				{
+					...components.multiList,
+					source: MultiList,
+				},
+				{
+					...components.rangeSlider,
+					source: RangeSlider,
+				},
+				{
+					...components.resultcard,
+					source: ReactiveList,
+				},
+			],
+			query,
+			components.settings,
+		),
+	};
+};
+
+Main.propTypes = {
+	store: PropTypes.oneOf([PropTypes.object]),
+};
+
+export default Main;

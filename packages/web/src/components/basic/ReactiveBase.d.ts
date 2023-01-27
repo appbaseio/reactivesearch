@@ -23,8 +23,7 @@ export interface ReactiveBaseProps {
 	setSearchParams?: (newURL: string) => void;
 	initialQueriesSyncTime?: number;
 	analyticsConfig?: types.analyticsConfig;
-	appbaseConfig?: types.appbaseConfig;
-	enableAppbase?: boolean;
+	reactivesearchAPIConfig?: types.appbaseConfig;
 	initialState?: types.children;
 	analytics?: boolean;
 	endpoint?: types.endpointConfig;

@@ -11,7 +11,6 @@ import {
 	checkPropChange,
 	checkSomePropChange,
 	getClassName,
-	getOptionsFromQuery,
 	updateCustomQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
@@ -45,15 +44,6 @@ class NumberBox extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.value, prevProps.value, () => {
 			this.setValue(this.props.value, this.props);
@@ -64,51 +54,24 @@ class NumberBox extends Component {
 		checkPropChange(this.props.queryFormat, this.props.queryFormat, () => {
 			this.updateQuery(this.state.currentValue, this.props);
 		});
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
-			this.updateQuery(this.state.currentValue, this.props);
-		});
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField', 'aggregationSize'],
+			() => {
+				this.updateQuery(this.state.currentValue, this.props);
+			},
+		);
 	}
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		switch (props.queryFormat) {
-			case 'exact':
-				query = {
-					term: {
-						[props.dataField]: value,
-					},
-				};
-				break;
-			case 'lte':
-				query = {
-					range: {
-						[props.dataField]: {
-							lte: value,
-							boost: 2.0,
-						},
-					},
-				};
-				break;
-			default:
-				query = {
-					range: {
-						[props.dataField]: {
-							gte: value,
-							boost: 2.0,
-						},
-					},
-				};
-		}
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+		},
+	});
 
 	incrementValue = () => {
 		if (this.state.currentValue === this.props.data.end) {
@@ -161,11 +124,9 @@ class NumberBox extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = NumberBox.defaultQuery(value, props);
+		const query = NumberBox.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -224,7 +185,6 @@ NumberBox.propTypes = {
 	selectedValue: types.selectedValue,
 	setQueryOptions: types.funcRequired,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
@@ -265,7 +225,6 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -289,7 +248,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.numberBox}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

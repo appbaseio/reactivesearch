@@ -295,8 +295,18 @@ const ReactiveList = {
 			}
 		},
 		infiniteScroll(newVal, oldVal) {
+			if (newVal !== oldVal)
+			{
+				if (newVal && !this.pagination) {
+					window.addEventListener('scroll', this.scrollHandler);
+				} else {
+					window.removeEventListener('scroll', this.scrollHandler);
+				}
+			}
+		},
+		pagination(newVal, oldVal) {
 			if (newVal !== oldVal) {
-				if (!newVal) {
+				if (!newVal && this.infiniteScroll) {
 					window.addEventListener('scroll', this.scrollHandler);
 				} else {
 					window.removeEventListener('scroll', this.scrollHandler);
@@ -858,6 +868,9 @@ export const RLConnected = PreferencesConsumer(
 );
 
 RLConnected.name = ReactiveList.name;
+
+RLConnected.generateQueryOptions = ReactiveList.generateQueryOptions;
+RLConnected.hasInternalComponent = ReactiveList.hasInternalComponent;
 
 RLConnected.install = function (Vue) {
 	Vue.component(RLConnected.name, RLConnected);

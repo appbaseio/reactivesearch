@@ -1,12 +1,12 @@
 import React from 'react';
-import { DataSearch, SingleDropdownList, SingleDropdownRange } from '@appbaseio/reactivesearch';
+import { SearchBox, SingleDropdownList, SingleDropdownRange } from '@appbaseio/reactivesearch';
 
 import Flex, { FlexChild } from '../styles/Flex';
 
 const SearchFilters = () => (
 	<Flex responsive style={{ padding: '1rem' }}>
 		<FlexChild flex={2}>
-			<DataSearch
+			<SearchBox
 				componentId="title"
 				dataField={['title', 'text']}
 				highlight
