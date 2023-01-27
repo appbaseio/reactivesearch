@@ -20,17 +20,18 @@ const dateQuery = (value, props) => {
 			{
 				range: {
 					[props.dataField]: {
-						lte: moment(value).format('YYYYMMDD'),
+						lte: moment(value.end).valueOf(),
+						gte: moment(value.start).valueOf(),
 					},
 				},
 			},
 		];
 	}
-	return query;
+	return query ? { query: { bool: { must: query } } } : null;
 };
 
 const settings = {
-	app: 'airbeds-test-app',
+	app: 'airbnb-dev',
 	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
 	enableAppbase: true,
 };
@@ -47,13 +48,14 @@ const Main = props => (
 				<div className="col">
 					<DateRange
 						componentId="DateSensor"
-						dataField="date_from"
-						initialMonth={new Date('2017-05-05')}
+						dataField="available_from"
+						initialMonth={new Date('2021-05-05')}
 						customQuery={dateQuery}
 						defaultValue={{
-							start: '2017-05-05',
-							end: '2017-05-10',
+							start: new Date('2022-04-07'),
+							end: new Date('2022-05-26'),
 						}}
+						URLParams
 					/>
 				</div>
 
@@ -93,7 +95,8 @@ const Main = props => (
 							);
 						}}
 						react={{ and: ['DateSensor'] }}
-						showPagination
+						pagination
+						URLParams
 					/>
 				</div>
 			</div>
