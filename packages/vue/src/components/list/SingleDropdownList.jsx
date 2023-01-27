@@ -75,18 +75,13 @@ const SingleDropdownList = {
 		showSearch: VueTypes.bool.def(false),
 		showClear: VueTypes.bool.def(false),
 		showLoadMore: VueTypes.bool.def(false),
-		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
+		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.nullable]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
 		endpoint: types.endpointConfig,
 	},
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		const props = this.$props;
 		this.modifiedOptions
 			= this.options && this.options[props.dataField]
@@ -177,10 +172,10 @@ const SingleDropdownList = {
 		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
 		const { isLastBucket } = this.$data;
 		let selectAll = [];
-		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
-		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
-		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
-		const renderNoResults = this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+		const renderItemCalc = this.$slots.renderItem || renderItem;
+		const renderErrorCalc = this.$slots.renderError || renderError;
+		const renderLabelCalc = this.$slots.renderLabel || renderLabel;
+		const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 
 		if (renderErrorCalc && this.error) {
 			return isFunction(renderErrorCalc) ? renderErrorCalc(this.error) : renderErrorCalc;
@@ -231,9 +226,7 @@ const SingleDropdownList = {
 					hasCustomRenderer={this.hasCustomRenderer}
 					customRenderer={this.getComponent}
 					renderItem={renderItemCalc}
-					renderNoResults={
-						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
-					}
+					renderNoResults={this.$slots.renderNoResults || this.$props.renderNoResults}
 					themePreset={this.themePreset}
 					showSearch={this.$props.showSearch}
 					showClear={this.$props.showClear}
@@ -377,47 +370,16 @@ const SingleDropdownList = {
 		},
 	},
 };
-SingleDropdownList.defaultQuery = (value, props) => {
-	let query = null;
-	if (props.selectAllLabel && props.selectAllLabel === value) {
-		if (props.showMissing) {
-			query = { match_all: {} };
-		}
-		query = {
-			exists: {
-				field: props.dataField,
-			},
-		};
-	} else if (value) {
-		if (props.showMissing && props.missingLabel === value) {
-			query = {
-				bool: {
-					must_not: {
-						exists: { field: props.dataField },
-					},
-				},
-			};
-		}
-		query = {
-			term: {
-				[props.dataField]: value,
-			},
-		};
-	}
-
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-
-	return query;
-};
+SingleDropdownList.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		selectAllLabel: props.selectAllLabel,
+		showMissing: props.showMissing,
+	},
+});
 SingleDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
 	return props.showLoadMore
@@ -446,7 +408,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

@@ -1,10 +1,7 @@
-import Vue from "vue";
-import App from "./App.vue";
-import VueRs from "@appbaseio/reactivesearch-vue";
+import { createApp } from 'vue';
+import VueRs from '@appbaseio/reactivesearch-vue';
+import App from './App.vue';
 
-Vue.use(VueRs);
-Vue.config.productionTip = false;
-
-new Vue({
-  render: h => h(App)
-}).$mount("#app");
+const app = createApp(App);
+app.use(VueRs)
+app.mount('#app'); // Vue Instance - Root component

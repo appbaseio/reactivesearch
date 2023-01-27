@@ -1,7 +1,6 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
-
+import { css } from 'emotion';
 import Title from './Title';
 
 const container = css`
@@ -12,7 +11,7 @@ const container = css`
 	overflow: hidden;
 `;
 
-const smallImage = css`
+const smallImage = `
 	width: 100px;
 	height: 100px;
 `;
@@ -20,12 +19,12 @@ const smallImage = css`
 const Image = styled('div')`
 	width: 160px;
 	height: 160px;
-	${props => (props.small ? smallImage : null)};
+	${(props) => (props.small ? smallImage : null)};
 	margin: 0;
 	background-size: contain;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-image: ${props => `url(${props.src})`};
+	background-image: ${(props) => `url(${props.src})`};
 `;
 
 const ListItem = styled('a')`
@@ -45,7 +44,7 @@ const ListItem = styled('a')`
 			? lighten(0.3, theme.colors.backgroundColor)
 			: lighten(0.68, theme.colors.textColor)};
 	color: ${({ theme }) => theme.colors.textColor};
-	${props => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
+	${(props) => (props.href ? 'cursor: pointer' : null)}; all 0.3s ease;
 
 	&:hover, &:focus {
 		background-color: ${({ theme }) =>
@@ -71,13 +70,13 @@ const ListItem = styled('a')`
 	}
 
 	article {
-		width: ${props => {
+		width: ${(props) => {
 		if (props.image) {
 			return props.small ? 'calc(100% - 100px)' : 'calc(100% - 160px)';
 		}
 		return '100%';
 	}};
-		padding-left: ${props => (props.image ? '10px' : 0)};
+		padding-left: ${(props) => (props.image ? '10px' : 0)};
 		font-size: 0.9rem;
 	}
 

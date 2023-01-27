@@ -1,5 +1,6 @@
 import VueTypes from 'vue-types';
 import { helper } from '@appbaseio/reactivecore';
+
 import Button, { pagination } from '../../../styles/Button';
 import types from '../../../utils/vueTypes';
 
@@ -23,9 +24,8 @@ const Pagination = {
 		prevLabel: types.string,
 		nextLabel: types.string,
 	},
-	render(createElement, context) {
-		const { props } = context;
-
+	render(context) {
+		const props = context.$props;
 		const onPrevPage = () => {
 			if (props.currentPage) {
 				props.setPage(props.currentPage - 1);
@@ -111,8 +111,10 @@ const Pagination = {
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage === 0}
-					onKeyPress={(event) => handleA11yAction(event, onPrevPage)}
-					onClick={onPrevPage}
+					on={{
+						click: onPrevPage,
+						'key-press': (event) => handleA11yAction(event, onPrevPage),
+					}}
 					tabIndex="0"
 				>
 					{props.prevLabel || 'Prev'}
@@ -122,7 +124,9 @@ const Pagination = {
 						class={className}
 						primary={primary}
 						onKeyPress={(event) => handleA11yAction(event, () => props.setPage(0))}
-						onClick={() => props.setPage(0)}
+						on={{
+							click: () => props.setPage(0),
+						}}
 						tabIndex="0"
 					>
 						1
@@ -146,8 +150,10 @@ const Pagination = {
 				<Button
 					class={getClassName(props.innerClass, 'button') || ''}
 					disabled={props.currentPage >= props.totalPages - 1}
-					onKeyPress={(event) => handleA11yAction(event, onNextPage)}
-					onClick={onNextPage}
+					on={{
+						click: onNextPage,
+						'key-press': (event) => handleA11yAction(event, onNextPage),
+					}}
 					tabIndex="0"
 				>
 					{props.nextLabel || 'Next'}

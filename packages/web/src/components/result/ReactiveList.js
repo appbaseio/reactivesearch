@@ -1015,8 +1015,12 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
+<<<<<<< HEAD
 	queryLog:
 		state.queryLog[props.componentId] && state.queryLog[props.componentId][props.componentId],
+=======
+	queryLog: state.queryLog[props.componentId] && state.queryLog[props.componentId][props.componentId],
+>>>>>>> 9788c539d0ddc24d2144206518fe2995640cda6a
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],

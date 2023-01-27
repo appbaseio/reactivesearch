@@ -1,11 +1,10 @@
-import GmapVue, { components } from 'gmap-vue';
+import VueGoogleMaps, { Map } from 'vue-google-maps-community-fork';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import { css } from 'emotion';
 import { RMConnected } from './ReactiveMap.jsx';
 import GoogleMapMarkers from './GoogleMapMarkers.jsx';
 import types from '../../utils/vueTypes';
-
-const { MapLayer: Map } = components;
 
 const ReactiveGoogleMap = {
 	name: 'ReactiveGoogleMap',
@@ -41,6 +40,19 @@ const ReactiveGoogleMap = {
 		calculateMarkers: VueTypes.func,
 		highlightMarkerOnHover: VueTypes.bool.def(true),
 	},
+	computed: {
+		listeners() {
+			const onRE = /^on[^a-z]/;
+			const listeners = {};
+			const { $attrs } = this;
+			Object.keys($attrs).forEach((property) => {
+				if (onRE.test(property)) {
+					listeners[property] = $attrs[property];
+				}
+			});
+			return listeners;
+		},
+	},
 	methods: {
 		renderMap({
 			resultsToRender,
@@ -68,12 +80,15 @@ const ReactiveGoogleMap = {
 						style={{
 							height: '100%',
 						}}
+						class={css`
+							height: 100%;
+						`}
 						options={{
 							zoomControl: true,
 						}}
 						center={center}
 						zoom={zoom}
-						{...{ props: this.mapProps }}
+						{...this.mapProps}
 						onzoom_changed={handleZoomChange}
 						ondragend={handleOnDragEnd}
 						onidle={handleOnIdle}
@@ -87,20 +102,18 @@ const ReactiveGoogleMap = {
 								handlePreserveCenter={handlePreserveCenter}
 								highlightMarkerOnHover={this.highlightMarkerOnHover}
 								renderItem={
-									this.$scopedSlots.renderItem
+									this.$slots.renderItem
 										? () => ({
-											custom: this.$scopedSlots.renderItem,
+											custom: this.$slots.renderItem,
 										  })
 										: this.renderItem
 								}
 								defaultPin={defaultPin}
 								autoClosePopover={autoClosePopover}
-								renderPopover={this.$scopedSlots.renderPopover}
-								renderClusterPopover={this.$scopedSlots.renderClusterPopover}
+								renderPopover={this.$slots.renderPopover}
+								renderClusterPopover={this.$slots.renderClusterPopover}
 								showMarkerClusters={this.showMarkerClusters}
-								{...{
-									on: this.$listeners,
-								}}
+								{...this.listeners}
 							/>
 						) : null}
 					</Map>
@@ -122,6 +135,7 @@ const ReactiveGoogleMap = {
 				) {
 					clusterManagerInstance = currentInstance;
 					currentInstance = null;
+					// TODO: Check if $children works in vue 3
 				} else if (currentInstance.$children) {
 					[currentInstance] = currentInstance.$children;
 				} else {
@@ -171,8 +185,7 @@ const ReactiveGoogleMap = {
 				loader={this.loader}
 				calculateMarkers={this.calculateMarkers}
 				{...{
-					scopedSlots: this.$scopedSlots,
-					on: this.$listeners,
+					on: this.$attrs,
 				}}
 			/>
 		);
@@ -184,7 +197,7 @@ ReactiveGoogleMap.install = function (Vue, options) {
 	if (!options || !options.key) {
 		console.error('ReactiveSearch: map key is required to use ReactiveGoogleMap component');
 	}
-	Vue.use(GmapVue, {
+	Vue.use(VueGoogleMaps, {
 		load: {
 			key: options.key,
 			libraries: 'places',

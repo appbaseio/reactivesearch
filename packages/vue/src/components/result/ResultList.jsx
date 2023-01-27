@@ -26,14 +26,11 @@ const ResultList = {
 		return this.__state;
 	},
 	mounted() {
-		const children = this.$slots.default;
-
-		const ImageChild = children.find(
-			o => o.componentOptions && o.componentOptions.tag === ResultListImage.name,
-		);
-		if (ImageChild && ImageChild.componentOptions && ImageChild.componentOptions.propsData) {
+		const children = this.$slots.default();
+		const ImageChild = children.find((o) => o.type && o.type.name === ResultListImage.name);
+		if (ImageChild && ImageChild.props) {
 			this.hasImage = true;
-			if (ImageChild.componentOptions.propsData.small) {
+			if (ImageChild.props.small) {
 				this.isSmall = true;
 			}
 		}
@@ -51,13 +48,13 @@ const ResultList = {
 				rel={target === '_blank' ? 'noopener noreferrer' : null}
 				{...props}
 			>
-				{children}
+				{children()}
 			</ListItem>
 		);
 	},
 };
 
-ResultList.install = function(Vue) {
+ResultList.install = function (Vue) {
 	Vue.component(ResultList.name, ResultList);
 	Vue.component(ResultListContent.name, ResultListContent);
 	Vue.component(ResultListDescription.name, ResultListDescription);

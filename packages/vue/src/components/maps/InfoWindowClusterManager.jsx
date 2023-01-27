@@ -130,7 +130,7 @@ const InfoWindowClusterManager = {
 				<div ref="flyaway">
 					{/* so named because it will fly away to another component --> */}
 					{/* @slot Used to set your info window.  --> */}
-					{this.$scopedSlots.default()}
+					{this.$slots.default()}
 				</div>
 			</div>
 		);

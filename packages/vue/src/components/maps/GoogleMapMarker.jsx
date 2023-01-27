@@ -1,12 +1,10 @@
-import { components } from 'gmap-vue';
+import { Marker } from 'vue-google-maps-community-fork';
 import { Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';
 import MarkerWithLabel from './MarkerWithLabel.jsx';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import { MapPin, MapPinArrow, mapPinWrapper } from './addons/styles';
-
-const { Marker } = components;
 
 const { recordResultClick } = Actions;
 
@@ -155,7 +153,7 @@ const GoogleMapMarker = {
 						handleMouseOut={this.removeMarkerZIndex}
 						handleClick={this.openMarker}
 						zIndex={markerProps.zIndex}
-						{...{ props: customMarkerProps }}
+						{...customMarkerProps}
 						renderMarker={() => (
 							<div css={mapPinWrapper}>
 								<MapPin>{data.label}</MapPin>
@@ -178,7 +176,7 @@ const GoogleMapMarker = {
 						handleMouseOver={this.increaseMarkerZIndex}
 						handleMouseOut={this.removeMarkerZIndex}
 						zIndex={markerProps.zIndex}
-						{...{ props: customMarkerProps }}
+						{...customMarkerProps}
 						renderMarker={() => (
 							<div css={mapPinWrapper}>
 								{typeof data.custom === 'function'
@@ -199,10 +197,10 @@ const GoogleMapMarker = {
 			<Marker
 				key={marker._id}
 				zIndex={markerProps.zIndex}
-				onclick={() => this.openMarker()}
-				onmouseover={this.increaseMarkerZIndex}
-				onmouseout={this.removeMarkerZIndex}
-				{...{ props: customMarkerProps }}
+				onClick={() => this.openMarker()}
+				onMouseover={this.increaseMarkerZIndex}
+				onMouseout={this.removeMarkerZIndex}
+				{...customMarkerProps}
 				position={getPosition(marker)}
 				options={{
 					metaData: marker,

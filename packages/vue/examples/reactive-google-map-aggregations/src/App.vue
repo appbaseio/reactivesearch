@@ -3,7 +3,6 @@
 		<reactive-base
 			app="earthquakes"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:enable-appbase="true"
 		>
 			<div class="row">
 				<div class="col">
@@ -31,9 +30,8 @@
 						@zoom-changed="handleZoomChange"
 						:auto-close-popover="true"
 					>
-						<div
-							slot="renderItem"
-							slot-scope="{ doc_count }"
+						<template
+							#renderItem="{ doc_count }"
 							:style="{
 								background: 'dodgerblue',
 								color: '#fff',
@@ -45,10 +43,10 @@
 						>
 							<i class="fas fa-globe-europe" />
 							&nbsp;{{ doc_count }}
-						</div>
-						<div slot="renderPopover" slot-scope="{ doc_count }">
+						</template>
+						<template #renderPopover="{ doc_count }">
 							{{ doc_count }}
-						</div>
+						</template>
 					</reactive-google-map>
 				</div>
 			</div>
@@ -62,8 +60,8 @@ export default {
 	name: 'app',
 	methods: {
 		handleCalculateMarkers({ rawData }) {
-			const markers = rawData?.aggregations?.results?.buckets?.map(bucket => ({
-				...bucket,
+			const markers = rawData && rawData.aggregations && rawData.aggregations.results.buckets.map(bucket => ({
+			...bucket,
 				_id: bucket.key,
 				location: bucket.cetroid.location
 			}))

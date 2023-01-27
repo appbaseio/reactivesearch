@@ -1,5 +1,5 @@
-
 import VueTypes from 'vue-types';
+
 import MicSvg from '../../shared/MicSvg';
 import MuteSvg from '../../shared/MuteSvg';
 import ListenSvg from '../../shared/ListenSvg';
@@ -15,6 +15,7 @@ const STATUS = {
 };
 
 const Mic = {
+
 	name: 'Mic',
 	props: {
 		children: types.title,
@@ -78,8 +79,8 @@ const Mic = {
 					}
 					this.results.push({ results, timeStamp });
 				};
-				this.instance.onnomatch = e => (onNoMatch ? onNoMatch(e) : console.warn(e));
-				this.instance.onerror = e => {
+				this.instance.onnomatch = (e) => (onNoMatch ? onNoMatch(e) : console.warn(e));
+				this.instance.onerror = (e) => {
 					if (e.error === 'no-speech' || e.error === 'audio-capture') {
 						this.status = STATUS.inactive;
 					} else if (e.error === 'not-allowed') {
@@ -139,15 +140,10 @@ const Mic = {
 		}
 	},
 	render() {
-
 		if (this.hasCustomRenderer) {
 			return this.getComponent();
 		}
-		return (
-			<IconWrapper>
-				{this.Icon}
-			</IconWrapper>
-		);
+		return <IconWrapper>{this.Icon}</IconWrapper>;
 	},
 };
 

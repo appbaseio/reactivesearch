@@ -85,7 +85,7 @@ const RangeInput = {
 			return false;
 		},
 		isControlled() {
-			if (this.$props.value && this.$listeners) {
+			if (this.$props.value && this.$attrs) {
 				return true;
 			}
 			return false;
@@ -101,15 +101,16 @@ const RangeInput = {
 								end: this.$props.range ? this.$props.range.end : 10,
 							};
 						}
-						this.$data.currentValue = { ...currentValue };
-						this.$emit('change', this.$data.currentValue);
+
+						this.currentValue = currentValue;
+						this.$emit('change', this.currentValue);
 						break;
 					case 'value-change':
-						this.$emit('valueChange', this.$data.currentValue);
-						this.$emit('value-change', this.$data.currentValue);
+						this.$emit('valueChange', this.currentValue);
+						this.$emit('value-change', this.currentValue);
 						break;
 					default:
-						this.$data.currentValue = { ...currentValue };
+						this.currentValue = { ...currentValue };
 						break;
 				}
 			}
@@ -124,29 +125,29 @@ const RangeInput = {
 			const { name, value } = e.target;
 			if (Number.isNaN(value)) {
 				if (name === 'start') {
-					this.$data.isStartValid = false;
+					this.isStartValid = false;
 				} else {
-					this.$data.isEndValid = false;
+					this.isEndValid = false;
 				}
-			} else if (name === 'start' && !this.$data.isStartValid) {
-				this.$data.isStartValid = true;
-			} else if (name === 'end' && !this.$data.isEndValid) {
-				this.$data.isEndValid = true;
+			} else if (name === 'start' && !this.isStartValid) {
+				this.isStartValid = true;
+			} else if (name === 'end' && !this.isEndValid) {
+				this.isEndValid = true;
 			}
 
-			if (this.$data.isStartValid && this.$data.isEndValid) {
+			if (this.isStartValid && this.isEndValid) {
 				if (name === 'start') {
 					this.handleChange(
 						{
 							start: Number(value),
-							end: this.$data.currentValue.end,
+							end: this.currentValue.end,
 						},
 						'change',
 					);
 				} else {
 					this.handleChange(
 						{
-							start: this.$data.currentValue.start,
+							start: this.currentValue.start,
 							end: Number(value),
 						},
 						'change',
@@ -228,8 +229,10 @@ const RangeInput = {
 					URLParams={URLParams}
 					sliderOptions={sliderOptions}
 					nestedField={nestedField}
-					on-change={this.handleOnChange}
-					on-value-change={this.handleValueChange}
+					on={{
+						change: this.handleOnChange,
+						'value-change': this.handleValueChange,
+					}}
 				/>
 				<Flex class={getClassName(innerClass, 'input-container') || ''}>
 					<Flex direction="column" flex={2}>
@@ -237,18 +240,16 @@ const RangeInput = {
 							key={`${componentId}-start-value`}
 							name="start"
 							type="number"
-							onChange={this.handleInputChange}
+							on={{
+								change: this.handleInputChange,
+							}}
 							step={stepValue}
 							themePreset={themePreset}
 							aria-label={`${componentId}-start-input`}
 							min={this.$props.range ? this.$props.range.start : 0}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isStartValid}
-							{...{
-								domProps: {
-									value: this.currentValue.start,
-								},
-							}}
+							value={this.currentValue.start || 0}
 						/>
 						{!this.isStartValid && <Content alert>Input range is invalid</Content>}
 					</Flex>
@@ -260,18 +261,16 @@ const RangeInput = {
 							key={`${componentId}-end-value`}
 							name="end"
 							type="number"
-							onChange={this.handleInputChange}
+							on={{
+								change: this.handleInputChange,
+							}}
 							step={stepValue}
 							themePreset={themePreset}
 							aria-label={`${componentId}-end-input`}
 							max={this.$props.range ? this.$props.range.end : 10}
 							class={getClassName(innerClass, 'input') || ''}
 							alert={!this.isEndValid}
-							{...{
-								domProps: {
-									value: this.currentValue.end,
-								},
-							}}
+							value={this.currentValue.end || 0}
 						/>
 						{!this.isEndValid && <Content alert>Input range is invalid</Content>}
 					</Flex>

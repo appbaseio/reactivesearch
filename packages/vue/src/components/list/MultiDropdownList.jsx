@@ -78,18 +78,13 @@ const MultiDropdownList = {
 		showSearch: VueTypes.bool.def(false),
 		showClear: VueTypes.bool.def(false),
 		showLoadMore: VueTypes.bool.def(false),
-		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.any]).def('Load More'),
+		loadMoreLabel: VueTypes.oneOfType([VueTypes.string, VueTypes.nullable]).def('Load More'),
 		nestedField: types.string,
 		index: VueTypes.string,
 		searchPlaceholder: VueTypes.string.def('Type here to search...'),
 		endpoint: types.endpointConfig,
 	},
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		const props = this.$props;
 		this.modifiedOptions
 			= this.options && this.options[props.dataField]
@@ -185,11 +180,11 @@ const MultiDropdownList = {
 
 	render() {
 		const { showLoadMore, loadMoreLabel, renderItem, renderError, renderLabel } = this.$props;
-		const renderItemCalc = this.$scopedSlots.renderItem || renderItem;
-		const renderErrorCalc = this.$scopedSlots.renderError || renderError;
-		const renderLabelCalc = this.$scopedSlots.renderLabel || renderLabel;
+		const renderItemCalc = this.$slots.renderItem || renderItem;
+		const renderErrorCalc = this.$slots.renderError || renderError;
+		const renderLabelCalc = this.$slots.renderLabel || renderLabel;
 		const { isLastBucket } = this.$data;
-		const renderNoResults = this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
+		const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
 		let selectAll = [];
 
 		if (renderErrorCalc && this.error) {
@@ -243,9 +238,7 @@ const MultiDropdownList = {
 					showCount={this.$props.showCount}
 					themePreset={this.themePreset}
 					renderItem={renderItemCalc}
-					renderNoResults={
-						this.$scopedSlots.renderNoResults || this.$props.renderNoResults
-					}
+					renderNoResults={this.$slots.renderNoResults || this.$props.renderNoResults}
 					showSearch={this.$props.showSearch}
 					showClear={this.$props.showClear}
 					searchPlaceholder={this.$props.searchPlaceholder}
@@ -446,90 +439,16 @@ const MultiDropdownList = {
 	},
 };
 
-MultiDropdownList.defaultQuery = (value, props) => {
-	let query = null;
-	let { queryFormat } = props;
-	if (queryFormat === undefined) {
-		queryFormat = 'or';
-	}
-	const type = queryFormat === 'or' ? 'terms' : 'term';
-
-	if (!Array.isArray(value) || value.length === 0) {
-		return null;
-	}
-
-	if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
-		if (props.showMissing) {
-			query = { match_all: {} };
-		} else {
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		}
-	} else if (value) {
-		let listQuery;
-		if (queryFormat === 'or') {
-			if (props.showMissing) {
-				const hasMissingTerm = value.includes(props.missingLabel);
-				let should = [
-					{
-						[type]: {
-							[props.dataField]: value.filter((item) => item !== props.missingLabel),
-						},
-					},
-				];
-				if (hasMissingTerm) {
-					should = should.concat({
-						bool: {
-							must_not: {
-								exists: { field: props.dataField },
-							},
-						},
-					});
-				}
-				listQuery = {
-					bool: {
-						should,
-					},
-				};
-			} else {
-				listQuery = {
-					[type]: {
-						[props.dataField]: value,
-					},
-				};
-			}
-		} else {
-			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = value.map((item) => ({
-				[type]: {
-					[props.dataField]: item,
-				},
-			}));
-			listQuery = {
-				bool: {
-					must: queryArray,
-				},
-			};
-		}
-
-		query = value.length ? listQuery : null;
-	}
-
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-	return query;
-};
+MultiDropdownList.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		selectAllLabel: props.selectAllLabel,
+		showMissing: props.showMissing,
+	},
+});
 
 MultiDropdownList.generateQueryOptions = (props, after) => {
 	const queryOptions = getQueryOptions(props);
@@ -558,7 +477,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

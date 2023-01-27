@@ -1,10 +1,8 @@
 import VueTypes from 'vue-types';
-import { components } from 'gmap-vue';
+import { GMapCluster } from 'vue-google-maps-community-fork';
 import ClusterManager from './ClusterManager.jsx';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import GoogleMapMarker from './GoogleMapMarker.jsx';
-
-const { Cluster } = components;
 
 const GoogleMapMarkers = {
 	name: 'GoogleMapMarkers',
@@ -70,10 +68,8 @@ const GoogleMapMarkers = {
 		if (this.showMarkerClusters) {
 			return (
 				<div>
-					<Cluster
-						{...{
-							props: this.clusterProps,
-						}}
+					<GMapCluster
+						{...this.clusterProps}
 						onclick={(cluster) => {
 							const markers = cluster.markers.map((i) => i.metaData);
 							this.clickedCluster = cluster;
@@ -93,10 +89,10 @@ const GoogleMapMarkers = {
 							renderPopover={markerProps.renderPopover}
 							highlightMarkerOnHover={markerProps.highlightMarkerOnHover}
 							{...{
-								on: this.$listeners,
+								on: this.$attrs,
 							}}
 						/>
-					</Cluster>
+					</GMapCluster>
 					{this.clickedCluster && this.renderClusterPopover ? (
 						<InfoWindowWrapper
 							id="cluster"
@@ -129,10 +125,8 @@ const GoogleMapMarkers = {
 					<GoogleMapMarker
 						index={index}
 						marker={marker}
-						{...{
-							props: markerProps,
-							on: this.$listeners,
-						}}
+						{...markerProps}
+						{...this.$attrs}
 					/>
 				))}
 			</div>

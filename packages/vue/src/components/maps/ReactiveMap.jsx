@@ -647,7 +647,7 @@ const ReactiveMap = {
 			this.$emit('search-as-move', this.searchAsMove);
 		},
 		renderErrorComponent() {
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			if (renderError && this.error && !this.isLoading) {
 				return isFunction(renderError) ? renderError(this.error) : renderError;
 			}
@@ -805,7 +805,7 @@ const ReactiveMap = {
 		);
 	},
 	render() {
-		const loader = this.$scopedSlots.loader || this.$props.loader;
+		const loader = this.$slots.loader || this.$props.loader;
 		return (
 			<div style={{ ...style, ...this.$props.style }} class={this.$props.className}>
 				{this.renderErrorComponent()}

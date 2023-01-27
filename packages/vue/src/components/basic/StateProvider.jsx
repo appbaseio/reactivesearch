@@ -220,7 +220,7 @@ const StateProvider = {
 	},
 	render() {
 		const { searchState } = this;
-		const dom = this.$scopedSlots.default;
+		const dom = this.$slots.default;
 		return dom ? dom({ searchState, setSearchState: this.setSearchState }) : null;
 	},
 };

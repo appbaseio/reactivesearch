@@ -1,7 +1,6 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
-const open = css`
+const open = `
 	top: 0.55em;
 	transform: rotate(-45deg);
 `;
@@ -20,7 +19,7 @@ const Chevron = styled('span')`
 		vertical-align: top;
 		width: 0.45em;
 
-		${props => (props.open ? open : null)};
+		${(props) => (props.open ? open : null)};
 	}
 `;
 
