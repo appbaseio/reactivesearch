@@ -52,12 +52,7 @@ const Main = (props) => {
 		>
 			<div className="row">
 				<div className="col">
-					<SearchBox
-						componentId="SearchBox"
-						dataField="original_title"
-						URLParams
-						defaultValue="harry"
-					/>
+					<SearchBox componentId="SearchBox" dataField="original_title" URLParams />
 					<MultiList
 						componentId="BookSensor"
 						dataField="original_series.keyword"
