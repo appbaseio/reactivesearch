@@ -7,7 +7,7 @@ import {
 	SearchBox,
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
-import { getServerState } from '@appbaseio/reactivesearch/lib/server';
+import getServerState from '@appbaseio/reactivesearch/lib/server';
 
 const Main = (props) => {
 	function booksReactiveList(data) {

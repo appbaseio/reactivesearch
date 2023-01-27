@@ -2,7 +2,7 @@ import Express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { renderStylesToString } from 'emotion-server';
-import { getServerState } from '@appbaseio/reactivesearch/lib/server';
+import getServerState from '@appbaseio/reactivesearch/lib/server';
 
 import App from '../common/App';
 

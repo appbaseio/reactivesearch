@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 import Layout from '../components/Layout';
 import BookCard from '../components/BookCard';
-import { getServerState } from '../../../lib/server';
+import getServerState from '../../../lib/server';
 
 const settings = {
 	app: 'good-books-ds',
