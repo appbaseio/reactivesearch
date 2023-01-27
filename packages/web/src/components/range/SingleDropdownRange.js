@@ -42,16 +42,6 @@ class SingleDropdownRange extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { config, index } = this.props;
-		const { enableAppbase } = config;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, prevProps);
@@ -78,23 +68,14 @@ class SingleDropdownRange extends Component {
 	// parses range label to get start and end
 	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (value) {
-			query = getRangeQueryWithNullValues([value.start, value.end], props);
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			showMissing: props.showMissing,
+		},
+	});
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let currentValue = value;
@@ -125,11 +106,9 @@ class SingleDropdownRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = SingleDropdownRange.defaultQuery(value, props);
+		const query = SingleDropdownRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions, false);

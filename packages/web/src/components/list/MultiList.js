@@ -78,15 +78,6 @@ class MultiList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField, options } = this.props;
@@ -198,79 +189,16 @@ class MultiList extends Component {
 		return buckets;
 	};
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		const type = props.queryFormat === 'or' ? 'terms' : 'term';
-
-		if (!Array.isArray(value) || value.length === 0) {
-			return null;
-		}
-
-		if (props.selectAllLabel && value.includes(props.selectAllLabel)) {
-			if (props.showMissing) {
-				query = { match_all: {} };
-			} else {
-				query = {
-					exists: {
-						field: props.dataField,
-					},
-				};
-			}
-		} else if (value) {
-			let listQuery;
-			if (props.queryFormat === 'or') {
-				let should = [
-					{
-						[type]: {
-							[props.dataField]: value.filter(item => item !== props.missingLabel),
-						},
-					},
-				];
-				if (props.showMissing) {
-					const hasMissingTerm = value.includes(props.missingLabel);
-					if (hasMissingTerm) {
-						should = should.concat({
-							bool: {
-								must_not: {
-									exists: { field: props.dataField },
-								},
-							},
-						});
-					}
-				}
-				listQuery = {
-					bool: {
-						should,
-					},
-				};
-			} else {
-				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => ({
-					[type]: {
-						[props.dataField]: item,
-					},
-				}));
-				listQuery = {
-					bool: {
-						must: queryArray,
-					},
-				};
-			}
-
-			query = value.length ? listQuery : null;
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			selectAllLabel: props.selectAllLabel,
+			showMissing: props.showMissing,
+		},
+	});
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		const { selectAllLabel } = props;
@@ -342,11 +270,9 @@ class MultiList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = MultiList.defaultQuery(value, props);
+		const query = MultiList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, {
@@ -603,15 +529,8 @@ class MultiList extends Component {
 									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 								>
 									<span>
-
-										<span>
-											{selectAllLabel}
-										</span>
-										{showCount ? (
-											<span>
-												{total}
-											</span>)
-											: null}
+										<span>{selectAllLabel}</span>
+										{showCount ? <span>{total}</span> : null}
 									</span>
 								</label>
 							</li>
@@ -699,7 +618,6 @@ MultiList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	enableAppbase: types.bool,
 	total: types.number,
 	// component props
 	beforeValueChange: types.func,
@@ -779,7 +697,6 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

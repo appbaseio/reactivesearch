@@ -5,8 +5,8 @@
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "3.43.7",
-		"emotion-server": "^11.0.0",
+		"@appbaseio/reactivesearch": "4.0.0-alpha.1",
+		"emotion-server": "^10.0.27",
 		"moment": "^2.29.4",
 		"next": "^13.0.7",
 		"prop-types": "^15.6.1",

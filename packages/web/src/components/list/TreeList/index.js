@@ -95,7 +95,6 @@ const TreeList = (props) => {
 		showCheckbox,
 		showRadio,
 		dataField,
-		enableAppbase,
 		index,
 		sortBy,
 		renderError,
@@ -357,12 +356,6 @@ const TreeList = (props) => {
 
 	useEffect(() => {
 		hasMounted.current = true;
-
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 	}, []);
 
 	const handleInputChange = (e) => {
@@ -563,7 +556,6 @@ TreeList.propTypes = {
 	value: types.stringArray,
 	customQuery: types.func,
 	defaultQuery: types.func,
-	enableAppbase: types.bool,
 	index: types.string,
 	showFilter: types.bool,
 	URLParams: types.bool,
@@ -615,13 +607,15 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
 	isLoading: state.isLoading[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	setQueryOptions: (component, props) => dispatch(setQueryOptionsAction(component, props)),
 	updateQuery: updateQueryObject => dispatch(updateQueryAction(updateQueryObject)),
 });
+
+// Add componentType for SSR
+TreeList.componentType = componentTypes.treeList;
 
 const ConnectedComponent = connect(
 	mapStateToProps,

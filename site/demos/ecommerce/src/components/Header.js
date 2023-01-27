@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategorySearch } from '@appbaseio/reactivesearch';
+import { SearchBox } from '@appbaseio/reactivesearch';
 
 import Navbar, { title } from '../styles/Navbar';
 import Flex, { FlexChild } from '../styles/Flex';
@@ -10,7 +10,7 @@ export default () => (
 		<Flex alignCenter responsive justifyContent="space-between">
 			<FlexChild className={title}>Car Store</FlexChild>
 			<FlexChild className={categorySearchContainer}>
-				<CategorySearch
+				<SearchBox
 					dataField="model"
 					categoryField="brand.keyword"
 					componentId="category"

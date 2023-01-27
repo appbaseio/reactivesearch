@@ -61,15 +61,6 @@ class TagCloud extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { buckets } = this.props.options[this.props.dataField];
@@ -115,45 +106,17 @@ class TagCloud extends Component {
 		}
 	}
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		let type = props.queryFormat === 'or' ? 'terms' : 'term';
-		type = props.multiSelect ? type : 'term';
-		if (value) {
-			let listQuery;
-			if (!props.multiSelect || props.queryFormat === 'or') {
-				listQuery = {
-					[type]: {
-						[props.dataField]: value,
-					},
-				};
-			} else {
-				// adds a sub-query with must as an array of objects for each term/value
-				const queryArray = value.map(item => ({
-					[type]: {
-						[props.dataField]: item,
-					},
-				}));
-				listQuery = {
-					bool: {
-						must: queryArray,
-					},
-				};
-			}
-
-			query = value.length ? listQuery : null;
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			selectAllLabel: props.selectAllLabel,
+			showMissing: props.showMissing,
+			multiSelect: props.multiSelect,
+		},
+	});
 
 	setValue = (value, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let { currentValue } = this.state;
@@ -321,7 +284,6 @@ TagCloud.propTypes = {
 	setCustomQuery: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -384,7 +346,6 @@ const mapStateToProps = (state, props) => {
 			|| null,
 		isLoading: state.isLoading[props.componentId],
 		error: state.error[props.componentId],
-		enableAppbase: state.config.enableAppbase,
 	};
 };
 

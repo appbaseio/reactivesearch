@@ -35,7 +35,6 @@ class Main extends React.Component {
 			<ReactiveBase
 				app="meetup_dataset"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-				enableAppbase
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 			>
 				<h2>Polylines on ReactiveMap</h2>
@@ -76,3 +75,4 @@ class Main extends React.Component {
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));
+));

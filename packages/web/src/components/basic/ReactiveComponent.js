@@ -27,8 +27,6 @@ import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import SingleList from '../list/SingleList';
 import ReactiveList from '../result/ReactiveList';
-import DataSearch from '../search/DataSearch';
-import CategorySearch from '../search/CategorySearch';
 import SearchBox from '../search/SearchBox';
 import MultiList from '../list/MultiList';
 import SingleDataList from '../list/SingleDataList';
@@ -74,7 +72,6 @@ class ReactiveComponent extends Component {
 
 			let queryToBeSet = obj.query;
 
-			// when enableAppbase is true, Backend throws error because of repeated query in request body
 			if (obj && obj.query && obj.query.query) {
 				queryToBeSet = obj.query.query;
 			}
@@ -149,30 +146,8 @@ class ReactiveComponent extends Component {
 			filterLabel,
 			showFilter,
 			URLParams,
-			aggregationField,
-			config,
-			distinctField,
-			distinctFieldConfig,
-			index,
 		} = this.props;
 		const initialValue = selectedValue || value || defaultValue || null;
-		const { enableAppbase } = config;
-
-		if (enableAppbase && aggregationField) {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 
 		if (customQuery) {
 			const calcCustomQuery = customQuery(this.props.selectedValue, this.props);
@@ -427,10 +402,6 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 					return <TreeList {...preferenceProps} />;
 				case componentTypes.reactiveList:
 					return <ReactiveList {...preferenceProps} />;
-				case componentTypes.dataSearch:
-					return <DataSearch {...preferenceProps} />;
-				case componentTypes.categorySearch:
-					return <CategorySearch {...preferenceProps} />;
 				case componentTypes.searchBox:
 					return <SearchBox {...preferenceProps} />;
 				// list components

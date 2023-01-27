@@ -1,11 +1,7 @@
 import React, { useContext } from 'react';
 import { connect as connectToStore } from 'react-redux';
 import dayjs from 'dayjs';
-import {
-	isEqual,
-	isValidDateRangeQueryFormat,
-	isFunction,
-} from '@appbaseio/reactivecore/lib/utils/helper';
+import { isEqual, isValidDateRangeQueryFormat } from '@appbaseio/reactivecore/lib/utils/helper';
 import { validProps } from '@appbaseio/reactivecore/lib/utils/constants';
 
 export const ReactReduxContext = React.createContext(null);
@@ -17,7 +13,7 @@ export const ReduxGetStateContext = React.createContext(null);
 /**
  * This exported connect expects two args (mapStateToProps, mapStateToDispatch).
  * If we don't want to pass any of them, then we need to explicityly pass as null.
-*/
+ */
 export const connect = (...args) => connectToStore(...args, null, { context: ReactReduxContext });
 
 export const X_SEARCH_CLIENT = 'ReactiveSearch React';
@@ -79,27 +75,6 @@ export const getNullValuesQuery = fieldName => ({
 	},
 });
 
-export const getRangeQueryWithNullValues = (value, props) => {
-	let query = null;
-	const rangeQuery = {
-		range: {
-			[props.dataField]: {
-				gte: value[0],
-				lte: value[1],
-				boost: 2.0,
-			},
-		},
-	};
-	if (props.includeNullValues) {
-		query = {
-			bool: {
-				should: [rangeQuery, getNullValuesQuery(props.dataField)],
-			},
-		};
-	} else query = rangeQuery;
-	return query;
-};
-
 // parses current array (i.e. this.props.value) for `onChange` callback for multi-* components
 export function parseValueArray(originalArr = [], currentValue) {
 	const newValue = Object.assign([], originalArr);
@@ -125,32 +100,6 @@ export const isQueryIdentical = (value = null, props = {}, prevProps = {}, key) 
 	if (typeof props[key] !== 'function' || typeof prevProps[key] !== 'function') return true;
 	// to not call original defaultQuery and customQuery, as here we are only comparing
 	return isEqual(props[key](value, props), prevProps[key](value, prevProps));
-};
-
-/**
- * To determine whether a component has renderPopularSuggestions prop defined or not
- * @returns {Boolean}
- */
-export const hasPopularSuggestionsRenderer = (props = {}) => {
-	// TODO: Remove renderQuerySuggestions in v4
-	const { renderQuerySuggestions, renderPopularSuggestions } = props;
-	return isFunction(renderPopularSuggestions || renderQuerySuggestions);
-};
-
-/**
- * Extracts the renderPopularSuggestions prop from props and returns a valid React element
- * @param {Object} data
- * @param {Object} props
- */
-export const getPopularSuggestionsComponent = (data = {}, props = {}) => {
-	// TODO: Remove renderQuerySuggestions in v4
-	const { renderQuerySuggestions, renderPopularSuggestions } = props;
-	const renderFunc = renderPopularSuggestions || renderQuerySuggestions;
-	// Render function as render prop
-	if (isFunction(renderFunc)) {
-		return renderFunc(data);
-	}
-	return null;
 };
 
 export const isEmpty = val => !(val && val.length && Object.keys(val).length);
@@ -226,8 +175,13 @@ export function extractModifierKeysFromFocusShortcuts(focusShortcutsArray) {
 // this pertains to the convention that internally our components uses numerics for local state
 export function getNumericRangeValue(value, isDateType) {
 	try {
-		if (isDateType && value !== undefined && value !== null && dayjs(new Date((value))).isValid()) {
-			return dayjs(new Date((value))).valueOf();
+		if (
+			isDateType
+			&& value !== undefined
+			&& value !== null
+			&& dayjs(new Date(value)).isValid()
+		) {
+			return dayjs(new Date(value)).valueOf();
 		}
 		return parseFloat(value);
 	} catch (e) {
@@ -238,7 +192,7 @@ export function getNumericRangeValue(value, isDateType) {
 
 export const formatDateString = (date, format) => {
 	try {
-		return dayjs(new Date((date))).format(format || 'YYYY-MM-DD[T]HH:mm:ss');
+		return dayjs(new Date(date)).format(format || 'YYYY-MM-DD[T]HH:mm:ss');
 	} catch (e) {
 		return date;
 	}

@@ -110,14 +110,6 @@ class RangeSlider extends Component {
 			componentTypes.rangeSlider,
 		);
 	}
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
 
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(
@@ -240,23 +232,14 @@ class RangeSlider extends Component {
 			: getNumericRangeArray(props.range, props.queryFormat);
 	};
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (Array.isArray(value) && value.length) {
-			query = getRangeQueryWithNullValues(value, props);
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			showMissing: props.showMissing,
+		},
+	});
 
 	getSnapPoints = () => {
 		let snapPoints = [];
@@ -424,11 +407,9 @@ class RangeSlider extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = RangeSlider.defaultQuery(value, props);
+		const query = RangeSlider.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		const { showFilter } = props;
@@ -557,7 +538,6 @@ RangeSlider.propTypes = {
 	options: types.options,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -637,7 +617,6 @@ const mapStateToProps = (state, props) => {
 		selectedValue: state.selectedValues[props.componentId]
 			? state.selectedValues[props.componentId].value
 			: null,
-		enableAppbase: state.config.enableAppbase,
 	};
 };
 

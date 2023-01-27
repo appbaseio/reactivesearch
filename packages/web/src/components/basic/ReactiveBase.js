@@ -36,28 +36,6 @@ class ReactiveBase extends Component {
 		this.setStore(props);
 	}
 
-	componentDidMount() {
-		const { analyticsConfig, analytics } = this.props;
-		// TODO: Remove in 4.0
-		if (analyticsConfig !== undefined) {
-			console.warn(
-				'Warning(ReactiveSearch): The `analyticsConfig` prop has been marked as deprecated, please use the `appbaseConfig` prop instead.',
-			);
-		}
-		// TODO: Remove in 4.0
-		if (analytics !== undefined) {
-			console.warn(
-				'Warning(ReactiveSearch): The `analytics` prop has been marked as deprecated, please set the `recordAnalytics` property as `true` in `appbaseConfig` prop instead.',
-			);
-		}
-
-		if (!this.props.enableAppbase && this.props.endpoint instanceof Object) {
-			console.warn(
-				'Warning(ReactiveSearch): The `endpoint` prop works only when `enableAppbase` prop is set to true.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(
 			this.props,
@@ -79,14 +57,9 @@ class ReactiveBase extends Component {
 				}));
 			},
 		);
-		checkSomePropChange(this.props, prevProps, ['analyticsConfig'], () => {
+		checkSomePropChange(this.props, prevProps, ['reactivesearchAPIConfig'], () => {
 			if (this.store) {
-				this.store.dispatch(updateAnalyticsConfig(this.props.analyticsConfig));
-			}
-		});
-		checkSomePropChange(this.props, prevProps, ['appbaseConfig'], () => {
-			if (this.store) {
-				this.store.dispatch(updateAnalyticsConfig(this.props.appbaseConfig));
+				this.store.dispatch(updateAnalyticsConfig(this.props.reactivesearchAPIConfig));
 			}
 		});
 	}
@@ -105,18 +78,16 @@ class ReactiveBase extends Component {
 
 	get headers() {
 		const {
-			enableAppbase, headers, appbaseConfig, mongodb, endpoint,
+			headers, reactivesearchAPIConfig, mongodb, endpoint,
 		} = this.props;
-		const { enableTelemetry } = appbaseConfig || {};
+		const { enableTelemetry } = reactivesearchAPIConfig || {};
 		return {
-			...(enableAppbase
-				&& !mongodb && {
+			...(!mongodb && {
 				'X-Search-Client': X_SEARCH_CLIENT,
 				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			}),
 			...headers,
-			...(enableAppbase
-				&& endpoint
+			...(endpoint
 				&& endpoint.headers && {
 				...endpoint.headers,
 			}),
@@ -129,12 +100,8 @@ class ReactiveBase extends Component {
 		const credentials
 			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
-		const appbaseConfig = {
-			...props.analyticsConfig, // TODO: remove in 4.0
-			...props.appbaseConfig,
-		};
 		let url = props.url && props.url.trim() !== '' ? props.url : '';
-		if (props.enableAppbase && props.endpoint instanceof Object) {
+		if (props.endpoint instanceof Object) {
 			if (props.endpoint.url) {
 				url = props.endpoint.url;
 			} else {
@@ -149,16 +116,14 @@ class ReactiveBase extends Component {
 			credentials,
 			type: this.type,
 			transformRequest: props.transformRequest,
-			analytics: props.appbaseConfig
-				? props.appbaseConfig.recordAnalytics
-				: !!props.analytics,
-			enableAppbase: props.enableAppbase,
-			analyticsConfig: appbaseConfig,
+			analytics: props.reactivesearchAPIConfig
+				? props.reactivesearchAPIConfig.recordAnalytics
+				: true,
+			analyticsConfig: props.reactivesearchAPIConfig,
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 			mongodb: props.mongodb,
-			...(props.enableAppbase
-				&& props.endpoint instanceof Object && { endpoint: props.endpoint }),
+			...(props.endpoint instanceof Object && { endpoint: props.endpoint }),
 		};
 
 		let queryParams = '';
@@ -196,14 +161,12 @@ class ReactiveBase extends Component {
 			}
 		});
 
-		const { themePreset, enableAppbase, endpoint } = props;
+		const { themePreset, endpoint, reactivesearchAPIConfig } = props;
 
 		const appbaseRef = Appbase(config);
 
 		appbaseRef.transformRequest = (request) => {
-			const modifiedRequest = enableAppbase
-				? transformRequestUsingEndpoint(request, endpoint)
-				: request;
+			const modifiedRequest = transformRequestUsingEndpoint(request, endpoint);
 			if (this.props.transformRequest) return this.props.transformRequest(modifiedRequest);
 			return modifiedRequest;
 		};
@@ -213,7 +176,7 @@ class ReactiveBase extends Component {
 			credentials: appbaseRef.credentials,
 			// When endpoint prop is used index is not defined, so we use _default
 			index: appbaseRef.app || '_default',
-			globalCustomEvents: appbaseConfig && appbaseConfig.customEvents,
+			globalCustomEvents: reactivesearchAPIConfig && reactivesearchAPIConfig.customEvents,
 		};
 
 		try {
@@ -289,7 +252,6 @@ ReactiveBase.defaultProps = {
 	initialState: {},
 	graphQLUrl: '',
 	as: 'div',
-	enableAppbase: false,
 	endpoint: null,
 };
 
@@ -312,9 +274,7 @@ ReactiveBase.propTypes = {
 	className: types.string,
 	initialState: types.children,
 	analytics: types.bool,
-	enableAppbase: types.bool,
-	analyticsConfig: types.analyticsConfig,
-	appbaseConfig: types.appbaseConfig,
+	reactivesearchAPIConfig: types.appbaseConfig,
 	graphQLUrl: types.string,
 	transformResponse: types.func,
 	getSearchParams: types.func,

@@ -9,9 +9,9 @@
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"@appbaseio/analytics": "^1.0.0",
+		"@appbaseio/reactivesearch": "4.0.0-alpha.1",
 		"react-scripts": "5.0.1",
-		"web-vitals": "^2.1.4",
-		"@appbaseio/reactivesearch": "3.43.7"
+		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
 		"start": "react-scripts start",

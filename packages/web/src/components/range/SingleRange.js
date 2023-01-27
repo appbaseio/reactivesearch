@@ -41,15 +41,6 @@ class SingleRange extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
@@ -75,23 +66,14 @@ class SingleRange extends Component {
 	// parses range label to get start and end
 	static parseValue = (value, props) => props.data.find(item => item.label === value) || null;
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (value) {
-			query = getRangeQueryWithNullValues([value.start, value.end], props);
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			showMissing: props.showMissing,
+		},
+	});
 
 	setValue = (value, props = this.props, hasMounted = true) => {
 		const currentValue
@@ -119,11 +101,9 @@ class SingleRange extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = SingleRange.defaultQuery(value, props);
+		const query = SingleRange.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -202,7 +182,6 @@ SingleRange.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	className: types.string,
@@ -246,7 +225,6 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

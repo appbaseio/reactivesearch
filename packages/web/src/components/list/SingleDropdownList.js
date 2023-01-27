@@ -64,15 +64,6 @@ class SingleDropdownList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkPropChange(this.props.options, prevProps.options, () => {
 			const { showLoadMore, dataField } = this.props;
@@ -144,45 +135,16 @@ class SingleDropdownList extends Component {
 		}
 	}
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (props.selectAllLabel && props.selectAllLabel === value) {
-			if (props.showMissing) {
-				query = { match_all: {} };
-			}
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		} else if (value) {
-			if (props.showMissing && props.missingLabel === value) {
-				query = {
-					bool: {
-						must_not: {
-							exists: { field: props.dataField },
-						},
-					},
-				};
-			}
-			query = {
-				term: {
-					[props.dataField]: value,
-				},
-			};
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			selectAllLabel: props.selectAllLabel,
+			showMissing: props.showMissing,
+		},
+	});
 
 	setValue = (value, props = this.props, hasMounted = true) => {
 		const performUpdate = () => {
@@ -207,11 +169,9 @@ class SingleDropdownList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = SingleDropdownList.defaultQuery(value, props);
+		const query = SingleDropdownList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -395,7 +355,6 @@ SingleDropdownList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	error: types.title,
 	isLoading: types.bool,
-	enableAppbase: types.bool,
 	total: types.number,
 	// component props
 	beforeValueChange: types.func,
@@ -479,7 +438,6 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({

@@ -1,11 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
-import {
-	ReactiveBase,
-	CategorySearch,
-	SelectedFilters,
-	ReactiveList,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, SearchBox, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
 
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
@@ -18,9 +13,8 @@ const settings = {
 	enableAppbase: true,
 };
 
-const categorySearchProps = {
+const searchBoxProps = {
 	dataField: ['original_title', 'original_title.search'],
-	categoryField: 'authors.keyword',
 	componentId: 'BookSensor',
 	defaultValue: 'Harry',
 };
@@ -43,8 +37,8 @@ export default class Main extends Component {
 			store: await initReactivesearch(
 				[
 					{
-						...categorySearchProps,
-						source: CategorySearch,
+						...searchBoxProps,
+						source: SearchBox,
 					},
 					{
 						...reactiveListProps,
@@ -59,11 +53,11 @@ export default class Main extends Component {
 
 	render() {
 		return (
-			<Layout title="SSR | CategorySearch">
+			<Layout title="SSR | SearchBox">
 				<ReactiveBase {...settings} initialState={this.props.store}>
 					<div className="row">
 						<div className="col">
-							<CategorySearch {...categorySearchProps} />
+							<SearchBox {...searchBoxProps} />
 						</div>
 
 						<div className="col">
