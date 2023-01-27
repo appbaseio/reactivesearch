@@ -6,7 +6,6 @@ import {
 	checkValueChange,
 	checkSomePropChange,
 	getClassName,
-	formatDate,
 	getOptionsFromQuery,
 	updateCustomQuery,
 } from '@appbaseio/reactivecore/lib/utils/helper';
@@ -15,6 +14,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import XDate from 'xdate';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
+import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
@@ -291,7 +291,13 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props}>
+	<PreferencesConsumer
+		userProps={{
+			...props,
+			// eslint-disable-next-line react/prop-types
+			...(!props.queryFormat ? { queryFormat: dateFormats.epoch_millis } : {}),
+		}}
+	>
 		{preferenceProps => (
 			<ComponentWrapper
 				{...preferenceProps}
