@@ -55,7 +55,6 @@ async function handleRender(req, res) {
 			}
 		});
 		// Create a new store instance and wait for results
-
 		const store = await getServerState(
 			props => <App settings={settings} {...props} />,
 			queryParams,

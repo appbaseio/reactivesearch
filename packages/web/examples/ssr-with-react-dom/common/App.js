@@ -16,7 +16,6 @@ const settings = {
 const searchBoxProps = {
 	dataField: ['original_title', 'original_title.search'],
 	componentId: 'BookSensor',
-	defaultValue: 'Harry',
 	URLParams: true,
 };
 const multiListProps = {
