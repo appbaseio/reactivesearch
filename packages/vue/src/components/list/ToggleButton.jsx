@@ -300,6 +300,8 @@ export const TBConnected = PreferencesConsumer(
 		componentType: componentTypes.toggleButton,
 	}),
 );
+TBConnected.parseValue = ToggleButton.parseValue;
+TBConnected.defaultQuery = ToggleButton.defaultQuery;
 TBConnected.name = ToggleButton.name;
 
 TBConnected.install = function (Vue) {

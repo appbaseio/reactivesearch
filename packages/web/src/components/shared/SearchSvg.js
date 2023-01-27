@@ -1,4 +1,4 @@
-import { object } from 'prop-types';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 import React from 'react';
 
 const SearchSvg = (props = {}) => (
@@ -26,8 +26,7 @@ const SearchSvg = (props = {}) => (
 	</svg>
 );
 SearchSvg.propTypes = {
-	// eslint-disable-next-line
-	style: object,
+	style: types.style,
 };
 
 export default SearchSvg;

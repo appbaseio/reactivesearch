@@ -289,6 +289,10 @@ export const RangeConnected = PreferencesConsumer(
 );
 RangeConnected.name = MultiRange.name;
 
+RangeConnected.defaultQuery = MultiRange.defaultQuery;
+RangeConnected.parseValue = MultiRange.parseValue;
+RangeConnected.hasInternalComponent = MultiRange.hasInternalComponent;
+
 RangeConnected.install = function (Vue) {
 	Vue.component(RangeConnected.name, RangeConnected);
 };

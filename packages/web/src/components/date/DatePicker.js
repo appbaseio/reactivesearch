@@ -8,10 +8,11 @@ import {
 	getClassName,
 	getOptionsFromQuery,
 	updateCustomQuery,
+	unwrapToNativeDate,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import XDate from 'xdate';
+import dayjs from 'dayjs';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
 import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
@@ -44,7 +45,7 @@ class DatePicker extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () =>
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () =>
 			this.updateQuery(
 				this.state.currentDate ? this.formatInputDate(this.state.currentDate) : null,
 				this.props,
@@ -61,7 +62,7 @@ class DatePicker extends Component {
 		}
 	}
 
-	formatInputDate = date => new XDate(date).toString('yyyy-MM-dd');
+	formatInputDate = date => dayjs(new Date(date)).format('YYYY-MM-DD');
 
 	static defaultQuery = (value, props) => ({
 		query: {
@@ -119,7 +120,7 @@ class DatePicker extends Component {
 		hasMounted = true,
 	) => {
 		// currentDate should be valid or empty string for resetting the query
-		if (isDefaultValue && !new XDate(currentDate).valid() && currentDate.length) {
+		if (isDefaultValue && !dayjs(new Date(currentDate)).isValid() && currentDate.length) {
 			console.error(`DatePicker: ${props.componentId} invalid value passed for date`);
 		} else {
 			let value = null;
@@ -191,7 +192,7 @@ class DatePicker extends Component {
 					<DayPickerInput
 						showOverlay={this.props.focused}
 						formatDate={this.formatInputDate}
-						value={this.state.currentDate}
+						value={unwrapToNativeDate(this.state.currentDate)}
 						placeholder={this.props.placeholder}
 						dayPickerProps={{
 							numberOfMonths: this.props.numberOfMonths,
@@ -304,7 +305,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.datePicker}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

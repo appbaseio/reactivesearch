@@ -789,6 +789,7 @@ class ReactiveList extends Component {
 			settings: this.props.settings,
 			triggerExportCSV: this.triggerExportCSV,
 			triggerExportJSON: this.triggerExportJSON,
+			setPage: this.setPage,
 		};
 	};
 
@@ -1070,7 +1071,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.reactiveList}
 				{...preferenceProps}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
