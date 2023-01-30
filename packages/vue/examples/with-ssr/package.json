@@ -10,13 +10,7 @@
 		"postinstall": "nuxt prepare"
 	},
 	"dependencies": {
-<<<<<<< HEAD
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.0",
-		"core-js": "^3.15.1",
-		"nuxt": "^3.0.0"
-=======
 		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2"
->>>>>>> next
 	},
 	"devDependencies": {
 		"nuxt": "^3.0.0",

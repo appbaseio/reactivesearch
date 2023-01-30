@@ -8,11 +8,7 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
-<<<<<<< HEAD
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.0",
-=======
 		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2",
->>>>>>> next
 		"vue": "^2.7.7"
 	},
 	"devDependencies": {
