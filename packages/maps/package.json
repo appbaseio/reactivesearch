@@ -33,7 +33,7 @@
 		"ngeohash": "^0.6.3",
 		"prop-types": "^15.6.0",
 		"react-leaflet": "^2.1.3",
-		"@appbaseio/rheostat": "^1.0.0-alpha.2"
+		"@appbaseio/rheostat": "^1.0.0-alpha.15"
 	},
 	"peerDependencies": {
 		"@appbaseio/reactivesearch": ">=3.43.1",
@@ -41,7 +41,7 @@
 		"react-dom": ">=15"
 	},
 	"devDependencies": {
-		"@appbaseio/reactivesearch": ">=3.43.1",
+		"@appbaseio/reactivesearch": ">=4.0.0-alpha.0",
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.0",
 		"babel-loader": "^7.1.2",

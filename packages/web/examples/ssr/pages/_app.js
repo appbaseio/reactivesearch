@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import './styles/airbnb.css';
+import './styles/movies.css';
 import '../components/index.css';
 
 export default function MyApp({ Component, pageProps }) {

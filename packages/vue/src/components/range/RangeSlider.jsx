@@ -269,6 +269,10 @@ export const RangeConnected = PreferencesConsumer(
 );
 RangeConnected.name = RangeSlider.name;
 
+RangeConnected.defaultQuery = RangeSlider.defaultQuery;
+RangeConnected.parseValue = RangeSlider.parseValue;
+RangeConnected.hasInternalComponent = RangeSlider.hasInternalComponent;
+
 RangeConnected.install = function (Vue) {
 	Vue.component(RangeConnected.name, RangeConnected);
 };

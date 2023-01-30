@@ -18,7 +18,6 @@ const Main = () => {
 			style={{
 				position: 'relative',
 			}}
-			enableAppbase
 			mapLibraries={['visualization', 'places']}
 		>
 			<h2>Weather updates on ReactiveMap</h2>

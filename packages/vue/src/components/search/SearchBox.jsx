@@ -1247,6 +1247,8 @@ const SearchBox = defineComponent({
 	},
 });
 
+SearchBox.hasInternalComponent = () => true;
+
 SearchBox.defaultQuery = (value, props) => {
 	let finalQuery = null;
 
@@ -1314,6 +1316,11 @@ export const SBConnected = PreferencesConsumer(
 	}),
 );
 SBConnected.name = SearchBox.name;
+
+SBConnected.defaultQuery = SearchBox.defaultQuery;
+SBConnected.shouldQuery = SearchBox.shouldQuery;
+SBConnected.hasInternalComponent = SearchBox.hasInternalComponent;
+
 SBConnected.install = function (Vue) {
 	Vue.component(SBConnected.name, SBConnected);
 };

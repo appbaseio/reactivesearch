@@ -25,6 +25,7 @@ import {
 	isFunction,
 	debounce,
 	parseHits,
+	checkSomePropChange,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import {
 	connect,
@@ -89,6 +90,10 @@ class ReactiveChart extends React.Component {
 				options: this.transformOptions(this.props.options, this.props),
 			});
 		}
+		checkSomePropChange(this.props, prevProps, ['dataField', 'aggregationSize'], () => {
+			this.updateDefaultQuery();
+			this.updateQuery(this.state.currentValue, this.props);
+		});
 		if (!isQueryIdentical(this.state.currentValue, this.props, prevProps, 'defaultQuery')) {
 			this.updateDefaultQuery();
 			// Clear the component value
@@ -189,11 +194,9 @@ class ReactiveChart extends React.Component {
 	};
 	updateQuery = (value, props, execute = true) => {
 		const { customQuery } = props;
-		let query = ReactiveChart.defaultQuery(value, props);
+		const query = ReactiveChart.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(
@@ -335,6 +338,7 @@ class ReactiveChart extends React.Component {
 					contextmenu: onContextMenu,
 					datazoom: this.handleRange,
 				}}
+				notMerge
 			/>
 		);
 	}
@@ -345,54 +349,14 @@ ReactiveChart.generateQueryOptions = (props, after, value = {}) => {
 	return getAggsQuery(value, queryOptions, props);
 };
 
-ReactiveChart.defaultQuery = (value, props) => {
-	let query = null;
-	const type = props.queryFormat === 'or' ? 'terms' : 'term';
-
-	if (value) {
-		let listQuery;
-		if (props.queryFormat === 'or') {
-			const should = [
-				{
-					[type]: {
-						[props.dataField]: value,
-					},
-				},
-			];
-			listQuery = {
-				bool: {
-					should,
-				},
-			};
-		} else {
-			const currentValue = Array.isArray(value) ? value : [value];
-			// adds a sub-query with must as an array of objects for each term/value
-			const queryArray = currentValue.map(item => ({
-				[type]: {
-					[props.dataField]: item,
-				},
-			}));
-			listQuery = {
-				bool: {
-					must: queryArray,
-				},
-			};
-		}
-
-		query = value ? listQuery : null;
-	}
-
-	if (query && props.nestedField) {
-		return {
-			nested: {
-				path: props.nestedField,
-				query,
-			},
-		};
-	}
-
-	return query;
-};
+ReactiveChart.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+	},
+});
 
 ReactiveChart.GetScatterChartOptions = `({
 	data,
@@ -868,7 +832,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 					size={size}
 					dataField={dataField}
 				>
-					{() => (
+					{componentProps => (
 						<ConnectedComponent
 							{...preferenceProps}
 							size={size}
@@ -876,6 +840,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 							aggregationSize={aggregationSize}
 							dataField={dataField}
 							myForwardedRef={ref}
+							{...componentProps}
 						/>
 					)}
 				</ComponentWrapper>

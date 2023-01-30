@@ -70,15 +70,6 @@ class SingleList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
 		checkPropChange(prevProps.options, this.props.options, () => {
 			const { showLoadMore, dataField, options } = this.props;
@@ -125,7 +116,7 @@ class SingleList extends Component {
 			this.updateQueryOptions(this.props),
 		);
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQueryOptions(this.props);
 			this.updateQuery(this.state.currentValue, this.props);
 		});
@@ -159,43 +150,16 @@ class SingleList extends Component {
 		return buckets;
 	};
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (props.selectAllLabel && props.selectAllLabel === value) {
-			if (props.showMissing) {
-				query = { match_all: {} };
-			}
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		} else if (value) {
-			query = {
-				term: {
-					[props.dataField]: value,
-				},
-			};
-			if (props.showMissing && props.missingLabel === value) {
-				query = {
-					bool: {
-						must_not: {
-							exists: { field: props.dataField },
-						},
-					},
-				};
-			}
-		}
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			selectAllLabel: props.selectAllLabel,
+			showMissing: props.showMissing,
+		},
+	});
 
 	setValue = (nextValue, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let value = nextValue;
@@ -226,11 +190,9 @@ class SingleList extends Component {
 
 	updateQuery = (value, props) => {
 		const { customQuery } = props;
-		let query = SingleList.defaultQuery(value, props);
+		const query = SingleList.defaultQuery(value, props);
 		let customQueryOptions;
 		if (customQuery) {
-			({ query } = customQuery(value, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(value, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(
@@ -545,7 +507,6 @@ SingleList.propTypes = {
 	setCustomQuery: types.funcRequired,
 	isLoading: types.bool,
 	error: types.title,
-	enableAppbase: types.bool,
 	total: types.number,
 	// component props
 	beforeValueChange: types.func,
@@ -627,7 +588,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId],
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -654,7 +614,10 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.singleList}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						<ConnectedComponent {...preferenceProps} {...componentProps} myForwardedRef={ref} />
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

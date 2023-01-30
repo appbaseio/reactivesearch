@@ -11,7 +11,11 @@
 		"generate": "nuxt generate"
 	},
 	"dependencies": {
+<<<<<<< HEAD
 		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.0",
+=======
+		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2",
+>>>>>>> next
 		"cross-env": "^5.2.0",
 		"nuxt": "^3.0.0"
 	},

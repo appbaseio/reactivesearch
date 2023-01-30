@@ -84,8 +84,8 @@ const ToggleButton = {
 					: null;
 
 				if (
-					!isEqual(currentValue, this.selectedValue)
-					&& !isEqual(oldVal, this.selectedValue)
+					!isEqual(currentValue, this.selectedValue) &&
+					!isEqual(oldVal, this.selectedValue)
 				) {
 					this.handleToggle(this.selectedValue || [], true, this.$props);
 				}
@@ -183,9 +183,9 @@ const ToggleButton = {
 		handleClick(item) {
 			const { enableStrictSelection, multiSelect } = this.$props;
 			if (
-				enableStrictSelection
-				&& !multiSelect
-				&& this.$data.currentValue.find((stateItem) => isEqual(item, stateItem))
+				enableStrictSelection &&
+				!multiSelect &&
+				this.$data.currentValue.find((stateItem) => isEqual(item, stateItem))
 			) {
 				return false;
 			}
@@ -259,9 +259,9 @@ ToggleButton.defaultQuery = (value, props) => ({
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+		(state.selectedValues[props.componentId] &&
+			state.selectedValues[props.componentId].value) ||
+		null,
 	componentProps: state.props[props.componentId],
 });
 
@@ -276,6 +276,8 @@ export const TBConnected = PreferencesConsumer(
 		componentType: componentTypes.toggleButton,
 	}),
 );
+TBConnected.parseValue = ToggleButton.parseValue;
+TBConnected.defaultQuery = ToggleButton.defaultQuery;
 TBConnected.name = ToggleButton.name;
 
 TBConnected.install = function (Vue) {

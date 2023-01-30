@@ -5,24 +5,24 @@
 	"main": "index.js",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "3.43.6",
+		"@appbaseio/reactivesearch": "4.0.0-alpha.1",
 		"emotion-server": "^10.0.27",
 		"moment": "^2.29.4",
-		"next": "^12.1.5",
+		"next": "^13.0.7",
 		"prop-types": "^15.6.1",
-		"react": "^18.0.2",
-		"react-dom": "^18.0.2"
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
-		"@babel/core": "^7.19.3",
+		"@babel/core": "^7.20.5",
 		"babel-eslint": "^8.2.2",
-		"babel-loader": "^8.2.5",
-		"babel-plugin-direct-import": "^0.5.0",
-		"babel-plugin-emotion": "^10.0.33",
+		"babel-loader": "^9.1.0",
+		"babel-plugin-direct-import": "^1.0.0",
+		"babel-plugin-emotion": "^10.2.2",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-preset-env": "^1.6.1",
+		"babel-preset-env": "^1.7.0",
 		"@babel/preset-react": "^7.18.6"
 	},
 	"scripts": {

@@ -26,7 +26,7 @@ class Main extends Component {
 							defaultQuery={() => ({
 								query: { match_all: {} },
 							})}
-							aggregationField="brand.keyword"
+							distinctField="brand.keyword"
 						>
 							{props => <CustomComponent {...props} />}
 						</ReactiveComponent>

@@ -4,5 +4,8 @@ import App from './App.vue';
 
 const app = createApp(App);
 app.use(VueRs);
+<<<<<<< HEAD
 app.config.warnHandler = () => {};
+=======
+>>>>>>> next
 app.mount('#app'); // Vue Instance - Root component

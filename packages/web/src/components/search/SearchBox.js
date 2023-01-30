@@ -19,7 +19,6 @@ import {
 	withClickIds,
 	updateCustomQuery,
 	updateDefaultQuery,
-	normalizeDataField,
 	getComponent as getComponentUtilFunc,
 	isFunction,
 	hasCustomRenderer,
@@ -185,138 +184,16 @@ const SearchBox = (props) => {
 		props.triggerAnalytics(searchPosition, docId);
 	};
 
-	const shouldQuery = (value, dataFields, props) => {
-		const finalQuery = [];
-		const phrasePrefixFields = [];
-		const fields = dataFields.map((dataField) => {
-			const queryField = `${dataField.field}${
-				dataField.weight ? `^${dataField.weight}` : ''
-			}`;
-			if (
-				!(
-					dataField.field.endsWith('.keyword')
-					|| dataField.field.endsWith('.autosuggest')
-					|| dataField.field.endsWith('.search')
-				)
-			) {
-				phrasePrefixFields.push(queryField);
-			}
-			return queryField;
-		});
-		if (props.searchOperators || props.queryString) {
-			return {
-				query: value,
-				fields,
-				default_operator: props.queryFormat,
-			};
-		}
-
-		if (props.queryFormat === 'and') {
-			finalQuery.push({
-				multi_match: {
-					query: value,
-					fields,
-					type: 'cross_fields',
-					operator: 'and',
-				},
-			});
-			finalQuery.push({
-				multi_match: {
-					query: value,
-					fields,
-					type: 'phrase',
-					operator: 'and',
-				},
-			});
-			if (phrasePrefixFields.length > 0) {
-				finalQuery.push({
-					multi_match: {
-						query: value,
-						fields: phrasePrefixFields,
-						type: 'phrase_prefix',
-						operator: 'and',
-					},
-				});
-			}
-			return finalQuery;
-		}
-
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'best_fields',
-				operator: 'or',
-				fuzziness: props.fuzziness ? props.fuzziness : 0,
-			},
-		});
-
-		finalQuery.push({
-			multi_match: {
-				query: value,
-				fields,
-				type: 'phrase',
-				operator: 'or',
-			},
-		});
-
-		if (phrasePrefixFields.length > 0) {
-			finalQuery.push({
-				multi_match: {
-					query: value,
-					fields: phrasePrefixFields,
-					type: 'phrase_prefix',
-					operator: 'or',
-				},
-			});
-		}
-
-		return finalQuery;
-	};
-
-	const searchBoxDefaultQuery = (value, props) => {
-		let finalQuery = null;
-
-		const fields = normalizeDataField(props.dataField, props.fieldWeights);
-		if (value) {
-			if (props.queryString) {
-				finalQuery = {
-					query_string: shouldQuery(value, fields, props),
-				};
-			} else if (props.searchOperators) {
-				finalQuery = {
-					simple_query_string: shouldQuery(value, fields, props),
-				};
-			} else {
-				finalQuery = {
-					bool: {
-						should: shouldQuery(value, fields, props),
-						minimum_should_match: '1',
-					},
-				};
-			}
-		}
-
-		if (value === '') {
-			finalQuery = {
-				bool: {
-					should: shouldQuery(value, fields, props),
-					minimum_should_match: '1',
-				},
-			};
-		}
-
-		if (finalQuery && props.nestedField) {
-			finalQuery = {
-				nested: {
-					path: props.nestedField,
-					query: finalQuery,
-				},
-			};
-		}
-		return finalQuery;
-	};
-
+	const searchBoxDefaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			queryString: props.queryString,
+			searchOperators: props.searchOperators,
+		},
+	});
 	// fires query to fetch suggestion
 	const triggerDefaultQuery = (paramValue) => {
 		if (!props.autosuggest) {
@@ -943,9 +820,6 @@ const SearchBox = (props) => {
 			console.warn(
 				'Warning(ReactiveSearch): The `categoryField` prop is not supported when `mode` prop is set to `tag`',
 			);
-		}
-		if (!props.enableAppbase) {
-			throw new Error('enableAppbase is required to be true when using SearchBox component.');
 		}
 		const currentLocalValue = selectedValue || value || defaultValue || '';
 
@@ -1585,7 +1459,6 @@ SearchBox.propTypes = {
 	error: types.title,
 	isLoading: types.bool,
 	time: types.number,
-	enableAppbase: types.bool,
 	rawData: types.rawData,
 	aggregationData: types.aggregationData,
 	// component props
@@ -1737,7 +1610,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
@@ -1751,6 +1623,9 @@ const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 });
+
+// Add componentType for SSR
+SearchBox.componentType = componentTypes.searchBox;
 
 const ConnectedComponent = connect(
 	mapStateToProps,
@@ -1767,7 +1642,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.searchBox}
 				mode={preferenceProps.testMode ? 'test' : ''}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

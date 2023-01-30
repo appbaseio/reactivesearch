@@ -31,8 +31,6 @@ import DynamicRangeSlider from './components/range/DynamicRangeSlider';
 import RangeInput from './components/range/RangeInput';
 import RatingsFilter from './components/range/RatingsFilter';
 
-import DataSearch from './components/search/DataSearch';
-import CategorySearch from './components/search/CategorySearch';
 import SearchBox from './components/search/SearchBox';
 
 import ReactiveList from './components/result/ReactiveList';
@@ -74,9 +72,6 @@ export {
 	DynamicRangeSlider,
 	RangeInput,
 	RatingsFilter,
-	// search
-	DataSearch,
-	CategorySearch,
 	SearchBox,
 	// result
 	ReactiveList,

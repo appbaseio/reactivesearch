@@ -78,17 +78,8 @@ class SingleDataList extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { enableAppbase, index } = this.props;
-		if (!enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-	}
-
 	componentDidUpdate(prevProps) {
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField'], () => {
+		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
 			this.updateQuery(this.state.currentValue, this.props);
 
 			if (this.props.showCount) {
@@ -135,33 +126,16 @@ class SingleDataList extends Component {
 		}
 	}
 
-	static defaultQuery = (value, props) => {
-		let query = null;
-		if (props.selectAllLabel && props.selectAllLabel === value) {
-			query = {
-				exists: {
-					field: props.dataField,
-				},
-			};
-		} else if (value) {
-			query = {
-				term: {
-					[props.dataField]: value,
-				},
-			};
-		}
-
-		if (query && props.nestedField) {
-			return {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			};
-		}
-
-		return query;
-	};
+	static defaultQuery = (value, props) => ({
+		query: {
+			queryFormat: props.queryFormat,
+			dataField: props.dataField,
+			value,
+			nestedField: props.nestedField,
+			selectAllLabel: props.selectAllLabel,
+			showMissing: props.showMissing,
+		},
+	});
 
 	setValue = (nextValue, isDefaultValue = false, props = this.props, hasMounted = true) => {
 		let value = nextValue;
@@ -218,10 +192,8 @@ class SingleDataList extends Component {
 		} else {
 			currentValue = props.selectAllLabel;
 		}
-		let query = SingleDataList.defaultQuery(currentValue, props);
+		const query = SingleDataList.defaultQuery(currentValue, props);
 		if (customQuery) {
-			({ query } = customQuery(currentValue, props) || {});
-			customQueryOptions = getOptionsFromQuery(customQuery(currentValue, props));
 			updateCustomQuery(props.componentId, props, value);
 		}
 		props.setQueryOptions(props.componentId, customQueryOptions, false);
@@ -495,7 +467,6 @@ SingleDataList.propTypes = {
 	options: types.options,
 	rawData: types.rawData,
 	setCustomQuery: types.funcRequired,
-	enableAppbase: types.bool,
 	// component props
 	beforeValueChange: types.func,
 	children: types.func,
@@ -560,15 +531,12 @@ const mapStateToProps = (state, props) => ({
 		props.nestedField && state.aggregations[props.componentId]
 			? state.aggregations[props.componentId].reactivesearch_nested
 			: state.aggregations[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = dispatch => ({
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-
 	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
-
 	setQueryOptions: (...args) => dispatch(setQueryOptions(...args)),
 });
 
@@ -586,7 +554,14 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				internalComponent
 				componentType={componentTypes.singleDataList}
 			>
-				{() => <ConnectedComponent {...preferenceProps} myForwardedRef={ref} />}
+				{
+					componentProps =>
+						(<ConnectedComponent
+							{...preferenceProps}
+							{...componentProps}
+							myForwardedRef={ref}
+						/>)
+				}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

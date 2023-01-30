@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
 	ReactiveBase,
-	DataSearch,
+	SearchBox,
 	MultiList,
 	RangeSlider,
 	SingleRange,
@@ -31,13 +31,12 @@ class App extends Component {
 			<ReactiveBase
 				app="good-books-ds"
 				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-				enableAppbase
 			>
 				<div className="navbar">
 					<div className="logo">
 						Good<b>Books</b>
 					</div>
-					<DataSearch
+					<SearchBox
 						className="datasearch"
 						componentId="mainSearch"
 						dataField={[

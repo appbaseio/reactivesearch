@@ -2,7 +2,6 @@ import Appbase from 'appbase-js';
 
 import valueReducer from '@appbaseio/reactivecore/lib/reducers/valueReducer';
 import queryReducer from '@appbaseio/reactivecore/lib/reducers/queryReducer';
-import queryOptionsReducer from '@appbaseio/reactivecore/lib/reducers/queryOptionsReducer';
 import dependencyTreeReducer from '@appbaseio/reactivecore/lib/reducers/dependencyTreeReducer';
 import {
 	buildQuery,
@@ -10,25 +9,55 @@ import {
 	transformRequestUsingEndpoint,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import fetchGraphQL from '@appbaseio/reactivecore/lib/utils/graphQL';
-import { componentTypes, validProps } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	componentTypes,
+	validProps,
+	queryTypes,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	getRSQuery,
 	extractPropsFromState,
 	getDependentQueries,
+	componentToTypeMap,
 } from '@appbaseio/reactivecore/lib/utils/transform';
 import { isPropertyDefined } from '@appbaseio/reactivecore/lib/actions/utils';
 import { X_SEARCH_CLIENT } from '../utils';
 
-const componentsWithHighlightQuery = [componentTypes.dataSearch, componentTypes.categorySearch];
+const componentsWithInternalComponent = {
+	// search components
+	[componentTypes.reactiveList]: true,
+	[componentTypes.searchBox]: true,
+	// term components
+	[componentTypes.singleList]: true,
+	[componentTypes.multiList]: true,
+	[componentTypes.singleDropdownList]: true,
+	[componentTypes.singleDataList]: false,
+	[componentTypes.multiDataList]: false,
+	[componentTypes.multiDropdownList]: true,
+	[componentTypes.tagCloud]: true,
+	[componentTypes.toggleButton]: false,
+	[componentTypes.reactiveChart]: true,
+	[componentTypes.treeList]: true,
+	// basic components
+	[componentTypes.numberBox]: false,
 
-const componentsWithOptions = [
-	componentTypes.reactiveList,
-	componentTypes.reactiveMap,
-	componentTypes.singleList,
-	componentTypes.multiList,
-	componentTypes.tagCloud,
-	...componentsWithHighlightQuery,
-];
+	// range components
+	[componentTypes.datePicker]: false,
+	[componentTypes.dateRange]: false,
+	[componentTypes.dynamicRangeSlider]: true,
+	[componentTypes.singleDropdownRange]: true,
+	[componentTypes.multiDropdownRange]: true,
+	[componentTypes.singleRange]: false,
+	[componentTypes.multiRange]: false,
+	[componentTypes.rangeSlider]: true,
+	[componentTypes.ratingsFilter]: false,
+	[componentTypes.rangeInput]: true,
+
+	// map components
+	[componentTypes.geoDistanceDropdown]: true,
+	[componentTypes.geoDistanceSlider]: true,
+	[componentTypes.reactiveMap]: true,
+};
 
 const componentsWithoutFilters = [componentTypes.numberBox, componentTypes.ratingsFilter];
 
@@ -93,14 +122,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 				: true;
 
 		const headers = {
-			...(settings.enableAppbase && {
-				'X-Search-Client': X_SEARCH_CLIENT,
-				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-			}),
+			'X-Search-Client': X_SEARCH_CLIENT,
+			...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 			...settings.headers,
-			...(settings.enableAppbase && settings.endpoint && settings.endpoint.headers
-				? settings.endpoint.headers
-				: {}),
+			...(settings.endpoint && settings.endpoint.headers ? settings.endpoint.headers : {}),
 		};
 		let url
 			= settings.url && settings.url.trim() !== ''
@@ -108,7 +133,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 				: 'https://scalr.api.appbase.io';
 
 		let transformRequest = settings.transformRequest || null;
-		if (settings.enableAppbase && settings.endpoint && settings.endpoint instanceof Object) {
+		if (settings.endpoint && settings.endpoint instanceof Object) {
 			if (settings.endpoint.url) url = settings.endpoint.url;
 			transformRequest = (request) => {
 				const modifiedRequest = transformRequestUsingEndpoint(request, settings.endpoint);
@@ -130,7 +155,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 			headers,
 			analyticsConfig: settings.appbaseConfig || null,
 			endpoint: settings.endpoint,
-			enableAppbase: settings.enableAppbase,
 		};
 		const appbaseRef = Appbase(config);
 
@@ -147,7 +171,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 		const internalValues = {};
 		let queryList = {};
 		let queryLog = {};
-		let queryOptions = {};
+		const queryOptions = {};
 		let dependencyTree = {};
 		let finalQuery = [];
 		let appbaseQuery = {}; // Use object to prevent duplicate query added by react prop
@@ -169,7 +193,10 @@ export default function initReactivesearch(componentCollection, searchState, set
 					compProps[key] = component[key];
 				}
 			});
-			let isInternalComponentPresent = false;
+			let isInternalComponentPresent = componentsWithInternalComponent[componentType];
+			if (componentType === componentTypes.reactiveComponent && compProps.defaultQuery) {
+				isInternalComponentPresent = true;
+			}
 			const isResultComponent = resultComponents.includes(componentType);
 			const internalComponent = `${component.componentId}__internal`;
 			const label = component.filterLabel || component.componentId;
@@ -202,76 +229,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				showFilter,
 				URLParams: component.URLParams || false,
 			});
-
-			// [2] set query options - main component query (valid for result components)
-			if (componentsWithOptions.includes(componentType)) {
-				const options = component.source.generateQueryOptions
-					? component.source.generateQueryOptions(component)
-					: null;
-				let highlightQuery = {};
-
-				if (componentsWithHighlightQuery.includes(componentType) && component.highlight) {
-					highlightQuery = component.source.highlightQuery(component);
-				}
-
-				if (
-					(options && Object.keys(options).length)
-					|| (highlightQuery && Object.keys(highlightQuery).length)
-				) {
-					// eslint-disable-next-line
-					let { aggs, size, ...otherQueryOptions } = options || {};
-
-					if (aggs && Object.keys(aggs).length) {
-						isInternalComponentPresent = true;
-
-						// query should be applied on the internal component
-						// to enable feeding the data to parent component
-						queryOptions = queryOptionsReducer(queryOptions, {
-							type: 'SET_QUERY_OPTIONS',
-							component: internalComponent,
-							options: { aggs, size: typeof size === 'undefined' ? 100 : size },
-						});
-					}
-
-					// sort, highlight, size, from - query should be applied on the main component
-					if (
-						(otherQueryOptions && Object.keys(otherQueryOptions).length)
-						|| (highlightQuery && Object.keys(highlightQuery).length)
-					) {
-						if (!otherQueryOptions) otherQueryOptions = {};
-						if (!highlightQuery) highlightQuery = {};
-
-						let mainQueryOptions = { ...otherQueryOptions, ...highlightQuery, size };
-						if (isInternalComponentPresent) {
-							mainQueryOptions = { ...otherQueryOptions, ...highlightQuery };
-						}
-						if (isResultComponent) {
-							let currentPage = component.currentPage ? component.currentPage - 1 : 0;
-							if (
-								selectedValues[component.componentId]
-								&& selectedValues[component.componentId].value
-							) {
-								currentPage = selectedValues[component.componentId].value - 1 || 0;
-							}
-							const resultSize = component.size || 10;
-							const from = currentPage * resultSize;
-							// Update props for RS API
-							compProps.from = from;
-							mainQueryOptions = {
-								...mainQueryOptions,
-								...highlightQuery,
-								size: resultSize,
-								from,
-							};
-						}
-						queryOptions = queryOptionsReducer(queryOptions, {
-							type: 'SET_QUERY_OPTIONS',
-							component: component.componentId,
-							options: { ...mainQueryOptions },
-						});
-					}
-				}
-			}
 
 			// [3] set dependency tree
 			if (component.react || isInternalComponentPresent || isResultComponent) {
@@ -329,61 +286,75 @@ export default function initReactivesearch(componentCollection, searchState, set
 				queryList,
 				queryOptions,
 			);
+			if (!queryObj && !options) {
+				return;
+			}
 
-			const validOptions = ['aggs', 'from', 'sort'];
+			const query = getRSQuery(
+				component.componentId,
+				extractPropsFromState(
+					state,
+					component.componentId,
+					queryOptions && queryOptions[component.componentId]
+						? { from: queryOptions[component.componentId].from }
+						: null,
+				),
+			);
+
 			// check if query or options are valid - non-empty
-			if (
-				(queryObj && !!Object.keys(queryObj).length)
-				|| (options && Object.keys(options).some(item => validOptions.includes(item)))
-			) {
-				if (!queryObj || (queryObj && !Object.keys(queryObj).length)) {
-					queryObj = { match_all: {} };
+			if (query && !!Object.keys(query).length) {
+				const currentQuery = query;
+				const cProps = componentProps[component.componentId];
+				const dependentQueries = getDependentQueries(
+					state,
+					component.componentId,
+					orderOfQueries,
+				);
+				let queryToLog = {
+					...{ [component.componentId]: currentQuery },
+					...Object.keys(dependentQueries).reduce(
+						(acc, q) => ({
+							...acc,
+							[q]: { ...dependentQueries[q], execute: false },
+						}),
+						{},
+					),
+				};
+				if (
+					[queryTypes.range, queryTypes.term].includes(
+						componentToTypeMap[cProps && cProps.componentType],
+					)
+				) {
+					// Avoid logging `value` for term type of components
+					// eslint-disable-next-line
+					const { value, ...rest } = currentQuery;
+
+					queryToLog = {
+						...{ [component.componentId]: rest },
+						...Object.keys(dependentQueries).reduce(
+							(acc, q) => ({
+								...acc,
+								[q]: { ...dependentQueries[q], execute: false },
+							}),
+							{},
+						),
+					};
 				}
 
 				orderOfQueries = [...orderOfQueries, component.componentId];
 
-				const currentQuery = {
-					query: { ...queryObj },
-					...options,
-					...queryOptions[component.componentId],
-				};
-
 				queryLog = {
 					...queryLog,
-					[component.componentId]: currentQuery,
+					[component.componentId]: queryToLog,
 				};
 
-				if (settings.enableAppbase) {
-					const query = getRSQuery(
-						component.componentId,
-						extractPropsFromState(
-							state,
-							component.componentId,
-							queryOptions && queryOptions[component.componentId]
-								? { from: queryOptions[component.componentId].from }
-								: null,
-						),
-					);
-					if (query) {
-						// Apply dependent queries
-						appbaseQuery = {
-							...appbaseQuery,
-							...{ [component.componentId]: query },
-							...getDependentQueries(state, component.componentId, orderOfQueries),
-						};
-					}
-				} else {
-					const preference
-						= config && config.analyticsConfig && config.analyticsConfig.userId
-							? `${config.analyticsConfig.userId}_${component}`
-							: component;
-					finalQuery = [
-						...finalQuery,
-						{
-							preference,
-						},
-						currentQuery,
-					];
+				if (query) {
+					// Apply dependent queries
+					appbaseQuery = {
+						...appbaseQuery,
+						...{ [component.componentId]: query },
+						...getDependentQueries(state, component.componentId, orderOfQueries),
+					};
 				}
 			}
 		});
@@ -483,7 +454,9 @@ export default function initReactivesearch(componentCollection, searchState, set
 									responseResolve();
 								}
 							})
-							.catch(err => responseReject(err));
+							.catch((err) => {
+								responseReject(err);
+							});
 					}),
 			);
 
@@ -525,7 +498,7 @@ export default function initReactivesearch(componentCollection, searchState, set
 						.catch(err => reject(err));
 				})
 				.catch(err => reject(err));
-		} else if (settings.enableAppbase && Object.keys(appbaseQuery).length) {
+		} else if (Object.keys(appbaseQuery).length) {
 			finalQuery = Object.keys(appbaseQuery).map(c => appbaseQuery[c]);
 			// Call RS API
 			const rsAPISettings = {};
@@ -555,16 +528,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				.catch((err) => {
 					reject(err);
 				});
-		} else {
-			appbaseRef
-				.msearch({
-					type: config.type === '*' ? '' : config.type,
-					body: finalQuery,
-				})
-				.then((res) => {
-					handleResponse(res);
-				})
-				.catch(err => reject(err));
 		}
 	});
 }
