@@ -378,8 +378,10 @@ const TreeList = {
 				handleClick: this.handleListItemClick,
 				value: this.$data.selectedValues,
 				loading: isLoading,
+				PATH_SEPARATOR: TREELIST_VALUES_PATH_SEPARATOR,
 			};
-			return getComponentHelper(data, this.$props);
+
+			return this.$slots.render(data) || getComponentHelper(data, this.$props);
 		},
 		getDefaultQuery(value) {
 			let query = null;
