@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <reactive-base
-      v-bind="components.settings"
+    <reactive-base 
+      v-bind="components.settings" 
       :initial-state="store">
       <nav class="nav">
         <div class="title">Airbeds</div>
@@ -40,7 +40,7 @@ const components = {
 
 export default defineNuxtComponent({
 	name: 'AfreshComponent',
-	components: {ReactiveBase, SearchBox},
+	components: { ReactiveBase, SearchBox },
 	async asyncData() {
 		try {
 			const store = await initReactivesearch(
@@ -48,7 +48,7 @@ export default defineNuxtComponent({
 					{
 						...components.SearchBox,
 						source: SearchBox,
-					}
+					},
 				],
 				null,
 				components.settings,
@@ -63,7 +63,7 @@ export default defineNuxtComponent({
 					components,
 					store: null,
 					error,
-				}
+				},
 			};
 		}
 	},
