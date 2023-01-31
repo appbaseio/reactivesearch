@@ -266,14 +266,14 @@ const TreeList = {
 			const transformedData = transformRawTreeListData(this.$data.aggregationData, dataField);
 
 			let filteredData = [];
-			if (showSearch && this.$data.searchTerm) {
+			if (showSearch && this.searchTerm) {
 				filteredData = this.filterDataBasedOnSearchTerm(transformedData, '');
 			}
 			return filteredData.length ? filteredData : transformedData;
 		},
 		handleInputChange(e) {
 			const { value } = e.target;
-			this.$data.searchTerm = value;
+			this.searchTerm = value;
 		},
 		renderSearch() {
 			const { showSearch, innerClass, placeholder, componentId, themePreset } = this.$props;
@@ -281,8 +281,8 @@ const TreeList = {
 				return (
 					<Input
 						class={getClassName(innerClass, 'input') || null}
-						onChange={this.handleInputChange}
-						value={this.$data.searchTerm}
+						onInput={this.handleInputChange}
+						value={this.searchTerm}
 						placeholder={placeholder || 'Search'}
 						style={{
 							margin: '0 0 8px',
@@ -519,7 +519,6 @@ const TreeList = {
 			style,
 			className,
 			mode,
-			searchTerm,
 			showLine,
 			renderItem,
 			showCheckbox,
@@ -565,7 +564,7 @@ const TreeList = {
 						listItemProps={{
 							mode,
 							selectedValues: this.selectedValues,
-							searchTerm,
+							searchTerm: this.searchTerm,
 							showLine,
 							renderItem: renderItem ?? this.$slots.renderItem,
 							handleListItemClick: this.handleListItemClick,
