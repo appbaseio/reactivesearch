@@ -529,20 +529,19 @@ const TreeList = {
 			showSwitcherIcon,
 			switcherIcon,
 			title,
-			isLoading,
 			loader,
-			error,
 			renderError,
 		} = props;
-		if (isLoading) {
+
+		if (this.isLoading) {
 			return (this.$slots.loader ? this.$slots.loader() : loader) || null;
 		}
 
-		if (error) {
+		if (this.error) {
 			if (this.$slots.renderError) {
-				return this.$slots.renderError(error);
+				return this.$slots.renderError(this.error);
 			}
-			return isFunction(renderError) ? renderError(error) : renderError;
+			return isFunction(renderError) ? renderError(this.error) : renderError;
 		}
 
 		const transformedData = this.getTransformedData();
