@@ -538,7 +538,10 @@ const TreeList = {
 			return (this.$slots.loader ? this.$slots.loader() : loader) || null;
 		}
 
-		if (renderError && error) {
+		if (error) {
+			if (this.$slots.renderError) {
+				return this.$slots.renderError(error);
+			}
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
