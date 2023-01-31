@@ -20,6 +20,7 @@ import {
 	transformRawTreeListData,
 	getComponent as getComponentHelper,
 	isEqual,
+	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
@@ -528,7 +529,23 @@ const TreeList = {
 			showSwitcherIcon,
 			switcherIcon,
 			title,
+			isLoading,
+			loader,
+			error,
+			renderError,
 		} = props;
+		if (isLoading) {
+			return (this.$slots.loader ? this.$slots.loader() : loader) || null;
+		}
+
+		if (renderError && error) {
+			return isFunction(renderError) ? renderError(error) : renderError;
+		}
+
+		const transformedData = this.getTransformedData();
+		if (!transformedData || transformedData.length === 0) {
+			return this.$slots.renderNoResults ? this.$slots.renderNoResults() : null;
+		}
 		return (
 			<Container style={style} class={className}>
 				{props.title && (
@@ -540,7 +557,7 @@ const TreeList = {
 				) : (
 					<HierarchicalMenuComponent
 						key="initial-node"
-						listArray={this.getTransformedData()}
+						listArray={transformedData}
 						parentPath=""
 						isExpanded={true}
 						listItemProps={{
