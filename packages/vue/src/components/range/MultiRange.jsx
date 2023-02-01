@@ -162,8 +162,6 @@ const MultiRange = {
 	created() {
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
-	},
-	beforeMount() {
 		if (this.selectedValue) {
 			this.selectItem(this.selectedValue, true);
 		} else if (this.$props.value) {
