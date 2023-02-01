@@ -17,7 +17,6 @@ export default defineNuxtComponent({
 		const route = useRoute();
 		try {
 			const initialState = await getServerState(Search, route.query);
-			console.log('INITIAL STATE ASYNC');
 			return {
 				initialState,
 			};
