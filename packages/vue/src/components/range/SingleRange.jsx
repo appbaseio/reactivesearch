@@ -44,8 +44,6 @@ const SingleRange = {
 	created() {
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
-	},
-	beforeMount() {
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
 		} else if (this.$props.value) {
@@ -54,6 +52,7 @@ const SingleRange = {
 			this.setValue(this.$props.defaultValue);
 		}
 	},
+
 	watch: {
 		dataField() {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);

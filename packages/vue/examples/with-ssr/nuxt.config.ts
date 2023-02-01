@@ -1,14 +1,18 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	telemetry: false,
-	vite:{
+	vite: {
 		optimizeDeps: {
-			include: ['@appbaseio/reactivecore', '@appbaseio/reactivesearch-vue', 'fast-deep-equal'],
+			include: [
+				'@appbaseio/reactivecore',
+				'@appbaseio/reactivesearch-vue',
+				'vue-emotion',
+				'fast-deep-equal',
+			],
 		},
 		build: {
 			commonjsOptions: {
-				include: [/reactivecore/, /reactivesearch/, /node_modules/],
+				include: [/reactivecore/, /vue-emotion/, /reactivesearch/, /node_modules/],
 			},
 		},
-	}
-})
+	},
+});

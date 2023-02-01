@@ -87,8 +87,6 @@ const MultiList = {
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
-	},
-	beforeMount() {
 		this.updateQueryHandlerOptions(this.$props);
 		const value = this.selectedValue || this.$props.value || this.$props.defaultValue;
 		this.setValue(value, !this.selectedValue);

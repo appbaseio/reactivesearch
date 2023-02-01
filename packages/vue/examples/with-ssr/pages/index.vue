@@ -1,141 +1,30 @@
+
 <template>
-  <div class="container">
-    <reactive-base
-      v-bind="components.settings"
-      :initial-state="store">
-      <nav class="nav">
-        <div class="title">Airbeds</div>
-        <search-box v-bind="components.SearchBox" />
-      </nav>
-      <client-only>
-        <reactive-google-map
-          :size="50"
-          :style="{ height: '90vh', minWidth: '300px' }"
-          :react="{ and: 'places' }"
-          :default-zoom="3"
-          :show-marker-clusters="false"
-          component-id="map"
-          data-field="location"
-        >
-          <template
-            :style="{
-              background: 'dodgerblue',
-              color: '#fff',
-              paddingLeft: '5px',
-              paddingRight: '5px',
-              borderRadius: '3px',
-              padding: '10px',
-            }"
-            #renderItem="{ magnitude }"
-          >
-            <i class="fas fa-globe-europe" />
-            &nbsp;{{ magnitude }}
-          </template>
-        </reactive-google-map>
-      </client-only>
-      <reactive-list v-bind="components.result">
-        <template
-          #render="{ data }">
-          <ResultCardsWrapper>
-            <ResultCard
-              v-for="result in data"
-              :key="result._id"
-              :href="result.listing_url"
-            >
-              <ResultCardImage :src="result.picture_url || ''" />
-              <ResultCardTitle>
-                {{ result.name }}
-              </ResultCardTitle>
-              <ResultCardDescription>
-                <div className="price">{{ result.price }}</div>
-                <p className="info">
-                  {{ result.room_type }} · {{ result.accommodates }} guests
-                </p>
-              </ResultCardDescription>
-            </ResultCard>
-          </ResultCardsWrapper>
-        </template>
-      </reactive-list>
-    </reactive-base>
+  <div>
+    <Search 
+      :initial-state="initialState" 
+      :context-collector="contextCollector" />
   </div>
 </template>
 
+
 <script>
-import { initReactivesearch, SearchBox, ReactiveList } from '@appbaseio/reactivesearch-vue';
-import '../styles/airbnb.css';
+import { getServerState } from '@appbaseio/reactivesearch-vue';
+import Search from '../components/search.vue';
 
-const components = {
-	  settings: {
-		  app: 'airbnb-dev',
-		  url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
-		  enableAppbase: true,
-		  theme: {
-			  colors: {
-				  primaryColor: '#FF3A4E',
-			  },
-		  },
-	  },
-	  SearchBox: {
-		  componentId: 'SearchSensor',
-		  dataField: ['name', 'name.search'],
-		  autosuggest: false,
-		  placeholder: 'Search by house names',
-		  iconPosition: 'left',
-		  className: 'search',
-		  highlight: true,
-		  URLParams: true,
-	  },
-	  result: {
-		  className: 'right-col',
-		  componentId: 'SearchResult',
-		  dataField: 'name',
-		  size: 12,
-		  pagination: true,
-		  URLParams: true,
-		  react: {
-			  and: ['SearchSensor'],
-		  },
-		  innerClass: {
-			  resultStats: 'result-stats',
-			  list: 'list',
-			  listItem: 'list-item',
-			  image: 'image',
-		  },
-	  },
-};
-
-export default {
-	  name: 'App',
-	  data() {
-		  return {
-			  components,
-		  };
-	  },
-	  async asyncData({ query }) {
-		  try {
-			  const store = await initReactivesearch(
-				  [
-					  {
-						  ...components.SearchBox,
-						  source: SearchBox,
-					  },
-					  {
-						  ...components.result,
-						  source: ReactiveList,
-					  },
-				  ],
-				  query,
-				  components.settings,
-			  );
-			  return {
-				  store,
-			  };
-		  } catch (error) {
-			  return {
-				  store: null,
-				  error,
-			  };
-		  }
-	  },
-};
+export default defineNuxtComponent({
+	async asyncData() {
+		const route = useRoute();
+		try {
+			const initialState = await getServerState(Search, route.query);
+			console.log('INITIAL STATE ASYNC');
+			return {
+				initialState,
+			};
+		} catch (e) {
+			console.error('error', e);
+		}
+		return {};
+	},
+});
 </script>
