@@ -100,7 +100,7 @@ const ReactiveList = {
 		);
 	},
 	props: {
-		currentPage: VueTypes.number.def(0),
+		currentPage: VueTypes.number,
 		includeFields: types.includeFields,
 		// component props
 		className: types.string,
@@ -295,8 +295,7 @@ const ReactiveList = {
 			}
 		},
 		infiniteScroll(newVal, oldVal) {
-			if (newVal !== oldVal)
-			{
+			if (newVal !== oldVal) {
 				if (newVal && !this.pagination) {
 					window.addEventListener('scroll', this.scrollHandler);
 				} else {

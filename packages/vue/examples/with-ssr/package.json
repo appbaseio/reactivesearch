@@ -12,6 +12,6 @@
 		"nuxt": "^3.1.0"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2"
+		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.3"
 	}
 }
