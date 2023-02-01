@@ -40,7 +40,9 @@ const ToggleButton = {
 		};
 		return this.__state;
 	},
-	beforeMount() {
+	created() {
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		const props = this.$props;
 		const hasMounted = false;
 		const value = this.selectedValue || props.value || props.defaultValue || [];
@@ -51,10 +53,6 @@ const ToggleButton = {
 		if (this.$data.currentValue.length) {
 			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
 		}
-	},
-	created() {
-		// Set custom query in store
-		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	watch: {
 		defaultValue(newVal) {
@@ -84,8 +82,8 @@ const ToggleButton = {
 					: null;
 
 				if (
-					!isEqual(currentValue, this.selectedValue) &&
-					!isEqual(oldVal, this.selectedValue)
+					!isEqual(currentValue, this.selectedValue)
+					&& !isEqual(oldVal, this.selectedValue)
 				) {
 					this.handleToggle(this.selectedValue || [], true, this.$props);
 				}
@@ -183,9 +181,9 @@ const ToggleButton = {
 		handleClick(item) {
 			const { enableStrictSelection, multiSelect } = this.$props;
 			if (
-				enableStrictSelection &&
-				!multiSelect &&
-				this.$data.currentValue.find((stateItem) => isEqual(item, stateItem))
+				enableStrictSelection
+				&& !multiSelect
+				&& this.$data.currentValue.find((stateItem) => isEqual(item, stateItem))
 			) {
 				return false;
 			}
@@ -259,9 +257,9 @@ ToggleButton.defaultQuery = (value, props) => ({
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId] &&
-			state.selectedValues[props.componentId].value) ||
-		null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	componentProps: state.props[props.componentId],
 });
 

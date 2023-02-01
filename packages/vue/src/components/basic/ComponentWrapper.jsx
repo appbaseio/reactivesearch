@@ -53,8 +53,7 @@ const ComponentWrapper = (
 		this.componentId = this.componentProps.componentId;
 		this.react = this.componentProps.react;
 		this.$timestamp = new Date().getTime();
-	},
-	beforeMount() {
+
 		let components = [];
 		if (this.$$store) {
 			({ components } = this.$$store.getState());
@@ -96,11 +95,15 @@ const ComponentWrapper = (
 				options.componentType,
 			);
 		}
+		if (this.internalComponent) {
+			// Watch component after rendering the component to avoid the un-necessary calls
+			this.setReact(this.componentProps, false);
+		}
 	},
 	mounted() {
 		if (this.internalComponent) {
 			// Watch component after rendering the component to avoid the un-necessary calls
-			this.setReact(this.componentProps);
+			this.setReact(this.componentProps, true);
 		}
 	},
 	beforeDestroy() {
@@ -138,7 +141,7 @@ const ComponentWrapper = (
 		},
 	},
 	methods: {
-		setReact(props) {
+		setReact(props, shouldExecute) {
 			const { react, executeInitialQuery } = props;
 			if (this.internalComponent) {
 				if (react) {
@@ -150,11 +153,11 @@ const ComponentWrapper = (
 						{
 							and: this.internalComponent,
 						},
-						executeInitialQuery,
+						shouldExecute || executeInitialQuery,
 					);
 				}
 			} else {
-				this.watchComponent(props.componentId, react, executeInitialQuery);
+				this.watchComponent(props.componentId, react, shouldExecute || executeInitialQuery);
 			}
 		},
 	},

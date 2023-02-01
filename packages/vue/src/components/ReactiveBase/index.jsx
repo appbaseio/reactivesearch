@@ -1,11 +1,10 @@
-import configureStore from '@appbaseio/reactivecore';
+import configureStore, { Actions } from '@appbaseio/reactivecore/lib';
 import { isEqual, transformRequestUsingEndpoint } from '@appbaseio/reactivecore/lib/utils/helper';
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
 import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
-
 import { createCache } from '@appbaseio/vue-emotion';
 import Provider from '../Provider';
 import { composeThemeObject, X_SEARCH_CLIENT } from '../../utils/index';
@@ -13,6 +12,7 @@ import types from '../../utils/vueTypes';
 import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
 
+const { setValues } = Actions;
 const ReactiveBase = {
 	name: 'ReactiveBase',
 	data() {
@@ -39,6 +39,7 @@ const ReactiveBase = {
 		initialQueriesSyncTime: types.number,
 		className: types.string,
 		initialState: VueTypes.object.def({}),
+		contextCollector: VueTypes.func,
 		transformRequest: types.func,
 		transformResponse: types.func,
 		as: VueTypes.string.def('div'),
@@ -49,6 +50,10 @@ const ReactiveBase = {
 		preferences: VueTypes.object,
 	},
 	provide() {
+		let createCacheFn = createCache;
+		if (createCache.default) {
+			createCacheFn = createCache.default;
+		}
 		return {
 			theme_reactivesearch: composeThemeObject(
 				getTheme(this.$props.themePreset),
@@ -57,7 +62,7 @@ const ReactiveBase = {
 			store: this.store,
 			$searchPreferences: this.preferences,
 			$emotionCache:
-				(this.$parent && this.$parent.$emotionCache) || createCache({ key: 'css' }),
+				(this.$parent && this.$parent.$emotionCache) || createCacheFn({ key: 'css' }),
 		};
 	},
 	watch: {
@@ -240,9 +245,21 @@ const ReactiveBase = {
 				selectedValues,
 				urlValues,
 				headers: this.getHeaders,
-				...this.$props.initialState,
+				...this.initialState,
 			};
-			this.store = configureStore(initialState);
+			let storeFn = configureStore;
+			if (configureStore.default) {
+				storeFn = configureStore.default;
+			}
+			this.store = storeFn(initialState);
+			// server side rendered app to collect context
+			if (typeof window === 'undefined' && props.contextCollector) {
+				const res = props.contextCollector({
+					ctx: this.store,
+				});
+				// necessary for supporting SSR of queryParams
+				this.store.dispatch(setValues(res.selectedValues));
+			}
 			this.analyticsRef = analyticsRef;
 		},
 	},

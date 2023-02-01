@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
 	ReactiveBase,
 	DatePicker,
 	SelectedFilters,
 	ReactiveList,
 	ResultCard,
+	getServerState,
 } from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
 
-import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 import moment from 'moment';
 
 import Layout from '../components/Layout';
@@ -20,102 +20,97 @@ const dateQuery = (value, props) => {
 			{
 				range: {
 					[props.dataField]: {
-						lte: moment(value).format('YYYYMMDD'),
+						gte: moment(value).valueOf(),
 					},
 				},
 			},
 		];
 	}
-	return query;
+	return query ? { query: { bool: { must: query } } } : null;
 };
 
 const settings = {
-	app: 'airbeds-test-app',
+	app: 'airbnb-dev',
 	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
 	enableAppbase: true,
-	type: 'listing',
 };
 
-const datePickerProps = {
-	componentId: 'DateSensor',
-	dataField: 'date_from',
-	initialMonth: new Date('2017-05-05'),
-	customQuery: dateQuery,
-	defaultValue: '2017-05-05',
-};
+// eslint-disable-next-line no-return-assign
+const Main = props => (
+	<Layout title="SSR | DatePicker">
+		<ReactiveBase
+			{...settings}
+			{...(props.contextCollector ? { contextCollector: props.contextCollector } : {})}
+			initialState={props.initialState}
+		>
+			<div className="row">
+				<div className="col">
+					<DatePicker
+						componentId="DateSensor"
+						dataField="available_from"
+						customQuery={dateQuery}
+						initialMonth={new Date('2017-05-05')}
+						placeholder="Available From - YYYY-MM-DD"
+						URLParams
+						defaultValue="2017-05-05"
+					/>
+				</div>
 
-const resultCardProps = {
-	componentId: 'SearchResult',
-	dataField: 'name',
-	className: 'result-list-container',
-	from: 0,
-	size: 40,
-	render: ({ data }) => (
-		<ReactiveList.ResultCardsWrapper>
-			{data.map(item => (
-				<ResultCard href={item.listing_url} key={item._id}>
-					<ResultCard.Image src={item.image} />
-					<ResultCard.Title>{item.name}</ResultCard.Title>
-					<ResultCard.Description>
-						<div>
-							<div>${item.price}</div>
-							<span style={{ backgroundImage: `url(${item.host_image})` }} />
-							<p>
-								{item.room_type} · {item.accommodates} guests
-							</p>
-						</div>
-					</ResultCard.Description>
-				</ResultCard>
-			))}
-		</ReactiveList.ResultCardsWrapper>
-	),
-	react: {
-		and: ['DateSensor'],
-	},
-	showPagination: true,
-};
-
-export default class Main extends Component {
-	static async getInitialProps() {
-		return {
-			store: await initReactivesearch(
-				[
-					{
-						...datePickerProps,
-						source: DatePicker,
-					},
-					{
-						...resultCardProps,
-						source: ReactiveList,
-					},
-				],
-				null,
-				settings,
-			),
-		};
-	}
-
-	render() {
-		return (
-			<Layout title="SSR | DatePicker">
-				<ReactiveBase {...settings} initialState={this.props.store}>
-					<div className="row">
-						<div className="col">
-							<DatePicker {...datePickerProps} />
-						</div>
-
-						<div className="col">
-							<SelectedFilters />
-							<ReactiveList {...resultCardProps} />
-						</div>
-					</div>
-				</ReactiveBase>
-			</Layout>
-		);
-	}
+				<div className="col">
+					<SelectedFilters />
+					<ReactiveList
+						componentId="SearchResult"
+						dataField="name"
+						className="result-list-container"
+						from={0}
+						size={40}
+						// eslint-disable-next-line react/jsx-no-bind, func-names
+						render={function ({ data }) {
+							return (
+								<ReactiveList.ResultCardsWrapper>
+									{data.map(item => (
+										<ResultCard href={item.listing_url} key={item._id}>
+											<ResultCard.Image src={item.picture_url} />
+											<ResultCard.Title>{item.name}</ResultCard.Title>
+											<ResultCard.Description>
+												<div>
+													<div>${item.price}</div>
+													<span
+														style={{
+															backgroundImage: `url(${item.picture_url})`,
+														}}
+													/>
+													<p>
+														{item.room_type} · {item.accommodates}{' '}
+														guests
+													</p>
+												</div>
+											</ResultCard.Description>
+										</ResultCard>
+									))}
+								</ReactiveList.ResultCardsWrapper>
+							);
+						}}
+						react={{ and: ['DateSensor'] }}
+						pagination
+						URLParams
+					/>
+				</div>
+			</div>
+		</ReactiveBase>
+	</Layout>
+);
+export async function getServerSideProps(context) {
+	const initialState = await getServerState(Main, context.resolvedUrl);
+	return {
+		props: { initialState },
+		// will be passed to the page component as props
+	};
 }
 
 Main.propTypes = {
 	// eslint-disable-next-line
-	store: PropTypes.object,
+	initialState: PropTypes.object,
+	contextCollector: PropTypes.func,
 };
+export default Main;

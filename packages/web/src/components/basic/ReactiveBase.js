@@ -13,6 +13,7 @@ import {
 	transformRequestUsingEndpoint,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
+import { setValues } from '@appbaseio/reactivecore/src/actions/value';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 
@@ -183,12 +184,13 @@ class ReactiveBase extends Component {
 			if (this.props.endpoint && this.props.endpoint.url) {
 				// Remove parts between '//' and first '/' in the url
 				analyticsInitConfig.url = this.props.endpoint.url.replace(/\/\/(.*?)\/.*/, '//$1');
-				const headerCredentials = this.props.endpoint.headers
-										&& this.props.endpoint.headers.Authorization;
-				analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
+				const headerCredentials
+					= this.props.endpoint.headers && this.props.endpoint.headers.Authorization;
+				analyticsInitConfig.credentials
+					= headerCredentials && headerCredentials.replace('Basic ', '');
 				// Decode the credentials
-				analyticsInitConfig.credentials = analyticsInitConfig.credentials
-												&& atob(analyticsInitConfig.credentials);
+				analyticsInitConfig.credentials
+					= analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 			}
 		} catch (e) {
 			console.error('Endpoint not set correctly for analytics');
@@ -216,7 +218,23 @@ class ReactiveBase extends Component {
 			headers: this.headers,
 			...this.props.initialState,
 		};
+
 		this.store = configureStore(initialState);
+
+		// server side rendered app to collect context
+		if (
+			typeof window === 'undefined'
+			&& props.contextCollector
+			&& !this.calledContextCollector
+		) {
+			this.calledContextCollector = true;
+			const res = props.contextCollector({
+				ctx: this.store,
+			});
+
+			// necessary for supporting SSR of queryParams
+			this.store.dispatch(setValues(res.selectedValues));
+		}
 	};
 
 	getReduxState = () => this.store.getState();
@@ -282,6 +300,7 @@ ReactiveBase.propTypes = {
 	mongodb: types.mongodb,
 	preferences: types.preferences,
 	endpoint: types.endpoint,
+	contextCollector: types.func,
 };
 
 export default ReactiveBase;

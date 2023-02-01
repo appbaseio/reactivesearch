@@ -93,6 +93,28 @@ const SearchBox = defineComponent({
 		// Set custom and default queries in store
 		this.triggerCustomQuery(this.currentValue, this.selectedCategory);
 		this.triggerDefaultQuery(this.currentValue);
+		if (this.selectedValue) {
+			this.setValue(
+				this.selectedValue,
+				true,
+				this.$props,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
+		} else if (this.$props.value) {
+			this.setValue(
+				this.$props.value,
+				true,
+				this.$props,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
+		} else if (this.$props.defaultValue) {
+			this.setValue(
+				this.$props.defaultValue,
+				true,
+				this.$props,
+				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
+			);
+		}
 	},
 
 	computed: {
@@ -190,30 +212,6 @@ const SearchBox = defineComponent({
 		renderSelectedTags: VueTypes.any,
 		searchboxId: VueTypes.string,
 		endpoint: types.endpointConfig,
-	},
-	beforeMount() {
-		if (this.selectedValue) {
-			this.setValue(
-				this.selectedValue,
-				true,
-				this.$props,
-				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
-			);
-		} else if (this.$props.value) {
-			this.setValue(
-				this.$props.value,
-				true,
-				this.$props,
-				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
-			);
-		} else if (this.$props.defaultValue) {
-			this.setValue(
-				this.$props.defaultValue,
-				true,
-				this.$props,
-				this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined,
-			);
-		}
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
