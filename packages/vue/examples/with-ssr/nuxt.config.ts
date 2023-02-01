@@ -1,8 +1,10 @@
 export default defineNuxtConfig({
 	telemetry: false,
 	build: {
-		transpile: ['@appbaseio/reactivesearch-vue']
+		transpile: ['@appbaseio/reactivesearch-vue'],
 	},
+	css: ['@/assets/css/airbnb.css'],
+	modules: ['@nuxtjs/emotion'],
 	vite: {
 		optimizeDeps: {
 			include: [

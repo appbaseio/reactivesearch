@@ -1,7 +1,7 @@
 import VueGoogleMaps, { Map } from 'vue-google-maps-community-fork';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { RMConnected } from './ReactiveMap.jsx';
 import GoogleMapMarkers from './GoogleMapMarkers.jsx';
 import types from '../../utils/vueTypes';

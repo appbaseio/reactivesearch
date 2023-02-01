@@ -95,7 +95,6 @@
 
 <script>
 import { ReactiveBase, ReactiveList, SearchBox, MultiList } from '@appbaseio/reactivesearch-vue';
-import '../styles/airbnb.css';
 
 export default {
 	name: 'Search',

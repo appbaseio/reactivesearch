@@ -1,5 +1,5 @@
 import { styled } from '@appbaseio/vue-emotion';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { darken, lighten, rgba } from 'polished';
 
 const filters = ({ colors: { borderColor } }) => css`
