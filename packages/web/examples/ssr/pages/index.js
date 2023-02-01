@@ -205,7 +205,7 @@ function Main(props) {
 								)}
 								URLParams
 								react={{
-									and: ['SearchSensor', 'vote-average', 'genres-list'],
+									and: ['SearchSensor', 'VoteAverage', 'GenresList'],
 								}}
 								innerClass={{
 									resultStats: 'result-stats',
