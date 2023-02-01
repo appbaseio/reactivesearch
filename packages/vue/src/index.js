@@ -21,7 +21,7 @@ import RangeSlider from './components/range/RangeSlider.jsx';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider.jsx';
 import StateProvider from './components/basic/StateProvider.jsx';
 import ReactiveGoogleMap from './components/maps/ReactiveGoogleMap.jsx';
-import initReactivesearch from './server/index';
+import getServerState from './server/index';
 import version from './components/Version/index';
 import install from './install';
 import RangeInput from './components/range/RangeInput.jsx';
@@ -51,7 +51,7 @@ export {
 	ToggleButton,
 	StateProvider,
 	ReactiveGoogleMap,
-	initReactivesearch,
+	getServerState,
 	RangeInput,
 	componentTypes,
 };
