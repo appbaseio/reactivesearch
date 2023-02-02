@@ -19,7 +19,13 @@
 					:autosuggest="false"
 					:highlight="true"
 					:URLParams="true"
-					:data-field="['original_title', 'original_title.search']"
+					:data-field="[
+						'original_title',
+						'original_title.search',
+						'authors',
+						'authors.search',
+					]"
+					:debounce="250"
 					component-id="SearchSensor"
 					placeholder="Search by books names"
 					icon-position="left"
@@ -57,12 +63,15 @@
 							<div :id="item._id" :key="item._id" class="flex book-content">
 								<img :src="item.image" alt="Book Cover" class="book-image" />
 								<div class="flex column justify-center ml20">
-									<div class="book-header" inner-html="item.original_title"></div>
+									<div class="book-header" v-html="item.original_title"></div>
 									<div class="flex column justify-space-between">
 										<div>
 											<div>
 												by
-												<span class="authors-list">{{ item.authors }}</span>
+												<span
+													class="authors-list"
+													v-html="item.authors"
+												></span>
 											</div>
 											<div class="ratings-list flex align-center">
 												<span class="stars">

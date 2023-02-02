@@ -1,34 +1,19 @@
-
-<template>
-  <div>
-    <Search 
-      :initial-state="initialState" 
-      :context-collector="contextCollector" />
-  </div>
-</template>
-
-
-<script>
+<script setup>
 import { getServerState } from '@appbaseio/reactivesearch-vue';
 import Search from '../components/search.vue';
 
-export default defineNuxtComponent({
-	async asyncData() {
-		const route = useRoute();
-		try {
-			const initialState = await getServerState(Search, route.query);
-			console.log('INITIAL STATE', initialState);
-			return {
-				initialState,
-			};
-		} catch (e) {
-			console.log('ERROR', e);
-			console.error('error', e);
-			return { error: e };
-		}
-	},
-	created() {
-		console.log('THIS IS ERROR', this.initialState, this.error);
-	},
-});
+// eslint-disable-next-line no-undef
+const route = useRoute();
+// eslint-disable-next-line no-unused-vars,no-undef
+const { data, pending, error, refresh } = await useAsyncData(() =>
+	getServerState(Search, route.query),
+);
+// eslint-disable-next-line no-unused-vars
+const initialState = data.value;
 </script>
+
+<template>
+  <div>
+    <search :initial-state="initialState" />
+  </div>
+</template>
