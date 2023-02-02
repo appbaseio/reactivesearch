@@ -841,6 +841,7 @@ const SearchBox = (props) => {
 		}
 		// Set custom and default queries in store
 		triggerCustomQuery(currentLocalValue, selectedCategory);
+
 		triggerDefaultQuery(currentLocalValue);
 	});
 	const clearTag = (tagValue) => {

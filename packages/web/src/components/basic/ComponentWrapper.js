@@ -67,25 +67,37 @@ class ComponentWrapper extends React.Component {
 		if (props.mockData) {
 			props.setTestData(props.componentId, props.mockData);
 		}
+		if (this.internalComponent) {
+			if (this.props.mode !== 'test') {
+				if (this.props.setReact) {
+					// Watch component after rendering the component to avoid the un-necessary calls
+					this.setReact(this.props, false);
+				}
+			}
+		}
 	}
 
 	get hasCustomRenderer() {
 		return hasCustomRenderer(this.props);
 	}
 
-	setReact = (props) => {
+	setReact = (props, shouldExecute = true) => {
 		const { react } = props;
 		if (this.internalComponent) {
 			if (react) {
 				const newReact = pushToAndClause(react, this.internalComponent);
-				props.watchComponent(props.componentId, newReact);
+				props.watchComponent(props.componentId, newReact, shouldExecute);
 			} else {
-				props.watchComponent(props.componentId, {
-					and: this.internalComponent,
-				});
+				props.watchComponent(
+					props.componentId,
+					{
+						and: this.internalComponent,
+					},
+					shouldExecute,
+				);
 			}
 		} else {
-			props.watchComponent(props.componentId, react);
+			props.watchComponent(props.componentId, react, shouldExecute);
 		}
 	};
 
@@ -180,7 +192,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 		dispatch(updateComponentProps(component, options, ownProps.componentType)),
 	addComponent: (component, timestamp) => dispatch(addComponent(component, timestamp)),
 	removeComponent: component => dispatch(removeComponent(component)),
-	watchComponent: (component, react) => dispatch(watchComponent(component, react)),
+	watchComponent: (component, react, execute) =>
+		dispatch(watchComponent(component, react, execute)),
 	setQueryListener: (component, onQueryChange, beforeQueryChange) =>
 		dispatch(setQueryListener(component, onQueryChange, beforeQueryChange)),
 });

@@ -1,22 +1,20 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React from 'react';
 import {
 	ReactiveBase,
-	ToggleButton,
 	SelectedFilters,
 	ReactiveList,
+	ToggleButton,
+	getServerState,
 } from '@appbaseio/reactivesearch';
-
-import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
+import PropTypes from 'prop-types';
 
 import Layout from '../components/Layout';
 import ListItemView from '../components/ListItemView';
 
 const settings = {
 	app: 'meetup_app',
-	url:
-		'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
-	enableAppbase: true
+	url: 'https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io',
+	enableAppbase: true,
 };
 
 const toggleButtonProps = {
@@ -51,41 +49,35 @@ const resultListProps = {
 	},
 };
 
-export default class Main extends Component {
-	static async getInitialProps() {
-		return {
-			store: await initReactivesearch(
-				[
-					{
-						...toggleButtonProps,
-						source: ToggleButton,
-					},
-					{
-						...resultListProps,
-						source: ReactiveList,
-					},
-				],
-				null,
-				settings,
-			),
-		};
-	}
-
-	render() {
-		return (
-			<Layout title="SSR | ToggleButton">
-				<ReactiveBase {...settings} initialState={this.props.store}>
-					<div className="row">
-						<div className="col">
-							<ToggleButton {...toggleButtonProps} />
-						</div>
-						<div className="col">
-							<SelectedFilters />
-							<ReactiveList {...resultListProps} />
-						</div>
-					</div>
-				</ReactiveBase>
-			</Layout>
-		);
-	}
+const Main = props => (
+	<Layout title="SSR | ResultList">
+		<ReactiveBase
+			{...settings}
+			{...(props.contextCollector ? { contextCollector: props.contextCollector } : {})}
+			initialState={props.initialState}
+		>
+			<div className="row">
+				<div className="col">
+					<ToggleButton {...toggleButtonProps} />
+				</div>
+				<div className="col">
+					<SelectedFilters />
+					<ReactiveList {...resultListProps} />
+				</div>
+			</div>
+		</ReactiveBase>
+	</Layout>
+);
+export async function getServerSideProps(context) {
+	const initialState = await getServerState(Main, context.resolvedUrl);
+	return {
+		props: { initialState },
+		// will be passed to the page component as props
+	};
 }
+Main.propTypes = {
+	// eslint-disable-next-line
+	initialState: PropTypes.object,
+	contextCollector: PropTypes.func,
+};
+export default Main;

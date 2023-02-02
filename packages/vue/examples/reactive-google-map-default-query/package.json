@@ -10,7 +10,7 @@
 	"dependencies": {
 		"core-js": "^3.6.5",
 		"vue": "^3.2.45",
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2"
+		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.7"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.18.6",

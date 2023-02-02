@@ -24,7 +24,6 @@ class Main extends Component {
 						<DatePicker
 							componentId="DateSensor"
 							dataField="available_from"
-							customQuery={this.dateQuery}
 							initialMonth={new Date('2016-05-05')}
 							placeholder="Available From - YYYY-MM-DD"
 						/>

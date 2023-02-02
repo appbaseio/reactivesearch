@@ -29,12 +29,7 @@
 	"scripts": {
 		"start:server": "babel-node --plugins transform-object-rest-spread server/index.js",
 		"start:client": "webpack -w",
-		"build:client": "webpack"
-	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest"
-		]
+		"build:client": "webpack",
+		"start": "yarn start:server && yarn start:client"
 	}
 }

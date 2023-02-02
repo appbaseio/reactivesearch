@@ -92,9 +92,6 @@ class ReactiveList extends Component {
 			this.sortOptionIndex
 				= this.props.sortOptions.findIndex(s => s.label === this.props.urlSortOption) || 0;
 		}
-	}
-
-	componentDidMount() {
 		let options = getQueryOptions(this.props);
 		options.from = this.state.from;
 		if (this.props.sortOptions) {
@@ -163,7 +160,9 @@ class ReactiveList extends Component {
 				execute,
 			);
 		}
+	}
 
+	componentDidMount() {
 		this.domNode = window;
 		if (this.showInfiniteScroll) {
 			const { scrollTarget } = this.props;
@@ -1016,7 +1015,8 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	config: state.config,
-	queryLog: state.queryLog[props.componentId] && state.queryLog[props.componentId][props.componentId],
+	queryLog:
+		state.queryLog[props.componentId] && state.queryLog[props.componentId][props.componentId],
 	error: state.error[props.componentId],
 	promotedResults: state.promotedResults[props.componentId],
 	customData: state.customData[props.componentId],
@@ -1071,14 +1071,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.reactiveList}
 				{...preferenceProps}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

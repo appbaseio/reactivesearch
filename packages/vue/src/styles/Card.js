@@ -1,6 +1,6 @@
 import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 
 import Title from './Title';
 

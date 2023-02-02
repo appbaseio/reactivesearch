@@ -1,7 +1,7 @@
 {
-	"name": "with-ssr",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"private": true,
+	"name": "with-ssr",
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev",
@@ -9,11 +9,11 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
 	},
-	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2"
-	},
 	"devDependencies": {
-		"nuxt": "^3.0.0",
-		"std-env": "^3.3.1"
+		"nuxt": "^3.1.0"
+	},
+	"dependencies": {
+		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.7",
+		"@nuxtjs/emotion": "^1.0.0"
 	}
 }
