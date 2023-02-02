@@ -59,7 +59,7 @@ class DynamicRangeSlider extends Component {
 	constructor(props) {
 		super(props);
 
-		const { queryFormat } = props;
+		const { queryFormat, selectedValue } = props;
 		if (queryFormat) {
 			if (!isValidDateRangeQueryFormat(queryFormat)) {
 				throw new Error('queryFormat is not supported. Try with a valid queryFormat.');
@@ -106,6 +106,15 @@ class DynamicRangeSlider extends Component {
 			// get range before executing other queries
 			this.updateRangeQueryOptions(props);
 		}
+		if (selectedValue) {
+			if (Array.isArray(selectedValue)) {
+				this.state.currentValue = selectedValue;
+				this.updateQuery(selectedValue, props);
+			} else {
+				this.state.currentValue = DynamicRangeSlider.parseValue(selectedValue, props);
+				this.updateQuery(DynamicRangeSlider.parseValue(selectedValue, props), props);
+			}
+		}
 
 		const { mode } = this.props;
 		if (mode !== 'test') {
@@ -126,7 +135,6 @@ class DynamicRangeSlider extends Component {
 					start: props.selectedValue[0],
 					end: props.selectedValue[1],
 				});
-
 				if (
 					selectedValueNumericArray[0] >= range.start
 					&& selectedValueNumericArray[1] <= range.end
@@ -184,11 +192,6 @@ class DynamicRangeSlider extends Component {
 			this.updateRange(formatRange(this.props.range, this.props));
 			// only listen to selectedValue initially, after the
 			// component has mounted and range is received
-			if (this.props.selectedValue) {
-				this.handleChange(this.props.selectedValue);
-			} else {
-				this.handleChange();
-			}
 		} else if (
 			this.props.range
 			&& !isEqual(
@@ -435,14 +438,18 @@ class DynamicRangeSlider extends Component {
 				{ start, end },
 				props.queryFormat,
 			);
-			// always keep the values within range
-			// props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000) is required
-			// since we need to convert the milliseconds value into seconds in case of epoch_second
-			normalizedValue = [
-				processedStart < props.range.start ? props.range.start : processedStart,
-				processedEnd > props.range.end ? props.range.end : processedEnd,
-			];
-			if (props.range.start === null) {
+			if (props.range) {
+				// always keep the values within range
+				// props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000) is required
+				// since we need to convert the milliseconds value into seconds in case of epoch_second
+				normalizedValue = [
+					processedStart < props.range.start ? props.range.start : processedStart,
+					processedEnd > props.range.end ? props.range.end : processedEnd,
+				];
+				if (props.range.start === null) {
+					normalizedValue = [processedStart, processedEnd];
+				}
+			} else {
 				normalizedValue = [processedStart, processedEnd];
 			}
 		}
