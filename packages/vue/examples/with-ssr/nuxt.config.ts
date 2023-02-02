@@ -5,6 +5,9 @@ export default defineNuxtConfig({
 	},
 	css: ['@/assets/css/airbnb.css'],
 	modules: ['@nuxtjs/emotion'],
+	webpack: {
+		terser: false,
+	},
 	vite: {
 		optimizeDeps: {
 			include: [

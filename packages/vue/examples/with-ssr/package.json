@@ -13,7 +13,7 @@
 		"nuxt": "^3.1.0"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.5",
+		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.7",
 		"@nuxtjs/emotion": "^1.0.0"
 	}
 }

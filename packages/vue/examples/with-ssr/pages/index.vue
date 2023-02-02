@@ -17,13 +17,18 @@ export default defineNuxtComponent({
 		const route = useRoute();
 		try {
 			const initialState = await getServerState(Search, route.query);
+			console.log('INITIAL STATE', initialState);
 			return {
 				initialState,
 			};
 		} catch (e) {
+			console.log('ERROR', e);
 			console.error('error', e);
+			return { error: e };
 		}
-		return {};
+	},
+	created() {
+		console.log('THIS IS ERROR', this.initialState, this.error);
 	},
 });
 </script>

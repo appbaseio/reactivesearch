@@ -13,7 +13,7 @@ import {
 	transformRequestUsingEndpoint,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
-import { setValues } from '@appbaseio/reactivecore/src/actions/value';
+import { setValues } from '@appbaseio/reactivecore/lib/actions/value';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import URLParamsProvider from './URLParamsProvider';
 

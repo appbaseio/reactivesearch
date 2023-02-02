@@ -9,9 +9,7 @@ export const getComponents = () => {
 	const components = { NoSSR };
 	try {
 		if (typeof window !== 'undefined') {
-			// in older versions of nuxt, it's process.BROWSER_BUILD
-			// eslint-disable-next-line
-			components['vue-slider-component'] = require('vue-slider-component');
+			components['vue-slider-component'] = () => import('vue-slider-component');
 		}
 	} catch (e) {
 		console.error('Unable to load vue-slider', e);
