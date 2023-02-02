@@ -41,6 +41,11 @@ const Flex = styled('div')`
 		&& `
 			align-items: ${props.alignItems};
 		`};
+	${(props) =>
+		props.gap
+		&& `
+			gap: ${props.gap};
+		`};
 
 	${(props) =>
 		props.flex

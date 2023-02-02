@@ -95,7 +95,6 @@ const TreeList = (props) => {
 		showCheckbox,
 		showRadio,
 		dataField,
-		index,
 		sortBy,
 		renderError,
 		renderNoResults,
@@ -631,14 +630,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.treeList}
 				mode={preferenceProps.testMode ? 'test' : ''}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
