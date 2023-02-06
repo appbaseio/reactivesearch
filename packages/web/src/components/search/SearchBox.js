@@ -95,6 +95,8 @@ const SearchBox = (props) => {
 		URLParams,
 		customQuery,
 		customEvents,
+		showSuggestionsFooter,
+		renderSuggestionsFooter,
 	} = props;
 
 	const internalComponent = getInternalComponentID(componentId);
@@ -829,6 +831,15 @@ const SearchBox = (props) => {
 			</div>
 		);
 	};
+	const SuggestionsFooter = () => (
+		typeof renderSuggestionsFooter === 'function'
+	 		? renderSuggestionsFooter()
+			: ((
+				<AutosuggestFooterContainer>
+					<div>↑↓ Navigate</div>
+					<div>↩ Go</div>
+				</AutosuggestFooterContainer>))
+	);
 
 
 	const onAutofillClick = (suggestion) => {
@@ -1366,10 +1377,8 @@ const SearchBox = (props) => {
 												);
 											})}
 
-											<AutosuggestFooterContainer>
-												<div>↑↓ Navigate</div>
-												<div>↩ Go</div>
-											</AutosuggestFooterContainer>
+											{showSuggestionsFooter
+												? <SuggestionsFooter /> : null}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
