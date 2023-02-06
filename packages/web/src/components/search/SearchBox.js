@@ -66,6 +66,7 @@ import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
+import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -741,6 +742,13 @@ const SearchBox = (props) => {
 
 	const renderIcon = () => {
 		if (props.showIcon) {
+			if (props.iconURL) {
+				return (<img
+					style={{ maxHeight: '25px' }}
+					src={XSS(props.iconURL)}
+					alt="search-icon"
+				/>);
+			}
 			return props.icon || <SearchSvg />;
 		}
 		return null;
@@ -1336,6 +1344,11 @@ const SearchBox = (props) => {
 													</li>
 												);
 											})}
+
+											<AutosuggestFooterContainer>
+												<div>↑↓ Navigate</div>
+												<div>↩ Go</div>
+											</AutosuggestFooterContainer>
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1495,6 +1508,7 @@ SearchBox.propTypes = {
 	highlight: types.bool,
 	highlightField: types.stringOrArray,
 	icon: types.children,
+	iconURL: types.string,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	includeFields: types.includeFields,
