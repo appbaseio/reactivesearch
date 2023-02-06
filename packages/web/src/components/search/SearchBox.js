@@ -775,8 +775,9 @@ const SearchBox = (props) => {
 			let shortcut = props.focusShortcuts[0];
 			shortcut = shortcut.toLowerCase();
 			shortcut = shortcut.replace('shift', '⬆️');
-			shortcut = shortcut.replace('command', 'CMD');
+			shortcut = shortcut.replace('command', 'cmd');
 			shortcut = shortcut.replace('control', 'ctrl');
+			shortcut = shortcut.replace('option', 'alt');
 			return shortcut.toUpperCase();
 		}
 		return '/';
