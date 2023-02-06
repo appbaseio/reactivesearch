@@ -1564,7 +1564,7 @@ SearchBox.propTypes = {
 SearchBox.defaultProps = {
 	autosuggest: true,
 	className: null,
-	debounce: 0,
+	debounce: 100,
 	downShiftProps: {},
 	enableSynonyms: true,
 	enablePopularSuggestions: false,
