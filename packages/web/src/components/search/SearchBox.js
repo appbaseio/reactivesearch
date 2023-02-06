@@ -44,7 +44,7 @@ import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../styles/IconWrapper';
+import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
 import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
@@ -673,6 +673,14 @@ const SearchBox = (props) => {
 		}
 		return null;
 	};
+	const handleFocus = (event) => {
+		if (props.autosuggest) {
+			setIsOpen(true);
+		}
+		if (props.onFocus) {
+			props.onFocus(event, triggerQuery);
+		}
+	};
 
 	const getComponent = (downshiftProps = {}) => {
 		const { error, isLoading, rawData } = props;
@@ -779,6 +787,7 @@ const SearchBox = (props) => {
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
+					<ButtonIconWrapper onClick={() => handleFocus()}>/</ButtonIconWrapper>
 					{shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -797,18 +806,11 @@ const SearchBox = (props) => {
 						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
 					)}
 				</IconGroup>
+
 			</div>
 		);
 	};
 
-	const handleFocus = (event) => {
-		if (props.autosuggest) {
-			setIsOpen(true);
-		}
-		if (props.onFocus) {
-			props.onFocus(event, triggerQuery);
-		}
-	};
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
@@ -1455,6 +1457,7 @@ const SearchBox = (props) => {
 							/>
 							{renderIcons()}
 						</InputWrapper>
+
 						{renderInputAddonAfter()}
 						{renderEnterButtonElement()}
 					</InputGroup>
