@@ -768,6 +768,17 @@ const SearchBox = (props) => {
 		}
 		return null;
 	};
+	const renderShortcut = () => {
+		if (props.focusShortcuts && props.focusShortcuts.length) {
+			let shortcut = props.focusShortcuts[0];
+			shortcut = shortcut.toLowerCase();
+			shortcut = shortcut.replace('shift', '⬆️');
+			shortcut = shortcut.replace('command', 'CMD');
+			shortcut = shortcut.replace('control', 'ctrl');
+			return shortcut.toUpperCase();
+		}
+		return '/';
+	};
 
 	const renderIcons = () => {
 		const {
@@ -778,6 +789,7 @@ const SearchBox = (props) => {
 			showVoiceSearch,
 			iconPosition,
 			innerClass,
+			showFocusShortcutsIcon,
 		} = props;
 		return (
 			<div>
@@ -787,7 +799,14 @@ const SearchBox = (props) => {
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
-					<ButtonIconWrapper onClick={() => handleFocus()}>/</ButtonIconWrapper>
+					{
+						showFocusShortcutsIcon
+						&& (
+							<ButtonIconWrapper onClick={() => handleFocus()}>
+								{renderShortcut()}
+							</ButtonIconWrapper>
+						)
+					}
 					{shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -1554,11 +1573,14 @@ SearchBox.propTypes = {
 	renderMic: types.func,
 	//
 	focusShortcuts: types.focusShortcuts,
+	showFocusShortcutsIcon: types.bool,
 	addonBefore: types.children,
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
 	popularSuggestionsConfig: types.componentObject,
 	recentSuggestionsConfig: types.componentObject,
+	showSuggestionsFooter: types.bool,
+	renderSuggestionsFooter: types.func,
 	applyStopwords: types.bool,
 	customStopwords: types.stringArray,
 	onData: types.func,
@@ -1592,11 +1614,13 @@ SearchBox.defaultProps = {
 	queryFormat: 'or',
 	showFilter: true,
 	showIcon: true,
+	showFocusShortcutsIcon: true,
 	showVoiceSearch: false,
 	style: {},
 	URLParams: false,
 	showClear: false,
 	showDistinctSuggestions: true,
+	showSuggestionsFooter: true,
 	strictSelection: false,
 	searchOperators: false,
 	size: 10,

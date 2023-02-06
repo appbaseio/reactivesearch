@@ -42,15 +42,15 @@ const IconWrapper = styled.div`
 
 export const ButtonIconWrapper = styled(IconWrapper)`
 	--inline-code-keylineColor: rgba(0, 0, 0, 0.05);
-	font-style: italic;
 	border: 1px solid var(--inline-code-keylineColor);
 	border-color: rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
 	vertical-align: middle;
-	width: 20px;
 	height: 25px;
 	font-size: 15px;
 	background: #e5eff5;
+	max-width: unset;
+	padding: 5px;
 `;
 
 export default IconWrapper;
