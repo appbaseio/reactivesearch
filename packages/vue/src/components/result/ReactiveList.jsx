@@ -309,8 +309,7 @@ const ReactiveList = {
 			}
 		},
 		infiniteScroll(newVal, oldVal) {
-			if (newVal !== oldVal)
-			{
+			if (newVal !== oldVal) {
 				if (newVal && !this.pagination) {
 					window.addEventListener('scroll', this.scrollHandler);
 				} else {
