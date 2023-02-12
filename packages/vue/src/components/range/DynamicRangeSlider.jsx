@@ -71,26 +71,6 @@ const DynamicRangeSlider = {
 
 	created() {
 		this.$timestamp = new Date().getTime();
-		const onQueryChange = (...args) => {
-			this.$emit('queryChange', ...args);
-			this.$emit('query-change', ...args);
-		};
-		this.setQueryListener(this.$props.componentId, onQueryChange, null);
-		// Update props in store
-		this.setComponentProps(this.componentId, this.$props, componentTypes.dynamicRangeSlider);
-		this.setComponentProps(
-			this.internalRangeComponent,
-			this.$props,
-			componentTypes.dynamicRangeSlider,
-		);
-
-		// Set custom query in store
-		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
-	},
-	mounted() {
-		this.setReact();
-	},
-	beforeMount() {
 		let components = [];
 		if (this.$$store) {
 			({ components } = this.$$store.getState());
@@ -110,8 +90,26 @@ const DynamicRangeSlider = {
 			// get range before executing other queries
 			this.updateRangeQueryOptions();
 		}
-	},
+		const onQueryChange = (...args) => {
+			this.$emit('queryChange', ...args);
+			this.$emit('query-change', ...args);
+		};
+		this.setQueryListener(this.$props.componentId, onQueryChange, null);
+		// Update props in store
+		this.setComponentProps(this.componentId, this.$props, componentTypes.dynamicRangeSlider);
+		this.setComponentProps(
+			this.internalRangeComponent,
+			this.$props,
+			componentTypes.dynamicRangeSlider,
+		);
 
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
+		this.setReact(false);
+	},
+	mounted() {
+		this.setReact(true);
+	},
 	beforeUpdate() {
 		if (!this.currentValue) {
 			this.setDefaultValue(this.range);
@@ -146,13 +144,13 @@ const DynamicRangeSlider = {
 			}
 		},
 
-		setReact() {
+		setReact(shouldExecute) {
 			if (this.$props.react) {
-				this.watchComponent(this.internalRangeComponent, this.$props.react);
-				this.watchComponent(this.$props.componentId, this.$props.react);
+				this.watchComponent(this.internalRangeComponent, this.$props.react, shouldExecute);
+				this.watchComponent(this.$props.componentId, this.$props.react, shouldExecute);
 			} else {
-				this.watchComponent(this.internalRangeComponent, {});
-				this.watchComponent(this.$props.componentId, {});
+				this.watchComponent(this.internalRangeComponent, {}, shouldExecute);
+				this.watchComponent(this.$props.componentId, {}, shouldExecute);
 			}
 		},
 

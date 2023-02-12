@@ -159,8 +159,6 @@ const RangeSlider = {
 
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
-	},
-	beforeMount() {
 		const { value, defaultValue } = this.$props;
 		const { selectedValue } = this;
 		if (this.$props.range) {

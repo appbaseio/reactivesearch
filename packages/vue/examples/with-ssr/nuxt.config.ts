@@ -1,14 +1,25 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	telemetry: false,
-	vite:{
+	build: {
+		transpile: ['@appbaseio/reactivesearch-vue'],
+	},
+	css: ['@/assets/css/airbnb.css'],
+	modules: ['@nuxtjs/emotion'],
+	webpack: {
+		terser: false,
+	},
+	vite: {
 		optimizeDeps: {
-			include: ['@appbaseio/reactivecore', '@appbaseio/reactivesearch-vue', 'fast-deep-equal'],
+			include: [
+				'@appbaseio/reactivecore',
+				'@appbaseio/reactivesearch-vue',
+				'fast-deep-equal',
+			],
 		},
 		build: {
 			commonjsOptions: {
 				include: [/reactivecore/, /reactivesearch/, /node_modules/],
 			},
 		},
-	}
-})
+	},
+});

@@ -8,15 +8,16 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
+		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.7",
 		"vue": "^3.2.5",
-		"@appbaseio/reactivesearch-vue": "3.0.0-alpha.2",
 		"vuejs-paginate": "^2.1.0"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "~4.5.0",
 		"@vue/cli-plugin-eslint": "~4.5.0",
 		"@vue/cli-service": "~4.5.0",
-		"@vue/compiler-sfc": "^3.1.0"
+		"@vue/compiler-sfc": "^3.1.0",
+		"node-ipc": "^11.1.0"
 	},
 	"eslintConfig": {
 		"root": true,

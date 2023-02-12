@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
-import { ReactiveBase, RangeInput, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch';
+import React from 'react';
+import {
+	ReactiveBase,
+	SelectedFilters,
+	ReactiveList,
+	RangeInput,
+	getServerState,
+} from '@appbaseio/reactivesearch';
 import PropTypes from 'prop-types';
-
-import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
 
 import Layout from '../components/Layout';
 import BookCard from '../components/BookCard';
@@ -32,56 +36,46 @@ const rangeInputProps = {
 
 const reactiveListProps = {
 	componentId: 'SearchResult',
-	dataField: 'original_title.keyword',
+	dataField: 'original_title',
+	className: 'result-list-container',
 	from: 0,
-	size: 10,
+	size: 5,
 	renderItem: data => <BookCard key={data._id} data={data} />,
 	react: {
 		and: ['BookSensor'],
 	},
 };
 
-export default class Main extends Component {
-	static async getInitialProps() {
-		return {
-			store: await initReactivesearch(
-				[
-					{
-						...rangeInputProps,
-						source: RangeInput,
-					},
-					{
-						...reactiveListProps,
-						source: ReactiveList,
-					},
-				],
-				null,
-				settings,
-			),
-		};
-	}
+const Main = props => (
+	<Layout title="SSR | RangeInput">
+		<ReactiveBase
+			{...settings}
+			{...(props.contextCollector ? { contextCollector: props.contextCollector } : {})}
+			initialState={props.initialState}
+		>
+			<div className="row">
+				<div className="col">
+					<RangeInput {...rangeInputProps} />
+				</div>
 
-	render() {
-		return (
-			<Layout title="SSR | RangeInput">
-				<ReactiveBase {...settings} initialState={this.props.store}>
-					<div className="row">
-						<div className="col">
-							<RangeInput {...rangeInputProps} />
-						</div>
-
-						<div className="col">
-							<SelectedFilters />
-							<ReactiveList {...reactiveListProps} />
-						</div>
-					</div>
-				</ReactiveBase>
-			</Layout>
-		);
-	}
+				<div className="col">
+					<SelectedFilters />
+					<ReactiveList {...reactiveListProps} />
+				</div>
+			</div>
+		</ReactiveBase>
+	</Layout>
+);
+export async function getServerSideProps(context) {
+	const initialState = await getServerState(Main, context.resolvedUrl);
+	return {
+		props: { initialState },
+		// will be passed to the page component as props
+	};
 }
-
 Main.propTypes = {
 	// eslint-disable-next-line
-	store: PropTypes.object,
+	initialState: PropTypes.object,
+	contextCollector: PropTypes.func,
 };
+export default Main;

@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { SearchPreferencesContext, useAnalytics } from './utils';
 import * as types from './types';
+import getServerState from './server';
 
 export interface CommonProps {
 	componentId: string;
@@ -52,3 +52,5 @@ export { default as SearchBox } from './components/search/SearchBox';
 export { default as ReactiveChart } from './components/chart/ReactiveChart';
 
 export { componentTypes, SearchPreferencesContext, useAnalytics };
+
+export { getServerState };

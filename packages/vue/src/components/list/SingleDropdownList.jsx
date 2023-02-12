@@ -90,8 +90,6 @@ const SingleDropdownList = {
 		// Set custom and default queries in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		updateDefaultQuery(this.componentId, this.setDefaultQuery, this.$props, this.currentValue);
-	},
-	beforeMount() {
 		this.updateQueryOptions(this.$props);
 
 		if (this.selectedValue) {

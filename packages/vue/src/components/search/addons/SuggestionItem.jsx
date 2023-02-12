@@ -1,6 +1,6 @@
 import Highlight from 'vue-highlight-words';
 import { styled } from '@appbaseio/vue-emotion';
-import { cx, css } from 'emotion';
+import { css } from '@emotion/css';
 import types from '../../../utils/vueTypes';
 
 import Flex from '../../../styles/Flex';
@@ -91,7 +91,7 @@ const SuggestionItem = {
 							</div>
 						)}
 						{description && (
-							<div class={cx('trim', css({ marginTop: 3 }))}>
+							<div class={['trim', css({ marginTop: 3 })]}>
 								<Highlight
 									searchWords={this.currentValue.split(' ')}
 									textToHighlight={description}
