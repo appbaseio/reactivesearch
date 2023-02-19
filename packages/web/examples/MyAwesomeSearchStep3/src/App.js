@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-	ReactiveBase,
-	SearchBox,
-	MultiList,
-	SingleRange,
-	ReactiveList,
-	ResultCard,
-} from '@appbaseio/reactivesearch';
+import { ReactiveBase, SearchBox, MultiList, SingleRange } from '@appbaseio/reactivesearch';
 
 function App() {
 	return (
@@ -52,32 +45,6 @@ function App() {
 					{ start: 3, end: 5, label: '3 stars and up' },
 				]}
 				defaultValue="4 stars and up"
-			/>
-			<ReactiveList
-				componentId="results"
-				dataField="_score"
-				size={6}
-				pagination={true}
-				react={{
-					and: ['searchbox', 'authorsfilter', 'ratingsfilter'],
-				}}
-				render={({ data }) => (
-					<ReactiveList.ResultCardsWrapper>
-						{data.map((item) => (
-							<ResultCard key={item._id}>
-								<ResultCard.Image src={item.image} />
-								<ResultCard.Title
-									dangerouslySetInnerHTML={{
-										__html: item.original_title,
-									}}
-								/>
-								<ResultCard.Description>
-									{item.authors + ' ' + '*'.repeat(item.average_rating)}
-								</ResultCard.Description>
-							</ResultCard>
-						))}
-					</ReactiveList.ResultCardsWrapper>
-				)}
 			/>
 		</ReactiveBase>
 	);

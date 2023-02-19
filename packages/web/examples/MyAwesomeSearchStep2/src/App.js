@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactiveBase, SearchBox, MultiList, SingleRange } from '@appbaseio/reactivesearch';
+import { ReactiveBase, SearchBox } from '@appbaseio/reactivesearch';
 
 function App() {
 	return (
@@ -29,22 +29,6 @@ function App() {
 					},
 				]}
 				placeholder="Search for books or authors"
-			/>
-			<MultiList
-				componentId="authorsfilter"
-				dataField="authors.keyword"
-				title="Filter by Authors"
-				aggregationSize={5}
-			/>
-			<SingleRange
-				componentId="ratingsfilter"
-				dataField="average_rating"
-				title="Filter by Ratings"
-				data={[
-					{ start: 4, end: 5, label: '4 stars and up' },
-					{ start: 3, end: 5, label: '3 stars and up' },
-				]}
-				defaultValue="4 stars and up"
 			/>
 		</ReactiveBase>
 	);
