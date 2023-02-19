@@ -104,14 +104,11 @@
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/048f0200a70fc849d70be4fc9018de5b26566e65"
   dependencies:
-    "@appbaseio/designkit" "^0.13.0"
-    "@appbaseio/reactivemaps" "^3.0.0"
-    "@appbaseio/reactivesearch" "^3.30.3"
+    "@appbaseio/designkit" "^0.11.0"
+    "@appbaseio/reactivemaps" "^3.0.0-beta.17"
+    "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
-    "@typeform/embed" "^1.34.1"
-    "@typeform/embed-react" "^1.13.0"
-    add "^2.0.6"
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
@@ -139,16 +136,13 @@
     gatsby-remark-external-links "0.0.4"
     gatsby-remark-images "6.9.0"
     gatsby-remark-prismjs "6.9.0"
-    gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
-    gatsby-transformer-remark "5.25.1"
+    gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
-    hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    lodash "^4.17.21"
-    moment "^2.29.4"
+    moment "^2.24.0"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -158,21 +152,8 @@
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
-    react-router-dom "^4.3.1"
-    react-use-fusejs "^1.0.1"
-    tocbot "^4.18.0"
-    yarn "^1.22.18"
-
-"@appbaseio/reactivecore@10.0.0-alpha.1":
-  version "10.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.1.tgz#5f2601ecb25632cc39f02e5a6abd93b6f8beebf5"
-  integrity sha512-KomLFtFBq4SGdXz7nt4rWWWzAuY5JVd2WfuUP0B4bLJSZ+9OdpN9SjO/mSrVtiXfUI3AegQ6DYMl3uOYUrg2pw==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
+    react-router-dom "4.3.1"
+    tocbot "4.5.0"
 
 "@appbaseio/reactivecore@10.0.0-alpha.3":
   version "10.0.0-alpha.3"
@@ -185,18 +166,19 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivesearch-vue@3.0.0-alpha.2":
-  version "3.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-alpha.2.tgz#e65300aac4a0f0d426d9f315f7421fe604bbe7a1"
-  integrity sha512-8eV1egXUus2Y8jKROnlaNXVItH3NuqLfwU742gux/qB45lU2TMRThwf2FyBzEXDVrpLJ4zuNQ5VK4iezG8jP9Q==
+"@appbaseio/reactivesearch-vue@3.0.0-alpha.7":
+  version "3.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-alpha.7.tgz#0baf98f636c613add89cc880d974c19e3e750809"
+  integrity sha512-ezQiLrkd65P58F4KmKJKFTqlWkOIcI71M4QZn65aIoY4vHxjQCaKkAr30OMmItWIBzvakMOcB1vwi4CyC4Py6w==
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.1"
+    "@appbaseio/reactivecore" "10.0.0-alpha.3"
     "@appbaseio/vue-emotion" "0.6.0-alpha.6"
+    "@emotion/css" "^11.10.5"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
     appbase-js "^5.2.0"
     compute-scroll-into-view "^1.0.11"
-    emotion "9.2.12"
+    emotion "11.0.0"
     hotkeys-js "^3.8.7"
     ngeohash "^0.6.3"
     polished "^2.2.0"
@@ -2500,6 +2482,23 @@
     source-map "^0.5.7"
     stylis "4.1.3"
 
+"@emotion/babel-plugin@^11.10.6":
+  version "11.10.6"
+  resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.6.tgz#a68ee4b019d661d6f37dec4b8903255766925ead"
+  integrity sha512-p2dAqtVrkhSa7xz1u/m9eHYdLi+en8NowrmXeF/dKtJpU8lCWli8RUAati7NcSl0afsBott48pdnANuD0wh9QQ==
+  dependencies:
+    "@babel/helper-module-imports" "^7.16.7"
+    "@babel/runtime" "^7.18.3"
+    "@emotion/hash" "^0.9.0"
+    "@emotion/memoize" "^0.8.0"
+    "@emotion/serialize" "^1.1.1"
+    babel-plugin-macros "^3.1.0"
+    convert-source-map "^1.5.0"
+    escape-string-regexp "^4.0.0"
+    find-root "^1.1.0"
+    source-map "^0.5.7"
+    stylis "4.1.3"
+
 "@emotion/babel-utils@^0.6.4":
   version "0.6.10"
   resolved "https://registry.yarnpkg.com/@emotion/babel-utils/-/babel-utils-0.6.10.tgz#83dbf3dfa933fae9fc566e54fbb45f14674c6ccc"
@@ -2561,6 +2560,17 @@
     "@emotion/serialize" "^0.11.15"
     "@emotion/utils" "0.11.3"
     babel-plugin-emotion "^10.0.27"
+
+"@emotion/css@^11.10.5":
+  version "11.10.6"
+  resolved "https://registry.yarnpkg.com/@emotion/css/-/css-11.10.6.tgz#5d226fdd8ef2a46d28e4eb09f66dc01a3bda5a04"
+  integrity sha512-88Sr+3heKAKpj9PCqq5A1hAmAkoSIvwEq1O2TwDij7fUtsJpdkV4jMTISSTouFeRvsGvXIpuSuDQ4C1YdfNGXw==
+  dependencies:
+    "@emotion/babel-plugin" "^11.10.6"
+    "@emotion/cache" "^11.10.5"
+    "@emotion/serialize" "^1.1.1"
+    "@emotion/sheet" "^1.2.1"
+    "@emotion/utils" "^1.2.0"
 
 "@emotion/css@^11.9.0":
   version "11.10.5"
@@ -16169,7 +16179,7 @@ emotion-utils@^9.1.0:
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-9.1.0.tgz#7484dbf18f3b1dc1de68559d1ff35a74caa998dc"
   integrity sha512-Zdy9TiZzMDRsCufivL/ZhQ0JdfGGSOc20opRjaBOemF5h2kYI/MD/bLcXfAZgzYVL12WNQegZIme6l+N/JFE4Q==
 
-emotion@*:
+emotion@*, emotion@11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-11.0.0.tgz#e33353668e72f0adea1f6fba790dc6c5b05b45d9"
   integrity sha512-QW3CRqic3aRw1OBOcnvxaHEpCmxtlGwZ5tM9dV5rY3Rn+F41E8EgTPOqJ5VfsqQ5ZXHDs2zSDyUwGI0ZfC2+5A==
