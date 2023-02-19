@@ -155,17 +155,6 @@
     react-router-dom "4.3.1"
     tocbot "4.5.0"
 
-"@appbaseio/reactivecore@10.0.0-alpha.3":
-  version "10.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.3.tgz#21c7db36664acf9a652238ea1df7a6599edca531"
-  integrity sha512-LievnS/UYyN4j6VZ2eaNkwm3VwfYM1zLttJ92ydyN2S71QXqmLjZtx941zLCILdzYXVzd3sV+YaOf0a+E/mmEQ==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivecore@9.14.37":
   version "9.14.37"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.37.tgz#2fd654e161787f25f7b1b0eb6aa02e2ffc4d6e60"
