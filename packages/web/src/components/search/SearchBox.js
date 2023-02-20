@@ -805,7 +805,7 @@ const SearchBox = (props) => {
 					{
 						showFocusShortcutsIcon
 						&& (
-							<ButtonIconWrapper onClick={() => handleFocus()}>
+							<ButtonIconWrapper onClick={e => focusSearchBox(e)}>
 								{renderShortcut()}
 							</ButtonIconWrapper>
 						)
