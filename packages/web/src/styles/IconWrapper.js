@@ -41,14 +41,13 @@ const IconWrapper = styled.div`
 `;
 
 export const ButtonIconWrapper = styled(IconWrapper)`
-	--inline-code-keylineColor: rgba(0, 0, 0, 0.05);
-	border: 1px solid var(--inline-code-keylineColor);
-	border-color: rgba(0, 0, 0, 0.1);
+	border: 1px solid ${({ theme }) => (theme.colors ? theme.colors.textColor : '#000')};
 	border-radius: 4px;
 	vertical-align: middle;
 	height: 25px;
 	font-size: 15px;
-	background: #e5eff5;
+	background: ${({ theme }) => (theme.colors ? theme.colors.backgroundColor : '#fff')};
+	border: 1px solid #aaa;
 	max-width: unset;
 	padding: 5px;
 `;
