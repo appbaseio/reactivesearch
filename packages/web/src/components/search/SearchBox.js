@@ -752,6 +752,9 @@ const SearchBox = (props) => {
 
 	const renderIcon = () => {
 		if (props.showIcon) {
+			if (props.icon) {
+				return props.icon;
+			}
 			if (props.iconURL) {
 				return (<img
 					style={{ maxHeight: '25px' }}
@@ -759,7 +762,7 @@ const SearchBox = (props) => {
 					alt="search-icon"
 				/>);
 			}
-			return props.icon || <SearchSvg />;
+			return <SearchSvg />;
 		}
 		return null;
 	};
