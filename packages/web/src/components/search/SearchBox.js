@@ -44,7 +44,7 @@ import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../styles/IconWrapper';
+import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
 import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
@@ -66,6 +66,7 @@ import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
+import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 
 const useConstructor = (callBack = () => {}) => {
 	const [hasBeenCalled, setHasBeenCalled] = useState(false);
@@ -94,6 +95,8 @@ const SearchBox = (props) => {
 		URLParams,
 		customQuery,
 		customEvents,
+		showSuggestionsFooter,
+		renderSuggestionsFooter,
 	} = props;
 
 	const internalComponent = getInternalComponentID(componentId);
@@ -672,6 +675,14 @@ const SearchBox = (props) => {
 		}
 		return null;
 	};
+	const handleFocus = (event) => {
+		if (props.autosuggest) {
+			setIsOpen(true);
+		}
+		if (props.onFocus) {
+			props.onFocus(event, triggerQuery);
+		}
+	};
 
 	const getComponent = (downshiftProps = {}) => {
 		const { error, isLoading, rawData } = props;
@@ -741,7 +752,17 @@ const SearchBox = (props) => {
 
 	const renderIcon = () => {
 		if (props.showIcon) {
-			return props.icon || <SearchSvg />;
+			if (props.icon) {
+				return props.icon;
+			}
+			if (props.iconURL) {
+				return (<img
+					style={{ maxHeight: '25px' }}
+					src={XSS(props.iconURL)}
+					alt="search-icon"
+				/>);
+			}
+			return <SearchSvg />;
 		}
 		return null;
 	};
@@ -751,6 +772,18 @@ const SearchBox = (props) => {
 			return props.clearIcon || <CancelSvg />;
 		}
 		return null;
+	};
+	const renderShortcut = () => {
+		if (props.focusShortcuts && props.focusShortcuts.length) {
+			let shortcut = props.focusShortcuts[0];
+			shortcut = shortcut.toLowerCase();
+			shortcut = shortcut.replace('shift', '⬆️');
+			shortcut = shortcut.replace('command', 'cmd');
+			shortcut = shortcut.replace('control', 'ctrl');
+			shortcut = shortcut.replace('option', 'alt');
+			return shortcut.toUpperCase();
+		}
+		return '/';
 	};
 
 	const renderIcons = () => {
@@ -762,6 +795,7 @@ const SearchBox = (props) => {
 			showVoiceSearch,
 			iconPosition,
 			innerClass,
+			showFocusShortcutsIcon,
 		} = props;
 		return (
 			<div>
@@ -771,6 +805,14 @@ const SearchBox = (props) => {
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
+					{
+						showFocusShortcutsIcon
+						&& (
+							<ButtonIconWrapper onClick={e => focusSearchBox(e)}>
+								{renderShortcut()}
+							</ButtonIconWrapper>
+						)
+					}
 					{shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -789,18 +831,20 @@ const SearchBox = (props) => {
 						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
 					)}
 				</IconGroup>
+
 			</div>
 		);
 	};
+	const SuggestionsFooter = () => (
+		typeof renderSuggestionsFooter === 'function'
+	 		? renderSuggestionsFooter()
+			: ((
+				<AutosuggestFooterContainer>
+					<div>↑↓ Navigate</div>
+					<div>↩ Go</div>
+				</AutosuggestFooterContainer>))
+	);
 
-	const handleFocus = (event) => {
-		if (props.autosuggest) {
-			setIsOpen(true);
-		}
-		if (props.onFocus) {
-			props.onFocus(event, triggerQuery);
-		}
-	};
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
@@ -1337,6 +1381,9 @@ const SearchBox = (props) => {
 													</li>
 												);
 											})}
+
+											{showSuggestionsFooter
+												? <SuggestionsFooter /> : null}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1443,6 +1490,7 @@ const SearchBox = (props) => {
 							/>
 							{renderIcons()}
 						</InputWrapper>
+
 						{renderInputAddonAfter()}
 						{renderEnterButtonElement()}
 					</InputGroup>
@@ -1496,6 +1544,7 @@ SearchBox.propTypes = {
 	highlight: types.bool,
 	highlightField: types.stringOrArray,
 	icon: types.children,
+	iconURL: types.string,
 	iconPosition: types.iconPosition,
 	innerClass: types.style,
 	includeFields: types.includeFields,
@@ -1538,11 +1587,14 @@ SearchBox.propTypes = {
 	renderMic: types.func,
 	//
 	focusShortcuts: types.focusShortcuts,
+	showFocusShortcutsIcon: types.bool,
 	addonBefore: types.children,
 	addonAfter: types.children,
 	expandSuggestionsContainer: types.bool,
 	popularSuggestionsConfig: types.componentObject,
 	recentSuggestionsConfig: types.componentObject,
+	showSuggestionsFooter: types.bool,
+	renderSuggestionsFooter: types.func,
 	applyStopwords: types.bool,
 	customStopwords: types.stringArray,
 	onData: types.func,
@@ -1565,7 +1617,7 @@ SearchBox.propTypes = {
 SearchBox.defaultProps = {
 	autosuggest: true,
 	className: null,
-	debounce: 0,
+	debounce: 100,
 	downShiftProps: {},
 	enableSynonyms: true,
 	enablePopularSuggestions: false,
@@ -1576,11 +1628,13 @@ SearchBox.defaultProps = {
 	queryFormat: 'or',
 	showFilter: true,
 	showIcon: true,
+	showFocusShortcutsIcon: true,
 	showVoiceSearch: false,
 	style: {},
 	URLParams: false,
 	showClear: false,
 	showDistinctSuggestions: true,
+	showSuggestionsFooter: true,
 	strictSelection: false,
 	searchOperators: false,
 	size: 10,

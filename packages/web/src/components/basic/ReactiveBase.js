@@ -197,7 +197,7 @@ class ReactiveBase extends Component {
 			console.error(e);
 		}
 
-		let analyticsRef = null;
+		let analyticsRef;
 		if (config.analytics) {
 			analyticsRef = AppbaseAnalytics.init(analyticsInitConfig);
 		}
