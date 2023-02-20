@@ -40,4 +40,15 @@ const IconWrapper = styled.div`
 	}
 `;
 
+export const ButtonIconWrapper = styled(IconWrapper)`
+	border-radius: 4px;
+	vertical-align: middle;
+	height: 25px;
+	font-size: 12px;
+	border: 1px solid ${({ theme }) => (theme.colors ? theme.colors.primaryColor : '#000')};
+	color: ${({ theme }) => (theme.colors ? theme.colors.primaryColor : '#000')};
+	max-width: unset;
+	padding: 5px;
+`;
+
 export default IconWrapper;
