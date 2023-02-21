@@ -16,6 +16,7 @@ export interface CommonProps {
 export { default as NumberBox } from './components/basic/NumberBox';
 export { default as ReactiveBase } from './components/basic/ReactiveBase';
 export { default as ReactiveComponent } from './components/basic/ReactiveComponent';
+export { default as ReactiveComponentPrivate } from './components/basic/ReactiveComponentPivate';
 export { default as SelectedFilters } from './components/basic/SelectedFilters';
 export { default as StateProvider } from './components/basic/StateProvider';
 export { default as ErrorBoundary } from './components/basic/ErrorBoundary';
