@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { Component } from 'react';
-import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
+import { ReactiveBase } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
 
@@ -106,19 +106,7 @@ class App extends Component {
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>
-					<div
-						style={{
-							position: 'relative',
-							zIndex: 2147483640,
-							marginBottom: '1rem',
-						}}
-					>
-						<DataSearch
-							dataField={[{ field: 'description', weight: 3 }]}
-							componentId="places-filter"
-							title="DataSearch: Search for properties"
-						/>
-					</div>
+
 					<div
 						style={{
 							position: 'relative',

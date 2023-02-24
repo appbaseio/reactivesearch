@@ -7,7 +7,7 @@ import {
 	ResultCard,
 	SelectedFilters,
 	useAnalytics,
-	DataSearch,
+	SearchBox,
 } from '@appbaseio/reactivesearch';
 
 import './index.css';
@@ -49,7 +49,7 @@ const Main = () => (
 		<div className="row">
 			<div className="col">
 				<VisitStoreButton />
-				<DataSearch
+				<SearchBox
 					title="DataSearch"
 					dataField="original_title"
 					componentId="BookSensor"
@@ -78,8 +78,7 @@ const Main = () => (
 								<ResultCard
 									id={item._id}
 									key={item._id}
-									onClick={() =>
-										triggerClickAnalytics(idx, item._id)}
+									onClick={() => triggerClickAnalytics(idx, item._id)}
 								>
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title>
