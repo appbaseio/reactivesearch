@@ -106,6 +106,7 @@ const ReactiveMap = {
 		URLParams: VueTypes.bool,
 		autoCenter: VueTypes.bool,
 		getMapRef: VueTypes.func.isRequired,
+		getMapPromise: VueTypes.func,
 		center: types.location,
 		defaultCenter: types.location,
 		defaultPin: types.string,
@@ -175,31 +176,39 @@ const ReactiveMap = {
 		},
 		defaultQuery(newVal, oldVal) {
 			if (!isQueryIdentical(newVal, oldVal, null, this.$props)) {
-				let options = getQueryOptions(this.$props);
-				options.from = 0;
-				this.$defaultQuery = newVal(null, this.$props);
-				const { sort, query } = this.$defaultQuery || {};
-
-				if (sort) {
-					options.sort = this.$defaultQuery.sort;
-				}
-				const queryOptions = getOptionsFromQuery(this.$defaultQuery);
-				if (queryOptions) {
-					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
-				}
-				// Update calculated default query in store
-				this.setQueryOptions(this.$props.componentId, options, false);
-
-				const persistMapQuery = true;
-				const forceExecute = true;
-				// Update default query to include the geo bounding box query
-				this.setDefaultQueryForRSAPI();
-				const meta = {
-					mapBoxBounds: this.mapBoxBounds,
-				};
-				this.setMapData(this.componentId, query, persistMapQuery, forceExecute, meta);
-				this.currentPageState = 0;
-				this.from = 0;
+				this.getMapPromise().then(() => {
+					let options = getQueryOptions(this.$props);
+					options.from = 0;
+					this.$defaultQuery = newVal(null, this.$props);
+					// Update default query to include the geo bounding box query
+					this.setDefaultQueryForRSAPI();
+					if (this.$defaultQuery) {
+						const { sort, query } = this.$defaultQuery || {};
+						if (sort) {
+							options.sort = this.$defaultQuery.sort;
+						}
+						const queryOptions = getOptionsFromQuery(this.$defaultQuery);
+						if (queryOptions) {
+							options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
+						}
+						// Update calculated default query in store
+						this.setQueryOptions(this.$props.componentId, options, false);
+						const persistMapQuery = true;
+						const forceExecute = true;
+						const meta = {
+							mapBoxBounds: this.mapBoxBounds,
+						};
+						this.setMapData(
+							this.componentId,
+							query,
+							persistMapQuery,
+							forceExecute,
+							meta,
+						);
+						this.currentPageState = 0;
+						this.from = 0;
+					}
+				});
 			}
 		},
 		promotedResults(newVal, oldVal) {
@@ -232,23 +241,19 @@ const ReactiveMap = {
 				const results = parseHits(hits) || [];
 				const parsedPromotedResults = parseHits(promotedResults) || [];
 				let filteredResults = results;
-
 				if (parsedPromotedResults.length) {
 					const ids = parsedPromotedResults.map((item) => item._id).filter(Boolean);
 					if (ids) {
 						filteredResults = filteredResults.filter((item) => !ids.includes(item._id));
 					}
-
 					filteredResults = [...parsedPromotedResults, ...filteredResults];
 				}
-
 				filteredResults = filteredResults
 					.filter((item) => !!item[this.dataField])
 					.map((item) => ({
 						...item,
 						[this.dataField]: getLocationObject(item[this.dataField]),
 					}));
-
 				this.filteredResults = this.addNoise(filteredResults);
 				if (this.calculateMarkers) {
 					this.markersData
@@ -434,19 +439,20 @@ const ReactiveMap = {
 			// or whenever searchAsMove is true and the map is dragged
 			if (executeUpdate || (!this.skipBoundingBox && !this.mapBoxBounds)) {
 				this.$defaultQuery = this.getGeoQuery();
-
-				const persistMapQuery = !!this.center;
-				const forceExecute = this.searchAsMove;
-				const meta = {
-					mapBoxBounds: this.mapBoxBounds,
-				};
-				this.setMapData(
-					this.componentId,
-					this.$defaultQuery,
-					persistMapQuery,
-					forceExecute,
-					meta,
-				);
+				if (this.$defaultQuery) {
+					const persistMapQuery = !!this.center;
+					const forceExecute = this.searchAsMove;
+					const meta = {
+						mapBoxBounds: this.mapBoxBounds,
+					};
+					this.setMapData(
+						this.componentId,
+						this.$defaultQuery,
+						persistMapQuery,
+						forceExecute,
+						meta,
+					);
+				}
 			}
 			this.skipBoundingBox = false;
 		},
@@ -719,90 +725,92 @@ const ReactiveMap = {
 			{ from: this.from },
 			componentTypes.reactiveMap,
 		);
+		this.setDefaultQueryForRSAPI();
 	},
 	mounted() {
-		if (this.defaultPage < 0 && this.currentPage > 0) {
-			if (this.$props.URLParams) {
-				this.setPageURL(
-					this.$props.componentId,
-					this.currentPage,
-					this.$props.componentId,
-					false,
-					true,
-				);
+		this.getMapPromise().then(() => {
+			if (this.defaultPage < 0 && this.currentPage > 0) {
+				if (this.$props.URLParams) {
+					this.setPageURL(
+						this.$props.componentId,
+						this.currentPage,
+						this.$props.componentId,
+						false,
+						true,
+					);
+				}
 			}
-		}
-		let options = getQueryOptions(this.$props);
-		options.from = this.$data.from;
-		if (this.$props.sortBy) {
-			options.sort = [
-				{
-					[this.$props.dataField]: {
-						order: this.$props.sortBy,
+			let options = getQueryOptions(this.$props);
+			options.from = this.$data.from;
+			if (this.$props.sortBy) {
+				options.sort = [
+					{
+						[this.$props.dataField]: {
+							order: this.$props.sortBy,
+						},
 					},
-				},
-			];
-		}
-		this.$defaultQuery = null;
-		if (this.$props.defaultQuery) {
-			this.$defaultQuery = this.$props.defaultQuery() || {};
-			options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
-
-			// Override sort query with defaultQuery's sort if defined
-			if (this.$defaultQuery.sort) {
-				options.sort = this.$defaultQuery.sort;
+				];
 			}
-			// since we want defaultQuery to be executed anytime
-			// map component's query is being executed
-			const persistMapQuery = true;
-			// no need to forceExecute because setReact() will capture the main query
-			// and execute the defaultQuery along with it
-			const forceExecute = false;
+			this.$defaultQuery = null;
+			if (this.$props.defaultQuery) {
+				this.$defaultQuery = this.$props.defaultQuery();
+				// Update default query for RS API
+				this.setDefaultQueryForRSAPI();
+				if (this.$defaultQuery) {
+					options = { ...options, ...getOptionsFromQuery(this.$defaultQuery) };
 
-			// Update default query for RS API
-			this.setDefaultQueryForRSAPI();
+					// Override sort query with defaultQuery's sort if defined
+					if (this.$defaultQuery.sort) {
+						options.sort = this.$defaultQuery.sort;
+					}
+					// since we want defaultQuery to be executed anytime
+					// map component's query is being executed
+					const persistMapQuery = true;
+					// no need to forceExecute because setReact() will capture the main query
+					// and execute the defaultQuery along with it
+					const forceExecute = false;
 
-			const meta = {
-				mapBoxBounds: this.mapBoxBounds,
-			};
+					const meta = {
+						mapBoxBounds: this.mapBoxBounds,
+					};
+					if (this.$defaultQuery) {
+						this.setMapData(
+							this.componentId,
+							this.$defaultQuery.query,
+							persistMapQuery,
+							forceExecute,
+							meta,
+						);
+						this.setQueryOptions(this.componentId, options);
+					}
+				}
+			} else {
+				// only apply geo-distance when defaultQuery prop is not set
+				const query = this.getGeoDistanceQuery();
+				if (query) {
+					// - only persist the map query if center prop is set
+					// - ideally, persist the map query if you want to keep executing it
+					//   whenever there is a change (due to subscription) in the component query
+					const persistMapQuery = !!this.center;
 
-			this.setMapData(
-				this.componentId,
-				this.$defaultQuery.query,
-				persistMapQuery,
-				forceExecute,
-				meta,
-			);
-		} else {
-			// only apply geo-distance when defaultQuery prop is not set
-			const query = this.getGeoDistanceQuery();
-			if (query) {
-				// - only persist the map query if center prop is set
-				// - ideally, persist the map query if you want to keep executing it
-				//   whenever there is a change (due to subscription) in the component query
-				const persistMapQuery = !!this.center;
-
-				// - forceExecute will make sure that the component query + Map query gets executed
-				//   irrespective of the changes in the component query
-				// - forceExecute will only come into play when searchAsMove is true
-				// - kindly note that forceExecute may result in one additional network request
-				//   since it bypasses the gatekeeping
-				const forceExecute = this.searchAsMove;
-				// Set meta for `distance` and `coordinates` in selected value
-				const center = this.center || this.defaultCenter;
-				const coordinatesObject = this.getArrPosition(center);
-				const meta = {
-					distance: this.defaultRadius,
-					coordinates: `${coordinatesObject.lat}, ${coordinatesObject.lon}`,
-				};
-				this.setMapData(this.componentId, query, persistMapQuery, forceExecute, meta);
+					// - forceExecute will make sure that the component query + Map query gets executed
+					//   irrespective of the changes in the component query
+					// - forceExecute will only come into play when searchAsMove is true
+					// - kindly note that forceExecute may result in one additional network request
+					//   since it bypasses the gatekeeping
+					const forceExecute = this.searchAsMove;
+					// Set meta for `distance` and `coordinates` in selected value
+					const center = this.center || this.defaultCenter;
+					const coordinatesObject = this.getArrPosition(center);
+					const meta = {
+						distance: this.defaultRadius,
+						coordinates: `${coordinatesObject.lat}, ${coordinatesObject.lon}`,
+					};
+					this.setMapData(this.componentId, query, persistMapQuery, forceExecute, meta);
+				}
+				this.setQueryOptions(this.componentId, options);
 			}
-		}
-		this.setQueryOptions(
-			this.componentId,
-			options,
-			!(this.$defaultQuery && this.$defaultQuery.query),
-		);
+		});
 	},
 	render() {
 		const loader = this.$scopedSlots.loader || this.$props.loader;
