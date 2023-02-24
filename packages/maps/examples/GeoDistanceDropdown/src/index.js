@@ -1,5 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
+
 import { ReactiveBase, SelectedFilters } from '@appbaseio/reactivesearch';
 import {
 	ReactiveOpenStreetMap,
@@ -18,7 +19,7 @@ const providers = [
 		value: 'openstreetMap',
 	},
 ];
-class App extends React.Component {
+class App extends Component {
 	constructor() {
 		super();
 
@@ -45,7 +46,7 @@ class App extends React.Component {
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			onPopoverClick: item => <div>{item.venue.venue_name}</div>,
+			onPopoverClick: (item) => <div>{item.venue.venue_name}</div>,
 			showMapStyles: true,
 		};
 		return (
@@ -126,4 +127,5 @@ class App extends React.Component {
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
