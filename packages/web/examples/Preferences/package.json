@@ -5,7 +5,7 @@
 	"license": "Apache-2.0",
 	"description": "Preferences example for ReactiveSearch",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "4.0.0-rc",
+		"@appbaseio/reactivesearch": "4.0.0-rc.1",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^13.5.0",
