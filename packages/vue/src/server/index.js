@@ -488,7 +488,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 			const rawData = {};
 			const customData = {};
 			const settingsResponse = {};
-			const timestamp = {};
 			const allPromises = orderOfQueries.map(
 				(component) =>
 					new Promise((responseResolve, responseReject) => {
@@ -520,7 +519,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 											[component]: response.aggregations,
 										};
 									}
-									timestamp[component] = res._timestamp;
 									const hitsObj = response.hits
 										? response.hits
 										: response[component].hits;
@@ -546,7 +544,6 @@ export default function initReactivesearch(componentCollection, searchState, set
 				state = {
 					...state,
 					hits,
-					timestamp,
 					aggregations,
 					compositeAggregations,
 					promotedResults,

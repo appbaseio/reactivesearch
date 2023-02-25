@@ -41,6 +41,14 @@ const ReactiveGoogleMap = {
 		calculateMarkers: VueTypes.func,
 		highlightMarkerOnHover: VueTypes.bool.def(true),
 	},
+	created() {
+		this.mapRefPromiseResolve = null;
+		this.mapRefPromiseRejecter = null;
+		this.mapRefPromise = new Promise((resolve, reject) => {
+			this.mapRefPromiseResolver = resolve;
+			this.mapRefPromiseRejecter = reject;
+		});
+	},
 	methods: {
 		renderMap({
 			resultsToRender,
@@ -111,6 +119,9 @@ const ReactiveGoogleMap = {
 		getMapRef() {
 			return this.mapRef;
 		},
+		getMapRefPromise() {
+			return this.mapRefPromise;
+		},
 		removeMarkers() {
 			let clusterManagerInstance;
 			let currentInstance = this;
@@ -135,15 +146,19 @@ const ReactiveGoogleMap = {
 	},
 	mounted() {
 		if (this.$refs.mapRef) {
-			this.$refs.mapRef.$mapPromise.then((map) => {
-				this.mapRef = map;
-			});
+			this.$refs.mapRef.$mapPromise
+				.then((map) => {
+					this.mapRef = map;
+					this.mapRefPromiseResolver(this.mapRef);
+				})
+				.catch(this.mapRefPromiseRejecter);
 		}
 	},
 	render() {
 		return (
 			<RMConnected
 				getMapRef={this.getMapRef}
+				getMapPromise={this.getMapRefPromise}
 				renderMap={this.renderMap}
 				componentId={this.componentId}
 				className={this.className}
