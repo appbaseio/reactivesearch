@@ -9,7 +9,7 @@ import {
 	SelectedFilters,
 } from '@appbaseio/reactivesearch';
 import initReactivesearch from '@appbaseio/reactivesearch/lib/server';
-import { components } from './utils/index';
+import { components } from '../utils/index';
 
 const Main = ({ store }) => {
 	const [isClicked, setIsClicked] = useState(false);
