@@ -124,6 +124,11 @@ const updaterMap = {
 class MarkerWithLabel extends Component {
 	static contextType = MapContext;
 
+	constructor(props) {
+		super(props);
+		this.myRef = React.createRef();
+	}
+
 	componentDidMount() {
 		const markerOptions = {
 			...(this.props.options || {}),
@@ -149,13 +154,8 @@ class MarkerWithLabel extends Component {
 			nextProps: this.props,
 			instance: this.marker,
 		});
-		const container = document.createElement('div');
-		ReactDOM.unstable_renderSubtreeIntoContainer(
-			this,
-			React.Children.only(this.props.children),
-			container,
-		);
-		this.marker.set('labelContent', container);
+
+		this.marker.set('labelContent', this.myRef.current);
 	}
 	componentDidUpdate(prevProps) {
 		if (this.marker) {
@@ -185,7 +185,7 @@ class MarkerWithLabel extends Component {
 		}
 	}
 	render() {
-		return this.props.children;
+		return <div ref={this.myRef}> {this.props.children}</div>;
 	}
 }
 MarkerWithLabel.propTypes = {
