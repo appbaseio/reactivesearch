@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { withTheme } from 'emotion-theming';
+import dateFormats from '@appbaseio/reactivecore/lib/utils/dateFormats';
 
 import DateContainer from '../../styles/DateContainer';
 import Title from '../../styles/Title';
@@ -105,17 +106,21 @@ class DateRange extends Component {
 			}
 		}
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () =>
-			this.updateQuery(
-				this.state.currentDate
-					? {
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField', 'aggregationSize'],
+			() =>
+				this.updateQuery(
+					this.state.currentDate
+						? {
 						// we need the date in correct queryFormat
-						start: formatDate(this.state.currentDate.start, this.props),
-						end: formatDate(this.state.currentDate.end, this.props),
-					} // prettier-ignore
-					: this.state.currentDate,
-				this.props,
-			),
+							start: formatDate(this.state.currentDate.start, this.props),
+							end: formatDate(this.state.currentDate.end, this.props),
+						} // prettier-ignore
+						: this.state.currentDate,
+					this.props,
+				),
 		);
 	}
 
@@ -534,21 +539,26 @@ const ConnectedComponent = connect(
 
 // eslint-disable-next-line
 const ForwardRefComponent = React.forwardRef((props, ref) => (
-	<PreferencesConsumer userProps={props}>
+	<PreferencesConsumer
+		userProps={{
+			...props,
+			// eslint-disable-next-line react/prop-types
+			...(!props.queryFormat ? { queryFormat: dateFormats.epoch_millis } : {}),
+		}}
+	>
 		{preferenceProps => (
 			<ComponentWrapper
 				{...preferenceProps}
 				internalComponent
 				componentType={componentTypes.dateRange}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>

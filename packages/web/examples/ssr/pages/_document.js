@@ -1,5 +1,5 @@
 import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { renderToString } from 'react-dom/server';
 
 export default class MyDocument extends Document {
@@ -23,7 +23,7 @@ export default class MyDocument extends Document {
 
 	render() {
 		return (
-			<html lang="en">
+			<Html lang="en">
 				<Head>
 					<link rel="stylesheet" href="/_next/static/style.css" />
 					<meta charSet="utf-8" />
@@ -35,7 +35,7 @@ export default class MyDocument extends Document {
 					<Main />
 					<NextScript />
 				</body>
-			</html>
+			</Html>
 		);
 	}
 }

@@ -18,7 +18,6 @@ class Main extends Component {
 	}
 
 	dateQuery(value) {
-		console.log('dateQuery', value);
 		let query = null;
 		if (value) {
 			query = [
@@ -42,7 +41,6 @@ class Main extends Component {
 	}
 
 	render() {
-		console.log('rerender');
 		return (
 			<ReactiveBase
 				app="airbnb-dev"
@@ -55,7 +53,6 @@ class Main extends Component {
 							value={{ ...this.state.date }}
 							onChange={(value) => {
 								// setting end date equal to start date
-								console.log('value', value);
 								this.setState({
 									date: {
 										start: value.start,

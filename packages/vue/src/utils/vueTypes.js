@@ -118,7 +118,7 @@ const types = {
 	params: VueTypes.object.isRequired,
 	props: VueTypes.object,
 	rangeLabelsAlign: VueTypes.oneOf(['left', 'right']),
-	title: VueTypes.oneOfType([VueTypes.string, VueTypes.any]),
+	title: VueTypes.oneOfType([VueTypes.string, VueTypes.nullable]),
 	tooltipTrigger: VueTypes.oneOf(['always', 'none', 'hover']),
 	location: VueTypes.custom(validateLocation),
 	unit: VueTypes.oneOf([
@@ -143,13 +143,7 @@ const types = {
 		'nauticalmiles',
 	]),
 	value: VueTypes.string.def(undefined),
-	analyticsConfig: VueTypes.shape({
-		emptyQuery: VueTypes.bool,
-		suggestionAnalytics: VueTypes.bool,
-		userId: VueTypes.string,
-		customEvents: VueTypes.object,
-	}),
-	appbaseConfig: VueTypes.shape({
+	reactivesearchAPIConfig: VueTypes.shape({
 		recordAnalytics: VueTypes.bool,
 		emptyQuery: VueTypes.bool,
 		suggestionAnalytics: VueTypes.bool,

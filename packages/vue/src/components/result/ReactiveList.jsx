@@ -2,6 +2,7 @@ import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { withClickIds } from '@appbaseio/reactivecore/lib/utils/helper';
+
 import Pagination from './addons/Pagination.jsx';
 import PoweredBy from './addons/PoweredBy.jsx';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -64,28 +65,13 @@ const ReactiveList = {
 		return this.__state;
 	},
 	created() {
-		const { distinctField, distinctFieldConfig, index } = this.$props;
 		// no support for pagination and aggregationField together
 		if (this.pagination && this.aggregationField) {
 			console.warn(
 				'Pagination is not supported when aggregationField is present. The list will be rendered with infinite scroll',
 			);
 		}
-		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!this.enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
+
 		const defaultPage = this.defaultPage || -1;
 		if (defaultPage >= 0) {
 			this.currentPageState = defaultPage;
@@ -114,7 +100,7 @@ const ReactiveList = {
 		);
 	},
 	props: {
-		currentPage: VueTypes.number.def(0),
+		currentPage: VueTypes.number,
 		includeFields: types.includeFields,
 		// component props
 		className: types.string,
@@ -160,10 +146,10 @@ const ReactiveList = {
 			return Math.ceil(this.total / this.$props.size) || 0;
 		},
 		hasPageChangeListener() {
-			return this.$listeners && this.$listeners.pageChange;
+			return this.$attrs && this.$attrs.pageChange;
 		},
 		hasResultStatsListener() {
-			return this.$listeners && this.$listeners.resultStats;
+			return this.$attrs && this.$attrs.resultStats;
 		},
 		stats() {
 			return {
@@ -309,8 +295,7 @@ const ReactiveList = {
 			}
 		},
 		infiniteScroll(newVal, oldVal) {
-			if (newVal !== oldVal)
-			{
+			if (newVal !== oldVal) {
 				if (newVal && !this.pagination) {
 					window.addEventListener('scroll', this.scrollHandler);
 				} else {
@@ -414,7 +399,7 @@ const ReactiveList = {
 		}
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.showInfiniteScroll) {
 			window.removeEventListener('scroll', this.scrollHandler);
 		}
@@ -428,7 +413,7 @@ const ReactiveList = {
 				{this.isLoading
 					&& this.shouldRenderPagination
 					&& this.showInfiniteScroll
-					&& (this.$scopedSlots.loader || this.$props.loader)}
+					&& (this.$slots.loader || this.$props.loader)}
 				{this.renderErrorComponent()}
 				<Flex
 					labelPosition={this.sortOptions ? 'right' : 'left'}
@@ -452,7 +437,7 @@ const ReactiveList = {
 					) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
-					? this.$scopedSlots.loader
+					? this.$slots.loader
 					  || this.$props.loader || (
 						<div
 							style={{
@@ -492,7 +477,7 @@ const ReactiveList = {
 
 	methods: {
 		renderErrorComponent() {
-			const renderError = this.$scopedSlots.renderError || this.$props.renderError;
+			const renderError = this.$slots.renderError || this.$props.renderError;
 			if (renderError && this.error && !this.isLoading) {
 				return isFunction(renderError) ? renderError(this.error) : renderError;
 			}
@@ -500,9 +485,7 @@ const ReactiveList = {
 		},
 		renderResults() {
 			const { size } = this.$props;
-
-			const renderItem = this.$scopedSlots.renderItem || this.$props.renderItem;
-
+			const renderItem = this.$slots.renderItem || this.$props.renderItem;
 			const element = this.hasCustomRender ? (
 				this.getComponent()
 			) : (
@@ -644,7 +627,7 @@ const ReactiveList = {
 
 		renderStats() {
 			const renderResultStats
-				= this.$scopedSlots.renderResultStats || this.$props.renderResultStats;
+				= this.$slots.renderResultStats || this.$props.renderResultStats;
 			if (renderResultStats && this.$data.total) {
 				return renderResultStats(this.stats);
 			}
@@ -665,9 +648,8 @@ const ReactiveList = {
 		},
 
 		renderNoResult() {
-			const renderNoResults
-				= this.$scopedSlots.renderNoResults || this.$props.renderNoResults;
-			if (this.$scopedSlots.renderNoResults) {
+			const renderNoResults = this.$slots.renderNoResults || this.$props.renderNoResults;
+			if (this.$slots.renderNoResults) {
 				return isFunction(renderNoResults) ? renderNoResults() : renderNoResults;
 			}
 			return (
@@ -732,7 +714,9 @@ const ReactiveList = {
 					class={`${sortOptions} ${getClassName(this.$props.innerClass, 'sortOptions')}`}
 					name="sort-options"
 					aria-label="Sort options"
-					onChange={this.handleSortChange}
+					on={{
+						change: this.handleSortChange,
+					}}
 					value={this.sortOptionIndex}
 				>
 					{this.sortOptions.map((sort, index) => (
@@ -807,7 +791,7 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	analytics: state.config && state.config.analytics,
-	enableAppbase: state.config.enableAppbase,
+
 	url: state.config.url,
 	error: state.error[props.componentId],
 	afterKey:

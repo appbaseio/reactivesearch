@@ -1,4 +1,4 @@
-import styled from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 
 const IconWrapper = styled('div')`
 	display: flex;
@@ -7,15 +7,16 @@ const IconWrapper = styled('div')`
 	max-width: 23px;
 	width: max-content;
 	cursor: pointer;
-	height: 100%;min-width:20px;
+	height: 100%;
+	min-width: 20px;
 
 	svg.search-icon {
-		fill: ${({ theme }) => theme.colors.primaryColor};
-		transform:scale(1.5);
+		fill: ${({ theme = {} }) => (theme.colors ? theme.colors.primaryColor : 'unset')};
+		transform: scale(1.5);
 	}
 
 	svg.cancel-icon {
-		fill: ${({ theme }) => theme.colors.borderColor || '#000'};
+		fill: ${({ theme = {} }) => (theme.colors ? theme.colors.borderColor : '#000')};
 	}
 `;
 

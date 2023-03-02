@@ -39,7 +39,7 @@
 				:size="5"
 				:react="{ and: ['Ratings', 'Authors'] }"
 			>
-				<div slot="renderItem" slot-scope="{ item }">
+				<template #renderItem="{ item }">
 					<div class="flex book-content" key="item._id">
 						<img :src="item.image" alt="Book Cover" class="book-image" />
 						<div class="flex column justify-center ml20">
@@ -70,7 +70,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</template>
 			</reactive-list>
 		</reactive-base>
 	</div>
@@ -78,8 +78,15 @@
 
 <script>
 import './styles.css';
+import { ReactiveBase, ReactiveList, MultiList, SingleRange } from '@appbaseio/reactivesearch-vue'
 
 export default {
+	components: {
+		ReactiveBase,
+		ReactiveList,
+		MultiList,
+		SingleRange
+	},
 	name: 'app',
 	data: function() {
 		return {

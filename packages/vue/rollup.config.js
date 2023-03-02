@@ -27,7 +27,6 @@ const inputChunks = {
 	ResultCard: 'src/components/result/ResultCard.jsx',
 	ResultList: 'src/components/result/ResultList.jsx',
 	ReactiveBase: 'src/components/ReactiveBase/index.jsx',
-	DataSearch: 'src/components/search/DataSearch.jsx',
 	SingleList: 'src/components/list/SingleList.jsx',
 	MultiList: 'src/components/list/MultiList.jsx',
 	SingleRange: 'src/components/range/SingleRange.jsx',
@@ -96,9 +95,24 @@ export default {
 	plugins: [
 		json(),
 		vuePlugin({
-			preprocessStyles: true
+			preprocessStyles: true,
 		}),
 		postCSS(),
+		umd
+			? replace({
+				'process.env.NODE_ENV': JSON.stringify(minify ? 'production' : 'development'),
+				"components['vue-slider-component'] = () => import('vue-slider-component');": `
+					var s = document.createElement("script");
+					s.setAttribute("src","https://cdn.jsdelivr.net/npm/vue-slider-component@3.2.15/dist/vue-slider-component.umd.min.js");
+					s.onload = function(){
+						var VueSlider = global['vue-slider-component'];
+						components['vue-slider-component'] = VueSlider;
+					}
+					document.head.appendChild(s);
+				`,
+				delimiters: ['', ''],
+			  })
+			: null,
 		umd
 			? resolve({
 				mainFields: ['browser', 'module'],
@@ -131,9 +145,9 @@ export default {
 						modules: false,
 					},
 				],
-				'@vue/babel-preset-jsx',
 			],
 			plugins: [
+				['@vue/babel-plugin-jsx', { transformOn: true, mergeProps: true }],
 				'@babel/plugin-syntax-dynamic-import',
 				'@babel/plugin-syntax-import-meta',
 				['@babel/plugin-proposal-private-methods', { loose: true }],
@@ -141,21 +155,6 @@ export default {
 				'@babel/plugin-proposal-json-strings',
 			],
 		}),
-		umd
-			? replace({
-				'process.env.NODE_ENV': JSON.stringify(minify ? 'production' : 'development'),
-				"components['vue-slider-component'] = require('vue-slider-component');": `
-					var s = document.createElement("script");
-					s.setAttribute("src","https://cdn.jsdelivr.net/npm/vue-slider-component@3.2.15/dist/vue-slider-component.umd.min.js");
-					s.onload = function(){
-						var VueSlider = global['vue-slider-component'];
-						components['vue-slider-component'] = VueSlider;
-					}
-					document.head.appendChild(s);
-				`,
-				delimiters: ['', ''],
-			  })
-			: null,
 		umd ? globals() : {},
 		umd ? builtins() : {},
 		minify ? terser() : null,

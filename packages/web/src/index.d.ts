@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { SearchPreferencesContext, useAnalytics } from './utils';
 import * as types from './types';
+import getServerState from './server';
 
 export interface CommonProps {
 	componentId: string;
@@ -16,6 +16,7 @@ export interface CommonProps {
 export { default as NumberBox } from './components/basic/NumberBox';
 export { default as ReactiveBase } from './components/basic/ReactiveBase';
 export { default as ReactiveComponent } from './components/basic/ReactiveComponent';
+export { default as ReactiveComponentPrivate } from './components/basic/ReactiveComponentPrivate';
 export { default as SelectedFilters } from './components/basic/SelectedFilters';
 export { default as StateProvider } from './components/basic/StateProvider';
 export { default as ErrorBoundary } from './components/basic/ErrorBoundary';
@@ -52,3 +53,5 @@ export { default as SearchBox } from './components/search/SearchBox';
 export { default as ReactiveChart } from './components/chart/ReactiveChart';
 
 export { componentTypes, SearchPreferencesContext, useAnalytics };
+
+export { getServerState };

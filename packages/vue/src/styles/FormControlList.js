@@ -1,5 +1,4 @@
-import { css } from 'emotion';
-import styled from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
 import { lighten } from 'polished';
 
 const item = {
@@ -8,7 +7,7 @@ const item = {
 	scale: '4px',
 };
 
-const vh = css`
+const vh = `
 	border: 0;
 	clip: rect(1px, 1px, 1px, 1px);
 	clip-path: inset(50%);
@@ -20,7 +19,7 @@ const vh = css`
 	white-space: nowrap;
 `;
 
-const hideInputControl = css`
+const hideInputControl = `
 	+ label {
 		padding-left: 0;
 
@@ -41,7 +40,7 @@ const hideInputControl = css`
 	}
 `;
 
-const formItem = ({ theme }) => css`
+const formItem = ({ theme = {} }) => `
 	${vh};
 
 	&:focus {
@@ -111,7 +110,7 @@ const formItem = ({ theme }) => css`
 
 const Radio = styled('input')`
 	${formItem};
-	${props => (props.show ? null : hideInputControl)};
+	${(props) => (props.show ? null : hideInputControl)};
 
 	+ label {
 		&::before,
@@ -149,7 +148,7 @@ const Radio = styled('input')`
 
 const Checkbox = styled('input')`
 	${formItem};
-	${props => (props.show ? null : hideInputControl)};
+	${(props) => (props.show ? null : hideInputControl)};
 
 	+ label {
 		&::before,
@@ -199,7 +198,7 @@ const UL = styled('ul')`
 	padding-bottom: 12px;
 
 	li {
-		height 30px;
+		height: 30px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;

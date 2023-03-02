@@ -1,5 +1,6 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+
 import { connect } from '../utils/index';
 import types from '../utils/vueTypes';
 import Base from '../styles/Base';
@@ -9,6 +10,7 @@ const { isEqual } = helper;
 
 const URLParamsProvider = {
 	name: 'URLParamsProvider',
+
 	props: {
 		className: types.string,
 		headers: types.headers,
@@ -234,7 +236,7 @@ const URLParamsProvider = {
 		},
 	},
 	render() {
-		const children = this.$slots.default;
+		const children = this.$slots.default();
 		return (
 			<Base as={this.$props.as} class={this.$props.className}>
 				{children}

@@ -40,7 +40,9 @@ const ToggleButton = {
 		};
 		return this.__state;
 	},
-	beforeMount() {
+	created() {
+		// Set custom query in store
+		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 		const props = this.$props;
 		const hasMounted = false;
 		const value = this.selectedValue || props.value || props.defaultValue || [];
@@ -51,15 +53,6 @@ const ToggleButton = {
 		if (this.$data.currentValue.length) {
 			this.handleToggle(this.$data.currentValue, true, props, hasMounted);
 		}
-	},
-	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		// Set custom query in store
-		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
 	},
 	watch: {
 		defaultValue(newVal) {
@@ -204,9 +197,8 @@ const ToggleButton = {
 		},
 
 		renderButton(item) {
-			const renderItem = this.$scopedSlots.renderItem || this.renderItem;
+			const renderItem = this.$slots.renderItem || this.renderItem;
 			const isSelected = this.$data.currentValue.some((value) => value.value === item.value);
-
 			return renderItem ? (
 				renderItem({ item, isSelected, handleClick: () => this.handleClick(item) })
 			) : (
@@ -251,34 +243,17 @@ ToggleButton.parseValue = (value, props) => {
 	return props.data.filter((item) => item.value === value);
 };
 
-ToggleButton.defaultQuery = (value, props) => {
-	let query = null;
-	if (value && value.length) {
-		query = {
-			bool: {
-				boost: 1.0,
-				minimum_should_match: 1,
-				should: value.map((item) => ({
-					term: {
-						[props.dataField]: item.value,
-					},
-				})),
-			},
-		};
-	}
-
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-	return query;
-};
+ToggleButton.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		nestedField: props.nestedField,
+		selectAllLabel: props.selectAllLabel,
+		showMissing: props.showMissing,
+		multiSelect: props.multiSelect,
+	},
+});
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
@@ -286,7 +261,6 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

@@ -6,6 +6,7 @@ import ErrorBoundary from './components/basic/ErrorBoundary';
 import SelectedFilters from './components/basic/SelectedFilters';
 import NumberBox from './components/basic/NumberBox';
 import ReactiveComponent from './components/basic/ReactiveComponent';
+import ReactiveComponentPrivate from './components/basic/ReactiveComponentPrivate';
 import StateProvider from './components/basic/StateProvider';
 
 import DatePicker from './components/date/DatePicker';
@@ -38,6 +39,7 @@ import ResultCard from './components/result/ResultCard';
 import ResultList from './components/result/ResultList';
 
 import ReactiveChart from './components/chart/ReactiveChart';
+import getServerState from './server';
 
 import { SearchPreferencesContext, useAnalytics } from './utils';
 
@@ -50,6 +52,7 @@ export {
 	NumberBox,
 	TagCloud,
 	ReactiveComponent,
+	ReactiveComponentPrivate,
 	ErrorBoundary,
 	// date
 	DatePicker,
@@ -83,4 +86,6 @@ export {
 	componentTypes,
 	// hooks
 	useAnalytics,
+	// server
+	getServerState,
 };

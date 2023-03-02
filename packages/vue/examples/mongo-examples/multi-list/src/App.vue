@@ -1,22 +1,21 @@
 <template>
 	<div id="app">
-		<ReactiveBase
+		<reactive-base
 			app="default"
 			url="https://us-east-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/public-demo-skxjb/service/http_endpoint/incoming_webhook/reactivesearch"
-			:enable-appbase="true"
 			:mongodb="{
 				db: 'sample_airbnb',
 				collection: 'listingsAndReviews',
 			}"
 		>
-			<MultiList
+			<multi-list
 				componentId="PropertyFilter"
 				placeholder="Search for property types"
 				dataField="property_type"
 				class="multi-list-container"
 				:showCount="true"
 			/>
-			<ReactiveList
+			<reactive-list
 				componentId="SearchResult"
 				dataField="name"
 				class="result-list-container"
@@ -25,7 +24,7 @@
 				:size="5"
 				:react="{ and: ['PropertyFilter'] }"
 			>
-				<div slot="renderItem" slot-scope="{ item }">
+				<template #renderItem="{ item }">
 					<div class="flex property-content" key="item._id">
 						<img
 							:src="item.images.picture_url"
@@ -68,17 +67,24 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</ReactiveList>
-		</ReactiveBase>
+				</template>
+			</reactive-list>
+		</reactive-base>
 	</div>
 </template>
 
 <script>
 import './styles.css';
+import {SearchBox, MultiList, ReactiveList, ReactiveBase} from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'app',
+	components:{
+		SearchBox,
+		MultiList,
+		ReactiveList,
+		ReactiveBase
+	}
 };
 </script>
 
@@ -87,6 +93,6 @@ export default {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	color: #2c3e50;
+	color: #445c74;
 }
 </style>

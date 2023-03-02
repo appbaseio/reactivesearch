@@ -1,13 +1,14 @@
 import ReactiveList from './components/result/ReactiveList.jsx';
 import ReactiveBase from './components/ReactiveBase/index.jsx';
-import DataSearch from './components/search/DataSearch.jsx';
 import SearchBox from './components/search/SearchBox.jsx';
 import SingleList from './components/list/SingleList.jsx';
 import MultiList from './components/list/MultiList.jsx';
+import TreeList from './components/list/TreeList/index.jsx';
 import SingleDropdownList from './components/list/SingleDropdownList.jsx';
 import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ToggleButton from './components/list/ToggleButton.jsx';
 import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
+import ReactiveComponentPrivate from './components/basic/ReactiveComponentPrivate.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
 import MultiRange from './components/range/MultiRange.jsx';
@@ -23,7 +24,6 @@ const components = [
 	ResultCard,
 	ResultList,
 	ReactiveBase,
-	DataSearch,
 	SearchBox,
 	SingleList,
 	MultiList,
@@ -32,12 +32,14 @@ const components = [
 	RangeSlider,
 	DynamicRangeSlider,
 	ReactiveComponent,
+	ReactiveComponentPrivate,
 	SelectedFilters,
 	ToggleButton,
 	SingleDropdownList,
 	MultiDropdownList,
 	StateProvider,
 	RangeInput,
+	TreeList,
 ];
 
 export default function (Vue) {

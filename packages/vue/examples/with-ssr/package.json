@@ -1,17 +1,19 @@
 {
-	"name": "with-ssr",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"private": true,
+	"name": "with-ssr",
 	"scripts": {
-		"dev": "nuxt",
 		"build": "nuxt build",
-		"start": "nuxt start",
-		"generate": "nuxt generate"
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"nuxt": "^3.1.0"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "1.33.7",
-		"core-js": "^3.15.1",
-		"nuxt": "^2.15.7"
-	},
-	"devDependencies": {}
+		"@appbaseio/reactivesearch-vue": "3.0.0-rc",
+		"@nuxtjs/emotion": "^1.0.0"
+	}
 }

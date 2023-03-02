@@ -253,7 +253,7 @@ exports[`should not render histogram when showHistogram is set to false 1`] = `
         <div
           className="rheostat-background"
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -274,7 +274,7 @@ exports[`should not render histogram when showHistogram is set to false 1`] = `
           }
           tabIndex={0}
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -1949,7 +1949,7 @@ exports[`should render histogram when showHistogram is set to true 1`] = `
         <div
           className="rheostat-background"
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -1970,7 +1970,7 @@ exports[`should render histogram when showHistogram is set to true 1`] = `
           }
           tabIndex={0}
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -2312,7 +2312,7 @@ exports[`should render range labels 1`] = `
         <div
           className="rheostat-background"
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -2333,7 +2333,7 @@ exports[`should render range labels 1`] = `
           }
           tabIndex={0}
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -2675,7 +2675,7 @@ exports[`should render range with slider 1`] = `
         <div
           className="rheostat-background"
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -2696,7 +2696,7 @@ exports[`should render range with slider 1`] = `
           }
           tabIndex={0}
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -3031,7 +3031,7 @@ exports[`should render title 1`] = `
         <div
           className="rheostat-background"
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -3052,7 +3052,7 @@ exports[`should render title 1`] = `
           }
           tabIndex={0}
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}
@@ -3380,7 +3380,7 @@ exports[`should select default value 1`] = `
         <div
           className="rheostat-background"
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={48000}
@@ -3401,7 +3401,7 @@ exports[`should select default value 1`] = `
           }
           tabIndex={0}
         />
-        <button
+        <div
           aria-disabled={false}
           aria-label="slider-button"
           aria-valuemax={50000}

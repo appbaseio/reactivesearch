@@ -1,6 +1,7 @@
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import VueTypes from 'vue-types';
+import { h } from 'vue';
 import {
 	connect,
 	updateCustomQuery,
@@ -10,19 +11,6 @@ import {
 import ComponentWrapper from './ComponentWrapper.jsx';
 import PreferencesConsumer from './PreferencesConsumer.jsx';
 import types from '../../utils/vueTypes';
-import { RLConnected as ReactiveList } from '../result/ReactiveList.jsx';
-import { DSConnected as DataSearch } from '../search/DataSearch.jsx';
-import { SBConnected as SearchBox } from '../search/SearchBox.jsx';
-import { ListConnected as SingleList } from '../list/SingleList.jsx';
-import { ListConnected as MultiList } from '../list/MultiList.jsx';
-import { ListConnected as SingleDropdownList } from '../list/SingleDropdownList.jsx';
-import { ListConnected as MultiDropdownList } from '../list/MultiDropdownList.jsx';
-import { TBConnected as ToggleButton } from '../list/ToggleButton.jsx';
-import { RangeConnected as DynamicRangeSlider } from '../range/DynamicRangeSlider.jsx';
-import { RangeConnected as SingleRange } from '../range/SingleRange.jsx';
-import { RangeConnected as MultiRange } from '../range/MultiRange.jsx';
-import { RangeConnected as RangeSlider } from '../range/RangeSlider.jsx';
-import { RangeConnected as RangeInput } from '../range/RangeInput.jsx';
 
 const { updateQuery, setQueryOptions, setCustomQuery, setDefaultQuery } = Actions;
 const {
@@ -58,32 +46,7 @@ const ReactiveComponent = {
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.selectedValue);
 
-		const {
-			customQuery,
-			componentId,
-			filterLabel,
-			showFilter,
-			URLParams,
-			distinctField,
-			distinctFieldConfig,
-			index,
-		} = props;
-
-		if (this.enableAppbase && this.aggregationField && this.aggregationField !== '') {
-			console.warn(
-				'Warning(ReactiveSearch): The `aggregationField` prop has been marked as deprecated, please use the `distinctField` prop instead.',
-			);
-		}
-		if (!this.enableAppbase && (distinctField || distinctFieldConfig)) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `distinctField` and `distinctFieldConfig` props, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
-		if (!this.enableAppbase && index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
+		const { customQuery, componentId, filterLabel, showFilter, URLParams } = props;
 
 		if (customQuery) {
 			const calcCustomQuery = customQuery(this.selectedValue, props);
@@ -273,7 +236,7 @@ const ReactiveComponent = {
 
 	render() {
 		try {
-			const dom = this.$scopedSlots.default;
+			const dom = this.$slots.default;
 			const { error, isLoading, selectedValue } = this;
 			const propsToBePassed = {
 				error,
@@ -347,7 +310,6 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {
@@ -365,59 +327,8 @@ const ConnectedComponent = ComponentWrapper(
 
 const RcConnected = PreferencesConsumer({
 	name: 'RcConnected',
-	render(h) {
-		let component = ConnectedComponent;
-		switch (this.$attrs.componentType) {
-			case componentTypes.reactiveList:
-				component = ReactiveList;
-				break;
-			case componentTypes.dataSearch:
-				component = DataSearch;
-				break;
-			case componentTypes.searchBox:
-				component = SearchBox;
-				break;
-			// list components
-			case componentTypes.singleList:
-				component = SingleList;
-				break;
-			case componentTypes.multiList:
-				component = MultiList;
-				break;
-			case componentTypes.singleDropdownList:
-				component = SingleDropdownList;
-				break;
-			case componentTypes.multiDropdownList:
-				component = MultiDropdownList;
-				break;
-			// basic components
-			case componentTypes.toggleButton:
-				component = ToggleButton;
-				break;
-			// range components
-			case componentTypes.dynamicRangeSlider:
-				component = DynamicRangeSlider;
-				break;
-			case componentTypes.singleRange:
-				component = SingleRange;
-				break;
-			case componentTypes.multiRange:
-				component = MultiRange;
-				break;
-			case componentTypes.rangeSlider:
-				component = RangeSlider;
-				break;
-			case componentTypes.rangeInput:
-				component = RangeInput;
-				break;
-			default:
-		}
-		return h(component, {
-			attrs: this.$attrs,
-			on: this.$listeners,
-			scopedSlots: this.$scopedSlots,
-			slots: this.$slots,
-		});
+	render() {
+		return h(ConnectedComponent, null, this.$slots);
 	},
 });
 RcConnected.name = ReactiveComponent.name;

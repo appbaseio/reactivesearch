@@ -1,5 +1,6 @@
 import Highlight from 'vue-highlight-words';
-import styled, { css, cx } from '@appbaseio/vue-emotion';
+import { styled } from '@appbaseio/vue-emotion';
+import { css } from '@emotion/css';
 import types from '../../../utils/vueTypes';
 
 import Flex from '../../../styles/Flex';
@@ -50,7 +51,7 @@ const SuggestionItem = {
 							  // eslint-disable-next-line
 							  || !!_suggestion_type
 					) ? (
-							<PredictiveSuggestion domPropsInnerHTML={label} />
+							<PredictiveSuggestion innerHTML={label} />
 						) : (
 							<Highlight
 								searchWords={_category ? [_category] : this.currentValue.split(' ')}
@@ -90,7 +91,7 @@ const SuggestionItem = {
 							</div>
 						)}
 						{description && (
-							<div class={cx('trim', css({ marginTop: 3 }))}>
+							<div class={['trim', css({ marginTop: 3 })]}>
 								<Highlight
 									searchWords={this.currentValue.split(' ')}
 									textToHighlight={description}

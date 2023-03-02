@@ -1,7 +1,7 @@
-import { injectGlobal } from '@appbaseio/vue-emotion';
+import { createGlobalStyle } from '@appbaseio/vue-emotion';
 
 // eslint-disable-next-line
-injectGlobal`
+createGlobalStyle`
 	@-webkit-keyframes kf_el_6WKby7wXqV_an_qqO-rxbNc {
 		0% {
 			opacity: 0;
@@ -323,7 +323,7 @@ const ListenSvg = {
 				width={28}
 				height={29}
 				className={this.$props.className}
-				style={{transform:'scale(1.5)'}}
+				style={{ transform: 'scale(1.5)' }}
 			>
 				<defs>
 					<path

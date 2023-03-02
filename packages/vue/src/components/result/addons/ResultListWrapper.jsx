@@ -2,16 +2,17 @@ import { container } from '../../../styles/ListItem';
 
 const ResultListWrapper = {
 	name: 'ResultListWrapper',
+
 	functional: true,
-	render(_, { props, children }) {
+	render(context) {
 		return (
-			<div className={container} {...props}>
-				{children}
+			<div className={container} {...context.$props}>
+				{context.$slots.default()}
 			</div>
 		);
 	},
 };
-ResultListWrapper.install = function(Vue) {
+ResultListWrapper.install = function (Vue) {
 	Vue.component(ResultListWrapper.name, ResultListWrapper);
 };
 export default ResultListWrapper;

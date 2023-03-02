@@ -42,15 +42,8 @@ const SingleRange = {
 		endpoint: types.endpointConfig,
 	},
 	created() {
-		if (!this.enableAppbase && this.$props.index) {
-			console.warn(
-				'Warning(ReactiveSearch): In order to use the `index` prop, the `enableAppbase` prop must be set to true in `ReactiveBase`.',
-			);
-		}
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.currentValue);
-	},
-	beforeMount() {
 		if (this.selectedValue) {
 			this.setValue(this.selectedValue);
 		} else if (this.$props.value) {
@@ -59,6 +52,7 @@ const SingleRange = {
 			this.setValue(this.$props.defaultValue);
 		}
 	},
+
 	watch: {
 		dataField() {
 			this.updateQueryHandler(this.$data.currentValue, this.$props);
@@ -103,7 +97,9 @@ const SingleRange = {
 									id={`${this.$props.componentId}-${item.label}`}
 									name={this.$props.componentId}
 									value={item.label}
-									onChange={this.handleChange}
+									on={{
+										change: this.handleChange,
+									}}
 									type="radio"
 									checked={selected}
 									show={this.$props.showRadio}
@@ -181,31 +177,14 @@ const SingleRange = {
 
 SingleRange.parseValue = (value, props) => props.data.find((item) => item.label === value) || null;
 
-SingleRange.defaultQuery = (value, props) => {
-	let query = null;
-	if (value) {
-		query = {
-			range: {
-				[props.dataField]: {
-					gte: value.start,
-					lte: value.end,
-					boost: 2.0,
-				},
-			},
-		};
-	}
-	if (query && props.nestedField) {
-		return {
-			query: {
-				nested: {
-					path: props.nestedField,
-					query,
-				},
-			},
-		};
-	}
-	return query;
-};
+SingleRange.defaultQuery = (value, props) => ({
+	query: {
+		queryFormat: props.queryFormat,
+		dataField: props.dataField,
+		value,
+		showMissing: props.showMissing,
+	},
+});
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
@@ -213,7 +192,6 @@ const mapStateToProps = (state, props) => ({
 			&& state.selectedValues[props.componentId].value)
 		|| null,
 	componentProps: state.props[props.componentId],
-	enableAppbase: state.config.enableAppbase,
 });
 
 const mapDispatchtoProps = {

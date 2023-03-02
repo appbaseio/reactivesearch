@@ -34,6 +34,7 @@ export interface SearchBoxProps extends CommonProps {
 	highlight?: boolean;
 	highlightField?: types.stringOrArray;
 	icon?: types.children;
+	iconURL?: string;
 	iconPosition?: types.iconPosition;
 	includeFields?: Array<string>;
 	innerClass?: types.style;
@@ -71,6 +72,7 @@ export interface SearchBoxProps extends CommonProps {
 	distinctField?: string;
 	distinctFieldConfig?: object;
 	focusShortcuts?: types.focusShortcuts;
+	showFocusShortcutsIcon?: boolean;
 	addonBefore?: types.children;
 	addonAfter?: types.children;
 	expandSuggestionsContainer?: boolean;
@@ -82,6 +84,8 @@ export interface SearchBoxProps extends CommonProps {
 	featuredSuggestionsConfig?: types.featuredSuggestionsConfig;
 	enableIndexSuggestions?: boolean;
 	enableFeaturedSuggestions?: boolean;
+	showSuggestionsFooter?: boolean;
+	renderSuggestionsFooter?: ()=>types.children;
 	applyStopwords?: boolean;
 	customStopwords?: string[];
 	enterButton?: boolean;

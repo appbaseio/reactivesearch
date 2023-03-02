@@ -5,14 +5,15 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 
 import ReactiveList from './components/result/ReactiveList.jsx';
 import ReactiveBase from './components/ReactiveBase/index.jsx';
-import DataSearch from './components/search/DataSearch.jsx';
 import SearchBox from './components/search/SearchBox.jsx';
 import SingleList from './components/list/SingleList.jsx';
 import MultiList from './components/list/MultiList.jsx';
+import TreeList from './components/list/TreeList/index.jsx';
 import SingleDropdownList from './components/list/SingleDropdownList.jsx';
 import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ToggleButton from './components/list/ToggleButton.jsx';
 import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
+import ReactiveComponentPrivate from './components/basic/ReactiveComponentPrivate.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
 import MultiRange from './components/range/MultiRange.jsx';
@@ -22,7 +23,7 @@ import RangeSlider from './components/range/RangeSlider.jsx';
 import DynamicRangeSlider from './components/range/DynamicRangeSlider.jsx';
 import StateProvider from './components/basic/StateProvider.jsx';
 import ReactiveGoogleMap from './components/maps/ReactiveGoogleMap.jsx';
-import initReactivesearch from './server/index';
+import getServerState from './server/index';
 import version from './components/Version/index';
 import install from './install';
 import RangeInput from './components/range/RangeInput.jsx';
@@ -38,22 +39,23 @@ export {
 	ResultCard,
 	ResultList,
 	ReactiveBase,
-	DataSearch,
 	SearchBox,
 	SingleList,
 	MultiList,
+	TreeList,
 	SingleRange,
 	MultiRange,
 	RangeSlider,
 	DynamicRangeSlider,
 	ReactiveComponent,
+	ReactiveComponentPrivate,
 	SelectedFilters,
 	SingleDropdownList,
 	MultiDropdownList,
 	ToggleButton,
 	StateProvider,
 	ReactiveGoogleMap,
-	initReactivesearch,
+	getServerState,
 	RangeInput,
 	componentTypes,
 };
