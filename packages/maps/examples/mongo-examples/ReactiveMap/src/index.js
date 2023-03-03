@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import { ReactiveBase, DataSearch } from '@appbaseio/reactivesearch';
 import { ReactiveGoogleMap, ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
 import Dropdown from '@appbaseio/reactivesearch/lib/components/shared/Dropdown';
@@ -43,7 +43,7 @@ class App extends React.Component {
 			},
 			showMarkerClusters: true,
 			size: 50,
-			onPopoverClick: item => (
+			onPopoverClick: (item) => (
 				<div
 					style={{
 						display: 'flex',
@@ -102,6 +102,7 @@ class App extends React.Component {
 				enableAppbase
 				mapLibraries={['places']}
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
+				reactivesearchAPIConfig={{ recordAnalytics: false }}
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search Properties</h3>
@@ -156,4 +157,5 @@ class App extends React.Component {
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
