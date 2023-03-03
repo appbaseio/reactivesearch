@@ -1,6 +1,8 @@
 /* eslint-disable react/forbid-prop-types */
 /* global google */
 import React, { Component } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+
 import { MapContext } from '@react-google-maps/api';
 import * as ReactDOM from 'react-dom';
 import makeMarkerWithLabel from 'markerwithlabel';
@@ -150,11 +152,8 @@ class MarkerWithLabel extends Component {
 			instance: this.marker,
 		});
 		const container = document.createElement('div');
-		ReactDOM.unstable_renderSubtreeIntoContainer(
-			this,
-			React.Children.only(this.props.children),
-			container,
-		);
+		container.innerHTML = renderToStaticMarkup(<div>{this.props.children}</div>);
+
 		this.marker.set('labelContent', container);
 	}
 	componentDidUpdate(prevProps) {
