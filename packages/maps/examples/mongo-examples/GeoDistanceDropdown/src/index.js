@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import { Component } from 'react';
 import { ReactiveBase } from '@appbaseio/reactivesearch';
 import {
 	GeoDistanceDropdown,
@@ -18,7 +18,7 @@ const providers = [
 		value: 'openstreetMap',
 	},
 ];
-class App extends React.Component {
+class App extends Component {
 	constructor() {
 		super();
 
@@ -46,7 +46,7 @@ class App extends React.Component {
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			onPopoverClick: item => (
+			onPopoverClick: (item) => (
 				<div
 					style={{
 						display: 'flex',
@@ -105,6 +105,7 @@ class App extends React.Component {
 				enableAppbase
 				mapKey="AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU"
 				mapLibraries={['places']}
+				reactivesearchAPIConfig={{ recordAnalytics: false }}
 			>
 				<div>
 					<h3 style={{ textAlign: 'center' }}>Search properties across the globe</h3>
@@ -172,4 +173,5 @@ class App extends React.Component {
 	}
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
