@@ -14,7 +14,7 @@ const providers = [
 		value: 'openstreetMap',
 	},
 ];
-class App extends React.Component {
+class App extends Component {
 	constructor() {
 		super();
 
