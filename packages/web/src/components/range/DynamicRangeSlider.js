@@ -794,7 +794,7 @@ const mapStateToProps = (state, props) => {
 	if (range) {
 		range = formatRange(range);
 		// eslint-disable-next-line no-restricted-globals
-		if (isNaN(range.start) && isNaN(range.start)) {
+		if (isNaN(range.start) && isNaN(range.end)) {
 			range = null;
 		}
 	}
