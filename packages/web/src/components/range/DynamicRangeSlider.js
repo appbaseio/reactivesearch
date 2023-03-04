@@ -226,9 +226,14 @@ class DynamicRangeSlider extends Component {
 			this.setReact(this.props);
 		});
 
-		checkSomePropChange(this.props, prevProps, ['dataField', 'nestedField', 'aggregationSize'], () => {
-			this.updateRangeQueryOptions(this.props);
-		});
+		checkSomePropChange(
+			this.props,
+			prevProps,
+			['dataField', 'nestedField', 'aggregationSize'],
+			() => {
+				this.updateRangeQueryOptions(this.props);
+			},
+		);
 
 		checkSomePropChange(
 			this.props,
@@ -629,7 +634,12 @@ class DynamicRangeSlider extends Component {
 	}
 
 	render() {
-		if (!this.state.currentValue || !this.state.range || this.props.range.start === null) {
+		if (
+			!this.state.currentValue
+			|| !this.state.range
+			|| this.props.range === null
+			|| this.props.range.start === null
+		) {
 			return null;
 		}
 
@@ -785,6 +795,10 @@ const mapStateToProps = (state, props) => {
 	}
 	if (range) {
 		range = formatRange(range);
+		// eslint-disable-next-line no-restricted-globals
+		if (isNaN(range.start) && isNaN(range.end)) {
+			range = null;
+		}
 	}
 	return {
 		options,
