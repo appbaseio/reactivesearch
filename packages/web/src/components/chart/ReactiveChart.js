@@ -16,7 +16,6 @@ import {
 	isEqual,
 	getQueryOptions,
 	checkValueChange,
-	getOptionsFromQuery,
 	getAggsQuery,
 	updateInternalQuery,
 	updateCustomQuery,
@@ -36,6 +35,7 @@ import {
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 
+const getLoading = loading => (loading === undefined ? true : loading);
 const ChartTypes = {
 	Pie: 'pie',
 	Scatter: 'scatter',
@@ -772,7 +772,7 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
-	isLoading: state.isLoading[getInternalComponentID(props.componentId)],
+	isLoading: getLoading(state.isLoading[getInternalComponentID(props.componentId)]),
 	error: state.error[getInternalComponentID(props.componentId)],
 });
 

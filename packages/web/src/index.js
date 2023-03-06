@@ -6,6 +6,7 @@ import ErrorBoundary from './components/basic/ErrorBoundary';
 import SelectedFilters from './components/basic/SelectedFilters';
 import NumberBox from './components/basic/NumberBox';
 import ReactiveComponent from './components/basic/ReactiveComponent';
+import ReactiveComponentPrivate from './components/basic/ReactiveComponentPrivate';
 import StateProvider from './components/basic/StateProvider';
 
 import DatePicker from './components/date/DatePicker';
@@ -51,6 +52,7 @@ export {
 	NumberBox,
 	TagCloud,
 	ReactiveComponent,
+	ReactiveComponentPrivate,
 	ErrorBoundary,
 	// date
 	DatePicker,

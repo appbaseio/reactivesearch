@@ -172,6 +172,72 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -183,7 +249,7 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   left: 0;
 }
 
-.emotion-19 {
+.emotion-21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -262,9 +328,15 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
                   />
                 </svg>
               </div>
+              <div
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
+                /
+              </div>
             </div>
             <div
-              className="emotion-15 emotion-12"
+              className="emotion-17 emotion-12"
             >
               <div
                 className="emotion-13 emotion-14"
@@ -275,7 +347,7 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
         </div>
       </div>
       <div
-        className="emotion-19 emotion-20"
+        className="emotion-21 emotion-22"
       />
     </div>
   </div>
@@ -396,6 +468,72 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -407,7 +545,7 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -429,43 +567,43 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -518,12 +656,19 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -552,7 +697,7 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       />
     </div>
   </div>
@@ -699,6 +844,1768 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-19 svg,
+.emotion-19 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-19 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-19 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-19 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-19 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-19 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-19 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-19 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-19 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-19 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-19 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-19 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-19 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-19 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-21 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+  max-height: min(100vh,401px);
+  border: none;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
+}
+
+.emotion-21.small {
+  top: 30px;
+}
+
+.emotion-21 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-21 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-21 li:hover,
+.emotion-21 li:focus {
+  background-color: #eee;
+}
+
+.emotion-21 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-21 li:hover,
+.emotion-21 li:focus {
+  background-color: unset;
+}
+
+.emotion-21 li .trim {
+  line-height: 20px;
+}
+
+.emotion-21 li.li-item {
+  background-color: #fff;
+}
+
+.emotion-21 li.li-item svg {
+  fill: #0B6AFF;
+}
+
+.emotion-21 li.active-li-item {
+  background-color: #2d84f6;
+  color: #fff;
+}
+
+.emotion-21 li.active-li-item svg {
+  -webkit-transition: fill 0.3s ease-in;
+  transition: fill 0.3s ease-in;
+  fill: #fff!important;
+}
+
+.emotion-21 .section-container {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f2f0f0;
+}
+
+.emotion-21 .section-container .section-header {
+  padding: 10px;
+  font-size: 12px;
+  color: #7f7c7c;
+  background: #f9f9f9;
+}
+
+.emotion-21 .section-container .section-list {
+  padding-left: 0;
+}
+
+.emotion-21 .section-container .section-list-item__label,
+.emotion-21 .section-container .section-list-item__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-21 .section-container .section-list-item__label *,
+.emotion-21 .section-container .section-list-item__description * {
+  margin: 0;
+  padding: 0;
+}
+
+.emotion-21 .section-container .section-list-item__description {
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-22 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-22 .highlight {
+  font-weight: 600;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+}
+
+.emotion-23 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-23 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 17px;
+}
+
+.emotion-23:hover svg {
+  fill: #1c1a1a;
+}
+
+.emotion-40 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+.emotion-44 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="input-addon emotion-7 emotion-8"
+        >
+          <h3>
+             Before
+          </h3>
+        </div>
+        <div
+          className="emotion-9 emotion-10"
+        >
+          <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={true}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-11 emotion-12"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-13 emotion-14"
+            >
+              <div
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-17 emotion-14"
+            >
+              <div
+                className="emotion-19 emotion-20"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <ul
+            className=" emotion-21"
+          >
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-0"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Recent Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-22"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "harry potter",
+                    }
+                  }
+                />
+              </div>
+              <button
+                className="emotion-23 emotion-24"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-1"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Recent Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-22"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "complete night harry potter film wizardry boxed set",
+                    }
+                  }
+                />
+              </div>
+              <button
+                className="emotion-23 emotion-24"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-2"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Popular Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-22"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "harry potter <b class=\\"highlight\\">complete series</b>",
+                    }
+                  }
+                />
+              </div>
+              <button
+                className="emotion-23 emotion-24"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-3"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="promoted search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-22"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "night harry potter film wizardry boxed set",
+                    }
+                  }
+                />
+              </div>
+              <button
+                className="emotion-23 emotion-24"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-4"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "left": "3px",
+                      "marginRight": "8px",
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-22"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "harry potter <b class=\\"highlight\\">film wizardry</b>",
+                    }
+                  }
+                />
+              </div>
+              <button
+                className="emotion-23 emotion-24"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-5"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "left": "3px",
+                      "marginRight": "8px",
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-22"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "harry potter <b class=\\"highlight\\">boxed set</b>",
+                    }
+                  }
+                />
+              </div>
+              <button
+                className="emotion-23 emotion-24"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <div
+              className="emotion-40 emotion-41"
+            >
+              <div>
+                ↑↓ Navigate
+              </div>
+              <div>
+                ↩ Go
+              </div>
+            </div>
+          </ul>
+        </div>
+        <div
+          className="input-addon emotion-7 emotion-8"
+        >
+          <h3>
+             After
+          </h3>
+        </div>
+      </div>
+      <div
+        className="emotion-44 emotion-45"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore/ addonAfter) prop is set 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #fafafa;
+  border: 1px solid transparent;
+  color: rgba(0,0,0,0.85);
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 11px;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.emotion-7:first-of-type {
+  border-right: 1px solid #f0efef;
+  border-bottom-left-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.emotion-7:last-of-type {
+  border-left: 1px solid #f0efef;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.emotion-9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-11 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+}
+
+.emotion-11:focus {
+  background-color: #fff;
+}
+
+.emotion-11[type='search']::-webkit-search-decoration,
+.emotion-11[type='search']::-webkit-search-cancel-button,
+.emotion-11[type='search']::-webkit-search-results-button,
+.emotion-11[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-19 svg,
+.emotion-19 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-19 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-19 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-19 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-19 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-19 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-19 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-19 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-19 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-19 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-19 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-19 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-19 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-19 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-23 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="input-addon emotion-7 emotion-8"
+        >
+          <h3>
+             Before
+          </h3>
+        </div>
+        <div
+          className="emotion-9 emotion-10"
+        >
+          <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-11 emotion-12"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-13 emotion-14"
+            >
+              <div
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-17 emotion-14"
+            >
+              <div
+                className="emotion-19 emotion-20"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="input-addon emotion-7 emotion-8"
+        >
+          <h3>
+             After
+          </h3>
+        </div>
+      </div>
+      <div
+        className="emotion-23 emotion-24"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render SearchBox 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 100%;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <input
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-11 emotion-12"
+            >
+              <div
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="emotion-19 emotion-20"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render SearchBox with featured suggestions 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  height: 100%;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-9[type='search']::-webkit-search-decoration,
+.emotion-9[type='search']::-webkit-search-cancel-button,
+.emotion-9[type='search']::-webkit-search-results-button,
+.emotion-9[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
 }
 
 .emotion-15 {
@@ -908,1454 +2815,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 }
 
 .emotion-20 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-20 .highlight {
-  font-weight: 600;
-  padding: 0;
-  background-color: transparent;
-  color: inherit;
-}
-
-.emotion-21 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin-left: auto;
-  position: relative;
-  right: -3px;
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0;
-  z-index: 111;
-}
-
-.emotion-21 svg {
-  cursor: pointer;
-  fill: #707070;
-  height: 17px;
-}
-
-.emotion-21:hover svg {
-  fill: #1c1a1a;
-}
-
-.emotion-40 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  width: 100%;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  <div
-    className="emotion-2 emotion-3"
-    style={Object {}}
-  >
-    <div
-      className="emotion-4"
-    >
-      <div
-        className="input-group emotion-5 emotion-6"
-      >
-        <div
-          className="input-addon emotion-7 emotion-8"
-        >
-          <h3>
-             Before
-          </h3>
-        </div>
-        <div
-          className="emotion-9 emotion-10"
-        >
-          <input
-            aria-activedescendant={null}
-            aria-autocomplete="list"
-            aria-expanded={true}
-            aria-label="MockSearchBox"
-            autoComplete="off"
-            autoFocus={undefined}
-            className=" emotion-11 emotion-12"
-            id="MockSearchBox-downshift-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={undefined}
-            onKeyUp={undefined}
-            placeholder="Search"
-            role="combobox"
-            type="search"
-            value=""
-          />
-          <div>
-            <div
-              className="emotion-13 emotion-14"
-            />
-            <div
-              className="emotion-15 emotion-14"
-            >
-              <div
-                className="emotion-17 emotion-18"
-                onClick={[Function]}
-              >
-                <svg
-                  alt="Search"
-                  className="search-icon"
-                  height="12"
-                  style={
-                    Object {
-                      "position": "relative",
-                      "transform": "scale(1.35)",
-                    }
-                  }
-                  viewBox="0 0 15 15"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    Search
-                  </title>
-                  <path
-                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-          <ul
-            className=" emotion-19"
-          >
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-0"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
-                  }
-                }
-              >
-                <svg
-                  alt="Recent Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "harry potter",
-                    }
-                  }
-                />
-              </div>
-              <button
-                className="emotion-21 emotion-22"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-1"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
-                  }
-                }
-              >
-                <svg
-                  alt="Recent Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "complete night harry potter film wizardry boxed set",
-                    }
-                  }
-                />
-              </div>
-              <button
-                className="emotion-21 emotion-22"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-2"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
-                  }
-                }
-              >
-                <svg
-                  alt="Popular Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "harry potter <b class=\\"highlight\\">complete series</b>",
-                    }
-                  }
-                />
-              </div>
-              <button
-                className="emotion-21 emotion-22"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-3"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
-                  }
-                }
-              >
-                <svg
-                  alt="promoted search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "night harry potter film wizardry boxed set",
-                    }
-                  }
-                />
-              </div>
-              <button
-                className="emotion-21 emotion-22"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-4"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
-                  }
-                }
-              >
-                <svg
-                  alt="Search"
-                  className="search-icon"
-                  height="12"
-                  style={
-                    Object {
-                      "left": "3px",
-                      "marginRight": "8px",
-                      "position": "relative",
-                      "transform": "scale(1.35)",
-                    }
-                  }
-                  viewBox="0 0 15 15"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    Search
-                  </title>
-                  <path
-                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "harry potter <b class=\\"highlight\\">film wizardry</b>",
-                    }
-                  }
-                />
-              </div>
-              <button
-                className="emotion-21 emotion-22"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-5"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
-                  }
-                }
-              >
-                <svg
-                  alt="Search"
-                  className="search-icon"
-                  height="12"
-                  style={
-                    Object {
-                      "left": "3px",
-                      "marginRight": "8px",
-                      "position": "relative",
-                      "transform": "scale(1.35)",
-                    }
-                  }
-                  viewBox="0 0 15 15"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    Search
-                  </title>
-                  <path
-                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20"
-                  dangerouslySetInnerHTML={
-                    Object {
-                      "__html": "harry potter <b class=\\"highlight\\">boxed set</b>",
-                    }
-                  }
-                />
-              </div>
-              <button
-                className="emotion-21 emotion-22"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div
-          className="input-addon emotion-7 emotion-8"
-        >
-          <h3>
-             After
-          </h3>
-        </div>
-      </div>
-      <div
-        className="emotion-40 emotion-41"
-      />
-    </div>
-  </div>
-</div>
-`;
-
-exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore/ addonAfter) prop is set 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-.emotion-4 {
-  position: relative;
-}
-
-.emotion-4 .cancel-icon {
-  cursor: pointer;
-}
-
-.emotion-5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  width: 100%;
-  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
-  border-radius: 6px;
-}
-
-.emotion-7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  background-color: #fafafa;
-  border: 1px solid transparent;
-  color: rgba(0,0,0,0.85);
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0 11px;
-  position: relative;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.emotion-7:first-of-type {
-  border-right: 1px solid #f0efef;
-  border-bottom-left-radius: 6px;
-  border-top-left-radius: 6px;
-}
-
-.emotion-7:last-of-type {
-  border-left: 1px solid #f0efef;
-  border-bottom-right-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.emotion-9 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  position: relative;
-}
-
-.emotion-11 {
-  width: 100%;
-  line-height: 1.5;
-  min-height: 42px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-  font-size: 0.9rem;
-  outline: none;
-  height: 100%;
-  padding: 8px 12px 9px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding-left: 36px;
-}
-
-.emotion-11:focus {
-  background-color: #fff;
-}
-
-.emotion-11[type='search']::-webkit-search-decoration,
-.emotion-11[type='search']::-webkit-search-cancel-button,
-.emotion-11[type='search']::-webkit-search-results-button,
-.emotion-11[type='search']::-webkit-search-results-decoration {
-  display: none;
-}
-
-.emotion-13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  grid-gap: 6px;
-  padding: 0 10px;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  right: 0;
-}
-
-.emotion-15 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  grid-gap: 6px;
-  padding: 0 10px;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  left: 0;
-}
-
-.emotion-17 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  max-width: 23px;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  cursor: pointer;
-  height: 100%;
-  min-width: 20px;
-}
-
-.emotion-17 svg,
-.emotion-17 svg g#el_D93PK3GbmJ {
-  fill: #0B6AFF;
-}
-
-.emotion-17 svg.search-icon {
-  -webkit-transform: scale(1.25);
-  -ms-transform: scale(1.25);
-  transform: scale(1.25);
-}
-
-.emotion-17 svg.cancel-icon {
-  fill: #595959;
-}
-
-.emotion-17 svg.--listen-svg {
-  fill: #0B6AFF;
-  -webkit-filter: hue-rotate(-10deg);
-  filter: hue-rotate(-10deg);
-}
-
-.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
-  fill: #0B6AFF!important;
-  -webkit-filter: hue-rotate(-10deg)!important;
-  filter: hue-rotate(-10deg)!important;
-}
-
-.emotion-21 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  width: 100%;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  <div
-    className="emotion-2 emotion-3"
-    style={Object {}}
-  >
-    <div
-      className="emotion-4"
-    >
-      <div
-        className="input-group emotion-5 emotion-6"
-      >
-        <div
-          className="input-addon emotion-7 emotion-8"
-        >
-          <h3>
-             Before
-          </h3>
-        </div>
-        <div
-          className="emotion-9 emotion-10"
-        >
-          <input
-            aria-activedescendant={null}
-            aria-autocomplete="list"
-            aria-expanded={false}
-            aria-label="MockSearchBox"
-            autoComplete="off"
-            autoFocus={undefined}
-            className=" emotion-11 emotion-12"
-            id="MockSearchBox-downshift-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={undefined}
-            onKeyUp={undefined}
-            placeholder="Search"
-            role="combobox"
-            type="search"
-            value=""
-          />
-          <div>
-            <div
-              className="emotion-13 emotion-14"
-            />
-            <div
-              className="emotion-15 emotion-14"
-            >
-              <div
-                className="emotion-17 emotion-18"
-                onClick={[Function]}
-              >
-                <svg
-                  alt="Search"
-                  className="search-icon"
-                  height="12"
-                  style={
-                    Object {
-                      "position": "relative",
-                      "transform": "scale(1.35)",
-                    }
-                  }
-                  viewBox="0 0 15 15"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    Search
-                  </title>
-                  <path
-                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="input-addon emotion-7 emotion-8"
-        >
-          <h3>
-             After
-          </h3>
-        </div>
-      </div>
-      <div
-        className="emotion-21 emotion-22"
-      />
-    </div>
-  </div>
-</div>
-`;
-
-exports[`should render SearchBox 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-.emotion-4 {
-  position: relative;
-}
-
-.emotion-4 .cancel-icon {
-  cursor: pointer;
-}
-
-.emotion-5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  width: 100%;
-  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
-  border-radius: 6px;
-}
-
-.emotion-7 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  position: relative;
-}
-
-.emotion-9 {
-  width: 100%;
-  line-height: 1.5;
-  min-height: 42px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-  font-size: 0.9rem;
-  outline: none;
-  height: 100%;
-  padding: 8px 12px 9px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding-left: 36px;
-}
-
-.emotion-9:focus {
-  background-color: #fff;
-}
-
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
-  display: none;
-}
-
-.emotion-11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  grid-gap: 6px;
-  padding: 0 10px;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  right: 0;
-}
-
-.emotion-13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  grid-gap: 6px;
-  padding: 0 10px;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  left: 0;
-}
-
-.emotion-15 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  max-width: 23px;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  cursor: pointer;
-  height: 100%;
-  min-width: 20px;
-}
-
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
-  fill: #0B6AFF;
-}
-
-.emotion-15 svg.search-icon {
-  -webkit-transform: scale(1.25);
-  -ms-transform: scale(1.25);
-  transform: scale(1.25);
-}
-
-.emotion-15 svg.cancel-icon {
-  fill: #595959;
-}
-
-.emotion-15 svg.--listen-svg {
-  fill: #0B6AFF;
-  -webkit-filter: hue-rotate(-10deg);
-  filter: hue-rotate(-10deg);
-}
-
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
-  fill: #0B6AFF!important;
-  -webkit-filter: hue-rotate(-10deg)!important;
-  filter: hue-rotate(-10deg)!important;
-}
-
-.emotion-17 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  width: 100%;
-}
-
-<div
-  className="emotion-0 emotion-1"
-  style={Object {}}
->
-  <div
-    className="emotion-2 emotion-3"
-    style={Object {}}
-  >
-    <div
-      className="emotion-4"
-    >
-      <div
-        className="input-group emotion-5 emotion-6"
-      >
-        <div
-          className="emotion-7 emotion-8"
-        >
-          <input
-            aria-activedescendant={null}
-            aria-autocomplete="list"
-            aria-expanded={false}
-            aria-label="MockSearchBox"
-            autoComplete="off"
-            autoFocus={undefined}
-            className=" emotion-9 emotion-10"
-            id="MockSearchBox-downshift-input"
-            onBlur={[Function]}
-            onChange={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={undefined}
-            onKeyUp={undefined}
-            placeholder="Search"
-            role="combobox"
-            type="search"
-            value=""
-          />
-          <div>
-            <div
-              className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
-            >
-              <div
-                className="emotion-15 emotion-16"
-                onClick={[Function]}
-              >
-                <svg
-                  alt="Search"
-                  className="search-icon"
-                  height="12"
-                  style={
-                    Object {
-                      "position": "relative",
-                      "transform": "scale(1.35)",
-                    }
-                  }
-                  viewBox="0 0 15 15"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    Search
-                  </title>
-                  <path
-                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="emotion-17 emotion-18"
-      />
-    </div>
-  </div>
-</div>
-`;
-
-exports[`should render SearchBox with featured suggestions 1`] = `
-.emotion-0 {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-  font-size: 16px;
-  color: #424242;
-  width: 100%;
-}
-
-.emotion-0 input,
-.emotion-0 button,
-.emotion-0 textarea,
-.emotion-0 select {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
-}
-
-.emotion-0 *,
-.emotion-0 *:before,
-.emotion-0 *:after {
-  box-sizing: border-box;
-}
-
-.emotion-4 {
-  position: relative;
-}
-
-.emotion-4 .cancel-icon {
-  cursor: pointer;
-}
-
-.emotion-5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  width: 100%;
-  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
-  border-radius: 6px;
-  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
-}
-
-.emotion-7 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  position: relative;
-}
-
-.emotion-9 {
-  width: 100%;
-  line-height: 1.5;
-  min-height: 42px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-  font-size: 0.9rem;
-  outline: none;
-  height: 100%;
-  padding: 8px 12px 9px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  padding-left: 36px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.emotion-9:focus {
-  background-color: #fff;
-}
-
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
-  display: none;
-}
-
-.emotion-11 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  grid-gap: 6px;
-  padding: 0 10px;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  right: 0;
-}
-
-.emotion-13 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  grid-gap: 6px;
-  padding: 0 10px;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  left: 0;
-}
-
-.emotion-15 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  max-width: 23px;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  cursor: pointer;
-  height: 100%;
-  min-width: 20px;
-}
-
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
-  fill: #0B6AFF;
-}
-
-.emotion-15 svg.search-icon {
-  -webkit-transform: scale(1.25);
-  -ms-transform: scale(1.25);
-  transform: scale(1.25);
-}
-
-.emotion-15 svg.cancel-icon {
-  fill: #595959;
-}
-
-.emotion-15 svg.--listen-svg {
-  fill: #0B6AFF;
-  -webkit-filter: hue-rotate(-10deg);
-  filter: hue-rotate(-10deg);
-}
-
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
-  fill: #0B6AFF!important;
-  -webkit-filter: hue-rotate(-10deg)!important;
-  filter: hue-rotate(-10deg)!important;
-}
-
-.emotion-17 {
-  display: block;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-top: none;
-  background-color: #fff;
-  font-size: 0.9rem;
-  z-index: 3;
-  position: absolute;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  max-height: 375px;
-  overflow-y: auto;
-  max-height: min(100vh,401px);
-  border: none;
-  border-radius: 6px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
-  border-top: 1px solid #f2f0f0;
-}
-
-.emotion-17.small {
-  top: 30px;
-}
-
-.emotion-17 li {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  cursor: pointer;
-  padding: 10px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.emotion-17 li .trim {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-17 li:hover,
-.emotion-17 li:focus {
-  background-color: #eee;
-}
-
-.emotion-17 li {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-  position: relative;
-}
-
-.emotion-17 li:hover,
-.emotion-17 li:focus {
-  background-color: unset;
-}
-
-.emotion-17 li .trim {
-  line-height: 20px;
-}
-
-.emotion-17 li.li-item {
-  background-color: #fff;
-}
-
-.emotion-17 li.li-item svg {
-  fill: #0B6AFF;
-}
-
-.emotion-17 li.active-li-item {
-  background-color: #2d84f6;
-  color: #fff;
-}
-
-.emotion-17 li.active-li-item svg {
-  -webkit-transition: fill 0.3s ease-in;
-  transition: fill 0.3s ease-in;
-  fill: #fff!important;
-}
-
-.emotion-17 .section-container {
-  padding-bottom: 5px;
-  border-bottom: 1px solid #f2f0f0;
-}
-
-.emotion-17 .section-container .section-header {
-  padding: 10px;
-  font-size: 12px;
-  color: #7f7c7c;
-  background: #f9f9f9;
-}
-
-.emotion-17 .section-container .section-list {
-  padding-left: 0;
-}
-
-.emotion-17 .section-container .section-list-item__label,
-.emotion-17 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-17 .section-container .section-list-item__label *,
-.emotion-17 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-17 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
-}
-
-.emotion-18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2365,7 +2824,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   flex-direction: column;
 }
 
-.emotion-18 svg.cancel-icon {
+.emotion-20 svg.cancel-icon {
   cursor: pointer;
   fill: #595959;
   -webkit-flex-basis: 30px;
@@ -2373,11 +2832,11 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   flex-basis: 30px;
 }
 
-.emotion-18 svg.cancel-icon:hover {
+.emotion-20 svg.cancel-icon:hover {
   fill: #424242;
 }
 
-.emotion-22 {
+.emotion-24 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2392,17 +2851,36 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   z-index: 111;
 }
 
-.emotion-22 svg {
+.emotion-24 svg {
   cursor: pointer;
   fill: #707070;
   height: 17px;
 }
 
-.emotion-22:hover svg {
+.emotion-24:hover svg {
   fill: #1c1a1a;
 }
 
-.emotion-44 {
+.emotion-46 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+.emotion-48 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2455,12 +2933,19 @@ exports[`should render SearchBox with featured suggestions 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -2489,7 +2974,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
         </div>
       </div>
       <ul
-        className=" emotion-17"
+        className=" emotion-19"
       >
         <div
           className="section-container"
@@ -2545,7 +3030,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -2620,7 +3105,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -2642,7 +3127,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-22 emotion-23"
+                className="emotion-24 emotion-25"
                 style={
                   Object {
                     "pointerEvents": "none",
@@ -2716,7 +3201,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -2730,7 +3215,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-22 emotion-23"
+                className="emotion-24 emotion-25"
                 onClick={[Function]}
               >
                 <svg
@@ -2783,7 +3268,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -2797,7 +3282,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-22 emotion-23"
+                className="emotion-24 emotion-25"
                 onClick={[Function]}
               >
                 <svg
@@ -2850,7 +3335,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -2864,7 +3349,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-22 emotion-23"
+                className="emotion-24 emotion-25"
                 onClick={[Function]}
               >
                 <svg
@@ -2933,7 +3418,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -2947,7 +3432,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-22 emotion-23"
+                className="emotion-24 emotion-25"
                 onClick={[Function]}
               >
                 <svg
@@ -3000,7 +3485,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 className="trim"
               >
                 <div
-                  className="emotion-18 emotion-19"
+                  className="emotion-20 emotion-21"
                   direction="column"
                 >
                   <div
@@ -3014,7 +3499,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-22 emotion-23"
+                className="emotion-24 emotion-25"
                 onClick={[Function]}
               >
                 <svg
@@ -3028,9 +3513,19 @@ exports[`should render SearchBox with featured suggestions 1`] = `
             </li>
           </ul>
         </div>
+        <div
+          className="emotion-46 emotion-47"
+        >
+          <div>
+            ↑↓ Navigate
+          </div>
+          <div>
+            ↩ Go
+          </div>
+        </div>
       </ul>
       <div
-        className="emotion-44 emotion-45"
+        className="emotion-48 emotion-49"
       />
     </div>
   </div>
@@ -3151,6 +3646,72 @@ exports[`should render SearchBox with tags 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -3162,7 +3723,7 @@ exports[`should render SearchBox with tags 1`] = `
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3184,43 +3745,43 @@ exports[`should render SearchBox with tags 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3232,7 +3793,7 @@ exports[`should render SearchBox with tags 1`] = `
   width: 100%;
 }
 
-.emotion-19 {
+.emotion-21 {
   cursor: default;
   box-sizing: border-box;
   margin: 0 4px 4px 0;
@@ -3256,7 +3817,7 @@ exports[`should render SearchBox with tags 1`] = `
   transition: all 0.3s;
 }
 
-.emotion-19 span.close-icon svg {
+.emotion-21 span.close-icon svg {
   cursor: pointer;
   height: 15px;
   position: relative;
@@ -3305,12 +3866,19 @@ exports[`should render SearchBox with tags 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -3339,10 +3907,10 @@ exports[`should render SearchBox with tags 1`] = `
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       >
         <span
-          className=" emotion-19 emotion-20"
+          className=" emotion-21 emotion-22"
         >
           <span>
             Paradise Ahead!
@@ -3501,6 +4069,72 @@ exports[`should render SearchBox with title 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -3512,7 +4146,7 @@ exports[`should render SearchBox with title 1`] = `
   left: 0;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3534,43 +4168,43 @@ exports[`should render SearchBox with title 1`] = `
   min-width: 20px;
 }
 
-.emotion-17 svg,
-.emotion-17 svg g#el_D93PK3GbmJ {
+.emotion-19 svg,
+.emotion-19 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-17 svg.search-icon {
+.emotion-19 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-17 svg.cancel-icon {
+.emotion-19 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-17 svg.--listen-svg {
+.emotion-19 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-19 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-19 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-19 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-19 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-19 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-19 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-19 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-19 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-19 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-19 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-19 {
+.emotion-21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3628,12 +4262,19 @@ exports[`should render SearchBox with title 1`] = `
           <div>
             <div
               className="emotion-13 emotion-14"
-            />
-            <div
-              className="emotion-15 emotion-14"
             >
               <div
-                className="emotion-17 emotion-18"
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-17 emotion-14"
+            >
+              <div
+                className="emotion-19 emotion-20"
                 onClick={[Function]}
               >
                 <svg
@@ -3662,7 +4303,7 @@ exports[`should render SearchBox with title 1`] = `
         </div>
       </div>
       <div
-        className="emotion-19 emotion-20"
+        className="emotion-21 emotion-22"
       />
     </div>
   </div>
@@ -3845,6 +4486,72 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -3856,7 +4563,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   left: 0;
 }
 
-.emotion-19 {
+.emotion-21 {
   display: block;
   width: 100%;
   border: 1px solid #ccc;
@@ -3879,11 +4586,11 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   border-top: 1px solid #f2f0f0;
 }
 
-.emotion-19.small {
+.emotion-21.small {
   top: 30px;
 }
 
-.emotion-19 li {
+.emotion-21 li {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3900,100 +4607,100 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   user-select: none;
 }
 
-.emotion-19 li .trim {
+.emotion-21 li .trim {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.emotion-19 li:hover,
-.emotion-19 li:focus {
+.emotion-21 li:hover,
+.emotion-21 li:focus {
   background-color: #eee;
 }
 
-.emotion-19 li {
+.emotion-21 li {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
   position: relative;
 }
 
-.emotion-19 li:hover,
-.emotion-19 li:focus {
+.emotion-21 li:hover,
+.emotion-21 li:focus {
   background-color: unset;
 }
 
-.emotion-19 li .trim {
+.emotion-21 li .trim {
   line-height: 20px;
 }
 
-.emotion-19 li.li-item {
+.emotion-21 li.li-item {
   background-color: #fff;
 }
 
-.emotion-19 li.li-item svg {
+.emotion-21 li.li-item svg {
   fill: #0B6AFF;
 }
 
-.emotion-19 li.active-li-item {
+.emotion-21 li.active-li-item {
   background-color: #2d84f6;
   color: #fff;
 }
 
-.emotion-19 li.active-li-item svg {
+.emotion-21 li.active-li-item svg {
   -webkit-transition: fill 0.3s ease-in;
   transition: fill 0.3s ease-in;
   fill: #fff!important;
 }
 
-.emotion-19 .section-container {
+.emotion-21 .section-container {
   padding-bottom: 5px;
   border-bottom: 1px solid #f2f0f0;
 }
 
-.emotion-19 .section-container .section-header {
+.emotion-21 .section-container .section-header {
   padding: 10px;
   font-size: 12px;
   color: #7f7c7c;
   background: #f9f9f9;
 }
 
-.emotion-19 .section-container .section-list {
+.emotion-21 .section-container .section-list {
   padding-left: 0;
 }
 
-.emotion-19 .section-container .section-list-item__label,
-.emotion-19 .section-container .section-list-item__description {
+.emotion-21 .section-container .section-list-item__label,
+.emotion-21 .section-container .section-list-item__description {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.emotion-19 .section-container .section-list-item__label *,
-.emotion-19 .section-container .section-list-item__description * {
+.emotion-21 .section-container .section-list-item__label *,
+.emotion-21 .section-container .section-list-item__description * {
   margin: 0;
   padding: 0;
 }
 
-.emotion-19 .section-container .section-list-item__description {
+.emotion-21 .section-container .section-list-item__description {
   margin-top: 5px;
   opacity: 0.7;
   font-size: 12px;
 }
 
-.emotion-20 {
+.emotion-22 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.emotion-20 .highlight {
+.emotion-22 .highlight {
   font-weight: 600;
   padding: 0;
   background-color: transparent;
   color: inherit;
 }
 
-.emotion-21 {
+.emotion-23 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -4008,17 +4715,36 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   z-index: 111;
 }
 
-.emotion-21 svg {
+.emotion-23 svg {
   cursor: pointer;
   fill: #707070;
   height: 17px;
 }
 
-.emotion-21:hover svg {
+.emotion-23:hover svg {
   fill: #1c1a1a;
 }
 
-.emotion-38 {
+.emotion-40 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+.emotion-42 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -4083,9 +4809,15 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
                   ❌
                 </span>
               </div>
+              <div
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
+                /
+              </div>
             </div>
             <div
-              className="emotion-15 emotion-12"
+              className="emotion-17 emotion-12"
             >
               <div
                 className="emotion-13 emotion-14"
@@ -4103,7 +4835,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
         </div>
       </div>
       <ul
-        className=" emotion-19"
+        className=" emotion-21"
       >
         <li
           className="li-item "
@@ -4146,7 +4878,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="emotion-20"
+              className="emotion-22"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter",
@@ -4155,7 +4887,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="emotion-21 emotion-22"
+            className="emotion-23 emotion-24"
             onClick={[Function]}
           >
             <svg
@@ -4208,7 +4940,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="emotion-20"
+              className="emotion-22"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "complete night harry potter film wizardry boxed set",
@@ -4217,7 +4949,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="emotion-21 emotion-22"
+            className="emotion-23 emotion-24"
             onClick={[Function]}
           >
             <svg
@@ -4270,7 +5002,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="emotion-20"
+              className="emotion-22"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter <b class=\\"highlight\\">complete series</b>",
@@ -4279,7 +5011,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="emotion-21 emotion-22"
+            className="emotion-23 emotion-24"
             onClick={[Function]}
           >
             <svg
@@ -4328,7 +5060,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="emotion-20"
+              className="emotion-22"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "night harry potter film wizardry boxed set",
@@ -4337,7 +5069,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="emotion-21 emotion-22"
+            className="emotion-23 emotion-24"
             onClick={[Function]}
           >
             <svg
@@ -4397,7 +5129,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="emotion-20"
+              className="emotion-22"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter <b class=\\"highlight\\">film wizardry</b>",
@@ -4406,7 +5138,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="emotion-21 emotion-22"
+            className="emotion-23 emotion-24"
             onClick={[Function]}
           >
             <svg
@@ -4466,7 +5198,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             className="trim"
           >
             <div
-              className="emotion-20"
+              className="emotion-22"
               dangerouslySetInnerHTML={
                 Object {
                   "__html": "harry potter <b class=\\"highlight\\">boxed set</b>",
@@ -4475,7 +5207,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             />
           </div>
           <button
-            className="emotion-21 emotion-22"
+            className="emotion-23 emotion-24"
             onClick={[Function]}
           >
             <svg
@@ -4487,9 +5219,19 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
             </svg>
           </button>
         </li>
+        <div
+          className="emotion-40 emotion-41"
+        >
+          <div>
+            ↑↓ Navigate
+          </div>
+          <div>
+            ↩ Go
+          </div>
+        </div>
       </ul>
       <div
-        className="emotion-38 emotion-39"
+        className="emotion-42 emotion-43"
       />
     </div>
   </div>
@@ -4613,6 +5355,72 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -4624,7 +5432,7 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -4646,43 +5454,43 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -4735,12 +5543,19 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -4856,7 +5671,7 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       />
     </div>
   </div>
@@ -4977,6 +5792,72 @@ exports[`should render custom enterButton 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -4988,7 +5869,7 @@ exports[`should render custom enterButton 1`] = `
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5010,43 +5891,43 @@ exports[`should render custom enterButton 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5099,12 +5980,19 @@ exports[`should render custom enterButton 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -5164,7 +6052,7 @@ exports[`should render custom enterButton 1`] = `
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       />
     </div>
   </div>
@@ -5285,6 +6173,72 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -5296,7 +6250,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5318,43 +6272,43 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -5386,29 +6340,29 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   color: #fff;
 }
 
-.emotion-17:hover,
-.emotion-17:focus {
+.emotion-19:hover,
+.emotion-19:focus {
   background-color: #ccc;
 }
 
-.emotion-17:focus {
+.emotion-19:focus {
   outline: 0;
   border-color: rgba(11,106,255,0.6);
   box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
 }
 
-.emotion-17:hover,
-.emotion-17:focus {
+.emotion-19:hover,
+.emotion-19:focus {
   background-color: #0054d7;
 }
 
-.emotion-17.enter-btn {
+.emotion-19.enter-btn {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   height: 100%;
 }
 
-.emotion-19 {
+.emotion-21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5461,12 +6415,19 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -5497,7 +6458,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
           className="enter-button-wrapper"
         >
           <a
-            className="enter-btn  emotion-17 emotion-18"
+            className="enter-btn  emotion-19 emotion-20"
             onClick={[Function]}
           >
             Search
@@ -5505,7 +6466,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
         </div>
       </div>
       <div
-        className="emotion-19 emotion-20"
+        className="emotion-21 emotion-22"
       />
     </div>
   </div>
@@ -5636,6 +6597,14 @@ exports[`should render search icon on the right 1`] = `
   cursor: pointer;
   height: 100%;
   min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
 }
 
 .emotion-13 svg,
@@ -5687,6 +6656,64 @@ exports[`should render search icon on the right 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-15 svg,
+.emotion-15 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-15 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-15 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-15 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -5698,7 +6725,7 @@ exports[`should render search icon on the right 1`] = `
   left: 0;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5756,6 +6783,12 @@ exports[`should render search icon on the right 1`] = `
                 className="emotion-13 emotion-14"
                 onClick={[Function]}
               >
+                /
+              </div>
+              <div
+                className="emotion-15 emotion-16"
+                onClick={[Function]}
+              >
                 <svg
                   alt="Search"
                   className="search-icon"
@@ -5779,13 +6812,13 @@ exports[`should render search icon on the right 1`] = `
               </div>
             </div>
             <div
-              className="emotion-15 emotion-12"
+              className="emotion-17 emotion-12"
             />
           </div>
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       />
     </div>
   </div>
@@ -5906,6 +6939,72 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -5917,7 +7016,7 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -5939,43 +7038,43 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -6028,12 +7127,19 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -6062,7 +7168,7 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       />
     </div>
   </div>
@@ -6183,6 +7289,72 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   grid-gap: 6px;
   padding: 0 10px;
   height: 100%;
@@ -6194,7 +7366,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   left: 0;
 }
 
-.emotion-15 {
+.emotion-17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -6216,43 +7388,43 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   min-width: 20px;
 }
 
-.emotion-15 svg,
-.emotion-15 svg g#el_D93PK3GbmJ {
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
   fill: #0B6AFF;
 }
 
-.emotion-15 svg.search-icon {
+.emotion-17 svg.search-icon {
   -webkit-transform: scale(1.25);
   -ms-transform: scale(1.25);
   transform: scale(1.25);
 }
 
-.emotion-15 svg.cancel-icon {
+.emotion-17 svg.cancel-icon {
   fill: #595959;
 }
 
-.emotion-15 svg.--listen-svg {
+.emotion-17 svg.--listen-svg {
   fill: #0B6AFF;
   -webkit-filter: hue-rotate(-10deg);
   filter: hue-rotate(-10deg);
 }
 
-.emotion-15 svg.--listen-svg #el_-Vm65Ltfy7,
-.emotion-15 svg.--listen-svg #el_9bggsfQOtU,
-.emotion-15 svg.--listen-svg #el_zclQ34fvf7,
-.emotion-15 svg.--listen-svg #el_aa9sjx4H0vA,
-.emotion-15 svg.--listen-svg #el_z5u6RAFhx7d,
-.emotion-15 svg.--listen-svg #el__ZcqlS20zcw,
-.emotion-15 svg.--listen-svg #el_FYYKCI_u24e,
-.emotion-15 svg.--listen-svg #el_RMT1KUfbdF8,
-.emotion-15 svg.--listen-svg #el_uzZNtK32Zi,
-.emotion-15 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
   fill: #0B6AFF!important;
   -webkit-filter: hue-rotate(-10deg)!important;
   filter: hue-rotate(-10deg)!important;
 }
 
-.emotion-17 {
+.emotion-19 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -6305,12 +7477,19 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
           <div>
             <div
               className="emotion-11 emotion-12"
-            />
-            <div
-              className="emotion-13 emotion-12"
             >
               <div
-                className="emotion-15 emotion-16"
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
                 onClick={[Function]}
               >
                 <svg
@@ -6339,7 +7518,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
         </div>
       </div>
       <div
-        className="emotion-17 emotion-18"
+        className="emotion-19 emotion-20"
       />
     </div>
   </div>
