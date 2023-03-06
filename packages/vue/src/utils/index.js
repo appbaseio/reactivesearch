@@ -12,9 +12,6 @@ const {
 // import { storeKey } from '@appbaseio/reactivecore';
 
 export const connect = (...args) => connectToStore(...args);
-// connectToStore(...args, null, {
-//   storeKey,
-// });
 
 export const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
 
