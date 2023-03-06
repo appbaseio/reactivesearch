@@ -1,7 +1,11 @@
 --- 
-maps: packages/maps/**/*
-maps-native: packages/maps-native/**/*
-native: packages/native/**/*
-vue: packages/vue/**/*
+maps: 
+  - packages/maps/**/*
+maps-native: 
+  - packages/maps-native/**/*
+native: 
+  - packages/native/**/*
+vue: 
+  - packages/vue/**/*
 web: 
   - packages/web/**/*
