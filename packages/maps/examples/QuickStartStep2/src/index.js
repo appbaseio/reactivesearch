@@ -32,7 +32,7 @@ class App extends Component {
 							defaultZoom={3}
 							size={50}
 							react={{
-								and: 'GeoDistanceSlider',
+								and: 'places',
 							}}
 							onPopoverClick={(item) => <div>{item.venue.venue_name}</div>}
 							showMapStyles={true}
