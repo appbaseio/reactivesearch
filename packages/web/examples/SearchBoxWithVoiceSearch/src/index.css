@@ -70,6 +70,11 @@ body {
 .authors-list {
 	color: #9d9d9d;
 	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 
 .ratings-list {

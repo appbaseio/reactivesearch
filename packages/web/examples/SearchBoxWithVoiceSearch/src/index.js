@@ -28,13 +28,13 @@ const Main = () => (
 					className="result-list-container"
 					pagination
 					react={{
-						and: 'BookSensor',
+						and: 'MoviesSensor',
 					}}
 					render={({ data }) => (
 						<ReactiveList.ResultCardsWrapper>
 							{data.map((item) => (
 								<ResultCard id={item._id} key={item._id}>
-									<ResultCard.Image src={item.image} />
+									<ResultCard.Image src={item.poster_path} />
 									<ResultCard.Title>
 										<div
 											className="book-title"
@@ -47,35 +47,19 @@ const Main = () => (
 									<ResultCard.Description>
 										<div className="flex column justify-space-between">
 											<div>
-												<div>
-													by{' '}
+												<div title={item.overview}>
 													<span className="authors-list">
-														{item.authors}
+														{item.overview}
 													</span>
 												</div>
 												<div className="ratings-list flex align-center">
-													<span className="stars">
-														{
-															/* eslint-disable */
-															Array(item.average_rating_rounded)
-																.fill('x')
-																.map((_, index) => (
-																	<i
-																		className="fas fa-star"
-																		key={index}
-																	/>
-																))
-															/* eslint-enable */
-														}
-													</span>
-													<span className="avg-rating">
-														({item.average_rating} avg)
+													<span>
+														{item.genres.map((_) => (
+															<span> ∙ {_}</span>
+														))}
 													</span>
 												</div>
 											</div>
-											<span className="pub-year">
-												Pub {item.original_publication_year}
-											</span>
 										</div>
 									</ResultCard.Description>
 								</ResultCard>
