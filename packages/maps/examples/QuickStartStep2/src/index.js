@@ -34,7 +34,7 @@ class App extends Component {
 							react={{
 								and: 'places',
 							}}
-							onPopoverClick={(item) => <div>{item.venue.venue_name}</div>}
+							onPopoverClick={(item) => <div>{item.place}</div>}
 							showMapStyles={true}
 							renderItem={(result) => ({
 								custom: (
