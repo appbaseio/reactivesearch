@@ -14,7 +14,6 @@ const input = searchBox => css`
 	background-color: #fafafa;
 	font-size: 0.9rem;
 	outline: none;
-	height: 100%;
 	&:focus {
 		background-color: #fff;
 	}

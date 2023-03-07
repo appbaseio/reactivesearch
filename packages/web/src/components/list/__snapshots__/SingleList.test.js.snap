@@ -288,7 +288,6 @@ exports[`should render list of items 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -616,7 +615,6 @@ exports[`should render search/count/checkbox when showSearch/showCount/showCheck
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -915,7 +913,6 @@ exports[`should select default value 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1215,7 +1212,6 @@ exports[`should use render prop to render the list item 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1295,7 +1291,6 @@ exports[`should use renderItem to render the list item 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {

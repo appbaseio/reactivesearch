@@ -30,7 +30,6 @@ exports[`should render 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -339,7 +338,6 @@ exports[`should render with displayAsVertical 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -648,7 +646,6 @@ exports[`should render with renderItem 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -945,7 +942,6 @@ exports[`should render with showCount 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1264,7 +1260,6 @@ exports[`should render with showRadio 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1573,7 +1568,6 @@ exports[`should render with showRadio and displayAsVertical 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1882,7 +1876,6 @@ exports[`should render with showRadio and showSearch 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -2191,7 +2184,6 @@ exports[`should render with showRadio, showSearch and displayAsVertical 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -2500,7 +2492,6 @@ exports[`should render with showSearch 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -2809,7 +2800,6 @@ exports[`should render with title 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {

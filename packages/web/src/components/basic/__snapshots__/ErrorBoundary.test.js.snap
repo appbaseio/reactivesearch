@@ -30,7 +30,6 @@ exports[`should handle error with componentIds passed 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
