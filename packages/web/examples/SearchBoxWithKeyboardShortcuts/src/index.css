@@ -15,11 +15,11 @@ body {
 .col {
 	flex: 1;
 	padding: 15px;
+	max-width: 100%;
 }
 
 .row > .col:first-child {
 	border-right: 1px solid #ccc;
-	max-width: 400px;
 }
 
 .row > .col:last-child {
@@ -70,11 +70,6 @@ body {
 .authors-list {
 	color: #9d9d9d;
 	font-weight: bold;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
 }
 
 .ratings-list {
@@ -150,4 +145,13 @@ body {
 
 .col .meetup-list-image {
 	background-size: cover;
+}
+.authors-list {
+	color: #9d9d9d;
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
