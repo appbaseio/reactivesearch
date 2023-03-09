@@ -12,14 +12,13 @@ const Main = () => (
 		<div className="row">
 			<div className="col">
 				<SearchBox
+					defaultValue={['shock and awe', 'Great Expectations']}
 					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
 					mode={'tag'}
 				/>
-			</div>
-
-			<div className="col">
+				<br />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"
