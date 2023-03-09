@@ -15,11 +15,11 @@ body {
 .col {
 	flex: 1;
 	padding: 15px;
+	max-width: 100%;
 }
 
 .row > .col:first-child {
 	border-right: 1px solid #ccc;
-	max-width: 400px;
 }
 
 .row > .col:last-child {
@@ -152,6 +152,7 @@ body {
 	display: flex;
 	gap: 10px;
 	overflow: auto;
+	margin-top: 10px;
 }
 .pill-wrapper::-webkit-scrollbar {
 	height: 0px;
