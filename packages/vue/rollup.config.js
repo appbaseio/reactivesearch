@@ -35,6 +35,7 @@ const inputChunks = {
 	RangeSlider: 'src/components/range/RangeSlider.jsx',
 	DynamicRangeSlider: 'src/components/range/DynamicRangeSlider.jsx',
 	ReactiveComponent: 'src/components/basic/ReactiveComponent.jsx',
+	ReactiveComponentPrivate: 'src/components/basic/ReactiveComponentPrivate.jsx',
 	SelectedFilters: 'src/components/basic/SelectedFilters.jsx',
 	SingleDropdownList: 'src/components/list/SingleDropdownList.jsx',
 	MultiDropdownList: 'src/components/list/MultiDropdownList.jsx',
@@ -96,7 +97,7 @@ export default {
 	plugins: [
 		json(),
 		vuePlugin({
-			preprocessStyles: true
+			preprocessStyles: true,
 		}),
 		postCSS(),
 		umd
