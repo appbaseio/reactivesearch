@@ -1382,8 +1382,7 @@ const SearchBox = (props) => {
 												);
 											})}
 
-											{showSuggestionsFooter
-												? <SuggestionsFooter /> : null}
+											{showSuggestionsFooter ? <SuggestionsFooter /> : null}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1469,6 +1468,7 @@ const SearchBox = (props) => {
 						{renderInputAddonBefore()}
 						<InputWrapper>
 							<Input
+								ref={_inputRef}
 								aria-label={props.componentId}
 								className={getClassName(props.innerClass, 'input') || null}
 								placeholder={props.placeholder}
