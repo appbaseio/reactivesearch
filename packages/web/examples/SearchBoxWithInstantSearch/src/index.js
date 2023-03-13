@@ -12,14 +12,13 @@ const Main = () => (
 		<div className="row">
 			<div className="col">
 				<SearchBox
-					title="SearchBox"
+					title="SearchBox with InstantSearch"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
 					autosuggest={false}
+					showFocusShortcutsIcon={false}
 				/>
-			</div>
-
-			<div className="col">
+				<br />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"

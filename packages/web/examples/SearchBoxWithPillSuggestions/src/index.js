@@ -20,7 +20,7 @@ const Main = () => {
 			<div className="row">
 				<div className="col">
 					<SearchBox
-						title="SearchBox"
+						title="SearchBox with pill suggestions"
 						defaultValue={'Free Guy'}
 						dataField={['original_title', 'original_title.search']}
 						componentId="MoviesSensor"
@@ -34,7 +34,7 @@ const Main = () => {
 							error,
 							data,
 							value,
-							downshiftProps: { isOpen, getItemProps },
+							downshiftProps: { getItemProps },
 						}) => {
 							if (loading) {
 								return <div>Fetching Suggestions.</div>;
@@ -46,7 +46,7 @@ const Main = () => {
 									</div>
 								);
 							}
-							return isOpen && Boolean(value.length) ? (
+							return Boolean(value.length) ? (
 								<div className="pill-wrapper">
 									{data.map((suggestion, index) => (
 										<button
@@ -63,9 +63,7 @@ const Main = () => {
 							) : null;
 						}}
 					/>
-				</div>
-
-				<div className="col">
+					<br />
 					<ReactiveList
 						componentId="SearchResult"
 						dataField="original_title"

@@ -15,6 +15,7 @@ const Main = () => (
 	>
 		<div className="row">
 			<div className="col">
+				{' '}
 				<SearchBox
 					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
@@ -37,15 +38,13 @@ const Main = () => (
 					enableRecentSuggestions
 					recentSuggestionsConfig={{
 						size: 5,
-						minHits: 5,
+						minHits: 2,
 						minChars: 3,
 						index: 'movies-demo-app', // further restrict the index to search on
 						sectionLabel: '<b>Recent suggestions 🙌🏻</b>',
 					}}
 				/>
-			</div>
-
-			<div className="col">
+				<br />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"

@@ -12,14 +12,12 @@ const Main = () => (
 		<div className="row">
 			<div className="col">
 				<SearchBox
-					title="SearchBox"
+					title="SearchBox with keyboard shortcuts"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
-					focusShortcuts={['SHIFT+Y']}
+					focusShortcuts={['⌘ + K']}
 				/>
-			</div>
-
-			<div className="col">
+				<br />
 				<ReactiveList
 					componentId="SearchResult"
 					dataField="original_title"
