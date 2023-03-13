@@ -15,7 +15,7 @@ const Main = () => (
 					title="SearchBox with keyboard shortcuts"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
-					focusShortcuts={['CMD + K']}
+					focusShortcuts={['⌘ + K']}
 				/>
 				<br />
 				<ReactiveList
