@@ -185,7 +185,6 @@ exports[`should not render histogram when showHistogram is set to false 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-15:focus {
@@ -530,7 +529,6 @@ exports[`should not render slider when ShowSlider is false 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-10:focus {
@@ -1271,7 +1269,6 @@ exports[`should render histogram when showHistogram is set to true 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-218:focus {
@@ -2244,7 +2241,6 @@ exports[`should render range labels 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-15:focus {
@@ -2607,7 +2603,6 @@ exports[`should render range with slider 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-15:focus {
@@ -2958,7 +2953,6 @@ exports[`should render title 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-12:focus {
@@ -3312,7 +3306,6 @@ exports[`should select default value 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-15:focus {

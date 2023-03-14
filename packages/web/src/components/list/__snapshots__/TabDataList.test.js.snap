@@ -897,7 +897,6 @@ exports[`should render with showRadio and showSearch 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1209,7 +1208,6 @@ exports[`should render with showRadio, showSearch and displayAsVertical 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {
@@ -1518,7 +1516,6 @@ exports[`should render with showSearch 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-4:focus {

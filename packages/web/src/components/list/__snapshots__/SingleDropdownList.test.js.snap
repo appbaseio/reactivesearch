@@ -640,7 +640,6 @@ exports[`should render search/count when showSearch/showCount are true 1`] = `
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  height: 100%;
 }
 
 .emotion-10:focus {
