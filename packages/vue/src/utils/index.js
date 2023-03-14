@@ -12,9 +12,6 @@ const {
 // import { storeKey } from '@appbaseio/reactivecore';
 
 export const connect = (...args) => connectToStore(...args);
-// connectToStore(...args, null, {
-//   storeKey,
-// });
 
 export const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
 
@@ -123,12 +120,15 @@ export const hasQuerySuggestionsRenderer = (_ref = {}) => {
  * @returns {string}
  */
 export const getCamelCase = (str = '') => {
+	const propsWhichRequirePascalCase = ['u-r-l-params']
 	const arr = str.split('-');
 	const capital = arr.map((item, index) =>
 		index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item,
 	);
 	// ^-- change here.
-	const capitalString = capital.join('');
+	let capitalString = capital.join('');
+	if(propsWhichRequirePascalCase.includes(str))
+		capitalString = capitalString[0].toUpperCase() + capitalString.substring(1)
 	return capitalString || '';
 };
 
