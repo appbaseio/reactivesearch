@@ -539,6 +539,14 @@ const SearchBox = (props) => {
 				const func = new Function(`return ${suggestion.subAction}`)();
 				func(suggestion, currentValue, customEvents);
 			}
+			if (suggestion.action === featuredSuggestionsActionTypes.SELECT) {
+				setValue(
+					suggestion.value,
+					true,
+					props,
+					isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+				);
+			}
 			// blur is important to close the dropdown
 			// on selecting one of featured suggestions
 			// else Downshift probably is focusing the dropdown
@@ -1767,14 +1775,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.searchBox}
 				mode={preferenceProps.testMode ? 'test' : ''}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
