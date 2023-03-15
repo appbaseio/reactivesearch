@@ -440,7 +440,8 @@ class DynamicRangeSlider extends Component {
 			);
 			if (props.range) {
 				// always keep the values within range
-				// props.range.start / (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000) is required
+				// props.range.start
+				// (props.queryFormat !== dateFormats.epoch_second ? 1 : 1000) is required
 				// since we need to convert the milliseconds value into seconds in case of epoch_second
 				normalizedValue = [
 					processedStart < props.range.start ? props.range.start : processedStart,
@@ -632,7 +633,12 @@ class DynamicRangeSlider extends Component {
 	}
 
 	render() {
-		if (!this.state.currentValue || !this.state.range || this.props.range.start === null) {
+		if (
+			!this.state.currentValue
+			|| !this.state.range
+			|| this.props.range === null
+			|| this.props.range.start === null
+		) {
 			return null;
 		}
 
@@ -787,6 +793,10 @@ const mapStateToProps = (state, props) => {
 	}
 	if (range) {
 		range = formatRange(range);
+		// eslint-disable-next-line no-restricted-globals
+		if (isNaN(range.start) && isNaN(range.end)) {
+			range = null;
+		}
 	}
 	return {
 		options,
