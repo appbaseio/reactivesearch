@@ -24,36 +24,14 @@ const Main = () => (
 			<div className="col">
 				<SearchBox
 					title="SearchBox"
-					defaultValue="Harry Potter"
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
-					highlight
+					highlight={false}
 					URLParams
-					enablePopularSuggestions
-					popularSuggestionsConfig={{
-						size: 3,
-						minChars: 2,
-						index: 'good-books-ds',
-					}}
-					enableRecentSuggestions
-					recentSuggestionsConfig={{
-						size: 3,
-						index: 'good-books-ds',
-						minChars: 4,
-					}}
-					size={5}
-					enablePredictiveSuggestions
-					index="good-books-ds"
-					onData={(props) => {
-						// eslint-disable-next-line
-						console.log(props);
-					}}
-					showClear
-					onValueSelected={(value, cause) => {
-						// eslint-disable-next-line
-						console.log(value, cause);
-					}}
-					renderNoSuggestion="No suggestions found."
+					searchboxId="select_action_test"
+					enableFeaturedSuggestions
+					size={10}
+					mode="tag"
 				/>
 			</div>
 
