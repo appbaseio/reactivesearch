@@ -419,6 +419,15 @@ const SearchBox = (props) => {
 				const func = new Function(`return ${suggestion.subAction}`)();
 				func(suggestion, currentValue, customEvents);
 			}
+			if (suggestion.action === featuredSuggestionsActionTypes.SELECT) {
+				setValue(
+					suggestion.value,
+					true,
+					props,
+					isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+				);
+				onValueSelected(suggestion.value, causes.SUGGESTION_SELECT);
+			}
 			// blur is important to close the dropdown
 			// on selecting one of featured suggestions
 			// else Downshift probably is focusing the dropdown
