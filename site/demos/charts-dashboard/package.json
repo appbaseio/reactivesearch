@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@appbaseio/reactivesearch": "4.0.0-rc.1",
+        "@appbaseio/reactivesearch": "4.0.0-rc.3",
         "antd": "^4.18.4",
         "prop-types": "^15.6.0",
         "react": "^18.2.0",
