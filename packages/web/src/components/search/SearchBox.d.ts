@@ -85,7 +85,7 @@ export interface SearchBoxProps extends CommonProps {
 	enableIndexSuggestions?: boolean;
 	enableFeaturedSuggestions?: boolean;
 	showSuggestionsFooter?: boolean;
-	renderSuggestionsFooter?: ()=>types.children;
+	renderSuggestionsFooter?: () => types.children;
 	applyStopwords?: boolean;
 	customStopwords?: string[];
 	enterButton?: boolean;
@@ -98,6 +98,8 @@ export interface SearchBoxProps extends CommonProps {
 		handleClear: (val: string) => void;
 		handleClearAll: () => void;
 	}) => any;
+	enableAI?: boolean;
+	AIConfig: types.AiConfig;
 }
 
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;
