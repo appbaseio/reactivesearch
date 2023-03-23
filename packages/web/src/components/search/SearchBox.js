@@ -765,11 +765,9 @@ const SearchBox = (props) => {
 				return props.icon;
 			}
 			if (props.iconURL) {
-				return (<img
-					style={{ maxHeight: '25px' }}
-					src={XSS(props.iconURL)}
-					alt="search-icon"
-				/>);
+				return (
+					<img style={{ maxHeight: '25px' }} src={XSS(props.iconURL)} alt="search-icon" />
+				);
 			}
 			return <SearchSvg />;
 		}
@@ -814,14 +812,11 @@ const SearchBox = (props) => {
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
-					{
-						showFocusShortcutsIcon
-						&& (
-							<ButtonIconWrapper onClick={e => focusSearchBox(e)}>
-								{renderShortcut()}
-							</ButtonIconWrapper>
-						)
-					}
+					{showFocusShortcutsIcon && (
+						<ButtonIconWrapper onClick={e => focusSearchBox(e)}>
+							{renderShortcut()}
+						</ButtonIconWrapper>
+					)}
 					{shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -840,20 +835,18 @@ const SearchBox = (props) => {
 						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
 					)}
 				</IconGroup>
-
 			</div>
 		);
 	};
-	const SuggestionsFooter = () => (
-		typeof renderSuggestionsFooter === 'function'
-	 		? renderSuggestionsFooter()
-			: ((
-				<AutosuggestFooterContainer>
-					<div>↑↓ Navigate</div>
-					<div>↩ Go</div>
-				</AutosuggestFooterContainer>))
-	);
-
+	const SuggestionsFooter = () =>
+		(typeof renderSuggestionsFooter === 'function' ? (
+			renderSuggestionsFooter()
+		) : (
+			<AutosuggestFooterContainer>
+				<div>↑↓ Navigate</div>
+				<div>↩ Go</div>
+			</AutosuggestFooterContainer>
+		));
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
@@ -1391,8 +1384,7 @@ const SearchBox = (props) => {
 												);
 											})}
 
-											{showSuggestionsFooter
-												? <SuggestionsFooter /> : null}
+											{showSuggestionsFooter ? <SuggestionsFooter /> : null}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1621,6 +1613,8 @@ SearchBox.propTypes = {
 	mode: oneOf(['select', 'tag']),
 	highlightConfig: types.componentObject,
 	renderSelectedTags: types.func,
+	enableAI: types.bool,
+	aiConfig: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1657,6 +1651,8 @@ SearchBox.defaultProps = {
 	enterButton: false,
 	type: 'search',
 	mode: 'select',
+	enableAI: false,
+	aiConfig: null,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1706,14 +1702,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.searchBox}
 				mode={preferenceProps.testMode ? 'test' : ''}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
