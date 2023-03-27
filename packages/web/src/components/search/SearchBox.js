@@ -67,13 +67,9 @@ import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
+import HOOKS from '../../utils/hooks';
 
-const useConstructor = (callBack = () => {}) => {
-	const [hasBeenCalled, setHasBeenCalled] = useState(false);
-	if (hasBeenCalled) return;
-	callBack();
-	setHasBeenCalled(true);
-};
+const { useConstructor } = HOOKS;
 
 const SearchBox = (props) => {
 	const {
