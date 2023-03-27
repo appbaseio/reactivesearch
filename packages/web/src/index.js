@@ -33,6 +33,7 @@ import RangeInput from './components/range/RangeInput';
 import RatingsFilter from './components/range/RatingsFilter';
 
 import SearchBox from './components/search/SearchBox';
+import AIAnswer from './components/search/AIAnswer';
 
 import ReactiveList from './components/result/ReactiveList';
 import ResultCard from './components/result/ResultCard';
@@ -88,4 +89,6 @@ export {
 	useAnalytics,
 	// server
 	getServerState,
+	// AI
+	AIAnswer,
 };
