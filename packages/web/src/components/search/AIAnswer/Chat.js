@@ -114,7 +114,7 @@ const Chat = (props) => {
 						{message.text}
 					</Message>
 				))}
-				{true && (
+				{props.isAIResponseLoading && (
 					<Message>
 						<TypingIndicator>
 							<TypingDot />
@@ -168,6 +168,9 @@ Chat.propTypes = {
 	getMicInstance: types.func,
 	innerClass: types.style,
 	placeholder: types.string,
+	AIResponse: types.componentObject,
+	isAIResponseLoading: types.bool,
+	AIResponseError: types.componentObject,
 };
 
 export default Chat;

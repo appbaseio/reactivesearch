@@ -1,16 +1,24 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'emotion-theming';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import { setQueryOptions, updateQuery } from '@appbaseio/reactivecore/lib/actions/query';
+import {
+	fetchAIResponse,
+	setQueryOptions,
+	updateQuery,
+} from '@appbaseio/reactivecore/lib/actions/query';
 import { setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import { getClassName, getQueryOptions } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	getClassName,
+	getObjectFromLocalStorage,
+	getQueryOptions,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 
 import { Chatbox } from '../../../styles/AIAnswer';
 import { connect } from '../../../utils';
@@ -81,14 +89,23 @@ const AIAnswer = (props) => {
 		},
 	]);
 
-	const handleSendMessage = (text) => {
-		setMessages([...messages, { text, isSender: true }]);
-	};
 	const internalComponent = useRef(null);
+	const AISessionId = useRef(null);
 	const options = getQueryOptions(props);
 
+	const handleSendMessage = (text) => {
+		setMessages([...messages, { text, isSender: true }]);
+		if (AISessionId.current) {
+			props.getAIResponse(AISessionId.current, props.componentId, text);
+		} else {
+			console.error(
+				`AISessionId for ${props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
+			);
+		}
+	};
 	useConstructor(() => {
 		internalComponent.current = getInternalComponentID(componentId);
+		AISessionId.current = getObjectFromLocalStorage('sessionIds')[props.componentId];
 
 		// execute is set to false at the time of mount
 		// to avoid firing (multiple) partial queries.
@@ -114,6 +131,10 @@ const AIAnswer = (props) => {
 		);
 	});
 
+	useEffect(() => {
+		console.log(props.AIResponse);
+	}, [props.AIResponse]);
+
 	return (
 		<Chatbox>
 			{' '}
@@ -135,6 +156,10 @@ const AIAnswer = (props) => {
 				getMicInstance={props.getMicInstance}
 				innerClass={props.innerClass}
 				placeholder={props.placeholder}
+				componentId={props.componentId}
+				isAIResponseLoading={props.isAIResponseLoading}
+				AIResponse={props.AIResponse}
+				AIResponseError={props.AIResponseError}
 			/>
 		</Chatbox>
 	);
@@ -160,6 +185,10 @@ AIAnswer.propTypes = {
 	innerClass: types.style,
 	placeholder: types.string,
 	title: types.title,
+	AIResponse: types.componentObject,
+	isAIResponseLoading: types.bool,
+	AIResponseError: types.componentObject,
+	getAIResponse: types.func.isRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -170,13 +199,22 @@ AIAnswer.defaultProps = {
 	iconPosition: 'left',
 };
 
-const mapStateToProps = (state, props) => ({});
+const mapStateToProps = (state, props) => ({
+	AIResponse:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
+	isAIResponseLoading:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+	AIResponseError:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+});
 
 const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	setQueryOptions: (component, props, execute) =>
 		dispatch(setQueryOptions(component, props, execute)),
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
+	getAIResponse: (sessionId, componentId, message) =>
+		dispatch(fetchAIResponse(sessionId, componentId, message)),
 });
 
 // Add componentType for SSR
@@ -194,7 +232,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 			<ComponentWrapper
 				{...preferenceProps}
 				internalComponent
-				componentType={componentTypes.searchBox}
+				componentType={componentTypes.AIAnswer}
 				mode={preferenceProps.testMode ? 'test' : ''}
 				{...(preferenceProps.AIConfig && preferenceProps.AIConfig.topDocsForContext
 					? { size: preferenceProps.AIConfig.topDocsForContext }
