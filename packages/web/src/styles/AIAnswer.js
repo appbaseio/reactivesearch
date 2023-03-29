@@ -41,6 +41,7 @@ export const Message = styled.div`
 	color: ${props =>
 		(props.isSender ? props.theme.colors.primaryTextColor : props.theme.colors.primaryColor)};
 	position: relative;
+	white-space: pre-wrap;
 `;
 
 export const MessageInputContainer = styled.form`
