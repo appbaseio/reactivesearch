@@ -21,7 +21,6 @@ export interface AIAnswerProps extends CommonProps {
 	clearIcon?: types.children;
 	showClear?: boolean;
 	showVoiceInput?: boolean;
-	enableAI?: boolean;
 	AIConfig: types.AiConfig;
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;

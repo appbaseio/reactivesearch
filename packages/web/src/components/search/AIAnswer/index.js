@@ -137,7 +137,6 @@ const AIAnswer = (props) => {
 
 	return (
 		<Chatbox>
-			{' '}
 			{props.title && (
 				<Title className={getClassName(props.innerClass, 'ai-title') || null}>
 					{props.title}

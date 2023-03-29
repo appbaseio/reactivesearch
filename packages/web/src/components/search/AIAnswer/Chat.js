@@ -214,8 +214,8 @@ const Chat = (props) => {
 Chat.propTypes = {
 	messages: PropTypes.arrayOf(
 		PropTypes.shape({
-			text: PropTypes.string.isRequired,
-			isSender: PropTypes.bool.isRequired,
+			content: PropTypes.string.isRequired,
+			role: PropTypes.bool.isRequired,
 		}),
 	).isRequired,
 	onSendMessage: PropTypes.func.isRequired,
