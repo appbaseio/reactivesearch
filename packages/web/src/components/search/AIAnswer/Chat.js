@@ -4,6 +4,7 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import PropTypes from 'prop-types';
 import xss from 'xss';
 import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+import { AI_ROLES } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	ChatContainer,
 	Message,
@@ -99,6 +100,23 @@ const Chat = (props) => {
 			</div>
 		);
 	};
+
+	const renderEnterButtonFunc = () => {
+		const { enterButton, renderEnterButton } = props;
+		if (!enterButton) {
+			return null;
+		}
+
+		if (renderEnterButton) {
+			return renderEnterButton;
+		}
+		return (
+			<SendButton primary type="submit">
+				Send
+			</SendButton>
+		);
+	};
+
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -109,10 +127,14 @@ const Chat = (props) => {
 		<ChatContainer>
 			<MessagesContainer ref={messagesContainerRef}>
 				{messages.map((message, index) => (
-					// eslint-disable-next-line react/no-array-index-key
-					<Message key={index} isSender={message.isSender}>
-						{message.text}
-					</Message>
+					<Message
+						// eslint-disable-next-line react/no-array-index-key
+						key={index}
+						isSender={message.role === AI_ROLES.USER}
+						dangerouslySetInnerHTML={{
+							__html: xss(message.content),
+						}}
+					/>
 				))}
 				{props.isAIResponseLoading && (
 					<Message>
@@ -141,9 +163,7 @@ const Chat = (props) => {
 						{renderIcons()}
 					</InputWrapper>
 				</InputGroup>
-				<SendButton primary type="submit">
-					Send
-				</SendButton>
+				{renderEnterButtonFunc()}
 			</MessageInputContainer>{' '}
 		</ChatContainer>
 	);
@@ -171,6 +191,8 @@ Chat.propTypes = {
 	AIResponse: types.componentObject,
 	isAIResponseLoading: types.bool,
 	AIResponseError: types.componentObject,
+	enterButton: types.bool,
+	renderEnterButton: types.title,
 };
 
 export default Chat;
