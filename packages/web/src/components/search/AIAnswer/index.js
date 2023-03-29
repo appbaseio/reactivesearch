@@ -55,9 +55,6 @@ const AIAnswer = (props) => {
 	};
 	useConstructor(() => {
 		internalComponent.current = getInternalComponentID(componentId);
-		AISessionId.current
-			= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
-				.sessionId || null;
 
 		// execute is set to false at the time of mount
 		// to avoid firing (multiple) partial queries.
@@ -85,6 +82,9 @@ const AIAnswer = (props) => {
 
 	useEffect(() => {
 		if (props.AIResponse) {
+			AISessionId.current
+				= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
+					.sessionId || null;
 			const { request, response } = props.AIResponse;
 
 			const finalMessages = [];
@@ -110,20 +110,17 @@ const AIAnswer = (props) => {
 		}
 	}, [props.AIResponse]);
 
-	useEffect(
-		() => () => {
-			if (props.clearSessionOnDestroy) {
-				// cleanup logic
-				// final Object to store in local storage cache
-				const finalCacheObj = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {};
-				// delete current component's cache
-				delete finalCacheObj[props.componentId];
-				// update local cache
-				setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, finalCacheObj);
-			}
-		},
-		[],
-	);
+	useEffect(() => () => {
+		if (props.clearSessionOnDestroy) {
+			// cleanup logic
+			// final Object to store in local storage cache
+			const finalCacheObj = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {};
+			// delete current component's cache
+			delete finalCacheObj[props.componentId];
+			// update local cache
+			setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, finalCacheObj);
+		}
+	}, []);
 
 	return (
 		<Chatbox>
