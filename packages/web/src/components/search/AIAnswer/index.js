@@ -16,7 +16,7 @@ import {
 	setQueryOptions,
 	updateQuery,
 } from '@appbaseio/reactivecore/lib/actions/query';
-import { setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
+import { setAIResponse, setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import {
 	getClassName,
@@ -62,7 +62,8 @@ const AIAnswer = (props) => {
 				AISessionId.current
 					= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
 						.sessionId || null;
-				if (AISessionId.current) { props.getAIResponse(AISessionId.current, props.componentId); }
+
+				props.updateAIResponse(props.componentId, localCache);
 			}
 		}
 		internalComponent.current = getInternalComponentID(componentId);
@@ -197,6 +198,7 @@ AIAnswer.propTypes = {
 	renderEnterButton: types.title,
 	showInput: types.bool,
 	clearSessionOnDestroy: types.bool,
+	updateAIResponse: types.func.isRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -227,6 +229,7 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	getAIResponse: (sessionId, componentId, message) =>
 		dispatch(fetchAIResponse(sessionId, componentId, message)),
+	updateAIResponse: (componentId, payload) => dispatch(setAIResponse(componentId, payload)),
 });
 
 // Add componentType for SSR
