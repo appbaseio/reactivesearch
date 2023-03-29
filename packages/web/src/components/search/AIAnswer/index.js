@@ -4,7 +4,11 @@ import { jsx } from '@emotion/core';
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'emotion-theming';
-import { AI_ROLES, componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import {
+	AI_LOCAL_CACHE_KEY,
+	AI_ROLES,
+	componentTypes,
+} from '@appbaseio/reactivecore/lib/utils/constants';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
@@ -18,6 +22,7 @@ import {
 	getClassName,
 	getObjectFromLocalStorage,
 	getQueryOptions,
+	setObjectInLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import { Chatbox } from '../../../styles/AIAnswer';
@@ -77,7 +82,6 @@ const AIAnswer = (props) => {
 	});
 
 	useEffect(() => {
-		console.log(props.AIResponse);
 		if (props.AIResponse) {
 			const { request, response } = props.AIResponse;
 
@@ -103,6 +107,23 @@ const AIAnswer = (props) => {
 			setMessages(finalMessages);
 		}
 	}, [props.AIResponse]);
+
+	useEffect(
+		() => () => {
+			if (props.clearSessionOnDestroy) {
+				// cleanup logic
+				// final Object to store in local storage cache
+				const finalCacheObj = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {};
+				// delete current component's cache
+				delete finalCacheObj[props.componentId];
+				// update local cache
+				setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, {
+					finalCacheObj,
+				});
+			}
+		},
+		[],
+	);
 
 	return (
 		<Chatbox>
@@ -164,6 +185,7 @@ AIAnswer.propTypes = {
 	enterButton: types.bool,
 	renderEnterButton: types.title,
 	showInput: types.bool,
+	clearSessionOnDestroy: types.bool,
 };
 
 AIAnswer.defaultProps = {
@@ -175,6 +197,7 @@ AIAnswer.defaultProps = {
 	enterButton: true,
 	renderEnterButton: null,
 	showInput: true,
+	clearSessionOnDestroy: true,
 };
 
 const mapStateToProps = (state, props) => ({
