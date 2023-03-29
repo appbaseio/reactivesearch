@@ -33,6 +33,9 @@ const Chat = (props) => {
 
 	const handleSendMessage = (e) => {
 		e.preventDefault();
+		if (props.isAIResponseLoading) {
+			return;
+		}
 		if (inputMessage.trim()) {
 			onSendMessage(inputMessage);
 			setInputMessage('');
@@ -101,20 +104,36 @@ const Chat = (props) => {
 		);
 	};
 
+	const onEnterButtonClick = (e) => {
+		handleSendMessage(e);
+	};
+
 	const renderEnterButtonFunc = () => {
 		const { enterButton, renderEnterButton } = props;
-		if (!enterButton) {
-			return null;
+		if (enterButton) {
+			const getEnterButtonMarkup = () => {
+				if (typeof renderEnterButton === 'function') {
+					return renderEnterButton(onEnterButtonClick);
+				}
+
+				return (
+					<SendButton
+						primary
+						type="submit"
+						tabIndex={0}
+						onClick={onEnterButtonClick}
+						onKeyPress={handleKeyPress}
+						className={`enter-btn ${getClassName(props.innerClass, 'ai-enter-button')}`}
+					>
+						Send
+					</SendButton>
+				);
+			};
+
+			return <div className="ai-enter-button-wrapper">{getEnterButtonMarkup()}</div>;
 		}
 
-		if (renderEnterButton) {
-			return renderEnterButton;
-		}
-		return (
-			<SendButton primary type="submit">
-				Send
-			</SendButton>
-		);
+		return null;
 	};
 
 	React.useEffect(() => {
@@ -160,6 +179,7 @@ const Chat = (props) => {
 								showIcon={props.showIcon}
 								iconPosition={props.iconPosition}
 								themePreset={props.themePreset}
+								disabled={props.isAIResponseLoading}
 							/>{' '}
 							{renderIcons()}
 						</InputWrapper>
