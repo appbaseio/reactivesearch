@@ -23,6 +23,7 @@ import {
 	getQueryOptions,
 	setObjectInLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 
 import { Chatbox } from '../../../styles/AIAnswer';
 import { connect } from '../../../utils';
@@ -31,7 +32,6 @@ import ComponentWrapper from '../../basic/ComponentWrapper';
 import HOOKS from '../../../utils/hooks';
 import Chat from './Chat';
 import Title from '../../../styles/Title';
-import { setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 
 const { useConstructor } = HOOKS;
 
@@ -110,6 +110,16 @@ const AIAnswer = (props) => {
 		}
 	}, [props.AIResponse]);
 
+	useEffect(() => {
+		if (props.onData) {
+			props.onData({
+				data: messages,
+				rawData: props.rawData,
+				loading: props.isAIResponseLoading,
+				error: props.AIResponseError,
+			});
+		}
+	}, [props.rawData, messages, props.isAIResponseLoading, props.AIResponseError]);
 	useEffect(
 		() => () => {
 			if (props.clearSessionOnDestroy) {
@@ -186,6 +196,7 @@ AIAnswer.propTypes = {
 	renderEnterButton: types.title,
 	showInput: types.bool,
 	clearSessionOnDestroy: types.bool,
+	rawData: types.rawData,
 };
 
 AIAnswer.defaultProps = {
@@ -207,6 +218,7 @@ const mapStateToProps = (state, props) => ({
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
 	AIResponseError:
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+	rawData: state.rawData[props.componentId],
 });
 
 const mapDispatchtoProps = dispatch => ({
