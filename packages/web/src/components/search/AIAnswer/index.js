@@ -120,7 +120,7 @@ const AIAnswer = (props) => {
 				themePreset={props.themePreset}
 				icon={props.icon}
 				iconURL={props.iconURL}
-				enableVoiceInput={props.enableVoiceInput}
+				showVoiceInput={props.showVoiceInput}
 				renderMic={props.renderMic}
 				getMicInstance={props.getMicInstance}
 				innerClass={props.innerClass}
@@ -131,6 +131,7 @@ const AIAnswer = (props) => {
 				AIResponseError={props.AIResponseError}
 				enterButton={props.enterButton}
 				renderEnterButton={props.renderEnterButton}
+				showInput={props.showInput}
 			/>
 		</Chatbox>
 	);
@@ -138,7 +139,7 @@ const AIAnswer = (props) => {
 
 AIAnswer.propTypes = {
 	componentId: types.string.isRequired,
-	enableVoiceInput: PropTypes.bool,
+	showVoiceInput: PropTypes.bool,
 	showIcon: PropTypes.bool,
 	onData: PropTypes.func.isRequired,
 	react: types.react,
@@ -162,16 +163,18 @@ AIAnswer.propTypes = {
 	getAIResponse: types.func.isRequired,
 	enterButton: types.bool,
 	renderEnterButton: types.title,
+	showInput: types.bool,
 };
 
 AIAnswer.defaultProps = {
 	placeholder: 'Ask a question',
-	enableVoiceInput: false,
+	showVoiceInput: false,
 	showIcon: true,
 	showVoiceSearch: false,
 	iconPosition: 'left',
 	enterButton: true,
 	renderEnterButton: null,
+	showInput: true,
 };
 
 const mapStateToProps = (state, props) => ({

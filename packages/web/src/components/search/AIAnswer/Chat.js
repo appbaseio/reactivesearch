@@ -78,12 +78,12 @@ const Chat = (props) => {
 	};
 	const renderIcons = () => {
 		const {
-			renderMic, getMicInstance, enableVoiceInput, iconPosition, innerClass,
+			renderMic, getMicInstance, showVoiceInput, iconPosition, innerClass,
 		} = props;
 		return (
 			<div>
 				<IconGroup groupPosition="right" positionType="absolute">
-					{shouldMicRender(enableVoiceInput) && (
+					{shouldMicRender(showVoiceInput) && (
 						<Mic
 							getInstance={getMicInstance}
 							render={renderMic}
@@ -146,25 +146,27 @@ const Chat = (props) => {
 					</Message>
 				)}
 			</MessagesContainer>
-			<MessageInputContainer onSubmit={handleSendMessage}>
-				<InputGroup isOpen={false}>
-					<InputWrapper>
-						<MessageInput
-							type="text"
-							placeholder={props.placeholder}
-							value={inputMessage}
-							onChange={handleMessageInputChange}
-							onKeyPress={handleKeyPress}
-							id={`${props.componentId}-ai-input`}
-							showIcon={props.showIcon}
-							iconPosition={props.iconPosition}
-							themePreset={props.themePreset}
-						/>{' '}
-						{renderIcons()}
-					</InputWrapper>
-				</InputGroup>
-				{renderEnterButtonFunc()}
-			</MessageInputContainer>{' '}
+			{props.showInput && (
+				<MessageInputContainer onSubmit={handleSendMessage}>
+					<InputGroup isOpen={false}>
+						<InputWrapper>
+							<MessageInput
+								type="text"
+								placeholder={props.placeholder}
+								value={inputMessage}
+								onChange={handleMessageInputChange}
+								onKeyPress={handleKeyPress}
+								id={`${props.componentId}-ai-input`}
+								showIcon={props.showIcon}
+								iconPosition={props.iconPosition}
+								themePreset={props.themePreset}
+							/>{' '}
+							{renderIcons()}
+						</InputWrapper>
+					</InputGroup>
+					{renderEnterButtonFunc()}
+				</MessageInputContainer>
+			)}{' '}
 		</ChatContainer>
 	);
 };
@@ -183,7 +185,7 @@ Chat.propTypes = {
 	themePreset: types.themePreset,
 	icon: types.children,
 	iconURL: types.string,
-	enableVoiceInput: types.bool,
+	showVoiceInput: types.bool,
 	renderMic: types.func,
 	getMicInstance: types.func,
 	innerClass: types.style,
@@ -193,6 +195,7 @@ Chat.propTypes = {
 	AIResponseError: types.componentObject,
 	enterButton: types.bool,
 	renderEnterButton: types.title,
+	showInput: types.bool,
 };
 
 export default Chat;
