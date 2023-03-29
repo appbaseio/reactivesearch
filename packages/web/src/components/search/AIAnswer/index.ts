@@ -9,9 +9,9 @@ export interface AIAnswerProps extends CommonProps {
 	renderMic?: (...args: any[]) => any;
 	icon?: types.children;
 	iconURL?: string;
+	placeholder?: string;
 	iconPosition?: types.iconPosition;
 	onData?: (...args: any[]) => any;
-	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
 	render?: (data: any) => any;
@@ -20,8 +20,11 @@ export interface AIAnswerProps extends CommonProps {
 	loader?: types.title;
 	clearIcon?: types.children;
 	showClear?: boolean;
-	showVoiceSearch?: boolean;
+	showVoiceInput?: boolean;
+	enableAI?: boolean;
 	AIConfig: types.AiConfig;
+	enterButton?: boolean;
+	renderEnterButton?: (onClick: any) => types.children;
 }
 
 declare const AIAnswer: React.ComponentClass<AIAnswerProps>;
