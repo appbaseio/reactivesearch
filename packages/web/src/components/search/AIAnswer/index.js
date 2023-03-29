@@ -55,7 +55,9 @@ const AIAnswer = (props) => {
 	};
 	useConstructor(() => {
 		internalComponent.current = getInternalComponentID(componentId);
-		AISessionId.current = getObjectFromLocalStorage('sessionIds')[props.componentId];
+		AISessionId.current
+			= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
+				.sessionId || null;
 
 		// execute is set to false at the time of mount
 		// to avoid firing (multiple) partial queries.
@@ -117,9 +119,7 @@ const AIAnswer = (props) => {
 				// delete current component's cache
 				delete finalCacheObj[props.componentId];
 				// update local cache
-				setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, {
-					finalCacheObj,
-				});
+				setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, finalCacheObj);
 			}
 		},
 		[],
