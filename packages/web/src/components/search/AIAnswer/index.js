@@ -54,6 +54,17 @@ const AIAnswer = (props) => {
 		}
 	};
 	useConstructor(() => {
+		if (!props.clearSessionOnDestroy) {
+			const localCache = (getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+				props.componentId
+			];
+			if (localCache) {
+				AISessionId.current
+					= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
+						.sessionId || null;
+				if (AISessionId.current) { props.getAIResponse(AISessionId.current, props.componentId); }
+			}
+		}
 		internalComponent.current = getInternalComponentID(componentId);
 
 		// execute is set to false at the time of mount
@@ -110,17 +121,20 @@ const AIAnswer = (props) => {
 		}
 	}, [props.AIResponse]);
 
-	useEffect(() => () => {
-		if (props.clearSessionOnDestroy) {
-			// cleanup logic
-			// final Object to store in local storage cache
-			const finalCacheObj = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {};
-			// delete current component's cache
-			delete finalCacheObj[props.componentId];
-			// update local cache
-			setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, finalCacheObj);
-		}
-	}, []);
+	useEffect(
+		() => () => {
+			if (props.clearSessionOnDestroy) {
+				// cleanup logic
+				// final Object to store in local storage cache
+				const finalCacheObj = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {};
+				// delete current component's cache
+				delete finalCacheObj[props.componentId];
+				// update local cache
+				setObjectInLocalStorage(AI_LOCAL_CACHE_KEY, finalCacheObj);
+			}
+		},
+		[],
+	);
 
 	return (
 		<Chatbox>
