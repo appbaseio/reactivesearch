@@ -3,7 +3,7 @@ import { isEqual, transformRequestUsingEndpoint } from '@appbaseio/reactivecore/
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
-import AppbaseAnalytics from '@appbaseio/analytics'
+import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
 
 import Provider from '../Provider';
@@ -38,7 +38,6 @@ const ReactiveBase = {
 		enableAppbase: VueTypes.bool.def(false),
 		credentials: types.string,
 		headers: types.headers,
-		queryParams: types.string,
 		theme: VueTypes.object.def({}),
 		themePreset: VueTypes.string.def('light'),
 		type: types.string,
@@ -207,7 +206,8 @@ const ReactiveBase = {
 				credentials: appbaseRef.credentials,
 				// When endpoint prop is used index is not defined, so we use _default
 				index: appbaseRef.app || '_default',
-				globalCustomEvents: this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
+				globalCustomEvents:
+					this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
 			};
 
 			try {
@@ -217,10 +217,13 @@ const ReactiveBase = {
 						/\/\/(.*?)\/.*/,
 						'//$1',
 					);
-					const headerCredentials = this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
-					analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
+					const headerCredentials
+						= this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
+					analyticsInitConfig.credentials
+						= headerCredentials && headerCredentials.replace('Basic ', '');
 					// Decode the credentials
-					analyticsInitConfig.credentials = analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
+					analyticsInitConfig.credentials
+						= analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 				}
 			} catch (e) {
 				console.error('Endpoint not set correctly for analytics');

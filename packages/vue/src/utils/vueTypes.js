@@ -159,6 +159,7 @@ const types = {
 		useCache: VueTypes.bool,
 		customEvents: VueTypes.object,
 		enableTelemetry: VueTypes.bool.def(true),
+		queryParams: VueTypes.object,
 	}).def({}),
 	mongodb: VueTypes.shape({
 		db: VueTypes.string,

@@ -163,17 +163,6 @@
     tocbot "^4.18.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@10.0.0-alpha.3":
-  version "10.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.3.tgz#21c7db36664acf9a652238ea1df7a6599edca531"
-  integrity sha512-LievnS/UYyN4j6VZ2eaNkwm3VwfYM1zLttJ92ydyN2S71QXqmLjZtx941zLCILdzYXVzd3sV+YaOf0a+E/mmEQ==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivemaps@4.0.0-rc":
   version "4.0.0-rc"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-4.0.0-rc.tgz#f410820e3a9e38595e4e9f434cb95bfd4ca78d9f"
@@ -190,32 +179,6 @@
     ngeohash "^0.6.3"
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
-
-"@appbaseio/reactivesearch@4.0.0-rc.1":
-  version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.1.tgz#4eb81a5a097d8e33ea3cee8eb7b847d2afaa3a18"
-  integrity sha512-qIHrGlBrc1hvI1oshNVNfFIyARVdoWrITtfl6mzOfwNrhFwMHcR0SxtoV5fcWY0MGCTiVv90T3QPibBQ45HG4Q==
-  dependencies:
-    "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.3"
-    "@appbaseio/rheostat" "^1.0.0-alpha.15"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^5.2.0"
-    cross-env "^5.2.0"
-    dayjs "^1.11.7"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    url-search-params-polyfill "^7.0.0"
-    xss "^1.0.11"
 
 "@appbaseio/rheostat@^1.0.0-alpha.15":
   version "1.0.0-alpha.15"
