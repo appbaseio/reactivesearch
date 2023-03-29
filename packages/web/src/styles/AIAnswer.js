@@ -25,6 +25,7 @@ export const MessagesContainer = styled.div`
 	padding: 10px;
 	display: flex;
 	flex-direction: column;
+	min-height: 100px;
 `;
 
 export const Message = styled.div`
