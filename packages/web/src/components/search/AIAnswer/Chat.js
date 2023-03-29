@@ -3,7 +3,11 @@ import React from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import PropTypes from 'prop-types';
 import xss from 'xss';
-import { getClassName } from '@appbaseio/reactivecore/lib/utils/helper';
+import {
+	getClassName,
+	hasCustomRenderer,
+	getComponent as getComponentUtilFunc,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import { AI_ROLES } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	ChatContainer,
@@ -136,6 +140,17 @@ const Chat = (props) => {
 		return null;
 	};
 
+	const getComponent = () => {
+		const { AIResponseError, isAIResponseLoading, rawData } = props;
+
+		const data = {
+			error: AIResponseError,
+			loading: isAIResponseLoading,
+			data: messages,
+			rawData,
+		};
+		return getComponentUtilFunc(data, props);
+	};
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -144,27 +159,32 @@ const Chat = (props) => {
 
 	return (
 		<ChatContainer>
-			<MessagesContainer ref={messagesContainerRef}>
-				{messages.map((message, index) => (
-					<Message
-						// eslint-disable-next-line react/no-array-index-key
-						key={index}
-						isSender={message.role === AI_ROLES.USER}
-						dangerouslySetInnerHTML={{
-							__html: xss(message.content),
-						}}
-					/>
-				))}
-				{props.isAIResponseLoading && (
-					<Message>
-						<TypingIndicator>
-							<TypingDot />
-							<TypingDot />
-							<TypingDot />
-						</TypingIndicator>
-					</Message>
-				)}
-			</MessagesContainer>
+			{/* custom render */}
+			{hasCustomRenderer(props) && getComponent()}
+			{/* Default render */}
+			{!hasCustomRenderer(props) && (
+				<MessagesContainer ref={messagesContainerRef}>
+					{messages.map((message, index) => (
+						<Message
+							// eslint-disable-next-line react/no-array-index-key
+							key={index}
+							isSender={message.role === AI_ROLES.USER}
+							dangerouslySetInnerHTML={{
+								__html: xss(message.content),
+							}}
+						/>
+					))}
+					{props.isAIResponseLoading && (
+						<Message>
+							<TypingIndicator>
+								<TypingDot />
+								<TypingDot />
+								<TypingDot />
+							</TypingIndicator>
+						</Message>
+					)}
+				</MessagesContainer>
+			)}
 			{props.showInput && (
 				<MessageInputContainer onSubmit={handleSendMessage}>
 					<InputGroup isOpen={false}>
@@ -216,6 +236,8 @@ Chat.propTypes = {
 	enterButton: types.bool,
 	renderEnterButton: types.title,
 	showInput: types.bool,
+	render: types.func,
+	rawData: types.rawData,
 };
 
 export default Chat;

@@ -163,6 +163,8 @@ const AIAnswer = (props) => {
 				enterButton={props.enterButton}
 				renderEnterButton={props.renderEnterButton}
 				showInput={props.showInput}
+				render={props.render}
+				rawData={props.rawData}
 			/>
 		</Chatbox>
 	);
@@ -197,6 +199,7 @@ AIAnswer.propTypes = {
 	showInput: types.bool,
 	clearSessionOnDestroy: types.bool,
 	rawData: types.rawData,
+	render: types.func,
 };
 
 AIAnswer.defaultProps = {
