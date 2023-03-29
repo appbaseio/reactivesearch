@@ -16,7 +16,6 @@ import {
 	setQueryOptions,
 	updateQuery,
 } from '@appbaseio/reactivecore/lib/actions/query';
-import { setAIResponse, setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import {
 	getClassName,
@@ -32,6 +31,7 @@ import ComponentWrapper from '../../basic/ComponentWrapper';
 import HOOKS from '../../../utils/hooks';
 import Chat from './Chat';
 import Title from '../../../styles/Title';
+import { setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 
 const { useConstructor } = HOOKS;
 
@@ -54,18 +54,6 @@ const AIAnswer = (props) => {
 		}
 	};
 	useConstructor(() => {
-		if (!props.clearSessionOnDestroy) {
-			const localCache = (getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
-				props.componentId
-			];
-			if (localCache) {
-				AISessionId.current
-					= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
-						.sessionId || null;
-
-				props.updateAIResponse(props.componentId, localCache);
-			}
-		}
 		internalComponent.current = getInternalComponentID(componentId);
 
 		// execute is set to false at the time of mount
@@ -198,7 +186,6 @@ AIAnswer.propTypes = {
 	renderEnterButton: types.title,
 	showInput: types.bool,
 	clearSessionOnDestroy: types.bool,
-	updateAIResponse: types.func.isRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -229,7 +216,6 @@ const mapDispatchtoProps = dispatch => ({
 	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	getAIResponse: (sessionId, componentId, message) =>
 		dispatch(fetchAIResponse(sessionId, componentId, message)),
-	updateAIResponse: (componentId, payload) => dispatch(setAIResponse(componentId, payload)),
 });
 
 // Add componentType for SSR
