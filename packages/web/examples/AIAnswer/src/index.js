@@ -36,7 +36,6 @@ const Main = () => (
 					showVoiceInput
 					showIcon
 					react={{ and: 'BookSensor' }}
-					enableAI
 					AIConfig={{
 						docTemplate:
 							'${source.text} is ${source.summary} with url as ${source.url}',

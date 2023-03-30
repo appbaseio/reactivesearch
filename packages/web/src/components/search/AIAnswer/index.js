@@ -251,6 +251,7 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				{...preferenceProps}
 				internalComponent
 				componentType={componentTypes.AIAnswer}
+				enableAI
 				mode={preferenceProps.testMode ? 'test' : ''}
 				{...(preferenceProps.AIConfig && preferenceProps.AIConfig.topDocsForContext
 					? { size: preferenceProps.AIConfig.topDocsForContext }
