@@ -18,8 +18,6 @@ export interface AIAnswerProps extends CommonProps {
 	renderError?: types.title;
 	showIcon?: boolean;
 	loader?: types.title;
-	clearIcon?: types.children;
-	showClear?: boolean;
 	showInput?: boolean;
 	showVoiceInput?: boolean;
 	AIConfig: types.AiConfig;
