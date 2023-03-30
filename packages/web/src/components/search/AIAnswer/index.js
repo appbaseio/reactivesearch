@@ -165,6 +165,7 @@ const AIAnswer = (props) => {
 				render={props.render}
 				rawData={props.rawData}
 				theme={props.theme}
+				renderError={props.renderError}
 			/>
 		</Chatbox>
 	);
@@ -200,6 +201,8 @@ AIAnswer.propTypes = {
 	clearSessionOnDestroy: types.bool,
 	rawData: types.rawData,
 	render: types.func,
+	onError: types.func,
+	renderError: types.title,
 };
 
 AIAnswer.defaultProps = {

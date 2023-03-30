@@ -7,6 +7,7 @@ import {
 	getClassName,
 	hasCustomRenderer,
 	getComponent as getComponentUtilFunc,
+	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { AI_ROLES } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
@@ -151,6 +152,22 @@ const Chat = (props) => {
 		};
 		return getComponentUtilFunc(data, props);
 	};
+
+	const renderErrorEle = () => {
+		const { AIResponseError, renderError, isAIResponseLoading } = props;
+		if (true || (AIResponseError && renderError && !isAIResponseLoading)) {
+			return (
+				<div
+					className={`--ai-answer-error-container ${
+						getClassName(props.innerClass, 'ai-error') || ''
+					}`}
+				>
+					{isFunction(renderError) ? renderError(AIResponseError) : renderError}
+				</div>
+			);
+		}
+		return null;
+	};
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -178,10 +195,17 @@ const Chat = (props) => {
 							}}
 							themePreset={props.themePreset}
 							theme={props.theme}
+							className={`--ai-answer-message ${
+								getClassName(props.innerClass, 'ai-message') || ''
+							}`}
 						/>
 					))}
 					{props.isAIResponseLoading && (
-						<Message>
+						<Message
+							className={`--ai-answer-message ${
+								getClassName(props.innerClass, 'ai-message') || null
+							}`}
+						>
 							<TypingIndicator>
 								<TypingDot />
 								<TypingDot />
@@ -191,8 +215,12 @@ const Chat = (props) => {
 					)}
 				</MessagesContainer>
 			)}
+			{renderErrorEle()}
 			{props.showInput && (
-				<MessageInputContainer onSubmit={handleSendMessage}>
+				<MessageInputContainer
+					className="--ai-input-container"
+					onSubmit={handleSendMessage}
+				>
 					<InputGroup isOpen={false}>
 						<InputWrapper>
 							<MessageInput
@@ -206,6 +234,7 @@ const Chat = (props) => {
 								iconPosition={props.iconPosition}
 								themePreset={props.themePreset}
 								disabled={props.isAIResponseLoading}
+								className={getClassName(props.innerClass, 'ai-input') || null}
 							/>{' '}
 							{renderIcons()}
 						</InputWrapper>
@@ -245,6 +274,7 @@ Chat.propTypes = {
 	render: types.func,
 	rawData: types.rawData,
 	theme: types.style,
+	renderError: types.title,
 };
 
 export default Chat;

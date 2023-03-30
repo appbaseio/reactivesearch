@@ -19,6 +19,10 @@ export const ChatContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+
+	.--ai-answer-error-container {
+		text-align: center;
+	}
 `;
 
 export const MessagesContainer = styled.div`
@@ -33,9 +37,8 @@ export const MessagesContainer = styled.div`
 `;
 
 export const Message = styled.div`
-	background-color: ${props => (props.isSender
-	? props.theme.colors.primaryColor
-	: props.theme.colors.primaryTextColor)};
+	background-color: ${props =>
+	(props.isSender ? props.theme.colors.primaryColor : props.theme.colors.primaryTextColor)};
 	padding: 10px;
 	border-radius: 7px;
 	margin-bottom: 10px;
