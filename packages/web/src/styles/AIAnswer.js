@@ -12,6 +12,8 @@ export const Chatbox = styled.div`
 	box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
 	border-radius: 6px;
 	margin-bottom: 20px;
+	background-color: ${props =>
+	(props.theme && props.theme.colors ? props.theme.colors.backgroundColor : '#fff')};
 `;
 export const ChatContainer = styled.div`
 	display: flex;
@@ -21,16 +23,19 @@ export const ChatContainer = styled.div`
 
 export const MessagesContainer = styled.div`
 	max-height: 400px;
-	overflow-y: scroll;
+    overflow-y: auto;
 	padding: 10px;
 	display: flex;
 	flex-direction: column;
 	min-height: 100px;
+
+}};
 `;
 
 export const Message = styled.div`
-	background-color: ${props =>
-	(props.isSender ? props.theme.colors.primaryColor : props.theme.colors.primaryTextColor)};
+	background-color: ${props => (props.isSender
+	? props.theme.colors.primaryColor
+	: props.theme.colors.primaryTextColor)};
 	padding: 10px;
 	border-radius: 7px;
 	margin-bottom: 10px;

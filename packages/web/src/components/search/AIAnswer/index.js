@@ -164,6 +164,7 @@ const AIAnswer = (props) => {
 				showInput={props.showInput}
 				render={props.render}
 				rawData={props.rawData}
+				theme={props.theme}
 			/>
 		</Chatbox>
 	);
@@ -173,7 +174,7 @@ AIAnswer.propTypes = {
 	componentId: types.string.isRequired,
 	showVoiceInput: PropTypes.bool,
 	showIcon: PropTypes.bool,
-	onData: PropTypes.func.isRequired,
+	onData: types.func,
 	react: types.react,
 	AIConfig: types.AIConfig,
 	setQueryOptions: types.funcRequired,
@@ -181,6 +182,7 @@ AIAnswer.propTypes = {
 	setDefaultQuery: types.funcRequired,
 	iconPosition: types.iconPosition,
 	themePreset: types.themePreset,
+	theme: types.style,
 	icon: types.children,
 	iconURL: types.string,
 	showVoiceSearch: types.bool,
@@ -221,6 +223,7 @@ const mapStateToProps = (state, props) => ({
 	AIResponseError:
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 	rawData: state.rawData[props.componentId],
+	themePreset: state.config.themePreset,
 });
 
 const mapDispatchtoProps = dispatch => ({

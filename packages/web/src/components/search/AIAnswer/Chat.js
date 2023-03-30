@@ -163,7 +163,11 @@ const Chat = (props) => {
 			{hasCustomRenderer(props) && getComponent()}
 			{/* Default render */}
 			{!hasCustomRenderer(props) && (
-				<MessagesContainer ref={messagesContainerRef}>
+				<MessagesContainer
+					themePreset={props.themePreset}
+					theme={props.theme}
+					ref={messagesContainerRef}
+				>
 					{messages.map((message, index) => (
 						<Message
 							// eslint-disable-next-line react/no-array-index-key
@@ -172,6 +176,8 @@ const Chat = (props) => {
 							dangerouslySetInnerHTML={{
 								__html: xss(message.content),
 							}}
+							themePreset={props.themePreset}
+							theme={props.theme}
 						/>
 					))}
 					{props.isAIResponseLoading && (
@@ -238,6 +244,7 @@ Chat.propTypes = {
 	showInput: types.bool,
 	render: types.func,
 	rawData: types.rawData,
+	theme: types.style,
 };
 
 export default Chat;
