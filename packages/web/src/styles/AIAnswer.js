@@ -38,7 +38,13 @@ export const MessagesContainer = styled.div`
 
 export const Message = styled.div`
 	background-color: ${props =>
-	(props.isSender ? props.theme.colors.primaryColor : props.theme.colors.primaryTextColor)};
+// eslint-disable-next-line no-nested-ternary
+	(!props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryColor
+			: props.theme.colors.borderColor
+		: props.theme.colors.backgroundColor)};
+
 	padding: 10px;
 	border-radius: 7px;
 	margin-bottom: 10px;
@@ -47,7 +53,12 @@ export const Message = styled.div`
 	display: inline-block;
 	border: 1px solid;
 	color: ${props =>
-		(props.isSender ? props.theme.colors.primaryTextColor : props.theme.colors.primaryColor)};
+		// eslint-disable-next-line no-nested-ternary
+			(!props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.textColor)};
 	position: relative;
 	white-space: pre-wrap;
 `;
@@ -63,6 +74,19 @@ export const MessageInput = styled(Input)`
 	width: 100%;
 	border-radius: 5px;
 	border: 1px solid #ccc;
+	color: ${props => props.theme.colors.textColor};
+
+	::placeholder {
+		color: ${props => props.theme.colors.textColor};
+	}
+
+	:-ms-input-placeholder {
+		color: ${props => props.theme.colors.textColor};
+	}
+
+	::-ms-input-placeholder {
+		color: ${props => props.theme.colors.textColor};
+	}
 `;
 
 export const SendButton = styled(Button)`
@@ -97,7 +121,10 @@ export const TypingIndicator = styled.div`
 export const TypingDot = styled.div`
 	width: 6px;
 	height: 6px;
-	background-color: #333;
+	background-color: ${props =>
+	(props.themePreset !== 'dark'
+		? props.theme.colors.primaryTextColor
+		: props.theme.colors.textColor)};
 	border-radius: 50%;
 	margin: 0 2px;
 	animation: ${typingDots} 1s infinite;

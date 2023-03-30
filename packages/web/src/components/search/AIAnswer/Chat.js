@@ -155,7 +155,7 @@ const Chat = (props) => {
 
 	const renderErrorEle = () => {
 		const { AIResponseError, renderError, isAIResponseLoading } = props;
-		if (true || (AIResponseError && renderError && !isAIResponseLoading)) {
+		if (AIResponseError && renderError && !isAIResponseLoading) {
 			return (
 				<div
 					className={`--ai-answer-error-container ${
@@ -202,14 +202,17 @@ const Chat = (props) => {
 					))}
 					{props.isAIResponseLoading && (
 						<Message
+							themePreset={props.themePreset}
+							theme={props.theme}
+							isSender={false}
 							className={`--ai-answer-message ${
 								getClassName(props.innerClass, 'ai-message') || null
 							}`}
 						>
 							<TypingIndicator>
-								<TypingDot />
-								<TypingDot />
-								<TypingDot />
+								<TypingDot themePreset={props.themePreset} />
+								<TypingDot themePreset={props.themePreset} />
+								<TypingDot themePreset={props.themePreset} />
 							</TypingIndicator>
 						</Message>
 					)}
