@@ -29,6 +29,7 @@ const Main = () => (
 					URLParams
 					enterButton
 					highlight={false}
+					defaultValue="Grasshopper Jungle"
 				/>
 				<AIAnswer
 					componentId="ai-answer"
@@ -42,12 +43,11 @@ const Main = () => (
 						queryTemplate: 'Answer the following: ${value}',
 						topDocsForContext: 7,
 					}}
-					themePreset="light"
-					title={<b>AI Chatbox</b>}
+					title={<b>AI Chatbox 🤩</b>}
 					enterButton={true}
-					// onData={(param) => {
-					// 	console.log('param', param);
-					// }}
+					onData={(param) => {
+						console.log('param', param);
+					}}
 					// render={({ loading, data, error, rawData }) => {
 					// 	if (loading) {
 					// 		return 'loading...';
