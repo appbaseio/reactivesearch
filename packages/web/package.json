@@ -37,8 +37,8 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/reactivecore": "10.0.0-alpha.4",
 		"@appbaseio/analytics": "^1.1.1",
+		"@appbaseio/reactivecore": "10.0.0-alpha.4",
 		"@appbaseio/rheostat": "^1.0.0-alpha.15",
 		"@emotion/core": "^10.0.28",
 		"@emotion/styled": "^10.0.27",
@@ -56,7 +56,8 @@
 		"react-day-picker": "^7.0.5",
 		"react-redux": "^6.0.1",
 		"url-search-params-polyfill": "^7.0.0",
-		"xss": "^1.0.11"
+		"xss": "^1.0.11",
+		"remarkable": "^2.0.1"
 	},
 	"peerDependencies": {
 		"react": ">=15",
