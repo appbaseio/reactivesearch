@@ -19,7 +19,7 @@ const Main = () => (
 			recordAnalytics: false,
 			userId: 'jon',
 		}}
-		themePreset="dark"
+		themePreset="light"
 	>
 		<div className="row">
 			<div className="col">
