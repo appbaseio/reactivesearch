@@ -51,7 +51,7 @@ export const TypingIndicator = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 5px;
+	margin: 5px !important;
 `;
 
 export const TypingDot = styled.div`
@@ -62,7 +62,7 @@ export const TypingDot = styled.div`
 		? props.theme.colors.primaryTextColor
 		: props.theme.colors.textColor)};
 	border-radius: 50%;
-	margin: 0 2px;
+	margin: 0 2px !important;
 	animation: ${typingDots} 1s infinite;
 	&:nth-child(2) {
 		animation-delay: 0.2s;
@@ -204,7 +204,10 @@ export const Message = styled.div`
 	}
 	pre,
 	code {
-		background: ${props => props.theme.colors.borderColor};
+		background: ${props =>
+					(props.themePreset !== 'dark'
+						? props.theme.colors.borderColor
+						: props.theme.colors.backgroundColor)};
 		padding: 0.6em 0.4em;
 	}
 
@@ -212,12 +215,12 @@ export const Message = styled.div`
 		line-height: normal;
 
 		color: ${props =>
-				// eslint-disable-next-line no-nested-ternary
-					(!props.isSender
-						? props.themePreset !== 'dark'
-							? props.theme.colors.primaryTextColor
-							: props.theme.colors.textColor
-						: props.theme.colors.textColor)};
+						// eslint-disable-next-line no-nested-ternary
+							(!props.isSender
+								? props.themePreset !== 'dark'
+									? props.theme.colors.primaryTextColor
+									: props.theme.colors.textColor
+								: props.theme.colors.textColor)};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
