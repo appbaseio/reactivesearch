@@ -35,6 +35,42 @@ export const MessagesContainer = styled.div`
 
 }};
 `;
+const typingDots = keyframes`
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-70%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+`;
+
+export const TypingIndicator = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 5px;
+`;
+
+export const TypingDot = styled.div`
+	width: 6px;
+	height: 6px;
+	background-color: ${props =>
+	(props.themePreset !== 'dark'
+		? props.theme.colors.primaryTextColor
+		: props.theme.colors.textColor)};
+	border-radius: 50%;
+	margin: 0 2px;
+	animation: ${typingDots} 1s infinite;
+	&:nth-child(2) {
+		animation-delay: 0.2s;
+	}
+	&:nth-child(3) {
+		animation-delay: 0.4s;
+	}
+`;
 
 export const Message = styled.div`
 	background-color: ${props =>
@@ -60,7 +96,132 @@ export const Message = styled.div`
 					: props.theme.colors.textColor
 				: props.theme.colors.textColor)};
 	position: relative;
-	white-space: pre-wrap;
+	html,
+	body,
+	div,
+	span,
+	applet,
+	object,
+	iframe,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	blockquote,
+	pre,
+	a,
+	abbr,
+	acronym,
+	address,
+	big,
+	cite,
+	code,
+	del,
+	dfn,
+	em,
+	img,
+	ins,
+	kbd,
+	q,
+	s,
+	samp,
+	small,
+	strike,
+	strong,
+	sub,
+	sup,
+	tt,
+	var,
+	b,
+	u,
+	i,
+	center,
+	dl,
+	dt,
+	dd,
+	ol,
+	ul,
+	li,
+	fieldset,
+	form,
+	label,
+	legend,
+	table,
+	caption,
+	tbody,
+	tfoot,
+	thead,
+	tr,
+	th,
+	td,
+	article,
+	aside,
+	canvas,
+	details,
+	embed,
+	figure,
+	figcaption,
+	footer,
+	header,
+	hgroup,
+	menu,
+	nav,
+	output,
+	ruby,
+	section,
+	summary,
+	time,
+	mark,
+	audio,
+	video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
+	pre {
+		margin: 10px auto;
+	}
+	table {
+		margin: 10px auto;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	tr {
+		border-bottom: 1px solid #ccc;
+	}
+	th,
+	td {
+		text-align: left;
+		padding: 4px;
+		border: 1px solid;
+		border-collapse: collapse;
+	}
+	pre,
+	code {
+		background: ${props => props.theme.colors.borderColor};
+		padding: 0.6em 0.4em;
+	}
+
+	code {
+		line-height: normal;
+
+		color: ${props =>
+				// eslint-disable-next-line no-nested-ternary
+					(!props.isSender
+						? props.themePreset !== 'dark'
+							? props.theme.colors.primaryTextColor
+							: props.theme.colors.textColor
+						: props.theme.colors.textColor)};
+		border-radius: 3px;
+		font-size: 85%;
+		padding: 0.2em 0.4em;
+	}
 `;
 
 export const MessageInputContainer = styled.form`
@@ -98,40 +259,4 @@ export const SendButton = styled(Button)`
 	outline: none;
 	padding: 10px;
 	text-align: center;
-`;
-const typingDots = keyframes`
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-70%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-`;
-
-export const TypingIndicator = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 5px;
-`;
-
-export const TypingDot = styled.div`
-	width: 6px;
-	height: 6px;
-	background-color: ${props =>
-	(props.themePreset !== 'dark'
-		? props.theme.colors.primaryTextColor
-		: props.theme.colors.textColor)};
-	border-radius: 50%;
-	margin: 0 2px;
-	animation: ${typingDots} 1s infinite;
-	&:nth-child(2) {
-		animation-delay: 0.2s;
-	}
-	&:nth-child(3) {
-		animation-delay: 0.4s;
-	}
 `;
