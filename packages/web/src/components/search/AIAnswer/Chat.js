@@ -9,6 +9,7 @@ import {
 	getComponent as getComponentUtilFunc,
 	isFunction,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { Remarkable } from 'remarkable';
 import { AI_ROLES } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	ChatContainer,
@@ -26,6 +27,14 @@ import SearchSvg from '../../shared/SearchSvg';
 import IconGroup from '../../../styles/IconGroup';
 import IconWrapper from '../../../styles/IconWrapper';
 import Mic from '../addons/Mic';
+
+const md = new Remarkable();
+
+md.set({
+	html: true,
+	breaks: true,
+	xhtmlOut: true,
+});
 
 const Chat = (props) => {
 	const { messages, onSendMessage } = props;
@@ -191,7 +200,7 @@ const Chat = (props) => {
 							key={index}
 							isSender={message.role === AI_ROLES.USER}
 							dangerouslySetInnerHTML={{
-								__html: xss(message.content),
+								__html: md.render(xss(message.content)),
 							}}
 							themePreset={props.themePreset}
 							theme={props.theme}
@@ -253,7 +262,7 @@ Chat.propTypes = {
 	messages: PropTypes.arrayOf(
 		PropTypes.shape({
 			content: PropTypes.string.isRequired,
-			role: PropTypes.bool.isRequired,
+			role: PropTypes.string.isRequired,
 		}),
 	).isRequired,
 	onSendMessage: PropTypes.func.isRequired,
