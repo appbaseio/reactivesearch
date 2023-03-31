@@ -86,7 +86,6 @@ const AIAnswer = (props) => {
 				= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
 					.sessionId || null;
 			const { request, response } = props.AIResponse;
-
 			const finalMessages = [];
 
 			// pushing message history so far
@@ -156,7 +155,7 @@ const AIAnswer = (props) => {
 				innerClass={props.innerClass}
 				placeholder={props.placeholder}
 				componentId={props.componentId}
-				isAIResponseLoading={props.isAIResponseLoading}
+				isAIResponseLoading={props.isAIResponseLoading || props.isLoading}
 				AIResponse={props.AIResponse}
 				AIResponseError={props.AIResponseError}
 				enterButton={props.enterButton}
@@ -203,6 +202,7 @@ AIAnswer.propTypes = {
 	render: types.func,
 	onError: types.func,
 	renderError: types.title,
+	isLoading: types.boolRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -225,6 +225,7 @@ const mapStateToProps = (state, props) => ({
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 	rawData: state.rawData[props.componentId],
 	themePreset: state.config.themePreset,
+	isLoading: state.isLoading[props.componentId] || false,
 });
 
 const mapDispatchtoProps = dispatch => ({
