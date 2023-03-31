@@ -11,37 +11,24 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import types from '@appbaseio/reactivecore/lib/utils/types';
-import {
-	fetchAIResponse,
-	setQueryOptions,
-	updateQuery,
-} from '@appbaseio/reactivecore/lib/actions/query';
-import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
+import { fetchAIResponse } from '@appbaseio/reactivecore/lib/actions/query';
 import {
 	getClassName,
 	getObjectFromLocalStorage,
-	getQueryOptions,
 	setObjectInLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import { setDefaultQuery } from '@appbaseio/reactivecore/lib/actions/misc';
 
 import { Chatbox } from '../../../styles/AIAnswer';
 import { connect } from '../../../utils';
 import PreferencesConsumer from '../../basic/PreferencesConsumer';
 import ComponentWrapper from '../../basic/ComponentWrapper';
-import HOOKS from '../../../utils/hooks';
 import Chat from './Chat';
 import Title from '../../../styles/Title';
 
-const { useConstructor } = HOOKS;
-
 const AIAnswer = (props) => {
-	const { componentId, AIConfig } = props;
 	const [messages, setMessages] = React.useState([]);
 
-	const internalComponent = useRef(null);
 	const AISessionId = useRef(null);
-	const options = getQueryOptions(props);
 
 	const handleSendMessage = (text) => {
 		setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
@@ -53,32 +40,6 @@ const AIAnswer = (props) => {
 			);
 		}
 	};
-	useConstructor(() => {
-		internalComponent.current = getInternalComponentID(componentId);
-
-		// execute is set to false at the time of mount
-		// to avoid firing (multiple) partial queries.
-		// Hence we are building the query in parts here
-		// and only executing it with setReact() at core
-		const execute = false;
-		props.setQueryOptions(
-			componentId,
-			{
-				...options,
-				...(AIConfig && AIConfig.topDocsForContext
-					? { size: AIConfig.topDocsForContext }
-					: {}),
-			},
-			execute,
-		);
-		props.updateQuery(
-			{
-				componentId: internalComponent.current,
-				query: null,
-			},
-			execute,
-		);
-	});
 
 	useEffect(() => {
 		if (props.AIResponse) {
@@ -177,9 +138,6 @@ AIAnswer.propTypes = {
 	onData: types.func,
 	react: types.react,
 	AIConfig: types.AIConfig,
-	setQueryOptions: types.funcRequired,
-	updateQuery: types.funcRequired,
-	setDefaultQuery: types.funcRequired,
 	iconPosition: types.iconPosition,
 	themePreset: types.themePreset,
 	theme: types.style,
@@ -229,10 +187,6 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
-	setQueryOptions: (component, props, execute) =>
-		dispatch(setQueryOptions(component, props, execute)),
-	updateQuery: (updateQueryObject, execute) => dispatch(updateQuery(updateQueryObject, execute)),
 	getAIResponse: (sessionId, componentId, message) =>
 		dispatch(fetchAIResponse(sessionId, componentId, message)),
 });
