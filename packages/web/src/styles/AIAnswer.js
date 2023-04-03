@@ -19,9 +19,34 @@ export const ChatContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
+	position: relative;
 
 	.--ai-answer-error-container {
 		text-align: center;
+		position: absolute;
+		bottom: 48px;
+		z-index: 1;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 100%;
+
+		.--default-error-element {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 10px;
+			background-color: ${props =>
+	(props.theme && props.theme.colors && props.theme.colors.backgroundColor
+		? props.theme.colors.backgroundColor
+		: '#fff')};
+
+			span {
+				margin-bottom: 5px;
+			}
+
+			button {
+			}
+		}
 	}
 `;
 

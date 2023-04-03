@@ -27,6 +27,7 @@ import SearchSvg from '../../shared/SearchSvg';
 import IconGroup from '../../../styles/IconGroup';
 import IconWrapper from '../../../styles/IconWrapper';
 import Mic from '../addons/Mic';
+import Button from '../../../styles/Button';
 
 const md = new Remarkable();
 
@@ -164,14 +165,34 @@ const Chat = (props) => {
 
 	const renderErrorEle = () => {
 		const { AIResponseError, renderError, isAIResponseLoading } = props;
-		if (AIResponseError && renderError && !isAIResponseLoading) {
+		if (AIResponseError && !isAIResponseLoading) {
+			if (renderError) {
+				return (
+					<div
+						className={`--ai-answer-error-container ${
+							getClassName(props.innerClass, 'ai-error') || ''
+						}`}
+					>
+						{isFunction(renderError) ? renderError(AIResponseError) : renderError}
+					</div>
+				);
+			}
 			return (
 				<div
 					className={`--ai-answer-error-container ${
 						getClassName(props.innerClass, 'ai-error') || ''
 					}`}
 				>
-					{isFunction(renderError) ? renderError(AIResponseError) : renderError}
+					<div className="--default-error-element">
+						<span>
+							There was an error in generating the response.{' '}
+							{AIResponseError.code
+								? `Code:{' '}
+							${AIResponseError.code}`
+								: ''}
+						</span>
+						<Button primary>Try again</Button>
+					</div>
 				</div>
 			);
 		}
@@ -184,7 +205,7 @@ const Chat = (props) => {
 	}, [messages]);
 
 	return (
-		<ChatContainer>
+		<ChatContainer theme={props.theme}>
 			{/* custom render */}
 			{hasCustomRenderer(props) && getComponent()}
 			{/* Default render */}
