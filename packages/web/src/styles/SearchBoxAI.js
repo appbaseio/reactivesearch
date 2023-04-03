@@ -60,6 +60,7 @@ export const Footer = styled.div`
 export const SourceTags = styled.div`
 	display: flex;
 	gap: 8px;
+	flex-wrap: wrap;
 
 	span {
 		font-weight: 300;
