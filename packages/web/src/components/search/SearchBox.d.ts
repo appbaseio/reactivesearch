@@ -100,6 +100,7 @@ export interface SearchBoxProps extends CommonProps {
 	}) => any;
 	enableAI?: boolean;
 	AIConfig: types.AiConfig;
+	renderAIAnswer?: (data: any) => any;
 }
 
 declare const SearchBox: React.ComponentClass<SearchBoxProps>;
