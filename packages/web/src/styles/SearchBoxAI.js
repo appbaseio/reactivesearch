@@ -39,10 +39,10 @@ export const Question = styled.div`
 
 export const Answer = styled.div`
 	position: relative;
-	overflow: hidden;
 	white-space: pre-wrap;
 	margin-bottom: 5px;
-	height: 200px;
+	min-height: 100px;
+	max-height: 200px;
 	overflow: auto;
 
 	${props => resetCSS(props)}
