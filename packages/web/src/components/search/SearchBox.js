@@ -1013,33 +1013,47 @@ const SearchBox = (props) => {
 				</SourceTags>
 			</Footer>
 		);
-	const renderAIScreen = () => (
-		<SearchBoxAISection>
-			<Question>{currentValue}</Question>
-			{props.isAIResponseLoading || props.isLoading ? (
-				<HorizontalSkeletonLoader />
-			) : (
-				<Fragment>
-					<Answer>
-						<TypingEffect
-							message={md.render(
-								XSS(
-									props.AIResponse
-										&& Array.isArray(props.AIResponse.choices)
-										&& props.AIResponse.choices[0].message.content,
-								),
-							)}
-							speed={5}
-							onTypingComplete={() => {
-								setShowAIScreenFooter(true);
-							}}
-						/>
-					</Answer>
-					{renderAIScreenFooter()}
-				</Fragment>
-			)}
-		</SearchBoxAISection>
-	);
+	const renderAIScreen = () => {
+		const { renderAIAnswer } = props;
+		if (typeof renderAIAnswer === 'function') {
+			return renderAIAnswer({
+				question: currentValue,
+				answer:
+					props.AIResponse
+					&& Array.isArray(props.AIResponse.choices)
+					&& props.AIResponse.choices[0].message.content,
+				documentIds: props.AIResponse ? props.AIResponse.documentIds : [],
+				loading: props.isAIResponseLoading || props.isLoading,
+			});
+		}
+		return (
+			<SearchBoxAISection>
+				<Question>{currentValue}</Question>
+				{props.isAIResponseLoading || props.isLoading ? (
+					<HorizontalSkeletonLoader />
+				) : (
+					<Fragment>
+						<Answer>
+							<TypingEffect
+								message={md.render(
+									XSS(
+										props.AIResponse
+											&& Array.isArray(props.AIResponse.choices)
+											&& props.AIResponse.choices[0].message.content,
+									),
+								)}
+								speed={5}
+								onTypingComplete={() => {
+									setShowAIScreenFooter(true);
+								}}
+							/>
+						</Answer>
+						{renderAIScreenFooter()}
+					</Fragment>
+				)}
+			</SearchBoxAISection>
+		);
+	};
 
 	useEffect(() => {
 		if (onData) {
@@ -1706,6 +1720,7 @@ SearchBox.propTypes = {
 	AIResponse: types.componentObject,
 	isAIResponseLoading: types.bool,
 	AIResponseError: types.componentObject,
+	renderAIAnswer: types.func,
 };
 
 SearchBox.defaultProps = {
