@@ -28,7 +28,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
 	updateQuery,
@@ -68,15 +68,9 @@ import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 import HOOKS from '../../utils/hooks';
-import {
-	Answer,
-	Footer,
-	Question,
-	SearchBoxAISection,
-	SourceTag,
-	SourceTags,
-} from '../../styles/SearchBoxAI';
+import { Answer, Footer, Question, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import TypingEffect from '../shared/TypingEffect';
+import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 
 const md = new Remarkable();
 
@@ -120,7 +114,8 @@ const SearchBox = (props) => {
 	const _inputRef = useRef(null);
 	const isTagsMode = useRef(false);
 	const stats = () => getResultStats(props);
-
+	const [showAIScreen, setShowAIScreen] = useState(false);
+	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
@@ -455,7 +450,10 @@ const SearchBox = (props) => {
 	};
 
 	const onSuggestionSelected = (suggestion) => {
-		setIsOpen(false);
+		if (!props.enableAI) setIsOpen(false);
+		else {
+			setShowAIScreen(true);
+		}
 		// handle featured suggestions click event
 		if (suggestion._suggestion_type === suggestionTypes.Featured) {
 			handleFeaturedSuggestionClicked(suggestion);
@@ -516,6 +514,9 @@ const SearchBox = (props) => {
 		if (!isOpen && props.autosuggest) {
 			setIsOpen(true);
 		}
+		if (showAIScreen) {
+			setShowAIScreen(false);
+		}
 		if (value === undefined) {
 			setValue(
 				inputValue,
@@ -557,7 +558,12 @@ const SearchBox = (props) => {
 					true,
 					props,
 					isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+					true,
+					!props.enableAI,
 				);
+				if (props.enableAI && !showAIScreen) {
+					setShowAIScreen(true);
+				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
 		}
@@ -993,6 +999,48 @@ const SearchBox = (props) => {
 			</TagsContainer>
 		);
 	};
+
+	const renderAIScreenFooter = () =>
+		showAIScreenFooter
+		&& props.AIResponse
+		&& props.AIResponse.documentIds && (
+			<Footer>
+				Summary generated using the following sources:{' '}
+				<SourceTags>
+					{props.AIResponse.documentIds.map(el => (
+						<span>{el}</span>
+					))}
+				</SourceTags>
+			</Footer>
+		);
+	const renderAIScreen = () => (
+		<SearchBoxAISection>
+			<Question>{currentValue}</Question>
+			{props.isAIResponseLoading || props.isLoading ? (
+				<HorizontalSkeletonLoader />
+			) : (
+				<Fragment>
+					<Answer>
+						<TypingEffect
+							message={md.render(
+								XSS(
+									props.AIResponse
+										&& Array.isArray(props.AIResponse.choices)
+										&& props.AIResponse.choices[0].message.content,
+								),
+							)}
+							speed={5}
+							onTypingComplete={() => {
+								setShowAIScreenFooter(true);
+							}}
+						/>
+					</Answer>
+					{renderAIScreenFooter()}
+				</Fragment>
+			)}
+		</SearchBoxAISection>
+	);
+
 	useEffect(() => {
 		if (onData) {
 			onData({
@@ -1096,6 +1144,12 @@ const SearchBox = (props) => {
 			}
 		}
 	}, [selectedValue]);
+
+	useEffect(() => {
+		if (!showAIScreen && showAIScreenFooter) {
+			setShowAIScreenFooter(false);
+		}
+	}, [showAIScreen]);
 
 	useEffect(() => {
 		hasMounted.current = true;
@@ -1209,218 +1263,216 @@ const SearchBox = (props) => {
 											)}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											<SearchBoxAISection>
-												<Question>What&apos;s your name?</Question>
-												<Answer>
-													<TypingEffect
-														message={md.render(
-															XSS(
-																'To accommodate multiline answers, you can modify the Answer styled component by changing the white-space property to pre-wrap. This will allow line breaks and preserve the formatting of multiline text. Additionally, remove the overflow: hidden and adjust the typing effect styles accordingly:',
-															),
-														)}
-														speed={5}
-													/>
-												</Answer>
-												<Footer>
-													Summary generated using the following sources:{' '}
-													<SourceTags>
-														{['dsfdsa', 'dsfdsafsadf', 'f345r4f'].map(
-															el => (
-																<span>{el}</span>
-															),
-														)}
-													</SourceTags>
-												</Footer>
-											</SearchBoxAISection>
-											{parsedSuggestions().map((item, itemIndex) => {
-												const index = indexOffset + itemIndex;
-												if (Array.isArray(item)) {
-													const sectionHtml = XSS(item[0].sectionLabel);
-													indexOffset += item.length - 1;
-													return (
-														<div
-															className="section-container"
-															key={`${item[0].sectionId}`}
-														>
-															{sectionHtml && (
+											{showAIScreen ? (
+												renderAIScreen()
+											) : (
+												<Fragment>
+													{parsedSuggestions().map((item, itemIndex) => {
+														const index = indexOffset + itemIndex;
+														if (Array.isArray(item)) {
+															const sectionHtml = XSS(
+																item[0].sectionLabel,
+															);
+															indexOffset += item.length - 1;
+															return (
 																<div
-																	className={`section-header ${getClassName(
-																		props.innerClass,
-																		'section-label',
-																	)}`}
-																	dangerouslySetInnerHTML={{
-																		__html: sectionHtml,
-																	}}
-																/>
-															)}
-															<ul className="section-list">
-																{item.map(
-																	(sectionItem, sectionIndex) => (
-																		<li
-																			{...getItemProps({
-																				item: sectionItem,
-																			})}
-																			key={`${
-																				sectionItem.sectionId
-																				+ sectionIndex
-																			}-${sectionItem.value}`}
-																			style={{
-																				justifyContent:
-																					'flex-start',
-																				alignItems:
-																					'center',
+																	className="section-container"
+																	key={`${item[0].sectionId}`}
+																>
+																	{sectionHtml && (
+																		<div
+																			className={`section-header ${getClassName(
+																				props.innerClass,
+																				'section-label',
+																			)}`}
+																			dangerouslySetInnerHTML={{
+																				__html: sectionHtml,
 																			}}
-																			className={`${
-																				highlightedIndex
-																				=== index + sectionIndex
-																					? `active-li-item ${getClassName(
-																						props.innerClass,
-																						'active-suggestion-item',
-																					  )}`
-																					: `li-item ${getClassName(
-																						props.innerClass,
-																						'suggestion-item',
-																					  )}`
-																			}`}
-																		>
-																			{props.renderItem ? (
-																				props.renderItem(
-																					sectionItem,
-																				)
-																			) : (
-																				<React.Fragment>
-																					<div
-																						style={{
-																							padding:
-																								'0 10px 0 0',
-																							display:
-																								'flex',
-																						}}
-																					>
-																						<CustomSvg
-																							iconId={`${
-																								sectionIndex
-																								+ index
-																								+ 1
-																							}-${
-																								sectionItem.value
-																							}-icon`}
-																							className={
-																								getClassName(
-																									props.innerClass,
-																									`${sectionItem._suggestion_type}-search-icon`,
-																								)
-																								|| null
-																							}
-																							icon={getIcon(
-																								sectionItem._suggestion_type,
+																		/>
+																	)}
+																	<ul className="section-list">
+																		{item.map(
+																			(
+																				sectionItem,
+																				sectionIndex,
+																			) => (
+																				<li
+																					{...getItemProps(
+																						{
+																							item: sectionItem,
+																						},
+																					)}
+																					key={`${
+																						sectionItem.sectionId
+																						+ sectionIndex
+																					}-${
+																						sectionItem.value
+																					}`}
+																					style={{
+																						justifyContent:
+																							'flex-start',
+																						alignItems:
+																							'center',
+																					}}
+																					className={`${
+																						highlightedIndex
+																						=== index
+																							+ sectionIndex
+																							? `active-li-item ${getClassName(
+																								props.innerClass,
+																								'active-suggestion-item',
+																							  )}`
+																							: `li-item ${getClassName(
+																								props.innerClass,
+																								'suggestion-item',
+																							  )}`
+																					}`}
+																				>
+																					{props.renderItem ? (
+																						props.renderItem(
+																							sectionItem,
+																						)
+																					) : (
+																						<React.Fragment>
+																							<div
+																								style={{
+																									padding:
+																										'0 10px 0 0',
+																									display:
+																										'flex',
+																								}}
+																							>
+																								<CustomSvg
+																									iconId={`${
+																										sectionIndex
+																										+ index
+																										+ 1
+																									}-${
+																										sectionItem.value
+																									}-icon`}
+																									className={
+																										getClassName(
+																											props.innerClass,
+																											`${sectionItem._suggestion_type}-search-icon`,
+																										)
+																										|| null
+																									}
+																									icon={getIcon(
+																										sectionItem._suggestion_type,
+																										sectionItem,
+																									)}
+																									type={`${sectionItem._suggestion_type}-search-icon`}
+																								/>
+																							</div>
+																							<div className="trim">
+																								<Flex direction="column">
+																									{sectionItem.label && (
+																										<div
+																											className="section-list-item__label"
+																											dangerouslySetInnerHTML={{
+																												__html: XSS(
+																													sectionItem.label,
+																												),
+																											}}
+																										/>
+																									)}
+																									{sectionItem.description && (
+																										<div
+																											className="section-list-item__description"
+																											dangerouslySetInnerHTML={{
+																												__html: XSS(
+																													sectionItem.description,
+																												),
+																											}}
+																										/>
+																									)}
+																								</Flex>
+																							</div>
+																							{getActionIcon(
 																								sectionItem,
 																							)}
-																							type={`${sectionItem._suggestion_type}-search-icon`}
-																						/>
-																					</div>
-																					<div className="trim">
-																						<Flex direction="column">
-																							{sectionItem.label && (
-																								<div
-																									className="section-list-item__label"
-																									dangerouslySetInnerHTML={{
-																										__html: XSS(
-																											sectionItem.label,
-																										),
-																									}}
-																								/>
-																							)}
-																							{sectionItem.description && (
-																								<div
-																									className="section-list-item__description"
-																									dangerouslySetInnerHTML={{
-																										__html: XSS(
-																											sectionItem.description,
-																										),
-																									}}
-																								/>
-																							)}
-																						</Flex>
-																					</div>
-																					{getActionIcon(
-																						sectionItem,
+																						</React.Fragment>
 																					)}
-																				</React.Fragment>
-																			)}
-																		</li>
-																	),
-																)}
-															</ul>
-														</div>
-													);
-												}
-
-												return (
-													<li
-														{...getItemProps({ item })}
-														key={`${index + 1}-${item.value}`}
-														style={{
-															justifyContent: 'flex-start',
-															alignItems: 'center',
-														}}
-														className={`${
-															highlightedIndex === index
-																? `active-li-item ${getClassName(
-																	props.innerClass,
-																	'active-suggestion-item',
-																  )}`
-																: `li-item ${getClassName(
-																	props.innerClass,
-																	'suggestion-item',
-																  )}`
-														}`}
-													>
-														{props.renderItem ? (
-															props.renderItem(item)
-														) : (
-															<React.Fragment>
-																{/* eslint-disable */}
-
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																		display: 'flex',
-																	}}
-																>
-																	<CustomSvg
-																		iconId={`${index + 1}-${
-																			item.value
-																		}-icon`}
-																		className={
-																			getClassName(
-																				props.innerClass,
-																				`${item._suggestion_type}-search-icon`,
-																			) || null
-																		}
-																		icon={getIcon(
-																			item._suggestion_type,
-																			item,
+																				</li>
+																			),
 																		)}
-																		type={`${item._suggestion_type}-search-icon`}
-																	/>
+																	</ul>
 																</div>
-																{/* eslint-enable */}
-																<SuggestionItem
-																	currentValue={
-																		currentValue || ''
-																	}
-																	suggestion={item}
-																/>
+															);
+														}
 
-																{getActionIcon(item)}
-															</React.Fragment>
-														)}
-													</li>
-												);
-											})}
+														return (
+															<li
+																{...getItemProps({ item })}
+																key={`${index + 1}-${item.value}`}
+																style={{
+																	justifyContent: 'flex-start',
+																	alignItems: 'center',
+																}}
+																className={`${
+																	highlightedIndex === index
+																		? `active-li-item ${getClassName(
+																			props.innerClass,
+																			'active-suggestion-item',
+																		  )}`
+																		: `li-item ${getClassName(
+																			props.innerClass,
+																			'suggestion-item',
+																		  )}`
+																}`}
+															>
+																{props.renderItem ? (
+																	props.renderItem(item)
+																) : (
+																	<React.Fragment>
+																		{/* eslint-disable */}
 
-											{showSuggestionsFooter ? <SuggestionsFooter /> : null}
+																		<div
+																			style={{
+																				padding:
+																					'0 10px 0 0',
+																				display: 'flex',
+																			}}
+																		>
+																			<CustomSvg
+																				iconId={`${
+																					index + 1
+																				}-${
+																					item.value
+																				}-icon`}
+																				className={
+																					getClassName(
+																						props.innerClass,
+																						`${item._suggestion_type}-search-icon`,
+																					) || null
+																				}
+																				icon={getIcon(
+																					item._suggestion_type,
+																					item,
+																				)}
+																				type={`${item._suggestion_type}-search-icon`}
+																			/>
+																		</div>
+																		{/* eslint-enable */}
+																		<SuggestionItem
+																			currentValue={
+																				currentValue || ''
+																			}
+																			suggestion={item}
+																		/>
+
+																		{getActionIcon(item)}
+																	</React.Fragment>
+																)}
+															</li>
+														);
+													})}
+
+													{showSuggestionsFooter ? (
+														<SuggestionsFooter />
+													) : null}
+												</Fragment>
+											)}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1651,6 +1703,9 @@ SearchBox.propTypes = {
 	renderSelectedTags: types.func,
 	enableAI: types.bool,
 	AIConfig: types.componentObject,
+	AIResponse: types.componentObject,
+	isAIResponseLoading: types.bool,
+	AIResponseError: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1710,6 +1765,15 @@ const mapStateToProps = (state, props) => ({
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
+	AIResponse:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.response)
+		|| null,
+	isAIResponseLoading:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+	AIResponseError:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 });
 
 const mapDispatchtoProps = dispatch => ({
