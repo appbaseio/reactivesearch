@@ -13,16 +13,28 @@ const fadeInFromBottom = keyframes`
   }
 `;
 
+const fadeInFromTop = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 export const SearchBoxAISection = styled('div')`
 	padding: 10px;
 	border-radius: 4px;
 	margin-bottom: 5px;
+	min-height: 200px;
 `;
 
 export const Question = styled.div`
 	font-weight: bold;
 	margin-bottom: 5px;
-	animation: ${fadeInFromBottom} 0.5s ease-out;
+	animation: ${fadeInFromTop} 0.5s ease-out;
 `;
 
 export const Answer = styled.div`
@@ -30,6 +42,8 @@ export const Answer = styled.div`
 	overflow: hidden;
 	white-space: pre-wrap;
 	margin-bottom: 5px;
+	height: 200px;
+	overflow: auto;
 
 	${props => resetCSS(props)}
 `;
@@ -40,6 +54,7 @@ export const Footer = styled.div`
 	align-items: center;
 	gap: 1rem;
 	flex-wrap: wrap;
+	animation: ${fadeInFromBottom} 0.5s ease-out;
 `;
 
 export const SourceTags = styled.div`

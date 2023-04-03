@@ -2,7 +2,11 @@ import types from '@appbaseio/reactivecore/lib/utils/types';
 import React, { useState, useEffect } from 'react';
 
 const TypingEffect = ({
-	message, speed, eraseSpeed = 50, shouldErase = false,
+	message,
+	speed,
+	eraseSpeed = 50,
+	shouldErase = false,
+	onTypingComplete = () => {},
 }) => {
 	const [currentMessage, setCurrentMessage] = useState('');
 	const [typing, setTyping] = useState(true);
@@ -20,6 +24,7 @@ const TypingEffect = ({
 							setCurrentMessage('');
 						}, eraseSpeed);
 					}
+					onTypingComplete();
 				}
 			}, speed);
 		}
@@ -52,6 +57,7 @@ TypingEffect.propTypes = {
 	speed: types.number,
 	eraseSpeed: types.number,
 	shouldErase: types.bool,
+	onTypingComplete: types.func,
 };
 
 export default TypingEffect;
