@@ -7,7 +7,7 @@ import {
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-
+import { Remarkable } from 'remarkable';
 import { withTheme } from 'emotion-theming';
 import { oneOf, oneOfType } from 'prop-types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
@@ -68,6 +68,23 @@ import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 import HOOKS from '../../utils/hooks';
+import {
+	Answer,
+	Footer,
+	Question,
+	SearchBoxAISection,
+	SourceTag,
+	SourceTags,
+} from '../../styles/SearchBoxAI';
+import TypingEffect from '../shared/TypingEffect';
+
+const md = new Remarkable();
+
+md.set({
+	html: true,
+	breaks: true,
+	xhtmlOut: true,
+});
 
 const { useConstructor } = HOOKS;
 
@@ -1192,6 +1209,29 @@ const SearchBox = (props) => {
 											)}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
+											<SearchBoxAISection>
+												<Question>What&apos;s your name?</Question>
+												<Answer>
+													<TypingEffect
+														message={md.render(
+															XSS(
+																'To accommodate multiline answers, you can modify the Answer styled component by changing the white-space property to pre-wrap. This will allow line breaks and preserve the formatting of multiline text. Additionally, remove the overflow: hidden and adjust the typing effect styles accordingly:',
+															),
+														)}
+														speed={5}
+													/>
+												</Answer>
+												<Footer>
+													Summary generated using the following sources:{' '}
+													<SourceTags>
+														{['dsfdsa', 'dsfdsafsadf', 'f345r4f'].map(
+															el => (
+																<span>{el}</span>
+															),
+														)}
+													</SourceTags>
+												</Footer>
+											</SearchBoxAISection>
 											{parsedSuggestions().map((item, itemIndex) => {
 												const index = indexOffset + itemIndex;
 												if (Array.isArray(item)) {
@@ -1610,7 +1650,7 @@ SearchBox.propTypes = {
 	highlightConfig: types.componentObject,
 	renderSelectedTags: types.func,
 	enableAI: types.bool,
-	aiConfig: types.componentObject,
+	AIConfig: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1648,7 +1688,7 @@ SearchBox.defaultProps = {
 	type: 'search',
 	mode: 'select',
 	enableAI: false,
-	aiConfig: null,
+	AIConfig: null,
 };
 
 const mapStateToProps = (state, props) => ({
