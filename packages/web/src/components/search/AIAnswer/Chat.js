@@ -162,6 +162,13 @@ const Chat = (props) => {
 		};
 		return getComponentUtilFunc(data, props);
 	};
+	const handleRetryRequest = () => {
+		if (messages) {
+			const lastUserRequestMessage = messages[messages.length - 1].content;
+
+			onSendMessage(lastUserRequestMessage, true);
+		}
+	};
 
 	const renderErrorEle = () => {
 		const { AIResponseError, renderError, isAIResponseLoading } = props;
@@ -173,7 +180,9 @@ const Chat = (props) => {
 							getClassName(props.innerClass, 'ai-error') || ''
 						}`}
 					>
-						{isFunction(renderError) ? renderError(AIResponseError) : renderError}
+						{isFunction(renderError)
+							? renderError(AIResponseError, handleRetryRequest)
+							: renderError}
 					</div>
 				);
 			}
@@ -185,13 +194,17 @@ const Chat = (props) => {
 				>
 					<div className="--default-error-element">
 						<span>
-							There was an error in generating the response.{' '}
+							{AIResponseError.message
+								? AIResponseError.message
+								: 'There was an error in generating the response.'}{' '}
 							{AIResponseError.code
-								? `Code:{' '}
+								? `Code:
 							${AIResponseError.code}`
 								: ''}
 						</span>
-						<Button primary>Try again</Button>
+						<Button primary onClick={handleRetryRequest}>
+							Try again
+						</Button>
 					</div>
 				</div>
 			);
@@ -205,7 +218,7 @@ const Chat = (props) => {
 	}, [messages]);
 
 	return (
-		<ChatContainer theme={props.theme}>
+		<ChatContainer theme={props.theme} showInput={props.showInput}>
 			{/* custom render */}
 			{hasCustomRenderer(props) && getComponent()}
 			{/* Default render */}

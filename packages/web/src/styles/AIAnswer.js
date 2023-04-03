@@ -20,11 +20,11 @@ export const ChatContainer = styled.div`
 	flex-direction: column;
 	height: 100%;
 	position: relative;
-
 	.--ai-answer-error-container {
 		text-align: center;
 		position: absolute;
-		bottom: 48px;
+		bottom: 0px;
+		${props => (props.showInput ? 'bottom: 48px;' : '')};
 		z-index: 1;
 		left: 50%;
 		transform: translateX(-50%);
@@ -39,6 +39,11 @@ export const ChatContainer = styled.div`
 	(props.theme && props.theme.colors && props.theme.colors.backgroundColor
 		? props.theme.colors.backgroundColor
 		: '#fff')};
+			box-shadow: 0 -5px 5px -2px
+				${props =>
+			(props.theme && props.theme.colors && props.theme.colors.backgroundColor
+				? props.theme.colors.backgroundColor
+				: '#fff')};
 
 			span {
 				margin-bottom: 5px;
@@ -56,7 +61,7 @@ export const MessagesContainer = styled.div`
 	padding: 10px;
 	display: flex;
 	flex-direction: column;
-	min-height: 100px;
+	min-height: 200px;
 
 }};
 `;

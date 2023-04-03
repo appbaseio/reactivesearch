@@ -30,8 +30,8 @@ const AIAnswer = (props) => {
 
 	const AISessionId = useRef(null);
 
-	const handleSendMessage = (text) => {
-		setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
+	const handleSendMessage = (text, isRetry = false) => {
+		if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
 		if (AISessionId.current) {
 			props.getAIResponse(AISessionId.current, props.componentId, text);
 		} else {
