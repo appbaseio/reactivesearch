@@ -3,6 +3,7 @@
 import { jsx } from '@emotion/core';
 
 import {
+	AI_LOCAL_CACHE_KEY,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -25,6 +26,7 @@ import {
 	suggestionTypes,
 	featuredSuggestionsActionTypes,
 	isEqual,
+	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -1052,7 +1054,35 @@ const SearchBox = (props) => {
 
 	const renderAIScreenFooter = () => {
 		const { AIUIConfig = {} } = props;
-		const { showSourceDocuments = true } = AIUIConfig || {};
+		const { showSourceDocuments = true, sourceDocumentLabel = '_id' } = AIUIConfig || {};
+
+		const getSourceObjects = () => {
+			const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
+			const sourceObjects = [];
+			const docIds = props.AIResponse.documentIds;
+			if (
+				localCache
+				&& localCache.meta
+				&& localCache.meta.hits
+				&& localCache.meta.hits.hits
+			) {
+				docIds.forEach((id) => {
+					const foundSourceObj
+						= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+					if (foundSourceObj) {
+						sourceObjects.push({ ...foundSourceObj, ...foundSourceObj._source });
+					}
+				});
+			} else {
+				sourceObjects.push(
+					...docIds.map(id => ({
+						_id: id,
+					})),
+				);
+			}
+
+			return sourceObjects;
+		};
 
 		return showSourceDocuments
 			&& showAIScreenFooter
@@ -1061,8 +1091,8 @@ const SearchBox = (props) => {
 				<Footer>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
-						{props.AIResponse.documentIds.map(el => (
-							<span>{el}</span>
+						{getSourceObjects().map(el => (
+							<span>{el[sourceDocumentLabel]}</span>
 						))}
 					</SourceTags>
 				</Footer>
