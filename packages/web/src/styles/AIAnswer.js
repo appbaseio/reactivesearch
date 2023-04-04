@@ -263,8 +263,9 @@ export const Message = styled.div`
 		margin: 5px 0;
 		display: inline-block;
 	}
-	ul {
-		padding-left: 12px;
+	ul,
+	ol {
+		list-style-position: inside;
 	}
 `;
 
