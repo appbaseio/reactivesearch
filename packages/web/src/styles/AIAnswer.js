@@ -255,6 +255,9 @@ export const Message = styled.div`
 		font-size: 85%;
 		padding: 0.2em 0.4em;
 	}
+	ul {
+		padding-left: 12px;
+	}
 `;
 
 export const MessageInputContainer = styled.form`
