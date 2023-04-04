@@ -190,6 +190,8 @@ export const resetCSS = props => css`
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
+		display: initial;
+		max-height: unset;
 	}
 	pre {
 		margin: 10px auto;

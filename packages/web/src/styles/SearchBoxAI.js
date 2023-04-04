@@ -29,6 +29,7 @@ export const SearchBoxAISection = styled('div')`
 	border-radius: 4px;
 	margin-bottom: 5px;
 	min-height: 200px;
+	padding-top: 20px;
 `;
 
 export const Question = styled.div`
@@ -38,14 +39,20 @@ export const Question = styled.div`
 `;
 
 export const Answer = styled.div`
+	${props => resetCSS(props)}
 	position: relative;
-	white-space: pre-wrap;
 	margin-bottom: 5px;
 	min-height: 100px;
-	max-height: 200px;
+	position: relative;
 	overflow: auto;
-
-	${props => resetCSS(props)}
+	white-space: pre-wrap;
+	pre {
+		white-space: pre-wrap;
+	}
+	code,
+	pre {
+		display: revert;
+	}
 `;
 
 export const Footer = styled.div`
@@ -55,6 +62,10 @@ export const Footer = styled.div`
 	gap: 1rem;
 	flex-wrap: wrap;
 	animation: ${fadeInFromBottom} 0.5s ease-out;
+	position: sticky;
+	bottom: 0;
+	background: white;
+	padding: 10px 0;
 `;
 
 export const SourceTags = styled.div`

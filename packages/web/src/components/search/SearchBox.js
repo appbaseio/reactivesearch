@@ -1047,11 +1047,9 @@ const SearchBox = (props) => {
 							<TypingEffect
 								key={currentValue}
 								message={md.render(
-									XSS(
-										props.AIResponse
-											&& Array.isArray(props.AIResponse.choices)
-											&& props.AIResponse.choices[0].message.content,
-									),
+									props.AIResponse
+										&& Array.isArray(props.AIResponse.choices)
+										&& props.AIResponse.choices[0].message.content,
 								)}
 								speed={5}
 								onTypingComplete={() => {
