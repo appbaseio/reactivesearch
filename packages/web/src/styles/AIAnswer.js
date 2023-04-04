@@ -88,8 +88,11 @@ export const TypingDot = styled.div`
 	width: 6px;
 	height: 6px;
 	background-color: ${props =>
-	(props.themePreset !== 'dark'
-		? props.theme.colors.primaryTextColor
+// eslint-disable-next-line no-nested-ternary
+	(props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
 		: props.theme.colors.textColor)};
 	border-radius: 50%;
 	margin: 0 2px !important;
@@ -105,7 +108,7 @@ export const TypingDot = styled.div`
 export const Message = styled.div`
 	background-color: ${props =>
 // eslint-disable-next-line no-nested-ternary
-	(!props.isSender
+	(props.isSender
 		? props.themePreset !== 'dark'
 			? props.theme.colors.primaryColor
 			: props.theme.colors.borderColor
@@ -120,7 +123,7 @@ export const Message = styled.div`
 	border: 1px solid;
 	color: ${props =>
 		// eslint-disable-next-line no-nested-ternary
-			(!props.isSender
+			(props.isSender
 				? props.themePreset !== 'dark'
 					? props.theme.colors.primaryTextColor
 					: props.theme.colors.textColor
@@ -234,11 +237,14 @@ export const Message = styled.div`
 	}
 	pre,
 	code {
-		background: ${props =>
-					(props.themePreset !== 'dark'
-						? props.theme.colors.borderColor
-						: props.theme.colors.backgroundColor)};
 		padding: 0.6em 0.4em;
+		background: ${props =>
+				// eslint-disable-next-line no-nested-ternary
+					(props.isSender
+						? props.themePreset !== 'dark'
+							? props.theme.colors.primaryColor
+							: props.theme.colors.borderColor
+						: props.theme.colors.borderColor)};
 	}
 
 	code {
@@ -246,14 +252,16 @@ export const Message = styled.div`
 
 		color: ${props =>
 						// eslint-disable-next-line no-nested-ternary
-							(!props.isSender
+							(props.isSender
 								? props.themePreset !== 'dark'
 									? props.theme.colors.primaryTextColor
 									: props.theme.colors.textColor
-								: props.theme.colors.textColor)};
+								: props.theme.colors.primaryTextColor)};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
+		margin: 5px 0;
+		display: inline-block;
 	}
 	ul {
 		padding-left: 12px;
