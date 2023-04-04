@@ -67,6 +67,8 @@ const AIAnswer = (props) => {
 			}
 
 			setMessages(finalMessages);
+		} else if (props.isLoading && !props.AIResponse) {
+			setMessages([]);
 		}
 	}, [props.AIResponse]);
 
