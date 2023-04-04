@@ -87,6 +87,16 @@ const primary = ({ theme }) => css`
 	}
 `;
 
+const info = ({ theme }) => css`
+	border: 1px solid ${theme.colors.primaryColor};
+	color: ${theme.colors.primaryColor};
+	background-color: ${theme.colors.primaryTextColor};
+	&:hover,
+	&:focus {
+		background-color: ${darken(0.1, theme.colors.primaryTextColor)};
+	}
+`;
+
 const large = css`
 	min-height: 40px;
 	padding: 10px 20px;
@@ -136,6 +146,7 @@ const Button = styled('a')`
 	}
 
 	${props => (props.primary ? primary : null)};
+	${props => (props.info ? info : null)};
 	${props => (props.disabled ? disabled : null)};
 	${props => props.large && large};
 

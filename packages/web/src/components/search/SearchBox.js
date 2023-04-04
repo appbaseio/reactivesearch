@@ -546,6 +546,10 @@ const SearchBox = (props) => {
 	};
 	const enterButtonOnClick = () =>
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+	const askButtonOnClick = () => {
+		setShowAIScreen(true);
+		triggerQuery({ isOpen: true, value: currentValue, customQuery: true });
+	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
 		// if a suggestion was selected, delegate the handling
@@ -735,6 +739,15 @@ const SearchBox = (props) => {
 			triggerClickAnalytics,
 			resultStats: stats(),
 			rawData,
+			AIData: {
+				question: currentValue,
+				answer:
+					props.AIResponse
+					&& Array.isArray(props.AIResponse.choices)
+					&& props.AIResponse.choices[0].message.content,
+				documentIds: props.AIResponse ? props.AIResponse.documentIds : [],
+				loading: props.isAIResponseLoading || props.isLoading,
+			},
 		};
 		return getComponentUtilFunc(data, props);
 	};
@@ -779,6 +792,32 @@ const SearchBox = (props) => {
 						onClick={enterButtonOnClick}
 					>
 						Search
+					</Button>
+				);
+			};
+
+			return <div className="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+		}
+
+		return null;
+	};
+
+	const renderAskButtonElement = () => {
+		const { AIUIConfig, innerClass } = props;
+		const { askButton, renderAskButton } = AIUIConfig;
+		if (askButton) {
+			const getEnterButtonMarkup = () => {
+				if (typeof renderAskButton === 'function') {
+					return renderAskButton(askButtonOnClick);
+				}
+
+				return (
+					<Button
+						className={`enter-btn ${getClassName(innerClass, 'ask-button')}`}
+						info
+						onClick={askButtonOnClick}
+					>
+						Ask
 					</Button>
 				);
 			};
@@ -1039,60 +1078,6 @@ const SearchBox = (props) => {
 
 		return <HorizontalSkeletonLoader />;
 	};
-	const renderAIScreen = () => {
-		const { renderAIAnswer } = props;
-		if (typeof renderAIAnswer === 'function') {
-			return renderAIAnswer({
-				question: currentValue,
-				answer:
-					props.AIResponse
-					&& Array.isArray(props.AIResponse.choices)
-					&& props.AIResponse.choices[0].message.content,
-				documentIds: props.AIResponse ? props.AIResponse.documentIds : [],
-				loading: props.isAIResponseLoading || props.isLoading,
-			});
-		}
-		return (
-			<SearchBoxAISection>
-				{props.isAIResponseLoading || props.isLoading ? (
-					renderAIScreenLoader()
-				) : (
-					<Fragment>
-						<Answer>
-							<TypingEffect
-								key={currentValue}
-								message={md.render(
-									props.AIResponse
-										&& Array.isArray(props.AIResponse.choices)
-										&& props.AIResponse.choices[0].message.content,
-								)}
-								speed={5}
-								onTypingComplete={() => {
-									setShowAIScreenFooter(true);
-
-									setTimeout(() => {
-										_dropdownULRef.current.scrollTo({
-											top: _dropdownULRef.current.scrollHeight,
-											behavior: 'smooth',
-										});
-									}, 100);
-								}}
-								onWhileTyping={() => {
-									setTimeout(() => {
-										_dropdownULRef.current.scrollTo({
-											top: _dropdownULRef.current.scrollHeight,
-											behavior: 'smooth',
-										});
-									}, 2000);
-								}}
-							/>
-						</Answer>
-						{renderAIScreenFooter()}
-					</Fragment>
-				)}
-			</SearchBoxAISection>
-		);
-	};
 
 	useEffect(() => {
 		if (onData) {
@@ -1325,9 +1310,86 @@ const SearchBox = (props) => {
 											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{showAIScreen ? (
-												renderAIScreen()
-											) : (
+											{showAIScreen && (
+												<SearchBoxAISection>
+													{typeof props.renderAIAnswer === 'function' ? (
+														props.renderAIAnswer({
+															question: currentValue,
+															answer:
+																props.AIResponse
+																&& Array.isArray(
+																	props.AIResponse.choices,
+																)
+																&& props.AIResponse.choices[0].message
+																	.content,
+															documentIds: props.AIResponse
+																? props.AIResponse.documentIds
+																: [],
+															loading:
+																props.isAIResponseLoading
+																|| props.isLoading,
+														})
+													) : (
+														<Fragment>
+															{props.isAIResponseLoading
+															|| props.isLoading ? (
+																	renderAIScreenLoader()
+																) : (
+																	<Fragment>
+																		<Answer>
+																			<TypingEffect
+																				key={currentValue}
+																				message={md.render(
+																					props.AIResponse
+																					&& Array.isArray(
+																						props
+																							.AIResponse
+																							.choices,
+																					)
+																					&& props.AIResponse
+																						.choices[0]
+																						.message
+																						.content,
+																				)}
+																				speed={5}
+																				onTypingComplete={() => {
+																					setShowAIScreenFooter(
+																						true,
+																					);
+
+																					setTimeout(() => {
+																						_dropdownULRef.current.scrollTo(
+																							{
+																								top: _dropdownULRef
+																									.current
+																									.scrollHeight,
+																								behavior:
+																								'smooth',
+																							},
+																						);
+																					}, 100);
+																				}}
+																				onWhileTyping={() => {
+																					_dropdownULRef.current.scrollTo(
+																						{
+																							top: _dropdownULRef
+																								.current
+																								.scrollHeight,
+																							behavior:
+																							'smooth',
+																						},
+																					);
+																				}}
+																			/>
+																		</Answer>
+																		{renderAIScreenFooter()}
+																	</Fragment>
+																)}
+														</Fragment>
+													)}
+												</SearchBoxAISection>
+											)}
+											{!showAIScreen && (
 												<Fragment>
 													{parsedSuggestions().map((item, itemIndex) => {
 														const index = indexOffset + itemIndex;
@@ -1595,6 +1657,7 @@ const SearchBox = (props) => {
 											)}
 									</InputWrapper>
 									{renderInputAddonAfter()}
+									{renderAskButtonElement()}
 									{renderEnterButtonElement()}
 								</InputGroup>
 
@@ -1643,6 +1706,7 @@ const SearchBox = (props) => {
 						</InputWrapper>
 
 						{renderInputAddonAfter()}
+						{renderAskButtonElement()}
 						{renderEnterButtonElement()}
 					</InputGroup>
 				</div>
