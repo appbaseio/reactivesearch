@@ -161,10 +161,10 @@
     tocbot "4.5.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@10.0.0-alpha.6":
-  version "10.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.6.tgz#1fef95c6bdcc793a059e237c7b709ba2ab409330"
-  integrity sha512-h+X8mlSBR2tmmpotmmGQbejDLEKnWqa/zXGSS7pXJ+9lyAWtyC1ljjLKAQSP3rXh9JHEkhLUBu5/s5xLTSX2cQ==
+"@appbaseio/reactivecore@10.0.0-alpha.7":
+  version "10.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.7.tgz#ac204054fe439e2b58c8c5a190bc981ee9a2a62c"
+  integrity sha512-PAxEwhDumK69WP+C/DeMHbUg4yGJ1MyRtGtM42GUNH7JuC6o4+CDH3SeMCYqQMjBkGXq//L9L3MXkaTOZaWXJg==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -200,13 +200,13 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch@4.1.0-alpha.3":
-  version "4.1.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.1.0-alpha.3.tgz#0d74bbc7b173fa28953d71f22a0f672c73f0ad17"
-  integrity sha512-2xI516CpP+pdOGLiNO3Dg4z9hZ92fbNBt+P9qa0lDGUcE1Ii7lYQlCrQmqdyF7gtQQBJzmCMkyGDpYMyJMkwJg==
+"@appbaseio/reactivesearch@4.0.0-alpha.3":
+  version "4.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-alpha.3.tgz#70dfbb6dbc4e30e57b62dcb1f696701b81a1b46d"
+  integrity sha512-dHtm1fV+qVApV4YzC3vBu6PwZQLlphB0Z1nEgYMkfKe+f2BxT7TG9DQYd8XR5k+ZfbebWTxxwp6tZ4fbmn8c7Q==
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.6"
+    "@appbaseio/reactivecore" "10.0.0-alpha.7"
     "@appbaseio/rheostat" "^1.0.0-alpha.15"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -223,6 +223,7 @@
     prop-types "^15.6.0"
     react-day-picker "^7.0.5"
     react-redux "^6.0.1"
+    remarkable "^2.0.1"
     url-search-params-polyfill "^7.0.0"
     xss "^1.0.11"
 
