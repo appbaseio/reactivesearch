@@ -234,7 +234,7 @@ const Chat = (props) => {
 							key={index}
 							isSender={message.role === AI_ROLES.USER}
 							dangerouslySetInnerHTML={{
-								__html: md.render(xss(message.content)),
+								__html: md.render(message.content),
 							}}
 							themePreset={props.themePreset}
 							theme={props.theme}
