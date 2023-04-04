@@ -30,6 +30,7 @@ export const SearchBoxAISection = styled('div')`
 	margin-bottom: 5px;
 	min-height: 200px;
 	padding-top: 20px;
+	position: relative;
 `;
 
 export const Question = styled.div`
@@ -43,7 +44,6 @@ export const Answer = styled.div`
 	position: relative;
 	margin-bottom: 5px;
 	min-height: 100px;
-	position: relative;
 	overflow: auto;
 	white-space: pre-wrap;
 	pre {

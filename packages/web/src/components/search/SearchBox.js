@@ -1010,19 +1010,34 @@ const SearchBox = (props) => {
 		);
 	};
 
-	const renderAIScreenFooter = () =>
-		showAIScreenFooter
-		&& props.AIResponse
-		&& props.AIResponse.documentIds && (
-			<Footer>
-				Summary generated using the following sources:{' '}
-				<SourceTags>
-					{props.AIResponse.documentIds.map(el => (
-						<span>{el}</span>
-					))}
-				</SourceTags>
-			</Footer>
-		);
+	const renderAIScreenFooter = () => {
+		const { AIUIConfig = {} } = props;
+		const { showSourceDocuments = true } = AIUIConfig || {};
+
+		return showSourceDocuments
+			&& showAIScreenFooter
+			&& props.AIResponse
+			&& props.AIResponse.documentIds ? (
+				<Footer>
+					Summary generated using the following sources:{' '}
+					<SourceTags>
+						{props.AIResponse.documentIds.map(el => (
+							<span>{el}</span>
+						))}
+					</SourceTags>
+				</Footer>
+			) : null;
+	};
+
+	const renderAIScreenLoader = () => {
+		const { AIUIConfig = {} } = props;
+		const { loaderMessage } = AIUIConfig || {};
+		if (loaderMessage) {
+			return loaderMessage;
+		}
+
+		return <HorizontalSkeletonLoader />;
+	};
 
 	const renderAIScreen = () => {
 		const { renderAIAnswer } = props;
@@ -1040,7 +1055,7 @@ const SearchBox = (props) => {
 		return (
 			<SearchBoxAISection>
 				{props.isAIResponseLoading || props.isLoading ? (
-					<HorizontalSkeletonLoader />
+					renderAIScreenLoader()
 				) : (
 					<Fragment>
 						<Answer>
@@ -1738,6 +1753,7 @@ SearchBox.propTypes = {
 	isAIResponseLoading: types.bool,
 	AIResponseError: types.componentObject,
 	renderAIAnswer: types.func,
+	AIUIConfig: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1776,6 +1792,7 @@ SearchBox.defaultProps = {
 	mode: 'select',
 	enableAI: false,
 	AIConfig: null,
+	AIUIConfig: {},
 };
 
 const mapStateToProps = (state, props) => ({
