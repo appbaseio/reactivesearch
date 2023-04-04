@@ -68,7 +68,7 @@ import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 import HOOKS from '../../utils/hooks';
-import { Answer, Footer, Question, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
+import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 
@@ -1023,6 +1023,7 @@ const SearchBox = (props) => {
 				</SourceTags>
 			</Footer>
 		);
+
 	const renderAIScreen = () => {
 		const { renderAIAnswer } = props;
 		if (typeof renderAIAnswer === 'function') {
@@ -1168,6 +1169,14 @@ const SearchBox = (props) => {
 			}
 		}
 	}, [selectedValue]);
+
+	useEffect(() => {
+		if (showAIScreen) {
+			if (_inputRef.current) {
+				_inputRef.current.blur();
+			}
+		}
+	}, [showAIScreen]);
 
 	useEffect(() => {
 		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
