@@ -112,6 +112,7 @@ const SearchBox = (props) => {
 	let [selectedTags, setSelectedTags] = useState([]);
 	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
+	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
 	const stats = () => getResultStats(props);
 	const [showAIScreen, setShowAIScreen] = useState(false);
@@ -1038,7 +1039,6 @@ const SearchBox = (props) => {
 
 		return <HorizontalSkeletonLoader />;
 	};
-
 	const renderAIScreen = () => {
 		const { renderAIAnswer } = props;
 		if (typeof renderAIAnswer === 'function') {
@@ -1069,6 +1069,21 @@ const SearchBox = (props) => {
 								speed={5}
 								onTypingComplete={() => {
 									setShowAIScreenFooter(true);
+
+									setTimeout(() => {
+										_dropdownULRef.current.scrollTo({
+											top: _dropdownULRef.current.scrollHeight,
+											behavior: 'smooth',
+										});
+									}, 100);
+								}}
+								onWhileTyping={() => {
+									setTimeout(() => {
+										_dropdownULRef.current.scrollTo({
+											top: _dropdownULRef.current.scrollHeight,
+											behavior: 'smooth',
+										});
+									}, 2000);
 								}}
 							/>
 						</Answer>
@@ -1307,6 +1322,7 @@ const SearchBox = (props) => {
 												props.themePreset,
 												props.theme,
 											)}
+											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
 											{showAIScreen ? (

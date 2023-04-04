@@ -31,6 +31,9 @@ export const SearchBoxAISection = styled('div')`
 	min-height: 200px;
 	padding-top: 20px;
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 `;
 
 export const Question = styled.div`
@@ -62,10 +65,10 @@ export const Footer = styled.div`
 	gap: 1rem;
 	flex-wrap: wrap;
 	animation: ${fadeInFromBottom} 0.5s ease-out;
-	position: sticky;
-	bottom: 0;
+	//position: sticky;
+	//bottom: 0;
+	padding-top: 10px;
 	background: white;
-	padding: 10px 0;
 `;
 
 export const SourceTags = styled.div`
