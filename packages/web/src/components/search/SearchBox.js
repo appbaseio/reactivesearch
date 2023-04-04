@@ -628,7 +628,17 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript
 			&& results[0][0].transcript.trim()
 		) {
-			setValue(results[0][0].transcript.trim(), true, props, undefined, true, isOpen);
+			setValue(
+				results[0][0].transcript.trim(),
+				true,
+				props,
+				undefined,
+				true,
+				props.enableAI ? !isOpen && !showAIScreen : isOpen,
+			);
+			if (!showAIScreen && props.autosuggest) {
+				setShowAIScreen(true);
+			}
 		}
 	};
 
@@ -1028,13 +1038,13 @@ const SearchBox = (props) => {
 		}
 		return (
 			<SearchBoxAISection>
-				<Question>{currentValue}</Question>
 				{props.isAIResponseLoading || props.isLoading ? (
 					<HorizontalSkeletonLoader />
 				) : (
 					<Fragment>
 						<Answer>
 							<TypingEffect
+								key={currentValue}
 								message={md.render(
 									XSS(
 										props.AIResponse
@@ -1160,10 +1170,10 @@ const SearchBox = (props) => {
 	}, [selectedValue]);
 
 	useEffect(() => {
-		if (!showAIScreen && showAIScreenFooter) {
+		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
 			setShowAIScreenFooter(false);
 		}
-	}, [showAIScreen]);
+	}, [showAIScreen, props.isAIResponseLoading]);
 
 	useEffect(() => {
 		hasMounted.current = true;
