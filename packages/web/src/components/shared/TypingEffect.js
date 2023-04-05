@@ -10,6 +10,7 @@ const TypingEffect = ({
 	showTypingIndicator = false,
 	onWhileTyping = () => {},
 	onWhileTypingDelay = 1500,
+	showTypingEffect = true,
 }) => {
 	const [currentMessage, setCurrentMessage] = useState('');
 	const [typing, setTyping] = useState(true);
@@ -37,8 +38,12 @@ const TypingEffect = ({
 
 	useEffect(() => {
 		if (message !== currentMessage) {
-			setCurrentMessage('');
-			setTyping(true);
+			if (showTypingEffect) {
+				setCurrentMessage('');
+				setTyping(true);
+			} else {
+				setCurrentMessage(message);
+			}
 		}
 	}, [message]);
 
@@ -77,6 +82,7 @@ TypingEffect.propTypes = {
 	showTypingIndicator: types.bool,
 	onWhileTyping: types.func,
 	onWhileTypingDelay: types.number,
+	showTypingEffect: types.bool,
 };
 
 export default React.memo(TypingEffect);

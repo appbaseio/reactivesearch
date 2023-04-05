@@ -117,8 +117,11 @@ const SearchBox = (props) => {
 	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
 	const stats = () => getResultStats(props);
+
 	const [showAIScreen, setShowAIScreen] = useState(false);
 	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
+	const [showTypingEffect, setShowTypingEffect] = useState(true);
+
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
@@ -1230,6 +1233,7 @@ const SearchBox = (props) => {
 			if (_inputRef.current) {
 				_inputRef.current.blur();
 			}
+			setShowTypingEffect(true);
 		}
 	}, [showAIScreen]);
 
@@ -1238,6 +1242,12 @@ const SearchBox = (props) => {
 			setShowAIScreenFooter(false);
 		}
 	}, [showAIScreen, props.isAIResponseLoading]);
+
+	useEffect(() => {
+		if (!isOpen) {
+			setShowTypingEffect(false);
+		}
+	}, [isOpen]);
 
 	useEffect(() => {
 		hasMounted.current = true;
@@ -1399,6 +1409,9 @@ const SearchBox = (props) => {
 																					setShowAIScreenFooter(
 																						true,
 																					);
+																					setShowTypingEffect(
+																						false,
+																					);
 
 																					setTimeout(() => {
 																						_dropdownULRef.current.scrollTo(
@@ -1423,6 +1436,9 @@ const SearchBox = (props) => {
 																						},
 																					);
 																				}}
+																				showTypingEffect={
+																					showTypingEffect
+																				}
 																			/>
 																		</Answer>
 																		{renderAIScreenFooter()}
