@@ -749,6 +749,7 @@ const SearchBox = (props) => {
 					&& props.AIResponse.choices[0].message.content,
 				documentIds: props.AIResponse ? props.AIResponse.documentIds : [],
 				loading: props.isAIResponseLoading || props.isLoading,
+				showAIScreen,
 			},
 		};
 		return getComponentUtilFunc(data, props);
