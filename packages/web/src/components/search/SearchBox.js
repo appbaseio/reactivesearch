@@ -1098,7 +1098,14 @@ const SearchBox = (props) => {
 					Summary generated using the following sources:{' '}
 					<SourceTags>
 						{getSourceObjects().map(el => (
-							<Button info onClick={() => onSourceClick && onSourceClick(el)}>
+							<Button
+								className={`--ai-source-tag ${
+								getClassName(props.innerClass, 'ai-source-tag') || ''
+							}`}
+								title={el[sourceDocumentLabel]}
+								info
+								onClick={() => onSourceClick && onSourceClick(el)}
+							>
 								{el[sourceDocumentLabel]}
 							</Button>
 						))}
@@ -1245,7 +1252,7 @@ const SearchBox = (props) => {
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
-				<Title className={getClassName(props.innerClass, 'title') || null}>
+				<Title className={getClassName(props.innerClass, 'title') || ''}>
 					{props.title}
 				</Title>
 			)}

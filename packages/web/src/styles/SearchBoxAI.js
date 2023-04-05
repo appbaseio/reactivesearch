@@ -76,11 +76,11 @@ export const SourceTags = styled.div`
 	gap: 8px;
 	flex-wrap: wrap;
 
-	span {
-		font-weight: 300;
-		padding: 5px;
-		border: 1px solid blue;
-		cursor: default;
-		border-radius: 4px;
+	.--ai-source-tag {
+		display: inline-block;
+		max-width: 200px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 `;
