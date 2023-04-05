@@ -1054,7 +1054,11 @@ const SearchBox = (props) => {
 
 	const renderAIScreenFooter = () => {
 		const { AIUIConfig = {} } = props;
-		const { showSourceDocuments = true, sourceDocumentLabel = '_id' } = AIUIConfig || {};
+		const {
+			showSourceDocuments = true,
+			sourceDocumentLabel = '_id',
+			onSourceClick = () => {},
+		} = AIUIConfig || {};
 
 		const getSourceObjects = () => {
 			const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
@@ -1070,7 +1074,9 @@ const SearchBox = (props) => {
 					const foundSourceObj
 						= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
 					if (foundSourceObj) {
-						sourceObjects.push({ ...foundSourceObj, ...foundSourceObj._source });
+						const { _source = {}, ...rest } = foundSourceObj;
+
+						sourceObjects.push({ ...rest, ..._source });
 					}
 				});
 			} else {
@@ -1092,7 +1098,9 @@ const SearchBox = (props) => {
 					Summary generated using the following sources:{' '}
 					<SourceTags>
 						{getSourceObjects().map(el => (
-							<span>{el[sourceDocumentLabel]}</span>
+							<Button info onClick={() => onSourceClick && onSourceClick(el)}>
+								{el[sourceDocumentLabel]}
+							</Button>
 						))}
 					</SourceTags>
 				</Footer>
