@@ -729,6 +729,31 @@ const SearchBox = (props) => {
 		}
 	};
 
+	const getAISourceObjects = () => {
+		const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
+		const sourceObjects = [];
+		const docIds = props.AIResponse.documentIds;
+		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+			docIds.forEach((id) => {
+				const foundSourceObj
+					= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+				if (foundSourceObj) {
+					const { _source = {}, ...rest } = foundSourceObj;
+
+					sourceObjects.push({ ...rest, ..._source });
+				}
+			});
+		} else {
+			sourceObjects.push(
+				...docIds.map(id => ({
+					_id: id,
+				})),
+			);
+		}
+
+		return sourceObjects;
+	};
+
 	const getComponent = (downshiftProps = {}) => {
 		const { error, isLoading, rawData } = props;
 
@@ -750,6 +775,7 @@ const SearchBox = (props) => {
 				documentIds: props.AIResponse ? props.AIResponse.documentIds : [],
 				loading: props.isAIResponseLoading || props.isLoading,
 				showAIScreen,
+				sources: getAISourceObjects(),
 			},
 		};
 		return getComponentUtilFunc(data, props);
@@ -1061,36 +1087,6 @@ const SearchBox = (props) => {
 			onSourceClick = () => {},
 		} = AIUIConfig || {};
 
-		const getSourceObjects = () => {
-			const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
-			const sourceObjects = [];
-			const docIds = props.AIResponse.documentIds;
-			if (
-				localCache
-				&& localCache.meta
-				&& localCache.meta.hits
-				&& localCache.meta.hits.hits
-			) {
-				docIds.forEach((id) => {
-					const foundSourceObj
-						= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
-					if (foundSourceObj) {
-						const { _source = {}, ...rest } = foundSourceObj;
-
-						sourceObjects.push({ ...rest, ..._source });
-					}
-				});
-			} else {
-				sourceObjects.push(
-					...docIds.map(id => ({
-						_id: id,
-					})),
-				);
-			}
-
-			return sourceObjects;
-		};
-
 		return showSourceDocuments
 			&& showAIScreenFooter
 			&& props.AIResponse
@@ -1098,7 +1094,7 @@ const SearchBox = (props) => {
 				<Footer>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
-						{getSourceObjects().map(el => (
+						{getAISourceObjects().map(el => (
 							<Button
 								className={`--ai-source-tag ${
 								getClassName(props.innerClass, 'ai-source-tag') || ''
@@ -1374,6 +1370,7 @@ const SearchBox = (props) => {
 															loading:
 																props.isAIResponseLoading
 																|| props.isLoading,
+															sources: getAISourceObjects(),
 														})
 													) : (
 														<Fragment>
