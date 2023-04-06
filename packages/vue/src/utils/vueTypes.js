@@ -164,6 +164,14 @@ const types = {
 		headers: VueTypes.object,
 		body: VueTypes.object,
 	}),
+	AIConfig: VueTypes.shape({
+		systemPrompt: VueTypes.string,
+		topDocsForContext: VueTypes.number,
+		maxTokens: VueTypes.number,
+		docTemplate: VueTypes.string,
+		queryTemplate: VueTypes.string,
+		temperature: VueTypes.number,
+	}),
 };
 
 export default types;
