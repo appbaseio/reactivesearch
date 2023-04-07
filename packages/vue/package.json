@@ -46,6 +46,7 @@
 		"ngeohash": "^0.6.3",
 		"polished": "^2.2.0",
 		"redux": "^4.0.0",
+		"remarkable": "^2.0.1",
 		"url-search-params-polyfill": "^7.0.0",
 		"vue-google-maps-community-fork": "^0.1.7",
 		"vue-highlight-words": "^1.2.0",
