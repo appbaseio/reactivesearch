@@ -504,14 +504,7 @@ const SearchBox = (props) => {
 			setIsOpen(true);
 		}
 		if (value === undefined) {
-			setValue(
-				inputValue,
-				false,
-				props,
-				inputValue === '' ? causes.CLEAR_VALUE : undefined,
-				true,
-				false,
-			);
+			setValue(inputValue, false, props, undefined, true, false);
 		} else if (onChange) {
 			// handle caret position in controlled components
 			handleCaretPosition(e);
@@ -765,11 +758,9 @@ const SearchBox = (props) => {
 				return props.icon;
 			}
 			if (props.iconURL) {
-				return (<img
-					style={{ maxHeight: '25px' }}
-					src={XSS(props.iconURL)}
-					alt="search-icon"
-				/>);
+				return (
+					<img style={{ maxHeight: '25px' }} src={XSS(props.iconURL)} alt="search-icon" />
+				);
 			}
 			return <SearchSvg />;
 		}
@@ -814,14 +805,11 @@ const SearchBox = (props) => {
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
-					{
-						showFocusShortcutsIcon
-						&& (
-							<ButtonIconWrapper onClick={e => focusSearchBox(e)}>
-								{renderShortcut()}
-							</ButtonIconWrapper>
-						)
-					}
+					{showFocusShortcutsIcon && (
+						<ButtonIconWrapper onClick={e => focusSearchBox(e)}>
+							{renderShortcut()}
+						</ButtonIconWrapper>
+					)}
 					{shouldMicRender(showVoiceSearch) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -840,20 +828,18 @@ const SearchBox = (props) => {
 						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
 					)}
 				</IconGroup>
-
 			</div>
 		);
 	};
-	const SuggestionsFooter = () => (
-		typeof renderSuggestionsFooter === 'function'
-	 		? renderSuggestionsFooter()
-			: ((
-				<AutosuggestFooterContainer>
-					<div>↑↓ Navigate</div>
-					<div>↩ Go</div>
-				</AutosuggestFooterContainer>))
-	);
-
+	const SuggestionsFooter = () =>
+		(typeof renderSuggestionsFooter === 'function' ? (
+			renderSuggestionsFooter()
+		) : (
+			<AutosuggestFooterContainer>
+				<div>↑↓ Navigate</div>
+				<div>↩ Go</div>
+			</AutosuggestFooterContainer>
+		));
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
@@ -1391,8 +1377,7 @@ const SearchBox = (props) => {
 												);
 											})}
 
-											{showSuggestionsFooter
-												? <SuggestionsFooter /> : null}
+											{showSuggestionsFooter ? <SuggestionsFooter /> : null}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1706,14 +1691,13 @@ const ForwardRefComponent = React.forwardRef((props, ref) => (
 				componentType={componentTypes.searchBox}
 				mode={preferenceProps.testMode ? 'test' : ''}
 			>
-				{
-					componentProps =>
-						(<ConnectedComponent
-							{...preferenceProps}
-							{...componentProps}
-							myForwardedRef={ref}
-						/>)
-				}
+				{componentProps => (
+					<ConnectedComponent
+						{...preferenceProps}
+						{...componentProps}
+						myForwardedRef={ref}
+					/>
+				)}
 			</ComponentWrapper>
 		)}
 	</PreferencesConsumer>
