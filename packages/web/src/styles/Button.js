@@ -1,3 +1,4 @@
+import { hexToRGBA } from '@appbaseio/reactivecore/lib/utils/helper';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { darken, lighten, rgba } from 'polished';
@@ -88,14 +89,14 @@ const primary = ({ theme }) => css`
 `;
 
 const info = ({ theme }) => css`
-	border: 1px solid ${theme.colors.primaryColor};
-	color: ${theme.colors.primaryColor};
-	background-color: ${theme.colors.primaryTextColor};
-	&:hover,
-	&:focus {
-		background-color: ${darken(0.1, theme.colors.primaryTextColor)};
-	}
-`;
+		border: 1px solid ${theme.colors.primaryColor};
+		color: ${theme.colors.primaryColor};
+		background-color: ${theme.colors.primaryTextColor};
+		&:hover,
+		&:focus {
+			background-color: ${darken(0.1, hexToRGBA(theme.colors.primaryTextColor))};
+		}
+	`;
 
 const large = css`
 	min-height: 40px;
