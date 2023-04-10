@@ -10,11 +10,10 @@ import { Remarkable } from 'remarkable';
 
 import {
 	getClassName,
-	getComponent,
 	getObjectFromLocalStorage,
 	setObjectInLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
-import { connect, hasCustomRenderer, isFunction } from '../../utils/index';
+import { connect, hasCustomRenderer, isFunction, getComponent } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
@@ -36,6 +35,7 @@ import IconWrapper from '../../styles/IconWrapper';
 import InputWrapper from '../../styles/InputWrapper';
 import InputGroup from '../../styles/InputGroup';
 import SearchSvg from '../shared/SearchSvg';
+import Button from '../../styles/Button';
 
 const md = new Remarkable();
 
@@ -53,6 +53,8 @@ const AIAnswer = defineComponent({
 			messages: [],
 			inputMessage: '',
 			AISessionId: '',
+			isLoadingState: false,
+			error: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -73,7 +75,7 @@ const AIAnswer = defineComponent({
 		showVoiceInput: VueTypes.bool.def(false),
 		showIcon: VueTypes.bool.def(true),
 		onData: types.func,
-		innerRef: VueTypes.string.def('searchInputField'),
+		innerRef: VueTypes.string.def('AISearchInputField'),
 		react: types.react,
 		enableAI: VueTypes.bool.def(true),
 		AIConfig: types.AIConfig,
@@ -117,7 +119,7 @@ const AIAnswer = defineComponent({
 				// pushing message history so far
 				if (request && request.messages && Array.isArray(request.messages)) {
 					finalMessages.push(
-						...request.messages.filter(msg => msg.role !== AI_ROLES.SYSTEM),
+						...request.messages.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
 					);
 				}
 
@@ -132,7 +134,7 @@ const AIAnswer = defineComponent({
 				}
 
 				this.messages = finalMessages;
-			} else if (this.$props.isLoading && !newVal) {
+			} else if (!newVal && !this.error) {
 				this.messages = [];
 			}
 		},
@@ -145,6 +147,16 @@ const AIAnswer = defineComponent({
 			});
 		},
 		isAIResponseLoading(newVal) {
+			this.isLoadingState = newVal;
+			this.$emit('on-data', {
+				data: this.messages,
+				rawData: this.$props.rawData,
+				loading: newVal || this.$props.isLoading,
+				error: this.$props.AIResponseError,
+			});
+		},
+		isLoading(newVal) {
+			this.isLoadingState = newVal;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
@@ -153,6 +165,7 @@ const AIAnswer = defineComponent({
 			});
 		},
 		AIResponseError(newVal) {
+			this.error = newVal;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
@@ -160,21 +173,28 @@ const AIAnswer = defineComponent({
 				error: newVal,
 			});
 		},
+		messages() {
+			this.scrollToBottom();
+		},
 	},
 	methods: {
+		scrollToBottom() {
+			const messageContainer = this.$refs?.[this.$props.innerRef];
+			messageContainer.scrollTop = messageContainer.scrollHeight;
+		},
 		handleMessageInputChange(e) {
 			this.inputMessage = e.target.value;
 		},
 		handleSendMessage(e, isRetry = false, text = this.inputMessage) {
 			if (typeof e === 'object') e.preventDefault();
 			if (text.trim()) {
-				if (this.$props.isAIResponseLoading) {
+				if (this.isLoadingState) {
 					return;
 				}
 				if (!isRetry)
 					this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
 				if (this.AISessionId) {
-					this.$props.getAIResponse(this.AISessionId, this.$props.componentId, text);
+					this.getAIResponse(this.AISessionId, this.componentId, text);
 				} else {
 					console.error(
 						`AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
@@ -185,57 +205,50 @@ const AIAnswer = defineComponent({
 			}
 		},
 		handleRetryRequest() {
-			if (this.messages && !(this.$props.isAIResponseLoading || this.$props.isLoading)) {
-				const lastUserRequestMessage = this.messages[this.messages.length - 1].content;
+			if (this.messages && !this.isLoadingState) {
+				const lastUserRequestMessage = this.messages[this.messages.length - 1]?.content;
 
 				if (this.AISessionId) {
-					this.$props.getAIResponse(
-						this.AISessionId,
-						this.$props.componentId,
-						lastUserRequestMessage,
-					);
+					this.getAIResponse(this.AISessionId, this.componentId, lastUserRequestMessage);
 					this.inputMessage = '';
 				} else {
 					console.error(
-						`AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
+						`AISessionId for ${this.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
 					);
 				}
 			}
 		},
 		renderErrorComponent() {
 			const renderError = this.$slots.renderError || this.$props.renderError;
-			const { AIResponseError, isAIResponseLoading } = this.$props;
 
-			if (AIResponseError && !isAIResponseLoading) {
+			if (this.error && !this.isLoadingState) {
 				if (renderError) {
 					return (
 						<div
-							class={`--ai-answer-error-container ${getClassName(
-								this.$props.innerClass,
-								'ai-error',
-							) || ''}`}
+							class={`--ai-answer-error-container ${
+								getClassName(this.$props.innerClass, 'ai-error') || ''
+							}`}
 						>
 							{isFunction(renderError)
-								? renderError(AIResponseError, this.handleRetryRequest)
+								? renderError(this.error, this.handleRetryRequest)
 								: renderError}
 						</div>
 					);
 				}
 				return (
 					<div
-						class={`--ai-answer-error-container ${getClassName(
-							this.$props.innerClass,
-							'ai-error',
-						) || ''}`}
+						class={`--ai-answer-error-container ${
+							getClassName(this.$props.innerClass, 'ai-error') || ''
+						}`}
 					>
 						<div class="--default-error-element">
 							<span>
-								{AIResponseError.message
-									? AIResponseError.message
+								{this.error.message
+									? this.error.message
 									: 'There was an error in generating the response.'}{' '}
-								{AIResponseError.code
+								{this.error.code
 									? `Code:
-							${AIResponseError.code}`
+							${this.error.code}`
 									: ''}
 							</span>
 							<Button primary onClick={this.handleRetryRequest}>
@@ -341,6 +354,15 @@ const AIAnswer = defineComponent({
 
 			return null;
 		},
+		getComponent() {
+			const data = {
+				error: this.AIResponseError,
+				loading: this.isAIResponseLoading,
+				data: this.messages,
+				rawData: this.rawData,
+			};
+			return getComponent(data, this);
+		},
 	},
 	beforeUnmount() {
 		if (this.$props.clearSessionOnDestroy) {
@@ -355,7 +377,7 @@ const AIAnswer = defineComponent({
 	},
 	render() {
 		const props = this.$props;
-		console.log('messages', this.messages);
+
 		return (
 			<Chatbox>
 				{this.$props.title && (
@@ -365,13 +387,27 @@ const AIAnswer = defineComponent({
 				)}
 				<ChatContainer theme={props.theme} showInput={props.showInput}>
 					{/* custom render */}
-					{this.hasCustomRenderer && getComponent()}
+					{this.hasCustomRenderer && (
+						<MessagesContainer
+							themePreset={props.themePreset}
+							theme={props.theme}
+							ref={this.$props.innerRef}
+							class={`--ai-message-container ${
+								getClassName(props.innerClass, 'ai-message-container') || ''
+							}`}
+						>
+							{this.getComponent()}
+						</MessagesContainer>
+					)}
 					{/* Default render */}
 					{!this.hasCustomRenderer && (
 						<MessagesContainer
 							themePreset={props.themePreset}
 							theme={props.theme}
 							ref={this.$props.innerRef}
+							class={`--ai-message-container ${
+								getClassName(props.innerClass, 'ai-message-container') || ''
+							}`}
 						>
 							{this.messages.map((message, index) => (
 								<Message
@@ -381,21 +417,19 @@ const AIAnswer = defineComponent({
 									innerHTML={md.render(message.content)}
 									themePreset={props.themePreset}
 									theme={props.theme}
-									class={`--ai-answer-message ${getClassName(
-										props.innerClass,
-										'ai-message',
-									) || ''}`}
+									class={`--ai-answer-message ${
+										getClassName(props.innerClass, 'ai-message') || ''
+									}`}
 								/>
 							))}
-							{props.isAIResponseLoading && (
+							{this.isLoadingState && (
 								<Message
 									themePreset={props.themePreset}
 									theme={props.theme}
 									isSender={false}
-									class={`--ai-answer-message ${getClassName(
-										props.innerClass,
-										'ai-message',
-									) || null}`}
+									class={`--ai-answer-message ${
+										getClassName(props.innerClass, 'ai-message') || null
+									}`}
 								>
 									<TypingIndicator>
 										<TypingDot themePreset={props.themePreset} />
@@ -424,7 +458,7 @@ const AIAnswer = defineComponent({
 										showIcon={props.showIcon}
 										iconPosition={props.iconPosition}
 										themePreset={props.themePreset}
-										disabled={props.isAIResponseLoading}
+										disabled={this.isLoadingState}
 										class={getClassName(props.innerClass, 'ai-input') || null}
 									/>{' '}
 									{this.renderIcons()}
@@ -445,8 +479,7 @@ const mapStateToProps = (state, props) => ({
 	AIResponse:
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
 	isAIResponseLoading:
-		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading)
-		|| false,
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
 	AIResponseError:
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 	rawData: state.rawData[props.componentId],
@@ -466,7 +499,7 @@ AIConnected.name = AIAnswer.name;
 
 AIConnected.hasInternalComponent = AIAnswer.hasInternalComponent;
 
-AIConnected.install = function(Vue) {
+AIConnected.install = function (Vue) {
 	Vue.component(AIConnected.name, AIConnected);
 };
 // Add componentType for SSR
