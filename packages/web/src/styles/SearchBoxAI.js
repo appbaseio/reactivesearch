@@ -27,13 +27,15 @@ const fadeInFromTop = keyframes`
 export const SearchBoxAISection = styled('div')`
 	padding: 10px;
 	border-radius: 4px;
-	margin-bottom: 5px;
 	min-height: 200px;
 	padding-top: 20px;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	background-color: ${({ themePreset, theme }) =>
+	(themePreset === 'dark' ? '#424242' : theme.colors.backgroundColor)};
+	color: ${({ theme }) => theme.colors.textColor};
 `;
 
 export const Question = styled.div`
@@ -65,10 +67,11 @@ export const Footer = styled.div`
 	gap: 1rem;
 	flex-wrap: wrap;
 	animation: ${fadeInFromBottom} 0.5s ease-out;
-	//position: sticky;
-	//bottom: 0;
-	padding-top: 10px;
+	padding: 10px 0;
 	background: white;
+	background-color: ${({ themePreset, theme }) =>
+	(themePreset === 'dark' ? '#424242' : theme.colors.backgroundColor)};
+	color: ${({ theme }) => theme.colors.textColor};
 `;
 
 export const SourceTags = styled.div`

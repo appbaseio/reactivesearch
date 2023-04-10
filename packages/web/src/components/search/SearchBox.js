@@ -1095,7 +1095,7 @@ const SearchBox = (props) => {
 			&& showAIScreenFooter
 			&& props.AIResponse
 			&& props.AIResponse.documentIds ? (
-				<Footer>
+				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
 						{getAISourceObjects().map(el => (
@@ -1364,7 +1364,7 @@ const SearchBox = (props) => {
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
 											{showAIScreen && (
-												<SearchBoxAISection>
+												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
 															question: currentValue,
