@@ -36,6 +36,20 @@ export const SearchBoxAISection = styled('div')`
 	background-color: ${({ themePreset, theme }) =>
 	(themePreset === 'dark' ? '#424242' : theme.colors.backgroundColor)};
 	color: ${({ theme }) => theme.colors.textColor};
+
+	.--ai-answer-error-container {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		.--default-error-element {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+		}
+	}
 `;
 
 export const Question = styled.div`

@@ -705,10 +705,61 @@ const SearchBox = (props) => {
 		return null;
 	};
 
-	const renderError = () => {
+	// TODO: this needs a fix and will be done
+	// TODO: alongside fixing the standalone AI query bug
+	const handleRetryRequest = () => {};
+
+	const renderError = (isAIError = false) => {
 		const {
-			error, renderError, themePreset, theme, isLoading, innerClass,
+			error,
+			renderError,
+			themePreset,
+			theme,
+			isLoading,
+			innerClass,
+			AIResponseError,
+			isAIResponseLoading,
 		} = props;
+		if (isAIError) {
+			if (showAIScreen && AIResponseError && !isAIResponseLoading) {
+				if (renderError) {
+					return (
+						<div
+							className={`--ai-answer-error-container ${
+								getClassName(props.innerClass, 'ai-error') || ''
+							}`}
+						>
+							{isFunction(renderError)
+								? renderError(AIResponseError, handleRetryRequest)
+								: renderError}
+						</div>
+					);
+				}
+				return (
+					<div
+						className={`--ai-answer-error-container ${
+							getClassName(props.innerClass, 'ai-error') || ''
+						}`}
+					>
+						<div className="--default-error-element">
+							<span>
+								{AIResponseError.message
+									? AIResponseError.message
+									: 'There was an error in generating the response.'}{' '}
+								{AIResponseError.code
+									? `Code:
+							${AIResponseError.code}`
+									: ''}
+							</span>
+							{/* TODO: bring retry button back */}
+							{/* <Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button> */}
+						</div>
+					</div>
+				);
+			}
+		}
 		if (error && renderError && currentValue && !isLoading) {
 			return (
 				<SuggestionWrapper
@@ -1382,6 +1433,7 @@ const SearchBox = (props) => {
 																props.isAIResponseLoading
 																|| props.isLoading,
 															sources: getAISourceObjects(),
+															error: props.AIResponseError,
 														})
 													) : (
 														<Fragment>
@@ -1447,6 +1499,7 @@ const SearchBox = (props) => {
 																)}
 														</Fragment>
 													)}
+													{renderError(true)}
 												</SearchBoxAISection>
 											)}
 											{!showAIScreen && (
