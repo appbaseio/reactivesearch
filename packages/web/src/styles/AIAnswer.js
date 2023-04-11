@@ -262,6 +262,8 @@ export const Message = styled.div`
 		padding: 0.2em 0.4em;
 		margin: 5px 0;
 		display: inline-block;
+		overflow: auto;
+		width: 100%;
 	}
 	ul,
 	ol {
