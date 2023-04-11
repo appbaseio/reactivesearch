@@ -53,7 +53,6 @@ const AIAnswer = defineComponent({
 			messages: [],
 			inputMessage: '',
 			AISessionId: '',
-			isLoadingState: false,
 			error: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
@@ -68,6 +67,9 @@ const AIAnswer = defineComponent({
 	computed: {
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
+		},
+		isLoadingState() {
+			return this.isAIResponseLoading || this.isLoading;
 		},
 	},
 	props: {
@@ -179,8 +181,16 @@ const AIAnswer = defineComponent({
 	},
 	methods: {
 		scrollToBottom() {
-			const messageContainer = this.$refs?.[this.$props.innerRef];
-			messageContainer.scrollTop = messageContainer.scrollHeight;
+			this.$nextTick(() => {
+				const messageContainer = this.$refs?.[this.$props.innerRef];
+
+				if (messageContainer && messageContainer.$el) {
+					messageContainer.$el.scrollTo({
+						top: messageContainer.$el.scrollHeight,
+						behavior: 'smooth',
+					});
+				}
+			});
 		},
 		handleMessageInputChange(e) {
 			this.inputMessage = e.target.value;
@@ -191,14 +201,17 @@ const AIAnswer = defineComponent({
 				if (this.isLoadingState) {
 					return;
 				}
-				if (!isRetry)
-					this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
 				if (this.AISessionId) {
+					if (!isRetry)
+						this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
 					this.getAIResponse(this.AISessionId, this.componentId, text);
 				} else {
 					console.error(
 						`AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
 					);
+					this.error = {
+						message: `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
+					};
 				}
 
 				this.inputMessage = '';
@@ -251,9 +264,11 @@ const AIAnswer = defineComponent({
 							${this.error.code}`
 									: ''}
 							</span>
-							<Button primary onClick={this.handleRetryRequest}>
-								Try again
-							</Button>
+							{this.AISessionId && (
+								<Button primary onClick={this.handleRetryRequest}>
+									Try again
+								</Button>
+							)}
 						</div>
 					</div>
 				);
