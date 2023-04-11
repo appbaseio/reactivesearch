@@ -572,8 +572,17 @@ const SearchBox = defineComponent({
 		},
 
 		clearValue() {
-			this.setValue('', false, this.$props, causes.CLEAR_VALUE, false);
-			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
+			this.setValue(
+				'',
+				false,
+				this.$props,
+				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
+				false,
+			);
+			this.onValueSelectedHandler(
+				'',
+				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
+			);
 		},
 
 		handleKeyDown(event, highlightedIndex = null) {
@@ -606,12 +615,7 @@ const SearchBox = defineComponent({
 
 			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(
-					inputValue,
-					false,
-					this.$props,
-					inputValue === '' ? causes.CLEAR_VALUE : undefined,
-				);
+				this.setValue(inputValue, false, this.$props, undefined);
 			} else {
 				this.$emit(
 					'change',
