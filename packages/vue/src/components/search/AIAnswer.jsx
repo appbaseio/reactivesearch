@@ -285,7 +285,8 @@ const AIAnswer = defineComponent({
 			if (this.$props.showIcon) {
 				if (this.$props.icon) {
 					return this.$props.icon;
-				} if (this.$slots.icon) {
+				}
+				if (this.$slots.icon) {
 					return this.$slots.icon();
 				}
 				if (this.$props.iconURL) {
@@ -341,6 +342,9 @@ const AIAnswer = defineComponent({
 					</IconGroup>
 				</div>
 			);
+		},
+		enterButtonOnClick(e) {
+			this.handleSendMessage(e);
 		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
