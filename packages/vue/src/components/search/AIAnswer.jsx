@@ -104,6 +104,7 @@ const AIAnswer = defineComponent({
 		onError: types.func,
 		renderError: types.title,
 		isLoading: types.boolRequired,
+		sessionIdFromStore: VueTypes.string,
 	},
 	mounted() {},
 	watch: {
@@ -166,8 +167,19 @@ const AIAnswer = defineComponent({
 				error: this.$props.AIResponseError,
 			});
 		},
+		sessionIdFromStore(newVal) {
+			if (newVal) {
+				this.sessionId = newVal;
+			}
+		},
 		AIResponseError(newVal) {
 			this.error = newVal;
+			this.AISessionId
+				= (
+					(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+						this.$props.componentId
+					] || {}
+				).sessionId || null;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
@@ -505,6 +517,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
+	sessionIdFromStore:
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].sessionId)
+		|| '',
 });
 const mapDispatchToProps = {
 	getAIResponse: fetchAIResponse,
