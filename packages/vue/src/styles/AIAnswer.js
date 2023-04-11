@@ -268,6 +268,9 @@ export const Message = styled('div')`
 	ol {
 		list-style-position: inside;
 	}
+	p {
+		overflow-wrap: anywhere;
+	}
 `;
 
 export const MessageInputContainer = styled('form')`
@@ -281,7 +284,8 @@ export const MessageInput = styled(Input)`
 	width: 100%;
 	border-radius: 5px;
 	border: 1px solid #ccc;
-	background-color: ${(props) => props.themePreset === 'dark' ? props.theme.colors.borderColor : '#fff'};
+	background-color: ${(props) =>
+		props.themePreset === 'dark' ? props.theme.colors.borderColor : '#fff'};
 	color: ${(props) =>
 		props.themePreset === 'dark'
 			? props.theme.colors.titleColor
