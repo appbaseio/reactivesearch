@@ -217,6 +217,7 @@ export const Message = styled('div')`
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
+		overflow-wrap: anywhere;
 	}
 	pre {
 		margin: 10px auto;
@@ -263,13 +264,12 @@ export const Message = styled('div')`
 		padding: 0.2em 0.4em;
 		margin: 5px 0;
 		display: inline-block;
+		overflow: auto;
+		width: 100%;
 	}
 	ul,
 	ol {
 		list-style-position: inside;
-	}
-	p {
-		overflow-wrap: anywhere;
 	}
 `;
 
