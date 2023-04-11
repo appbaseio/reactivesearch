@@ -164,7 +164,8 @@ const Chat = (props) => {
 	};
 	const handleRetryRequest = () => {
 		if (messages) {
-			const lastUserRequestMessage = messages[messages.length - 1].content;
+			const lastUserRequestMessage
+				= messages[messages.length - 1] && messages[messages.length - 1].content;
 
 			onSendMessage(lastUserRequestMessage, true);
 		}
@@ -202,9 +203,11 @@ const Chat = (props) => {
 							${AIResponseError.code}`
 								: ''}
 						</span>
-						<Button primary onClick={handleRetryRequest}>
-							Try again
-						</Button>
+						{props.showRetryButton && (
+							<Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button>
+						)}
 					</div>
 				</div>
 			);
@@ -321,6 +324,7 @@ Chat.propTypes = {
 	rawData: types.rawData,
 	theme: types.style,
 	renderError: types.title,
+	showRetryButton: types.bool,
 };
 
 export default Chat;

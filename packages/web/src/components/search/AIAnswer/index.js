@@ -27,12 +27,13 @@ import Title from '../../../styles/Title';
 
 const AIAnswer = (props) => {
 	const [messages, setMessages] = React.useState([]);
+	const [errorState, setErrorState] = React.useState(null);
 
 	const AISessionId = useRef(null);
 
 	const handleSendMessage = (text, isRetry = false) => {
-		if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
 		if (AISessionId.current) {
+			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
 			props.getAIResponse(AISessionId.current, props.componentId, text);
 		} else {
 			console.error(
@@ -40,6 +41,9 @@ const AIAnswer = (props) => {
 			);
 		}
 	};
+	useEffect(() => {
+		setErrorState(props.AIResponseError);
+	}, [props.AIResponseError]);
 
 	useEffect(() => {
 		if (props.AIResponse) {
@@ -48,6 +52,9 @@ const AIAnswer = (props) => {
 					.sessionId || null;
 			const { request, response } = props.AIResponse;
 			const finalMessages = [];
+			if (response.error) {
+				setErrorState({ message: response.error });
+			}
 
 			// pushing message history so far
 			if (request && request.messages && Array.isArray(request.messages)) {
@@ -82,6 +89,11 @@ const AIAnswer = (props) => {
 			});
 		}
 	}, [props.rawData, messages, props.isAIResponseLoading, props.AIResponseError]);
+
+	useEffect(() => {
+		AISessionId.current = props.sessionIdFromStore;
+	}, [props.sessionIdFromStore]);
+
 	useEffect(
 		() => () => {
 			if (props.clearSessionOnDestroy) {
@@ -120,7 +132,7 @@ const AIAnswer = (props) => {
 				componentId={props.componentId}
 				isAIResponseLoading={props.isAIResponseLoading || props.isLoading}
 				AIResponse={props.AIResponse}
-				AIResponseError={props.AIResponseError}
+				AIResponseError={errorState}
 				enterButton={props.enterButton}
 				renderEnterButton={props.renderEnterButton}
 				showInput={props.showInput}
@@ -128,6 +140,7 @@ const AIAnswer = (props) => {
 				rawData={props.rawData}
 				theme={props.theme}
 				renderError={props.renderError}
+				showRetryButton={AISessionId.current}
 			/>
 		</Chatbox>
 	);
@@ -163,6 +176,7 @@ AIAnswer.propTypes = {
 	onError: types.func,
 	renderError: types.title,
 	isLoading: types.boolRequired,
+	sessionIdFromStore: types.string,
 };
 
 AIAnswer.defaultProps = {
@@ -174,6 +188,7 @@ AIAnswer.defaultProps = {
 	renderEnterButton: null,
 	showInput: true,
 	clearSessionOnDestroy: true,
+	sessionIdFromStore: '',
 };
 
 const mapStateToProps = (state, props) => ({
@@ -186,6 +201,9 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	themePreset: state.config.themePreset,
 	isLoading: state.isLoading[props.componentId] || false,
+	sessionIdFromStore:
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].sessionId)
+		|| '',
 });
 
 const mapDispatchtoProps = dispatch => ({
