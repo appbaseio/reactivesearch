@@ -281,7 +281,11 @@ export const MessageInput = styled(Input)`
 	width: 100%;
 	border-radius: 5px;
 	border: 1px solid #ccc;
-	color: ${(props) => props.theme.colors.textColor};
+	background-color: ${(props) => props.themePreset === 'dark' ? props.theme.colors.borderColor : '#fff'};
+	color: ${(props) =>
+		props.themePreset === 'dark'
+			? props.theme.colors.titleColor
+			: props.theme.colors.textColor};
 
 	::placeholder {
 		color: ${(props) => props.theme.colors.textColor};

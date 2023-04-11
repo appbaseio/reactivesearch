@@ -207,7 +207,7 @@ const AIAnswer = defineComponent({
 					this.getAIResponse(this.AISessionId, this.componentId, text);
 				} else {
 					console.error(
-						`AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
+						`AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Try reloading the App.`,
 					);
 					this.error = {
 						message: `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
@@ -226,7 +226,7 @@ const AIAnswer = defineComponent({
 					this.inputMessage = '';
 				} else {
 					console.error(
-						`AISessionId for ${this.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
+						`AISessionId for ${this.componentId} is missing! AIAnswer component requires an AISession to function. Try reloading the App.`,
 					);
 				}
 			}
@@ -398,7 +398,6 @@ const AIAnswer = defineComponent({
 	},
 	render() {
 		const props = this.$props;
-
 		return (
 			<Chatbox>
 				{this.$props.title && (
@@ -410,7 +409,7 @@ const AIAnswer = defineComponent({
 					{/* custom render */}
 					{this.hasCustomRenderer && (
 						<MessagesContainer
-							themePreset={props.themePreset}
+							themePreset={this.themePreset}
 							theme={props.theme}
 							ref={this.$props.innerRef}
 							class={`--ai-message-container ${
@@ -423,7 +422,7 @@ const AIAnswer = defineComponent({
 					{/* Default render */}
 					{!this.hasCustomRenderer && (
 						<MessagesContainer
-							themePreset={props.themePreset}
+							themePreset={this.themePreset}
 							theme={props.theme}
 							ref={this.$props.innerRef}
 							class={`--ai-message-container ${
@@ -436,7 +435,7 @@ const AIAnswer = defineComponent({
 									key={index}
 									isSender={message.role === AI_ROLES.USER}
 									innerHTML={md.render(message.content)}
-									themePreset={props.themePreset}
+									themePreset={this.themePreset}
 									theme={props.theme}
 									class={`--ai-answer-message ${
 										getClassName(props.innerClass, 'ai-message') || ''
@@ -445,7 +444,7 @@ const AIAnswer = defineComponent({
 							))}
 							{this.isLoadingState && (
 								<Message
-									themePreset={props.themePreset}
+									themePreset={this.themePreset}
 									theme={props.theme}
 									isSender={false}
 									class={`--ai-answer-message ${
@@ -453,9 +452,9 @@ const AIAnswer = defineComponent({
 									}`}
 								>
 									<TypingIndicator>
-										<TypingDot themePreset={props.themePreset} />
-										<TypingDot themePreset={props.themePreset} />
-										<TypingDot themePreset={props.themePreset} />
+										<TypingDot themePreset={this.themePreset} />
+										<TypingDot themePreset={this.themePreset} />
+										<TypingDot themePreset={this.themePreset} />
 									</TypingIndicator>
 								</Message>
 							)}
@@ -478,7 +477,7 @@ const AIAnswer = defineComponent({
 										id={`${props.componentId}-ai-input`}
 										showIcon={props.showIcon}
 										iconPosition={props.iconPosition}
-										themePreset={props.themePreset}
+										themePreset={this.themePreset}
 										disabled={this.isLoadingState}
 										class={getClassName(props.innerClass, 'ai-input') || null}
 									/>{' '}
