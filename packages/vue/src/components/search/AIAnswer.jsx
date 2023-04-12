@@ -120,24 +120,22 @@ const AIAnswer = defineComponent({
 							this.$props.componentId
 						] || {}
 					).sessionId || null;
-				const { request, response } = newVal;
+				const { messages: messagesHistory, response } = newVal;
 				const finalMessages = [];
 
-				// pushing message history so far
-				if (request && request.messages && Array.isArray(request.messages)) {
-					finalMessages.push(
-						...request.messages.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
-					);
+				if (response && response.error) {
+					this.error = { message: response.error };
 				}
 
-				// pushing fresh response
-				if (
-					response
-					&& response.choices
-					&& Array.isArray(response.choices)
-					&& response.choices.length > 0
-				) {
-					finalMessages.push(response.choices[0].message);
+				// pushing message history so far
+				if (messagesHistory && messagesHistory && Array.isArray(messagesHistory)) {
+					finalMessages.push(
+						...messagesHistory.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
+					);
+				}
+				//  fresh response
+				if (response && response.answer) {
+					// do something as needed
 				}
 
 				this.messages = finalMessages;
