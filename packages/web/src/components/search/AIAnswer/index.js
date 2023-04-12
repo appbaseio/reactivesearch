@@ -41,7 +41,6 @@ const AIAnswer = (props) => {
 		}
 	};
 	useEffect(() => {
-		console.log('props.AIResponseError', props.AIResponseError);
 		setErrorState(props.AIResponseError);
 	}, [props.AIResponseError]);
 
