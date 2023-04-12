@@ -28,7 +28,6 @@ import Title from '../../../styles/Title';
 const AIAnswer = (props) => {
 	const [messages, setMessages] = React.useState([]);
 	const [errorState, setErrorState] = React.useState(null);
-
 	const AISessionId = useRef(null);
 
 	const handleSendMessage = (text, isRetry = false) => {
@@ -52,7 +51,7 @@ const AIAnswer = (props) => {
 					.sessionId || null;
 			const { request, response } = props.AIResponse;
 			const finalMessages = [];
-			if (response.error) {
+			if (response && response.error) {
 				setErrorState({ message: response.error });
 			}
 
@@ -108,6 +107,10 @@ const AIAnswer = (props) => {
 		},
 		[],
 	);
+
+	if (!props.showComponent) {
+		return null;
+	}
 
 	return (
 		<Chatbox>
@@ -177,6 +180,7 @@ AIAnswer.propTypes = {
 	renderError: types.title,
 	isLoading: types.boolRequired,
 	sessionIdFromStore: types.string,
+	showComponent: types.boolRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -189,22 +193,36 @@ AIAnswer.defaultProps = {
 	showInput: true,
 	clearSessionOnDestroy: true,
 	sessionIdFromStore: '',
+	showComponent: false,
 };
 
-const mapStateToProps = (state, props) => ({
-	AIResponse:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
-	isAIResponseLoading:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
-	AIResponseError:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
-	rawData: state.rawData[props.componentId],
-	themePreset: state.config.themePreset,
-	isLoading: state.isLoading[props.componentId] || false,
-	sessionIdFromStore:
-		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].sessionId)
-		|| '',
-});
+const mapStateToProps = (state, props) => {
+	let dependencyComponent = Object.values(props.react)[0];
+	if (Array.isArray(dependencyComponent)) {
+		dependencyComponent = dependencyComponent[0];
+	}
+
+	const showComponent
+		= state.selectedValues[dependencyComponent]
+		&& state.selectedValues[dependencyComponent].value;
+
+	return {
+		showComponent,
+		AIResponse:
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
+		isAIResponseLoading:
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+		AIResponseError:
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+		rawData: state.rawData[props.componentId],
+		themePreset: state.config.themePreset,
+		isLoading: state.isLoading[props.componentId] || false,
+		sessionIdFromStore:
+			(state.AIResponses[props.componentId]
+				&& state.AIResponses[props.componentId].sessionId)
+			|| '',
+	};
+};
 
 const mapDispatchtoProps = dispatch => ({
 	getAIResponse: (sessionId, componentId, message) =>
