@@ -41,6 +41,7 @@ const AIAnswer = (props) => {
 		}
 	};
 	useEffect(() => {
+		console.log('props.AIResponseError', props.AIResponseError);
 		setErrorState(props.AIResponseError);
 	}, [props.AIResponseError]);
 
@@ -49,27 +50,23 @@ const AIAnswer = (props) => {
 			AISessionId.current
 				= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
 					.sessionId || null;
-			const { request, response } = props.AIResponse;
+			const { messages: messagesHistory, response } = props.AIResponse;
+
 			const finalMessages = [];
 			if (response && response.error) {
 				setErrorState({ message: response.error });
 			}
 
 			// pushing message history so far
-			if (request && request.messages && Array.isArray(request.messages)) {
+			if (messagesHistory && messagesHistory && Array.isArray(messagesHistory)) {
 				finalMessages.push(
-					...request.messages.filter(msg => msg.role !== AI_ROLES.SYSTEM),
+					...messagesHistory.filter(msg => msg.role !== AI_ROLES.SYSTEM),
 				);
 			}
 
-			// pushing fresh response
-			if (
-				response
-				&& response.choices
-				&& Array.isArray(response.choices)
-				&& response.choices.length > 0
-			) {
-				finalMessages.push(response.choices[0].message);
+			//  fresh response
+			if (response && response.answer) {
+				// do something as needed
 			}
 
 			setMessages(finalMessages);
