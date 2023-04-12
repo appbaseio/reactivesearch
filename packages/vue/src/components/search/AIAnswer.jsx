@@ -71,6 +71,9 @@ const AIAnswer = defineComponent({
 		isLoadingState() {
 			return this.isAIResponseLoading || this.isLoading;
 		},
+		shouldShowComponent() {
+			return this.showComponent;
+		},
 	},
 	props: {
 		componentId: types.string.isRequired,
@@ -105,6 +108,7 @@ const AIAnswer = defineComponent({
 		renderError: types.title,
 		isLoading: types.boolRequired,
 		sessionIdFromStore: VueTypes.string,
+		showComponent: types.boolRequired,
 	},
 	mounted() {},
 	watch: {
@@ -410,6 +414,9 @@ const AIAnswer = defineComponent({
 	},
 	render() {
 		const props = this.$props;
+		if (!this.shouldShowComponent) {
+			return null;
+		}
 		return (
 			<Chatbox>
 				{this.$props.title && (
@@ -507,20 +514,33 @@ const AIAnswer = defineComponent({
 
 AIAnswer.hasInternalComponent = () => true;
 
-const mapStateToProps = (state, props) => ({
-	AIResponse:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
-	isAIResponseLoading:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
-	AIResponseError:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
-	rawData: state.rawData[props.componentId],
-	themePreset: state.config.themePreset,
-	isLoading: state.isLoading[props.componentId] || false,
-	sessionIdFromStore:
-		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].sessionId)
-		|| '',
-});
+const mapStateToProps = (state, props) => {
+	let dependencyComponent = Object.values(props.react)[0];
+	if (Array.isArray(dependencyComponent)) {
+		// eslint-disable-next-line prefer-destructuring
+		dependencyComponent = dependencyComponent[0];
+	}
+
+	const showComponent
+		= state.selectedValues[dependencyComponent]
+		&& state.selectedValues[dependencyComponent].value;
+	return {
+		showComponent,
+		AIResponse:
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
+		isAIResponseLoading:
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+		AIResponseError:
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+		rawData: state.rawData[props.componentId],
+		themePreset: state.config.themePreset,
+		isLoading: state.isLoading[props.componentId] || false,
+		sessionIdFromStore:
+			(state.AIResponses[props.componentId]
+				&& state.AIResponses[props.componentId].sessionId)
+			|| '',
+	};
+};
 const mapDispatchToProps = {
 	getAIResponse: fetchAIResponse,
 };
