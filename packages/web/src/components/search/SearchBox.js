@@ -1479,9 +1479,21 @@ const SearchBox = (props) => {
 																					setShowAIScreenFooter(
 																						true,
 																					);
-																					setShowTypingEffect(
-																						false,
-																					);
+																					if (
+																						props.AIResponse
+																					&& props.AIResponse
+																						.response
+																					&& props.AIResponse
+																						.response
+																						.answer
+																					&& props.AIResponse
+																						.response
+																						.answer.text
+																					) {
+																						setShowTypingEffect(
+																							false,
+																						);
+																					}
 
 																					setTimeout(() => {
 																						_dropdownULRef.current.scrollTo(
