@@ -212,7 +212,7 @@ const SearchBox = (props) => {
 		},
 	});
 	// fires query to fetch suggestion
-	const triggerDefaultQuery = (paramValue) => {
+	const triggerDefaultQuery = (paramValue, meta = {}) => {
 		if (!props.autosuggest) {
 			return;
 		}
@@ -231,6 +231,7 @@ const SearchBox = (props) => {
 			query,
 			value,
 			componentType: componentTypes.searchBox,
+			meta,
 		});
 	};
 
@@ -551,9 +552,11 @@ const SearchBox = (props) => {
 	};
 	const enterButtonOnClick = () =>
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+
 	const askButtonOnClick = () => {
 		setShowAIScreen(true);
-		triggerQuery({ isOpen: true, value: currentValue, customQuery: true });
+		setIsOpen(true);
+		triggerDefaultQuery(currentValue, { enableAI: true });
 	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
