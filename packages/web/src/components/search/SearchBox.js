@@ -790,7 +790,9 @@ const SearchBox = (props) => {
 		const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
 		const sourceObjects = [];
 		if (!props.AIResponse) return sourceObjects;
-		const docIds = props.AIResponse.documentIds;
+		const docIds
+			= (props.AIResponse && props.AIResponse.answer && props.AIResponse.answer.documentIds)
+			|| [];
 		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
 			docIds.forEach((id) => {
 				const foundSourceObj
@@ -813,7 +815,9 @@ const SearchBox = (props) => {
 	};
 
 	const getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, rawData } = props;
+		const {
+			error, isLoading, rawData, AIResponse,
+		} = props;
 
 		const data = {
 			error,
@@ -825,12 +829,10 @@ const SearchBox = (props) => {
 			resultStats: stats(),
 			rawData,
 			AIData: {
-				question: currentValue,
-				answer:
-					props.AIResponse
-					&& Array.isArray(props.AIResponse.choices)
-					&& props.AIResponse.choices[0].message.content,
-				documentIds: props.AIResponse ? props.AIResponse.documentIds : [],
+				question: AIResponse && AIResponse.question,
+				answer: AIResponse && AIResponse.answer && AIResponse.answer.text,
+				documentIds:
+					(AIResponse && AIResponse.answer && AIResponse.answer.documentIds) || [],
 				loading: props.isAIResponseLoading || props.isLoading,
 				showAIScreen,
 				sources: getAISourceObjects(),
@@ -1148,7 +1150,8 @@ const SearchBox = (props) => {
 		return showSourceDocuments
 			&& showAIScreenFooter
 			&& props.AIResponse
-			&& props.AIResponse.documentIds ? (
+			&& props.AIResponse.answer
+			&& props.AIResponse.answer.documentIds ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
@@ -1421,17 +1424,19 @@ const SearchBox = (props) => {
 												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
-															question: currentValue,
+															question:
+																props.AIResponse
+																&& props.AIResponse.question,
 															answer:
 																props.AIResponse
-																&& Array.isArray(
-																	props.AIResponse.choices,
-																)
-																&& props.AIResponse.choices[0].message
-																	.content,
-															documentIds: props.AIResponse
-																? props.AIResponse.documentIds
-																: [],
+																&& props.AIResponse.answer
+																&& props.AIResponse.answer.text,
+															documentIds:
+																(props.AIResponse
+																	&& props.AIResponse.answer
+																	&& props.AIResponse.answer
+																		.documentIds)
+																|| [],
 															loading:
 																props.isAIResponseLoading
 																|| props.isLoading,
@@ -1450,15 +1455,11 @@ const SearchBox = (props) => {
 																				key={currentValue}
 																				message={md.render(
 																					props.AIResponse
-																					&& Array.isArray(
-																						props
-																							.AIResponse
-																							.choices,
-																					)
 																					&& props.AIResponse
-																						.choices[0]
-																						.message
-																						.content,
+																						.answer
+																					&& props.AIResponse
+																						.answer
+																						.text,
 																				)}
 																				speed={5}
 																				onTypingComplete={() => {
@@ -2011,9 +2012,7 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
 	AIResponse:
-		(state.AIResponses[props.componentId]
-			&& state.AIResponses[props.componentId].response
-			&& state.AIResponses[props.componentId].response.response)
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
 		|| null,
 	isAIResponseLoading:
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
