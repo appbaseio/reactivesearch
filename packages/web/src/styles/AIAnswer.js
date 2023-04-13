@@ -88,8 +88,11 @@ export const TypingDot = styled.div`
 	width: 6px;
 	height: 6px;
 	background-color: ${props =>
-	(props.themePreset !== 'dark'
-		? props.theme.colors.primaryTextColor
+// eslint-disable-next-line no-nested-ternary
+	(props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
 		: props.theme.colors.textColor)};
 	border-radius: 50%;
 	margin: 0 2px !important;
@@ -190,8 +193,6 @@ export const resetCSS = props => css`
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
-		display: initial;
-		max-height: unset;
 	}
 	pre {
 		margin: 10px auto;
@@ -213,38 +214,48 @@ export const resetCSS = props => css`
 	}
 	pre,
 	code {
-		background: ${props.themePreset !== 'dark'
-	? props.theme.colors.borderColor
-	: props.theme.colors.backgroundColor};
 		padding: 0.6em 0.4em;
+		background: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryColor
+					: props.theme.colors.borderColor
+				: props.theme.colors.borderColor
+		};
 	}
-
 	code {
 		line-height: normal;
-
 		color: ${
 			// eslint-disable-next-line no-nested-ternary
-			!props.isSender
+			props.isSender
 				? props.themePreset !== 'dark'
 					? props.theme.colors.primaryTextColor
 					: props.theme.colors.textColor
-				: props.theme.colors.textColor
+				: props.theme.colors.primaryTextColor
 		};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
+		margin: 5px 0;
+		display: inline-block;
+		overflow: auto;
+		width: 100%;
+	}
+	ul,
+	ol {
+		list-style-position: inside;
 	}
 `;
 
 export const Message = styled.div`
 	background-color: ${props =>
 // eslint-disable-next-line no-nested-ternary
-	(!props.isSender
+	(props.isSender
 		? props.themePreset !== 'dark'
 			? props.theme.colors.primaryColor
 			: props.theme.colors.borderColor
 		: props.theme.colors.backgroundColor)};
-
 	padding: 10px;
 	border-radius: 7px;
 	margin-bottom: 10px;
@@ -254,7 +265,7 @@ export const Message = styled.div`
 	border: 1px solid;
 	color: ${props =>
 		// eslint-disable-next-line no-nested-ternary
-			(!props.isSender
+			(props.isSender
 				? props.themePreset !== 'dark'
 					? props.theme.colors.primaryTextColor
 					: props.theme.colors.textColor
