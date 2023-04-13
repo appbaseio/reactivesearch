@@ -211,6 +211,7 @@ const SearchBox = (props) => {
 			searchOperators: props.searchOperators,
 		},
 	});
+
 	// fires query to fetch suggestion
 	const triggerDefaultQuery = (paramValue, meta = {}) => {
 		if (!props.autosuggest) {
@@ -362,7 +363,10 @@ const SearchBox = (props) => {
 							value,
 						});
 
-						triggerDefaultQuery(newCurrentValue);
+						triggerDefaultQuery(
+							newCurrentValue,
+							props.enableAI ? { enableAI: true } : {},
+						);
 					}
 					// in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -550,8 +554,10 @@ const SearchBox = (props) => {
 			);
 		}
 	};
-	const enterButtonOnClick = () =>
+	const enterButtonOnClick = () => {
+		setShowAIScreen(false);
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+	};
 
 	const askButtonOnClick = () => {
 		setShowAIScreen(true);
@@ -791,7 +797,10 @@ const SearchBox = (props) => {
 		const sourceObjects = [];
 		if (!props.AIResponse) return sourceObjects;
 		const docIds
-			= (props.AIResponse && props.AIResponse.answer && props.AIResponse.answer.documentIds)
+			= (props.AIResponse
+				&& props.AIResponse.response
+				&& props.AIResponse.response.answer
+				&& props.AIResponse.response.answer.documentIds)
 			|| [];
 		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
 			docIds.forEach((id) => {
@@ -1150,8 +1159,9 @@ const SearchBox = (props) => {
 		return showSourceDocuments
 			&& showAIScreenFooter
 			&& props.AIResponse
-			&& props.AIResponse.answer
-			&& props.AIResponse.answer.documentIds ? (
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& props.AIResponse.response.answer.documentIds ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
@@ -1426,15 +1436,20 @@ const SearchBox = (props) => {
 														props.renderAIAnswer({
 															question:
 																props.AIResponse
-																&& props.AIResponse.question,
+																&& props.AIResponse.response
+																&& props.AIResponse.response.question,
 															answer:
 																props.AIResponse
-																&& props.AIResponse.answer
-																&& props.AIResponse.answer.text,
+																&& props.AIResponse.response
+																&& props.AIResponse.response.answer
+																&& props.AIResponse.response.answer
+																	.text,
 															documentIds:
 																(props.AIResponse
-																	&& props.AIResponse.answer
-																	&& props.AIResponse.answer
+																	&& props.AIResponse.response
+																	&& props.AIResponse.response
+																		.answer
+																	&& props.AIResponse.response.answer
 																		.documentIds)
 																|| [],
 															loading:
@@ -1456,8 +1471,12 @@ const SearchBox = (props) => {
 																				message={md.render(
 																					props.AIResponse
 																					&& props.AIResponse
+																						.response
+																					&& props.AIResponse
+																						.response
 																						.answer
 																					&& props.AIResponse
+																						.response
 																						.answer
 																						.text,
 																				)}
@@ -1994,30 +2013,31 @@ SearchBox.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| null,
+			(state.selectedValues[props.componentId]
+				&& state.selectedValues[props.componentId].value)
+			|| null,
 	selectedCategory:
-		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].category)
-		|| null,
+			(state.selectedValues[props.componentId]
+				&& state.selectedValues[props.componentId].category)
+			|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
-	isLoading: !!state.isLoading[`${props.componentId}_active`],
+	isLoading: !!state.isLoading[`${props.componentId}`],
 	error: state.error[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
 	AIResponse:
-		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
-		|| null,
+			(state.AIResponses[props.componentId]
+				&& state.AIResponses[props.componentId].response)
+			|| null,
 	isAIResponseLoading:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
 	AIResponseError:
-		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 });
 
 const mapDispatchtoProps = dispatch => ({
