@@ -1,6 +1,7 @@
 import { styled } from '@appbaseio/vue-emotion';
 
 import { keyframes } from '@emotion/css';
+import { lighten } from 'polished';
 import Button from './Button';
 import Input from './Input';
 
@@ -88,13 +89,21 @@ export const TypingIndicator = styled('div')`
 export const TypingDot = styled('div')`
 	width: 6px;
 	height: 6px;
-	background-color: ${(props) =>
-		// eslint-disable-next-line no-nested-ternary
-		props.isSender
-			? props.themePreset !== 'dark'
-				? props.theme.colors.primaryTextColor
-				: props.theme.colors.textColor
-			: props.theme.colors.textColor};
+	background-color: ${(props) => {
+		let finalColor;
+		if (props.isSender) {
+			finalColor
+				= props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor;
+		} else {
+			finalColor
+				= props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor;
+		}
+		return finalColor;
+	}};
 	border-radius: 50%;
 	margin: 0 2px !important;
 	animation: ${typingDots} 1s infinite;
@@ -106,30 +115,7 @@ export const TypingDot = styled('div')`
 	}
 `;
 
-export const Message = styled('div')`
-	background-color: ${(props) =>
-		// eslint-disable-next-line no-nested-ternary
-		props.isSender
-			? props.themePreset !== 'dark'
-				? props.theme.colors.primaryColor
-				: props.theme.colors.borderColor
-			: props.theme.colors.backgroundColor};
-
-	padding: 10px;
-	border-radius: 7px;
-	margin-bottom: 10px;
-	max-width: 80%;
-	align-self: ${(props) => (props.isSender ? 'flex-end' : 'flex-start')};
-	display: inline-block;
-	border: 1px solid;
-	color: ${(props) =>
-		// eslint-disable-next-line no-nested-ternary
-		props.isSender
-			? props.themePreset !== 'dark'
-				? props.theme.colors.primaryTextColor
-				: props.theme.colors.textColor
-			: props.theme.colors.textColor};
-	position: relative;
+export const resetCSS = (props) => `
 	html,
 	body,
 	div,
@@ -240,25 +226,26 @@ export const Message = styled('div')`
 	pre,
 	code {
 		padding: 0.6em 0.4em;
-		background: ${(props) =>
+		background: ${
 	// eslint-disable-next-line no-nested-ternary
-		props.isSender
-			? props.themePreset !== 'dark'
-				? props.theme.colors.primaryColor
-				: props.theme.colors.borderColor
-			: props.theme.colors.borderColor};
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryColor
+			: props.theme.colors.borderColor
+		: props.theme.colors.borderColor
+};
 	}
 
 	code {
 		line-height: normal;
 
-		color: ${(props) =>
+		color: ${(colorProps) =>
 	// eslint-disable-next-line no-nested-ternary
-		props.isSender
-			? props.themePreset !== 'dark'
-				? props.theme.colors.primaryTextColor
-				: props.theme.colors.textColor
-			: props.theme.colors.primaryTextColor};
+		colorProps.isSender
+			? colorProps.themePreset !== 'dark'
+				? colorProps.theme.colors.primaryTextColor
+				: colorProps.theme.colors.textColor
+			: colorProps.theme.colors.primaryTextColor};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
@@ -271,6 +258,50 @@ export const Message = styled('div')`
 	ol {
 		list-style-position: inside;
 	}
+`;
+const messageBGColor = (props) => {
+	let finalBGColor;
+	if (props.isSender) {
+		finalBGColor
+			= props.themePreset !== 'dark'
+				? props.theme.colors.primaryColor
+				: props.theme.colors.borderColor;
+	} else {
+		finalBGColor
+			= props.themePreset !== 'dark'
+				? lighten(0.25, props.theme.colors.borderColor)
+				: props.theme.colors.backgroundColor;
+	}
+	return finalBGColor;
+};
+export const Message = styled('div')`
+	background-color: ${(props) => messageBGColor(props)};
+	color: ${(props) => {
+		let finalColor;
+		if (props.isSender) {
+			finalColor
+				= props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor;
+		} else {
+			finalColor
+				= props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor;
+		}
+		return finalColor;
+	}};
+	border: 1px solid
+		${(props) => (props.themePreset === 'dark' ? 'currentColor' : messageBGColor(props))};
+	padding: 10px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	max-width: 80%;
+	align-self: ${(props) => (props.isSender ? 'flex-end' : 'flex-start')};
+	display: inline-block;
+	position: relative;
+	overflow-wrap: anywhere;
+	${(props) => resetCSS(props)}
 `;
 
 export const MessageInputContainer = styled('form')`
