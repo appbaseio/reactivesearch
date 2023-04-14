@@ -1,5 +1,6 @@
 import { css, keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
+import { lighten } from 'polished';
 import Button from './Button';
 import Input from './Input';
 
@@ -87,13 +88,23 @@ export const TypingIndicator = styled.div`
 export const TypingDot = styled.div`
 	width: 6px;
 	height: 6px;
-	background-color: ${props =>
-// eslint-disable-next-line no-nested-ternary
-	(props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryTextColor
-			: props.theme.colors.textColor
-		: props.theme.colors.textColor)};
+	background-color: ${(props) => {
+	let finalColor;
+
+	if (props.isSender) {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor;
+	} else {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor;
+	}
+
+	return finalColor;
+}};
 	border-radius: 50%;
 	margin: 0 2px !important;
 	animation: ${typingDots} 1s infinite;
@@ -248,28 +259,48 @@ export const resetCSS = props => css`
 	}
 `;
 
+const messageBGColor = (props) => {
+	let finalBGColor;
+	if (props.isSender) {
+		finalBGColor
+			= props.themePreset !== 'dark'
+				? props.theme.colors.primaryColor
+				: props.theme.colors.borderColor;
+	} else {
+		finalBGColor
+			= props.themePreset !== 'dark'
+				? lighten(0.25, props.theme.colors.borderColor)
+				: props.theme.colors.backgroundColor;
+	}
+	return finalBGColor;
+};
 export const Message = styled.div`
-	background-color: ${props =>
-// eslint-disable-next-line no-nested-ternary
-	(props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryColor
-			: props.theme.colors.borderColor
-		: props.theme.colors.backgroundColor)};
+	background-color: ${props => messageBGColor(props)};
+	color: ${(props) => {
+	let finalColor;
+
+	if (props.isSender) {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor;
+	} else {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor;
+	}
+
+	return finalColor;
+}};
+	border: 1px solid
+		${props => (props.themePreset === 'dark' ? 'currentColor' : messageBGColor(props))};
 	padding: 10px;
 	border-radius: 7px;
 	margin-bottom: 10px;
 	max-width: 80%;
 	align-self: ${props => (props.isSender ? 'flex-end' : 'flex-start')};
 	display: inline-block;
-	border: 1px solid;
-	color: ${props =>
-		// eslint-disable-next-line no-nested-ternary
-			(props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
-					: props.theme.colors.textColor
-				: props.theme.colors.textColor)};
 	position: relative;
 
 	${props => resetCSS(props)}
