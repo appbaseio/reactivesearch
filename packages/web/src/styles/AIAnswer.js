@@ -304,6 +304,7 @@ export const Message = styled.div`
 	position: relative;
 
 	${props => resetCSS(props)}
+	overflow-wrap: anywhere;
 `;
 
 export const MessageInputContainer = styled.form`
