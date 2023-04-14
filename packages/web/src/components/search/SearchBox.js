@@ -529,14 +529,7 @@ const SearchBox = (props) => {
 			setShowAIScreen(false);
 		}
 		if (value === undefined) {
-			setValue(
-				inputValue,
-				false,
-				props,
-				inputValue === '' ? causes.CLEAR_VALUE : undefined,
-				true,
-				false,
-			);
+			setValue(inputValue, false, props, undefined, true, false);
 		} else if (onChange) {
 			// handle caret position in controlled components
 			handleCaretPosition(e);
@@ -593,7 +586,14 @@ const SearchBox = (props) => {
 	};
 
 	const clearValue = () => {
-		setValue('', false, props, causes.CLEAR_VALUE, true, false);
+		setValue(
+			'',
+			false,
+			props,
+			!isTagsMode.current ? causes.CLEAR_VALUE : undefined,
+			true,
+			false,
+		);
 		if (onChange) {
 			onChange('', ({ isOpen } = {}) =>
 				triggerQuery({
