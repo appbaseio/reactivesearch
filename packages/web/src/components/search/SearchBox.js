@@ -3,11 +3,12 @@
 import { jsx } from '@emotion/core';
 
 import {
+	AI_LOCAL_CACHE_KEY,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-
+import { Remarkable } from 'remarkable';
 import { withTheme } from 'emotion-theming';
 import { oneOf, oneOfType } from 'prop-types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
@@ -25,10 +26,11 @@ import {
 	suggestionTypes,
 	featuredSuggestionsActionTypes,
 	isEqual,
+	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
 	updateQuery,
@@ -68,6 +70,17 @@ import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 import HOOKS from '../../utils/hooks';
+import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
+import TypingEffect from '../shared/TypingEffect';
+import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
+
+const md = new Remarkable();
+
+md.set({
+	html: true,
+	breaks: true,
+	xhtmlOut: true,
+});
 
 const { useConstructor } = HOOKS;
 
@@ -101,8 +114,13 @@ const SearchBox = (props) => {
 	let [selectedTags, setSelectedTags] = useState([]);
 	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
+	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
 	const stats = () => getResultStats(props);
+
+	const [showAIScreen, setShowAIScreen] = useState(false);
+	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
+	const [showTypingEffect, setShowTypingEffect] = useState(true);
 
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
@@ -193,8 +211,9 @@ const SearchBox = (props) => {
 			searchOperators: props.searchOperators,
 		},
 	});
+
 	// fires query to fetch suggestion
-	const triggerDefaultQuery = (paramValue) => {
+	const triggerDefaultQuery = (paramValue, meta = {}) => {
 		if (!props.autosuggest) {
 			return;
 		}
@@ -213,6 +232,7 @@ const SearchBox = (props) => {
 			query,
 			value,
 			componentType: componentTypes.searchBox,
+			meta,
 		});
 	};
 
@@ -343,7 +363,10 @@ const SearchBox = (props) => {
 							value,
 						});
 
-						triggerDefaultQuery(newCurrentValue);
+						triggerDefaultQuery(
+							newCurrentValue,
+							props.enableAI ? { enableAI: true } : {},
+						);
 					}
 					// in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -438,7 +461,10 @@ const SearchBox = (props) => {
 	};
 
 	const onSuggestionSelected = (suggestion) => {
-		setIsOpen(false);
+		if (!props.enableAI) setIsOpen(false);
+		else {
+			setShowAIScreen(true);
+		}
 		// handle featured suggestions click event
 		if (suggestion._suggestion_type === suggestionTypes.Featured) {
 			handleFeaturedSuggestionClicked(suggestion);
@@ -499,6 +525,9 @@ const SearchBox = (props) => {
 		if (!isOpen && props.autosuggest) {
 			setIsOpen(true);
 		}
+		if (showAIScreen) {
+			setShowAIScreen(false);
+		}
 		if (value === undefined) {
 			setValue(
 				inputValue,
@@ -525,8 +554,16 @@ const SearchBox = (props) => {
 			);
 		}
 	};
-	const enterButtonOnClick = () =>
+	const enterButtonOnClick = () => {
+		setShowAIScreen(false);
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+	};
+
+	const askButtonOnClick = () => {
+		setShowAIScreen(true);
+		setIsOpen(true);
+		triggerDefaultQuery(currentValue, { enableAI: true });
+	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
 		// if a suggestion was selected, delegate the handling
@@ -540,7 +577,12 @@ const SearchBox = (props) => {
 					true,
 					props,
 					isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+					true,
+					!props.enableAI,
 				);
+				if (props.enableAI && !showAIScreen) {
+					setShowAIScreen(true);
+				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
 		}
@@ -605,7 +647,17 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript
 			&& results[0][0].transcript.trim()
 		) {
-			setValue(results[0][0].transcript.trim(), true, props, undefined, true, isOpen);
+			setValue(
+				results[0][0].transcript.trim(),
+				true,
+				props,
+				undefined,
+				true,
+				props.enableAI ? !isOpen && !showAIScreen : isOpen,
+			);
+			if (!showAIScreen && props.autosuggest) {
+				setShowAIScreen(true);
+			}
 		}
 	};
 
@@ -662,10 +714,55 @@ const SearchBox = (props) => {
 		return null;
 	};
 
-	const renderError = () => {
+	const renderError = (isAIError = false) => {
 		const {
-			error, renderError, themePreset, theme, isLoading, innerClass,
+			error,
+			renderError,
+			themePreset,
+			theme,
+			isLoading,
+			innerClass,
+			AIResponseError,
+			isAIResponseLoading,
 		} = props;
+		if (isAIError) {
+			if (showAIScreen && AIResponseError && !isAIResponseLoading) {
+				if (renderError) {
+					return (
+						<div
+							className={`--ai-answer-error-container ${
+								getClassName(props.innerClass, 'ai-error') || ''
+							}`}
+						>
+							{isFunction(renderError) ? renderError(AIResponseError) : renderError}
+						</div>
+					);
+				}
+				return (
+					<div
+						className={`--ai-answer-error-container ${
+							getClassName(props.innerClass, 'ai-error') || ''
+						}`}
+					>
+						<div className="--default-error-element">
+							<span>
+								{AIResponseError.message
+									? AIResponseError.message
+									: 'There was an error in generating the response.'}{' '}
+								{AIResponseError.code
+									? `Code:
+							${AIResponseError.code}`
+									: ''}
+							</span>
+
+							{/* <Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button> */}
+						</div>
+					</div>
+				);
+			}
+		}
 		if (error && renderError && currentValue && !isLoading) {
 			return (
 				<SuggestionWrapper
@@ -689,8 +786,41 @@ const SearchBox = (props) => {
 		}
 	};
 
+	const getAISourceObjects = () => {
+		const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
+		const sourceObjects = [];
+		if (!props.AIResponse) return sourceObjects;
+		const docIds
+			= (props.AIResponse
+				&& props.AIResponse.response
+				&& props.AIResponse.response.answer
+				&& props.AIResponse.response.answer.documentIds)
+			|| [];
+		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+			docIds.forEach((id) => {
+				const foundSourceObj
+					= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+				if (foundSourceObj) {
+					const { _source = {}, ...rest } = foundSourceObj;
+
+					sourceObjects.push({ ...rest, ..._source });
+				}
+			});
+		} else {
+			sourceObjects.push(
+				...docIds.map(id => ({
+					_id: id,
+				})),
+			);
+		}
+
+		return sourceObjects;
+	};
+
 	const getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, rawData } = props;
+		const {
+			error, isLoading, rawData, AIResponse,
+		} = props;
 
 		const data = {
 			error,
@@ -701,6 +831,15 @@ const SearchBox = (props) => {
 			triggerClickAnalytics,
 			resultStats: stats(),
 			rawData,
+			AIData: {
+				question: AIResponse && AIResponse.question,
+				answer: AIResponse && AIResponse.answer && AIResponse.answer.text,
+				documentIds:
+					(AIResponse && AIResponse.answer && AIResponse.answer.documentIds) || [],
+				loading: props.isAIResponseLoading || props.isLoading,
+				showAIScreen,
+				sources: getAISourceObjects(),
+			},
 		};
 		return getComponentUtilFunc(data, props);
 	};
@@ -745,6 +884,32 @@ const SearchBox = (props) => {
 						onClick={enterButtonOnClick}
 					>
 						Search
+					</Button>
+				);
+			};
+
+			return <div className="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+		}
+
+		return null;
+	};
+
+	const renderAskButtonElement = () => {
+		const { AIUIConfig, innerClass } = props;
+		const { askButton, renderAskButton } = AIUIConfig;
+		if (askButton) {
+			const getEnterButtonMarkup = () => {
+				if (typeof renderAskButton === 'function') {
+					return renderAskButton(askButtonOnClick);
+				}
+
+				return (
+					<Button
+						className={`enter-btn ${getClassName(innerClass, 'ask-button')}`}
+						info
+						onClick={askButtonOnClick}
+					>
+						Ask
 					</Button>
 				);
 			};
@@ -976,6 +1141,51 @@ const SearchBox = (props) => {
 			</TagsContainer>
 		);
 	};
+
+	const renderAIScreenFooter = () => {
+		const { AIUIConfig = {} } = props;
+		const {
+			showSourceDocuments = true,
+			sourceDocumentLabel = '_id',
+			onSourceClick = () => {},
+		} = AIUIConfig || {};
+
+		return showSourceDocuments
+			&& showAIScreenFooter
+			&& props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& props.AIResponse.response.answer.documentIds ? (
+				<Footer themePreset={props.themePreset}>
+					Summary generated using the following sources:{' '}
+					<SourceTags>
+						{getAISourceObjects().map(el => (
+							<Button
+								className={`--ai-source-tag ${
+								getClassName(props.innerClass, 'ai-source-tag') || ''
+							}`}
+								title={el[sourceDocumentLabel]}
+								info
+								onClick={() => onSourceClick && onSourceClick(el)}
+							>
+								{el[sourceDocumentLabel]}
+							</Button>
+						))}
+					</SourceTags>
+				</Footer>
+			) : null;
+	};
+
+	const renderAIScreenLoader = () => {
+		const { AIUIConfig = {} } = props;
+		const { loaderMessage } = AIUIConfig || {};
+		if (loaderMessage) {
+			return loaderMessage;
+		}
+
+		return <HorizontalSkeletonLoader />;
+	};
+
 	useEffect(() => {
 		if (onData) {
 			onData({
@@ -1081,6 +1291,27 @@ const SearchBox = (props) => {
 	}, [selectedValue]);
 
 	useEffect(() => {
+		if (showAIScreen) {
+			if (_inputRef.current) {
+				_inputRef.current.blur();
+			}
+			setShowTypingEffect(true);
+		}
+	}, [showAIScreen]);
+
+	useEffect(() => {
+		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
+			setShowAIScreenFooter(false);
+		}
+	}, [showAIScreen, props.isAIResponseLoading]);
+
+	useEffect(() => {
+		if (!isOpen) {
+			setShowTypingEffect(false);
+		}
+	}, [isOpen]);
+
+	useEffect(() => {
 		hasMounted.current = true;
 		// register hotkeys for listening to focusShortcuts' key presses
 		listenForFocusShortcuts();
@@ -1090,7 +1321,7 @@ const SearchBox = (props) => {
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
-				<Title className={getClassName(props.innerClass, 'title') || null}>
+				<Title className={getClassName(props.innerClass, 'title') || ''}>
 					{props.title}
 				</Title>
 			)}
@@ -1190,197 +1421,324 @@ const SearchBox = (props) => {
 												props.themePreset,
 												props.theme,
 											)}
+											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{parsedSuggestions().map((item, itemIndex) => {
-												const index = indexOffset + itemIndex;
-												if (Array.isArray(item)) {
-													const sectionHtml = XSS(item[0].sectionLabel);
-													indexOffset += item.length - 1;
-													return (
-														<div
-															className="section-container"
-															key={`${item[0].sectionId}`}
-														>
-															{sectionHtml && (
+											{showAIScreen && (
+												<SearchBoxAISection themePreset={props.themePreset}>
+													{typeof props.renderAIAnswer === 'function' ? (
+														props.renderAIAnswer({
+															question:
+																props.AIResponse
+																&& props.AIResponse.response
+																&& props.AIResponse.response.question,
+															answer:
+																props.AIResponse
+																&& props.AIResponse.response
+																&& props.AIResponse.response.answer
+																&& props.AIResponse.response.answer
+																	.text,
+															documentIds:
+																(props.AIResponse
+																	&& props.AIResponse.response
+																	&& props.AIResponse.response
+																		.answer
+																	&& props.AIResponse.response.answer
+																		.documentIds)
+																|| [],
+															loading:
+																props.isAIResponseLoading
+																|| props.isLoading,
+															sources: getAISourceObjects(),
+															error: props.AIResponseError,
+														})
+													) : (
+														<Fragment>
+															{props.isAIResponseLoading
+															|| props.isLoading ? (
+																	renderAIScreenLoader()
+																) : (
+																	<Fragment>
+																		<Answer>
+																			<TypingEffect
+																				key={currentValue}
+																				message={md.render(
+																					props.AIResponse
+																					&& props.AIResponse
+																						.response
+																					&& props.AIResponse
+																						.response
+																						.answer
+																					&& props.AIResponse
+																						.response
+																						.answer
+																						.text,
+																				)}
+																				speed={5}
+																				onTypingComplete={() => {
+																					setShowAIScreenFooter(
+																						true,
+																					);
+																					if (
+																						props.AIResponse
+																					&& props.AIResponse
+																						.response
+																					&& props.AIResponse
+																						.response
+																						.answer
+																					&& props.AIResponse
+																						.response
+																						.answer.text
+																					) {
+																						setShowTypingEffect(
+																							false,
+																						);
+																					}
+
+																					setTimeout(() => {
+																						_dropdownULRef.current.scrollTo(
+																							{
+																								top: _dropdownULRef
+																									.current
+																									.scrollHeight,
+																								behavior:
+																								'smooth',
+																							},
+																						);
+																					}, 100);
+																				}}
+																				onWhileTyping={() => {
+																					_dropdownULRef.current.scrollTo(
+																						{
+																							top: _dropdownULRef
+																								.current
+																								.scrollHeight,
+																							behavior:
+																							'smooth',
+																						},
+																					);
+																				}}
+																				showTypingEffect={
+																					showTypingEffect
+																				}
+																			/>
+																		</Answer>
+																		{renderAIScreenFooter()}
+																	</Fragment>
+																)}
+														</Fragment>
+													)}
+													{renderError(true)}
+												</SearchBoxAISection>
+											)}
+											{!showAIScreen && (
+												<Fragment>
+													{parsedSuggestions().map((item, itemIndex) => {
+														const index = indexOffset + itemIndex;
+														if (Array.isArray(item)) {
+															const sectionHtml = XSS(
+																item[0].sectionLabel,
+															);
+															indexOffset += item.length - 1;
+															return (
 																<div
-																	className={`section-header ${getClassName(
-																		props.innerClass,
-																		'section-label',
-																	)}`}
-																	dangerouslySetInnerHTML={{
-																		__html: sectionHtml,
-																	}}
-																/>
-															)}
-															<ul className="section-list">
-																{item.map(
-																	(sectionItem, sectionIndex) => (
-																		<li
-																			{...getItemProps({
-																				item: sectionItem,
-																			})}
-																			key={`${
-																				sectionItem.sectionId
-																				+ sectionIndex
-																			}-${sectionItem.value}`}
-																			style={{
-																				justifyContent:
-																					'flex-start',
-																				alignItems:
-																					'center',
+																	className="section-container"
+																	key={`${item[0].sectionId}`}
+																>
+																	{sectionHtml && (
+																		<div
+																			className={`section-header ${getClassName(
+																				props.innerClass,
+																				'section-label',
+																			)}`}
+																			dangerouslySetInnerHTML={{
+																				__html: sectionHtml,
 																			}}
-																			className={`${
-																				highlightedIndex
-																				=== index + sectionIndex
-																					? `active-li-item ${getClassName(
-																						props.innerClass,
-																						'active-suggestion-item',
-																					  )}`
-																					: `li-item ${getClassName(
-																						props.innerClass,
-																						'suggestion-item',
-																					  )}`
-																			}`}
-																		>
-																			{props.renderItem ? (
-																				props.renderItem(
-																					sectionItem,
-																				)
-																			) : (
-																				<React.Fragment>
-																					<div
-																						style={{
-																							padding:
-																								'0 10px 0 0',
-																							display:
-																								'flex',
-																						}}
-																					>
-																						<CustomSvg
-																							iconId={`${
-																								sectionIndex
-																								+ index
-																								+ 1
-																							}-${
-																								sectionItem.value
-																							}-icon`}
-																							className={
-																								getClassName(
-																									props.innerClass,
-																									`${sectionItem._suggestion_type}-search-icon`,
-																								)
-																								|| null
-																							}
-																							icon={getIcon(
-																								sectionItem._suggestion_type,
+																		/>
+																	)}
+																	<ul className="section-list">
+																		{item.map(
+																			(
+																				sectionItem,
+																				sectionIndex,
+																			) => (
+																				<li
+																					{...getItemProps(
+																						{
+																							item: sectionItem,
+																						},
+																					)}
+																					key={`${
+																						sectionItem.sectionId
+																						+ sectionIndex
+																					}-${
+																						sectionItem.value
+																					}`}
+																					style={{
+																						justifyContent:
+																							'flex-start',
+																						alignItems:
+																							'center',
+																					}}
+																					className={`${
+																						highlightedIndex
+																						=== index
+																							+ sectionIndex
+																							? `active-li-item ${getClassName(
+																								props.innerClass,
+																								'active-suggestion-item',
+																							  )}`
+																							: `li-item ${getClassName(
+																								props.innerClass,
+																								'suggestion-item',
+																							  )}`
+																					}`}
+																				>
+																					{props.renderItem ? (
+																						props.renderItem(
+																							sectionItem,
+																						)
+																					) : (
+																						<React.Fragment>
+																							<div
+																								style={{
+																									padding:
+																										'0 10px 0 0',
+																									display:
+																										'flex',
+																								}}
+																							>
+																								<CustomSvg
+																									iconId={`${
+																										sectionIndex
+																										+ index
+																										+ 1
+																									}-${
+																										sectionItem.value
+																									}-icon`}
+																									className={
+																										getClassName(
+																											props.innerClass,
+																											`${sectionItem._suggestion_type}-search-icon`,
+																										)
+																										|| null
+																									}
+																									icon={getIcon(
+																										sectionItem._suggestion_type,
+																										sectionItem,
+																									)}
+																									type={`${sectionItem._suggestion_type}-search-icon`}
+																								/>
+																							</div>
+																							<div className="trim">
+																								<Flex direction="column">
+																									{sectionItem.label && (
+																										<div
+																											className="section-list-item__label"
+																											dangerouslySetInnerHTML={{
+																												__html: XSS(
+																													sectionItem.label,
+																												),
+																											}}
+																										/>
+																									)}
+																									{sectionItem.description && (
+																										<div
+																											className="section-list-item__description"
+																											dangerouslySetInnerHTML={{
+																												__html: XSS(
+																													sectionItem.description,
+																												),
+																											}}
+																										/>
+																									)}
+																								</Flex>
+																							</div>
+																							{getActionIcon(
 																								sectionItem,
 																							)}
-																							type={`${sectionItem._suggestion_type}-search-icon`}
-																						/>
-																					</div>
-																					<div className="trim">
-																						<Flex direction="column">
-																							{sectionItem.label && (
-																								<div
-																									className="section-list-item__label"
-																									dangerouslySetInnerHTML={{
-																										__html: XSS(
-																											sectionItem.label,
-																										),
-																									}}
-																								/>
-																							)}
-																							{sectionItem.description && (
-																								<div
-																									className="section-list-item__description"
-																									dangerouslySetInnerHTML={{
-																										__html: XSS(
-																											sectionItem.description,
-																										),
-																									}}
-																								/>
-																							)}
-																						</Flex>
-																					</div>
-																					{getActionIcon(
-																						sectionItem,
+																						</React.Fragment>
 																					)}
-																				</React.Fragment>
-																			)}
-																		</li>
-																	),
-																)}
-															</ul>
-														</div>
-													);
-												}
-
-												return (
-													<li
-														{...getItemProps({ item })}
-														key={`${index + 1}-${item.value}`}
-														style={{
-															justifyContent: 'flex-start',
-															alignItems: 'center',
-														}}
-														className={`${
-															highlightedIndex === index
-																? `active-li-item ${getClassName(
-																	props.innerClass,
-																	'active-suggestion-item',
-																  )}`
-																: `li-item ${getClassName(
-																	props.innerClass,
-																	'suggestion-item',
-																  )}`
-														}`}
-													>
-														{props.renderItem ? (
-															props.renderItem(item)
-														) : (
-															<React.Fragment>
-																{/* eslint-disable */}
-
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																		display: 'flex',
-																	}}
-																>
-																	<CustomSvg
-																		iconId={`${index + 1}-${
-																			item.value
-																		}-icon`}
-																		className={
-																			getClassName(
-																				props.innerClass,
-																				`${item._suggestion_type}-search-icon`,
-																			) || null
-																		}
-																		icon={getIcon(
-																			item._suggestion_type,
-																			item,
+																				</li>
+																			),
 																		)}
-																		type={`${item._suggestion_type}-search-icon`}
-																	/>
+																	</ul>
 																</div>
-																{/* eslint-enable */}
-																<SuggestionItem
-																	currentValue={
-																		currentValue || ''
-																	}
-																	suggestion={item}
-																/>
+															);
+														}
 
-																{getActionIcon(item)}
-															</React.Fragment>
-														)}
-													</li>
-												);
-											})}
+														return (
+															<li
+																{...getItemProps({ item })}
+																key={`${index + 1}-${item.value}`}
+																style={{
+																	justifyContent: 'flex-start',
+																	alignItems: 'center',
+																}}
+																className={`${
+																	highlightedIndex === index
+																		? `active-li-item ${getClassName(
+																			props.innerClass,
+																			'active-suggestion-item',
+																		  )}`
+																		: `li-item ${getClassName(
+																			props.innerClass,
+																			'suggestion-item',
+																		  )}`
+																}`}
+															>
+																{props.renderItem ? (
+																	props.renderItem(item)
+																) : (
+																	<React.Fragment>
+																		{/* eslint-disable */}
 
-											{showSuggestionsFooter ? <SuggestionsFooter /> : null}
+																		<div
+																			style={{
+																				padding:
+																					'0 10px 0 0',
+																				display: 'flex',
+																			}}
+																		>
+																			<CustomSvg
+																				iconId={`${
+																					index + 1
+																				}-${
+																					item.value
+																				}-icon`}
+																				className={
+																					getClassName(
+																						props.innerClass,
+																						`${item._suggestion_type}-search-icon`,
+																					) || null
+																				}
+																				icon={getIcon(
+																					item._suggestion_type,
+																					item,
+																				)}
+																				type={`${item._suggestion_type}-search-icon`}
+																			/>
+																		</div>
+																		{/* eslint-enable */}
+																		<SuggestionItem
+																			currentValue={
+																				currentValue || ''
+																			}
+																			suggestion={item}
+																		/>
+
+																		{getActionIcon(item)}
+																	</React.Fragment>
+																)}
+															</li>
+														);
+													})}
+
+													{showSuggestionsFooter ? (
+														<SuggestionsFooter />
+													) : null}
+												</Fragment>
+											)}
 										</ul>
 									) : (
 										renderNoSuggestion(parsedSuggestions())
@@ -1441,6 +1799,7 @@ const SearchBox = (props) => {
 											)}
 									</InputWrapper>
 									{renderInputAddonAfter()}
+									{renderAskButtonElement()}
 									{renderEnterButtonElement()}
 								</InputGroup>
 
@@ -1489,6 +1848,7 @@ const SearchBox = (props) => {
 						</InputWrapper>
 
 						{renderInputAddonAfter()}
+						{renderAskButtonElement()}
 						{renderEnterButtonElement()}
 					</InputGroup>
 				</div>
@@ -1610,7 +1970,12 @@ SearchBox.propTypes = {
 	highlightConfig: types.componentObject,
 	renderSelectedTags: types.func,
 	enableAI: types.bool,
-	aiConfig: types.componentObject,
+	AIConfig: types.componentObject,
+	AIResponse: types.componentObject,
+	isAIResponseLoading: types.bool,
+	AIResponseError: types.componentObject,
+	renderAIAnswer: types.func,
+	AIUIConfig: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1648,7 +2013,8 @@ SearchBox.defaultProps = {
 	type: 'search',
 	mode: 'select',
 	enableAI: false,
-	aiConfig: null,
+	AIConfig: null,
+	AIUIConfig: {},
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1664,12 +2030,19 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
-	isLoading: !!state.isLoading[`${props.componentId}_active`],
+	isLoading: !!state.isLoading[`${props.componentId}`],
 	error: state.error[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
+	AIResponse:
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
+		|| null,
+	isAIResponseLoading:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+	AIResponseError:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 });
 
 const mapDispatchtoProps = dispatch => ({

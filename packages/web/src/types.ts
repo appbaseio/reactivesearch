@@ -211,3 +211,12 @@ export interface AiConfig {
 	queryTemplate?: string;
 	temperature?: number;
 }
+
+export interface AIUIConfig {
+	loaderMessage?: string | children;
+	showSourceDocuments?: boolean;
+	sourceDocumentLabel?: string;
+	onSourceClick?: (sourceObject: object) => void;
+	renderAskButton?: (onAskButtonClick: any) => children;
+	askButton?: boolean;
+}

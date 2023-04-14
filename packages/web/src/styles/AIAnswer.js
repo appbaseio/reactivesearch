@@ -1,4 +1,4 @@
-import { keyframes } from '@emotion/core';
+import { css, keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import Button from './Button';
 import Input from './Input';
@@ -105,30 +105,7 @@ export const TypingDot = styled.div`
 	}
 `;
 
-export const Message = styled.div`
-	background-color: ${props =>
-// eslint-disable-next-line no-nested-ternary
-	(props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryColor
-			: props.theme.colors.borderColor
-		: props.theme.colors.backgroundColor)};
-
-	padding: 10px;
-	border-radius: 7px;
-	margin-bottom: 10px;
-	max-width: 80%;
-	align-self: ${props => (props.isSender ? 'flex-end' : 'flex-start')};
-	display: inline-block;
-	border: 1px solid;
-	color: ${props =>
-		// eslint-disable-next-line no-nested-ternary
-			(props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
-					: props.theme.colors.textColor
-				: props.theme.colors.textColor)};
-	position: relative;
+export const resetCSS = props => css`
 	html,
 	body,
 	div,
@@ -238,25 +215,25 @@ export const Message = styled.div`
 	pre,
 	code {
 		padding: 0.6em 0.4em;
-		background: ${props =>
-				// eslint-disable-next-line no-nested-ternary
-					(props.isSender
-						? props.themePreset !== 'dark'
-							? props.theme.colors.primaryColor
-							: props.theme.colors.borderColor
-						: props.theme.colors.borderColor)};
+		background: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryColor
+					: props.theme.colors.borderColor
+				: props.theme.colors.borderColor
+		};
 	}
-
 	code {
 		line-height: normal;
-
-		color: ${props =>
-						// eslint-disable-next-line no-nested-ternary
-							(props.isSender
-								? props.themePreset !== 'dark'
-									? props.theme.colors.primaryTextColor
-									: props.theme.colors.textColor
-								: props.theme.colors.primaryTextColor)};
+		color: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.primaryTextColor
+		};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
@@ -269,6 +246,33 @@ export const Message = styled.div`
 	ol {
 		list-style-position: inside;
 	}
+`;
+
+export const Message = styled.div`
+	background-color: ${props =>
+// eslint-disable-next-line no-nested-ternary
+	(props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryColor
+			: props.theme.colors.borderColor
+		: props.theme.colors.backgroundColor)};
+	padding: 10px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	max-width: 80%;
+	align-self: ${props => (props.isSender ? 'flex-end' : 'flex-start')};
+	display: inline-block;
+	border: 1px solid;
+	color: ${props =>
+		// eslint-disable-next-line no-nested-ternary
+			(props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.textColor)};
+	position: relative;
+
+	${props => resetCSS(props)}
 `;
 
 export const MessageInputContainer = styled.form`
