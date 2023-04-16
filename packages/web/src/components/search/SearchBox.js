@@ -1427,6 +1427,8 @@ const SearchBox = (props) => {
 											{...getInputProps({
 												className: getClassName(props.innerClass, 'input'),
 												placeholder: props.placeholder,
+												// When props.value is defined,
+												// it means SearchBox is used as a controlled component
 												value: Object.hasOwn(props, 'value') ? props.value : currentValue || '',
 												onChange: onInputChange,
 												onBlur: withTriggerQuery(props.onBlur),
