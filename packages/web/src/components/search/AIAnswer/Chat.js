@@ -28,6 +28,7 @@ import IconGroup from '../../../styles/IconGroup';
 import IconWrapper from '../../../styles/IconWrapper';
 import Mic from '../addons/Mic';
 import Button from '../../../styles/Button';
+import AIFeedback from '../../shared/AIFeedback';
 
 const md = new Remarkable();
 
@@ -214,6 +215,27 @@ const Chat = (props) => {
 		}
 		return null;
 	};
+
+	const renderFeedbackEle = () => {
+		const { showFeedback, isAIResponseLoading } = props;
+		if (!showFeedback || isAIResponseLoading) {
+			return null;
+		}
+
+		return (
+			<div
+				className={`--ai-answer-feedback-container ${
+					getClassName(props.innerClass, 'ai-feedback') || ''
+				}`}
+			>
+				<AIFeedback
+					onFeedbackSubmit={(type, text) => {
+						console.log(type, text);
+					}}
+				/>
+			</div>
+		);
+	};
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -265,6 +287,7 @@ const Chat = (props) => {
 				</MessagesContainer>
 			)}
 			{renderErrorEle()}
+			{renderFeedbackEle()}
 			{props.showInput && (
 				<MessageInputContainer
 					className="--ai-input-container"
@@ -325,6 +348,7 @@ Chat.propTypes = {
 	theme: types.style,
 	renderError: types.title,
 	showRetryButton: types.bool,
+	showFeedback: types.bool,
 };
 
 export default Chat;

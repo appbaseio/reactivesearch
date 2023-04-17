@@ -140,6 +140,7 @@ const AIAnswer = (props) => {
 				theme={props.theme}
 				renderError={props.renderError}
 				showRetryButton={AISessionId.current}
+				showFeedback={props.showFeedback}
 			/>
 		</Chatbox>
 	);
