@@ -54,6 +54,11 @@ export const ChatContainer = styled.div`
 			}
 		}
 	}
+
+	.--ai-answer-feedback-container {
+		margin-top: 15px;
+		margin-bottom: -10px;
+	}
 `;
 
 export const MessagesContainer = styled.div`
@@ -354,6 +359,10 @@ export const AIFeedbackContainer = styled.div`
 		svg {
 			cursor: pointer;
 			transition: all ease-in 0.1s;
+			&.selected {
+				transform: scale(1.1);
+				cursor: default;
+			}
 
 			&:hover {
 				transform: scale(1.1);
@@ -364,6 +373,5 @@ export const AIFeedbackContainer = styled.div`
 	.--feedback-input-wrapper {
 		display: flex;
 		gap: 7px;
-		flex-wrap: wrap;
 	}
 `;

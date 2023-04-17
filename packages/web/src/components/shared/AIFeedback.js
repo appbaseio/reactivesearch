@@ -11,6 +11,7 @@ const FeedbackComponent = ({ onFeedbackSubmit }) => {
 	const [showInput, setShowInput] = useState(false);
 	const [feedbackType, setFeedbackType] = useState(null);
 	const [feedbackText, setFeedbackText] = useState('');
+	const [feedbackRecorded, setFeedbackRecorded] = useState(false);
 
 	const handleButtonClick = (type) => {
 		if (feedbackType === type) {
@@ -28,17 +29,37 @@ const FeedbackComponent = ({ onFeedbackSubmit }) => {
 
 	const handleSubmit = () => {
 		if (feedbackText) {
-			onFeedbackSubmit(feedbackType, feedbackText);
+			onFeedbackSubmit(feedbackType === 'positive', feedbackText);
 		}
-		setFeedbackType(null);
+		// setFeedbackType(null);
 		setFeedbackText('');
 		setShowInput(false);
+		setFeedbackRecorded(true);
 	};
 	const handleCancel = () => {
 		setFeedbackType(null);
 		setFeedbackText('');
 		setShowInput(false);
 	};
+	if (feedbackRecorded) {
+		return (
+			<AIFeedbackContainer>
+				<div className="--feedback-svgs-wrapper">
+					{feedbackType === 'positive' ? (
+						<ThumbsUpSvg
+							className="selected"
+							onClick={() => handleButtonClick('positive')}
+						/>
+					) : (
+						<ThumbsDownSvg
+							className="selected"
+							onClick={() => handleButtonClick('negative')}
+						/>
+					)}
+				</div>
+			</AIFeedbackContainer>
+		);
+	}
 	return (
 		<AIFeedbackContainer>
 			{!showInput && (
