@@ -177,6 +177,7 @@ AIAnswer.propTypes = {
 	isLoading: types.boolRequired,
 	sessionIdFromStore: types.string,
 	showComponent: types.boolRequired,
+	showFeedback: types.bool,
 };
 
 AIAnswer.defaultProps = {
@@ -190,6 +191,7 @@ AIAnswer.defaultProps = {
 	clearSessionOnDestroy: true,
 	sessionIdFromStore: '',
 	showComponent: false,
+	showFeedback: true,
 };
 
 const mapStateToProps = (state, props) => {
