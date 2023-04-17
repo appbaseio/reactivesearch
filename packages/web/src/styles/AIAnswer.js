@@ -343,3 +343,27 @@ export const SendButton = styled(Button)`
 	padding: 10px;
 	text-align: center;
 `;
+
+export const AIFeedbackContainer = styled.div`
+	.--feedback-svgs-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 5px;
+
+		svg {
+			cursor: pointer;
+			transition: all ease-in 0.1s;
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+
+	.--feedback-input-wrapper {
+		display: flex;
+		gap: 7px;
+		flex-wrap: wrap;
+	}
+`;
