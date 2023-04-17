@@ -217,8 +217,10 @@ const Chat = (props) => {
 	};
 
 	const renderFeedbackEle = () => {
-		const { showFeedback, isAIResponseLoading } = props;
-		if (!showFeedback || isAIResponseLoading) {
+		const {
+			showFeedback, isAIResponseLoading, currentSessionId, trackUsefullness,
+		} = props;
+		if (!showFeedback || isAIResponseLoading || !currentSessionId) {
 			return null;
 		}
 
@@ -229,8 +231,11 @@ const Chat = (props) => {
 				}`}
 			>
 				<AIFeedback
-					onFeedbackSubmit={(type, text) => {
-						console.log(type, text);
+					onFeedbackSubmit={(useful, reason) => {
+						trackUsefullness(currentSessionId, {
+							useful,
+							reason,
+						});
 					}}
 				/>
 			</div>
@@ -349,6 +354,8 @@ Chat.propTypes = {
 	renderError: types.title,
 	showRetryButton: types.bool,
 	showFeedback: types.bool,
+	trackUsefullness: types.func,
+	currentSessionId: types.string,
 };
 
 export default Chat;

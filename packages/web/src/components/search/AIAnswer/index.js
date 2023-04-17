@@ -17,6 +17,7 @@ import {
 	getObjectFromLocalStorage,
 	setObjectInLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
 
 import { Chatbox } from '../../../styles/AIAnswer';
 import { connect } from '../../../utils';
@@ -139,8 +140,10 @@ const AIAnswer = (props) => {
 				rawData={props.rawData}
 				theme={props.theme}
 				renderError={props.renderError}
-				showRetryButton={AISessionId.current}
+				showRetryButton={!!AISessionId.current}
 				showFeedback={props.showFeedback}
+				trackUsefullness={props.trackUsefullness}
+				currentSessionId={AISessionId.current || ''}
 			/>
 		</Chatbox>
 	);
@@ -179,6 +182,7 @@ AIAnswer.propTypes = {
 	sessionIdFromStore: types.string,
 	showComponent: types.boolRequired,
 	showFeedback: types.bool,
+	trackUsefullness: types.funcRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -201,9 +205,10 @@ const mapStateToProps = (state, props) => {
 		dependencyComponent = dependencyComponent[0];
 	}
 
-	const showComponent
-		= state.selectedValues[dependencyComponent]
-		&& state.selectedValues[dependencyComponent].value;
+	const showComponent = Boolean(
+		state.selectedValues[dependencyComponent]
+			&& state.selectedValues[dependencyComponent].value,
+	);
 
 	return {
 		showComponent,
@@ -226,6 +231,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchtoProps = dispatch => ({
 	getAIResponse: (sessionId, componentId, message) =>
 		dispatch(fetchAIResponse(sessionId, componentId, message)),
+	trackUsefullness: (sessionId, otherInfo) =>
+		dispatch(recordAISessionUsefulness(sessionId, otherInfo)),
 });
 
 // Add componentType for SSR

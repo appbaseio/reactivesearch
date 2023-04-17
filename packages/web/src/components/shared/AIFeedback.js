@@ -28,9 +28,8 @@ const FeedbackComponent = ({ onFeedbackSubmit }) => {
 	};
 
 	const handleSubmit = () => {
-		if (feedbackText) {
-			onFeedbackSubmit(feedbackType === 'positive', feedbackText);
-		}
+		onFeedbackSubmit(feedbackType === 'positive', feedbackText);
+
 		// setFeedbackType(null);
 		setFeedbackText('');
 		setShowInput(false);
