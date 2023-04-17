@@ -37,7 +37,7 @@
 	"author": "metagrover",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"@appbaseio/analytics": "^1.1.1",
+		"@appbaseio/analytics": "^1.2.0-alpha.1",
 		"@appbaseio/reactivecore": "10.0.0-alpha.4",
 		"@appbaseio/rheostat": "^1.0.0-alpha.15",
 		"@emotion/core": "^10.0.28",
