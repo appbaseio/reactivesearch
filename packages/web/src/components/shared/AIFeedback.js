@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { func } from 'prop-types';
+import { bool, func } from 'prop-types';
 
 import ThumbsUpSvg from './ThumbsUpSvg';
 import ThumbsDownSvg from './ThumbsDownSvg';
@@ -7,7 +7,7 @@ import Input from '../../styles/Input';
 import { AIFeedbackContainer } from '../../styles/AIAnswer';
 import Button from '../../styles/Button';
 
-const FeedbackComponent = ({ onFeedbackSubmit }) => {
+const FeedbackComponent = ({ onFeedbackSubmit, hideUI }) => {
 	const [showInput, setShowInput] = useState(false);
 	const [feedbackType, setFeedbackType] = useState(null);
 	const [feedbackText, setFeedbackText] = useState('');
@@ -59,6 +59,10 @@ const FeedbackComponent = ({ onFeedbackSubmit }) => {
 			</AIFeedbackContainer>
 		);
 	}
+
+	if (hideUI) {
+		return null;
+	}
 	return (
 		<AIFeedbackContainer>
 			{!showInput && (
@@ -99,6 +103,7 @@ const FeedbackComponent = ({ onFeedbackSubmit }) => {
 
 FeedbackComponent.propTypes = {
 	onFeedbackSubmit: func,
+	hideUI: bool,
 };
 
-export default FeedbackComponent;
+export default React.memo(FeedbackComponent);

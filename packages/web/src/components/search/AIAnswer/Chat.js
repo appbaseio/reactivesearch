@@ -216,31 +216,6 @@ const Chat = (props) => {
 		return null;
 	};
 
-	const renderFeedbackEle = () => {
-		const {
-			showFeedback, isAIResponseLoading, currentSessionId, trackUsefullness,
-		} = props;
-		if (!showFeedback || isAIResponseLoading || !currentSessionId) {
-			return null;
-		}
-
-		return (
-			<div
-				className={`--ai-answer-feedback-container ${
-					getClassName(props.innerClass, 'ai-feedback') || ''
-				}`}
-			>
-				<AIFeedback
-					onFeedbackSubmit={(useful, reason) => {
-						trackUsefullness(currentSessionId, {
-							useful,
-							reason,
-						});
-					}}
-				/>
-			</div>
-		);
-	};
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
@@ -292,7 +267,22 @@ const Chat = (props) => {
 				</MessagesContainer>
 			)}
 			{renderErrorEle()}
-			{renderFeedbackEle()}
+			<div
+				className={`--ai-answer-feedback-container ${
+					getClassName(props.innerClass, 'ai-feedback') || ''
+				}`}
+			>
+				<AIFeedback
+					hideUI={props.isAIResponseLoading || !props.currentSessionId}
+					key={props.currentSessionId}
+					onFeedbackSubmit={(useful, reason) => {
+						props.trackUsefullness(props.currentSessionId, {
+							useful,
+							reason,
+						});
+					}}
+				/>
+			</div>
 			{props.showInput && (
 				<MessageInputContainer
 					className="--ai-input-container"
