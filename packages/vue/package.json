@@ -34,7 +34,7 @@
 	],
 	"sideEffects": false,
 	"dependencies": {
-		"@appbaseio/analytics": "^1.1.1",
+		"@appbaseio/analytics": "^1.2.0-alpha.1",
 		"@appbaseio/reactivecore": "10.0.0-alpha.4",
 		"@appbaseio/vue-emotion": "0.6.0-alpha.6",
 		"@emotion/css": "^11.10.5",
