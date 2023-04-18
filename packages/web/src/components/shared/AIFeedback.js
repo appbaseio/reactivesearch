@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { bool, func } from 'prop-types';
 
 import ThumbsUpSvg from './ThumbsUpSvg';
@@ -7,7 +7,7 @@ import Input from '../../styles/Input';
 import { AIFeedbackContainer } from '../../styles/AIAnswer';
 import Button from '../../styles/Button';
 
-const FeedbackComponent = ({ onFeedbackSubmit, hideUI }) => {
+const FeedbackComponent = ({ onFeedbackSubmit, hideUI, overrideState = {} }) => {
 	const [showInput, setShowInput] = useState(false);
 	const [feedbackType, setFeedbackType] = useState(null);
 	const [feedbackText, setFeedbackText] = useState('');
@@ -40,6 +40,13 @@ const FeedbackComponent = ({ onFeedbackSubmit, hideUI }) => {
 		setFeedbackText('');
 		setShowInput(false);
 	};
+
+	useEffect(() => {
+		if (overrideState && overrideState.isRecorded) {
+			setFeedbackRecorded(true);
+			setFeedbackType(overrideState.feedbackType || 'positive');
+		}
+	}, [overrideState]);
 
 	if (hideUI) {
 		return null;
@@ -98,6 +105,7 @@ const FeedbackComponent = ({ onFeedbackSubmit, hideUI }) => {
 FeedbackComponent.propTypes = {
 	onFeedbackSubmit: func,
 	hideUI: bool,
+	overrideState: bool,
 };
 
 export default React.memo(FeedbackComponent);
