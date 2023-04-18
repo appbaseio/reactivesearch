@@ -267,22 +267,24 @@ const Chat = (props) => {
 				</MessagesContainer>
 			)}
 			{renderErrorEle()}
-			<div
-				className={`--ai-answer-feedback-container ${
-					getClassName(props.innerClass, 'ai-feedback') || ''
-				}`}
-			>
-				<AIFeedback
-					hideUI={props.isAIResponseLoading || !props.currentSessionId}
-					key={props.currentSessionId}
-					onFeedbackSubmit={(useful, reason) => {
-						props.trackUsefullness(props.currentSessionId, {
-							useful,
-							reason,
-						});
-					}}
-				/>
-			</div>
+			{props.showFeedback && (
+				<div
+					className={`--ai-answer-feedback-container ${
+						getClassName(props.innerClass, 'ai-feedback') || ''
+					}`}
+				>
+					<AIFeedback
+						hideUI={props.isAIResponseLoading || !props.currentSessionId}
+						key={props.currentSessionId}
+						onFeedbackSubmit={(useful, reason) => {
+							props.trackUsefullness(props.currentSessionId, {
+								useful,
+								reason,
+							});
+						}}
+					/>
+				</div>
+			)}
 			{props.showInput && (
 				<MessageInputContainer
 					className="--ai-input-container"

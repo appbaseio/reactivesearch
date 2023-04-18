@@ -40,28 +40,22 @@ const FeedbackComponent = ({ onFeedbackSubmit, hideUI }) => {
 		setFeedbackText('');
 		setShowInput(false);
 	};
+
+	if (hideUI) {
+		return null;
+	}
 	if (feedbackRecorded) {
 		return (
 			<AIFeedbackContainer>
 				<div className="--feedback-svgs-wrapper">
 					{feedbackType === 'positive' ? (
-						<ThumbsUpSvg
-							className="selected"
-							onClick={() => handleButtonClick('positive')}
-						/>
+						<ThumbsUpSvg className="selected" />
 					) : (
-						<ThumbsDownSvg
-							className="selected"
-							onClick={() => handleButtonClick('negative')}
-						/>
+						<ThumbsDownSvg className="selected" />
 					)}
 				</div>
 			</AIFeedbackContainer>
 		);
-	}
-
-	if (hideUI) {
-		return null;
 	}
 	return (
 		<AIFeedbackContainer>
