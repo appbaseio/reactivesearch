@@ -1549,38 +1549,50 @@ const SearchBox = (props) => {
 																		{renderAIScreenFooter()}
 
 																		{showFeedbackComponent && (
-																			<AIFeedback
-																				overrideState={
-																					feedbackState
-																				}
-																				hideUI={
-																					props.isAIResponseLoading
-																				|| props.isLoading
-																				|| !props.sessionIdFromStore
-																				}
-																				key={
-																					props.sessionIdFromStore
-																				}
-																				onFeedbackSubmit={(
-																					useful,
-																					reason,
-																				) => {
-																					setFeedbackState({
-																						isRecorded: true,
-																						feedbackType:
-																						useful
-																							? 'positive'
-																							: 'negative',
-																					});
-																					props.trackUsefullness(
-																						props.sessionIdFromStore,
-																						{
-																							useful,
-																							reason,
-																						},
-																					);
-																				}}
-																			/>
+																			<div
+																				className={`${
+																				getClassName(
+																					props.innerClass,
+																					'ai-feedback',
+																				) || ''
+																			}`}
+																			>
+																				{' '}
+																				<AIFeedback
+																					overrideState={
+																						feedbackState
+																					}
+																					hideUI={
+																						props.isAIResponseLoading
+																					|| props.isLoading
+																					|| !props.sessionIdFromStore
+																					}
+																					key={
+																						props.sessionIdFromStore
+																					}
+																					onFeedbackSubmit={(
+																						useful,
+																						reason,
+																					) => {
+																						setFeedbackState(
+																							{
+																								isRecorded: true,
+																								feedbackType:
+																								useful
+																									? 'positive'
+																									: 'negative',
+																							},
+																						);
+																						props.trackUsefullness(
+																							props.sessionIdFromStore,
+																							{
+																								useful,
+																								reason,
+																							},
+																						);
+																					}}
+																				/>
+																			</div>
 																		)}
 																	</Fragment>
 																)}
