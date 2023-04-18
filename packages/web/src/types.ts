@@ -219,4 +219,5 @@ export interface AIUIConfig {
 	onSourceClick?: (sourceObject: object) => void;
 	renderAskButton?: (onAskButtonClick: any) => children;
 	askButton?: boolean;
+	showFeedback?: boolean;
 }
