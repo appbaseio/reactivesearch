@@ -791,7 +791,9 @@ const SearchBox = (props) => {
 	};
 
 	const getAISourceObjects = () => {
-		const localCache = getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
+		const localCache
+			= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+			&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
 		const sourceObjects = [];
 		if (!props.AIResponse) return sourceObjects;
 		const docIds
