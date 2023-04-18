@@ -13,6 +13,7 @@ import {
 	getObjectFromLocalStorage,
 	setObjectInLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
+import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
 import { connect, hasCustomRenderer, isFunction, getComponent } from '../../utils/index';
 import types from '../../utils/vueTypes';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -36,6 +37,7 @@ import InputWrapper from '../../styles/InputWrapper';
 import InputGroup from '../../styles/InputGroup';
 import SearchSvg from '../shared/SearchSvg';
 import Button from '../../styles/Button';
+import AIFeedback from '../shared/AIFeedback.jsx';
 
 const md = new Remarkable();
 
@@ -78,6 +80,7 @@ const AIAnswer = defineComponent({
 	props: {
 		componentId: types.string.isRequired,
 		showVoiceInput: VueTypes.bool.def(false),
+		showFeedback: VueTypes.bool.def(true),
 		showIcon: VueTypes.bool.def(true),
 		onData: types.func,
 		innerRef: VueTypes.string.def('AISearchInputField'),
@@ -477,7 +480,25 @@ const AIAnswer = defineComponent({
 							)}
 						</MessagesContainer>
 					)}
-					{this.renderErrorComponent()}
+					{this.renderErrorComponent()}{' '}
+					{props.showFeedback && (
+						<div
+							class={`--ai-answer-feedback-container ${
+								getClassName(props.innerClass, 'ai-feedback') || ''
+							}`}
+						>
+							<AIFeedback
+								hideUI={this.isLoadingState || !this.sessionId}
+								key={this.sessionId}
+								onFeedbackSubmit={(useful, reason) => {
+									this.trackUsefullness(this.sessionId, {
+										useful,
+										reason,
+									});
+								}}
+							/>
+						</div>
+					)}
 					{props.showInput && (
 						<MessageInputContainer
 							class="--ai-input-container"
@@ -535,12 +556,14 @@ const mapStateToProps = (state, props) => {
 		isLoading: state.isLoading[props.componentId] || false,
 		sessionIdFromStore:
 			(state.AIResponses[props.componentId]
-				&& state.AIResponses[props.componentId].sessionId)
+				&& state.AIResponses[props.componentId].response
+				&& state.AIResponses[props.componentId].response.sessionId)
 			|| '',
 	};
 };
 const mapDispatchToProps = {
 	getAIResponse: fetchAIResponse,
+	trackUsefullness: recordAISessionUsefulness,
 };
 export const AIConnected = PreferencesConsumer(
 	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(AIAnswer), {
