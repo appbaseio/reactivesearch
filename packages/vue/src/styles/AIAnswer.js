@@ -55,6 +55,10 @@ export const ChatContainer = styled('div')`
 			}
 		}
 	}
+	.--ai-answer-feedback-container {
+		margin-top: 15px;
+		margin-bottom: -10px;
+	}
 `;
 
 export const MessagesContainer = styled('div')`
