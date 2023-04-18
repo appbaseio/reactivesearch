@@ -40,6 +40,7 @@ import {
 } from '@appbaseio/reactivecore/lib/actions';
 import hotkeys from 'hotkeys-js';
 import XSS from 'xss';
+import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
@@ -73,6 +74,7 @@ import HOOKS from '../../utils/hooks';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
+import AIFeedback from '../shared/AIFeedback';
 
 const md = new Remarkable();
 
@@ -121,6 +123,8 @@ const SearchBox = (props) => {
 	const [showAIScreen, setShowAIScreen] = useState(false);
 	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
 	const [showTypingEffect, setShowTypingEffect] = useState(true);
+	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
+	const [feedbackState, setFeedbackState] = useState(null);
 
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
@@ -1302,6 +1306,7 @@ const SearchBox = (props) => {
 	useEffect(() => {
 		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
 			setShowAIScreenFooter(false);
+			setShowFeedbackComponent(false);
 		}
 	}, [showAIScreen, props.isAIResponseLoading]);
 
@@ -1480,6 +1485,22 @@ const SearchBox = (props) => {
 																						true,
 																					);
 																					if (
+																						props.AIUIConfig
+																					&& typeof props
+																						.AIUIConfig
+																						.showFeedback
+																						=== 'boolean'
+																							? props
+																								.AIUIConfig
+																								.showFeedback
+																							: true
+																					) {
+																						setShowFeedbackComponent(
+																							true,
+																						);
+																					}
+
+																					if (
 																						props.AIResponse
 																					&& props.AIResponse
 																						.response
@@ -1524,6 +1545,41 @@ const SearchBox = (props) => {
 																			/>
 																		</Answer>
 																		{renderAIScreenFooter()}
+
+																		{showFeedbackComponent && (
+																			<AIFeedback
+																				overrideState={
+																					feedbackState
+																				}
+																				hideUI={
+																					props.isAIResponseLoading
+																				|| props.isLoading
+																				|| !props.sessionIdFromStore
+																				}
+																				key={
+																					props.sessionIdFromStore
+																				}
+																				onFeedbackSubmit={(
+																					useful,
+																					reason,
+																				) => {
+																					setFeedbackState({
+																						isRecorded: true,
+																						feedbackType:
+																						useful
+																							? 'positive'
+																							: 'negative',
+																					});
+																					props.trackUsefullness(
+																						props.sessionIdFromStore,
+																						{
+																							useful,
+																							reason,
+																						},
+																					);
+																				}}
+																			/>
+																		)}
 																	</Fragment>
 																)}
 														</Fragment>
@@ -1976,6 +2032,8 @@ SearchBox.propTypes = {
 	AIResponseError: types.componentObject,
 	renderAIAnswer: types.func,
 	AIUIConfig: types.componentObject,
+	trackUsefullness: types.funcRequired,
+	sessionIdFromStore: types.string,
 };
 
 SearchBox.defaultProps = {
@@ -2043,6 +2101,11 @@ const mapStateToProps = (state, props) => ({
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
 	AIResponseError:
 		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+	sessionIdFromStore:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.sessionId)
+		|| '',
 });
 
 const mapDispatchtoProps = dispatch => ({
@@ -2051,6 +2114,8 @@ const mapDispatchtoProps = dispatch => ({
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	trackUsefullness: (sessionId, otherInfo) =>
+		dispatch(recordAISessionUsefulness(sessionId, otherInfo)),
 });
 
 // Add componentType for SSR
