@@ -107,7 +107,7 @@ export const TypingDot = styled.div`
 	} else {
 		finalColor
 				= props.themePreset !== 'dark'
-				? props.theme.colors.primaryTextColor
+				? props.theme.colors.borderColor
 				: props.theme.colors.textColor;
 	}
 
@@ -278,7 +278,7 @@ const messageBGColor = (props) => {
 	} else {
 		finalBGColor
 			= props.themePreset !== 'dark'
-				? lighten(0.25, props.theme.colors.borderColor)
+				? lighten(0.53, props.theme.colors.borderColor)
 				: props.theme.colors.backgroundColor;
 	}
 	return finalBGColor;
@@ -296,7 +296,7 @@ export const Message = styled.div`
 	} else {
 		finalColor
 				= props.themePreset !== 'dark'
-				? props.theme.colors.primaryTextColor
+				? props.theme.colors.borderColor
 				: props.theme.colors.textColor;
 	}
 
