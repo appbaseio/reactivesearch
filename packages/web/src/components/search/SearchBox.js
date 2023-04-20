@@ -838,11 +838,18 @@ const SearchBox = (props) => {
 			resultStats: stats(),
 			rawData,
 			AIData: {
-				question: AIResponse && AIResponse.question,
-				answer: AIResponse && AIResponse.answer && AIResponse.answer.text,
+				question: AIResponse && AIResponse.response && AIResponse.response.question,
+				answer:
+					AIResponse
+					&& AIResponse.response
+					&& AIResponse.response.answer
+					&& AIResponse.response.answer.text,
 				documentIds:
-					(AIResponse && AIResponse.answer && AIResponse.answer.documentIds) || [],
-				loading: props.isAIResponseLoading || props.isLoading,
+					(AIResponse
+						&& AIResponse.response
+						&& AIResponse.response.answer
+						&& AIResponse.response.answer.documentIds)
+					|| [],
 				showAIScreen,
 				sources: getAISourceObjects(),
 			},
