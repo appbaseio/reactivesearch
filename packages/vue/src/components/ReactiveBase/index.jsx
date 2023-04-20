@@ -31,7 +31,7 @@ const ReactiveBase = {
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
-		theme: VueTypes.oneOf([VueTypes.object.def({}), false]),
+		theme: VueTypes.oneOf([VueTypes.bool, VueTypes.object.def({})]),
 		themePreset: VueTypes.string.def('light'),
 		type: types.string,
 		url: types.string,

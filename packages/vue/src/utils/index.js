@@ -17,9 +17,7 @@ export const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
 
 export const composeThemeObject = (ownTheme = {}, userThemeParam = {}) => {
 	let userTheme = {};
-	if (userThemeParam) {
-		userTheme = { ...userThemeParam };
-	} else {
+	if (typeof userThemeParam === 'boolean' && userThemeParam === false) {
 		userTheme = {
 			typography: {
 				fontFamily: 'inherit',
@@ -34,6 +32,8 @@ export const composeThemeObject = (ownTheme = {}, userThemeParam = {}) => {
 				borderColor: 'inherit',
 			},
 		};
+	} else {
+		userTheme = { ...userThemeParam };
 	}
 	return {
 		typography: {
