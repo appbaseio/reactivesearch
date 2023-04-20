@@ -31,7 +31,7 @@ const ReactiveBase = {
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
-		theme: VueTypes.object.def({}),
+		theme: VueTypes.oneOf([VueTypes.object.def({}), false]),
 		themePreset: VueTypes.string.def('light'),
 		type: types.string,
 		url: types.string,
@@ -54,6 +54,7 @@ const ReactiveBase = {
 		if (createCache.default) {
 			createCacheFn = createCache.default;
 		}
+		console.log(composeThemeObject(getTheme(this.$props.themePreset), this.$props.theme));
 		return {
 			theme_reactivesearch: composeThemeObject(
 				getTheme(this.$props.themePreset),
