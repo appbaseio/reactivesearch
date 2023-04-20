@@ -55,10 +55,16 @@ export const ChatContainer = styled('div')`
 			}
 		}
 	}
-	.--ai-answer-feedback-container {
+
+	${(props) =>
+		props.showInput
+			? `.--ai-answer-feedback-container {
 		margin-top: 15px;
 		margin-bottom: -10px;
-	}
+	}`
+			: `.--ai-answer-feedback-container {
+		margin-top: 4px;
+	}`};
 `;
 
 export const MessagesContainer = styled('div')`
