@@ -54,7 +54,6 @@ const ReactiveBase = {
 		if (createCache.default) {
 			createCacheFn = createCache.default;
 		}
-		console.log(composeThemeObject(getTheme(this.$props.themePreset), this.$props.theme));
 		return {
 			theme_reactivesearch: composeThemeObject(
 				getTheme(this.$props.themePreset),
