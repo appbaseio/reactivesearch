@@ -103,7 +103,7 @@ export const TypingDot = styled('div')`
 		} else {
 			finalColor
 				= props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
+					? props.theme.colors.borderColor
 					: props.theme.colors.textColor;
 		}
 		return finalColor;
@@ -243,20 +243,22 @@ export const resetCSS = (props) => `
 	code {
 		line-height: normal;
 
-		color: ${(colorProps) =>
+		color: ${
 	// eslint-disable-next-line no-nested-ternary
-		colorProps.isSender
-			? colorProps.themePreset !== 'dark'
-				? colorProps.theme.colors.primaryTextColor
-				: colorProps.theme.colors.textColor
-			: colorProps.theme.colors.primaryTextColor};
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
-		margin: 5px 0;
+		margin-top: 5px;
 		display: inline-block;
 		overflow: auto;
-		width: 100%;
+		width: fit-content;
+		max-width: 100%;
 	}
 	ul,
 	ol {
@@ -273,7 +275,7 @@ const messageBGColor = (props) => {
 	} else {
 		finalBGColor
 			= props.themePreset !== 'dark'
-				? lighten(0.25, props.theme.colors.borderColor)
+				? lighten(0.53, props.theme.colors.borderColor)
 				: props.theme.colors.backgroundColor;
 	}
 	return finalBGColor;
@@ -290,7 +292,7 @@ export const Message = styled('div')`
 		} else {
 			finalColor
 				= props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
+					? props.theme.colors.borderColor
 					: props.theme.colors.textColor;
 		}
 		return finalColor;
