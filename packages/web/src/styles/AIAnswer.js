@@ -256,10 +256,11 @@ export const resetCSS = props => css`
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
-		margin: 5px 0;
+		margin-top: 5px;
 		display: inline-block;
 		overflow: auto;
-		width: 100%;
+		width: fit-content;
+		max-width: 100%;
 	}
 	ul,
 	ol {
