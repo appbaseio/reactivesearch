@@ -234,7 +234,7 @@ const Chat = (props) => {
 			_inputWrapper.current.style.height = `${height}px`;
 
 			if (_errorWrapper.current) {
-				_inputWrapper.current.style.bottom = `${height}px`;
+				_errorWrapper.current.style.bottom = `${height}px`;
 			}
 		}
 	};
