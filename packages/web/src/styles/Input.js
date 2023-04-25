@@ -290,5 +290,89 @@ const suggestionsContainer = css`
 	}
 `;
 
+export const TextArea = styled('textarea')`
+	${props => input(props.searchBox)};
+	${({ themePreset }) => themePreset === 'dark' && darkInput};
+
+	${props =>
+	props.showIcon
+		&& props.iconPosition === 'left'
+		&& css`
+			padding-left: 36px;
+		`};
+
+	${props =>
+			props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 36px;
+		`};
+
+	${props =>
+		// for clear icon
+			props.showClear
+		&& css`
+			padding-right: 36px;
+		`};
+	${props =>
+		// for voice search icon
+			props.showVoiceSearch
+		&& css`
+			padding-right: 36px;
+		`};
+	${props =>
+		// for clear icon with search icon
+			props.showClear
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+	${props =>
+		// for voice search icon with clear icon
+			props.showVoiceSearch
+		&& props.showIcon
+		&& css`
+			padding-right: 66px;
+		`};
+	${props =>
+		// for voice search icon with search icon
+			props.showVoiceSearch
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+	${props =>
+		// for clear icon with search icon and voice search
+			props.showClear
+		&& props.showIcon
+		&& props.showVoiceSearch
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 90px;
+		`};
+
+	${props => props.alert && alertBorder};
+
+	${props =>
+			props.isOpen
+		&& css`
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		`};
+
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		display: none;
+	}
+
+	resize: none;
+	overflow: hidden;
+	height: 42px;
+`;
+
 export default Input;
 export { suggestionsContainer, suggestions, input, noSuggestions, searchboxSuggestions };
