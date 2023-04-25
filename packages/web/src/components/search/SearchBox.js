@@ -52,7 +52,7 @@ import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import Input, { searchboxSuggestions, suggestionsContainer } from '../../styles/Input';
+import Input, { searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
 import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
@@ -523,9 +523,24 @@ const SearchBox = (props) => {
 		// uncontrolled component behavior
 		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion);
 	};
+	const handleTextAreaHeightChange = () => {
+		const textArea = _inputRef.current;
+		if (textArea) {
+			textArea.style.height = '42px';
+			const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+			const maxHeight = lineHeight * 4; // max height for 3 lines
+			const height = Math.min(textArea.scrollHeight, maxHeight);
+			textArea.style.height = `${height}px`;
+			textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+			if (_dropdownULRef && _dropdownULRef.current) {
+				_dropdownULRef.current.style.top = `${height}px`;
+			}
+		}
+	};
 
 	const onInputChange = (e) => {
 		const { value: inputValue } = e.target;
+
 		if (!isOpen && props.autosuggest) {
 			setIsOpen(true);
 		}
@@ -551,6 +566,7 @@ const SearchBox = (props) => {
 			);
 		}
 	};
+
 	const enterButtonOnClick = () => {
 		setShowAIScreen(false);
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
@@ -977,12 +993,18 @@ const SearchBox = (props) => {
 			iconPosition,
 			innerClass,
 			showFocusShortcutsIcon,
+			enableAI,
 		} = props;
 		return (
 			<div>
-				<IconGroup groupPosition="right" positionType="absolute">
+				<IconGroup enableAI={enableAI} groupPosition="right" positionType="absolute">
 					{currentValue && showClear && (
-						<IconWrapper onClick={clearValue} showIcon={showIcon} isClearIcon>
+						<IconWrapper
+							enableAI={enableAI}
+							onClick={clearValue}
+							showIcon={showIcon}
+							isClearIcon
+						>
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
@@ -1000,13 +1022,17 @@ const SearchBox = (props) => {
 						/>
 					)}
 					{iconPosition === 'right' && (
-						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
+						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
+							{renderIcon()}
+						</IconWrapper>
 					)}
 				</IconGroup>
 
-				<IconGroup groupPosition="left" positionType="absolute">
+				<IconGroup enableAI={enableAI} groupPosition="left" positionType="absolute">
 					{iconPosition === 'left' && (
-						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
+						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
+							{renderIcon()}
+						</IconWrapper>
 					)}
 				</IconGroup>
 			</div>
@@ -1324,6 +1350,12 @@ const SearchBox = (props) => {
 			setShowTypingEffect(false);
 		}
 	}, [isOpen]);
+
+	useEffect(() => {
+		if (props.autosuggest && props.enableAI) {
+			handleTextAreaHeightChange();
+		}
+	}, [currentValue]);
 
 	useEffect(() => {
 		hasMounted.current = true;
@@ -1834,35 +1866,75 @@ const SearchBox = (props) => {
 								<InputGroup isOpen={isOpen}>
 									{renderInputAddonBefore()}
 									<InputWrapper>
-										<Input
-											aria-label={props.componentId}
-											id={`${props.componentId}-input`}
-											showIcon={props.showIcon}
-											showClear={props.showClear}
-											iconPosition={props.iconPosition}
-											ref={_inputRef}
-											{...getInputProps({
-												className: getClassName(props.innerClass, 'input'),
-												placeholder: props.placeholder,
-												value: currentValue === null ? '' : currentValue,
-												onChange: onInputChange,
-												onBlur: withTriggerQuery(props.onBlur),
-												onFocus: handleFocus,
-												onClick: () => {
-													// clear highlighted index
-													setHighlightedIndex(null);
-												},
-												onKeyPress: withTriggerQuery(props.onKeyPress),
-												onKeyDown: e =>
-													handleKeyDown(e, highlightedIndex),
-												onKeyUp: withTriggerQuery(props.onKeyUp),
-												autoFocus: props.autoFocus,
-											})}
-											themePreset={props.themePreset}
-											type={props.type}
-											searchBox // a prop specific to Input styled-component
-											isOpen={isOpen} // is dropdown open or not
-										/>
+										{props.enableAI ? (
+											<TextArea
+												aria-label={props.componentId}
+												id={`${props.componentId}-input`}
+												showIcon={props.showIcon}
+												showClear={props.showClear}
+												iconPosition={props.iconPosition}
+												ref={_inputRef}
+												{...getInputProps({
+													className: getClassName(
+														props.innerClass,
+														'input',
+													),
+													placeholder: props.placeholder,
+													value:
+														currentValue === null ? '' : currentValue,
+													onChange: onInputChange,
+													onBlur: withTriggerQuery(props.onBlur),
+													onFocus: handleFocus,
+													onClick: () => {
+														// clear highlighted index
+														setHighlightedIndex(null);
+													},
+													onKeyPress: withTriggerQuery(props.onKeyPress),
+													onKeyDown: e =>
+														handleKeyDown(e, highlightedIndex),
+													onKeyUp: withTriggerQuery(props.onKeyUp),
+													autoFocus: props.autoFocus,
+												})}
+												themePreset={props.themePreset}
+												type={props.type}
+												searchBox // a prop specific to Input styled-component
+												isOpen={isOpen} // is dropdown open or not
+											/>
+										) : (
+											<Input
+												aria-label={props.componentId}
+												id={`${props.componentId}-input`}
+												showIcon={props.showIcon}
+												showClear={props.showClear}
+												iconPosition={props.iconPosition}
+												ref={_inputRef}
+												{...getInputProps({
+													className: getClassName(
+														props.innerClass,
+														'input',
+													),
+													placeholder: props.placeholder,
+													value:
+														currentValue === null ? '' : currentValue,
+													onChange: onInputChange,
+													onBlur: withTriggerQuery(props.onBlur),
+													onFocus: handleFocus,
+													onClick: () => {
+														// clear highlighted index
+														setHighlightedIndex(null);
+													},
+													onKeyPress: withTriggerQuery(props.onKeyPress),
+													onKeyDown: e =>
+														handleKeyDown(e, highlightedIndex),
+													onKeyUp: withTriggerQuery(props.onKeyUp),
+													autoFocus: props.autoFocus,
+												})}
+												themePreset={props.themePreset}
+												type={props.type}
+												searchBox // a prop specific to Input styled-component
+												isOpen={isOpen} // is dropdown open or not
+											/>
+										)}
 										{renderIcons()}
 										{!props.expandSuggestionsContainer
 											&& renderSuggestionsDropdown(
