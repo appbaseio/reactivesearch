@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import PropTypes from 'prop-types';
@@ -42,6 +42,8 @@ const Chat = (props) => {
 	const { messages, onSendMessage } = props;
 	const [inputMessage, setInputMessage] = React.useState('');
 	const messagesContainerRef = React.useRef(null);
+	const _inputRef = useRef(null);
+	const _inputWrapper = useRef(null);
 
 	const handleMessageInputChange = (e) => {
 		setInputMessage(e.target.value);
@@ -101,7 +103,7 @@ const Chat = (props) => {
 		} = props;
 		return (
 			<div>
-				<IconGroup groupPosition="right" positionType="absolute">
+				<IconGroup enableAI groupPosition="right" positionType="absolute">
 					{shouldMicRender(showVoiceInput) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -113,7 +115,7 @@ const Chat = (props) => {
 					{iconPosition === 'right' && <IconWrapper>{renderIcon()}</IconWrapper>}
 				</IconGroup>
 
-				<IconGroup groupPosition="left" positionType="absolute">
+				<IconGroup enableAI groupPosition="left" positionType="absolute">
 					{iconPosition === 'left' && <IconWrapper>{renderIcon()}</IconWrapper>}
 				</IconGroup>
 			</div>
@@ -216,11 +218,29 @@ const Chat = (props) => {
 		return null;
 	};
 
+	const handleTextAreaHeightChange = () => {
+		const textArea = _inputRef.current;
+		if (textArea) {
+			textArea.style.height = '42px';
+			const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+			const maxHeight = lineHeight * 4; // max height for 3 lines
+			const height = Math.min(textArea.scrollHeight, maxHeight);
+			textArea.style.height = `${height}px`;
+			textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+			// wrapper around input/ textarea
+			_inputWrapper.current.style.height = `${height}px`;
+		}
+	};
+
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
 		}
 	}, [messages]);
+
+	React.useEffect(() => {
+		handleTextAreaHeightChange();
+	}, [inputMessage]);
 
 	return (
 		<ChatContainer theme={props.theme} showInput={props.showInput}>
@@ -291,9 +311,10 @@ const Chat = (props) => {
 					onSubmit={handleSendMessage}
 				>
 					<InputGroup isOpen={false}>
-						<InputWrapper>
+						<InputWrapper ref={_inputWrapper} enableAI>
 							<MessageInput
 								type="text"
+								ref={_inputRef}
 								placeholder={props.placeholder}
 								value={inputMessage}
 								onChange={handleMessageInputChange}

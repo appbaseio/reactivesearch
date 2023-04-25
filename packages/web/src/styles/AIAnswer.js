@@ -2,7 +2,7 @@ import { css, keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
 import { lighten } from 'polished';
 import Button from './Button';
-import Input from './Input';
+import { TextArea } from './Input';
 
 export const Chatbox = styled.div`
 	position: relative;
@@ -71,7 +71,6 @@ export const MessagesContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-height: 200px;
-
 }};
 `;
 const typingDots = keyframes`
@@ -323,7 +322,7 @@ export const MessageInputContainer = styled.form`
 	margin-top: 10px;
 `;
 
-export const MessageInput = styled(Input)`
+export const MessageInput = styled(TextArea)`
 	width: 100%;
 	border-radius: 5px;
 	border: 1px solid #ccc;
