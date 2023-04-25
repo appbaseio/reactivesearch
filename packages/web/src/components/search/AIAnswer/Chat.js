@@ -44,6 +44,7 @@ const Chat = (props) => {
 	const messagesContainerRef = React.useRef(null);
 	const _inputRef = useRef(null);
 	const _inputWrapper = useRef(null);
+	const _errorWrapper = useRef(null);
 
 	const handleMessageInputChange = (e) => {
 		setInputMessage(e.target.value);
@@ -183,6 +184,7 @@ const Chat = (props) => {
 						className={`--ai-answer-error-container ${
 							getClassName(props.innerClass, 'ai-error') || ''
 						}`}
+						ref={_errorWrapper}
 					>
 						{isFunction(renderError)
 							? renderError(AIResponseError, handleRetryRequest)
@@ -192,6 +194,7 @@ const Chat = (props) => {
 			}
 			return (
 				<div
+					ref={_errorWrapper}
 					className={`--ai-answer-error-container ${
 						getClassName(props.innerClass, 'ai-error') || ''
 					}`}
@@ -229,6 +232,10 @@ const Chat = (props) => {
 			textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
 			// wrapper around input/ textarea
 			_inputWrapper.current.style.height = `${height}px`;
+
+			if (_errorWrapper.current) {
+				_inputWrapper.current.style.bottom = `${height}px`;
+			}
 		}
 	};
 
