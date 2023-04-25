@@ -24,13 +24,13 @@ const InputIcon = styled.div`
 	transform: translateY(-50%);
 	cursor: pointer;
 	${({ iconPosition }) => {
-		if (iconPosition === 'left') {
-			return left;
-		} else if (iconPosition === 'right') {
-			return right;
-		}
-		return null;
-	}};
+	if (iconPosition === 'left') {
+		return left;
+	} else if (iconPosition === 'right') {
+		return right;
+	}
+	return null;
+}};
 	${({ clearIcon }) => clearIcon && clear};
 	${({ showIcon }) => !showIcon && 'padding-right:10px'};
 

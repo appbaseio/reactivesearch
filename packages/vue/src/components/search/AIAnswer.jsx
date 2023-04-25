@@ -47,6 +47,10 @@ md.set({
 	xhtmlOut: true,
 });
 
+const _inputWrapperRef = 'inputWrapperRef';
+const _inputRef = 'inputRef';
+const _errorContainerRef = 'errorContainerRef';
+
 const AIAnswer = defineComponent({
 	name: 'AIAnswer',
 	data() {
@@ -211,6 +215,7 @@ const AIAnswer = defineComponent({
 		},
 		handleMessageInputChange(e) {
 			this.inputMessage = e.target.value;
+			this.handleTextAreaHeightChange();
 		},
 		handleSendMessage(e, isRetry = false, text = this.inputMessage) {
 			if (typeof e === 'object') e.preventDefault();
@@ -255,6 +260,7 @@ const AIAnswer = defineComponent({
 				if (renderError) {
 					return (
 						<div
+							ref={_errorContainerRef}
 							class={`--ai-answer-error-container ${
 								getClassName(this.$props.innerClass, 'ai-error') || ''
 							}`}
@@ -267,16 +273,17 @@ const AIAnswer = defineComponent({
 				}
 				return (
 					<div
+						ref={_errorContainerRef}
 						class={`--ai-answer-error-container ${
 							getClassName(this.$props.innerClass, 'ai-error') || ''
 						}`}
 					>
 						<div class="--default-error-element">
 							<span>
-								{this.error.message
+								{this.error?.message
 									? this.error.message
 									: 'There was an error in generating the response.'}{' '}
-								{this.error.code
+								{this.error?.code
 									? `Code:
 							${this.error.code}`
 									: ''}
@@ -342,7 +349,7 @@ const AIAnswer = defineComponent({
 			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			return (
 				<div>
-					<IconGroup groupPosition="right" positionType="absolute">
+					<IconGroup enableAI groupPosition="right" positionType="absolute">
 						{this.shouldMicRender(showVoiceInput) && (
 							<Mic
 								getInstance={getMicInstance}
@@ -354,7 +361,7 @@ const AIAnswer = defineComponent({
 						{iconPosition === 'right' && <IconWrapper>{this.renderIcon()}</IconWrapper>}
 					</IconGroup>
 
-					<IconGroup groupPosition="left" positionType="absolute">
+					<IconGroup enableAI groupPosition="left" positionType="absolute">
 						{iconPosition === 'left' && <IconWrapper>{this.renderIcon()}</IconWrapper>}
 					</IconGroup>
 				</div>
@@ -400,6 +407,29 @@ const AIAnswer = defineComponent({
 				rawData: this.rawData,
 			};
 			return getComponent(data, this);
+		},
+		handleTextAreaHeightChange() {
+			const textArea = this.$refs?.[_inputRef]?.$el;
+			const inputWrapper = this.$refs?.[_inputWrapperRef]?.$el;
+			const errorContainer = this.$refs?.[_errorContainerRef];
+
+			if (textArea) {
+				textArea.style.height = '42px';
+				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+				const maxHeight = lineHeight * 4; // max height for 3 lines
+				const height = Math.min(textArea.scrollHeight, maxHeight);
+				textArea.style.height = `${height}px`;
+				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+				// wrapper around input/ textarea
+				inputWrapper.style.height = `${height}px`;
+				// adjust error-container
+
+				if (errorContainer) {
+					errorContainer.style.bottom = `${height}px`;
+				}
+
+				this.$forceUpdate();
+			}
 		},
 	},
 	beforeUnmount() {
@@ -504,13 +534,14 @@ const AIAnswer = defineComponent({
 							class="--ai-input-container"
 							onSubmit={this.handleSendMessage}
 						>
-							<InputGroup isOpen={false}>
-								<InputWrapper>
+							<InputGroup enableAI isOpen={false}>
+								<InputWrapper ref={_inputWrapperRef}>
 									<MessageInput
+										ref={_inputRef}
 										type="text"
 										placeholder={props.placeholder}
 										value={this.inputMessage}
-										onChange={this.handleMessageInputChange}
+										onInput={this.handleMessageInputChange}
 										onKeyPress={this.handleKeyPress}
 										id={`${props.componentId}-ai-input`}
 										showIcon={props.showIcon}

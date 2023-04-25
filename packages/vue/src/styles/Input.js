@@ -204,5 +204,92 @@ const noSuggestions = (themePreset, theme) => css`
 	${themePreset === 'dark' && theme && dark(theme)}
 `;
 
+const TextArea = styled('textarea')`
+	${input};
+
+	&:focus {
+		background-color: #fff;
+	}
+	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
+
+	${(props) =>
+		props.showIcon
+		&& props.iconPosition === 'left'
+		&& `
+			padding-left: 36px;
+		`};
+
+	${(props) =>
+		props.showIcon
+		&& props.iconPosition === 'right'
+		&& `
+			padding-right: 36px;
+		`};
+
+	${(props) =>
+		// for clear icon
+		props.showClear
+		&& `
+			padding-right: 36px;
+		`};
+	${(props) =>
+		// for voice search icon
+		props.showVoiceSearch
+		&& `
+			padding-right: 36px;
+		`};
+
+	${(props) =>
+		// for clear icon with search icon
+		props.showClear
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& `
+			padding-right: 66px;
+		`};
+
+	${(props) =>
+		// for voice search icon with search icon
+		props.showVoiceSearch
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& `
+			padding-right: 66px;
+		`};
+	${(props) =>
+		// for voice search icon with clear icon
+		props.showVoiceSearch
+		&& props.showIcon
+		&& `
+			padding-right: 66px;
+		`};
+	${(props) =>
+		// for clear icon with search icon and voice search
+		props.showClear
+		&& props.showIcon
+		&& props.showVoiceSearch
+		&& props.iconPosition === 'right'
+		&& `
+			padding-right: 90px;
+		`};
+
+	${(props) => props.alert && alertBorder};
+	${(props) =>
+		props.isOpen
+		&& css`
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		`};
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		display: none;
+	}
+	resize: none;
+	overflow: hidden;
+	height: 42px;
+`;
+
 export default Input;
-export { suggestionsContainer, suggestions, input, noSuggestions };
+export { suggestionsContainer, suggestions, input, noSuggestions, TextArea };
