@@ -1868,11 +1868,15 @@ const SearchBox = (props) => {
 									<InputWrapper>
 										{props.enableAI ? (
 											<TextArea
+												showFocusShortcutsIcon={
+													props.showFocusShortcutsIcon
+												}
 												aria-label={props.componentId}
 												id={`${props.componentId}-input`}
 												showIcon={props.showIcon}
 												showClear={props.showClear}
 												iconPosition={props.iconPosition}
+												showVoiceSearch={props.showVoiceSearch}
 												ref={_inputRef}
 												{...getInputProps({
 													className: getClassName(
@@ -2170,13 +2174,13 @@ SearchBox.defaultProps = {
 
 const mapStateToProps = (state, props) => ({
 	selectedValue:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].value)
-			|| null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].value)
+		|| null,
 	selectedCategory:
-			(state.selectedValues[props.componentId]
-				&& state.selectedValues[props.componentId].category)
-			|| null,
+		(state.selectedValues[props.componentId]
+			&& state.selectedValues[props.componentId].category)
+		|| null,
 	suggestions: state.hits[props.componentId] && state.hits[props.componentId].hits,
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
@@ -2188,18 +2192,17 @@ const mapStateToProps = (state, props) => ({
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
 	AIResponse:
-			(state.AIResponses[props.componentId]
-				&& state.AIResponses[props.componentId].response)
-			|| null,
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
+		|| null,
 	isAIResponseLoading:
-			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
 	AIResponseError:
-			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
 	sessionIdFromStore:
-			(state.AIResponses[props.componentId]
-				&& state.AIResponses[props.componentId].response
-				&& state.AIResponses[props.componentId].response.sessionId)
-			|| '',
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.sessionId)
+		|| '',
 });
 
 const mapDispatchtoProps = dispatch => ({
