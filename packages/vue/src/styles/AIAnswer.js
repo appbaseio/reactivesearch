@@ -321,6 +321,10 @@ export const MessageInputContainer = styled('form')`
 	padding-top: 12px;
 	align-items: stretch;
 	margin-top: 10px;
+	.ai-enter-button-wrapper {
+		align-self: baseline;
+		height: 41px;
+	}
 `;
 
 export const MessageInput = styled(TextArea)`
@@ -345,6 +349,12 @@ export const MessageInput = styled(TextArea)`
 	::-ms-input-placeholder {
 		color: ${(props) => props.theme.colors.textColor};
 	}
+	${({ enterButton }) =>
+		enterButton
+		&& `
+		    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+	`}
 `;
 
 export const SendButton = styled(Button)`

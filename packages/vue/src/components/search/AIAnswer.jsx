@@ -540,6 +540,7 @@ const AIAnswer = defineComponent({
 										ref={_inputRef}
 										type="text"
 										placeholder={props.placeholder}
+										enterButton={props.enterButton}
 										value={this.inputMessage}
 										onInput={this.handleMessageInputChange}
 										onKeyPress={this.handleKeyPress}
