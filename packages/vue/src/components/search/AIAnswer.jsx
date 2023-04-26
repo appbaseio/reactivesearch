@@ -416,7 +416,7 @@ const AIAnswer = defineComponent({
 			if (textArea) {
 				textArea.style.height = '42px';
 				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
-				const maxHeight = lineHeight * 4; // max height for 3 lines
+				const maxHeight = lineHeight * 11; // max height for 10 lines
 				const height = Math.min(textArea.scrollHeight, maxHeight);
 				textArea.style.height = `${height}px`;
 				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
