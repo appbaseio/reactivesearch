@@ -1871,12 +1871,12 @@ const SearchBox = (props) => {
 												showFocusShortcutsIcon={
 													props.showFocusShortcutsIcon
 												}
+												showVoiceSearch={props.showVoiceSearch}
 												aria-label={props.componentId}
 												id={`${props.componentId}-input`}
 												showIcon={props.showIcon}
 												showClear={props.showClear}
 												iconPosition={props.iconPosition}
-												showVoiceSearch={props.showVoiceSearch}
 												ref={_inputRef}
 												{...getInputProps({
 													className: getClassName(
@@ -1909,6 +1909,10 @@ const SearchBox = (props) => {
 												aria-label={props.componentId}
 												id={`${props.componentId}-input`}
 												showIcon={props.showIcon}
+												showFocusShortcutsIcon={
+													props.showFocusShortcutsIcon
+												}
+												showVoiceSearch={props.showVoiceSearch}
 												showClear={props.showClear}
 												iconPosition={props.iconPosition}
 												ref={_inputRef}
@@ -1996,6 +2000,8 @@ const SearchBox = (props) => {
 								searchBox // a prop specific to Input styled-component
 								isOpen={false} // is dropdown open or not
 								type={props.type}
+								showFocusShortcutsIcon={props.showFocusShortcutsIcon}
+								showVoiceSearch={props.showVoiceSearch}
 							/>
 							{renderIcons()}
 						</InputWrapper>
