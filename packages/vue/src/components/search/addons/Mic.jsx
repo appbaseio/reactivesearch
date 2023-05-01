@@ -112,12 +112,12 @@ const Mic = {
 			const { className } = this.$props;
 			switch (status) {
 				case STATUS.active:
-					return <ListenSvg className={className} nativeOnClick={this.handleClick} />;
+					return <ListenSvg className={className} onClick={this.handleClick} />;
 				case STATUS.stopped:
 				case STATUS.denied:
-					return <MuteSvg className={className} nativeOnClick={this.handleClick} />;
+					return <MuteSvg className={className} onClick={this.handleClick} />;
 				default:
-					return <MicSvg className={className} nativeOnClick={this.handleClick} />;
+					return <MicSvg className={className} onClick={this.handleClick} />;
 			}
 		},
 	},
