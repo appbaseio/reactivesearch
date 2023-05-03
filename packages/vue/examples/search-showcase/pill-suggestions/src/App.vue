@@ -28,8 +28,9 @@
 						data: suggestions,
 					}"
 				>
-					<ul v-if="isOpen">
-						<li
+					<div class="pill-wrapper" v-if="isOpen">
+						<button
+								class="pill-btn"
 								v-for="(suggestion, idx) in suggestions"
 								:key="suggestion._id"
 								v-bind="getItemProps({
@@ -40,11 +41,10 @@
 									item: suggestion,
 									index: Number(idx)
 								})"
-								:style="{ backgroundColor: highlightedIndex === idx ? 'grey' : 'transparent' }"
 						>
 								{{ suggestion.label }}
-						</li>
-					</ul>
+							</button>
+					</div>
 				</template>
 			</search-box>
 			<reactive-list
@@ -112,5 +112,51 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	color: #2c3e50;
+}
+
+.pill-wrapper {
+	width: 100%;
+	display: flex;
+	gap: 10px;
+	overflow: auto;
+	margin-top: 10px;
+}
+.pill-wrapper::-webkit-scrollbar {
+	height: 0px;
+}
+
+.pill-wrapper:hover::-webkit-scrollbar {
+	height: 2px;
+}
+
+.pill-wrapper::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.pill-wrapper::-webkit-scrollbar-thumb {
+	background-color: darkgrey;
+	outline: 1px solid slategrey;
+}
+
+.pill-btn {
+	background-color: #ddd;
+	border: none;
+	color: black;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 0 0 fit-content;
+	max-width: 250px;
+}
+
+.pill-btn:hover {
+	filter: brightness(0.8);
 }
 </style>
