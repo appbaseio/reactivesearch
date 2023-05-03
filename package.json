@@ -19,6 +19,7 @@
 		"packages/web/examples/mongo-examples/*",
 		"packages/vue/examples/*",
 		"packages/vue/examples/mongo-examples/*",
+		"packages/vue/examples/search-showcase/*",
 		"packages/vue/demos/*",
 		"packages/maps/examples/*",
 		"packages/maps/examples/mongo-examples/*",
