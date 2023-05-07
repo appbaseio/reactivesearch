@@ -657,9 +657,11 @@ const SearchBox = defineComponent({
 						true,
 						this.$props,
 						this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
-						true,
 						!this.$props.enableAI,
 					);
+					if (this.$props.enableAI && !this.showAIScreen) {
+						this.showAIScreen = true;
+					}
 					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 				}
 			}
@@ -851,6 +853,7 @@ const SearchBox = defineComponent({
 			return null;
 		},
 		enterButtonOnClick() {
+			this.showAIScreen = false;
 			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
 		},
 		renderEnterButtonElement() {

@@ -269,6 +269,13 @@ export const resetCSS = (props) => `
 	ul,
 	ol {
 		list-style-position: inside;
+
+	}
+
+	li{
+		display: unset;
+		cursor: default;
+		padding: initial;
 	}
 `;
 const messageBGColor = (props) => {
