@@ -425,6 +425,25 @@ const SearchBox = defineComponent({
 				rawData: this.rawData,
 				value: currentValue,
 				resultStats: this.stats,
+				AIData: {
+					question:
+						this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.question,
+					answer:
+						this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.answer
+						&& this.AIResponse.response.answer.text,
+					documentIds:
+						(this.AIResponse
+							&& this.AIResponse.response
+							&& this.AIResponse.response.answer
+							&& this.AIResponse.response.answer.documentIds)
+						|| [],
+					showAIScreen: this.showAIScreen,
+					sources: this.getAISourceObjects(),
+				},
 			};
 			return getComponent(data, this);
 		},
