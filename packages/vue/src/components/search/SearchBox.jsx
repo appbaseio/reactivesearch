@@ -31,7 +31,7 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, TextArea } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -362,7 +362,7 @@ const SearchBox = defineComponent({
 		},
 		isAITyping(newVal, oldVal) {
 			const scrollAIContainer = () => {
-				const dropdownEle = this.$refs[_dropdownULRef].$el;
+				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
 					dropdownEle.scrollTo({
 						top: dropdownEle.scrollHeight,
@@ -389,6 +389,18 @@ const SearchBox = defineComponent({
 				this.scrollTimerRef = setTimeout(() => {
 					scrollAIContainer();
 				}, 2000);
+			}
+		},
+		showAIScreen(newVal) {
+			if (newVal) {
+				if (this.$refs?.[this.$props.innerRef]) {
+					this.$refs[this.$props.innerRef].blur();
+				}
+			}
+		},
+		currentValue() {
+			if (this.$props.autosuggest && this.$props.enableAI) {
+				this.handleTextAreaHeightChange();
 			}
 		},
 	},
@@ -1177,6 +1189,23 @@ const SearchBox = defineComponent({
 				</div>
 			);
 		},
+		handleTextAreaHeightChange() {
+			const textArea = this.$refs[this.$props.innerRef]?.$el;
+
+			if (textArea) {
+				textArea.style.height = '42px';
+				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+				const maxHeight = lineHeight * 4; // max height for 3 lines
+				const height = Math.min(textArea.scrollHeight, maxHeight);
+				textArea.style.height = `${height}px`;
+				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+
+				const dropdownEle = this.$refs[_dropdownULRef];
+				if (dropdownEle) {
+					dropdownEle.style.top = `${height}px`;
+				}
+			}
+		},
 	},
 	render() {
 		const { expandSuggestionsContainer } = this.$props;
@@ -1340,67 +1369,143 @@ const SearchBox = defineComponent({
 										<InputGroup>
 											{this.renderInputAddonBefore()}
 											<InputWrapper>
-												<Input
-													id={`${this.$props.componentId}-input`}
-													showIcon={this.$props.showIcon}
-													showClear={this.$props.showClear}
-													iconPosition={this.$props.iconPosition}
-													ref={this.$props.innerRef}
-													class={getClassName(
-														this.$props.innerClass,
-														'input',
-													)}
-													placeholder={this.$props.placeholder}
-													autoFocus={this.$props.autoFocus}
-													on={getInputEvents({
-														onInput: this.onInputChange,
-														onBlur: (e) => {
-															this.$emit(
-																'blur',
-																e,
-																this.triggerQuery,
-															);
-														},
-														onFocus: this.handleFocus,
-														onKeyPress: (e) => {
-															this.$emit(
-																'keyPress',
-																e,
-																this.triggerQuery,
-															);
-															this.$emit(
-																'key-press',
-																e,
-																this.triggerQuery,
-															);
-														},
-														onKeyDown: (e) =>
-															this.handleKeyDown(e, highlightedIndex),
-														onKeyUp: (e) => {
-															this.$emit(
-																'keyUp',
-																e,
-																this.triggerQuery,
-															);
-															this.$emit(
-																'key-up',
-																e,
-																this.triggerQuery,
-															);
-														},
-														onClick: () => {
-															setHighlightedIndex(null);
-														},
-													})}
-													{...getInputProps({
-														value:
-															this.$data.currentValue === null
-																? ''
-																: this.$data.currentValue,
-													})}
-													themePreset={this.themePreset}
-													autocomplete="off"
-												/>
+												{this.$props.enableAI ? (
+													<TextArea
+														id={`${this.$props.componentId}-input`}
+														showIcon={this.$props.showIcon}
+														showClear={this.$props.showClear}
+														iconPosition={this.$props.iconPosition}
+														ref={this.$props.innerRef}
+														class={getClassName(
+															this.$props.innerClass,
+															'input',
+														)}
+														placeholder={this.$props.placeholder}
+														autoFocus={this.$props.autoFocus}
+														showFocusShortcutsIcon={
+															this.$props.showFocusShortcutsIcon
+														}
+														showVoiceSearch={
+															this.$props.showVoiceSearch
+														}
+														on={getInputEvents({
+															onInput: this.onInputChange,
+															onBlur: (e) => {
+																this.$emit(
+																	'blur',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onFocus: this.handleFocus,
+															onKeyPress: (e) => {
+																this.$emit(
+																	'keyPress',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-press',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onKeyDown: (e) =>
+																this.handleKeyDown(
+																	e,
+																	highlightedIndex,
+																),
+															onKeyUp: (e) => {
+																this.$emit(
+																	'keyUp',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-up',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onClick: () => {
+																setHighlightedIndex(null);
+															},
+														})}
+														{...getInputProps({
+															value:
+																this.$data.currentValue === null
+																	? ''
+																	: this.$data.currentValue,
+														})}
+														themePreset={this.themePreset}
+														autocomplete="off"
+													/>
+												) : (
+													<Input
+														id={`${this.$props.componentId}-input`}
+														showIcon={this.$props.showIcon}
+														showClear={this.$props.showClear}
+														iconPosition={this.$props.iconPosition}
+														ref={this.$props.innerRef}
+														class={getClassName(
+															this.$props.innerClass,
+															'input',
+														)}
+														placeholder={this.$props.placeholder}
+														autoFocus={this.$props.autoFocus}
+														on={getInputEvents({
+															onInput: this.onInputChange,
+															onBlur: (e) => {
+																this.$emit(
+																	'blur',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onFocus: this.handleFocus,
+															onKeyPress: (e) => {
+																this.$emit(
+																	'keyPress',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-press',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onKeyDown: (e) =>
+																this.handleKeyDown(
+																	e,
+																	highlightedIndex,
+																),
+															onKeyUp: (e) => {
+																this.$emit(
+																	'keyUp',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-up',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onClick: () => {
+																setHighlightedIndex(null);
+															},
+														})}
+														{...getInputProps({
+															value:
+																this.$data.currentValue === null
+																	? ''
+																	: this.$data.currentValue,
+														})}
+														themePreset={this.themePreset}
+														autocomplete="off"
+													/>
+												)}
 												{this.renderIcons()}
 												{!expandSuggestionsContainer
 													&& renderSuggestionsDropdown()}
