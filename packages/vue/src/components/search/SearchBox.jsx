@@ -820,7 +820,7 @@ const SearchBox = defineComponent({
 					if (renderError) {
 						return (
 							<div
-								className={`--ai-answer-error-container ${
+								class={`--ai-answer-error-container ${
 									getClassName(this.$props.innerClass, 'ai-error') || ''
 								}`}
 							>
@@ -830,11 +830,11 @@ const SearchBox = defineComponent({
 					}
 					return (
 						<div
-							className={`--ai-answer-error-container ${
+							class={`--ai-answer-error-container ${
 								getClassName(this.$props.innerClass, 'ai-error') || ''
 							}`}
 						>
-							<div className="--default-error-element">
+							<div class="--default-error-element">
 								<span>
 									{typeof this.AIResponseError === 'string'
 										? this.AIResponseError
@@ -1194,7 +1194,7 @@ const SearchBox = defineComponent({
 						<SourceTags>
 							{this.getAISourceObjects().map((el) => (
 								<Button
-									className={`--ai-source-tag ${
+									class={`--ai-source-tag ${
 										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
 									}`}
 									title={el[sourceDocumentLabel]}
@@ -1248,11 +1248,7 @@ const SearchBox = defineComponent({
 					/>
 					{this.renderAIScreenFooter()}
 					{this.showFeedbackComponent && (
-						<div
-							className={`${
-								getClassName(this.$props.innerClass, 'ai-feedback') || ''
-							}`}
-						>
+						<div class={`${getClassName(this.$props.innerClass, 'ai-feedback') || ''}`}>
 							{' '}
 							<AIFeedbackContainer
 								overrideState={this.feedbackState}
@@ -1294,6 +1290,37 @@ const SearchBox = defineComponent({
 					dropdownEle.style.top = `${height}px`;
 				}
 			}
+		},
+		askButtonOnClick() {
+			this.showAIScreen = true;
+			this.isOpen = true;
+			this.triggerDefaultQuery(this.currentValue, { enableAI: true });
+		},
+		renderAskButtonElement() {
+			const { AIUIConfig, innerClass } = this.$props;
+			const { askButton } = AIUIConfig;
+			const { renderAskButton } = this.$slots;
+			if (askButton) {
+				const getEnterButtonMarkup = () => {
+					if (renderAskButton) {
+						return renderAskButton(this.askButtonOnClick);
+					}
+
+					return (
+						<Button
+							class={`enter-btn ${getClassName(innerClass, 'ask-button')}`}
+							info
+							onClick={this.askButtonOnClick}
+						>
+							Ask
+						</Button>
+					);
+				};
+
+				return <div class="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+			}
+
+			return null;
 		},
 	},
 	render() {
@@ -1601,6 +1628,7 @@ const SearchBox = defineComponent({
 													&& renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
+											{this.renderAskButtonElement()}
 											{this.renderEnterButtonElement()}
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsDropdown()}
