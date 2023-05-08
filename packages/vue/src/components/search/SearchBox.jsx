@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
@@ -50,6 +51,7 @@ import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
+import { AIFeedbackContainer } from '../../styles/AIAnswer';
 
 const md = new Remarkable();
 
@@ -393,8 +395,8 @@ const SearchBox = defineComponent({
 		},
 		showAIScreen(newVal) {
 			if (newVal) {
-				if (this.$refs?.[this.$props.innerRef]) {
-					this.$refs[this.$props.innerRef].blur();
+				if (this.$refs?.[this.$props.innerRef] && this.$refs[this.$props.innerRef].$el) {
+					this.$refs[this.$props.innerRef].$el.blur();
 				}
 			}
 		},
@@ -811,8 +813,48 @@ const SearchBox = defineComponent({
 			return null;
 		},
 
-		renderErrorComponent() {
+		renderErrorComponent(isAIError = false) {
 			const renderError = this.$slots.renderError || this.$props.renderError;
+			if (isAIError) {
+				if (this.showAIScreen && this.AIResponseError && !this.isAIResponseLoading) {
+					if (renderError) {
+						return (
+							<div
+								className={`--ai-answer-error-container ${
+									getClassName(this.$props.innerClass, 'ai-error') || ''
+								}`}
+							>
+								{renderError(this.AIResponseError)}
+							</div>
+						);
+					}
+					return (
+						<div
+							className={`--ai-answer-error-container ${
+								getClassName(this.$props.innerClass, 'ai-error') || ''
+							}`}
+						>
+							<div className="--default-error-element">
+								<span>
+									{typeof this.AIResponseError === 'string'
+										? this.AIResponseError
+										: this.AIResponseError.message
+											? this.AIResponseError.message
+											: 'There was an error in generating the response.'}
+									{this.AIResponseError.code
+										? `Code:
+							${this.AIResponseError.code}`
+										: ''}
+								</span>
+
+								{/* <Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button> */}
+							</div>
+						</div>
+					);
+				}
+			}
 			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
 				return (
 					<SuggestionWrapper
@@ -1205,6 +1247,34 @@ const SearchBox = defineComponent({
 						)}
 					/>
 					{this.renderAIScreenFooter()}
+					{this.showFeedbackComponent && (
+						<div
+							className={`${
+								getClassName(this.$props.innerClass, 'ai-feedback') || ''
+							}`}
+						>
+							{' '}
+							<AIFeedbackContainer
+								overrideState={this.feedbackState}
+								hideUI={
+									this.isAIResponseLoading
+									|| this.isLoading
+									|| !this.sessionIdFromStore
+								}
+								key={this.sessionIdFromStore}
+								onFeedbackSubmit={(useful, reason) => {
+									this.feedbackState = {
+										isRecorded: true,
+										feedbackType: useful ? 'positive' : 'negative',
+									};
+									this.recordAISessionUsefulness(this.sessionIdFromStore, {
+										useful,
+										reason,
+									});
+								}}
+							/>
+						</div>
+					)}
 				</div>
 			);
 		},
@@ -1293,7 +1363,8 @@ const SearchBox = defineComponent({
 														<SearchBoxAISection
 															themePreset={this.$props.themePreset}
 														>
-															{this.renderAIScreen()}
+															{this.renderAIScreen()}{' '}
+															{this.renderErrorComponent(true)}
 														</SearchBoxAISection>
 													)}
 													{!this.showAIScreen
