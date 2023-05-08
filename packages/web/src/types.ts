@@ -202,3 +202,12 @@ export interface endpointConfig {
 	body?: object;
 	method?: string;
 }
+
+export interface AiConfig {
+	systemPrompt?: string;
+	topDocsForContext?: number;
+	maxTokens?: number;
+	docTemplate?: string;
+	queryTemplate?: string;
+	temperature?: number;
+}

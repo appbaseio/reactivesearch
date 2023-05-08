@@ -105,8 +105,8 @@
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/6bdb1a3a7a248d525433b6876ae34867c1f290a6"
   dependencies:
     "@appbaseio/designkit" "^0.13.0"
-    "@appbaseio/reactivemaps" "^3.0.0"
-    "@appbaseio/reactivesearch" "^3.30.3"
+    "@appbaseio/reactivemaps" "^3.0.0-beta.17"
+    "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
     "@typeform/embed" "^1.34.1"
@@ -142,13 +142,12 @@
     gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
-    gatsby-transformer-remark "5.25.1"
+    gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
     hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    lodash "^4.17.21"
-    moment "^2.29.4"
+    moment "^2.29.2"
     prismjs "1.27.0"
     react "16.8.4"
     react-autosuggest "9.4.3"
@@ -159,14 +158,13 @@
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
     react-router-dom "^4.3.1"
-    react-use-fusejs "^1.0.1"
-    tocbot "^4.18.0"
+    tocbot "4.5.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@9.14.39":
-  version "9.14.39"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.39.tgz#c9b9914ca6a6e8134b314d29060079db1d9b6427"
-  integrity sha512-g1+1JNnnPAocbOeMFSnI7PMn3oaAvMPUkZp9mGUPJrSGXJodhvx9+/5NClk/OR+8+FtthSxlDN2GOUC4SSW8Gg==
+"@appbaseio/reactivecore@10.0.0-alpha.10":
+  version "10.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.10.tgz#595923181a79b8c7a88d4dfd6b8a5951b8d821f7"
+  integrity sha512-cc5fTjsjPio8dzDHtfwh3KKkns3208lv1d+io+dd6qFrDKJsjBMSQUySQu/mj2ffTgJHlpc3J8HMgPQnWKyZ6A==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -174,7 +172,18 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivemaps@^3.0.0":
+"@appbaseio/reactivecore@9.14.40":
+  version "9.14.40"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.40.tgz#346cac1a476b4e9b5e9305e849746fd858d947f1"
+  integrity sha512-PIq31VBQRV45nNMVxmOBgYu05h2TxXw+GOQhBmPdAyDiX8Y/nNNua5SPNqZ/OHomIOIT1fGSygkKR6E/iZYdlA==
+  dependencies:
+    cross-fetch "^3.0.4"
+    dayjs "^1.11.7"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
+"@appbaseio/reactivemaps@^3.0.0", "@appbaseio/reactivemaps@^3.0.0-beta.17":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-3.0.2.tgz#5d308938ab4f437919fd956e2510923a981f8b86"
   integrity sha512-lFZEKOYT5VBpXDEGQz9Xi0uAZu84uceswwd6HtSNW+TLfd3JwzEGzVu0O5RHn1bTs5Y5QuatWnlC6hA1/Yo9xg==
@@ -191,13 +200,40 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch@^3.30.3":
-  version "3.43.8"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.8.tgz#3467d4de74a1c712f569808b7efc3628600a784d"
-  integrity sha512-NemRlFcQ4UQ10Q+VB4vafvbRa4+q+e/2tkpkPHY+w3slxhIji96j5Jh7yLzN7luDxkZ8vWX/HcIVlT6rsZ+13w==
+"@appbaseio/reactivesearch@4.0.0-rc.8":
+  version "4.0.0-rc.8"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.8.tgz#476b2a7c3e5b9703e9b709c6dcbb8030aa93ed6e"
+  integrity sha512-bRf8SXdJr1I6Eu5SWejttPVQj1NrSDFtuM96wIlMWtvynsjpUTBLg5hw9j0FGJf+mbhLkX58GMc0Uu45j0pEgw==
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "9.14.39"
+    "@appbaseio/reactivecore" "10.0.0-alpha.10"
+    "@appbaseio/rheostat" "^1.0.0-alpha.15"
+    "@emotion/core" "^10.0.28"
+    "@emotion/styled" "^10.0.27"
+    appbase-js "^5.2.0"
+    cross-env "^5.2.0"
+    dayjs "^1.11.7"
+    downshift "^1.31.2"
+    echarts "^5.3.3"
+    echarts-for-react "^3.0.2"
+    emotion-theming "^10.0.27"
+    hoist-non-react-statics "^3.2.1"
+    hotkeys-js "^3.8.7"
+    polished "^1.9.3"
+    prop-types "^15.6.0"
+    react-day-picker "^7.0.5"
+    react-redux "^6.0.1"
+    remarkable "^2.0.1"
+    url-search-params-polyfill "^7.0.0"
+    xss "^1.0.11"
+
+"@appbaseio/reactivesearch@^3.29.0", "@appbaseio/reactivesearch@^3.30.3":
+  version "3.43.10"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.10.tgz#2c738f048ba6d3a8b049c2d120c3d482f3dd9e9f"
+  integrity sha512-QV2NcoxNY72a1ntZitSIdnMa7x3MNvLSYtbgVHHSF2Dx/Yw2plq4H3kRBaWd6VSuDhvjXuk1kZPAkMQV1GynTg==
+  dependencies:
+    "@appbaseio/analytics" "^1.1.1"
+    "@appbaseio/reactivecore" "9.14.40"
     "@appbaseio/rheostat" "^1.0.0-alpha.15"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -6888,19 +6924,26 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.0":
-  version "18.0.27"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.27.tgz#d9425abe187a00f8a5ec182b010d4fd9da703b71"
-  integrity sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==
+"@types/react@*":
+  version "16.3.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.7.tgz#3b90fc4c8382fc55f4d18a8d487dbd314eb6ec4c"
+  integrity sha512-7V1OfJvx2jKSBfBEDdjpozPzxPJN9ruzR1GtfDE7HmZymmvjMQqFHfHbiI4zzVzU09Yieg9B7ur0wPCu1edfQA==
+  dependencies:
+    csstype "^2.0.0"
+
+"@types/react@^16.3.8":
+  version "16.14.37"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.37.tgz#46bab00eee7829e7551ec8d7d1b12afd5de84a87"
+  integrity sha512-Jy/9txct4JC2nQsJNACeFczzIQ2Bh7s1PZpbYMs9jbj/jREWxEH0qGFYYZb7dq7H1sU0AAzHAPevtxBHGk6N6Q==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^16.3.8":
-  version "16.14.35"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.14.35.tgz#9d3cf047d85aca8006c4776693124a5be90ee429"
-  integrity sha512-NUEiwmSS1XXtmBcsm1NyRRPYjoZF2YTE89/5QiLt5mlGffYK9FQqOKuOLuXNrjPQV04oQgaZG+Yq02ZfHoFyyg==
+"@types/react@^18.0.0":
+  version "18.0.31"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.31.tgz#a69ef8dd7bfa849734d258c793a8fe343a338205"
+  integrity sha512-EEG67of7DsvRDU6BLLI0p+k1GojDLz9+lZsnCpCRTa/lOokvyPBvp8S5x+A24hME3yyQuIipcP70KJ6H7Qupww==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6946,9 +6989,9 @@
     "@types/node" "*"
 
 "@types/scheduler@*":
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
-  integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+  version "0.16.3"
+  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.3.tgz#cef09e3ec9af1d63d2a6cc5b383a737e24e6dcf5"
+  integrity sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
 
 "@types/semver@^7.3.12":
   version "7.3.13"
@@ -8764,7 +8807,7 @@ arg@^5.0.2:
   resolved "https://registry.yarnpkg.com/arg/-/arg-5.0.2.tgz#c81433cc427c92c4dcf4865142dbca6f15acd59c"
   integrity sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==
 
-argparse@^1.0.7:
+argparse@^1.0.10, argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
   integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
@@ -9146,6 +9189,13 @@ auto-bind@~4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/auto-bind/-/auto-bind-4.0.0.tgz#e3589fc6c2da8f7ca43ba9f84fa52a744fc997fb"
   integrity sha512-Hdw8qdNiqdJ8LqT0iK0sVzkFbzg6fhnQqqfWhBDxcHZvU75+B+ayzTy8x+k5Ix0Y92XOhOUlx74ps+bA6BeYMQ==
+
+autolinker@^3.11.0:
+  version "3.16.2"
+  resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-3.16.2.tgz#6bb4f32432fc111b65659336863e653973bfbcc9"
+  integrity sha512-JiYl7j2Z19F9NdTmirENSUUIIL/9MytEWtmzhfmsKPCp9E+G35Y0UNCMoM9tFigxT59qSc8Ml2dlZXOCVTYwuA==
+  dependencies:
+    tslib "^2.3.0"
 
 autoprefixer@^10.4.0, autoprefixer@^10.4.13:
   version "10.4.13"
@@ -13920,7 +13970,7 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7, csstype@^2.6.8:
+csstype@^2.0.0, csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7, csstype@^2.6.8:
   version "2.6.21"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.21.tgz#2efb85b7cc55c80017c66a5ad7cbd931fda3a90e"
   integrity sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==
@@ -14527,7 +14577,7 @@ dns-txt@^2.0.2:
 
 docs@appbaseio/Docs#dev:
   version "0.0.2"
-  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/2057bfe256bb0596f68b42656577221b40b4c639"
+  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/caafacfe1f3354d8a38e1e0be7a7070e053e3305"
   dependencies:
     "@appbaseio/designkit" "^0.13.0"
     "@appbaseio/reactivemaps" "^3.0.0"
@@ -18392,6 +18442,34 @@ gatsby-transformer-remark@5.25.1:
   dependencies:
     "@babel/runtime" "^7.15.4"
     gatsby-core-utils "^3.25.0"
+    gray-matter "^4.0.3"
+    hast-util-raw "^6.0.2"
+    hast-util-to-html "^7.1.3"
+    lodash "^4.17.21"
+    mdast-util-to-hast "^10.2.0"
+    mdast-util-to-string "^2.0.0"
+    mdast-util-toc "^5.1.0"
+    remark "^13.0.0"
+    remark-footnotes "^3.0.0"
+    remark-gfm "^1.0.0"
+    remark-parse "^9.0.0"
+    remark-retext "^4.0.0"
+    remark-stringify "^9.0.1"
+    retext-english "^3.0.4"
+    sanitize-html "^1.27.5"
+    underscore.string "^3.3.6"
+    unified "^9.2.2"
+    unist-util-remove-position "^3.0.0"
+    unist-util-select "^3.0.4"
+    unist-util-visit "^2.0.3"
+
+gatsby-transformer-remark@5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-5.9.0.tgz#5c28df3fe4a9b80ede971e3bf430852e8ed4d553"
+  integrity sha512-y8TrA5DgZ/hHkXQjYnjKDE27n+JA+yyRJkUfnsfiZCCGRdPCQ1KD/p9CaJgmY+u2QVnTHlfc8G7eU1gcR67nPw==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    gatsby-core-utils "^3.9.0"
     gray-matter "^4.0.3"
     hast-util-raw "^6.0.2"
     hast-util-to-html "^7.1.3"
@@ -31471,6 +31549,14 @@ remark@^13.0.0:
     remark-stringify "^9.0.0"
     unified "^9.1.0"
 
+remarkable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/remarkable/-/remarkable-2.0.1.tgz#280ae6627384dfb13d98ee3995627ca550a12f31"
+  integrity sha512-YJyMcOH5lrR+kZdmB0aJJ4+93bEojRZ1HGDn9Eagu6ibg7aVZhc3OWbbShRid+Q5eAfsEqWxpe+g5W5nYNfNiA==
+  dependencies:
+    argparse "^1.0.10"
+    autolinker "^3.11.0"
+
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
@@ -34523,6 +34609,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
 
+tocbot@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.5.0.tgz#55ba16887742acc1ce37b19171c76b9a40aabfa7"
+  integrity sha512-JwTyKlU2JgkmGJqxKJkiizlLwjQJ+f3WnDG08+DrWhrPgsVVjMh3quq3Apx09DCvulKbtYoxBT/c3HfkGWyZhw==
+
 tocbot@^4.18.0:
   version "4.20.1"
   resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.20.1.tgz#be1e0206700e13c8060f5bedbd4a51c6653b80fa"
@@ -34754,7 +34845,7 @@ tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.4.0:
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0, tslib@^2.4.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.0.tgz#42bfed86f5787aeb41d031866c8f402429e0fddf"
   integrity sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==

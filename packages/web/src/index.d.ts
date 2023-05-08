@@ -50,6 +50,8 @@ export { default as ResultList } from './components/result/ResultList';
 
 export { default as SearchBox } from './components/search/SearchBox';
 
+export { default as AIAnswer } from './components/search/AIAnswer';
+
 export { default as ReactiveChart } from './components/chart/ReactiveChart';
 
 export { componentTypes, SearchPreferencesContext, useAnalytics };

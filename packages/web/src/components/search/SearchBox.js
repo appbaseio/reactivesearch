@@ -67,13 +67,9 @@ import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
 import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
+import HOOKS from '../../utils/hooks';
 
-const useConstructor = (callBack = () => {}) => {
-	const [hasBeenCalled, setHasBeenCalled] = useState(false);
-	if (hasBeenCalled) return;
-	callBack();
-	setHasBeenCalled(true);
-};
+const { useConstructor } = HOOKS;
 
 const SearchBox = (props) => {
 	const {
@@ -1613,6 +1609,8 @@ SearchBox.propTypes = {
 	mode: oneOf(['select', 'tag']),
 	highlightConfig: types.componentObject,
 	renderSelectedTags: types.func,
+	enableAI: types.bool,
+	aiConfig: types.componentObject,
 };
 
 SearchBox.defaultProps = {
@@ -1649,6 +1647,8 @@ SearchBox.defaultProps = {
 	enterButton: false,
 	type: 'search',
 	mode: 'select',
+	enableAI: false,
+	aiConfig: null,
 };
 
 const mapStateToProps = (state, props) => ({

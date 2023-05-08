@@ -1,11 +1,19 @@
+/* eslint-disable no-nested-ternary */
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
+import { Remarkable } from 'remarkable';
 import {
+	AI_LOCAL_CACHE_KEY,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
-import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
+import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
+import {
+	getObjectFromLocalStorage,
+	getQueryOptions,
+	suggestionTypes,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
 import {
 	connect,
@@ -24,7 +32,7 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, TextArea } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -41,6 +49,18 @@ import CustomSvg from '../shared/CustomSvg';
 import AutofillSvg from '../shared/AutoFillSvg.jsx';
 import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
+import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
+import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
+import { AIFeedbackContainer } from '../../styles/AIAnswer';
+
+const md = new Remarkable();
+
+md.set({
+	html: true,
+	breaks: true,
+	xhtmlOut: true,
+});
+const _dropdownULRef = 'dropdownULRef';
 
 const { updateQuery, setCustomQuery, setDefaultQuery, recordSuggestionClick } = Actions;
 const {
@@ -63,6 +83,10 @@ const SearchBox = defineComponent({
 			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
+			showAIScreen: false,
+			showAIScreenFooter: false,
+			showFeedbackComponent: false,
+			feedbackState: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -212,6 +236,10 @@ const SearchBox = defineComponent({
 		renderSelectedTags: VueTypes.any,
 		searchboxId: VueTypes.string,
 		endpoint: types.endpointConfig,
+		enableAI: types.bool,
+		AIConfig: types.AIConfig,
+		// TODO: convert into a slot renderAIAnswer?: (data: any) => any,
+		AIUIConfig: types.AIUIConfig,
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
@@ -334,6 +362,49 @@ const SearchBox = defineComponent({
 				this.handleTextChange = debounce(this.handleText, newVal);
 			}
 		},
+		isAITyping(newVal, oldVal) {
+			const scrollAIContainer = () => {
+				const dropdownEle = this.$refs[_dropdownULRef];
+				if (dropdownEle) {
+					dropdownEle.scrollTo({
+						top: dropdownEle.scrollHeight,
+						behavior: 'smooth',
+					});
+				}
+			};
+
+			if (!newVal && oldVal) {
+				this.showAIScreenFooter = true;
+				if (
+					this.$props.AIUIConfig
+					&& typeof this.$props.AIUIConfig.showFeedback === 'boolean'
+						? this.$props.AIUIConfig.showFeedback
+						: true
+				) {
+					this.showFeedbackComponent = true;
+				}
+
+				setTimeout(() => {
+					scrollAIContainer();
+				}, 500);
+			} else if (newVal) {
+				this.scrollTimerRef = setTimeout(() => {
+					scrollAIContainer();
+				}, 2000);
+			}
+		},
+		showAIScreen(newVal) {
+			if (newVal) {
+				if (this.$refs?.[this.$props.innerRef] && this.$refs[this.$props.innerRef].$el) {
+					this.$refs[this.$props.innerRef].$el.blur();
+				}
+			}
+		},
+		currentValue() {
+			if (this.$props.autosuggest && this.$props.enableAI) {
+				this.handleTextAreaHeightChange();
+			}
+		},
 	},
 	methods: {
 		handleText(value, cause) {
@@ -356,6 +427,25 @@ const SearchBox = defineComponent({
 				rawData: this.rawData,
 				value: currentValue,
 				resultStats: this.stats,
+				AIData: {
+					question:
+						this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.question,
+					answer:
+						this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.answer
+						&& this.AIResponse.response.answer.text,
+					documentIds:
+						(this.AIResponse
+							&& this.AIResponse.response
+							&& this.AIResponse.response.answer
+							&& this.AIResponse.response.answer.documentIds)
+						|| [],
+					showAIScreen: this.showAIScreen,
+					sources: this.getAISourceObjects(),
+				},
 			};
 			return getComponent(data, this);
 		},
@@ -426,7 +516,10 @@ const SearchBox = defineComponent({
 							this.isOpen = false;
 						}
 						if (typeof this.currentValue === 'string')
-							this.triggerDefaultQuery(this.currentValue);
+							this.triggerDefaultQuery(
+								this.currentValue,
+								props.enableAI ? { enableAI: true } : {},
+							);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 					if (props.strictSelection) {
@@ -464,7 +557,7 @@ const SearchBox = defineComponent({
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		triggerDefaultQuery(paramValue) {
+		triggerDefaultQuery(paramValue, meta = {}) {
 			if (!this.$props.autosuggest) {
 				return;
 			}
@@ -489,6 +582,7 @@ const SearchBox = defineComponent({
 				query,
 				value,
 				componentType: componentTypes.searchBox,
+				meta,
 			});
 		},
 		triggerCustomQuery(paramValue, categoryValue = undefined) {
@@ -572,8 +666,17 @@ const SearchBox = defineComponent({
 		},
 
 		clearValue() {
-			this.setValue('', false, this.$props, causes.CLEAR_VALUE, false);
-			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
+			this.setValue(
+				'',
+				false,
+				this.$props,
+				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
+				false,
+			);
+			this.onValueSelectedHandler(
+				'',
+				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
+			);
 		},
 
 		handleKeyDown(event, highlightedIndex = null) {
@@ -587,7 +690,11 @@ const SearchBox = defineComponent({
 						true,
 						this.$props,
 						this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+						!this.$props.enableAI,
 					);
+					if (this.$props.enableAI && !this.showAIScreen) {
+						this.showAIScreen = true;
+					}
 					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 				}
 			}
@@ -603,15 +710,13 @@ const SearchBox = defineComponent({
 			if (!this.$data.isOpen && this.$props.autosuggest) {
 				this.isOpen = true;
 			}
+			if (this.showAIScreen) {
+				this.showAIScreen = false;
+			}
 
 			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(
-					inputValue,
-					false,
-					this.$props,
-					inputValue === '' ? causes.CLEAR_VALUE : undefined,
-				);
+				this.setValue(inputValue, false, this.$props, undefined);
 			} else {
 				this.$emit(
 					'change',
@@ -629,7 +734,10 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
-			this.isOpen = false;
+			if (!this.$props.enableAI) this.isOpen = false;
+			else {
+				this.showAIScreen = true;
+			}
 			const { value } = this.$props;
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
@@ -705,8 +813,48 @@ const SearchBox = defineComponent({
 			return null;
 		},
 
-		renderErrorComponent() {
+		renderErrorComponent(isAIError = false) {
 			const renderError = this.$slots.renderError || this.$props.renderError;
+			if (isAIError) {
+				if (this.showAIScreen && this.AIResponseError && !this.isAIResponseLoading) {
+					if (renderError) {
+						return (
+							<div
+								className={`--ai-answer-error-container ${
+									getClassName(this.$props.innerClass, 'ai-error') || ''
+								}`}
+							>
+								{renderError(this.AIResponseError)}
+							</div>
+						);
+					}
+					return (
+						<div
+							className={`--ai-answer-error-container ${
+								getClassName(this.$props.innerClass, 'ai-error') || ''
+							}`}
+						>
+							<div className="--default-error-element">
+								<span>
+									{typeof this.AIResponseError === 'string'
+										? this.AIResponseError
+										: this.AIResponseError.message
+											? this.AIResponseError.message
+											: 'There was an error in generating the response.'}
+									{this.AIResponseError.code
+										? `Code:
+							${this.AIResponseError.code}`
+										: ''}
+								</span>
+
+								{/* <Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button> */}
+							</div>
+						</div>
+					);
+				}
+			}
 			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
 				return (
 					<SuggestionWrapper
@@ -778,6 +926,7 @@ const SearchBox = defineComponent({
 			return null;
 		},
 		enterButtonOnClick() {
+			this.showAIScreen = false;
 			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
 		},
 		renderEnterButtonElement() {
@@ -977,6 +1126,175 @@ const SearchBox = defineComponent({
 				</TagsContainer>
 			);
 		},
+		getAISourceObjects() {
+			const localCache
+				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.componentId];
+			const sourceObjects = [];
+			if (!this.AIResponse) return sourceObjects;
+			const docIds
+				= (this.AIResponse
+					&& this.AIResponse.response
+					&& this.AIResponse.response.answer
+					&& this.AIResponse.response.answer.documentIds)
+				|| [];
+			if (
+				localCache
+				&& localCache.meta
+				&& localCache.meta.hits
+				&& localCache.meta.hits.hits
+			) {
+				docIds.forEach((id) => {
+					const foundSourceObj
+						= localCache.meta.hits.hits.find((hit) => hit._id === id) || {};
+					if (foundSourceObj) {
+						const { _source = {}, ...rest } = foundSourceObj;
+
+						sourceObjects.push({ ...rest, ..._source });
+					}
+				});
+			} else {
+				sourceObjects.push(
+					...docIds.map((id) => ({
+						_id: id,
+					})),
+				);
+			}
+
+			return sourceObjects;
+		},
+		renderAIScreenLoader() {
+			const { AIUIConfig = {} } = this.$props;
+			const { loaderMessage } = AIUIConfig || {};
+			if (loaderMessage) {
+				return loaderMessage;
+			}
+			if (this.$slots.loaderMessage) {
+				return this.$slots.loaderMessage();
+			}
+
+			return <HorizontalSkeletonLoader />;
+		},
+		renderAIScreenFooter() {
+			const { AIUIConfig = {} } = this.$props;
+			const {
+				showSourceDocuments = true,
+				sourceDocumentLabel = '_id',
+				onSourceClick = () => {},
+			} = AIUIConfig || {};
+
+			return showSourceDocuments
+				&& this.showAIScreenFooter
+				&& this.AIResponse
+				&& this.AIResponse.response
+				&& this.AIResponse.response.answer
+				&& this.AIResponse.response.answer.documentIds ? (
+					<Footer themePreset={this.$props.themePreset}>
+					Summary generated using the following sources:{' '}
+						<SourceTags>
+							{this.getAISourceObjects().map((el) => (
+								<Button
+									className={`--ai-source-tag ${
+										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
+									}`}
+									title={el[sourceDocumentLabel]}
+									info
+									onClick={() => onSourceClick && onSourceClick(el)}
+								>
+									{el[sourceDocumentLabel]}
+								</Button>
+							))}
+						</SourceTags>
+					</Footer>
+				) : null;
+		},
+		renderAIScreen() {
+			const customAIRenderer = this.$props.renferAIAnswer || this.$slots.renferAIAnswer;
+			if (customAIRenderer) {
+				return customAIRenderer({
+					question:
+						this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.question,
+					answer:
+						this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.answer
+						&& this.AIResponse.response.answer.text,
+					documentIds:
+						(this.AIResponse
+							&& this.AIResponse.response
+							&& this.AIResponse.response.answer
+							&& this.AIResponse.response.answer.documentIds)
+						|| [],
+					loading: this.isAIResponseLoading || this.isLoading,
+					sources: this.getAISourceObjects(),
+					error: this.AIResponseError,
+				});
+			}
+
+			if (this.isAIResponseLoading || this.isLoading) {
+				return this.renderAIScreenLoader();
+			}
+			return (
+				<div>
+					<Answer
+						innerHTML={md.render(
+							this.AIResponse
+								&& this.AIResponse.response
+								&& this.AIResponse.response.answer
+								&& this.AIResponse.response.answer.text,
+						)}
+					/>
+					{this.renderAIScreenFooter()}
+					{this.showFeedbackComponent && (
+						<div
+							className={`${
+								getClassName(this.$props.innerClass, 'ai-feedback') || ''
+							}`}
+						>
+							{' '}
+							<AIFeedbackContainer
+								overrideState={this.feedbackState}
+								hideUI={
+									this.isAIResponseLoading
+									|| this.isLoading
+									|| !this.sessionIdFromStore
+								}
+								key={this.sessionIdFromStore}
+								onFeedbackSubmit={(useful, reason) => {
+									this.feedbackState = {
+										isRecorded: true,
+										feedbackType: useful ? 'positive' : 'negative',
+									};
+									this.recordAISessionUsefulness(this.sessionIdFromStore, {
+										useful,
+										reason,
+									});
+								}}
+							/>
+						</div>
+					)}
+				</div>
+			);
+		},
+		handleTextAreaHeightChange() {
+			const textArea = this.$refs[this.$props.innerRef]?.$el;
+
+			if (textArea) {
+				textArea.style.height = '42px';
+				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+				const maxHeight = lineHeight * 4; // max height for 3 lines
+				const height = Math.min(textArea.scrollHeight, maxHeight);
+				textArea.style.height = `${height}px`;
+				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+
+				const dropdownEle = this.$refs[_dropdownULRef];
+				if (dropdownEle) {
+					dropdownEle.style.top = `${height}px`;
+				}
+			}
+		},
 	},
 	render() {
 		const { expandSuggestionsContainer } = this.$props;
@@ -1039,76 +1357,96 @@ const SearchBox = defineComponent({
 														this.$props.innerClass,
 														'list',
 													)}`}
+													ref={_dropdownULRef}
 												>
-													{this.normalizedSuggestions.map((item, index) =>
-														renderItem ? (
-															<li
-																{...getItemProps({
-																	item,
-																})}
-																{...getItemEvents({
-																	item,
-																})}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-															>
-																{renderItem(item)}
-															</li>
-														) : (
-															<li
-																{...getItemProps({
-																	item,
-																})}
-																on={getItemEvents({
-																	item,
-																})}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-															>
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																		display: 'flex',
-																	}}
-																>
-																	<CustomSvg
-																		className={
-																			getClassName(
-																				this.$props
-																					.innerClass,
-																				`${item._suggestion_type}-search-icon`,
-																			) || null
-																		}
-																		icon={getIcon(
-																			item._suggestion_type,
-																		)}
-																		type={`${item._suggestion_type}-search-icon`}
-																	/>
-																</div>
-																<SuggestionItem
-																	currentValue={this.currentValue}
-																	suggestion={item}
-																/>
-																{this.renderAutoFill(item)}
-															</li>
-														),
+													{this.showAIScreen && (
+														<SearchBoxAISection
+															themePreset={this.$props.themePreset}
+														>
+															{this.renderAIScreen()}{' '}
+															{this.renderErrorComponent(true)}
+														</SearchBoxAISection>
 													)}
+													{!this.showAIScreen
+														&& this.normalizedSuggestions.map(
+															(item, index) =>
+																renderItem ? (
+																	<li
+																		{...getItemProps({
+																			item,
+																		})}
+																		{...getItemEvents({
+																			item,
+																		})}
+																		key={`${index + 1}-${
+																			item.value
+																		}`}
+																		style={{
+																			backgroundColor:
+																				this.getBackgroundColor(
+																					highlightedIndex,
+																					index,
+																				),
+																			justifyContent:
+																				'flex-start',
+																			alignItems: 'center',
+																		}}
+																	>
+																		{renderItem(item)}
+																	</li>
+																) : (
+																	<li
+																		{...getItemProps({
+																			item,
+																		})}
+																		on={getItemEvents({
+																			item,
+																		})}
+																		key={`${index + 1}-${
+																			item.value
+																		}`}
+																		style={{
+																			backgroundColor:
+																				this.getBackgroundColor(
+																					highlightedIndex,
+																					index,
+																				),
+																			justifyContent:
+																				'flex-start',
+																			alignItems: 'center',
+																		}}
+																	>
+																		<div
+																			style={{
+																				padding:
+																					'0 10px 0 0',
+																				display: 'flex',
+																			}}
+																		>
+																			<CustomSvg
+																				className={
+																					getClassName(
+																						this.$props
+																							.innerClass,
+																						`${item._suggestion_type}-search-icon`,
+																					) || null
+																				}
+																				icon={getIcon(
+																					item._suggestion_type,
+																				)}
+																				type={`${item._suggestion_type}-search-icon`}
+																			/>
+																		</div>
+																		<SuggestionItem
+																			currentValue={
+																				this.currentValue
+																			}
+																			suggestion={item}
+																		/>
+																		{this.renderAutoFill(item)}
+																	</li>
+																),
+														)}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
@@ -1121,67 +1459,143 @@ const SearchBox = defineComponent({
 										<InputGroup>
 											{this.renderInputAddonBefore()}
 											<InputWrapper>
-												<Input
-													id={`${this.$props.componentId}-input`}
-													showIcon={this.$props.showIcon}
-													showClear={this.$props.showClear}
-													iconPosition={this.$props.iconPosition}
-													ref={this.$props.innerRef}
-													class={getClassName(
-														this.$props.innerClass,
-														'input',
-													)}
-													placeholder={this.$props.placeholder}
-													autoFocus={this.$props.autoFocus}
-													on={getInputEvents({
-														onInput: this.onInputChange,
-														onBlur: (e) => {
-															this.$emit(
-																'blur',
-																e,
-																this.triggerQuery,
-															);
-														},
-														onFocus: this.handleFocus,
-														onKeyPress: (e) => {
-															this.$emit(
-																'keyPress',
-																e,
-																this.triggerQuery,
-															);
-															this.$emit(
-																'key-press',
-																e,
-																this.triggerQuery,
-															);
-														},
-														onKeyDown: (e) =>
-															this.handleKeyDown(e, highlightedIndex),
-														onKeyUp: (e) => {
-															this.$emit(
-																'keyUp',
-																e,
-																this.triggerQuery,
-															);
-															this.$emit(
-																'key-up',
-																e,
-																this.triggerQuery,
-															);
-														},
-														onClick: () => {
-															setHighlightedIndex(null);
-														},
-													})}
-													{...getInputProps({
-														value:
-															this.$data.currentValue === null
-																? ''
-																: this.$data.currentValue,
-													})}
-													themePreset={this.themePreset}
-													autocomplete="off"
-												/>
+												{this.$props.enableAI ? (
+													<TextArea
+														id={`${this.$props.componentId}-input`}
+														showIcon={this.$props.showIcon}
+														showClear={this.$props.showClear}
+														iconPosition={this.$props.iconPosition}
+														ref={this.$props.innerRef}
+														class={getClassName(
+															this.$props.innerClass,
+															'input',
+														)}
+														placeholder={this.$props.placeholder}
+														autoFocus={this.$props.autoFocus}
+														showFocusShortcutsIcon={
+															this.$props.showFocusShortcutsIcon
+														}
+														showVoiceSearch={
+															this.$props.showVoiceSearch
+														}
+														on={getInputEvents({
+															onInput: this.onInputChange,
+															onBlur: (e) => {
+																this.$emit(
+																	'blur',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onFocus: this.handleFocus,
+															onKeyPress: (e) => {
+																this.$emit(
+																	'keyPress',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-press',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onKeyDown: (e) =>
+																this.handleKeyDown(
+																	e,
+																	highlightedIndex,
+																),
+															onKeyUp: (e) => {
+																this.$emit(
+																	'keyUp',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-up',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onClick: () => {
+																setHighlightedIndex(null);
+															},
+														})}
+														{...getInputProps({
+															value:
+																this.$data.currentValue === null
+																	? ''
+																	: this.$data.currentValue,
+														})}
+														themePreset={this.themePreset}
+														autocomplete="off"
+													/>
+												) : (
+													<Input
+														id={`${this.$props.componentId}-input`}
+														showIcon={this.$props.showIcon}
+														showClear={this.$props.showClear}
+														iconPosition={this.$props.iconPosition}
+														ref={this.$props.innerRef}
+														class={getClassName(
+															this.$props.innerClass,
+															'input',
+														)}
+														placeholder={this.$props.placeholder}
+														autoFocus={this.$props.autoFocus}
+														on={getInputEvents({
+															onInput: this.onInputChange,
+															onBlur: (e) => {
+																this.$emit(
+																	'blur',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onFocus: this.handleFocus,
+															onKeyPress: (e) => {
+																this.$emit(
+																	'keyPress',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-press',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onKeyDown: (e) =>
+																this.handleKeyDown(
+																	e,
+																	highlightedIndex,
+																),
+															onKeyUp: (e) => {
+																this.$emit(
+																	'keyUp',
+																	e,
+																	this.triggerQuery,
+																);
+																this.$emit(
+																	'key-up',
+																	e,
+																	this.triggerQuery,
+																);
+															},
+															onClick: () => {
+																setHighlightedIndex(null);
+															},
+														})}
+														{...getInputProps({
+															value:
+																this.$data.currentValue === null
+																	? ''
+																	: this.$data.currentValue,
+														})}
+														themePreset={this.themePreset}
+														autocomplete="off"
+													/>
+												)}
 												{this.renderIcons()}
 												{!expandSuggestionsContainer
 													&& renderSuggestionsDropdown()}
@@ -1294,18 +1708,36 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	themePreset: state.config.themePreset,
-	isLoading: !!state.isLoading[`${props.componentId}_active`],
+	isLoading: !!state.isLoading[`${props.componentId}`],
 	error: state.error[props.componentId],
 
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	AIResponse:
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
+		|| null,
+	isAIResponseLoading:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+	AIResponseError:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+	sessionIdFromStore:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.sessionId)
+		|| '',
+	isAITyping:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.isTyping)
+		|| false,
 });
 const mapDispatchToProps = {
 	updateQuery,
 	setCustomQuery,
 	setDefaultQuery,
 	recordSuggestionClick,
+	recordAISessionUsefulness,
 };
 export const SBConnected = PreferencesConsumer(
 	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(SearchBox), {
