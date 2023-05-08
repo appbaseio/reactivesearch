@@ -1300,7 +1300,7 @@ const SearchBox = defineComponent({
 		},
 		renderAskButtonElement() {
 			const { AIUIConfig, innerClass } = this.$props;
-			const { askButton } = AIUIConfig;
+			const { askButton } = AIUIConfig || {};
 			const { renderAskButton } = this.$slots;
 			if (askButton) {
 				const getEnterButtonMarkup = () => {
