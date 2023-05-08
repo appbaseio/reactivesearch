@@ -276,6 +276,10 @@ export const resetCSS = (props) => `
 		display: unset;
 		cursor: default;
 		padding: initial;
+
+		&:hover{
+			background-color: initial;
+		}
 	}
 `;
 const messageBGColor = (props) => {

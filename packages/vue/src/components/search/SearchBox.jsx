@@ -51,7 +51,7 @@ import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
-import { AIFeedbackContainer } from '../../styles/AIAnswer';
+import AIFeedback from '../shared/AIFeedback.jsx';
 
 const md = new Remarkable();
 
@@ -398,6 +398,9 @@ const SearchBox = defineComponent({
 				if (this.$refs?.[this.$props.innerRef] && this.$refs[this.$props.innerRef].$el) {
 					this.$refs[this.$props.innerRef].$el.blur();
 				}
+			} else {
+				this.feedbackState = null;
+				this.showFeedbackComponent = false;
 			}
 		},
 		currentValue() {
@@ -1169,8 +1172,8 @@ const SearchBox = defineComponent({
 			if (loaderMessage) {
 				return loaderMessage;
 			}
-			if (this.$slots.loaderMessage) {
-				return this.$slots.loaderMessage();
+			if (this.$slots.AILoaderMessage) {
+				return this.$slots.AILoaderMessage();
 			}
 
 			return <HorizontalSkeletonLoader />;
@@ -1236,6 +1239,7 @@ const SearchBox = defineComponent({
 			if (this.isAIResponseLoading || this.isLoading) {
 				return this.renderAIScreenLoader();
 			}
+
 			return (
 				<div>
 					<Answer
@@ -1249,8 +1253,7 @@ const SearchBox = defineComponent({
 					{this.renderAIScreenFooter()}
 					{this.showFeedbackComponent && (
 						<div class={`${getClassName(this.$props.innerClass, 'ai-feedback') || ''}`}>
-							{' '}
-							<AIFeedbackContainer
+							<AIFeedback
 								overrideState={this.feedbackState}
 								hideUI={
 									this.isAIResponseLoading
