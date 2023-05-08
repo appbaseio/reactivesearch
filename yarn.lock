@@ -74,6 +74,13 @@
   dependencies:
     cross-fetch "^3.0.4"
 
+"@appbaseio/analytics@^1.2.0-alpha.1":
+  version "1.2.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/analytics/-/analytics-1.2.0-alpha.1.tgz#786fce19ac03930aa8698aaf6929856c208778d6"
+  integrity sha512-IoRR71bah4w7LwgdokL7RVa67CX/CDmusNacupqOtFo8o81tA2w91Lq8NIpT1EVn3Cm3RD2TxzRJBs3Ls1nmGg==
+  dependencies:
+    cross-fetch "^3.0.4"
+
 "@appbaseio/designkit@^0.13.0":
   version "0.13.0"
   resolved "https://registry.yarnpkg.com/@appbaseio/designkit/-/designkit-0.13.0.tgz#79e184cb7ed283c7a07ccc7c75d8a3236a58b7ea"
