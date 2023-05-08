@@ -5,7 +5,7 @@
 	"main": "dist/cjs/index.js",
 	"jsnext:main": "dist/es/index.js",
 	"module": "dist/es/index.js",
-	"typings": "src/index.d.ts",
+    "typings": "src/index.d.ts",
 	"description": "A Vue UI components library for building search experiences",
 	"keywords": [
 		"appbase",

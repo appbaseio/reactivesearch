@@ -1,4 +1,4 @@
-import * as types from '../../types';
+import * as types from './types.ts';
 
 export interface CommonProps {
 	componentId: string;
@@ -10,5 +10,5 @@ export interface CommonProps {
 	style?: types.style;
 }
 
-export { default as ReactiveList } from './components/result/ReactiveList';
-export { default as ReactiveBase } from './components/ReactiveBase/ReactiveBase';
+export type { default as ReactiveList } from './components/result/ReactiveList';
+export type { default as ReactiveBase } from './components/ReactiveBase/ReactiveBase';

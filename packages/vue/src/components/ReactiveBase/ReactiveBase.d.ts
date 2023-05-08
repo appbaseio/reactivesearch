@@ -1,4 +1,4 @@
-import * as types from '../../types';
+import * as types from '../../types.ts';
 
 export interface ReactiveBaseProps {
 	app: string;
@@ -27,6 +27,6 @@ export interface ReactiveBaseProps {
 	endpoint?: types.endpointConfig;
 }
 
-type ReactiveBase = (props: ReactiveBaseProps)=> JSX.Element;
+declare function ReactiveBase(props: ReactiveBaseProps): JSX.Element;
 
 export default ReactiveBase;
