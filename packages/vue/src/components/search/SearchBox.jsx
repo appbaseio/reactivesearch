@@ -238,7 +238,6 @@ const SearchBox = defineComponent({
 		endpoint: types.endpointConfig,
 		enableAI: types.bool,
 		AIConfig: types.AIConfig,
-		// TODO: convert into a slot renderAIAnswer?: (data: any) => any,
 		AIUIConfig: types.AIUIConfig,
 	},
 	mounted() {
@@ -1212,7 +1211,7 @@ const SearchBox = defineComponent({
 				) : null;
 		},
 		renderAIScreen() {
-			const customAIRenderer = this.$props.renferAIAnswer || this.$slots.renferAIAnswer;
+			const customAIRenderer = this.$props.renderAIAnswer || this.$slots.renderAIAnswer;
 			if (customAIRenderer) {
 				return customAIRenderer({
 					question:
