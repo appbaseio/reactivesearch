@@ -27,7 +27,6 @@
 		"test": "nps test",
 		"precommit": "lint-staged",
 		"prepare": "npm start validate",
-		"build:copy-types": "node ./scripts/copy-types.js",
 		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js",
 		"postpublish": "yarn run version-upgrade"
 	},

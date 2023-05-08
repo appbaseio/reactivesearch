@@ -21,7 +21,12 @@ module.exports = {
 			default: series(
 				rimraf('dist'),
 				concurrent.nps('build.es', 'build.cjs', 'build.umd.main', 'build.umd.min'),
+				series.nps('build.types')
 			),
+			types: {
+				description: 'copy declaration files to folder',
+				script:'node ./scripts/copy-types.js'
+			},
 			es: {
 				description: 'run the build with rollup (uses rollup.config.js)',
 				script: 'rollup --config --environment FORMAT:es',
