@@ -1,5 +1,5 @@
 import VueTypes from 'vue-types';
-import { InfoWindow } from 'vue-google-maps-community-fork';
+import { InfoWindow } from '@appbaseio/vue-google-maps-community-fork';
 
 const InfoWindowWrapper = {
 	name: 'InfoWindowWrapper',

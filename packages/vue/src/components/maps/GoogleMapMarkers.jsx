@@ -1,5 +1,5 @@
 import VueTypes from 'vue-types';
-import { GMapCluster } from 'vue-google-maps-community-fork';
+import { GMapCluster } from '@appbaseio/vue-google-maps-community-fork';
 import ClusterManager from './ClusterManager.jsx';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
 import GoogleMapMarker from './GoogleMapMarker.jsx';

@@ -8,21 +8,7 @@ export default defineNuxtConfig({
 	webpack: {
 		terser: false,
 	},
-	vite: {
-		optimizeDeps: {
-			include: [
-				'@appbaseio/reactivecore',
-				'@appbaseio/reactivesearch-vue',
-				'fast-deep-equal',
-			],
-		},
-		build: {
-			commonjsOptions: {
-				include: [/reactivecore/, /reactivesearch/, /node_modules/],
-			},
-		},
+	nitro: {
+		preset: 'vercel',
 	},
-	nitro:{
-		preset: 'vercel'
-	}
 });
