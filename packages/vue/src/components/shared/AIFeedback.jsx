@@ -67,7 +67,10 @@ export default defineComponent({
 				}
 			},
 		);
-
+		if (props.overrideState && props.overrideState.isRecorded) {
+			feedbackRecorded.value = true;
+			feedbackType.value = props.overrideState.feedbackType || 'positive';
+		}
 		return {
 			showInput,
 			feedbackType,
@@ -80,7 +83,7 @@ export default defineComponent({
 		};
 	},
 	render() {
-		if (this.hideUI) {
+		if (this.$props.hideUI) {
 			return null;
 		}
 		if (this.feedbackRecorded) {

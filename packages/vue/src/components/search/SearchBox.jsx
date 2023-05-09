@@ -51,7 +51,7 @@ import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
-import { AIFeedbackContainer } from '../../styles/AIAnswer';
+import AIFeedback from '../shared/AIFeedback.jsx';
 
 const md = new Remarkable();
 
@@ -238,7 +238,6 @@ const SearchBox = defineComponent({
 		endpoint: types.endpointConfig,
 		enableAI: types.bool,
 		AIConfig: types.AIConfig,
-		// TODO: convert into a slot renderAIAnswer?: (data: any) => any,
 		AIUIConfig: types.AIUIConfig,
 	},
 	mounted() {
@@ -398,6 +397,9 @@ const SearchBox = defineComponent({
 				if (this.$refs?.[this.$props.innerRef] && this.$refs[this.$props.innerRef].$el) {
 					this.$refs[this.$props.innerRef].$el.blur();
 				}
+			} else {
+				this.feedbackState = null;
+				this.showFeedbackComponent = false;
 			}
 		},
 		currentValue() {
@@ -820,7 +822,7 @@ const SearchBox = defineComponent({
 					if (renderError) {
 						return (
 							<div
-								className={`--ai-answer-error-container ${
+								class={`--ai-answer-error-container ${
 									getClassName(this.$props.innerClass, 'ai-error') || ''
 								}`}
 							>
@@ -830,11 +832,11 @@ const SearchBox = defineComponent({
 					}
 					return (
 						<div
-							className={`--ai-answer-error-container ${
+							class={`--ai-answer-error-container ${
 								getClassName(this.$props.innerClass, 'ai-error') || ''
 							}`}
 						>
-							<div className="--default-error-element">
+							<div class="--default-error-element">
 								<span>
 									{typeof this.AIResponseError === 'string'
 										? this.AIResponseError
@@ -1169,8 +1171,8 @@ const SearchBox = defineComponent({
 			if (loaderMessage) {
 				return loaderMessage;
 			}
-			if (this.$slots.loaderMessage) {
-				return this.$slots.loaderMessage();
+			if (this.$slots.AILoaderMessage) {
+				return this.$slots.AILoaderMessage();
 			}
 
 			return <HorizontalSkeletonLoader />;
@@ -1194,7 +1196,7 @@ const SearchBox = defineComponent({
 						<SourceTags>
 							{this.getAISourceObjects().map((el) => (
 								<Button
-									className={`--ai-source-tag ${
+									class={`--ai-source-tag ${
 										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
 									}`}
 									title={el[sourceDocumentLabel]}
@@ -1209,7 +1211,7 @@ const SearchBox = defineComponent({
 				) : null;
 		},
 		renderAIScreen() {
-			const customAIRenderer = this.$props.renferAIAnswer || this.$slots.renferAIAnswer;
+			const customAIRenderer = this.$props.renderAIAnswer || this.$slots.renderAIAnswer;
 			if (customAIRenderer) {
 				return customAIRenderer({
 					question:
@@ -1236,6 +1238,7 @@ const SearchBox = defineComponent({
 			if (this.isAIResponseLoading || this.isLoading) {
 				return this.renderAIScreenLoader();
 			}
+
 			return (
 				<div>
 					<Answer
@@ -1248,13 +1251,8 @@ const SearchBox = defineComponent({
 					/>
 					{this.renderAIScreenFooter()}
 					{this.showFeedbackComponent && (
-						<div
-							className={`${
-								getClassName(this.$props.innerClass, 'ai-feedback') || ''
-							}`}
-						>
-							{' '}
-							<AIFeedbackContainer
+						<div class={`${getClassName(this.$props.innerClass, 'ai-feedback') || ''}`}>
+							<AIFeedback
 								overrideState={this.feedbackState}
 								hideUI={
 									this.isAIResponseLoading
@@ -1294,6 +1292,37 @@ const SearchBox = defineComponent({
 					dropdownEle.style.top = `${height}px`;
 				}
 			}
+		},
+		askButtonOnClick() {
+			this.showAIScreen = true;
+			this.isOpen = true;
+			this.triggerDefaultQuery(this.currentValue, { enableAI: true });
+		},
+		renderAskButtonElement() {
+			const { AIUIConfig, innerClass } = this.$props;
+			const { askButton } = AIUIConfig || {};
+			const { renderAskButton } = this.$slots;
+			if (askButton) {
+				const getEnterButtonMarkup = () => {
+					if (renderAskButton) {
+						return renderAskButton(this.askButtonOnClick);
+					}
+
+					return (
+						<Button
+							class={`enter-btn ${getClassName(innerClass, 'ask-button')}`}
+							info
+							onClick={this.askButtonOnClick}
+						>
+							Ask
+						</Button>
+					);
+				};
+
+				return <div class="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+			}
+
+			return null;
 		},
 	},
 	render() {
@@ -1601,6 +1630,7 @@ const SearchBox = defineComponent({
 													&& renderSuggestionsDropdown()}
 											</InputWrapper>
 											{this.renderInputAddonAfter()}
+											{this.renderAskButtonElement()}
 											{this.renderEnterButtonElement()}
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsDropdown()}
