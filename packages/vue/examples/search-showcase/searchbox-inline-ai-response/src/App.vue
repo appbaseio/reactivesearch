@@ -22,15 +22,6 @@
 				:autosuggest="true"
 				:enableAI="true"
 			/>
-			<div class="ai-answer-container">
-				<a-i-answer
-					className="ai-answer"
-					componentId="AIComponent"
-					:react="{ and: ['BookSensor'] }"
-					title="AI Chat Box"
-					:showInput="false"
-				></a-i-answer>
-			</div>
 		</reactive-base>
 	</div>
 </template>
