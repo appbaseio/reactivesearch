@@ -75,6 +75,12 @@ const Input = styled('input')`
 			padding-right: 20px;
 		`};
 	${props =>
+			props.showClear
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 50px;
+		`};
+	${props =>
 			props.showIcon
 		&& props.showFocusShortcutsIcon
 		&& props.iconPosition === 'right'
@@ -370,6 +376,12 @@ export const TextArea = styled('textarea')`
 			props.showFocusShortcutsIcon
 		&& css`
 			padding-right: 20px;
+		`};
+	${props =>
+			props.showClear
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 50px;
 		`};
 	${props =>
 			props.showIcon
