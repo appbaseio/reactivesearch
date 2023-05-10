@@ -20,7 +20,7 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
-				:enableAI="true"
+				:enableAI="false"
 			/>
 			<div class="ai-answer-container">
 				<a-i-answer

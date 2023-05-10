@@ -19,6 +19,7 @@
 					index: 'good-books-ds',
 					minChars: 4,
 				}"
+				enableAI="false"
 				:autosuggest="true"
 			/>
 			<a-i-answer
