@@ -168,17 +168,6 @@
     tocbot "4.5.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@10.0.0-alpha.10":
-  version "10.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.10.tgz#595923181a79b8c7a88d4dfd6b8a5951b8d821f7"
-  integrity sha512-cc5fTjsjPio8dzDHtfwh3KKkns3208lv1d+io+dd6qFrDKJsjBMSQUySQu/mj2ffTgJHlpc3J8HMgPQnWKyZ6A==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivecore@10.0.0-alpha.4":
   version "10.0.0-alpha.4"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.4.tgz#6c01e07847a4177e2e9284c96f1eac4c9892ff4c"
@@ -242,59 +231,6 @@
     vue-no-ssr "^1.1.0"
     vue-slider-component next
     vue-types "^5.0.2"
-
-"@appbaseio/reactivesearch@4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.3.tgz#a3fe6ddc26991976e0f6a0d3f636916138f6de74"
-  integrity sha512-f36N1cD4TRTVUUab02oj+uZgXBw1XhK595+Ap/kYj/CNc7d7WkGzJNPuxUVWi3SdxK938JCoJDXBIelWmle7Og==
-  dependencies:
-    "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.4"
-    "@appbaseio/rheostat" "^1.0.0-alpha.15"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^5.2.0"
-    cross-env "^5.2.0"
-    dayjs "^1.11.7"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    url-search-params-polyfill "^7.0.0"
-    xss "^1.0.11"
-
-"@appbaseio/reactivesearch@4.0.0-rc.8":
-  version "4.0.0-rc.8"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.8.tgz#476b2a7c3e5b9703e9b709c6dcbb8030aa93ed6e"
-  integrity sha512-bRf8SXdJr1I6Eu5SWejttPVQj1NrSDFtuM96wIlMWtvynsjpUTBLg5hw9j0FGJf+mbhLkX58GMc0Uu45j0pEgw==
-  dependencies:
-    "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.10"
-    "@appbaseio/rheostat" "^1.0.0-alpha.15"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^5.2.0"
-    cross-env "^5.2.0"
-    dayjs "^1.11.7"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    remarkable "^2.0.1"
-    url-search-params-polyfill "^7.0.0"
-    xss "^1.0.11"
 
 "@appbaseio/reactivesearch@^3.29.0", "@appbaseio/reactivesearch@^3.30.3":
   version "3.43.10"
