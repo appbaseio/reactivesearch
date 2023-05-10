@@ -870,7 +870,7 @@ const SearchBox = (props) => {
 				sources: getAISourceObjects(),
 			},
 		};
-		return getComponentUtilFunc(data, props);
+		return <div ref={_dropdownULRef}>{getComponentUtilFunc(data, props)}</div>;
 	};
 	const renderInputAddonBefore = () => {
 		const { addonBefore, expandSuggestionsContainer } = props;
