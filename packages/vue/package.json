@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "3.0.0-rc.1",
+	"version": "3.0.0-rc.5.alpha.3",
 	"private": false,
 	"main": "dist/cjs/index.js",
 	"jsnext:main": "dist/es/index.js",
@@ -26,8 +26,7 @@
 		"test": "nps test",
 		"precommit": "lint-staged",
 		"prepare": "npm start validate",
-		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js",
-		"postpublish": "yarn run version-upgrade"
+		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js"
 	},
 	"files": [
 		"dist"
@@ -35,7 +34,7 @@
 	"sideEffects": false,
 	"dependencies": {
 		"@appbaseio/analytics": "^1.1.1",
-		"@appbaseio/reactivecore": "10.0.0-alpha.4",
+		"@appbaseio/reactivecore": "10.0.0-alpha.18",
 		"@appbaseio/vue-emotion": "0.6.0-alpha.6",
 		"@appbaseio/vue-google-maps-community-fork": "1.0.0-alpha.1",
 		"@emotion/css": "^11.10.5",
