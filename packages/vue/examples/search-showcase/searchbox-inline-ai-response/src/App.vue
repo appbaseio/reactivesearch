@@ -20,50 +20,7 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
-				:enableAI="true"
 			>
-				<template
-					#render="{
-							downshiftProps: {
-									isOpen,
-									getItemProps,
-									highlightedIndex,
-									selectedItem,
-								},
-							AIData: { answer: aiAnswer, showAIScreen },
-							data
-					}"
-				>
-						<div v-if="isOpen">
-							<div v-if="showAIScreen" class="suggestions">
-								<div
-									:style="{
-										alignSelf: 'flex-start',
-										margin: 8,
-										maxWidth: '70%',
-									}"
-									>
-									<div
-										:style="{
-										display: 'inline-block',
-										maxWidth: '100%',
-										backgroundColor: '#f1f1f1',
-										color: 'black',
-										borderRadius: '16px',
-										padding: '8px 16px',
-										whiteSpace: 'pre-wrap',
-										wordWrap: 'break-word',
-										}"
-									>
-										{{aiAnswer || "Loading..."}}
-									</div>
-								</div>
-							</div>
-							<div v-else>
-								No suggestions
-							</div>
-						</div>
-				</template>
 			</search-box>
 		</reactive-base>
 	</div>
