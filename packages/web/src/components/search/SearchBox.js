@@ -116,6 +116,7 @@ const SearchBox = (props) => {
 	let [selectedTags, setSelectedTags] = useState([]);
 	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
+	const _inputGroupRef = useRef(null);
 	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
 	const stats = () => getResultStats(props);
@@ -525,6 +526,7 @@ const SearchBox = (props) => {
 	};
 	const handleTextAreaHeightChange = () => {
 		const textArea = _inputRef.current;
+		const inputGroupEle = _inputGroupRef.current;
 		if (textArea) {
 			textArea.style.height = '42px';
 			const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
@@ -532,6 +534,9 @@ const SearchBox = (props) => {
 			const height = Math.min(textArea.scrollHeight, maxHeight);
 			textArea.style.height = `${height}px`;
 			textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+			if (inputGroupEle) {
+				inputGroupEle.style.height = `${textArea.style.height}`;
+			}
 			if (_dropdownULRef && _dropdownULRef.current) {
 				_dropdownULRef.current.style.top = `${textArea.style.height}`;
 			}
@@ -1352,9 +1357,7 @@ const SearchBox = (props) => {
 	}, [isOpen]);
 
 	useEffect(() => {
-		if (props.autosuggest && props.enableAI) {
-			handleTextAreaHeightChange();
-		}
+		handleTextAreaHeightChange();
 	}, [currentValue, props.suggestions]);
 
 	useEffect(() => {
@@ -1863,7 +1866,7 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup isOpen={isOpen}>
+								<InputGroup ref={_inputGroupRef} isOpen={isOpen}>
 									{renderInputAddonBefore()}
 									<InputWrapper>
 										<TextArea
@@ -1932,7 +1935,7 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup isOpen={false}>
+					<InputGroup ref={_inputGroupRef} isOpen={false}>
 						{renderInputAddonBefore()}
 						<InputWrapper>
 							<TextArea
