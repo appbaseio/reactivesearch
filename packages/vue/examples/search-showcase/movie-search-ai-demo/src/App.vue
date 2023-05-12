@@ -51,7 +51,7 @@
         :size="10"
         :show-result-stats="false"
         :react="{
-          and: SEARCHBOX_COMPONENT_ID,
+          and: 'BookSensor',
         }"
         :pagination="!isResultsLoading"
         component-id="SearchResult"
@@ -66,9 +66,10 @@
         <template #render="{ data, loading, resultStats }">
           <div
             v-if="loading"
-            class="results-loader">
+            class="results-loader"
+          >
             <img
-              :style="{width: '100%'}"
+              class="loader"
               src="https://i.pinimg.com/originals/bc/56/b3/bc56b31a50e519be2ed335a47e75bc62.gif"
               alt="results loading"
             >
@@ -79,7 +80,7 @@
               {{ resultStats.numberOfResults }} in {{ resultStats.time }} ms
             </span>
             <results-card-wrapper>
-              <Card
+              <card
                 v-for="item in data"
                 v-bind="item"
                 :key="item._id" />
@@ -94,10 +95,11 @@
 <script>
 import './styles.css';
 import { ReactiveBase, ReactiveList, SearchBox, AIAnswer, ResultsCardWrapper } from '@appbaseio/reactivesearch-vue';
+import Card from './components/Card.vue';
 
 export default {
 	name: 'App',
-	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer, ResultsCardWrapper },
+	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer, ResultsCardWrapper, Card },
 	methods: {
 		getMessageStyle(message) {
 			const isSender = message.role === 'user';
@@ -128,6 +130,17 @@ export default {
 }
 .ai-answer-container{
 	display: block;
-    margin: 40px;
+  margin: 40px;
+}
+.results-loader{
+  display: flex;
+  top: 0px;
+  width: 100%;
+  height: 50vh;
+}
+.loader{
+  display: block;
+  width: 100%;
+  object-fit: contain;
 }
 </style>
