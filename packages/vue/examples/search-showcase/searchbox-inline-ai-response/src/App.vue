@@ -1,37 +1,212 @@
 <template>
-	<div id="app">
-		<reactive-base
-			app="good-books-ds"
-			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			themePreset="light"
-		>
-			<search-box
-				className="result-list-container"
-				componentId="BookSensor"
-				:dataField="['original_title', 'original_title.search']"
-				:URLParams="true"
-				:size="10"
-				:enablePopularSuggestions="true"
-				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds' }"
-				:enableRecentSuggestions="true"
-				:recentSuggestionsConfig="{
-					size: 3,
-					index: 'good-books-ds',
-					minChars: 4,
-				}"
-				:autosuggest="true"
-			>
-			</search-box>
-		</reactive-base>
-	</div>
+  <div id="app">
+    <reactive-base
+      :theme="{
+        typography: {
+          fontFamily: 'monospace',
+          fontSize: '16px',
+        },
+      }"
+      :reactivesearch-apiconfig="{
+        recordAnalytics: false,
+        userId: 'jon',
+      }"
+      app="reactivesearch_docs_v2"
+      url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+    >
+      <search-box
+        :data-field="[
+          {
+            field: 'keywords',
+            weight: 4,
+          },
+          {
+            field: 'heading',
+            weight: 2,
+          },
+          {
+            field: 'meta_title',
+            weight: 1,
+          },
+        ]"
+        :debounce="500"
+        :show-clear="true"
+        :highlight="false"
+        :size="5"
+        :urlparams="true"
+        :autosuggest="true"
+        :enable-ai="true"
+        :aiconfig="{
+          docTemplate:
+            'title is \'${source.title}\', page content is \'${source.tokens}\', URL is https://docs.reactivesearch.io${source.url}',
+          queryTemplate:
+            'Answer the query: \'${value}\', cite URL in your answer below it similar to a science paper format',
+          topDocsForContext: 2,
+        }"
+        distinct-field="meta_title.keyword"
+        class="mx-5 mt-2"
+        component-id="search"
+      >
+        <template
+          #render="{
+							downshiftProps: {
+									isOpen,
+									getItemProps,
+									highlightedIndex,
+									selectedItem,
+								},
+							AIData: { answer: aiAnswer, showAIScreen },
+							data
+					}"
+        >
+          <div v-if="isOpen">
+            <div class="suggestions">
+              <div v-if="showAIScreen" >
+                <div
+                  :style="{
+                    alignSelf: 'flex-start',
+                    margin: 8,
+                    maxWidth: '70%',
+                  }"
+                >
+                  <div
+                    :style="{
+                      display: 'inline-block',
+                      maxWidth: '100%',
+                      backgroundColor: '#f1f1f1',
+                      color: 'black',
+                      borderRadius: '16px',
+                      padding: '8px 16px',
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word',
+                    }"
+                  >
+                    {{ aiAnswer || "Loading..." }}
+                  </div>
+                </div>
+              </div>
+              <div v-else-if="!(data && data.length)">
+                <p
+                  class="bg-gray p-2 m-0 suggestionHeading"
+                >
+                  Frequently Asked Questions
+                  <span
+                    role="img"
+                    aria-label="confused">
+                    🤔
+                  </span>
+                </p>
+                <div>
+                  <div
+                    v-for="(item, index) in faqs"
+                    :key="item.id + index"
+                    v-bind="getItemProps({item})"
+                    :class="{
+                      activeSuggestion: highlightedIndex === index,
+                      suggestion: true,
+                      selectedSuggestion:
+                        selectedItem &&
+                        selectedItem.value === item.value
+                    }"
+                  >
+                    <span className="clipText">{{ item.value }}</span>
+                  </div>
+                </div>
+              </div>
+              <div v-else-if="data && data.length">
+                <p
+                  class="bg-gray p-2 m-0 suggestionHeading"
+                >
+                  Documentation pages
+                  <span
+                    role="img"
+                    aria-label="confused">
+                    📄
+                  </span>
+                </p>
+                <div>
+                  <a
+                    v-for="(item, index) in data"
+                    :key="item._id +index"
+                    v-bind="getItemProps({item})"
+                    :class="{
+                      activeSuggestion: highlightedIndex === index,
+                      suggestion: true,
+                      selectedSuggestion:
+                        selectedItem &&
+                        selectedItem.value === item.value
+                    }"
+                    :href="`https://docs.reactivesearch.io${item._source.url}`"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <div class="row">
+                      <div class="d-flex justify-content-center align-items-center col col-3 col-md-1">
+                        <div
+                          class="p-1
+                          bg-white
+                          rounded
+                          suggestionIcon"
+                        >
+                          <img
+                            :src="getIcon(item._source.keywords)"
+                            class="w-100 h-100"
+                            alt="icon"
+                          >
+                        </div>
+                      </div>
+                      <div class="col col-9 col-md-11">
+                        <div
+                          :title="item.value"
+                          class="suggestionTitle"
+                        >
+                          {{ item.value || item._source.title }}
+                        </div>
+                        <div
+                          v-if="item._source.heading
+                            ? `${item._source.meta_title} > ${item._source.heading}`
+                          : item._source.meta_title">
+                          <span
+                            :title="item._source.heading
+                              ? `${item._source.meta_title} > ${item._source.heading}`
+                            : item._source.meta_title"
+                            class="suggestionBreadcrumb"
+                          >
+                            {{ item._source.heading
+                              ? `${item._source.meta_title} > ${item._source.heading}`
+                            : item._source.meta_title }}
+                          </span>
+                        </div>
+                        <div
+                          :title="item._source.meta_description"
+                          class="suggestionDescription"
+                        >
+                          <div>
+                            {{ item._source.meta_description }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </search-box>
+    </reactive-base>
+  </div>
 </template>
 
 <script>
-import './styles.css';
 import { ReactiveBase, ReactiveList, SearchBox, AIAnswer } from '@appbaseio/reactivesearch-vue';
+import {getIcon} from './getIcon'
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles.css';
 
 export default {
-	name: 'app',
+	name: 'App',
 	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer },
 	methods: {
 		getMessageStyle(message) {
@@ -50,6 +225,7 @@ export default {
 				whiteSpace: 'pre-wrap',
 			};
 		},
+		getIcon
 	},
 };
 </script>
