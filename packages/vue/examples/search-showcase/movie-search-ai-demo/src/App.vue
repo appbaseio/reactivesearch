@@ -22,18 +22,11 @@
             :data-field="['original_title', 'original_title.search']"
             :urlparams="true"
             :size="10"
-            :enable-popular-suggestions="true"
-            :popular-suggestions-config="{ size: 3, minChars: 2, index: 'good-books-ds' }"
-            :enable-recent-suggestions="true"
-            :recent-suggestions-config="{
-              size: 3,
-              index: 'good-books-ds',
-              minChars: 4,
-            }"
             :autosuggest="true"
             :enable-ai="false"
             class-name="result-list-container"
             component-id="BookSensor"
+            searchbox-id="q_and_a_search_ui"
           />
         </div>
       </div>
