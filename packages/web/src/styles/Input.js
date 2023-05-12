@@ -72,7 +72,7 @@ const Input = styled('input')`
 	${props =>
 			props.showFocusShortcutsIcon
 		&& css`
-			padding-right: 20px;
+			padding-right: 32px;
 		`};
 	${props =>
 			props.showClear
@@ -375,7 +375,7 @@ export const TextArea = styled('textarea')`
 	${props =>
 			props.showFocusShortcutsIcon
 		&& css`
-			padding-right: 20px;
+			padding-right: 32px;
 		`};
 	${props =>
 			props.showClear
