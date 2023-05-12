@@ -7,7 +7,7 @@ import Input from '../../styles/Input';
 import { AIFeedbackContainer } from '../../styles/AIAnswer';
 import Button from '../../styles/Button';
 
-const FeedbackComponent = ({ onFeedbackSubmit, hideUI, overrideState = {} }) => {
+const AIFeedback = ({ onFeedbackSubmit, hideUI, overrideState = {} }) => {
 	const [showInput, setShowInput] = useState(false);
 	const [feedbackType, setFeedbackType] = useState(null);
 	const [feedbackText, setFeedbackText] = useState('');
@@ -102,11 +102,11 @@ const FeedbackComponent = ({ onFeedbackSubmit, hideUI, overrideState = {} }) => 
 	);
 };
 
-FeedbackComponent.propTypes = {
+AIFeedback.propTypes = {
 	onFeedbackSubmit: func,
 	hideUI: bool,
 	// eslint-disable-next-line react/forbid-prop-types
 	overrideState: object,
 };
 
-export default React.memo(FeedbackComponent);
+export default React.memo(AIFeedback);
