@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { bool, func } from 'prop-types';
+import { bool, func, object } from 'prop-types';
 
 import ThumbsUpSvg from './ThumbsUpSvg';
 import ThumbsDownSvg from './ThumbsDownSvg';
@@ -105,7 +105,8 @@ const FeedbackComponent = ({ onFeedbackSubmit, hideUI, overrideState = {} }) => 
 FeedbackComponent.propTypes = {
 	onFeedbackSubmit: func,
 	hideUI: bool,
-	overrideState: bool,
+	// eslint-disable-next-line react/forbid-prop-types
+	overrideState: object,
 };
 
 export default React.memo(FeedbackComponent);
