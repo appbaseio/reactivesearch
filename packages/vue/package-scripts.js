@@ -65,7 +65,6 @@ module.exports = {
 			},
 			andTest: series.nps('build'),
 		},
-		copyTypes: series(npsUtils.copy('dist')),
 		lint: {
 			description: 'lint the entire project',
 			script: 'eslint .',
