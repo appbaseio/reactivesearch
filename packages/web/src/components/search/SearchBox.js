@@ -108,6 +108,7 @@ const SearchBox = (props) => {
 		customEvents,
 		showSuggestionsFooter,
 		renderSuggestionsFooter,
+		isAITyping,
 	} = props;
 
 	const internalComponent = getInternalComponentID(componentId);
@@ -119,6 +120,8 @@ const SearchBox = (props) => {
 	const _inputGroupRef = useRef(null);
 	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
+	const prevPropsRefIsAITyping = useRef(undefined);
+
 	const stats = () => getResultStats(props);
 
 	const [showAIScreen, setShowAIScreen] = useState(false);
@@ -1344,6 +1347,17 @@ const SearchBox = (props) => {
 	}, [showAIScreen]);
 
 	useEffect(() => {
+		if (prevPropsRefIsAITyping.current === true && !isAITyping) {
+			setShowAIScreenFooter(true);
+			setShowFeedbackComponent(true);
+		} else if (prevPropsRefIsAITyping.current === undefined && isAITyping) {
+			prevPropsRefIsAITyping.current = true;
+			setShowTypingEffect(false);
+			setShowFeedbackComponent(false);
+		}
+	}, [isAITyping]);
+
+	useEffect(() => {
 		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
 			setShowAIScreenFooter(false);
 			setShowFeedbackComponent(false);
@@ -1525,11 +1539,16 @@ const SearchBox = (props) => {
 																				)}
 																				speed={5}
 																				onTypingComplete={() => {
-																					setShowAIScreenFooter(
-																						true,
-																					);
 																					if (
-																						props.AIUIConfig
+																						prevPropsRefIsAITyping.current
+																					=== undefined
+																					) {
+																						setShowAIScreenFooter(
+																							true,
+																						);
+																					}
+																					if (
+																						(props.AIUIConfig
 																					&& typeof props
 																						.AIUIConfig
 																						.showFeedback
@@ -1537,7 +1556,8 @@ const SearchBox = (props) => {
 																							? props
 																								.AIUIConfig
 																								.showFeedback
-																							: true
+																							: true)
+																					&& showTypingEffect
 																					) {
 																						setShowFeedbackComponent(
 																							true,
@@ -2094,6 +2114,7 @@ SearchBox.propTypes = {
 	AIUIConfig: types.componentObject,
 	trackUsefullness: types.funcRequired,
 	sessionIdFromStore: types.string,
+	isAITyping: types.boolRequired,
 };
 
 SearchBox.defaultProps = {
@@ -2166,6 +2187,11 @@ const mapStateToProps = (state, props) => ({
 			&& state.AIResponses[props.componentId].response
 			&& state.AIResponses[props.componentId].response.sessionId)
 		|| '',
+	isAITyping:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.isTyping)
+		|| false,
 });
 
 const mapDispatchtoProps = dispatch => ({
