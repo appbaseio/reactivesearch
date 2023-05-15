@@ -23,6 +23,7 @@ const inputChunks = {
 	index: 'src/index.js',
 	version: 'src/components/Version/index.js',
 	install: 'src/install.js',
+	SearchBox: 'src/components/search/SearchBox.jsx',
 	ReactiveList: 'src/components/result/ReactiveList.jsx',
 	ResultCard: 'src/components/result/ResultCard.jsx',
 	ResultList: 'src/components/result/ResultList.jsx',
