@@ -23,7 +23,7 @@ export interface MultiListProps extends CommonProps {
 	renderError?: types.title;
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
-	showCheckbox: boolean;
+	showCheckbox?: boolean;
 	showCount?: boolean;
 	showFilter?: boolean;
 	showSearch?: boolean;

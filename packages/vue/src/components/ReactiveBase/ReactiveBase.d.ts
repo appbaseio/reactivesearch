@@ -25,6 +25,7 @@ export interface ReactiveBaseProps {
 	initialState?: types.children;
 	analytics?: boolean;
 	endpoint?: types.endpointConfig;
+	contextCollector?: any;
 }
 
 declare function ReactiveBase(props: ReactiveBaseProps): JSX.Element;
