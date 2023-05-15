@@ -1353,6 +1353,7 @@ const SearchBox = (props) => {
 		} else if (prevPropsRefIsAITyping.current === undefined && isAITyping) {
 			prevPropsRefIsAITyping.current = true;
 			setShowTypingEffect(false);
+			setShowAIScreenFooter(false);
 			setShowFeedbackComponent(false);
 		}
 	}, [isAITyping]);
