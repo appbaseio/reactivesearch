@@ -49,7 +49,7 @@
       >
         <template
           #render="{
-						downshiftProps: { isOpen, getItemProps, highlightedIndex, selectedItem },
+						downshiftProps: { isOpen, getItemProps, getItemEvents, highlightedIndex, selectedItem },
 						AIData: { answer: aiAnswer, showAIScreen, isAILoading, AIError },
 						data,
 					}"
@@ -57,7 +57,6 @@
           <div v-if="isOpen">
             <div class="suggestions">
               <div v-if="showAIScreen">
-                🚨🚨🚨🚨🚨🚨🚨🚨{{ isAILoading }}{{ AIError }}
                 <div
                   :style="{
                     alignSelf: 'flex-start',
@@ -77,28 +76,37 @@
                       wordWrap: 'break-word',
                     }"
                   >
-                    {{ aiAnswer || 'Loading...' }}
+                    <span v-if="isAILoading">Loading...</span>
+                    <span v-else>{{ aiAnswer }}</span>
                   </div>
+
                 </div>
               </div>
               <div v-else-if="!(data && data.length)">
                 <p class="bg-gray p-2 m-0 suggestionHeading">
                   Frequently Asked Questions
-                  <span 
-                    role="img" 
+                  <span
+                    role="img"
                     aria-label="confused"> 🤔 </span>
                 </p>
                 <div>
                   <div
                     v-for="(item, index) in faqs"
                     :key="item.id + index"
-                    v-bind="getItemProps({ item })"
+                    v-bind="getItemProps({
+                      item,
+                      index: index
+                    })"
                     :class="{
                       activeSuggestion: highlightedIndex === index,
                       suggestion: true,
                       selectedSuggestion:
                         selectedItem && selectedItem.value === item.value,
                     }"
+                    v-on="getItemEvents({
+                      item,
+                      index: Number(index)
+                    })"
                   >
                     <span className="clipText">{{ item.value }}</span>
                   </div>
@@ -107,8 +115,8 @@
               <div v-else-if="data && data.length">
                 <p class="bg-gray p-2 m-0 suggestionHeading">
                   Documentation pages
-                  <span 
-                    role="img" 
+                  <span
+                    role="img"
                     aria-label="confused"> 📄 </span>
                 </p>
                 <div>
@@ -139,8 +147,8 @@
                         </div>
                       </div>
                       <div class="col col-9 col-md-11">
-                        <div 
-                          :title="item.value" 
+                        <div
+                          :title="item.value"
                           class="suggestionTitle">
                           {{ item.value || item._source.title }}
                         </div>
@@ -197,6 +205,24 @@ import './styles.css';
 export default {
 	name: 'App',
 	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer },
+	data(){
+		return {
+			faqs: [
+				{
+					label:
+      'How to use the SearchBox component with MultiList and ReactiveList in React?',
+					value:
+      'How to use the SearchBox component with MultiList and ReactiveList in React?',
+					id: 'faq-1',
+				},
+				{
+					label: 'Basic usage for MultiList in React',
+					value: 'Basic usage for MultiList in React',
+					id: 'faq-2',
+				},
+			]
+		}
+	},
 	methods: {
 		getMessageStyle(message) {
 			const isSender = message.role === 'user';
@@ -278,7 +304,7 @@ export default {
 	position: relative;
 }
 .activeSuggestion,
-.activeSuggestion:hover {
+.suggestion:hover {
 	background-color: var(--bs-primary);
 	color: white;
 	padding: 10px 15px;
