@@ -10,26 +10,35 @@ const IconGroup = styled.div`
 	height: 100%;
 
 	${({ positionType }) => {
-		if (positionType === 'absolute') {
-			return css`
+	if (positionType === 'absolute') {
+		return css`
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
 			`;
-		}
-		return null;
-	}};
+	}
+	return null;
+}};
 
 	${({ groupPosition }) => {
-		if (groupPosition === 'right') {
-			return css`
+	if (groupPosition === 'right') {
+		return css`
 				right: 0;
 			`;
-		}
-		return css`
+	}
+	return css`
 			left: 0;
 		`;
-	}};
+}};
+	${({ enableAI }) =>
+	(enableAI
+		? `
+		top: 0%;
+	    transform: translateY(0);
+    	height: 42px;
+
+	`
+		: '')};
 `;
 
 export default IconGroup;

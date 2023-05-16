@@ -218,7 +218,7 @@ const AIAnswer = defineComponent({
 			this.handleTextAreaHeightChange();
 		},
 		handleSendMessage(e, isRetry = false, text = this.inputMessage) {
-			if (typeof e === 'object') e.preventDefault();
+			if (typeof e === 'object' && e !== null) e.preventDefault();
 			if (text.trim()) {
 				if (this.isLoadingState) {
 					return;
@@ -354,7 +354,7 @@ const AIAnswer = defineComponent({
 							<Mic
 								getInstance={getMicInstance}
 								render={renderMic}
-								onResult={this.handleVoiceResults}
+								handleResult={this.handleVoiceResults}
 								class={getClassName(innerClass, 'ai-search-mic') || null}
 							/>
 						)}
