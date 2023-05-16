@@ -1,16 +1,13 @@
-import reactIcon from './react.svg';
-import vueIcon from './vue.svg';
-import flutterIcon from './flutter.svg';
-import blockIcon from './block.svg';
-
 // eslint-disable-next-line import/prefer-default-export
 export function getIcon(keywords = []) {
 	if (keywords.includes('vue')) {
-		return vueIcon;
-	} if (keywords.includes('flutter')) {
-		return flutterIcon;
-	} if (keywords.includes('react')) {
-		return reactIcon;
+	  return '/vue.svg';
 	}
-	return blockIcon;
+	if (keywords.includes('flutter')) {
+	  return '/flutter.svg';
+	}
+	if (keywords.includes('react')) {
+	  return '/react.svg';
+	}
+	return '/block.svg';
 }
