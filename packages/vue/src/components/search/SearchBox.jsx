@@ -447,6 +447,8 @@ const SearchBox = defineComponent({
 						|| [],
 					showAIScreen: this.showAIScreen,
 					sources: this.getAISourceObjects(),
+					isAILoading: this.isAIResponseLoading,
+					AIError: this.AIResponseError,
 				},
 			};
 			return <div ref={_dropdownULRef}>{getComponent(data, this)}</div>;
@@ -1278,7 +1280,7 @@ const SearchBox = defineComponent({
 		},
 		handleTextAreaHeightChange() {
 			const textArea = this.$refs[this.$props.innerRef]?.$el;
-			const inputGroupEle = this.$refs[_dropdownULRef]?.$el;
+			const inputGroupEle = this.$refs[_inputGroupRef]?.$el;
 			if (textArea) {
 				textArea.style.height = '42px';
 				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
