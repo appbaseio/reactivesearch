@@ -236,7 +236,7 @@ const SearchBox = defineComponent({
 		renderSelectedTags: VueTypes.any,
 		searchboxId: VueTypes.string,
 		endpoint: types.endpointConfig,
-		enableAI: types.bool,
+		enableAI: VueTypes.bool.def(false),
 		AIConfig: types.AIConfig,
 		AIUIConfig: types.AIUIConfig,
 	},
