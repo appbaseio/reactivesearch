@@ -32,7 +32,7 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import Input, { suggestionsContainer, suggestions, TextArea } from '../../styles/Input';
+import { suggestionsContainer, suggestions, TextArea } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -61,6 +61,7 @@ md.set({
 	xhtmlOut: true,
 });
 const _dropdownULRef = 'dropdownULRef';
+const _inputGroupRef = 'inputGroupRef';
 
 const { updateQuery, setCustomQuery, setDefaultQuery, recordSuggestionClick } = Actions;
 const {
@@ -293,6 +294,7 @@ const SearchBox = defineComponent({
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
 			this.normalizedSuggestions = suggestionsList;
+			this.handleTextAreaHeightChange();
 		},
 		selectedValue(newVal, oldVal) {
 			if (
@@ -403,9 +405,7 @@ const SearchBox = defineComponent({
 			}
 		},
 		currentValue() {
-			if (this.$props.autosuggest && this.$props.enableAI) {
-				this.handleTextAreaHeightChange();
-			}
+			this.handleTextAreaHeightChange();
 		},
 	},
 	methods: {
@@ -449,7 +449,7 @@ const SearchBox = defineComponent({
 					sources: this.getAISourceObjects(),
 				},
 			};
-			return getComponent(data, this);
+			return <div ref={_dropdownULRef}>{getComponent(data, this)}</div>;
 		},
 		// returns size and aggs property
 		getBasicQueryOptions() {
@@ -1278,7 +1278,7 @@ const SearchBox = defineComponent({
 		},
 		handleTextAreaHeightChange() {
 			const textArea = this.$refs[this.$props.innerRef]?.$el;
-
+			const inputGroupEle = this.$refs[_dropdownULRef]?.$el;
 			if (textArea) {
 				textArea.style.height = '42px';
 				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
@@ -1289,7 +1289,10 @@ const SearchBox = defineComponent({
 
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
-					dropdownEle.style.top = `${height}px`;
+					dropdownEle.style.top = `${textArea.style.height}`;
+				}
+				if (inputGroupEle) {
+					inputGroupEle.style.height = `${textArea.style.height}`;
 				}
 			}
 		},
@@ -1485,146 +1488,74 @@ const SearchBox = defineComponent({
 								};
 								return (
 									<div class={suggestionsContainer}>
-										<InputGroup>
+										<InputGroup ref={_inputGroupRef}>
 											{this.renderInputAddonBefore()}
 											<InputWrapper>
-												{this.$props.enableAI ? (
-													<TextArea
-														id={`${this.$props.componentId}-input`}
-														showIcon={this.$props.showIcon}
-														showClear={this.$props.showClear}
-														iconPosition={this.$props.iconPosition}
-														ref={this.$props.innerRef}
-														class={getClassName(
-															this.$props.innerClass,
-															'input',
-														)}
-														placeholder={this.$props.placeholder}
-														autoFocus={this.$props.autoFocus}
-														showFocusShortcutsIcon={
-															this.$props.showFocusShortcutsIcon
-														}
-														showVoiceSearch={
-															this.$props.showVoiceSearch
-														}
-														on={getInputEvents({
-															onInput: this.onInputChange,
-															onBlur: (e) => {
-																this.$emit(
-																	'blur',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onFocus: this.handleFocus,
-															onKeyPress: (e) => {
-																this.$emit(
-																	'keyPress',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-press',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onKeyDown: (e) =>
-																this.handleKeyDown(
-																	e,
-																	highlightedIndex,
-																),
-															onKeyUp: (e) => {
-																this.$emit(
-																	'keyUp',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-up',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onClick: () => {
-																setHighlightedIndex(null);
-															},
-														})}
-														{...getInputProps({
-															value:
-																this.$data.currentValue === null
-																	? ''
-																	: this.$data.currentValue,
-														})}
-														themePreset={this.themePreset}
-														autocomplete="off"
-													/>
-												) : (
-													<Input
-														id={`${this.$props.componentId}-input`}
-														showIcon={this.$props.showIcon}
-														showClear={this.$props.showClear}
-														iconPosition={this.$props.iconPosition}
-														ref={this.$props.innerRef}
-														class={getClassName(
-															this.$props.innerClass,
-															'input',
-														)}
-														placeholder={this.$props.placeholder}
-														autoFocus={this.$props.autoFocus}
-														on={getInputEvents({
-															onInput: this.onInputChange,
-															onBlur: (e) => {
-																this.$emit(
-																	'blur',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onFocus: this.handleFocus,
-															onKeyPress: (e) => {
-																this.$emit(
-																	'keyPress',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-press',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onKeyDown: (e) =>
-																this.handleKeyDown(
-																	e,
-																	highlightedIndex,
-																),
-															onKeyUp: (e) => {
-																this.$emit(
-																	'keyUp',
-																	e,
-																	this.triggerQuery,
-																);
-																this.$emit(
-																	'key-up',
-																	e,
-																	this.triggerQuery,
-																);
-															},
-															onClick: () => {
-																setHighlightedIndex(null);
-															},
-														})}
-														{...getInputProps({
-															value:
-																this.$data.currentValue === null
-																	? ''
-																	: this.$data.currentValue,
-														})}
-														themePreset={this.themePreset}
-														autocomplete="off"
-													/>
-												)}
+												<TextArea
+													id={`${this.$props.componentId}-input`}
+													showIcon={this.$props.showIcon}
+													showClear={this.$props.showClear}
+													iconPosition={this.$props.iconPosition}
+													ref={this.$props.innerRef}
+													class={getClassName(
+														this.$props.innerClass,
+														'input',
+													)}
+													placeholder={this.$props.placeholder}
+													autoFocus={this.$props.autoFocus}
+													showFocusShortcutsIcon={
+														this.$props.showFocusShortcutsIcon
+													}
+													showVoiceSearch={this.$props.showVoiceSearch}
+													on={getInputEvents({
+														onInput: this.onInputChange,
+														onBlur: (e) => {
+															this.$emit(
+																'blur',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onFocus: this.handleFocus,
+														onKeyPress: (e) => {
+															this.$emit(
+																'keyPress',
+																e,
+																this.triggerQuery,
+															);
+															this.$emit(
+																'key-press',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onKeyDown: (e) =>
+															this.handleKeyDown(e, highlightedIndex),
+														onKeyUp: (e) => {
+															this.$emit(
+																'keyUp',
+																e,
+																this.triggerQuery,
+															);
+															this.$emit(
+																'key-up',
+																e,
+																this.triggerQuery,
+															);
+														},
+														onClick: () => {
+															setHighlightedIndex(null);
+														},
+													})}
+													{...getInputProps({
+														value:
+															this.$data.currentValue === null
+																? ''
+																: this.$data.currentValue,
+													})}
+													themePreset={this.themePreset}
+													autocomplete="off"
+												/>
 												{this.renderIcons()}
 												{!expandSuggestionsContainer
 													&& renderSuggestionsDropdown()}
@@ -1642,10 +1573,10 @@ const SearchBox = defineComponent({
 					</Downshift>
 				) : (
 					<div class={suggestionsContainer}>
-						<InputGroup>
+						<InputGroup ref={_inputGroupRef}>
 							{this.renderInputAddonBefore()}
 							<InputWrapper>
-								<Input
+								<TextArea
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
 									on={{
