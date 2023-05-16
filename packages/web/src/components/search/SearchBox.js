@@ -876,6 +876,8 @@ const SearchBox = (props) => {
 					|| [],
 				showAIScreen,
 				sources: getAISourceObjects(),
+				isAILoading: props.isAIResponseLoading,
+				AIError: props.AIResponseError,
 			},
 		};
 		return <div ref={_dropdownULRef}>{getComponentUtilFunc(data, props)}</div>;
