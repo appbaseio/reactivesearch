@@ -200,7 +200,6 @@ import { ReactiveBase, ReactiveList, SearchBox, AIAnswer } from '@appbaseio/reac
 import { getIcon } from './getIcon';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
 
 export default {
 	name: 'App',
