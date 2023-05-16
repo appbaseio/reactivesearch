@@ -62,6 +62,7 @@
                     alignSelf: 'flex-start',
                     margin: 8,
                     maxWidth: '70%',
+                    padding: '5px'
                   }"
                 >
                   <div
@@ -77,6 +78,7 @@
                     }"
                   >
                     <span v-if="isAILoading">Loading...</span>
+                    <span v-else-if="AIError">{{ AIError.message }}</span>
                     <span v-else>{{ aiAnswer }}</span>
                   </div>
 
@@ -95,11 +97,11 @@
                     :key="item.id + index"
                     v-bind="getItemProps({
                       item,
-                      index: index
+                      index
                     })"
                     :class="{
                       activeSuggestion: highlightedIndex === index,
-                      suggestion: true,
+                      suggestion: !(highlightedIndex === index),
                       selectedSuggestion:
                         selectedItem && selectedItem.value === item.value,
                     }"
@@ -123,10 +125,10 @@
                   <a
                     v-for="(item, index) in data"
                     :key="item._id + index"
-                    v-bind="getItemProps({ item })"
+                    v-bind="getItemProps({ item, index })"
                     :class="{
                       activeSuggestion: highlightedIndex === index,
-                      suggestion: true,
+                      suggestion: !(highlightedIndex === index),
                       selectedSuggestion:
                         selectedItem && selectedItem.value === item.value,
                     }"
@@ -251,120 +253,124 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 	color: #2c3e50;
 }
+.bg-gray {
+    background-color: #eee;
+}
 .ai-answer-container {
 	display: block;
 	margin: 40px;
 }
 .spinner {
-	position: absolute;
-	height: 80vh;
-	width: 100vw;
-	left: 0px;
-	display: flex;
-	justify-content: center;
-	padding-top: 50px;
-	z-index: 1;
-	background-color: white;
+  position: absolute;
+  height: 80vh;
+  width: 100vw;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  z-index: 1;
+  background-color: white;
 }
 .headingTag {
-	background: linear-gradient(
-		30deg,
-		rgb(59, 130, 246) 0%,
-		rgb(59, 130, 246) 0%,
-		rgb(255, 42, 111) 100%
-	);
-	margin-right: auto;
-	border-radius: var(--bs-border-radius);
-	padding: 5px 10px;
+  background: linear-gradient(
+    30deg,
+    rgb(59, 130, 246) 0%,
+    rgb(59, 130, 246) 0%,
+    rgb(255, 42, 111) 100%
+  );
+  margin-right: auto;
+  border-radius: var(--bs-border-radius);
+  padding: 5px 10px;
 }
 .suggestions {
-	z-index: 2;
-	box-shadow: #9597a1 0px 8px 24px;
-	background: white;
-	width: 100%;
-	border-radius: 0px 0px 10px 10px;
-	max-height: 500px;
-	overflow: auto;
-	font-size: 0.9rem;
+  position: absolute;
+  z-index: 2;
+  box-shadow: #9597a1 0px 8px 24px;
+  background: white;
+  width: 100%;
+  border-radius: 0px 0px 10px 10px;
+  max-height: 500px;
+  overflow: auto;
+  font-size: 0.9rem;
 }
 .suggestionHeading {
-	font-size: 0.8rem;
-	font-weight: bold;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 .suggestion {
-	background-color: white;
-	color: var(--bs-black);
-	font-weight: normal;
-	padding: 10px 15px;
-	width: 100%;
-	height: 100%;
-	display: block;
-	text-decoration: none;
-	position: relative;
+  background-color: white;
+  color: var(--bs-black);
+  font-weight: normal;
+  padding: 10px 15px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-decoration: none;
+  position: relative;
 }
 .activeSuggestion,
-.suggestion:hover {
-	background-color: var(--bs-primary);
-	color: white;
-	padding: 10px 15px;
-	width: 100%;
-	height: 100%;
-	display: block;
-	text-decoration: none;
-	position: relative;
+.activeSuggestion:hover {
+  background-color: var(--bs-primary);
+  color: white;
+  padding: 10px 15px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-decoration: none;
+  position: relative;
 }
 .suggestionTitle {
-	text-transform: uppercase;
-	font-weight: bold;
-	width: 50%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  text-transform: uppercase;
+  font-weight: bold;
+  width: 50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .suggestionBreadcrumb {
-	padding: 0.25rem;
-	margin-top: 0.25rem;
-	font-size: 0.8rem;
-	position: absolute;
-	top: 2px;
-	max-width: 30%;
-	right: 10px;
-	background-color: #eee;
-	color: #6c757d;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	border-radius: var(--bs-border-radius);
+  padding: 0.25rem;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 2px;
+  max-width: 30%;
+  right: 10px;
+  background-color: #eee;
+  color: #6c757d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: var(--bs-border-radius);
 }
 .suggestionDescription {
-	margin-top: 0.25rem;
-	width: 100%;
-	display: -webkit-box;
-	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 2;
-	overflow: hidden;
+  margin-top: 0.25rem;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 @media (max-width: 500px) {
-	.suggestionDescription {
-		-webkit-line-clamp: 3;
-	}
-	.suggestionBreadcrumb {
-		position: relative;
-		top: 0;
-		right: 0;
-		font-size: 0.7rem;
-		display: block;
-		max-width: 100%;
-	}
-	.suggestionTitle {
-		width: 100%;
-	}
+  .suggestionDescription {
+    -webkit-line-clamp: 3;
+  }
+  .suggestionBreadcrumb {
+    position: relative;
+    top: 0;
+    right: 0;
+    font-size: 0.7rem;
+    display: block;
+    max-width: 100%;
+  }
+  .suggestionTitle {
+    width: 100%;
+  }
 }
 .suggestionIcon {
-	max-width: 3rem;
-	margin: auto;
+  max-width: 3rem;
+  margin: auto;
 }
 .selectedSuggestion {
-	font-weight: bold;
+  font-weight: bold;
 }
 </style>
