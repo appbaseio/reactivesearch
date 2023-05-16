@@ -17,22 +17,7 @@ export const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
 
 export const composeThemeObject = (ownTheme = {}, userThemeParam = {}) => {
 	let userTheme = {};
-	if (typeof userThemeParam === 'boolean' && userThemeParam === false) {
-		userTheme = {
-			typography: {
-				fontFamily: 'inherit',
-				fontSize: 'inherit',
-			},
-			colors: {
-				textColor: 'inherit',
-				primaryTextColor: 'inherit',
-				primaryColor: 'inherit',
-				titleColor: 'inherit',
-				alertColor: 'inherit',
-				borderColor: 'inherit',
-			},
-		};
-	} else {
+	if (typeof userThemeParam !== 'boolean' && Object.keys(userThemeParam).length) {
 		userTheme = { ...userThemeParam };
 	}
 	return {

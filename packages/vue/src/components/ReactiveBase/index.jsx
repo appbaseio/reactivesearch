@@ -275,6 +275,7 @@ const ReactiveBase = {
 					className={className}
 					getSearchParams={this.getSearchParams}
 					setSearchParams={this.setSearchParams}
+					userThemeProp={this.$props.theme}
 				>
 					{children()}
 				</URLParamsProvider>
