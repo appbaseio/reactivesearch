@@ -1107,6 +1107,26 @@ const SearchBox = defineComponent({
 																						  )}`
 																				}`}
 																			>
+																				<div
+																					style={{
+																						padding: '0 10px 0 0',
+																						display: 'flex',
+																					}}
+																				>
+																					<CustomSvg
+																						className={
+																							getClassName(
+																								this.$props
+																									.innerClass,
+																								`${sectionItem._suggestion_type}-search-icon`,
+																							) || null
+																						}
+																						icon={getIcon(
+																							sectionItem._suggestion_type,
+																						)}
+																						type={`${sectionItem._suggestion_type}-search-icon`}
+																					/>
+																				</div>
 																				<div>
 																					<div
 																						style={{
