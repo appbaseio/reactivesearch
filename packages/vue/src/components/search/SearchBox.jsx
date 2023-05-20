@@ -7,6 +7,7 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
+import xss from 'xss';
 import {
 	connect,
 	getComponent,
@@ -24,7 +25,7 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, searchboxSuggestions } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -124,6 +125,25 @@ const SearchBox = defineComponent({
 		stats() {
 			return getResultStats(this);
 		},
+		parsedSuggestions(){
+			let suggestionsArray = [];
+			if (Array.isArray(this.suggestions) && this.suggestions.length) {
+				suggestionsArray = [...withClickIds(this.suggestions)];
+			}
+
+			const sectionsAccumulated = [];
+			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+				if (sectionsAccumulated.includes(d.sectionId)) return acc;
+				if (d.sectionId) {
+					acc[currentIndex] = suggestionsArray.filter(g => g.sectionId === d.sectionId);
+					sectionsAccumulated.push(d.sectionId);
+				} else {
+					acc[currentIndex] = d;
+				}
+				return acc;
+			}, {});
+			return Object.values(sectionisedSuggestions);
+		}
 	},
 	props: {
 		autoFocus: VueTypes.bool,
@@ -1020,6 +1040,7 @@ const SearchBox = defineComponent({
 												return null;
 										}
 									};
+									let indexOffset = 0
 									return (
 										<div>
 											{this.hasCustomRenderer
@@ -1038,77 +1059,160 @@ const SearchBox = defineComponent({
 													)} ${getClassName(
 														this.$props.innerClass,
 														'list',
-													)}`}
-												>
-													{this.normalizedSuggestions.map((item, index) =>
-														renderItem ? (
-															<li
-																{...getItemProps({
-																	item,
-																})}
-																{...getItemEvents({
-																	item,
-																})}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-															>
-																{renderItem(item)}
-															</li>
-														) : (
-															<li
-																{...getItemProps({
-																	item,
-																})}
-																on={getItemEvents({
-																	item,
-																})}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-															>
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																		display: 'flex',
-																	}}
-																>
-																	<CustomSvg
-																		className={
-																			getClassName(
-																				this.$props
-																					.innerClass,
-																				`${item._suggestion_type}-search-icon`,
-																			) || null
-																		}
-																		icon={getIcon(
-																			item._suggestion_type,
-																		)}
-																		type={`${item._suggestion_type}-search-icon`}
-																	/>
-																</div>
-																<SuggestionItem
-																	currentValue={this.currentValue}
-																	suggestion={item}
-																/>
-																{this.renderAutoFill(item)}
-															</li>
-														),
+													)} ${searchboxSuggestions(
+														this.themePreset,
+														this.theme,
 													)}
+													`}
+												>
+													{this.parsedSuggestions.map((item, itemIndex)=>{
+														const index = indexOffset + itemIndex;
+														if (Array.isArray(item)) {
+															const sectionHtml = xss(item[0].sectionLabel);
+															indexOffset += item.length - 1;
+															return <div class="section-container">
+																{sectionHtml ? <div
+																	class={`section-header ${getClassName(
+																		this.$props.innerClass,
+																		'section-label',
+																	)}`}
+																	key={`${item[0].sectionId}`}
+																	innerHTML={sectionHtml}
+																/>: null}
+																<ul class="section-list">
+																	{item.map(
+																		(sectionItem, sectionIndex) => (
+																			<li
+																				{...getItemProps({
+																					item: sectionItem,
+																				})}
+																				on={getItemEvents({
+																					item: sectionItem,
+																				})}
+																				key={index + sectionIndex}
+																				style={{
+																					justifyContent: 'flex-start',
+																					alignItems: 'center',
+																				}}
+																				class={`${
+																					highlightedIndex
+																					=== index + sectionIndex
+																						? `active-li-item ${getClassName(
+																							this.$props.innerClass,
+																							'active-suggestion-item',
+																						  )}`
+																						: `li-item ${getClassName(
+																							this.$props.innerClass,
+																							'suggestion-item',
+																						  )}`
+																				}`}
+																			>
+																				<div>
+																					<div
+																						style={{
+																							padding:
+																								'0 10px 0 0',
+																							display:
+																								'flex',
+																						}}
+																					>
+																					</div>
+																					<div class="trim">
+																						<Flex direction="column">
+																							{sectionItem.label && (
+																								<div
+																									class="section-list-item__label"
+																									innerHTML={xss(sectionItem.label)}
+																								/>
+																							)}
+																							{sectionItem.description && (
+																								<div
+																									class="section-list-item__description"
+																									innerHTML={ xss(
+																										sectionItem.description,
+																									)
+																									}
+																								/>
+																							)}
+																						</Flex>
+																					</div>
+																				</div>
+																			</li>
+																		))}</ul>
+															</div>
+														}
+														return <div>No suggestions</div>
+
+													})}
+
+													{/* {this.normalizedSuggestions.map((item, index) =>renderItem ? (
+														<li
+															{...getItemProps({
+																item,
+															})}
+															{...getItemEvents({
+																item,
+															})}
+															key={`${index + 1}-${item.value}`}
+															style={{
+																backgroundColor:
+																		this.getBackgroundColor(
+																			highlightedIndex,
+																			index,
+																		),
+																justifyContent: 'flex-start',
+																alignItems: 'center',
+															}}
+														>
+															{renderItem(item)}
+														</li>
+													) : (
+														<li
+															{...getItemProps({
+																item,
+															})}
+															on={getItemEvents({
+																item,
+															})}
+															key={`${index + 1}-${item.value}`}
+															style={{
+																backgroundColor:
+																		this.getBackgroundColor(
+																			highlightedIndex,
+																			index,
+																		),
+																justifyContent: 'flex-start',
+																alignItems: 'center',
+															}}
+														>
+															<div
+																style={{
+																	padding: '0 10px 0 0',
+																	display: 'flex',
+																}}
+															>
+																<CustomSvg
+																	className={
+																		getClassName(
+																			this.$props
+																				.innerClass,
+																			`${item._suggestion_type}-search-icon`,
+																		) || null
+																	}
+																	icon={getIcon(
+																		item._suggestion_type,
+																	)}
+																	type={`${item._suggestion_type}-search-icon`}
+																/>
+															</div>
+															<SuggestionItem
+																currentValue={this.currentValue}
+																suggestion={item}
+															/>
+															{this.renderAutoFill(item)}
+														</li>
+													)
+													)} */}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)

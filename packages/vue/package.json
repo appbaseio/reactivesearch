@@ -51,7 +51,8 @@
 		"vue-highlight-words": "^1.2.0",
 		"vue-no-ssr": "^1.1.0",
 		"vue-slider-component": "next",
-		"vue-types": "^5.0.2"
+		"vue-types": "^5.0.2",
+		"xss": "^1.0.11"
 	},
 	"peerDependencies": {
 		"vue": "^3.1.0"
