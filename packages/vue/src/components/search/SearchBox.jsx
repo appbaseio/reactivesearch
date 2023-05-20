@@ -5,7 +5,7 @@ import {
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
-import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
+import { getQueryOptions, suggestionTypes , featuredSuggestionsActionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
 import xss from 'xss';
 import {
@@ -924,13 +924,33 @@ const SearchBox = defineComponent({
 			this.currentValue = decodeHtml(value);
 			this.triggerDefaultQuery(value);
 		},
-		renderAutoFill(suggestion) {
+		renderActionIcon(suggestion) {
 			const handleAutoFillClick = (e) => {
 				e.stopPropagation();
 				this.onAutofillClick(suggestion);
 			};
-			/* 👇 avoid showing autofill for category suggestions👇 */
-			return suggestion._category ? null : <AutofillSvg onClick={handleAutoFillClick} />;
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					return (
+						<AutofillSvg
+							style={{
+								transform: 'rotate(135deg)',
+								pointerEvents: 'none',
+							}}
+						/>
+					);
+				}
+				return null;
+			} if (!suggestion._category) {
+				/* 👇 avoid showing autofill for category suggestions👇 */
+
+				return (
+					<AutofillSvg
+						onClick={handleAutoFillClick}
+					/>
+				);
+			}
+			return null;
 		},
 		renderTag(item) {
 			const { innerClass } = this.$props;
@@ -1127,36 +1147,12 @@ const SearchBox = defineComponent({
 																						type={`${sectionItem._suggestion_type}-search-icon`}
 																					/>
 																				</div>
-																				<div>
-																					<div
-																						style={{
-																							padding:
-																								'0 10px 0 0',
-																							display:
-																								'flex',
-																						}}
-																					>
-																					</div>
-																					<div class="trim">
-																						<Flex direction="column">
-																							{sectionItem.label && (
-																								<div
-																									class="section-list-item__label"
-																									innerHTML={xss(sectionItem.label)}
-																								/>
-																							)}
-																							{sectionItem.description && (
-																								<div
-																									class="section-list-item__description"
-																									innerHTML={ xss(
-																										sectionItem.description,
-																									)
-																									}
-																								/>
-																							)}
-																						</Flex>
-																					</div>
-																				</div>
+
+																				<SuggestionItem
+																					currentValue={this.currentValue}
+																					suggestion={sectionItem}
+																				/>
+																				{this.renderActionIcon(sectionItem)}
 																			</li>
 																		))}</ul>
 															</div>
