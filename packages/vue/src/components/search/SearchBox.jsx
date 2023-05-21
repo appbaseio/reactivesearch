@@ -222,6 +222,7 @@ const SearchBox = defineComponent({
 		index: VueTypes.string,
 		popularSuggestionsConfig: VueTypes.object,
 		recentSuggestionsConfig: VueTypes.object,
+		customEvents: VueTypes.object,
 		applyStopwords: VueTypes.bool,
 		customStopwords: types.stringArray,
 		onData: types.func,
@@ -647,10 +648,54 @@ const SearchBox = defineComponent({
 				);
 			}
 		},
+		handleFeaturedSuggestionClicked(suggestion) {
+			try {
+				if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+					const { target = '_self', link = '/' } = JSON.parse(suggestion.subAction);
+
+					if (typeof window !== 'undefined') {
+						window.open(link, target);
+					}
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					const matchedValues = suggestion.subAction.match(/function\s*\(.*\)(.|\n)*/);
+					const functionStr = matchedValues && matchedValues[0];
+					// eslint-disable-next-line no-new-func
+					const func = new Function(`return ${functionStr}`)();
+					func(suggestion, this.$data.currentValue, this.$props.customEvents);
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.SELECT) {
+					this.setValue(
+						suggestion.value,
+						true,
+						this.$props,
+						this.$options.isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+					);
+					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
+				}
+				// blur is important to close the dropdown
+				// on selecting one of featured suggestions
+				// else Downshift probably is focusing the dropdown
+				// and not letting it close
+				// eslint-disable-next-line no-unused-expressions
+				this.$refs?.[this.$props.innerRef]?.blur();
+			} catch (e) {
+				console.error(
+					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
+					e,
+				);
+			}
+		},
 
 		onSuggestionSelected(suggestion) {
 			this.isOpen = false;
 			const { value } = this.$props;
+
+			// handle featured suggestions click event
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				this.handleFeaturedSuggestionClicked(suggestion);
+				return;
+			}
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
