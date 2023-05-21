@@ -1168,7 +1168,35 @@ const SearchBox = defineComponent({
 																/>: null}
 																<ul class="section-list">
 																	{item.map(
-																		(sectionItem, sectionIndex) => (
+																		(sectionItem, sectionIndex) => renderItem?(
+																			<li
+																				{...getItemProps({
+																					item: sectionItem,
+																				})}
+																				on={getItemEvents({
+																					item: sectionItem,
+																				})}
+																				key={index + sectionIndex}
+																				style={{
+																					justifyContent: 'flex-start',
+																					alignItems: 'center',
+																				}}
+																				class={`${
+																					highlightedIndex
+																					=== index + sectionIndex
+																						? `active-li-item ${getClassName(
+																							this.$props.innerClass,
+																							'active-suggestion-item',
+																						  )}`
+																						: `li-item ${getClassName(
+																							this.$props.innerClass,
+																							'suggestion-item',
+																						  )}`
+																				}`}
+																			>
+																				{renderItem(sectionItem)}
+																			</li>
+																		):(
 																			<li
 																				{...getItemProps({
 																					item: sectionItem,
@@ -1228,75 +1256,6 @@ const SearchBox = defineComponent({
 														return <div>No suggestions</div>
 
 													})}
-
-													{/* {this.normalizedSuggestions.map((item, index) =>renderItem ? (
-														<li
-															{...getItemProps({
-																item,
-															})}
-															{...getItemEvents({
-																item,
-															})}
-															key={`${index + 1}-${item.value}`}
-															style={{
-																backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																justifyContent: 'flex-start',
-																alignItems: 'center',
-															}}
-														>
-															{renderItem(item)}
-														</li>
-													) : (
-														<li
-															{...getItemProps({
-																item,
-															})}
-															on={getItemEvents({
-																item,
-															})}
-															key={`${index + 1}-${item.value}`}
-															style={{
-																backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																justifyContent: 'flex-start',
-																alignItems: 'center',
-															}}
-														>
-															<div
-																style={{
-																	padding: '0 10px 0 0',
-																	display: 'flex',
-																}}
-															>
-																<CustomSvg
-																	className={
-																		getClassName(
-																			this.$props
-																				.innerClass,
-																			`${item._suggestion_type}-search-icon`,
-																		) || null
-																	}
-																	icon={getIcon(
-																		item._suggestion_type,
-																	)}
-																	type={`${item._suggestion_type}-search-icon`}
-																/>
-															</div>
-															<SuggestionItem
-																currentValue={this.currentValue}
-																suggestion={item}
-															/>
-															{this.renderAutoFill(item)}
-														</li>
-													)
-													)} */}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
