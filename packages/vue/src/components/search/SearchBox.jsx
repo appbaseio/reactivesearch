@@ -222,6 +222,10 @@ const SearchBox = defineComponent({
 		index: VueTypes.string,
 		popularSuggestionsConfig: VueTypes.object,
 		recentSuggestionsConfig: VueTypes.object,
+		featuredSuggestionsConfig: VueTypes.shape({
+			maxSuggestionsPerSection: VueTypes.number,
+			sectionsOrder: VueTypes.arrayOf(VueTypes.string)
+		}),
 		customEvents: VueTypes.object,
 		applyStopwords: VueTypes.bool,
 		customStopwords: types.stringArray,
