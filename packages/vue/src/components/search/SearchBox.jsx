@@ -1095,12 +1095,34 @@ const SearchBox = defineComponent({
 								setHighlightedIndex,
 							}) => {
 								const renderSuggestionsDropdown = () => {
-									const getIcon = (iconType) => {
+									const getIcon = (iconType, item) => {
 										switch (iconType) {
 											case suggestionTypes.Recent:
 												return recentSearchesIcon;
 											case suggestionTypes.Popular:
 												return popularSearchesIcon;
+											case suggestionTypes.Featured:
+												if (item.icon) {
+													return ()=>(
+														<div
+															style={{ display: 'flex' }}
+															innerHTML={
+																 xss(item.icon)
+															}
+														/>
+													);
+												}
+												if(item.iconURL){
+													return ()=>(
+														<img
+															style={{ maxHeight: '25px' }}
+															src={xss(item.iconURL)}
+															alt={item.value}
+														/>
+													);
+												}
+												return null
+
 											default:
 												return null;
 										}
@@ -1188,6 +1210,7 @@ const SearchBox = defineComponent({
 																						}
 																						icon={getIcon(
 																							sectionItem._suggestion_type,
+																							sectionItem
 																						)}
 																						type={`${sectionItem._suggestion_type}-search-icon`}
 																					/>
