@@ -269,6 +269,17 @@ export const resetCSS = (props) => `
 	ul,
 	ol {
 		list-style-position: inside;
+
+	}
+
+	li{
+		display: unset;
+		cursor: default;
+		padding: initial;
+
+		&:hover{
+			background-color: initial;
+		}
 	}
 `;
 const messageBGColor = (props) => {
