@@ -145,9 +145,9 @@ const Button = styled('button')`
 			: ''};
 	}
 	${(props) => (props.info ? info : null)};
-	${(props) => (props.primary ? primary : null)};
 	${(props) => (props.disabled ? disabled : null)};
 	${(props) => props.large && large};
+	${(props) => (props.primary ? primary : null)};
 
 	&.enter-btn {
 		border-top-left-radius: 0px;
