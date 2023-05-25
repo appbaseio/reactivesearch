@@ -142,10 +142,9 @@ const AIAnswer = defineComponent({
 					finalMessages.push(
 						...messagesHistory.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
 					);
-				}
-				//  fresh response
-				if (response && response.answer) {
-					// do something as needed
+				} else if (response && response.answer && response.answer.text) {
+					finalMessages.push({ role: AI_ROLES.ASSISTANT, content: response.answer.text });
+					this.error = { message: this.errorMessageForMissingSessionId };
 				}
 
 				this.messages = finalMessages;
@@ -358,7 +357,9 @@ const AIAnswer = defineComponent({
 			return (
 				<div>
 					<IconGroup enableAI groupPosition="right" positionType="absolute">
-						{this.shouldMicRender(showVoiceInput) && (
+						{!this.isLoadingState
+							&& this.AISessionId
+							&& this.shouldMicRender(showVoiceInput) && (
 							<Mic
 								getInstance={getMicInstance}
 								render={renderMic}
