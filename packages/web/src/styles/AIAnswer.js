@@ -351,6 +351,10 @@ export const MessageInput = styled(TextArea)`
 		    border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 	`}
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 `;
 
 export const SendButton = styled(Button)`
@@ -362,6 +366,8 @@ export const SendButton = styled(Button)`
 	outline: none;
 	padding: 10px;
 	text-align: center;
+
+	${({ disabled }) => disabled && 'cursor: not-allowed;'}
 `;
 
 export const AIFeedbackContainer = styled.div`

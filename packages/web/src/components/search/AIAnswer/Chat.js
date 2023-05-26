@@ -52,7 +52,7 @@ const Chat = (props) => {
 
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-		if (props.isAIResponseLoading) {
+		if (props.isAIResponseLoading || !props.currentSessionId) {
 			return;
 		}
 		if (inputMessage.trim()) {
@@ -143,6 +143,7 @@ const Chat = (props) => {
 						onClick={onEnterButtonClick}
 						onKeyPress={handleKeyPress}
 						className={`enter-btn ${getClassName(props.innerClass, 'ai-enter-button')}`}
+						disabled={props.isAIResponseLoading || !props.currentSessionId}
 					>
 						Send
 					</SendButton>
@@ -331,7 +332,7 @@ const Chat = (props) => {
 								showIcon={props.showIcon}
 								iconPosition={props.iconPosition}
 								themePreset={props.themePreset}
-								disabled={props.isAIResponseLoading}
+								disabled={props.isAIResponseLoading || !props.currentSessionId}
 								className={getClassName(props.innerClass, 'ai-input') || null}
 							/>{' '}
 							{renderIcons()}
