@@ -2114,6 +2114,8 @@ SearchBox.propTypes = {
 	isOpen: types.bool,
 	enableIndexSuggestions: types.bool,
 	enableFeaturedSuggestions: types.bool,
+	enableFAQSuggestions: types.bool,
+	FAQSuggestionsConfig: types.componentObject,
 	featuredSuggestionsConfig: types.componentObject,
 	indexSuggestionsConfig: types.componentObject,
 	enterButton: types.bool,
