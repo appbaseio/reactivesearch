@@ -19,6 +19,8 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
+				:value="val"
+				@change="onChange"
 			>
 				<template
 					#render="{
@@ -28,7 +30,7 @@
 						data: suggestions,
 					}"
 				>
-					<div class="pill-wrapper" v-if="isOpen">
+					<div class="pill-wrapper" v-if="isOpen && !!val">
 						<button
 								class="pill-btn"
 								v-for="(suggestion, idx) in suggestions"
@@ -99,9 +101,17 @@ import { ReactiveBase, ReactiveList, SearchBox } from '@appbaseio/reactivesearch
 export default {
 	name: 'app',
 	components: { ReactiveBase, ReactiveList, SearchBox },
+	data(){
+		return {
+			val: ''
+		}
+	},
 	methods:{
 		// eslint-disable-next-line no-console
-		log: console.log
+		log: console.log,
+		onChange (val){
+			this.val = val;
+		}
 	}
 };
 </script>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import PropTypes from 'prop-types';
@@ -28,6 +28,7 @@ import IconGroup from '../../../styles/IconGroup';
 import IconWrapper from '../../../styles/IconWrapper';
 import Mic from '../addons/Mic';
 import Button from '../../../styles/Button';
+import AIFeedback from '../../shared/AIFeedback';
 
 const md = new Remarkable();
 
@@ -41,6 +42,9 @@ const Chat = (props) => {
 	const { messages, onSendMessage } = props;
 	const [inputMessage, setInputMessage] = React.useState('');
 	const messagesContainerRef = React.useRef(null);
+	const _inputRef = useRef(null);
+	const _inputWrapper = useRef(null);
+	const _errorWrapper = useRef(null);
 
 	const handleMessageInputChange = (e) => {
 		setInputMessage(e.target.value);
@@ -100,7 +104,7 @@ const Chat = (props) => {
 		} = props;
 		return (
 			<div>
-				<IconGroup groupPosition="right" positionType="absolute">
+				<IconGroup enableAI groupPosition="right" positionType="absolute">
 					{shouldMicRender(showVoiceInput) && (
 						<Mic
 							getInstance={getMicInstance}
@@ -112,7 +116,7 @@ const Chat = (props) => {
 					{iconPosition === 'right' && <IconWrapper>{renderIcon()}</IconWrapper>}
 				</IconGroup>
 
-				<IconGroup groupPosition="left" positionType="absolute">
+				<IconGroup enableAI groupPosition="left" positionType="absolute">
 					{iconPosition === 'left' && <IconWrapper>{renderIcon()}</IconWrapper>}
 				</IconGroup>
 			</div>
@@ -164,7 +168,8 @@ const Chat = (props) => {
 	};
 	const handleRetryRequest = () => {
 		if (messages) {
-			const lastUserRequestMessage = messages[messages.length - 1].content;
+			const lastUserRequestMessage
+				= messages[messages.length - 1] && messages[messages.length - 1].content;
 
 			onSendMessage(lastUserRequestMessage, true);
 		}
@@ -179,6 +184,7 @@ const Chat = (props) => {
 						className={`--ai-answer-error-container ${
 							getClassName(props.innerClass, 'ai-error') || ''
 						}`}
+						ref={_errorWrapper}
 					>
 						{isFunction(renderError)
 							? renderError(AIResponseError, handleRetryRequest)
@@ -188,6 +194,7 @@ const Chat = (props) => {
 			}
 			return (
 				<div
+					ref={_errorWrapper}
 					className={`--ai-answer-error-container ${
 						getClassName(props.innerClass, 'ai-error') || ''
 					}`}
@@ -202,20 +209,45 @@ const Chat = (props) => {
 							${AIResponseError.code}`
 								: ''}
 						</span>
-						<Button primary onClick={handleRetryRequest}>
-							Try again
-						</Button>
+						{props.showRetryButton && (
+							<Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button>
+						)}
 					</div>
 				</div>
 			);
 		}
 		return null;
 	};
+
+	const handleTextAreaHeightChange = () => {
+		const textArea = _inputRef.current;
+		if (textArea) {
+			textArea.style.height = '42px';
+			const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+			const maxHeight = lineHeight * 11; // max height for 3 lines
+			const height = Math.min(textArea.scrollHeight, maxHeight);
+			textArea.style.height = `${height}px`;
+			textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+			// wrapper around input/ textarea
+			_inputWrapper.current.style.height = `${height}px`;
+
+			if (_errorWrapper.current) {
+				_errorWrapper.current.style.bottom = `${height}px`;
+			}
+		}
+	};
+
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
 		}
 	}, [messages]);
+
+	React.useEffect(() => {
+		handleTextAreaHeightChange();
+	}, [inputMessage]);
 
 	return (
 		<ChatContainer theme={props.theme} showInput={props.showInput}>
@@ -262,15 +294,35 @@ const Chat = (props) => {
 				</MessagesContainer>
 			)}
 			{renderErrorEle()}
+			{props.showFeedback && (
+				<div
+					className={`--ai-answer-feedback-container ${
+						getClassName(props.innerClass, 'ai-feedback') || ''
+					}`}
+				>
+					<AIFeedback
+						hideUI={props.isAIResponseLoading || !props.currentSessionId}
+						key={props.currentSessionId}
+						onFeedbackSubmit={(useful, reason) => {
+							props.trackUsefullness(props.currentSessionId, {
+								useful,
+								reason,
+							});
+						}}
+					/>
+				</div>
+			)}
 			{props.showInput && (
 				<MessageInputContainer
 					className="--ai-input-container"
 					onSubmit={handleSendMessage}
 				>
 					<InputGroup isOpen={false}>
-						<InputWrapper>
+						<InputWrapper ref={_inputWrapper} enableAI>
 							<MessageInput
 								type="text"
+								enterButton={props.enterButton}
+								ref={_inputRef}
 								placeholder={props.placeholder}
 								value={inputMessage}
 								onChange={handleMessageInputChange}
@@ -321,6 +373,10 @@ Chat.propTypes = {
 	rawData: types.rawData,
 	theme: types.style,
 	renderError: types.title,
+	showRetryButton: types.bool,
+	showFeedback: types.bool,
+	trackUsefullness: types.func,
+	currentSessionId: types.string,
 };
 
 export default Chat;

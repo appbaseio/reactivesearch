@@ -1,27 +1,4 @@
-import { createGlobalStyle } from '@appbaseio/vue-emotion';
-
-// eslint-disable-next-line
-createGlobalStyle`
-	#el_X81iT9kZYo {
-		stroke: none;
-		stroke-width: 1;
-		fill: none;
-	}
-	#el_gMpyalCphp {
-		-webkit-transform: translate(163px, 131px);
-		transform: translate(163px, 131px);
-	}
-	#el_c7H-3u-D4l {
-		fill: #d8d8d8;
-	}
-	#el_qhFcdAAFwo {
-		fill: #d8d8d8;
-	}
-	#el_M8X8g37WOI {
-		stroke: #e83137;
-		stroke-width: 21;
-	}
-`;
+import './MuteSvg.css'
 
 const MuteSvg = {
 	name: 'MuteSvg',
@@ -29,7 +6,7 @@ const MuteSvg = {
 	render() {
 		return (
 			<svg
-			style={{transform:'scale(1.5)'}}
+				style={{transform:'scale(1.5)'}}
 				viewBox="0 0 480 480"
 				xmlns="http://www.w3.org/2000/svg"
 				id="el_D1rEpH2zj"

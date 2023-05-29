@@ -1,7 +1,8 @@
-import { keyframes } from '@emotion/core';
+import { css, keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
+import { lighten } from 'polished';
 import Button from './Button';
-import Input from './Input';
+import { TextArea } from './Input';
 
 export const Chatbox = styled.div`
 	position: relative;
@@ -53,6 +54,14 @@ export const ChatContainer = styled.div`
 			}
 		}
 	}
+
+	${props =>
+					(props.showInput
+						? `.--ai-answer-feedback-container {
+		margin-top: 15px;
+		margin-bottom: -10px;
+	}`
+						: '')};
 `;
 
 export const MessagesContainer = styled.div`
@@ -62,7 +71,6 @@ export const MessagesContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-height: 200px;
-
 }};
 `;
 const typingDots = keyframes`
@@ -87,13 +95,23 @@ export const TypingIndicator = styled.div`
 export const TypingDot = styled.div`
 	width: 6px;
 	height: 6px;
-	background-color: ${props =>
-// eslint-disable-next-line no-nested-ternary
-	(props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryTextColor
-			: props.theme.colors.textColor
-		: props.theme.colors.textColor)};
+	background-color: ${(props) => {
+	let finalColor;
+
+	if (props.isSender) {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor;
+	} else {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.borderColor
+				: props.theme.colors.textColor;
+	}
+
+	return finalColor;
+}};
 	border-radius: 50%;
 	margin: 0 2px !important;
 	animation: ${typingDots} 1s infinite;
@@ -105,30 +123,7 @@ export const TypingDot = styled.div`
 	}
 `;
 
-export const Message = styled.div`
-	background-color: ${props =>
-// eslint-disable-next-line no-nested-ternary
-	(props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryColor
-			: props.theme.colors.borderColor
-		: props.theme.colors.backgroundColor)};
-
-	padding: 10px;
-	border-radius: 7px;
-	margin-bottom: 10px;
-	max-width: 80%;
-	align-self: ${props => (props.isSender ? 'flex-end' : 'flex-start')};
-	display: inline-block;
-	border: 1px solid;
-	color: ${props =>
-		// eslint-disable-next-line no-nested-ternary
-			(props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
-					: props.theme.colors.textColor
-				: props.theme.colors.textColor)};
-	position: relative;
+export const resetCSS = props => css`
 	html,
 	body,
 	div,
@@ -238,30 +233,33 @@ export const Message = styled.div`
 	pre,
 	code {
 		padding: 0.6em 0.4em;
-		background: ${props =>
-				// eslint-disable-next-line no-nested-ternary
-					(props.isSender
-						? props.themePreset !== 'dark'
-							? props.theme.colors.primaryColor
-							: props.theme.colors.borderColor
-						: props.theme.colors.borderColor)};
+		background: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryColor
+					: props.theme.colors.borderColor
+				: props.theme.colors.borderColor
+		};
 	}
-
 	code {
 		line-height: normal;
-
-		color: ${props =>
-						// eslint-disable-next-line no-nested-ternary
-							(props.isSender
-								? props.themePreset !== 'dark'
-									? props.theme.colors.primaryTextColor
-									: props.theme.colors.textColor
-								: props.theme.colors.primaryTextColor)};
+		color: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.primaryTextColor
+		};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
-		margin: 5px 0;
+		margin-top: 5px;
 		display: inline-block;
+		overflow: auto;
+		width: fit-content;
+		max-width: 100%;
 	}
 	ul,
 	ol {
@@ -269,14 +267,67 @@ export const Message = styled.div`
 	}
 `;
 
+const messageBGColor = (props) => {
+	let finalBGColor;
+	if (props.isSender) {
+		finalBGColor
+			= props.themePreset !== 'dark'
+				? props.theme.colors.primaryColor
+				: props.theme.colors.borderColor;
+	} else {
+		finalBGColor
+			= props.themePreset !== 'dark'
+				? lighten(0.53, props.theme.colors.borderColor)
+				: props.theme.colors.backgroundColor;
+	}
+	return finalBGColor;
+};
+export const Message = styled.div`
+	background-color: ${props => messageBGColor(props)};
+	color: ${(props) => {
+	let finalColor;
+
+	if (props.isSender) {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor;
+	} else {
+		finalColor
+				= props.themePreset !== 'dark'
+				? props.theme.colors.borderColor
+				: props.theme.colors.textColor;
+	}
+
+	return finalColor;
+}};
+	border: 1px solid
+		${props => (props.themePreset === 'dark' ? 'currentColor' : messageBGColor(props))};
+	padding: 10px;
+	border-radius: 7px;
+	margin-bottom: 10px;
+	max-width: 80%;
+	align-self: ${props => (props.isSender ? 'flex-end' : 'flex-start')};
+	display: inline-block;
+	position: relative;
+
+	${props => resetCSS(props)}
+	overflow-wrap: anywhere;
+`;
+
 export const MessageInputContainer = styled.form`
 	display: flex;
 	padding-top: 12px;
 	align-items: stretch;
 	margin-top: 10px;
+
+	.ai-enter-button-wrapper {
+		align-self: baseline;
+		height: 41px;
+	}
 `;
 
-export const MessageInput = styled(Input)`
+export const MessageInput = styled(TextArea)`
 	width: 100%;
 	border-radius: 5px;
 	border: 1px solid #ccc;
@@ -293,6 +344,13 @@ export const MessageInput = styled(Input)`
 	::-ms-input-placeholder {
 		color: ${props => props.theme.colors.textColor};
 	}
+
+	${({ enterButton }) =>
+	enterButton
+		&& `
+		    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+	`}
 `;
 
 export const SendButton = styled(Button)`
@@ -304,4 +362,31 @@ export const SendButton = styled(Button)`
 	outline: none;
 	padding: 10px;
 	text-align: center;
+`;
+
+export const AIFeedbackContainer = styled.div`
+	.--feedback-svgs-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 5px;
+
+		svg {
+			cursor: pointer;
+			transition: all ease-in 0.1s;
+			&.selected {
+				transform: scale(1.1);
+				cursor: default;
+			}
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+	}
+
+	.--feedback-input-wrapper {
+		display: flex;
+		gap: 7px;
+	}
 `;
