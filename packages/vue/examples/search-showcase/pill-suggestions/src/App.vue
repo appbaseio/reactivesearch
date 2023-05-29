@@ -110,7 +110,8 @@ export default {
 		// eslint-disable-next-line no-console
 		log: console.log,
 		onChange (val){
-			this.val = val;
+			if(typeof val === 'string')
+				this.val = val;
 		}
 	}
 };
