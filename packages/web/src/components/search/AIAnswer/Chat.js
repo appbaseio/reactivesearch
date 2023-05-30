@@ -251,7 +251,11 @@ const Chat = (props) => {
 	}, [inputMessage]);
 
 	return (
-		<ChatContainer theme={props.theme} showInput={props.showInput}>
+		<ChatContainer
+			className="--ai-chat-container"
+			theme={props.theme}
+			showInput={props.showInput}
+		>
 			{/* custom render */}
 			{hasCustomRenderer(props) && getComponent()}
 			{/* Default render */}
@@ -260,6 +264,7 @@ const Chat = (props) => {
 					themePreset={props.themePreset}
 					theme={props.theme}
 					ref={messagesContainerRef}
+					className="--ai-messages-container"
 				>
 					{messages.map((message, index) => (
 						<Message

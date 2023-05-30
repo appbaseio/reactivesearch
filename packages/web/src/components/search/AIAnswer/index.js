@@ -64,7 +64,7 @@ const AIAnswer = (props) => {
 				);
 			} else if (response && response.answer && response.answer.text) {
 				finalMessages.push({ role: AI_ROLES.ASSISTANT, content: response.answer.text });
-				setErrorState({ message: errorMessageForMissingSessionId });
+				if (!AISessionId.current) { setErrorState({ message: errorMessageForMissingSessionId }); }
 			}
 
 			setMessages(finalMessages);
@@ -108,7 +108,7 @@ const AIAnswer = (props) => {
 	}
 
 	return (
-		<Chatbox>
+		<Chatbox style={props.style} className="--ai-chat-box-wrapper">
 			{props.title && (
 				<Title className={getClassName(props.innerClass, 'ai-title') || null}>
 					{props.title}
@@ -185,6 +185,7 @@ AIAnswer.propTypes = {
 	showComponent: types.boolRequired,
 	showFeedback: types.bool,
 	trackUsefullness: types.funcRequired,
+	style: types.style,
 };
 
 AIAnswer.defaultProps = {
@@ -199,6 +200,7 @@ AIAnswer.defaultProps = {
 	sessionIdFromStore: '',
 	showComponent: false,
 	showFeedback: true,
+	style: {},
 };
 
 const mapStateToProps = (state, props) => {
