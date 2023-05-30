@@ -119,6 +119,7 @@ const AIAnswer = defineComponent({
 		isLoading: types.boolRequired,
 		sessionIdFromStore: VueTypes.string,
 		showComponent: types.boolRequired,
+		style: types.style,
 	},
 	mounted() {},
 	watch: {
@@ -396,7 +397,7 @@ const AIAnswer = defineComponent({
 							tabIndex={0}
 							onClick={this.handleSendMessage}
 							onKeyPress={this.handleKeyPress}
-							class={`enter-btn ${getClassName(innerClass, 'ai-enter-button')}`}
+							class={`ask-btn ${getClassName(innerClass, 'ai-enter-button')}`}
 							disabled={this.isLoadingState || !this.AISessionId}
 						>
 							Send
@@ -459,13 +460,17 @@ const AIAnswer = defineComponent({
 			return null;
 		}
 		return (
-			<Chatbox>
+			<Chatbox style={props.style} class="--ai-chat-box-wrapper">
 				{this.$props.title && (
 					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
 					</Title>
 				)}
-				<ChatContainer theme={props.theme} showInput={props.showInput}>
+				<ChatContainer
+					class="--ai-chat-container"
+					theme={props.theme}
+					showInput={props.showInput}
+				>
 					{/* custom render */}
 					{this.hasCustomRenderer && (
 						<MessagesContainer
