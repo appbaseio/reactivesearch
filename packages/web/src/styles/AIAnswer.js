@@ -263,7 +263,10 @@ export const resetCSS = props => css`
 	}
 	ul,
 	ol {
-		list-style-position: inside;
+		padding-left: 1rem;
+	}
+	p {
+		margin: 8px auto;
 	}
 `;
 
