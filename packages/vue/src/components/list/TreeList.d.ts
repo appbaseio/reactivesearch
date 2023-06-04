@@ -1,3 +1,4 @@
+import { VNode } from 'vue';
 import type { CommonProps } from '../../index';
 import * as types from '../../types.ts';
 
@@ -17,7 +18,7 @@ export interface TreeListProps extends CommonProps {
 	showLine?: boolean;
 	showSwitcherIcon?: boolean;
 	switcherIcon?: (expanded: boolean) => types.children;
-	render?: (data: any) => any;
+	render?: (data: any) => VNode[];
 	renderItem?: (item: any, count?: number, isSelected?: boolean) => any;
 	dataField: types.stringArray;
 	showFilter?: boolean;

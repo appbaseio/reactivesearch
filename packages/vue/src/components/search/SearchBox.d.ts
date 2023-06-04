@@ -1,3 +1,4 @@
+import { VNode } from 'vue';
 import type { CommonProps } from '../..';
 import * as types from '../../types.ts';
 
@@ -50,7 +51,7 @@ export interface SearchBoxProps extends CommonProps {
 	placeholder?: string;
 	queryFormat?: types.queryFormatSearch;
 	react?: types.react;
-	render?: (data: any) => any;
+	render?: (data: object) => VNode[];
 	renderNoSuggestion?: types.title;
 	renderError?: types.title;
 	showFilter?: boolean;

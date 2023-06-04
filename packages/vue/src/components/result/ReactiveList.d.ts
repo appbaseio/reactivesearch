@@ -1,3 +1,4 @@
+import { VNode } from 'vue';
 import type { CommonProps } from '../../index.d.ts';
 import * as types from '../../types.ts';
 
@@ -13,8 +14,8 @@ interface ReactiveListProps extends CommonProps {
 	infiniteScroll?: boolean;
 	includeFields?: Array<string>;
 	loader?: types.title;
-	render?: (data: any) => any;
-	renderItem?: (data: any) => any;
+	render?: (data: any) => VNode[];
+	renderItem?: (data: any) => VNode[];
 	renderResultStats?: (...args: any[]) => any;
 	renderPagination?: (data: any) => any;
 	renderError?: types.title;
