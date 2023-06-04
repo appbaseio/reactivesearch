@@ -1,7 +1,7 @@
 import * as types from '../../types.ts';
 
 export interface ReactiveBaseProps {
-	app: string;
+	app?: string;
 	children?: types.children;
 	credentials?: string;
 	as?: string;
