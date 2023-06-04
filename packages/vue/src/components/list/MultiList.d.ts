@@ -11,7 +11,6 @@ export interface MultiListProps extends CommonProps {
 	value?: types.stringArray;
 	filterLabel?: string;
 	innerClass?: types.style;
-	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;

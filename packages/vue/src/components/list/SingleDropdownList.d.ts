@@ -10,7 +10,6 @@ export interface SingleDropdownListProps extends CommonProps {
 	value?: string;
 	filterLabel?: string;
 	innerClass?: types.style;
-	loader?: types.title;
 	onValueChange?: (...args: any[]) => any;
 	onChange?: (...args: any[]) => any;
 	onError?: (...args: any[]) => any;

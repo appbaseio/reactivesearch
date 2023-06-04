@@ -58,7 +58,6 @@ export interface SearchBoxProps extends CommonProps {
 	title?: types.title;
 	theme?: types.style;
 	type?: string;
-	loader?: types.title;
 	themePreset?: types.themePreset;
 	clearIcon?: types.children;
 	showClear?: boolean;
