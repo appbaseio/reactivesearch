@@ -3,6 +3,7 @@ import * as types from './types.ts';
 export interface CommonProps {
 	componentId: string;
 	URLParams?: boolean;
+	uRLParams?: boolean;
 	className?: string;
 	onQueryChange?: (...args: any[]) => any;
 	onValueChange?: (...args: any[]) => any;
