@@ -50,13 +50,14 @@
         <template
           #render="{
 						downshiftProps: { isOpen, getItemProps, getItemEvents, highlightedIndex, selectedItem },
-						AIData: { answer: aiAnswer, showAIScreen, isAILoading, AIError },
+						AIData: { answer: aiAnswer, isAILoading },
 						data,
+            loading
 					}"
         >
           <div v-if="isOpen">
             <div class="suggestions">
-              <div v-if="showAIScreen">
+              <div v-if="isAILoading || loading">
                 <div
                   :style="{
                     alignSelf: 'flex-start',
@@ -77,11 +78,34 @@
                       wordWrap: 'break-word',
                     }"
                   >
-                    <span v-if="isAILoading">Loading...</span>
-                    <span v-else-if="AIError">{{ AIError.message }}</span>
-                    <span v-else>{{ aiAnswer }}</span>
+                    <span>Loading...</span>
                   </div>
-
+                </div>
+              </div>
+              <div v-else-if="isAILoading || aiAnswer">
+                <div
+                  :style="{
+                    alignSelf: 'flex-start',
+                    margin: 8,
+                    maxWidth: '70%',
+                    padding: '5px'
+                  }"
+                >
+                  <div
+                    :style="{
+                      display: 'inline-block',
+                      maxWidth: '100%',
+                      backgroundColor: '#f1f1f1',
+                      color: 'black',
+                      borderRadius: '16px',
+                      padding: '8px 16px',
+                      whiteSpace: 'pre-wrap',
+                      wordWrap: 'break-word',
+                    }"
+                  >
+                    <span v-if="aiAnswer">{{ aiAnswer }}</span>
+                    <span v-else-if="isAILoading || loading">Loading...</span>
+                  </div>
                 </div>
               </div>
               <div v-else-if="!(data && data.length)">
