@@ -119,6 +119,7 @@ const AIAnswer = defineComponent({
 		isLoading: types.boolRequired,
 		sessionIdFromStore: VueTypes.string,
 		showComponent: types.boolRequired,
+		style: types.style,
 	},
 	mounted() {},
 	watch: {
@@ -144,7 +145,8 @@ const AIAnswer = defineComponent({
 					);
 				} else if (response && response.answer && response.answer.text) {
 					finalMessages.push({ role: AI_ROLES.ASSISTANT, content: response.answer.text });
-					this.error = { message: this.errorMessageForMissingSessionId };
+					if (!this.AISessionId)
+						this.error = { message: this.errorMessageForMissingSessionId };
 				}
 
 				this.messages = finalMessages;
@@ -161,7 +163,6 @@ const AIAnswer = defineComponent({
 			});
 		},
 		isAIResponseLoading(newVal) {
-			this.isLoadingState = newVal;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
@@ -170,7 +171,6 @@ const AIAnswer = defineComponent({
 			});
 		},
 		isLoading(newVal) {
-			this.isLoadingState = newVal;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
@@ -307,6 +307,7 @@ const AIAnswer = defineComponent({
 			return null;
 		},
 		handleKeyPress(e) {
+			window.console.log('e', e);
 			if (e.key === 'Enter') {
 				this.handleSendMessage(e);
 				this.inputMessage = '';
@@ -396,7 +397,7 @@ const AIAnswer = defineComponent({
 							tabIndex={0}
 							onClick={this.handleSendMessage}
 							onKeyPress={this.handleKeyPress}
-							class={`enter-btn ${getClassName(innerClass, 'ai-enter-button')}`}
+							class={`ask-btn ${getClassName(innerClass, 'ai-enter-button')}`}
 							disabled={this.isLoadingState || !this.AISessionId}
 						>
 							Send
@@ -459,13 +460,17 @@ const AIAnswer = defineComponent({
 			return null;
 		}
 		return (
-			<Chatbox>
+			<Chatbox style={props.style} class="--ai-chat-box-wrapper">
 				{this.$props.title && (
 					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
 					</Title>
 				)}
-				<ChatContainer theme={props.theme} showInput={props.showInput}>
+				<ChatContainer
+					class="--ai-chat-container"
+					theme={props.theme}
+					showInput={props.showInput}
+				>
 					{/* custom render */}
 					{this.hasCustomRenderer && (
 						<MessagesContainer
@@ -548,12 +553,10 @@ const AIAnswer = defineComponent({
 								<InputWrapper ref={_inputWrapperRef}>
 									<MessageInput
 										ref={_inputRef}
-										type="text"
 										placeholder={props.placeholder}
 										enterButton={props.enterButton}
 										value={this.inputMessage}
 										onInput={this.handleMessageInputChange}
-										onKeyPress={this.handleKeyPress}
 										id={`${props.componentId}-ai-input`}
 										showIcon={props.showIcon}
 										iconPosition={props.iconPosition}
