@@ -43,10 +43,24 @@
             'Answer the query: \'${value}\', cite URL in your answer below it similar to a science paper format',
           topDocsForContext: 2,
         }"
+        :AIUIConfig="{
+          askButton: true,
+        }"
         distinct-field="meta_title.keyword"
         class="mx-5 mt-2"
         component-id="search"
       >
+        <template #renderAskButton="clickHandler">
+
+          <button class="ask-ai-button" @click="clickHandler">
+            <span class="button-emoji">
+              <Gradient/>
+            </span>
+            <span class="button-text">
+              Ask AI
+            </span>
+          </button>
+        </template>
         <template
           #render="{
 						downshiftProps: { isOpen, getItemProps, getItemEvents, highlightedIndex, selectedItem },
@@ -224,12 +238,13 @@
 <script>
 import { ReactiveBase, ReactiveList, SearchBox, AIAnswer } from '@appbaseio/reactivesearch-vue';
 import { getIcon } from './getIcon';
+import Gradient from './Gradient.vue'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default {
 	name: 'App',
-	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer },
+	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer, Gradient },
 	data(){
 		return {
 			faqs: [
@@ -271,6 +286,85 @@ export default {
 </script>
 
 <style>
+@keyframes glowing {
+  0% {
+    box-shadow: 0 0 5px #47b5ff;
+  }
+  50% {
+    box-shadow: 0 0 20px #47b5ff, 0 0 30px #47b5ff;
+  }
+  100% {
+    box-shadow: 0 0 5px #47b5ff;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: scale(1.7) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.7) rotate(180deg);
+  }
+  51% {
+    transform: scale(1.7) rotate(185deg);
+  }
+  52% {
+    transform: scale(1.7) rotate(180deg);
+  }
+  80% {
+    transform: scale(1.7) rotate(360deg);
+  }
+}
+
+.ask-ai-button {
+  display: inline-block;
+  position: relative;
+  padding: 5px 10px;
+  background-color: #f8f8f8;
+  border: 2px solid transparent;
+  border-radius: 0;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333333;
+  cursor: pointer;
+  overflow: hidden;
+  animation: glowing 2s infinite;
+  height: 42px;
+}
+
+.ask-ai-button:before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid transparent;
+  border-radius: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+  animation: glowing 2s infinite;
+}
+
+.ask-ai-button:hover:before {
+  opacity: 1;
+}
+
+.button-text {
+  position: relative;
+  z-index: 1;
+}
+
+.button-emoji {
+  margin-right: 10px;
+}
+
+.button-emoji svg {
+  transform: scale(1.7) rotate(0deg);
+  animation: rotate 2s infinite linear;
+}
+
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
