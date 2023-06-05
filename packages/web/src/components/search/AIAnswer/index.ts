@@ -23,6 +23,7 @@ export interface AIAnswerProps extends CommonProps {
 	AIConfig: types.AiConfig;
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;
+	showFeedback?: boolean;
 }
 
 declare const AIAnswer: React.ComponentClass<AIAnswerProps>;

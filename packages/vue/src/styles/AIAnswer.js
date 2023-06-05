@@ -377,6 +377,10 @@ export const SendButton = styled(Button)`
 	outline: none;
 	padding: 10px;
 	text-align: center;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 `;
 
 export const AIFeedbackContainer = styled('div')`

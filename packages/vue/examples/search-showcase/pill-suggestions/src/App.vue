@@ -116,9 +116,18 @@ import { ReactiveBase, ReactiveList, SearchBox } from '@appbaseio/reactivesearch
 export default {
 	name: 'app',
 	components: { ReactiveBase, ReactiveList, SearchBox },
+	data(){
+		return {
+			val: ''
+		}
+	},
 	methods:{
 		// eslint-disable-next-line no-console
-		log: console.log
+		log: console.log,
+		onChange (val){
+			if(typeof val === 'string')
+				this.val = val;
+		}
 	}
 };
 </script>
