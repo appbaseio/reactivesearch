@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css"
+      integrity="sha512-gMjQeDaELJ0ryCI+FtItusU9MkAifCZcGq789FrzkiM49D8lbDhoaUaIX4ASU187wofMNlgBJ4ckbrXM9sE6Pg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" >
     <reactive-base
       app="good-books-ds"
       url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
@@ -47,7 +53,7 @@
                     {{ result.original_title }}
                   </ResultCardTitle>
                   <ResultCardDescription>
-                    <div class="flex column justify-center ml20">
+                    <div class="flex column justify-center">
                       <div class="flex column justify-space-between">
                         <div>
                           <div>
@@ -57,7 +63,7 @@
                             <span class="stars">
                               <i
                                 v-for="(item, index) in Array(
-                                  result.average_rating_rounded,
+                                  Math.floor(result.average_rating)
                                 ).fill('x')"
                                 :key="index"
                                 class="fas fa-star"
