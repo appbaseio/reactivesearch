@@ -1,93 +1,110 @@
 <template>
 	<div id="app">
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css"
+			integrity="sha512-gMjQeDaELJ0ryCI+FtItusU9MkAifCZcGq789FrzkiM49D8lbDhoaUaIX4ASU187wofMNlgBJ4ckbrXM9sE6Pg=="
+			crossorigin="anonymous"
+			referrerpolicy="no-referrer"
+		>
 		<reactive-base
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 		>
-			<search-box
-				className="result-list-container"
-				componentId="BookSensor"
-				:dataField="['original_title', 'original_title.search']"
-				:URLParams="true"
-				:size="10"
-				:enablePopularSuggestions="true"
-				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds' }"
-				:enableRecentSuggestions="true"
-				:recentSuggestionsConfig="{
-					size: 3,
-					index: 'good-books-ds',
-					minChars: 4,
-				}"
-				:autosuggest="true"
-			>
-				<template
-					#render="{
-						error,
-						loading,
-						downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
-						data: suggestions,
-					}"
-				>
-					<div class="pill-wrapper" v-if="isOpen">
-						<button
-								class="pill-btn"
-								v-for="(suggestion, idx) in suggestions"
-								:key="suggestion._id"
-								v-bind="getItemProps({
-									item: suggestion,
-									index: idx
-								})"
-								v-on="getItemEvents({
-									item: suggestion,
-									index: Number(idx)
-								})"
+			<div class="container">
+				<div id="row">
+					<search-box
+						componentId="BookSensor"
+						:dataField="['original_title', 'original_title.search']"
+						:URLParams="true"
+						:size="10"
+						:autosuggest="true"
+						class="searchbox"
+					>
+						<template
+							#render="{
+								error,
+								loading,
+								downshiftProps: { isOpen, highlightedIndex, getItemProps, getItemEvents },
+								data: suggestions,
+							}"
 						>
-								{{ suggestion.label }}
-							</button>
-					</div>
-				</template>
-			</search-box>
-			<reactive-list
-				componentId="SearchResult"
-				dataField="original_title.keyword"
-				className="result-list-container"
-				:pagination="true"
-				:size="5"
-				:react="{ and: ['BookSensor'] }"
-			>
-				<template #renderItem="{ item }">
-					<div :id="item._id" class="flex book-content" :key="item._id">
-						<img :src="item.image" alt="Book Cover" class="book-image" />
-						<div class="flex column justify-center ml20">
-							<div class="book-header">{{ item.original_title }}</div>
-							<div class="flex column justify-space-between">
-								<div>
+							<div class="pill-wrapper" v-if="isOpen">
+								<button
+										class="pill-btn"
+										v-for="(suggestion, idx) in suggestions"
+										:key="suggestion._id"
+										v-bind="getItemProps({
+											item: suggestion,
+											index: idx
+										})"
+										v-on="getItemEvents({
+											item: suggestion,
+											index: Number(idx)
+										})"
+								>
+										{{ suggestion.label }}
+									</button>
+							</div>
+						</template>
+					</search-box>
+				</div>
+				<div class="row">
+					<reactive-list
+						:pagination="true"
+						:size="10"
+						:react="{ and: ['BookSensor'] }"
+						component-id="SearchResult"
+						data-field="original_title.keyword"
+					>
+
+						<template #render="{ data }">
+						<ResultCardsWrapper>
+							<ResultCard
+							v-for="result in data"
+							:key="result._id"
+							:id="result._id"
+							>
+							<ResultCardImage :src="result.image" />
+							<ResultCardTitle>
+								{{ result.original_title }}
+							</ResultCardTitle>
+							<ResultCardDescription>
+								<div class="flex column justify-center">
+								<div class="flex column justify-space-between">
 									<div>
-										by <span class="authors-list">{{ item.authors }}</span>
+									<div>
+										by <span class="authors-list">{{ result.authors }}</span>
 									</div>
 									<div class="ratings-list flex align-center">
 										<span class="stars">
-											<i
-												v-for="(item, index) in Array(
-													item.average_rating_rounded,
-												).fill('x')"
-												class="fas fa-star"
-												:key="index"
-											/>
+										<i
+											v-for="(item, index) in Array(
+											Math.floor(result.average_rating)
+											).fill('x')"
+											:key="index"
+											class="fas fa-star"
+										/>
 										</span>
-										<span class="avg-rating"
-											>({{ item.average_rating }} avg)</span
+										<span
+										class="avg-rating"
+										>({{ result.average_rating }} avg)</span
 										>
 									</div>
+									</div>
+									<span
+									class="pub-year"
+									>Pub {{ result.original_publication_year }}</span
+									>
 								</div>
-								<span class="pub-year"
-									>Pub {{ item.original_publication_year }}</span
-								>
-							</div>
-						</div>
-					</div>
-				</template>
-			</reactive-list>
+								</div>
+							</ResultCardDescription>
+							</ResultCard>
+						</ResultCardsWrapper>
+						</template>
+					</reactive-list>
+				</div>
+			</div>
 		</reactive-base>
 	</div>
 </template>

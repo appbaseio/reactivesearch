@@ -13,9 +13,18 @@
   padding: 15px;
 }
 
-.row > .col:first-child {
-  border-right: 1px solid #ccc;
-  max-width: 400px;
+.container{
+  max-width: 1200px;
+  padding: 0 20px;
+  width: 100%;
+  margin:auto;
+	border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  background: #fafafa;
+}
+.searchbox{
+  width: 100%;
+  margin-top: 10px;
 }
 
 .result-list-container {
