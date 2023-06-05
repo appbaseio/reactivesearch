@@ -56,7 +56,6 @@ import {
 	connect,
 	decodeHtml,
 	extractModifierKeysFromFocusShortcuts,
-	handleCaretPosition,
 	isEmpty,
 	parseFocusShortcuts,
 } from '../../utils';
@@ -70,6 +69,19 @@ import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer'
 import HOOKS from '../../utils/hooks';
 
 const { useConstructor } = HOOKS;
+
+/**
+ * inputValue:
+ * The value which is passed to the html input box.
+ * The onChange handler(event listener on input box) should directly update inputValue.
+ *
+ * For uncontrolled components, we maintain the input value(useState - currentValue).
+ * Hence, onChange should call setValue to update currentValue directly.
+ *
+ * For controlled components, we get the input value(props.value).
+ * Hence, onChange should call props.onChange,
+ * which then updates currentValue by calling setValue in useEffect.
+ */
 
 const SearchBox = (props) => {
 	const {
@@ -502,9 +514,6 @@ const SearchBox = (props) => {
 		if (value === undefined) {
 			setValue(inputValue, false, props, undefined, true, false);
 		} else if (onChange) {
-			// handle caret position in controlled components
-			handleCaretPosition(e);
-
 			onChange(
 				inputValue,
 				({ isOpen } = {}) => {
@@ -988,6 +997,11 @@ const SearchBox = (props) => {
 		}
 	}, [rawData, aggregationData, isLoading, error]);
 
+	/**
+	 * For uncontrolled component,
+	 * props.value would be changed directly,
+	 * which then needs to update currentValue by calling setValue
+	 */
 	useEffect(() => {
 		if (hasMounted.current) {
 			if (
@@ -1409,7 +1423,9 @@ const SearchBox = (props) => {
 											{...getInputProps({
 												className: getClassName(props.innerClass, 'input'),
 												placeholder: props.placeholder,
-												value: currentValue === null ? '' : currentValue,
+												// When props.value is defined,
+												// it means SearchBox is used as a controlled component
+												value: Object.hasOwn(props, 'value') ? props.value : currentValue || '',
 												onChange: onInputChange,
 												onBlur: withTriggerQuery(props.onBlur),
 												onFocus: handleFocus,
@@ -1469,7 +1485,7 @@ const SearchBox = (props) => {
 								aria-label={props.componentId}
 								className={getClassName(props.innerClass, 'input') || null}
 								placeholder={props.placeholder}
-								value={currentValue || ''}
+								value={Object.hasOwn(props, 'value') ? props.value : currentValue || ''}
 								onChange={onInputChange}
 								onBlur={withTriggerQuery(props.onBlur)}
 								onFocus={withTriggerQuery(props.onFocus)}
