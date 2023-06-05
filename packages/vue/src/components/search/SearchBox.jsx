@@ -1125,7 +1125,7 @@ const SearchBox = defineComponent({
 														/>
 													);
 												}
-												return null
+												return ()=>(<span></span>)
 
 											default:
 												return null;
