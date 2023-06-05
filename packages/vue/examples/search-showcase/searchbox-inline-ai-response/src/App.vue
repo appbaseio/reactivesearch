@@ -211,14 +211,14 @@ export default {
 			faqs: [
 				{
 					label:
-      'How to use the SearchBox component with MultiList and ReactiveList in React?',
+      'How to use the SearchBox component with MultiList and ReactiveList in Vue?',
 					value:
-      'How to use the SearchBox component with MultiList and ReactiveList in React?',
+      'How to use the SearchBox component with MultiList and ReactiveList in Vue?',
 					id: 'faq-1',
 				},
 				{
-					label: 'Basic usage for MultiList in React',
-					value: 'Basic usage for MultiList in React',
+					label: 'Basic usage for MultiList in Vue',
+					value: 'Basic usage for MultiList in Vue',
 					id: 'faq-2',
 				},
 			]
