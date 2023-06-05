@@ -1,3 +1,6 @@
+body{
+  margin:0px;
+}
 .row {
   display: flex;
   flex-direction: row;
@@ -7,20 +10,31 @@
 .row.dark {
   background: #303030;
 }
-
+.container{
+  max-width: 1200px;
+  padding: 0 20px;
+  width: 100%;
+  margin:auto;
+	border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  background: #fafafa;
+}
+.searchbox{
+  width: 100%;
+  margin-top: 10px;
+}
 .col {
   width: calc(100% - 400px);
   padding: 15px;
 }
 
-.row > .col:first-child {
-  border-right: 1px solid #ccc;
-  max-width: 400px;
+.row:first-child {
+  width: 100%;
 }
 
 .result-list-container {
-  width: 75%;
-  padding: 0 40px;
+  width: 100%;
+  padding: 0 20px;
   display: inline-flex;
   flex-direction: column;
 }
