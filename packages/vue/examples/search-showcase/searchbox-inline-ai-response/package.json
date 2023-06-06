@@ -8,7 +8,7 @@
 		"preview": "vite preview --port 4173"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.0.0-rc.6.2",
+		"@appbaseio/reactivesearch-vue": "3.0.0-rc.6.4",
 		"bootstrap": "^5.2.3",
 		"vue": "^3.2.37"
 	},
@@ -23,8 +23,8 @@
 			"node": true
 		},
 		"extends": [
-		  "plugin:vue/vue3-essential",
-		  "eslint:recommended"
+			"plugin:vue/essential",
+			"eslint:recommended"
 		],
 		"rules": {},
 		"parserOptions": {
