@@ -238,19 +238,29 @@ const TextArea = styled('textarea')`
 		&& `
 			padding-right: 36px;
 		`};
-
 	${(props) =>
-		// for clear icon with search icon
-		props.showClear
-		&& props.showIcon
+		props.showFocusShortcutsIcon
+		&& `
+			padding-right: 20px;
+		`};
+	${(props) =>
+		props.showIcon
+		&& props.showFocusShortcutsIcon
 		&& props.iconPosition === 'right'
 		&& `
 			padding-right: 66px;
 		`};
 
 	${(props) =>
-		// for voice search icon with search icon
+		// for voice search icon with focusshortcut  icon
 		props.showVoiceSearch
+		&& props.showFocusShortcutsIcon
+		&& `
+			padding-right: 50px;
+		`};
+	${(props) =>
+		// for clear icon with search icon
+		props.showClear
 		&& props.showIcon
 		&& props.iconPosition === 'right'
 		&& `
@@ -264,6 +274,31 @@ const TextArea = styled('textarea')`
 			padding-right: 66px;
 		`};
 	${(props) =>
+		// for voice search icon with search icon
+		props.showVoiceSearch
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& `
+			padding-right: 66px;
+		`};
+	${(props) =>
+		// for voice search icon with focusshortcut  icon and clear icon
+		props.showVoiceSearch
+		&& props.showFocusShortcutsIcon
+		&& props.showClear
+		&& `
+			padding-right: 80px;
+		`};
+
+	${(props) =>
+		// for search icon with focusshortcut  icon
+		props.showIcon
+		&& props.showFocusShortcutsIcon
+		&& props.iconPosition === 'right'
+		&& `
+			padding-right: 66px;
+		`};
+	${(props) =>
 		// for clear icon with search icon and voice search
 		props.showClear
 		&& props.showIcon
@@ -271,6 +306,16 @@ const TextArea = styled('textarea')`
 		&& props.iconPosition === 'right'
 		&& `
 			padding-right: 90px;
+		`};
+	${(props) =>
+		// for clear icon with search icon, focusshortcut icon and voice search
+		props.showClear
+		&& props.showIcon
+		&& props.showVoiceSearch
+		&& props.iconPosition === 'right'
+		&& props.showFocusShortcutsIcon
+		&& `
+			padding-right: 106px;
 		`};
 
 	${(props) => props.alert && alertBorder};

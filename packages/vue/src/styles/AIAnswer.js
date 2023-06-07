@@ -269,6 +269,21 @@ export const resetCSS = (props) => `
 	ul,
 	ol {
 		list-style-position: inside;
+		padding-left: 10px;
+
+	}
+
+	li{
+		display: list-item;
+		cursor: default;
+		padding: initial;
+
+		&:hover{
+			background-color: initial;
+		}
+	}
+	p {
+		margin: inherit;
 	}
 `;
 const messageBGColor = (props) => {
@@ -366,6 +381,10 @@ export const SendButton = styled(Button)`
 	outline: none;
 	padding: 10px;
 	text-align: center;
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 `;
 
 export const AIFeedbackContainer = styled('div')`

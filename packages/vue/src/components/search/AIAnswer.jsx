@@ -80,6 +80,9 @@ const AIAnswer = defineComponent({
 		shouldShowComponent() {
 			return this.showComponent;
 		},
+		errorMessageForMissingSessionId() {
+			return `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISessionId to function. Try reloading the App.`;
+		},
 	},
 	props: {
 		componentId: types.string.isRequired,
@@ -117,6 +120,7 @@ const AIAnswer = defineComponent({
 		sessionIdFromStore: VueTypes.string,
 		showComponent: types.boolRequired,
 		componentError: types.componentObject,
+		style: types.style,
 	},
 	mounted() {},
 	watch: {
@@ -140,10 +144,10 @@ const AIAnswer = defineComponent({
 					finalMessages.push(
 						...messagesHistory.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
 					);
-				}
-				//  fresh response
-				if (response && response.answer) {
-					// do something as needed
+				} else if (response && response.answer && response.answer.text) {
+					finalMessages.push({ role: AI_ROLES.ASSISTANT, content: response.answer.text });
+					if (!this.AISessionId)
+						this.error = { message: this.errorMessageForMissingSessionId };
 				}
 
 				this.messages = finalMessages;
@@ -160,20 +164,18 @@ const AIAnswer = defineComponent({
 			});
 		},
 		isAIResponseLoading(newVal) {
-			this.isLoadingState = newVal;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
-				loading: newVal || this.$props.isLoading,
+				loading: newVal || this.isLoading,
 				error: this.$props.AIResponseError,
 			});
 		},
 		isLoading(newVal) {
-			this.isLoadingState = newVal;
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
-				loading: newVal || this.$props.isLoading,
+				loading: newVal || this.isAIResponseLoading,
 				error: this.$props.AIResponseError,
 			});
 		},
@@ -190,10 +192,17 @@ const AIAnswer = defineComponent({
 						this.$props.componentId
 					] || {}
 				).sessionId || null;
+			if (this.error && !this.AISessionId) {
+				const errorMessage = this.errorMessageForMissingSessionId;
+				this.error = {
+					message: errorMessage,
+				};
+				console.error(errorMessage);
+			}
 			this.$emit('on-data', {
 				data: this.messages,
 				rawData: this.$props.rawData,
-				loading: this.$props.isAIResponseLoading || this.$props.isLoading,
+				loading: this.isAIResponseLoading || this.isLoading,
 				error: newVal,
 			});
 		},
@@ -261,11 +270,9 @@ const AIAnswer = defineComponent({
 						this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
 					this.getAIResponse(this.AISessionId, this.componentId, text);
 				} else {
-					console.error(
-						`AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Try reloading the App.`,
-					);
+					console.error(this.errorMessageForMissingSessionId);
 					this.error = {
-						message: `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
+						message: `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISessionId to function. Trying reloading the App.`,
 					};
 				}
 
@@ -281,7 +288,7 @@ const AIAnswer = defineComponent({
 					this.inputMessage = '';
 				} else {
 					console.error(
-						`AISessionId for ${this.componentId} is missing! AIAnswer component requires an AISession to function. Try reloading the App.`,
+						`AISessionId for ${this.componentId} is missing! AIAnswer component requires an AISessionId to function. Try reloading the App.`,
 					);
 				}
 			}
@@ -333,6 +340,7 @@ const AIAnswer = defineComponent({
 			return null;
 		},
 		handleKeyPress(e) {
+			window.console.log('e', e);
 			if (e.key === 'Enter') {
 				this.handleSendMessage(e);
 				this.inputMessage = '';
@@ -383,7 +391,9 @@ const AIAnswer = defineComponent({
 			return (
 				<div>
 					<IconGroup enableAI groupPosition="right" positionType="absolute">
-						{this.shouldMicRender(showVoiceInput) && (
+						{!this.isLoadingState
+							&& this.AISessionId
+							&& this.shouldMicRender(showVoiceInput) && (
 							<Mic
 								getInstance={getMicInstance}
 								render={renderMic}
@@ -420,7 +430,8 @@ const AIAnswer = defineComponent({
 							tabIndex={0}
 							onClick={this.handleSendMessage}
 							onKeyPress={this.handleKeyPress}
-							class={`enter-btn ${getClassName(innerClass, 'ai-enter-button')}`}
+							class={`ask-btn ${getClassName(innerClass, 'ai-enter-button')}`}
+							disabled={this.isLoadingState || !this.AISessionId}
 						>
 							Send
 						</SendButton>
@@ -482,13 +493,17 @@ const AIAnswer = defineComponent({
 			return null;
 		}
 		return (
-			<Chatbox>
+			<Chatbox style={props.style} class="--ai-chat-box-wrapper">
 				{this.$props.title && (
 					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
 					</Title>
 				)}
-				<ChatContainer theme={props.theme} showInput={props.showInput}>
+				<ChatContainer
+					class="--ai-chat-container"
+					theme={props.theme}
+					showInput={props.showInput}
+				>
 					{/* custom render */}
 					{this.hasCustomRenderer && (
 						<MessagesContainer
@@ -571,17 +586,15 @@ const AIAnswer = defineComponent({
 								<InputWrapper ref={_inputWrapperRef}>
 									<MessageInput
 										ref={_inputRef}
-										type="text"
 										placeholder={props.placeholder}
 										enterButton={props.enterButton}
 										value={this.inputMessage}
 										onInput={this.handleMessageInputChange}
-										onKeyPress={this.handleKeyPress}
 										id={`${props.componentId}-ai-input`}
 										showIcon={props.showIcon}
 										iconPosition={props.iconPosition}
 										themePreset={this.themePreset}
-										disabled={this.isLoadingState}
+										disabled={this.isLoadingState || !this.AISessionId}
 										class={getClassName(props.innerClass, 'ai-input') || null}
 									/>{' '}
 									{this.renderIcons()}

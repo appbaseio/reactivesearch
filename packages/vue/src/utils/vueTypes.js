@@ -172,6 +172,15 @@ const types = {
 		queryTemplate: VueTypes.string,
 		temperature: VueTypes.number,
 	}),
+	AIUIConfig: VueTypes.shape({
+		loaderMessage: VueTypes.string, // slot #loaderMessage should also be supported
+		showSourceDocuments: VueTypes.bool,
+		sourceDocumentLabel: VueTypes.string,
+		onSourceClick: VueTypes.func,
+		// renderAskButton: VueTypes.func,has to be a slot
+		askButton: VueTypes.bool,
+		showFeedback: VueTypes.bool,
+	}),
 };
 
 export default types;
