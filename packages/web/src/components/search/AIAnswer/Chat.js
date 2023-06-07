@@ -134,7 +134,6 @@ const Chat = (props) => {
 				if (typeof renderEnterButton === 'function') {
 					return renderEnterButton(onEnterButtonClick);
 				}
-
 				return (
 					<SendButton
 						primary
