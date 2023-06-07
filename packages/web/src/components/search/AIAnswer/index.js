@@ -31,14 +31,14 @@ const AIAnswer = (props) => {
 	const [errorState, setErrorState] = React.useState(null);
 	const AISessionId = useRef(null);
 
+	const errorMessageForMissingSessionId = `AISessionId for ${props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`;
+
 	const handleSendMessage = (text, isRetry = false) => {
 		if (AISessionId.current) {
 			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
 			props.getAIResponse(AISessionId.current, props.componentId, text);
 		} else {
-			console.error(
-				`AISessionId for ${props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`,
-			);
+			console.error(errorMessageForMissingSessionId);
 		}
 	};
 	useEffect(() => {
@@ -62,11 +62,9 @@ const AIAnswer = (props) => {
 				finalMessages.push(
 					...messagesHistory.filter(msg => msg.role !== AI_ROLES.SYSTEM),
 				);
-			}
-
-			//  fresh response
-			if (response && response.answer) {
-				// do something as needed
+			} else if (response && response.answer && response.answer.text) {
+				finalMessages.push({ role: AI_ROLES.ASSISTANT, content: response.answer.text });
+				if (!AISessionId.current) { setErrorState({ message: errorMessageForMissingSessionId }); }
 			}
 
 			setMessages(finalMessages);
@@ -110,7 +108,7 @@ const AIAnswer = (props) => {
 	}
 
 	return (
-		<Chatbox>
+		<Chatbox style={props.style} className="--ai-chat-box-wrapper">
 			{props.title && (
 				<Title className={getClassName(props.innerClass, 'ai-title') || null}>
 					{props.title}
@@ -124,7 +122,11 @@ const AIAnswer = (props) => {
 				themePreset={props.themePreset}
 				icon={props.icon}
 				iconURL={props.iconURL}
-				showVoiceInput={props.showVoiceInput}
+				showVoiceInput={
+					props.showVoiceInput
+					&& !(props.isAIResponseLoading || props.isLoading)
+					&& AISessionId.current
+				}
 				renderMic={props.renderMic}
 				getMicInstance={props.getMicInstance}
 				innerClass={props.innerClass}
@@ -183,6 +185,7 @@ AIAnswer.propTypes = {
 	showComponent: types.boolRequired,
 	showFeedback: types.bool,
 	trackUsefullness: types.funcRequired,
+	style: types.style,
 };
 
 AIAnswer.defaultProps = {
@@ -197,6 +200,7 @@ AIAnswer.defaultProps = {
 	sessionIdFromStore: '',
 	showComponent: false,
 	showFeedback: true,
+	style: {},
 };
 
 const mapStateToProps = (state, props) => {

@@ -28,31 +28,7 @@ const Main = () => (
 					componentId="BookSensor"
 					highlight
 					URLParams
-					enablePopularSuggestions
-					popularSuggestionsConfig={{
-						size: 3,
-						minChars: 2,
-						index: 'good-books-ds',
-					}}
-					enableRecentSuggestions
-					recentSuggestionsConfig={{
-						size: 3,
-						index: 'good-books-ds',
-						minChars: 4,
-					}}
-					size={5}
-					enablePredictiveSuggestions
-					index="good-books-ds"
-					onData={(props) => {
-						// eslint-disable-next-line
-						console.log(props);
-					}}
-					showClear
-					onValueSelected={(value, cause) => {
-						// eslint-disable-next-line
-						console.log(value, cause);
-					}}
-					renderNoSuggestion="No suggestions found."
+					enableAI
 				/>
 			</div>
 

@@ -168,10 +168,10 @@
     tocbot "4.5.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@10.0.0-alpha.15":
-  version "10.0.0-alpha.15"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.15.tgz#2dfc5f42f26fd36883dac808e9b2324cb548b7f4"
-  integrity sha512-breDxqa7t7s4Bzi/yrH4vHS9//CPkjCTtVyqtO3yQNYSsoFNMWv3rxU1gAnB9CRXuNVb0+Exv1f6lq/b475ljg==
+"@appbaseio/reactivecore@10.0.0-alpha.24":
+  version "10.0.0-alpha.24"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.24.tgz#9c635b52cfbce357dd3e45dad1266c602878cdda"
+  integrity sha512-DTO/kmay7NElyqZq/04vwHM4AeoFsg17yLe3jr8A7aIlJ+u2b8G8OJPEUZGidOCEk2ouy63QxLW76qpYLNtITQ==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -207,13 +207,13 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch-vue@3.0.0-rc.3":
-  version "3.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.3.tgz#74563d25d8d9c73aae37a57c22cfb2a5500c1a93"
-  integrity sha512-sYNpY7OFVf77oUrYRjaKN0ik1GaCvhpJuuCQEPWyJra70k2JtK9QcKHkj+qjxPT7cnCWBTj9w5YZ9x7ZjMSeFw==
+"@appbaseio/reactivesearch-vue@3.0.0-rc.6.4":
+  version "3.0.0-rc.6.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.4.tgz#cbaaa49ff326a239114f6576606fbe5d2e2db0b1"
+  integrity sha512-ZKJCxjRIt+3Rv/E1Ua2fgTN0P6aLMeuLd7cXydFau4gXoAo7ws/K6QZYstEcvLVUNaQ/2+Sgu4zy8esl4blzbw==
   dependencies:
     "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.15"
+    "@appbaseio/reactivecore" "10.0.0-alpha.25"
     "@appbaseio/vue-emotion" "0.6.0-alpha.6"
     "@emotion/css" "^11.10.5"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
