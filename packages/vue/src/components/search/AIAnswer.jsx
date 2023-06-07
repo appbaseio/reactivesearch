@@ -116,6 +116,7 @@ const AIAnswer = defineComponent({
 		isLoading: types.boolRequired,
 		sessionIdFromStore: VueTypes.string,
 		showComponent: types.boolRequired,
+		componentError: types.componentObject,
 	},
 	mounted() {},
 	watch: {
@@ -198,6 +199,38 @@ const AIAnswer = defineComponent({
 		},
 		messages() {
 			this.scrollToBottom();
+		},
+		componentError(newVal) {
+			if (newVal && newVal._bodyBlob) {
+				newVal._bodyBlob
+					.text()
+					.then((textData) => {
+						try {
+							const parsedErrorRes = JSON.parse(textData);
+							if (parsedErrorRes.error) {
+								this.error = parsedErrorRes.error;
+								this.AISessionId
+									= (
+										(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+											this.$props.componentId
+										] || {}
+									).sessionId || null;
+								this.$emit('on-data', {
+									data: this.messages,
+									rawData: this.$props.rawData,
+									loading:
+										this.$props.isAIResponseLoading || this.$props.isLoading,
+									error: parsedErrorRes.error,
+								});
+							}
+						} catch (error) {
+							console.error('Error parsing component error JSON:', error);
+						}
+					})
+					.catch((error) => {
+						console.error('Error reading  component error text data:', error);
+					});
+			}
 		},
 	},
 	methods: {
@@ -284,7 +317,7 @@ const AIAnswer = defineComponent({
 									? this.error.message
 									: 'There was an error in generating the response.'}{' '}
 								{this.error?.code
-									? `Code:
+									? `, Code:
 							${this.error.code}`
 									: ''}
 							</span>
@@ -591,6 +624,7 @@ const mapStateToProps = (state, props) => {
 				&& state.AIResponses[props.componentId].response
 				&& state.AIResponses[props.componentId].response.sessionId)
 			|| '',
+		componentError: state.error[props.componentId],
 	};
 };
 const mapDispatchToProps = {
