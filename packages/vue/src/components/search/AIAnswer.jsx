@@ -5,7 +5,7 @@ import {
 	componentTypes,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { defineComponent } from 'vue';
-import { fetchAIResponse } from '@appbaseio/reactivecore/lib/actions/query';
+import { fetchAIResponse, createAISession } from '@appbaseio/reactivecore/lib/actions/query';
 import { Remarkable } from 'remarkable';
 
 import {
@@ -211,6 +211,15 @@ const AIAnswer = defineComponent({
 		},
 		componentError(newVal) {
 			if (newVal && newVal._bodyBlob) {
+				this.AISessionId
+					= (
+						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+							this.$props.componentId
+						] || {}
+					).sessionId || null;
+				if (!this.AISessionId) {
+					this.generateNewSessionId();
+				}
 				newVal._bodyBlob
 					.text()
 					.then((textData) => {
@@ -218,12 +227,7 @@ const AIAnswer = defineComponent({
 							const parsedErrorRes = JSON.parse(textData);
 							if (parsedErrorRes.error) {
 								this.error = parsedErrorRes.error;
-								this.AISessionId
-									= (
-										(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
-											this.$props.componentId
-										] || {}
-									).sessionId || null;
+
 								this.$emit('on-data', {
 									data: this.messages,
 									rawData: this.$props.rawData,
@@ -243,6 +247,16 @@ const AIAnswer = defineComponent({
 		},
 	},
 	methods: {
+		generateNewSessionId() {
+			const newSessionPromise = this.createAISession();
+			newSessionPromise
+				.then((res) => {
+					this.AISessionId = res.AIsessionId;
+				})
+				.catch((e) => {
+					console.error(e);
+				});
+		},
 		scrollToBottom() {
 			this.$nextTick(() => {
 				const messageContainer = this.$refs?.[this.$props.innerRef];
@@ -416,7 +430,6 @@ const AIAnswer = defineComponent({
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
 			const { renderEnterButton } = this.$slots;
-
 			if (enterButton) {
 				const getEnterButtonMarkup = () => {
 					if (renderEnterButton) {
@@ -493,7 +506,7 @@ const AIAnswer = defineComponent({
 			return null;
 		}
 		return (
-			<Chatbox style={props.style} class="--ai-chat-box-wrapper">
+			<Chatbox style={props.style || {}}>
 				{this.$props.title && (
 					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
@@ -643,6 +656,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = {
 	getAIResponse: fetchAIResponse,
 	trackUsefullness: recordAISessionUsefulness,
+	createAISession,
 };
 export const AIConnected = PreferencesConsumer(
 	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(AIAnswer), {
