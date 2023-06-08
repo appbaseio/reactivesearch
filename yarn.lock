@@ -177,17 +177,6 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivecore@10.0.0-alpha.23":
-  version "10.0.0-alpha.23"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.23.tgz#35c1e3a70f85244b511cf5c0cde5739ac172b16f"
-  integrity sha512-HTwkS8IbTilvIqV5wJ/Ur1t9fuOi46esXHeNQotGcUmY99KKcz2ggwXsMhMyJdIlcUFZM10R8P/ZOw1eu2l25A==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivecore@10.0.0-alpha.25":
   version "10.0.0-alpha.25"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.25.tgz#a93921ae90a73b9ac25bfcef71755514d99f9971"
@@ -255,31 +244,6 @@
     ngeohash "^0.6.3"
     polished "^2.2.0"
     redux "^4.0.0"
-    url-search-params-polyfill "^7.0.0"
-    vue-google-maps-community-fork "^0.1.7"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component next
-    vue-types "^5.0.2"
-
-"@appbaseio/reactivesearch-vue@3.0.0-rc.6.2":
-  version "3.0.0-rc.6.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.2.tgz#4b05a2c8f78bac37577482350eec832c35801434"
-  integrity sha512-uX/5jnbUVUr0afsUFonSkdCWVP0suBASTRwHXQhpmalPEhaVYZXVey38LrUkRmLA2AAIQr7FYhDi1C9zvc+GMw==
-  dependencies:
-    "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.23"
-    "@appbaseio/vue-emotion" "0.6.0-alpha.6"
-    "@emotion/css" "^11.10.5"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.2.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "11.0.0"
-    hotkeys-js "^3.8.7"
-    ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    remarkable "^2.0.1"
     url-search-params-polyfill "^7.0.0"
     vue-google-maps-community-fork "^0.1.7"
     vue-highlight-words "^1.2.0"
