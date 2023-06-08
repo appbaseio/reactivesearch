@@ -1099,7 +1099,7 @@ const SearchBox = defineComponent({
 								setHighlightedIndex,
 							}) => {
 								const renderSuggestionsDropdown = () => {
-									const getIcon = (iconType, item) => {
+									const getIcon = (iconType, item, leaveSpaceForIcon) => {
 										switch (iconType) {
 											case suggestionTypes.Recent:
 												return recentSearchesIcon;
@@ -1118,6 +1118,7 @@ const SearchBox = defineComponent({
 												}
 												if(item.iconURL){
 													return ()=>(
+														// When you change below also change the empty icon below
 														<img
 															style={{ maxHeight: '25px' }}
 															src={xss(item.iconURL)}
@@ -1125,7 +1126,8 @@ const SearchBox = defineComponent({
 														/>
 													);
 												}
-												return ()=>(<span></span>)
+												// Render an empty icon when no icon is provided from the dashboard
+												return ()=>(<span style={{display: 'inline-block',height: '25px', width: leaveSpaceForIcon?'25px': 0}}></span>)
 
 											default:
 												return null;
@@ -1172,89 +1174,93 @@ const SearchBox = defineComponent({
 																/>: null}
 																<ul class="section-list">
 																	{item.map(
-																		(sectionItem, sectionIndex) => renderItem?(
-																			<li
-																				{...getItemProps({
-																					item: sectionItem,
-																				})}
-																				on={getItemEvents({
-																					item: sectionItem,
-																				})}
-																				key={index + sectionIndex}
-																				style={{
-																					justifyContent: 'flex-start',
-																					alignItems: 'center',
-																				}}
-																				class={`${
-																					highlightedIndex
-																					=== index + sectionIndex
-																						? `active-li-item ${getClassName(
-																							this.$props.innerClass,
-																							'active-suggestion-item',
-																						  )}`
-																						: `li-item ${getClassName(
-																							this.$props.innerClass,
-																							'suggestion-item',
-																						  )}`
-																				}`}
-																			>
-																				{renderItem(sectionItem)}
-																			</li>
-																		):(
-																			<li
-																				{...getItemProps({
-																					item: sectionItem,
-																				})}
-																				on={getItemEvents({
-																					item: sectionItem,
-																				})}
-																				key={index + sectionIndex}
-																				style={{
-																					justifyContent: 'flex-start',
-																					alignItems: 'center',
-																				}}
-																				class={`${
-																					highlightedIndex
-																					=== index + sectionIndex
-																						? `active-li-item ${getClassName(
-																							this.$props.innerClass,
-																							'active-suggestion-item',
-																						  )}`
-																						: `li-item ${getClassName(
-																							this.$props.innerClass,
-																							'suggestion-item',
-																						  )}`
-																				}`}
-																			>
-																				<div
+																		(sectionItem, sectionIndex) => {
+																			const suggestionsHaveIcon = item.some(s=>s.icon || s.iconURL)
+																			return renderItem?(
+																				<li
+																					{...getItemProps({
+																						item: sectionItem,
+																					})}
+																					on={getItemEvents({
+																						item: sectionItem,
+																					})}
+																					key={index + sectionIndex}
 																					style={{
-																						padding: '0 10px 0 0',
-																						display: 'flex',
+																						justifyContent: 'flex-start',
+																						alignItems: 'center',
 																					}}
+																					class={`${
+																						highlightedIndex
+																					=== index + sectionIndex
+																							? `active-li-item ${getClassName(
+																								this.$props.innerClass,
+																								'active-suggestion-item',
+																						  )}`
+																							: `li-item ${getClassName(
+																								this.$props.innerClass,
+																								'suggestion-item',
+																						  )}`
+																					}`}
 																				>
-																					<CustomSvg
-																						className={
-																							getClassName(
-																								this.$props
-																									.innerClass,
-																								`${sectionItem._suggestion_type}-search-icon`,
-																							) || null
-																						}
-																						icon={getIcon(
-																							sectionItem._suggestion_type,
-																							sectionItem
-																						)}
-																						type={`${sectionItem._suggestion_type}-search-icon`}
-																					/>
-																				</div>
+																					{renderItem(sectionItem)}
+																				</li>
+																			):(
+																				<li
+																					{...getItemProps({
+																						item: sectionItem,
+																					})}
+																					on={getItemEvents({
+																						item: sectionItem,
+																					})}
+																					key={index + sectionIndex}
+																					style={{
+																						justifyContent: 'flex-start',
+																						alignItems: 'center',
+																					}}
+																					class={`${
+																						highlightedIndex
+																					=== index + sectionIndex
+																							? `active-li-item ${getClassName(
+																								this.$props.innerClass,
+																								'active-suggestion-item',
+																						  )}`
+																							: `li-item ${getClassName(
+																								this.$props.innerClass,
+																								'suggestion-item',
+																						  )}`
+																					}`}
+																				>
+																					<div
+																						style={{
+																							padding: '0 10px 0 0',
+																							display: 'flex',
+																						}}
+																					>
+																						<CustomSvg
+																							className={
+																								getClassName(
+																									this.$props
+																										.innerClass,
+																									`${sectionItem._suggestion_type}-search-icon`,
+																								) || null
+																							}
+																							icon={getIcon(
+																								sectionItem._suggestion_type,
+																								sectionItem,
+																								suggestionsHaveIcon
+																							)}
+																							type={`${sectionItem._suggestion_type}-search-icon`}
+																						/>
+																					</div>
 
-																				<SuggestionItem
-																					currentValue={this.currentValue}
-																					suggestion={sectionItem}
-																				/>
-																				{this.renderActionIcon(sectionItem)}
-																			</li>
-																		))}</ul>
+																					<SuggestionItem
+																						currentValue={this.currentValue}
+																						suggestion={sectionItem}
+																					/>
+																					{this.renderActionIcon(sectionItem)}
+																				</li>
+																			)
+																		})}</ul>
 															</div>
 														}
 														return <div>No suggestions</div>
