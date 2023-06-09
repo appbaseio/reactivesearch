@@ -87,6 +87,6 @@
 		"rollup-plugin-terser": "^5.1.1",
 		"rollup-plugin-vue": "^6.0.0",
 		"vue-eslint-parser": "^3.2.2",
-		"typescript": "^2.8.1"
+		"typescript": "^5.0.0"
 	}
 }
