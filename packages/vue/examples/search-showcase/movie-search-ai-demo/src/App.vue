@@ -87,12 +87,12 @@
 
 <script>
 import './styles.css';
-import { ReactiveBase, ReactiveList, SearchBox, AIAnswer, ResultsCardWrapper } from '@appbaseio/reactivesearch-vue';
+import { ReactiveBase, ReactiveList, SearchBox, AIAnswer } from '@appbaseio/reactivesearch-vue';
 import Card from './components/Card.vue';
 
 export default {
 	name: 'App',
-	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer, ResultsCardWrapper, Card },
+	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer, Card },
 	methods: {
 		getMessageStyle(message) {
 			const isSender = message.role === 'user';
@@ -135,5 +135,10 @@ export default {
   display: block;
   width: 100%;
   object-fit: contain;
+}
+.ai-answer{
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
 }
 </style>
