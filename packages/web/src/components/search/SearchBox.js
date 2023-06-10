@@ -137,6 +137,7 @@ const SearchBox = (props) => {
 	const stats = () => getResultStats(props);
 
 	const [showAIScreen, setShowAIScreen] = useState(false);
+	const [prefilledAIAnswer, setPrefilledAIAnswer] = useState('');
 	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
 	const [showTypingEffect, setShowTypingEffect] = useState(true);
 	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
@@ -233,7 +234,7 @@ const SearchBox = (props) => {
 	});
 
 	// fires query to fetch suggestion
-	const triggerDefaultQuery = (paramValue, meta = {}) => {
+	const triggerDefaultQuery = (paramValue, meta = {}, shouldExecuteQuery = true) => {
 		if (!props.autosuggest) {
 			return;
 		}
@@ -253,11 +254,11 @@ const SearchBox = (props) => {
 			value,
 			componentType: componentTypes.searchBox,
 			meta,
-		});
+		}, shouldExecuteQuery);
 	};
 
 	// fires query to fetch results(dependent components are affected here)
-	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
+	const triggerCustomQuery = (paramValue, categoryValue = undefined, shouldExecuteQuery = true) => {
 		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		if (isTagsMode.current) {
 			value = paramValue;
@@ -283,7 +284,7 @@ const SearchBox = (props) => {
 			URLParams,
 			componentType: componentTypes.searchBox,
 			...(!isTagsMode.current ? { category: categoryValue } : {}),
-		});
+		}, shouldExecuteQuery);
 	};
 
 	const triggerQuery = ({
@@ -292,16 +293,16 @@ const SearchBox = (props) => {
 		defaultQuery = false,
 		value = undefined,
 		categoryValue = undefined,
-	} = {}) => {
+	} = {}, shouldExecuteQuery = true) => {
 		if (typeof isOpen === 'boolean') {
 			setIsOpen(isOpen);
 		}
 
 		if (customQuery) {
-			triggerCustomQuery(value, categoryValue);
+			triggerCustomQuery(value, categoryValue, shouldExecuteQuery);
 		}
 		if (defaultQuery) {
-			triggerDefaultQuery(value);
+			triggerDefaultQuery(value, {}, shouldExecuteQuery);
 		}
 	};
 
@@ -333,6 +334,7 @@ const SearchBox = (props) => {
 		hasMounted = true,
 		toggleIsOpen = true,
 		categoryValue = undefined,
+		shouldExecuteQuery = true,
 	) => {
 		const performUpdate = () => {
 			if (isTagsMode.current && isEqual(value, selectedTags)) {
@@ -381,11 +383,12 @@ const SearchBox = (props) => {
 							...(toggleIsOpen && { isOpen: !isOpen }),
 							defaultQuery: false,
 							value,
-						});
+						}, shouldExecuteQuery);
 
 						triggerDefaultQuery(
 							newCurrentValue,
 							props.enableAI ? { enableAI: true } : {},
+							shouldExecuteQuery,
 						);
 					}
 					// in case of strict selection only SUGGESTION_SELECT should be able
@@ -398,6 +401,7 @@ const SearchBox = (props) => {
 							triggerCustomQuery(
 								queryHandlerValue,
 								isTagsMode.current ? undefined : categoryValue,
+								shouldExecuteQuery,
 							);
 						} else {
 							setValue('', true);
@@ -412,6 +416,7 @@ const SearchBox = (props) => {
 						triggerCustomQuery(
 							queryHandlerValue,
 							isTagsMode.current ? undefined : categoryValue,
+							shouldExecuteQuery,
 						);
 					}
 				} else {
@@ -425,7 +430,7 @@ const SearchBox = (props) => {
 					customQuery: true,
 					value,
 					categoryValue: isTagsMode.current ? undefined : categoryValue,
-				});
+				}, shouldExecuteQuery);
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
 		};
@@ -481,6 +486,24 @@ const SearchBox = (props) => {
 	};
 
 	const onSuggestionSelected = (suggestion) => {
+		// handle when FAQ suggestion is clicked
+		if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
+			setPrefilledAIAnswer(suggestion._answer);
+			setShowAIScreen(true);
+			setValue(
+				suggestion.value,
+				true,
+				props,
+				causes.SUGGESTION_SELECT,
+				true,
+				false,
+				suggestion._category,
+				false,
+				false,
+			);
+			return;
+		}
+
 		if (!props.enableAI) setIsOpen(false);
 		else {
 			setShowAIScreen(true);
@@ -1482,6 +1505,13 @@ const SearchBox = (props) => {
 							};
 
 							let indexOffset = 0;
+
+							const aiAnswerToDisplay = prefilledAIAnswer || (props.AIResponse
+							&& props.AIResponse.response
+							&& props.AIResponse.response.answer
+							&& props.AIResponse.response.answer
+								.text);
+
 							return (
 								<React.Fragment>
 									{hasCustomRenderer(props)
@@ -1512,12 +1542,7 @@ const SearchBox = (props) => {
 																props.AIResponse
 																&& props.AIResponse.response
 																&& props.AIResponse.response.question,
-															answer:
-																props.AIResponse
-																&& props.AIResponse.response
-																&& props.AIResponse.response.answer
-																&& props.AIResponse.response.answer
-																	.text,
+															answer: aiAnswerToDisplay,
 															documentIds:
 																(props.AIResponse
 																	&& props.AIResponse.response
@@ -1543,16 +1568,7 @@ const SearchBox = (props) => {
 																			<TypingEffect
 																				key={currentValue}
 																				message={md.render(
-																					props.AIResponse
-																					&& props.AIResponse
-																						.response
-																					&& props.AIResponse
-																						.response
-																						.answer
-																					&& props.AIResponse
-																						.response
-																						.answer
-																						.text,
+																					aiAnswerToDisplay,
 																				)}
 																				speed={5}
 																				onTypingComplete={() => {
@@ -1582,15 +1598,7 @@ const SearchBox = (props) => {
 																					}
 
 																					if (
-																						props.AIResponse
-																					&& props.AIResponse
-																						.response
-																					&& props.AIResponse
-																						.response
-																						.answer
-																					&& props.AIResponse
-																						.response
-																						.answer.text
+																						aiAnswerToDisplay
 																					) {
 																						setShowTypingEffect(
 																							false,
@@ -2216,7 +2224,8 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchtoProps = dispatch => ({
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: (updateQueryObject, execute = true) =>
+		dispatch(updateQuery(updateQueryObject, execute)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
