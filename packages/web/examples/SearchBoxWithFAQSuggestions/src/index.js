@@ -26,7 +26,7 @@ const Main = () => (
 					searchboxId="rs_docs"
 					enableFAQSuggestions={true}
 					FAQSuggestionsConfig={{
-						sectionLabel: "? : FAQ Suggestions"
+						sectionLabel: "❓ FAQ Suggestions"
 					}}
 					enableAI
 				/>
