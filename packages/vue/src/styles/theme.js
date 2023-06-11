@@ -1,7 +1,7 @@
 const typography = {
 	fontFamily:
 		'-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif',
-	fontSize: '16px'
+	fontSize: '16px',
 };
 
 const light = {
@@ -14,21 +14,21 @@ const light = {
 		titleColor: '#424242',
 		alertColor: '#d9534f',
 		borderColor: '#595959',
-	}
+	},
 };
 
 const dark = {
 	typography,
 
 	colors: {
-		textColor: '#fff',
+		textColor: '#ffffffcf',
 		backgroundColor: '#212121',
-		primaryTextColor: '#fff',
+		primaryTextColor: '#ffffffcf',
 		primaryColor: '#2196F3',
-		titleColor: '#fff',
+		titleColor: '#ffffffcf',
 		alertColor: '#d9534f',
-		borderColor: '#666'
-	}
+		borderColor: '#666',
+	},
 };
 
 export default function getTheme(preset) {
