@@ -19,6 +19,12 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
+				:enableFAQSuggestions="true"
+				:FAQSuggestionsConfig="{
+					sectionLabel: '❓ FAQ Suggestions'
+				}"
+				searchboxId="rs_docs"
+				:enableAI="true"
 			/>
 			<reactive-list
 				componentId="SearchResult"
