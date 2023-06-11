@@ -177,10 +177,10 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivecore@10.0.0-alpha.26":
-  version "10.0.0-alpha.26"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.26.tgz#7e0d22a00e6df8ac9a0e7372f8bc5f0c12132370"
-  integrity sha512-R9gPfUthDkKc3zbKjEgcuH5sE9QLHbYO5ipEFZCO8tVyr6aH1bA7KiS1FzxUCs5yefOd6pNwLSjdYZTDK+YgAA==
+"@appbaseio/reactivecore@10.0.0-alpha.21":
+  version "10.0.0-alpha.21"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.21.tgz#bb9889cbe9c1b26d4c7405dd3a7a4bbe29be13f2"
+  integrity sha512-0DvDQbXFxCsqo/9Vx3UNQ3CSWWwBcUawHHsTl0D/j71u3ShezZ7CbRqkEVOpBkhPjzWPsbrUuTmVbDMO9ySLYg==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"

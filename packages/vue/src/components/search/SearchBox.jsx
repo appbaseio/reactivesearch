@@ -2,6 +2,7 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
+import xss from 'xss';
 import { Remarkable } from 'remarkable';
 import {
 	AI_LOCAL_CACHE_KEY,
@@ -13,6 +14,7 @@ import {
 	getObjectFromLocalStorage,
 	getQueryOptions,
 	suggestionTypes,
+	featuredSuggestionsActionTypes
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
 import {
@@ -32,7 +34,7 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import { suggestionsContainer, suggestions, TextArea } from '../../styles/Input';
+import Input, { suggestionsContainer, suggestions, searchboxSuggestions, TextArea } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -155,6 +157,25 @@ const SearchBox = defineComponent({
 						&& this.AIResponse.response
 						&& this.AIResponse.response.answer
 						&& this.AIResponse.response.answer.text)
+		},
+		parsedSuggestions(){
+			let suggestionsArray = [];
+			if (Array.isArray(this.suggestions) && this.suggestions.length) {
+				suggestionsArray = [...withClickIds(this.suggestions)];
+			}
+
+			const sectionsAccumulated = [];
+			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+				if (sectionsAccumulated.includes(d.sectionId)) return acc;
+				if (d.sectionId) {
+					acc[currentIndex] = suggestionsArray.filter(g => g.sectionId === d.sectionId);
+					sectionsAccumulated.push(d.sectionId);
+				} else {
+					acc[currentIndex] = d;
+				}
+				return acc;
+			}, {});
+			return Object.values(sectionisedSuggestions);
 		}
 	},
 	props: {
@@ -236,6 +257,11 @@ const SearchBox = defineComponent({
 		index: VueTypes.string,
 		popularSuggestionsConfig: VueTypes.object,
 		recentSuggestionsConfig: VueTypes.object,
+		featuredSuggestionsConfig: VueTypes.shape({
+			maxSuggestionsPerSection: VueTypes.number,
+			sectionsOrder: VueTypes.arrayOf(VueTypes.string)
+		}),
+		customEvents: VueTypes.object,
 		applyStopwords: VueTypes.bool,
 		customStopwords: types.stringArray,
 		onData: types.func,
@@ -745,6 +771,44 @@ const SearchBox = defineComponent({
 				);
 			}
 		},
+		handleFeaturedSuggestionClicked(suggestion) {
+			try {
+				if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+					const { target = '_self', link = '/' } = JSON.parse(suggestion.subAction);
+
+					if (typeof window !== 'undefined') {
+						window.open(link, target);
+					}
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					const matchedValues = suggestion.subAction.match(/function\s*\(.*\)(.|\n)*/);
+					const functionStr = matchedValues && matchedValues[0];
+					// eslint-disable-next-line no-new-func
+					const func = new Function(`return ${functionStr}`)();
+					func(suggestion, this.$data.currentValue, this.$props.customEvents);
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.SELECT) {
+					this.setValue(
+						suggestion.value,
+						true,
+						this.$props,
+						this.$options.isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+					);
+					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
+				}
+				// blur is important to close the dropdown
+				// on selecting one of featured suggestions
+				// else Downshift probably is focusing the dropdown
+				// and not letting it close
+				// eslint-disable-next-line no-unused-expressions
+				this.$refs?.[this.$props.innerRef]?.blur();
+			} catch (e) {
+				console.error(
+					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
+					e,
+				);
+			}
+		},
 
 		onSuggestionSelected(suggestion) {
 			// handle when FAQ suggestion is clicked
@@ -768,6 +832,12 @@ const SearchBox = defineComponent({
 				this.showAIScreen = true;
 			}
 			const { value } = this.$props;
+
+			// handle featured suggestions click event
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				this.handleFeaturedSuggestionClicked(suggestion);
+				return;
+			}
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
@@ -1082,13 +1152,33 @@ const SearchBox = defineComponent({
 			this.currentValue = decodeHtml(value);
 			this.triggerDefaultQuery(value);
 		},
-		renderAutoFill(suggestion) {
+		renderActionIcon(suggestion) {
 			const handleAutoFillClick = (e) => {
 				e.stopPropagation();
 				this.onAutofillClick(suggestion);
 			};
-			/* 👇 avoid showing autofill for category suggestions👇 */
-			return suggestion._category ? null : <AutofillSvg onClick={handleAutoFillClick} />;
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					return (
+						<AutofillSvg
+							style={{
+								transform: 'rotate(135deg)',
+								pointerEvents: 'none',
+							}}
+						/>
+					);
+				}
+				return null;
+			} if (!suggestion._category) {
+				/* 👇 avoid showing autofill for category suggestions👇 */
+
+				return (
+					<AutofillSvg
+						onClick={handleAutoFillClick}
+					/>
+				);
+			}
+			return null;
 		},
 		renderTag(item) {
 			const { innerClass } = this.$props;
@@ -1380,16 +1470,41 @@ const SearchBox = defineComponent({
 								setHighlightedIndex,
 							}) => {
 								const renderSuggestionsDropdown = () => {
-									const getIcon = (iconType) => {
+									const getIcon = (iconType, item, leaveSpaceForIcon) => {
 										switch (iconType) {
 											case suggestionTypes.Recent:
 												return recentSearchesIcon;
 											case suggestionTypes.Popular:
 												return popularSearchesIcon;
+											case suggestionTypes.Featured:
+												if (item.icon) {
+													return ()=>(
+														<div
+															style={{ display: 'flex' }}
+															innerHTML={
+																 xss(item.icon)
+															}
+														/>
+													);
+												}
+												if(item.iconURL){
+													return ()=>(
+														// When you change below also change the empty icon below
+														<img
+															style={{ maxHeight: '25px' }}
+															src={xss(item.iconURL)}
+															alt={item.value}
+														/>
+													);
+												}
+												// Render an empty icon when no icon is provided from the dashboard
+												return ()=>(<span style={{display: 'inline-block',height: '25px', width: leaveSpaceForIcon?'25px': 0}}></span>)
+
 											default:
 												return null;
 										}
 									};
+									let indexOffset = 0
 									return (
 										<div>
 											{this.hasCustomRenderer
@@ -1408,7 +1523,11 @@ const SearchBox = defineComponent({
 													)} ${getClassName(
 														this.$props.innerClass,
 														'list',
-													)}`}
+													)} ${searchboxSuggestions(
+														this.themePreset,
+														this.theme,
+													)}
+													`}
 													ref={_dropdownULRef}
 												>
 													{this.showAIScreen && (
@@ -1420,85 +1539,114 @@ const SearchBox = defineComponent({
 														</SearchBoxAISection>
 													)}
 													{!this.showAIScreen
-														&& this.normalizedSuggestions.map(
-															(item, index) =>
-																renderItem ? (
-																	<li
-																		{...getItemProps({
-																			item,
-																		})}
-																		{...getItemEvents({
-																			item,
-																		})}
-																		key={`${index + 1}-${
-																			item.value
-																		}`}
-																		style={{
-																			backgroundColor:
-																				this.getBackgroundColor(
-																					highlightedIndex,
-																					index,
-																				),
-																			justifyContent:
-																				'flex-start',
-																			alignItems: 'center',
-																		}}
-																	>
-																		{renderItem(item)}
-																	</li>
-																) : (
-																	<li
-																		{...getItemProps({
-																			item,
-																		})}
-																		on={getItemEvents({
-																			item,
-																		})}
-																		key={`${index + 1}-${
-																			item.value
-																		}`}
-																		style={{
-																			backgroundColor:
-																				this.getBackgroundColor(
-																					highlightedIndex,
-																					index,
-																				),
-																			justifyContent:
-																				'flex-start',
-																			alignItems: 'center',
-																		}}
-																	>
-																		<div
-																			style={{
-																				padding:
-																					'0 10px 0 0',
-																				display: 'flex',
-																			}}
-																		>
-																			<CustomSvg
-																				className={
-																					getClassName(
-																						this.$props
-																							.innerClass,
-																						`${item._suggestion_type}-search-icon`,
-																					) || null
-																				}
-																				icon={getIcon(
-																					item._suggestion_type,
-																				)}
-																				type={`${item._suggestion_type}-search-icon`}
-																			/>
-																		</div>
-																		<SuggestionItem
-																			currentValue={
-																				this.currentValue
-																			}
-																			suggestion={item}
-																		/>
-																		{this.renderAutoFill(item)}
-																	</li>
-																),
-														)}
+														&& this.parsedSuggestions.map((item, itemIndex)=>{
+															const index = indexOffset + itemIndex;
+															if (Array.isArray(item)) {
+																const sectionHtml = xss(item[0].sectionLabel);
+																indexOffset += item.length - 1;
+																return <div class="section-container">
+																	{sectionHtml ? <div
+																		class={`section-header ${getClassName(
+																			this.$props.innerClass,
+																			'section-label',
+																		)}`}
+																		key={`${item[0].sectionId}`}
+																		innerHTML={sectionHtml}
+																	/>: null}
+																	<ul class="section-list">
+																		{item.map(
+																			(sectionItem, sectionIndex) => {
+																				const suggestionsHaveIcon = item.some(s=>s.icon || s.iconURL)
+																				return renderItem?(
+																					<li
+																						{...getItemProps({
+																							item: sectionItem,
+																						})}
+																						on={getItemEvents({
+																							item: sectionItem,
+																						})}
+																						key={index + sectionIndex}
+																						style={{
+																							justifyContent: 'flex-start',
+																							alignItems: 'center',
+																						}}
+																						class={`${
+																							highlightedIndex
+																					=== index + sectionIndex
+																								? `active-li-item ${getClassName(
+																									this.$props.innerClass,
+																									'active-suggestion-item',
+																						  )}`
+																								: `li-item ${getClassName(
+																									this.$props.innerClass,
+																									'suggestion-item',
+																						  )}`
+																						}`}
+																					>
+																						{renderItem(sectionItem)}
+																					</li>
+																				):(
+																					<li
+																						{...getItemProps({
+																							item: sectionItem,
+																						})}
+																						on={getItemEvents({
+																							item: sectionItem,
+																						})}
+																						key={index + sectionIndex}
+																						style={{
+																							justifyContent: 'flex-start',
+																							alignItems: 'center',
+																						}}
+																						class={`${
+																							highlightedIndex
+																					=== index + sectionIndex
+																								? `active-li-item ${getClassName(
+																									this.$props.innerClass,
+																									'active-suggestion-item',
+																						  )}`
+																								: `li-item ${getClassName(
+																									this.$props.innerClass,
+																									'suggestion-item',
+																						  )}`
+																						}`}
+																					>
+																						<div
+																							style={{
+																								padding: '0 10px 0 0',
+																								display: 'flex',
+																							}}
+																						>
+																							<CustomSvg
+																								className={
+																									getClassName(
+																										this.$props
+																											.innerClass,
+																										`${sectionItem._suggestion_type}-search-icon`,
+																									) || null
+																								}
+																								icon={getIcon(
+																									sectionItem._suggestion_type,
+																									sectionItem,
+																									suggestionsHaveIcon
+																								)}
+																								type={`${sectionItem._suggestion_type}-search-icon`}
+																							/>
+																						</div>
+
+																						<SuggestionItem
+																							currentValue={this.currentValue}
+																							suggestion={sectionItem}
+																						/>
+																						{this.renderActionIcon(sectionItem)}
+																					</li>
+																				)
+																			})}</ul>
+																</div>
+															}
+															return <div>No suggestions</div>
+
+														})}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
