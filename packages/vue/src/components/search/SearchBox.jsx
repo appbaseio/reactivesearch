@@ -88,6 +88,7 @@ const SearchBox = defineComponent({
 			showAIScreenFooter: false,
 			showFeedbackComponent: false,
 			feedbackState: null,
+			prefilledAIAnswer: ''
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -149,6 +150,12 @@ const SearchBox = defineComponent({
 		stats() {
 			return getResultStats(this);
 		},
+		mergedAIAnswer(){
+			return this.prefilledAIAnswer || (this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.answer
+						&& this.AIResponse.response.answer.text)
+		}
 	},
 	props: {
 		autoFocus: VueTypes.bool,
@@ -436,11 +443,7 @@ const SearchBox = defineComponent({
 						this.AIResponse
 						&& this.AIResponse.response
 						&& this.AIResponse.response.question,
-					answer:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.answer
-						&& this.AIResponse.response.answer.text,
+					answer: this.mergedAIAnswerc,
 					documentIds:
 						(this.AIResponse
 							&& this.AIResponse.response
@@ -481,6 +484,7 @@ const SearchBox = defineComponent({
 			cause,
 			toggleIsOpen = true,
 			categoryValue = undefined,
+			shouldExecuteQuery = true
 		) {
 			const performUpdate = () => {
 				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
@@ -525,6 +529,7 @@ const SearchBox = defineComponent({
 							this.triggerDefaultQuery(
 								this.currentValue,
 								props.enableAI ? { enableAI: true } : {},
+								shouldExecuteQuery
 							);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -538,6 +543,7 @@ const SearchBox = defineComponent({
 							this.triggerCustomQuery(
 								queryHandlerValue,
 								this.$options.isTagsMode ? undefined : categoryValue,
+								shouldExecuteQuery
 							);
 						} else {
 							this.setValue('', true);
@@ -550,6 +556,7 @@ const SearchBox = defineComponent({
 						this.triggerCustomQuery(
 							queryHandlerValue,
 							this.$options.isTagsMode ? undefined : categoryValue,
+							shouldExecuteQuery
 						);
 					}
 				} else {
@@ -563,7 +570,7 @@ const SearchBox = defineComponent({
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		triggerDefaultQuery(paramValue, meta = {}) {
+		triggerDefaultQuery(paramValue, meta = {}, shouldExecuteQuery = true) {
 			if (!this.$props.autosuggest) {
 				return;
 			}
@@ -589,9 +596,9 @@ const SearchBox = defineComponent({
 				value,
 				componentType: componentTypes.searchBox,
 				meta,
-			});
+			}, shouldExecuteQuery);
 		},
-		triggerCustomQuery(paramValue, categoryValue = undefined) {
+		triggerCustomQuery(paramValue, categoryValue = undefined, shouldExecuteQuery = true) {
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
 			let value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
 			if (this.$options.isTagsMode) {
@@ -619,7 +626,7 @@ const SearchBox = defineComponent({
 				URLParams,
 				componentType: componentTypes.searchBox,
 				category: categoryValue,
-			});
+			}, shouldExecuteQuery);
 		},
 		handleFocus(event) {
 			if (this.$props.autosuggest) {
@@ -740,6 +747,22 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
+			// handle when FAQ suggestion is clicked
+			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
+				this.prefilledAIAnswer = (suggestion._answer);
+				this.showAIScreen = true;
+				this.setValue(
+					suggestion.value,
+					true,
+					this.$props,
+					causes.SUGGESTION_SELECT,
+					true,
+					false,
+					suggestion._category,
+					false
+				);
+				return;
+			}
 			if (!this.$props.enableAI) this.isOpen = false;
 			else {
 				this.showAIScreen = true;
@@ -1222,11 +1245,7 @@ const SearchBox = defineComponent({
 						this.AIResponse
 						&& this.AIResponse.response
 						&& this.AIResponse.response.question,
-					answer:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.answer
-						&& this.AIResponse.response.answer.text,
+					answer: this.mergedAIAnswer,
 					documentIds:
 						(this.AIResponse
 							&& this.AIResponse.response
@@ -1247,10 +1266,7 @@ const SearchBox = defineComponent({
 				<div>
 					<Answer
 						innerHTML={md.render(
-							this.AIResponse
-								&& this.AIResponse.response
-								&& this.AIResponse.response.answer
-								&& this.AIResponse.response.answer.text,
+							this.mergedAIAnswer,
 						)}
 					/>
 					{this.renderAIScreenFooter()}
