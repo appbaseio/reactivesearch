@@ -159,6 +159,8 @@ const SearchBox = defineComponent({
 		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSuggestions: VueTypes.bool.def(false),
+		enableFAQSuggestions: VueTypes.bool.def(false),
+		FAQSuggestionsConfig: VueTypes.shape({sectionLabel: VueTypes.string, size: VueTypes.number}),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -1296,7 +1298,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}_active`],
 	error: state.error[props.componentId],
-
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
