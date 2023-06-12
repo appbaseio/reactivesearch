@@ -587,6 +587,7 @@ const SearchBox = defineComponent({
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
 					) {
+						this.showAIScreen = false
 						this.triggerCustomQuery(
 							queryHandlerValue,
 							this.$options.isTagsMode ? undefined : categoryValue,
@@ -822,7 +823,6 @@ const SearchBox = defineComponent({
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
 				this.prefilledAIAnswer = (suggestion._answer);
-				this.showAIScreen = true;
 				this.setValue(
 					suggestion.value,
 					true,
@@ -833,6 +833,8 @@ const SearchBox = defineComponent({
 					suggestion._category,
 					false
 				);
+				this.isOpen = true
+				this.showAIScreen = true;
 				return;
 			}
 			if (!this.$props.enableAI) this.isOpen = false;
