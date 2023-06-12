@@ -34,7 +34,7 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import Input, { suggestionsContainer, suggestions, searchboxSuggestions, TextArea } from '../../styles/Input';
+import { suggestionsContainer, suggestions, searchboxSuggestions, TextArea } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -163,6 +163,14 @@ const SearchBox = defineComponent({
 			if (Array.isArray(this.suggestions) && this.suggestions.length) {
 				suggestionsArray = [...withClickIds(this.suggestions)];
 			}
+
+			suggestionsArray = suggestionsArray.map(s =>{
+				if(s.sectionId){
+					return s
+				}
+				return {...s, sectionId: s._suggestion_type}
+
+			})
 
 			const sectionsAccumulated = [];
 			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -1618,6 +1626,7 @@ const SearchBox = defineComponent({
 																							}}
 																						>
 																							<CustomSvg
+																								key={`${sectionItem._suggestion_type}-${sectionIndex}`}
 																								className={
 																									getClassName(
 																										this.$props
