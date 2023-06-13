@@ -19,6 +19,7 @@
 					minChars: 4,
 				}"
 				:autosuggest="true"
+				:focus-shortcuts="['CMD + K']"
 			/>
 			<reactive-list
 				componentId="SearchResult"
