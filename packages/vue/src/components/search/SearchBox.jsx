@@ -36,7 +36,7 @@ import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
 import { suggestionsContainer, suggestions, searchboxSuggestions, TextArea } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../styles/IconWrapper';
+import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
@@ -54,6 +54,7 @@ import { TagItem, TagsContainer } from '../../styles/Tags';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import AIFeedback from '../shared/AIFeedback.jsx';
+import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer';
 
 const md = new Remarkable();
 
@@ -259,9 +260,12 @@ const SearchBox = defineComponent({
 		focusShortcuts: VueTypes.arrayOf(
 			VueTypes.oneOfType([VueTypes.string, VueTypes.number]),
 		).def(['/']),
+		showFocusShortcutsIcon: VueTypes.bool.def(true),
 		addonBefore: VueTypes.any,
 		addonAfter: VueTypes.any,
+		showSuggestionsFooter: VueTypes.bool.def(true),
 		expandSuggestionsContainer: VueTypes.bool.def(true),
+		renderSuggestionsFooter: VueTypes.func,
 		index: VueTypes.string,
 		popularSuggestionsConfig: VueTypes.object,
 		recentSuggestionsConfig: VueTypes.object,
@@ -1038,6 +1042,16 @@ const SearchBox = defineComponent({
 			this.showAIScreen = false;
 			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
 		},
+		suggestionsFooter() {
+			return (typeof renderSuggestionsFooter === 'function' ? (
+				this.$props.renderSuggestionsFooter()
+			) : (
+				<AutosuggestFooterContainer>
+					<div>↑↓ Navigate</div>
+					<div>↩ Go</div>
+				</AutosuggestFooterContainer>
+			))
+		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
 			const { renderEnterButton } = this.$slots;
@@ -1064,6 +1078,18 @@ const SearchBox = defineComponent({
 
 			return null;
 		},
+		renderShortcut () {
+			if (this.$props.focusShortcuts && this.$props.focusShortcuts.length) {
+				let shortcut = this.$props.focusShortcuts[0];
+				shortcut = shortcut.toLowerCase();
+				shortcut = shortcut.replace('shift', '⬆️');
+				shortcut = shortcut.replace('command', 'cmd');
+				shortcut = shortcut.replace('control', 'ctrl');
+				shortcut = shortcut.replace('option', 'alt');
+				return shortcut.toUpperCase();
+			}
+			return '/';
+		},
 		renderIcons() {
 			const {
 				iconPosition,
@@ -1072,6 +1098,7 @@ const SearchBox = defineComponent({
 				getMicInstance,
 				showVoiceSearch,
 				showIcon,
+				showFocusShortcutsIcon
 			} = this.$props;
 			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
@@ -1082,6 +1109,11 @@ const SearchBox = defineComponent({
 							<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
 								{this.renderCancelIcon()}
 							</IconWrapper>
+						)}
+						{showFocusShortcutsIcon && (
+							<ButtonIconWrapper onClick={e => this.focusSearchBox(e)}>
+								{this.renderShortcut()}
+							</ButtonIconWrapper>
 						)}
 						{showVoiceSearch && (
 							<Mic
@@ -1658,6 +1690,7 @@ const SearchBox = defineComponent({
 															return <div>No suggestions</div>
 
 														})}
+													{this.$props.showSuggestionsFooter ? this.suggestionsFooter() : null}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
@@ -1686,6 +1719,7 @@ const SearchBox = defineComponent({
 														this.$props.showFocusShortcutsIcon
 													}
 													showVoiceSearch={this.$props.showVoiceSearch}
+													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {

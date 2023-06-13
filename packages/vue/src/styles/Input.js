@@ -5,20 +5,24 @@ const alertBorder = ({ theme }) => `
 	border: 1px solid ${theme.colors.alertColor};
 `;
 
-const input = `
-	width: 100%;
-	line-height: 1.5;
-	min-height: 42px;
-	padding: 8px 12px;
-	border: 1px solid #ccc;
-	background-color: #fafafa;
-	font-size: 0.9rem;
-	outline: none;
-	height: 100%;
-
-	&:focus {
-		background-color: #fff;
-	}
+const input = (searchBox)=>`
+width: 100%;
+line-height: 1.5;
+min-height: 42px;
+padding: 8px 12px;
+border: 1px solid #ccc;
+background-color: #fafafa;
+font-size: 0.9rem;
+outline: none;
+&:focus {
+	background-color: #fff;
+}
+${searchBox
+&& `
+	padding: 8px 12px 9px;
+	border: 1px solid transparent;
+	border-radius: 6px;
+`};
 `;
 
 const dark = (theme) => `
@@ -35,43 +39,37 @@ const darkInput = ({ theme }) => `
 	}
 `;
 
-
 const Input = styled('input')`
-	${input};
+	${props => input(props.searchBox)};
+	${({ themePreset }) => themePreset === 'dark' && darkInput};
 
-	&:focus {
-		background-color: #fff;
-	}
-	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
-
-	${(props) =>
+	${props =>
 		props.showIcon
 		&& props.iconPosition === 'left'
 		&& `
 			padding-left: 36px;
 		`};
 
-	${(props) =>
+	${props =>
 		props.showIcon
 		&& props.iconPosition === 'right'
 		&& `
 			padding-right: 36px;
 		`};
 
-	${(props) =>
+	${props =>
 		// for clear icon
 		props.showClear
 		&& `
 			padding-right: 36px;
 		`};
-	${(props) =>
+	${props =>
 		// for voice search icon
 		props.showVoiceSearch
 		&& `
 			padding-right: 36px;
 		`};
-
-	${(props) =>
+	${props =>
 		// for clear icon with search icon
 		props.showClear
 		&& props.showIcon
@@ -79,8 +77,14 @@ const Input = styled('input')`
 		&& `
 			padding-right: 66px;
 		`};
-
-	${(props) =>
+	${props =>
+		// for voice search icon with clear icon
+		props.showVoiceSearch
+		&& props.showIcon
+		&& `
+			padding-right: 66px;
+		`};
+	${props =>
 		// for voice search icon with search icon
 		props.showVoiceSearch
 		&& props.showIcon
@@ -88,14 +92,7 @@ const Input = styled('input')`
 		&& `
 			padding-right: 66px;
 		`};
-	${(props) =>
-		// for voice search icon with clear icon
-		props.showVoiceSearch
-		&& props.showIcon
-		&& `
-			padding-right: 66px;
-		`};
-	${(props) =>
+	${props =>
 		// for clear icon with search icon and voice search
 		props.showClear
 		&& props.showIcon
@@ -105,7 +102,21 @@ const Input = styled('input')`
 			padding-right: 90px;
 		`};
 
-	${(props) => props.alert && alertBorder};
+	${props => props.alert && alertBorder};
+
+	${props =>
+		props.isOpen
+		&& `
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		`};
+
+	&[type='search']::-webkit-search-decoration,
+	&[type='search']::-webkit-search-cancel-button,
+	&[type='search']::-webkit-search-results-button,
+	&[type='search']::-webkit-search-results-decoration {
+		display: none;
+	}
 `;
 
 const suggestions = (themePreset, theme) => css`
