@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import { styled } from '@appbaseio/vue-emotion';
 
 const AutosuggestFooterContainer = styled('div')`
 	display: flex;
@@ -10,4 +10,4 @@ const AutosuggestFooterContainer = styled('div')`
 	height: 40px;
 `;
 
-export default AutosuggestFooterContainer;
+export default AutosuggestFooterContainer
