@@ -27,6 +27,15 @@ const IconGroup = styled('div')`
 			: `
 					left: 0;
 			  `};
+
+	${({ enableAI }) =>
+		enableAI
+			? `
+		top: 0%;
+	    transform: translateY(0);
+    	height: 42px;
+	`
+			: ''};
 `;
 
 export default IconGroup;

@@ -10,7 +10,7 @@ const InputGroup = styled('div')`
 	${props =>
 		props.isOpen
 		&& 'box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;'}
-};
+	};
 `;
 
 InputGroup.defaultProps = { className: 'input-group' };

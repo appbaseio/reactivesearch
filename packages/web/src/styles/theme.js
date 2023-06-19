@@ -21,11 +21,11 @@ const dark = {
 	typography,
 
 	colors: {
-		textColor: '#fff',
+		textColor: '#ffffffcf',
 		backgroundColor: '#212121',
-		primaryTextColor: '#fff',
+		primaryTextColor: '#ffffffcf',
 		primaryColor: '#2196F3',
-		titleColor: '#fff',
+		titleColor: '#ffffffcf',
 		alertColor: '#d9534f',
 		borderColor: '#666',
 	},
