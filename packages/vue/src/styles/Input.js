@@ -39,6 +39,7 @@ const darkInput = ({ theme }) => `
 	}
 `;
 
+
 const Input = styled('input')`
 	${props => input(props.searchBox)};
 	${({ themePreset }) => themePreset === 'dark' && darkInput};
@@ -118,6 +119,7 @@ const Input = styled('input')`
 		display: none;
 	}
 `;
+
 
 const suggestions = (themePreset, theme) => css`
 	display: block;
@@ -303,10 +305,6 @@ const noSuggestions = (themePreset, theme) => css`
 
 const TextArea = styled('textarea')`
 	${input};
-
-	&:focus {
-		background-color: #fff;
-	}
 	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
 
 	${(props) =>
@@ -414,7 +412,6 @@ const TextArea = styled('textarea')`
 		&& `
 			padding-right: 106px;
 		`};
-
 	${(props) => props.alert && alertBorder};
 	${(props) =>
 		props.isOpen
@@ -431,7 +428,21 @@ const TextArea = styled('textarea')`
 	resize: none;
 	overflow: hidden;
 	height: 42px;
+	${({searchBox})=>searchBox && `
+		background: none;
+		padding:0px;
+		padding-top: 12px;
+		border: none;
+		line-height: inherit;
+		&:focus {
+			background-color: none;
+		}
+	`}
 `;
 
+const Actions = styled('div')`
+	display: flex;
+`
+
 export default Input;
-export { suggestionsContainer, suggestions, input, noSuggestions, searchboxSuggestions, TextArea };
+export { suggestionsContainer, suggestions, input, noSuggestions, searchboxSuggestions, TextArea, Actions };
