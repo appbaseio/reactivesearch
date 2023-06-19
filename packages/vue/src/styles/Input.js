@@ -434,6 +434,7 @@ const TextArea = styled('textarea')`
 		padding-top: 12px;
 		border: none;
 		line-height: inherit;
+		white-space: nowrap;
 		&:focus {
 			background: none;
 		}
