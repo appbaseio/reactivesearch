@@ -1,9 +1,10 @@
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import {ReactiveComponentProps} from './ReactiveComponent'
 
-declare function ReactiveComponentPrivate(props: any): JSX.Element;
-
 interface ReactiveComponentPrivateProps extends ReactiveComponentProps{
-    componentType: string
+  componentType: typeof componentTypes[keyof typeof componentTypes];
 }
+
+declare function ReactiveComponentPrivate(props: ReactiveComponentPrivateProps): JSX.Element;
 
 export default ReactiveComponentPrivate;
