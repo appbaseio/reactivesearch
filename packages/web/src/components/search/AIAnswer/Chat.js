@@ -52,7 +52,7 @@ const Chat = (props) => {
 
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-		if (props.isAIResponseLoading) {
+		if (props.isAIResponseLoading || !props.currentSessionId) {
 			return;
 		}
 		if (inputMessage.trim()) {
@@ -134,7 +134,6 @@ const Chat = (props) => {
 				if (typeof renderEnterButton === 'function') {
 					return renderEnterButton(onEnterButtonClick);
 				}
-
 				return (
 					<SendButton
 						primary
@@ -143,6 +142,7 @@ const Chat = (props) => {
 						onClick={onEnterButtonClick}
 						onKeyPress={handleKeyPress}
 						className={`enter-btn ${getClassName(props.innerClass, 'ai-enter-button')}`}
+						disabled={props.isAIResponseLoading || !props.currentSessionId}
 					>
 						Send
 					</SendButton>
@@ -250,7 +250,11 @@ const Chat = (props) => {
 	}, [inputMessage]);
 
 	return (
-		<ChatContainer theme={props.theme} showInput={props.showInput}>
+		<ChatContainer
+			className="--ai-chat-container"
+			theme={props.theme}
+			showInput={props.showInput}
+		>
 			{/* custom render */}
 			{hasCustomRenderer(props) && getComponent()}
 			{/* Default render */}
@@ -259,6 +263,7 @@ const Chat = (props) => {
 					themePreset={props.themePreset}
 					theme={props.theme}
 					ref={messagesContainerRef}
+					className="--ai-messages-container"
 				>
 					{messages.map((message, index) => (
 						<Message
@@ -331,7 +336,7 @@ const Chat = (props) => {
 								showIcon={props.showIcon}
 								iconPosition={props.iconPosition}
 								themePreset={props.themePreset}
-								disabled={props.isAIResponseLoading}
+								disabled={props.isAIResponseLoading || !props.currentSessionId}
 								className={getClassName(props.innerClass, 'ai-input') || null}
 							/>{' '}
 							{renderIcons()}
