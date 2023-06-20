@@ -8,7 +8,7 @@
 		"preview": "vite preview --port 4173"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.0.0-rc.6.4",
+		"@appbaseio/reactivesearch-vue": "3.0.0-rc.8",
 		"vue": "^3.2.37"
 	},
 	"devDependencies": {
