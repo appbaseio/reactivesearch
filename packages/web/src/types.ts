@@ -202,3 +202,22 @@ export interface endpointConfig {
 	body?: object;
 	method?: string;
 }
+
+export interface AiConfig {
+	systemPrompt?: string;
+	topDocsForContext?: number;
+	maxTokens?: number;
+	docTemplate?: string;
+	queryTemplate?: string;
+	temperature?: number;
+}
+
+export interface AIUIConfig {
+	loaderMessage?: string | children;
+	showSourceDocuments?: boolean;
+	sourceDocumentLabel?: string;
+	onSourceClick?: (sourceObject: object) => void;
+	renderAskButton?: (onAskButtonClick: any) => children;
+	askButton?: boolean;
+	showFeedback?: boolean;
+}

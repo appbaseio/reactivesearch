@@ -70,6 +70,32 @@ const Input = styled('input')`
 			padding-right: 36px;
 		`};
 	${props =>
+			props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 32px;
+		`};
+	${props =>
+			props.showClear
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 50px;
+		`};
+	${props =>
+			props.showIcon
+		&& props.showFocusShortcutsIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+
+	${props =>
+		// for voice search icon with focusshortcut  icon
+			props.showVoiceSearch
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 50px;
+		`};
+	${props =>
 		// for clear icon with search icon
 			props.showClear
 		&& props.showIcon
@@ -93,6 +119,23 @@ const Input = styled('input')`
 			padding-right: 66px;
 		`};
 	${props =>
+		// for voice search icon with focusshortcut  icon and clear icon
+			props.showVoiceSearch
+		&& props.showFocusShortcutsIcon
+		&& props.showClear
+		&& css`
+			padding-right: 80px;
+		`};
+
+	${props =>
+		// for search icon with focusshortcut  icon
+			props.showIcon
+		&& props.showFocusShortcutsIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+	${props =>
 		// for clear icon with search icon and voice search
 			props.showClear
 		&& props.showIcon
@@ -101,7 +144,16 @@ const Input = styled('input')`
 		&& css`
 			padding-right: 90px;
 		`};
-
+	${props =>
+		// for clear icon with search icon, focusshortcut icon and voice search
+			props.showClear
+		&& props.showIcon
+		&& props.showVoiceSearch
+		&& props.iconPosition === 'right'
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 106px;
+		`};
 	${props => props.alert && alertBorder};
 
 	${props =>
@@ -288,6 +340,146 @@ const suggestionsContainer = css`
 	.cancel-icon {
 		cursor: pointer;
 	}
+`;
+
+export const TextArea = styled('textarea')`
+	${props => input(props.searchBox)};
+	${({ themePreset }) => themePreset === 'dark' && darkInput};
+
+	${props =>
+	props.showIcon
+		&& props.iconPosition === 'left'
+		&& css`
+			padding-left: 36px;
+		`};
+
+	${props =>
+			props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 36px;
+		`};
+
+	${props =>
+		// for clear icon
+			props.showClear
+		&& css`
+			padding-right: 36px;
+		`};
+	${props =>
+		// for voice search icon
+			props.showVoiceSearch
+		&& css`
+			padding-right: 36px;
+		`};
+	${props =>
+			props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 32px;
+		`};
+	${props =>
+			props.showClear
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 50px;
+		`};
+	${props =>
+			props.showIcon
+		&& props.showFocusShortcutsIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+
+	${props =>
+		// for voice search icon with focusshortcut  icon
+			props.showVoiceSearch
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 50px;
+		`};
+	${props =>
+		// for clear icon with search icon
+			props.showClear
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+	${props =>
+		// for voice search icon with clear icon
+			props.showVoiceSearch
+		&& props.showIcon
+		&& css`
+			padding-right: 66px;
+		`};
+	${props =>
+		// for voice search icon with search icon
+			props.showVoiceSearch
+		&& props.showIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+
+	${props =>
+		// for voice search icon with focusshortcut  icon and clear icon
+			props.showVoiceSearch
+		&& props.showFocusShortcutsIcon
+		&& props.showClear
+		&& css`
+			padding-right: 80px;
+		`};
+
+	${props =>
+		// for search icon with focusshortcut  icon
+			props.showIcon
+		&& props.showFocusShortcutsIcon
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 66px;
+		`};
+
+	${props =>
+		// for clear icon with search icon and voice search
+			props.showClear
+		&& props.showIcon
+		&& props.showVoiceSearch
+		&& props.iconPosition === 'right'
+		&& css`
+			padding-right: 90px;
+		`};
+
+	${props =>
+		// for clear icon with search icon, focusshortcut icon and voice search
+			props.showClear
+		&& props.showIcon
+		&& props.showVoiceSearch
+		&& props.iconPosition === 'right'
+		&& props.showFocusShortcutsIcon
+		&& css`
+			padding-right: 106px;
+		`};
+
+	${props => props.alert && alertBorder};
+
+	${props =>
+			props.isOpen
+		&& css`
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		`};
+
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		display: none;
+	}
+
+	resize: none;
+	overflow: hidden;
+	height: 42px;
 `;
 
 export default Input;
