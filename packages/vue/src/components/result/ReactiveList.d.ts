@@ -52,4 +52,4 @@ interface ReactiveListProps extends CommonProps {
 
 declare function ReactiveList(props: ReactiveListProps): JSX.Element;
 
-export default ReactiveList
+export default ReactiveList;
