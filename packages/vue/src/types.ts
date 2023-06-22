@@ -202,3 +202,21 @@ export interface endpointConfig {
 	body?: object;
 	method?: string;
 }
+
+export interface AIConfig {
+	systemPrompt?: string;
+	topDocsForContext?: number;
+	maxTokens?: number;
+	docTemplate?: string;
+	queryTemplate?: string;
+	temperature?: number;
+}
+export interface AIUIConfig {
+	loaderMessage: string; // slot #loaderMessage should also be supported
+	showSourceDocuments: boolean;
+	sourceDocumentLabel: string;
+	onSourceClick: (source: Object) => void;
+	renderAskButton: (onClick: Function) => any;
+	askButton: boolean;
+	showFeedback: boolean;
+}
