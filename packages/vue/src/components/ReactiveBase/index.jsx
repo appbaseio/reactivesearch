@@ -31,7 +31,7 @@ const ReactiveBase = {
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
-		theme: VueTypes.object.def({}),
+		theme: VueTypes.oneOf([VueTypes.bool, VueTypes.object.def({})]),
 		themePreset: VueTypes.string.def('light'),
 		type: types.string,
 		url: types.string,
@@ -275,6 +275,7 @@ const ReactiveBase = {
 					className={className}
 					getSearchParams={this.getSearchParams}
 					setSearchParams={this.setSearchParams}
+					userThemeProp={this.$props.theme}
 				>
 					{children()}
 				</URLParamsProvider>

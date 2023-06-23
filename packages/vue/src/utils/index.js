@@ -15,20 +15,26 @@ export const connect = (...args) => connectToStore(...args);
 
 export const X_SEARCH_CLIENT = 'ReactiveSearch Vue';
 
-export const composeThemeObject = (ownTheme = {}, userTheme = {}) => ({
-	typography: {
-		...ownTheme.typography,
-		...userTheme.typography,
-	},
-	colors: {
-		...ownTheme.colors,
-		...userTheme.colors,
-	},
-	component: {
-		...ownTheme.component,
-		...userTheme.component,
-	},
-});
+export const composeThemeObject = (ownTheme = {}, userThemeParam = {}) => {
+	let userTheme = {};
+	if (typeof userThemeParam !== 'boolean' && Object.keys(userThemeParam).length) {
+		userTheme = { ...userThemeParam };
+	}
+	return {
+		typography: {
+			...ownTheme.typography,
+			...userTheme.typography,
+		},
+		colors: {
+			...ownTheme.colors,
+			...userTheme.colors,
+		},
+		component: {
+			...ownTheme.component,
+			...userTheme.component,
+		},
+	};
+};
 /**
  * To determine wether an element is a function
  * @param {any} element
@@ -120,15 +126,15 @@ export const hasQuerySuggestionsRenderer = (_ref = {}) => {
  * @returns {string}
  */
 export const getCamelCase = (str = '') => {
-	const propsWhichRequirePascalCase = ['u-r-l-params']
+	const propsWhichRequirePascalCase = ['u-r-l-params'];
 	const arr = str.split('-');
 	const capital = arr.map((item, index) =>
 		index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item,
 	);
 	// ^-- change here.
 	let capitalString = capital.join('');
-	if(propsWhichRequirePascalCase.includes(str))
-		capitalString = capitalString[0].toUpperCase() + capitalString.substring(1)
+	if (propsWhichRequirePascalCase.includes(str))
+		capitalString = capitalString[0].toUpperCase() + capitalString.substring(1);
 	return capitalString || '';
 };
 
