@@ -304,15 +304,8 @@ const noSuggestions = (themePreset, theme) => css`
 `;
 
 const TextArea = styled('textarea')`
-	${input};
+	${(props) => input(props.searchBox)};
 	${({ themePreset, theme }) => themePreset === 'dark' && darkInput({ theme })};
-
-	${(props) =>
-		props.showIcon
-		&& props.iconPosition === 'left'
-		&& `
-			padding-left: 36px;
-		`};
 
 	${(props) =>
 		props.showIcon
@@ -428,18 +421,7 @@ const TextArea = styled('textarea')`
 	resize: none;
 	overflow: hidden;
 	height: 42px;
-	${({ searchBox }) =>
-		searchBox
-		&& `
-		background: none;
-		padding:0px;
-		padding-top: 12px;
-		border: none;
-		line-height: inherit;
-		&:focus {
-			background: none;
-		}
-	`}
+	padding-left: 0;
 `;
 
 const Actions = styled('div')`

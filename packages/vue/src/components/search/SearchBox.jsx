@@ -1421,7 +1421,6 @@ const SearchBox = defineComponent({
 				const height = Math.min(textArea.scrollHeight, maxHeight);
 				textArea.style.height = `${height}px`;
 				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
-
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
 					dropdownEle.style.top = `${textArea.style.height}`;
