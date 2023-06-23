@@ -5,7 +5,7 @@ import {
 	componentTypes,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { defineComponent } from 'vue';
-import { fetchAIResponse } from '@appbaseio/reactivecore/lib/actions/query';
+import { fetchAIResponse, createAISession } from '@appbaseio/reactivecore/lib/actions/query';
 import { Remarkable } from 'remarkable';
 
 import {
@@ -119,6 +119,7 @@ const AIAnswer = defineComponent({
 		isLoading: types.boolRequired,
 		sessionIdFromStore: VueTypes.string,
 		showComponent: types.boolRequired,
+		componentError: types.componentObject,
 		style: types.style,
 	},
 	mounted() {},
@@ -208,8 +209,54 @@ const AIAnswer = defineComponent({
 		messages() {
 			this.scrollToBottom();
 		},
+		componentError(newVal) {
+			if (newVal && newVal._bodyBlob) {
+				this.AISessionId
+					= (
+						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+							this.$props.componentId
+						] || {}
+					).sessionId || null;
+				if (!this.AISessionId) {
+					this.generateNewSessionId();
+				}
+				newVal._bodyBlob
+					.text()
+					.then((textData) => {
+						try {
+							const parsedErrorRes = JSON.parse(textData);
+							if (parsedErrorRes.error) {
+								this.error = parsedErrorRes.error;
+
+								this.$emit('on-data', {
+									data: this.messages,
+									rawData: this.$props.rawData,
+									loading:
+										this.$props.isAIResponseLoading || this.$props.isLoading,
+									error: parsedErrorRes.error,
+								});
+							}
+						} catch (error) {
+							console.error('Error parsing component error JSON:', error);
+						}
+					})
+					.catch((error) => {
+						console.error('Error reading  component error text data:', error);
+					});
+			}
+		},
 	},
 	methods: {
+		generateNewSessionId() {
+			const newSessionPromise = this.createAISession();
+			newSessionPromise
+				.then((res) => {
+					this.AISessionId = res.AIsessionId;
+				})
+				.catch((e) => {
+					console.error(e);
+				});
+		},
 		scrollToBottom() {
 			this.$nextTick(() => {
 				const messageContainer = this.$refs?.[this.$props.innerRef];
@@ -291,7 +338,7 @@ const AIAnswer = defineComponent({
 									? this.error.message
 									: 'There was an error in generating the response.'}{' '}
 								{this.error?.code
-									? `Code:
+									? `, Code:
 							${this.error.code}`
 									: ''}
 							</span>
@@ -383,7 +430,6 @@ const AIAnswer = defineComponent({
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
 			const { renderEnterButton } = this.$slots;
-
 			if (enterButton) {
 				const getEnterButtonMarkup = () => {
 					if (renderEnterButton) {
@@ -460,7 +506,7 @@ const AIAnswer = defineComponent({
 			return null;
 		}
 		return (
-			<Chatbox style={props.style} class="--ai-chat-box-wrapper">
+			<Chatbox style={props.style || {}}>
 				{this.$props.title && (
 					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
 						{this.$props.title}
@@ -604,11 +650,13 @@ const mapStateToProps = (state, props) => {
 				&& state.AIResponses[props.componentId].response
 				&& state.AIResponses[props.componentId].response.sessionId)
 			|| '',
+		componentError: state.error[props.componentId],
 	};
 };
 const mapDispatchToProps = {
 	getAIResponse: fetchAIResponse,
 	trackUsefullness: recordAISessionUsefulness,
+	createAISession,
 };
 export const AIConnected = PreferencesConsumer(
 	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(AIAnswer), {

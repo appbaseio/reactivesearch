@@ -166,10 +166,17 @@
     tocbot "4.5.0"
     yarn "^1.22.18"
 
+<<<<<<< HEAD
 "@appbaseio/reactivecore@10.0.0-alpha.10":
   version "10.0.0-alpha.10"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.10.tgz#595923181a79b8c7a88d4dfd6b8a5951b8d821f7"
   integrity sha512-cc5fTjsjPio8dzDHtfwh3KKkns3208lv1d+io+dd6qFrDKJsjBMSQUySQu/mj2ffTgJHlpc3J8HMgPQnWKyZ6A==
+=======
+"@appbaseio/reactivecore@10.0.0-alpha.25":
+  version "10.0.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.25.tgz#a93921ae90a73b9ac25bfcef71755514d99f9971"
+  integrity sha512-iemIE58vdq62L88kwAkyrcIPeYJ1GMMsfLdC3HrUPKibE1O4rhQ4ESchNCTyFpSLwBInIpq6nG9x0AeAzEzVTA==
+>>>>>>> vue-ai-chat-box
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -177,6 +184,7 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
+<<<<<<< HEAD
 "@appbaseio/reactivecore@10.0.0-alpha.25":
   version "10.0.0-alpha.25"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.25.tgz#a93921ae90a73b9ac25bfcef71755514d99f9971"
@@ -199,6 +207,8 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
+=======
+>>>>>>> vue-ai-chat-box
 "@appbaseio/reactivecore@9.14.40":
   version "9.14.40"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.40.tgz#346cac1a476b4e9b5e9305e849746fd858d947f1"
@@ -227,6 +237,7 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
+<<<<<<< HEAD
 "@appbaseio/reactivesearch-vue@3.0.0-rc.1":
   version "3.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.1.tgz#4eabddc30e440578f4d8e1f1a42c9983a662a5ac"
@@ -234,6 +245,15 @@
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
     "@appbaseio/reactivecore" "10.0.0-alpha.4"
+=======
+"@appbaseio/reactivesearch-vue@3.0.0-rc.6.4":
+  version "3.0.0-rc.6.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.4.tgz#cbaaa49ff326a239114f6576606fbe5d2e2db0b1"
+  integrity sha512-ZKJCxjRIt+3Rv/E1Ua2fgTN0P6aLMeuLd7cXydFau4gXoAo7ws/K6QZYstEcvLVUNaQ/2+Sgu4zy8esl4blzbw==
+  dependencies:
+    "@appbaseio/analytics" "^1.2.0-alpha.1"
+    "@appbaseio/reactivecore" "10.0.0-alpha.25"
+>>>>>>> vue-ai-chat-box
     "@appbaseio/vue-emotion" "0.6.0-alpha.6"
     "@emotion/css" "^11.10.5"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
@@ -244,6 +264,7 @@
     ngeohash "^0.6.3"
     polished "^2.2.0"
     redux "^4.0.0"
+    remarkable "^2.0.1"
     url-search-params-polyfill "^7.0.0"
     vue-google-maps-community-fork "^0.1.7"
     vue-highlight-words "^1.2.0"
@@ -251,6 +272,7 @@
     vue-slider-component next
     vue-types "^5.0.2"
 
+<<<<<<< HEAD
 "@appbaseio/reactivesearch@4.0.0-rc.8":
   version "4.0.0-rc.8"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.8.tgz#476b2a7c3e5b9703e9b709c6dcbb8030aa93ed6e"
@@ -258,6 +280,15 @@
   dependencies:
     "@appbaseio/analytics" "^1.1.1"
     "@appbaseio/reactivecore" "10.0.0-alpha.10"
+=======
+"@appbaseio/reactivesearch@4.0.0-rc.18.2":
+  version "4.0.0-rc.18.2"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.18.2.tgz#e98c2e5b134ea6f1b2003729bb134bd767f7a8d1"
+  integrity sha512-dAKJNRSkuCeUCOXzHHbG6U3t8cjtK/8BJkrTQijYdvN7LzfTWv6KwQCeKDlNrnAai7Swcq/+3Uiv4H4AhEKItA==
+  dependencies:
+    "@appbaseio/analytics" "^1.2.0-alpha.1"
+    "@appbaseio/reactivecore" "10.0.0-alpha.25"
+>>>>>>> vue-ai-chat-box
     "@appbaseio/rheostat" "^1.0.0-alpha.15"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -542,6 +573,14 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.22.1.tgz#ac3a56dbada59ed969d712cf527bd8271fe3eba8"
   integrity sha512-Z2tgopurB/kTbidvzeBrc2To3PUP/9i5MUe+fU6QJCQDyPwSH2oRapkLw3KGECDYSjhQZCNxEvNvZlLw8JjGwA==
 
+<<<<<<< HEAD
+=======
+"@babel/helper-environment-visitor@^7.21.5":
+  version "7.21.5"
+  resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.21.5.tgz#c769afefd41d171836f7cb63e295bedf689d48ba"
+  integrity sha512-IYl4gZ3ETsWocUWgsFZLM5i1BYx9SoemminVEXadgLBa9TdeorzgLKm8wWLA6J1N/kT3Kch8XIk1laNzYoHKvQ==
+
+>>>>>>> vue-ai-chat-box
 "@babel/helper-function-name@7.0.0-beta.44":
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.0.0-beta.44.tgz#e18552aaae2231100a6e485e03854bc3532d44dd"
@@ -595,7 +634,11 @@
   dependencies:
     "@babel/types" "^7.21.4"
 
+<<<<<<< HEAD
 "@babel/helper-module-transforms@^7.12.1", "@babel/helper-module-transforms@^7.18.6", "@babel/helper-module-transforms@^7.20.11", "@babel/helper-module-transforms@^7.21.5", "@babel/helper-module-transforms@^7.22.1":
+=======
+"@babel/helper-module-transforms@^7.12.1", "@babel/helper-module-transforms@^7.18.6", "@babel/helper-module-transforms@^7.20.11", "@babel/helper-module-transforms@^7.22.1":
+>>>>>>> vue-ai-chat-box
   version "7.22.1"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-transforms/-/helper-module-transforms-7.22.1.tgz#e0cad47fedcf3cae83c11021696376e2d5a50c63"
   integrity sha512-dxAe9E7ySDGbQdCVOY/4+UcD8M9ZFqZcZhSPsPacvCG4M+9lwtDDQfI2EoaSvmf7W/8yCBkGU0m7Pvt1ru3UZw==
@@ -733,10 +776,17 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.4.tgz#a770e98fd785c231af9d93f6459d36770993fb32"
   integrity sha512-VLLsx06XkEYqBtE5YGPwfSGwfrjnyPP5oiGty3S8pQLFDFLaS8VwWSIxkTXpcvr5zeYLE6+MBNl2npl/YnfofA==
 
+<<<<<<< HEAD
 "@babel/parser@^7.16.4":
   version "7.20.13"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.20.13.tgz#ddf1eb5a813588d2fb1692b70c6fce75b945c088"
   integrity sha512-gFDLKMfpiXCsjt4za2JA9oTMn70CeseCehb11kRZgvd7+F67Hih3OHOK24cRrWECJ/ljfPGac6ygXAs/C8kIvw==
+=======
+"@babel/parser@^7.21.5":
+  version "7.21.8"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.8.tgz#642af7d0333eab9c0ad70b14ac5e76dbde7bfdf8"
+  integrity sha512-6zavDGdzG3gUqAdWvlLFfk+36RilI+Pwyuuh7HItyeScCWP3k6i8vKclAQ0bM/0y/Kz/xiwvxhMv9MgTJP5gmA==
+>>>>>>> vue-ai-chat-box
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.18.6":
   version "7.18.6"
@@ -1790,10 +1840,26 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+<<<<<<< HEAD
 "@babel/types@^7.0.0", "@babel/types@^7.0.0-beta.49", "@babel/types@^7.12.11", "@babel/types@^7.12.6", "@babel/types@^7.12.7", "@babel/types@^7.15.4", "@babel/types@^7.16.8", "@babel/types@^7.18.6", "@babel/types@^7.18.9", "@babel/types@^7.2.0", "@babel/types@^7.20.0", "@babel/types@^7.20.5", "@babel/types@^7.20.7", "@babel/types@^7.21.0", "@babel/types@^7.21.3", "@babel/types@^7.21.4", "@babel/types@^7.21.5", "@babel/types@^7.22.0", "@babel/types@^7.22.3", "@babel/types@^7.22.4", "@babel/types@^7.3.3", "@babel/types@^7.4.4", "@babel/types@^7.6.1", "@babel/types@^7.7.0", "@babel/types@^7.9.6":
   version "7.22.4"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.22.4.tgz#56a2653ae7e7591365dabf20b76295410684c071"
   integrity sha512-Tx9x3UBHTTsMSW85WB2kphxYQVvrZ/t1FxD88IpSgIjiUJlCm9z+xWIDwyo1vffTwSqteqyznB8ZE9vYYk16zA==
+=======
+"@babel/types@^7.0.0", "@babel/types@^7.0.0-beta.49", "@babel/types@^7.12.11", "@babel/types@^7.12.6", "@babel/types@^7.12.7", "@babel/types@^7.15.4", "@babel/types@^7.16.8", "@babel/types@^7.18.6", "@babel/types@^7.18.9", "@babel/types@^7.2.0", "@babel/types@^7.20.0", "@babel/types@^7.20.5", "@babel/types@^7.20.7", "@babel/types@^7.21.3", "@babel/types@^7.22.0", "@babel/types@^7.22.3", "@babel/types@^7.22.4", "@babel/types@^7.3.3", "@babel/types@^7.4.4", "@babel/types@^7.6.1", "@babel/types@^7.7.0", "@babel/types@^7.9.6":
+  version "7.22.4"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.22.4.tgz#56a2653ae7e7591365dabf20b76295410684c071"
+  integrity sha512-Tx9x3UBHTTsMSW85WB2kphxYQVvrZ/t1FxD88IpSgIjiUJlCm9z+xWIDwyo1vffTwSqteqyznB8ZE9vYYk16zA==
+  dependencies:
+    "@babel/helper-string-parser" "^7.21.5"
+    "@babel/helper-validator-identifier" "^7.19.1"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.21.0", "@babel/types@^7.21.4", "@babel/types@^7.21.5":
+  version "7.21.5"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.21.5.tgz#18dfbd47c39d3904d5db3d3dc2cc80bedb60e5b6"
+  integrity sha512-m4AfNvVF2mVC/F7fDEdH2El3HzUg9It/XsCxZiOTTA3m3qYfcSVSbTfM6Q9xG+hYDniZssYhlXKKUMD5m8tF4Q==
+>>>>>>> vue-ai-chat-box
   dependencies:
     "@babel/helper-string-parser" "^7.21.5"
     "@babel/helper-validator-identifier" "^7.19.1"
@@ -7873,6 +7939,7 @@
     estree-walker "^2.0.2"
     source-map-js "^1.0.2"
 
+<<<<<<< HEAD
 "@vue/compiler-dom@3.2.45":
   version "3.2.45"
   resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.2.45.tgz#c43cc15e50da62ecc16a42f2622d25dc5fd97dce"
@@ -7881,6 +7948,8 @@
     "@vue/compiler-core" "3.2.45"
     "@vue/shared" "3.2.45"
 
+=======
+>>>>>>> vue-ai-chat-box
 "@vue/compiler-dom@3.3.4", "@vue/compiler-dom@^3.2.0":
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.3.4.tgz#f56e09b5f4d7dc350f981784de9713d823341151"
@@ -7898,6 +7967,7 @@
     postcss "^8.4.14"
     source-map "^0.6.1"
 
+<<<<<<< HEAD
 "@vue/compiler-sfc@3.2.45":
   version "3.2.45"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.2.45.tgz#7f7989cc04ec9e7c55acd406827a2c4e96872c70"
@@ -7914,6 +7984,8 @@
     postcss "^8.1.10"
     source-map "^0.6.1"
 
+=======
+>>>>>>> vue-ai-chat-box
 "@vue/compiler-sfc@3.3.4", "@vue/compiler-sfc@^3.0.11", "@vue/compiler-sfc@^3.1.0", "@vue/compiler-sfc@^3.2.0", "@vue/compiler-sfc@^3.3.4":
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.3.4.tgz#b19d942c71938893535b46226d602720593001df"
@@ -11421,11 +11493,6 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
-
-bootstrap@^5.2.3:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.0.tgz#0718a7cc29040ee8dbf1bd652b896f3436a87c29"
-  integrity sha512-UnBV3E3v4STVNQdms6jSGO2CvOkjUMdDAVR2V5N4uCMdaIkaQjbcEAMqRimDHIs4uqBYzDAKCQwCB+97tJgHQw==
 
 bowser@^1.0.0, bowser@^1.7.3:
   version "1.9.4"
@@ -35510,10 +35577,22 @@ tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
+<<<<<<< HEAD
 tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.0, tslib@^2.4.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
   integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
+=======
+tslib@^2.0.0, tslib@^2.0.1, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.4.0:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.2.tgz#1b6f07185c881557b0ffa84b111a0106989e8338"
+  integrity sha512-5svOrSA2w3iGFDs1HibEVBGbDrAY82bFQ3HZ3ixB+88nsbsWQoKqDRb5UBYAUPEzbBn6dAp5gRNXglySbx1MlA==
+
+tslib@^2.3.0:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.5.3.tgz#24944ba2d990940e6e982c4bea147aba80209913"
+  integrity sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==
+>>>>>>> vue-ai-chat-box
 
 tslib@~2.4.0:
   version "2.4.1"
@@ -35688,15 +35767,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typescript@3.4.5:
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
-  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
-
-typescript@^2.8.1:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
-  integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
+typescript@^5.0.0:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.3.tgz#8d84219244a6b40b6fb2b33cc1c062f715b9e826"
+  integrity sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.19, ua-parser-js@^0.7.30:
   version "0.7.35"
@@ -36948,6 +37022,7 @@ vue-types@^5.0.2:
   dependencies:
     is-plain-object "5.0.0"
 
+<<<<<<< HEAD
 vue@3, vue@^3.2.37, vue@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
@@ -36971,12 +37046,26 @@ vue@^3.2.45, vue@^3.2.5:
   version "3.2.45"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.45.tgz#94a116784447eb7dbd892167784619fef379b3c8"
   integrity sha512-9Nx/Mg2b2xWlXykmCwiTUCWHbWIj53bnkizBxKai1g61f2Xit700A1ljowpTIM11e3uipOeiPcSqnmBg6gyiaA==
+=======
+vue@3, vue@^3.2.45, vue@^3.2.5, vue@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
+  integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
+>>>>>>> vue-ai-chat-box
   dependencies:
     "@vue/compiler-dom" "3.2.45"
     "@vue/compiler-sfc" "3.2.45"
     "@vue/runtime-dom" "3.2.45"
     "@vue/server-renderer" "3.2.45"
     "@vue/shared" "3.2.45"
+
+vue@^2.6.11, vue@^2.7.7:
+  version "2.7.14"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.7.14.tgz#3743dcd248fd3a34d421ae456b864a0246bafb17"
+  integrity sha512-b2qkFyOM0kwqWFuQmgd4o+uHGU7T+2z3T+WQp8UBjADfEv2n4FEMffzBmCKNP0IGzOEEfYjvtcC62xaSKeQDrQ==
+  dependencies:
+    "@vue/compiler-sfc" "2.7.14"
+    csstype "^3.1.0"
 
 vuejs-paginate@^2.1.0:
   version "2.1.0"
