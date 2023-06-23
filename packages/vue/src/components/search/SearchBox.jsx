@@ -1766,9 +1766,6 @@ const SearchBox = defineComponent({
 												<TextArea
 													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
-													showIcon={this.$props.showIcon}
-													showClear={this.$props.showClear}
-													iconPosition={this.$props.iconPosition}
 													ref={this.$props.innerRef}
 													class={getClassName(
 														this.$props.innerClass,
@@ -1777,10 +1774,6 @@ const SearchBox = defineComponent({
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
 													searchBox
-													showFocusShortcutsIcon={
-														this.$props.showFocusShortcutsIcon
-													}
-													showVoiceSearch={this.$props.showVoiceSearch}
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {
