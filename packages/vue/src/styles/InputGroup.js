@@ -7,17 +7,19 @@ const InputGroup = styled('div')`
 	box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
 	border-radius: 6px;
 
-	${({theme, searchBox}) => searchBox
-		&& `background-color: ${theme.colors.backgroundColor|| '#fafafa'};
+	${({ theme, searchBox }) =>
+		searchBox
+		&& `background-color: ${theme.colors.backgroundColor || '#fafafa'};
 		color: ${theme.colors.textColor || '#fff'};
 
 		&:focus-within {
 			background-color: ${theme.colors.backgroundColor || '#fff'};
-		}`
-}
-	${props =>
+		}`}
+	${(props) =>
 		props.isOpen
-		&& 'box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;'}
+		&& `box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+		border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;`}
 	};
 `;
 

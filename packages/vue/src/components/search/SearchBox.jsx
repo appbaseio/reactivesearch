@@ -39,7 +39,7 @@ import {
 	suggestions,
 	searchboxSuggestions,
 	TextArea,
-	Actions as ActionsContainer
+	Actions as ActionsContainer,
 } from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
@@ -1063,17 +1063,19 @@ const SearchBox = defineComponent({
 			}
 			return '/';
 		},
-		renderLeftIcons(){
-			const {iconPosition, showIcon} = this.$props
-			return <div>
-				<IconGroup groupPosition="left">
-					{iconPosition === 'left' && showIcon && (
-						<IconWrapper onClick={this.handleSearchIconClick}>
-							{this.renderIcon()}
-						</IconWrapper>
-					)}
-				</IconGroup>
-			</div>
+		renderLeftIcons() {
+			const { iconPosition, showIcon } = this.$props;
+			return (
+				<div>
+					<IconGroup groupPosition="left">
+						{iconPosition === 'left' && showIcon && (
+							<IconWrapper onClick={this.handleSearchIconClick}>
+								{this.renderIcon()}
+							</IconWrapper>
+						)}
+					</IconGroup>
+				</div>
+			);
 		},
 		renderRightIcons() {
 			const {
@@ -1752,13 +1754,18 @@ const SearchBox = defineComponent({
 								};
 								return (
 									<div class={suggestionsContainer}>
-										<InputGroup searchBox ref={_inputGroupRef}>
+										<InputGroup
+											searchBox
+											ref={_inputGroupRef}
+											isOpen={this.$data.isOpen}
+										>
 											<ActionsContainer>
 												{this.renderInputAddonBefore()}
 												{this.renderLeftIcons()}
 											</ActionsContainer>
 											<InputWrapper>
 												<TextArea
+													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
 													showIcon={this.$props.showIcon}
 													showClear={this.$props.showClear}

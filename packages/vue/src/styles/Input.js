@@ -5,7 +5,7 @@ const alertBorder = ({ theme }) => `
 	border: 1px solid ${theme.colors.alertColor};
 `;
 
-const input = (searchBox)=>`
+const input = (searchBox) => `
 width: 100%;
 line-height: 1.5;
 min-height: 42px;
@@ -17,12 +17,14 @@ outline: none;
 &:focus {
 	background-color: #fff;
 }
-${searchBox
-&& `
+${
+	searchBox
+	&& `
 	padding: 8px 12px 9px;
 	border: 1px solid transparent;
 	border-radius: 6px;
-`};
+`
+};
 `;
 
 const dark = (theme) => `
@@ -39,38 +41,37 @@ const darkInput = ({ theme }) => `
 	}
 `;
 
-
 const Input = styled('input')`
-	${props => input(props.searchBox)};
+	${(props) => input(props.searchBox)};
 	${({ themePreset }) => themePreset === 'dark' && darkInput};
 
-	${props =>
+	${(props) =>
 		props.showIcon
 		&& props.iconPosition === 'left'
 		&& `
 			padding-left: 36px;
 		`};
 
-	${props =>
+	${(props) =>
 		props.showIcon
 		&& props.iconPosition === 'right'
 		&& `
 			padding-right: 36px;
 		`};
 
-	${props =>
+	${(props) =>
 		// for clear icon
 		props.showClear
 		&& `
 			padding-right: 36px;
 		`};
-	${props =>
+	${(props) =>
 		// for voice search icon
 		props.showVoiceSearch
 		&& `
 			padding-right: 36px;
 		`};
-	${props =>
+	${(props) =>
 		// for clear icon with search icon
 		props.showClear
 		&& props.showIcon
@@ -78,14 +79,14 @@ const Input = styled('input')`
 		&& `
 			padding-right: 66px;
 		`};
-	${props =>
+	${(props) =>
 		// for voice search icon with clear icon
 		props.showVoiceSearch
 		&& props.showIcon
 		&& `
 			padding-right: 66px;
 		`};
-	${props =>
+	${(props) =>
 		// for voice search icon with search icon
 		props.showVoiceSearch
 		&& props.showIcon
@@ -93,7 +94,7 @@ const Input = styled('input')`
 		&& `
 			padding-right: 66px;
 		`};
-	${props =>
+	${(props) =>
 		// for clear icon with search icon and voice search
 		props.showClear
 		&& props.showIcon
@@ -103,9 +104,9 @@ const Input = styled('input')`
 			padding-right: 90px;
 		`};
 
-	${props => props.alert && alertBorder};
+	${(props) => props.alert && alertBorder};
 
-	${props =>
+	${(props) =>
 		props.isOpen
 		&& `
 			border-bottom-left-radius: 0;
@@ -119,7 +120,6 @@ const Input = styled('input')`
 		display: none;
 	}
 `;
-
 
 const suggestions = (themePreset, theme) => css`
 	display: block;
@@ -415,7 +415,7 @@ const TextArea = styled('textarea')`
 	${(props) => props.alert && alertBorder};
 	${(props) =>
 		props.isOpen
-		&& css`
+		&& `
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 		`};
@@ -428,7 +428,9 @@ const TextArea = styled('textarea')`
 	resize: none;
 	overflow: hidden;
 	height: 42px;
-	${({searchBox})=>searchBox && `
+	${({ searchBox }) =>
+		searchBox
+		&& `
 		background: none;
 		padding:0px;
 		padding-top: 12px;
@@ -443,7 +445,15 @@ const TextArea = styled('textarea')`
 
 const Actions = styled('div')`
 	display: flex;
-`
+`;
 
 export default Input;
-export { suggestionsContainer, suggestions, input, noSuggestions, searchboxSuggestions, TextArea, Actions };
+export {
+	suggestionsContainer,
+	suggestions,
+	input,
+	noSuggestions,
+	searchboxSuggestions,
+	TextArea,
+	Actions,
+};
