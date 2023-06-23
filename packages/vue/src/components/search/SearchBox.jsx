@@ -1132,7 +1132,7 @@ const SearchBox = defineComponent({
 				return;
 			}
 
-			this.$refs?.[this.$props.innerRef]?.focus(); // eslint-disable-line
+			this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 		},
 		listenForFocusShortcuts() {
 			const { focusShortcuts = ['/'] } = this.$props;
