@@ -1746,7 +1746,9 @@ const SearchBox = defineComponent({
 																return <div>No suggestions</div>;
 															},
 														)}
-													{this.$props.showSuggestionsFooter
+													{!this.showAIScreen
+													&& this.parsedSuggestions.length
+													&& this.$props.showSuggestionsFooter
 														? this.suggestionsFooter()
 														: null}
 												</ul>
