@@ -230,33 +230,6 @@
     vue-slider-component next
     vue-types "^5.0.2"
 
-"@appbaseio/reactivesearch@4.0.0-rc.18.2":
-  version "4.0.0-rc.18.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.18.2.tgz#e98c2e5b134ea6f1b2003729bb134bd767f7a8d1"
-  integrity sha512-dAKJNRSkuCeUCOXzHHbG6U3t8cjtK/8BJkrTQijYdvN7LzfTWv6KwQCeKDlNrnAai7Swcq/+3Uiv4H4AhEKItA==
-  dependencies:
-    "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.25"
-    "@appbaseio/rheostat" "^1.0.0-alpha.15"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^5.2.0"
-    cross-env "^5.2.0"
-    dayjs "^1.11.7"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    remarkable "^2.0.1"
-    url-search-params-polyfill "^7.0.0"
-    xss "^1.0.11"
-
 "@appbaseio/reactivesearch@^3.29.0":
   version "3.43.10"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.10.tgz#2c738f048ba6d3a8b049c2d120c3d482f3dd9e9f"
