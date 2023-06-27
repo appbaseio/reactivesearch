@@ -1202,11 +1202,15 @@ const SearchBox = (props) => {
 
 	const renderAIScreenFooter = () => {
 		const { AIUIConfig = {} } = props;
-		const {
-			showSourceDocuments = true,
-			sourceDocumentLabel = '_id',
-			onSourceClick = () => {},
-		} = AIUIConfig || {};
+		const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+
+		const renderSourceDocumentLabel = (sourceObj) => {
+			if (props.AIUIConfig && props.AIUIConfig.renderSourceDocument) {
+				return props.AIUIConfig.renderSourceDocument(sourceObj);
+			}
+
+			return sourceObj._id;
+		};
 
 		return showSourceDocuments
 			&& showAIScreenFooter
@@ -1222,11 +1226,10 @@ const SearchBox = (props) => {
 								className={`--ai-source-tag ${
 								getClassName(props.innerClass, 'ai-source-tag') || ''
 							}`}
-								title={el[sourceDocumentLabel]}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
 							>
-								{el[sourceDocumentLabel]}
+								{renderSourceDocumentLabel(el)}
 							</Button>
 						))}
 					</SourceTags>
@@ -1920,7 +1923,9 @@ const SearchBox = (props) => {
 												placeholder: props.placeholder,
 												// When props.value is defined,
 												// it means SearchBox is used as a controlled component
-												value: Object.hasOwn(props, 'value') ? props.value : currentValue || '',
+												value: Object.hasOwn(props, 'value')
+													? props.value
+													: currentValue || '',
 												onChange: onInputChange,
 												onBlur: withTriggerQuery(props.onBlur),
 												onFocus: handleFocus,
@@ -1981,7 +1986,9 @@ const SearchBox = (props) => {
 								aria-label={props.componentId}
 								className={getClassName(props.innerClass, 'input') || null}
 								placeholder={props.placeholder}
-								value={Object.hasOwn(props, 'value') ? props.value : currentValue || ''}
+								value={
+									Object.hasOwn(props, 'value') ? props.value : currentValue || ''
+								}
 								onChange={onInputChange}
 								onBlur={withTriggerQuery(props.onBlur)}
 								onFocus={withTriggerQuery(props.onFocus)}
