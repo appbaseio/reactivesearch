@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch",
-	"version": "4.0.0-rc.20",
+	"version": "4.0.0-rc.21",
 	"description": "A React UI components library for building search experirnences",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
