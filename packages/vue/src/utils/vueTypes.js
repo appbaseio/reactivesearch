@@ -175,7 +175,7 @@ const types = {
 	AIUIConfig: VueTypes.shape({
 		loaderMessage: VueTypes.string, // slot #loaderMessage should also be supported
 		showSourceDocuments: VueTypes.bool,
-		sourceDocumentLabel: VueTypes.string,
+		renderSourceDocument: VueTypes.func,
 		onSourceClick: VueTypes.func,
 		// renderAskButton: VueTypes.func,has to be a slot
 		askButton: VueTypes.bool,
