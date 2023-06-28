@@ -3,9 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview --port 4173"
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
 		"@appbaseio/reactivesearch-vue": "3.0.0-rc.11",
@@ -35,6 +35,6 @@
 	"browserslist": [
 		"> 1%",
 		"last 2 versions",
-		"not dead"
+		"not ie <= 8"
 	]
 }
