@@ -10,11 +10,13 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
 import {
-	getObjectFromLocalStorage,
 	getQueryOptions,
 	suggestionTypes,
+	featuredSuggestionsActionTypes,
+	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
+import xss from 'xss';
 import {
 	connect,
 	getComponent,
@@ -32,9 +34,15 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import { suggestionsContainer, suggestions, TextArea } from '../../styles/Input';
+import {
+	suggestionsContainer,
+	suggestions,
+	searchboxSuggestions,
+	TextArea,
+	Actions as ActionsContainer,
+} from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../styles/IconWrapper';
+import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
@@ -49,6 +57,7 @@ import CustomSvg from '../shared/CustomSvg';
 import AutofillSvg from '../shared/AutoFillSvg.jsx';
 import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
+import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import AIFeedback from '../shared/AIFeedback.jsx';
@@ -149,6 +158,25 @@ const SearchBox = defineComponent({
 		stats() {
 			return getResultStats(this);
 		},
+		parsedSuggestions() {
+			let suggestionsArray = [];
+			if (Array.isArray(this.suggestions) && this.suggestions.length) {
+				suggestionsArray = [...withClickIds(this.suggestions)];
+			}
+
+			const sectionsAccumulated = [];
+			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+				if (sectionsAccumulated.includes(d.sectionId)) return acc;
+				if (d.sectionId) {
+					acc[currentIndex] = suggestionsArray.filter((g) => g.sectionId === d.sectionId);
+					sectionsAccumulated.push(d.sectionId);
+				} else {
+					acc[currentIndex] = d;
+				}
+				return acc;
+			}, {});
+			return Object.values(sectionisedSuggestions);
+		},
 	},
 	props: {
 		autoFocus: VueTypes.bool,
@@ -221,12 +249,20 @@ const SearchBox = defineComponent({
 		focusShortcuts: VueTypes.arrayOf(
 			VueTypes.oneOfType([VueTypes.string, VueTypes.number]),
 		).def(['/']),
+		showFocusShortcutsIcon: VueTypes.bool.def(true),
 		addonBefore: VueTypes.any,
 		addonAfter: VueTypes.any,
+		showSuggestionsFooter: VueTypes.bool.def(true),
 		expandSuggestionsContainer: VueTypes.bool.def(true),
+		renderSuggestionsFooter: VueTypes.func,
 		index: VueTypes.string,
 		popularSuggestionsConfig: VueTypes.object,
 		recentSuggestionsConfig: VueTypes.object,
+		featuredSuggestionsConfig: VueTypes.shape({
+			maxSuggestionsPerSection: VueTypes.number,
+			sectionsOrder: VueTypes.arrayOf(VueTypes.string),
+		}),
+		customEvents: VueTypes.object,
 		applyStopwords: VueTypes.bool,
 		customStopwords: types.stringArray,
 		onData: types.func,
@@ -736,6 +772,46 @@ const SearchBox = defineComponent({
 				);
 			}
 		},
+		handleFeaturedSuggestionClicked(suggestion) {
+			try {
+				if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+					const { target = '_self', link = '/' } = JSON.parse(suggestion.subAction);
+
+					if (typeof window !== 'undefined') {
+						window.open(link, target);
+					}
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					const matchedValues = suggestion.subAction.match(/function\s*\(.*\)(.|\n)*/);
+					const functionStr = matchedValues && matchedValues[0];
+					// eslint-disable-next-line no-new-func
+					const func = new Function(`return ${functionStr}`)();
+					func(suggestion, this.$data.currentValue, this.$props.customEvents);
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.SELECT) {
+					this.setValue(
+						suggestion.value,
+						true,
+						this.$props,
+						this.$options.isTagsMode.current
+							? causes.SUGGESTION_SELECT
+							: causes.ENTER_PRESS,
+					);
+					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
+				}
+				// blur is important to close the dropdown
+				// on selecting one of featured suggestions
+				// else Downshift probably is focusing the dropdown
+				// and not letting it close
+				// eslint-disable-next-line no-unused-expressions
+				this.$refs?.[this.$props.innerRef]?.blur();
+			} catch (e) {
+				console.error(
+					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
+					e,
+				);
+			}
+		},
 
 		onSuggestionSelected(suggestion) {
 			if (!this.$props.enableAI) this.isOpen = false;
@@ -743,6 +819,12 @@ const SearchBox = defineComponent({
 				this.showAIScreen = true;
 			}
 			const { value } = this.$props;
+
+			// handle featured suggestions click event
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				this.handleFeaturedSuggestionClicked(suggestion);
+				return;
+			}
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
@@ -933,6 +1015,16 @@ const SearchBox = defineComponent({
 			this.showAIScreen = false;
 			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
 		},
+		suggestionsFooter() {
+			return typeof renderSuggestionsFooter === 'function' ? (
+				this.$props.renderSuggestionsFooter()
+			) : (
+				<AutosuggestFooterContainer>
+					<div>↑↓ Navigate</div>
+					<div>↩ Go</div>
+				</AutosuggestFooterContainer>
+			);
+		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
 			const { renderEnterButton } = this.$slots;
@@ -959,7 +1051,33 @@ const SearchBox = defineComponent({
 
 			return null;
 		},
-		renderIcons() {
+		renderShortcut() {
+			if (this.$props.focusShortcuts && this.$props.focusShortcuts.length) {
+				let shortcut = this.$props.focusShortcuts[0];
+				shortcut = shortcut.toLowerCase();
+				shortcut = shortcut.replace('shift', '⬆️');
+				shortcut = shortcut.replace('command', 'cmd');
+				shortcut = shortcut.replace('control', 'ctrl');
+				shortcut = shortcut.replace('option', 'alt');
+				return shortcut.toUpperCase();
+			}
+			return '/';
+		},
+		renderLeftIcons() {
+			const { iconPosition, showIcon } = this.$props;
+			return (
+				<div>
+					<IconGroup groupPosition="left">
+						{iconPosition === 'left' && showIcon && (
+							<IconWrapper onClick={this.handleSearchIconClick}>
+								{this.renderIcon()}
+							</IconWrapper>
+						)}
+					</IconGroup>
+				</div>
+			);
+		},
+		renderRightIcons() {
 			const {
 				iconPosition,
 				showClear,
@@ -967,16 +1085,22 @@ const SearchBox = defineComponent({
 				getMicInstance,
 				showVoiceSearch,
 				showIcon,
+				showFocusShortcutsIcon,
 			} = this.$props;
 			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
 			return (
 				<div>
-					<IconGroup groupPosition="right" positionType="absolute">
+					<IconGroup groupPosition="right">
 						{currentValue && showClear && (
 							<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
 								{this.renderCancelIcon()}
 							</IconWrapper>
+						)}
+						{showFocusShortcutsIcon && (
+							<ButtonIconWrapper onClick={(e) => this.focusSearchBox(e)}>
+								{this.renderShortcut()}
+							</ButtonIconWrapper>
 						)}
 						{showVoiceSearch && (
 							<Mic
@@ -987,14 +1111,6 @@ const SearchBox = defineComponent({
 							/>
 						)}
 						{iconPosition === 'right' && showIcon && (
-							<IconWrapper onClick={this.handleSearchIconClick}>
-								{this.renderIcon()}
-							</IconWrapper>
-						)}
-					</IconGroup>
-
-					<IconGroup groupPosition="left" positionType="absolute">
-						{iconPosition === 'left' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
 								{this.renderIcon()}
 							</IconWrapper>
@@ -1057,13 +1173,30 @@ const SearchBox = defineComponent({
 			this.currentValue = decodeHtml(value);
 			this.triggerDefaultQuery(value);
 		},
-		renderAutoFill(suggestion) {
+		renderActionIcon(suggestion) {
 			const handleAutoFillClick = (e) => {
 				e.stopPropagation();
 				this.onAutofillClick(suggestion);
 			};
-			/* 👇 avoid showing autofill for category suggestions👇 */
-			return suggestion._category ? null : <AutofillSvg onClick={handleAutoFillClick} />;
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					return (
+						<AutofillSvg
+							style={{
+								transform: 'rotate(135deg)',
+								pointerEvents: 'none',
+							}}
+						/>
+					);
+				}
+				return null;
+			}
+			if (!suggestion._category) {
+				/* 👇 avoid showing autofill for category suggestions👇 */
+
+				return <AutofillSvg onClick={handleAutoFillClick} />;
+			}
+			return null;
 		},
 		renderTag(item) {
 			const { innerClass } = this.$props;
@@ -1288,7 +1421,6 @@ const SearchBox = defineComponent({
 				const height = Math.min(textArea.scrollHeight, maxHeight);
 				textArea.style.height = `${height}px`;
 				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
-
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
 					dropdownEle.style.top = `${textArea.style.height}`;
@@ -1362,16 +1494,47 @@ const SearchBox = defineComponent({
 								setHighlightedIndex,
 							}) => {
 								const renderSuggestionsDropdown = () => {
-									const getIcon = (iconType) => {
+									const getIcon = (iconType, item, leaveSpaceForIcon) => {
 										switch (iconType) {
 											case suggestionTypes.Recent:
 												return recentSearchesIcon;
 											case suggestionTypes.Popular:
 												return popularSearchesIcon;
+											case suggestionTypes.Featured:
+												if (item.icon) {
+													return () => (
+														<div
+															style={{ display: 'flex' }}
+															innerHTML={xss(item.icon)}
+														/>
+													);
+												}
+												if (item.iconURL) {
+													return () => (
+														// When you change below also change the empty icon below
+														<img
+															style={{ maxHeight: '25px' }}
+															src={xss(item.iconURL)}
+															alt={item.value}
+														/>
+													);
+												}
+												// Render an empty icon when no icon is provided from the dashboard
+												return () => (
+													<span
+														style={{
+															display: 'inline-block',
+															height: '25px',
+															width: leaveSpaceForIcon ? '25px' : 0,
+														}}
+													></span>
+												);
+
 											default:
 												return null;
 										}
 									};
+									let indexOffset = 0;
 									return (
 										<div>
 											{this.hasCustomRenderer
@@ -1390,7 +1553,11 @@ const SearchBox = defineComponent({
 													)} ${getClassName(
 														this.$props.innerClass,
 														'list',
-													)}`}
+													)} ${searchboxSuggestions(
+														this.themePreset,
+														this.theme,
+													)}
+													`}
 													ref={_dropdownULRef}
 												>
 													{this.showAIScreen && (
@@ -1402,85 +1569,181 @@ const SearchBox = defineComponent({
 														</SearchBoxAISection>
 													)}
 													{!this.showAIScreen
-														&& this.normalizedSuggestions.map(
-															(item, index) =>
-																renderItem ? (
-																	<li
-																		{...getItemProps({
-																			item,
-																		})}
-																		{...getItemEvents({
-																			item,
-																		})}
-																		key={`${index + 1}-${
-																			item.value
-																		}`}
-																		style={{
-																			backgroundColor:
-																				this.getBackgroundColor(
-																					highlightedIndex,
-																					index,
-																				),
-																			justifyContent:
-																				'flex-start',
-																			alignItems: 'center',
-																		}}
-																	>
-																		{renderItem(item)}
-																	</li>
-																) : (
-																	<li
-																		{...getItemProps({
-																			item,
-																		})}
-																		on={getItemEvents({
-																			item,
-																		})}
-																		key={`${index + 1}-${
-																			item.value
-																		}`}
-																		style={{
-																			backgroundColor:
-																				this.getBackgroundColor(
-																					highlightedIndex,
-																					index,
-																				),
-																			justifyContent:
-																				'flex-start',
-																			alignItems: 'center',
-																		}}
-																	>
-																		<div
-																			style={{
-																				padding:
-																					'0 10px 0 0',
-																				display: 'flex',
-																			}}
-																		>
-																			<CustomSvg
-																				className={
-																					getClassName(
+														&& this.parsedSuggestions.map(
+															(item, itemIndex) => {
+																const index
+																	= indexOffset + itemIndex;
+																if (Array.isArray(item)) {
+																	const sectionHtml = xss(
+																		item[0].sectionLabel,
+																	);
+																	indexOffset += item.length - 1;
+																	return (
+																		<div class="section-container">
+																			{sectionHtml ? (
+																				<div
+																					class={`section-header ${getClassName(
 																						this.$props
 																							.innerClass,
-																						`${item._suggestion_type}-search-icon`,
-																					) || null
-																				}
-																				icon={getIcon(
-																					item._suggestion_type,
+																						'section-label',
+																					)}`}
+																					key={`${item[0].sectionId}`}
+																					innerHTML={
+																						sectionHtml
+																					}
+																				/>
+																			) : null}
+																			<ul class="section-list">
+																				{item.map(
+																					(
+																						sectionItem,
+																						sectionIndex,
+																					) => {
+																						const suggestionsHaveIcon
+																							= item.some(
+																								(
+																									s,
+																								) =>
+																									s.icon
+																									|| s.iconURL,
+																							);
+																						return renderItem ? (
+																							<li
+																								{...getItemProps(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								on={getItemEvents(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								key={
+																									index
+																									+ sectionIndex
+																								}
+																								style={{
+																									justifyContent:
+																										'flex-start',
+																									alignItems:
+																										'center',
+																								}}
+																								class={`${
+																									highlightedIndex
+																									=== index
+																										+ sectionIndex
+																										? `active-li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'active-suggestion-item',
+																										  )}`
+																										: `li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'suggestion-item',
+																										  )}`
+																								}`}
+																							>
+																								{renderItem(
+																									sectionItem,
+																								)}
+																							</li>
+																						) : (
+																							<li
+																								{...getItemProps(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								on={getItemEvents(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								key={
+																									index
+																									+ sectionIndex
+																								}
+																								style={{
+																									justifyContent:
+																										'flex-start',
+																									alignItems:
+																										'center',
+																								}}
+																								class={`${
+																									highlightedIndex
+																									=== index
+																										+ sectionIndex
+																										? `active-li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'active-suggestion-item',
+																										  )}`
+																										: `li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'suggestion-item',
+																										  )}`
+																								}`}
+																							>
+																								<div
+																									style={{
+																										padding:
+																											'0 10px 0 0',
+																										display:
+																											'flex',
+																									}}
+																								>
+																									<CustomSvg
+																										className={
+																											getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												`${sectionItem._suggestion_type}-search-icon`,
+																											)
+																											|| null
+																										}
+																										icon={getIcon(
+																											sectionItem._suggestion_type,
+																											sectionItem,
+																											suggestionsHaveIcon,
+																										)}
+																										type={`${sectionItem._suggestion_type}-search-icon`}
+																									/>
+																								</div>
+
+																								<SuggestionItem
+																									currentValue={
+																										this
+																											.currentValue
+																									}
+																									suggestion={
+																										sectionItem
+																									}
+																								/>
+																								{this.renderActionIcon(
+																									sectionItem,
+																								)}
+																							</li>
+																						);
+																					},
 																				)}
-																				type={`${item._suggestion_type}-search-icon`}
-																			/>
+																			</ul>
 																		</div>
-																		<SuggestionItem
-																			currentValue={
-																				this.currentValue
-																			}
-																			suggestion={item}
-																		/>
-																		{this.renderAutoFill(item)}
-																	</li>
-																),
+																	);
+																}
+																return <div>No suggestions</div>;
+															},
 														)}
+													{this.$props.showSuggestionsFooter
+														? this.suggestionsFooter()
+														: null}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
@@ -1490,14 +1753,19 @@ const SearchBox = defineComponent({
 								};
 								return (
 									<div class={suggestionsContainer}>
-										<InputGroup ref={_inputGroupRef}>
-											{this.renderInputAddonBefore()}
+										<InputGroup
+											searchBox
+											ref={_inputGroupRef}
+											isOpen={this.$data.isOpen}
+										>
+											<ActionsContainer>
+												{this.renderInputAddonBefore()}
+												{this.renderLeftIcons()}
+											</ActionsContainer>
 											<InputWrapper>
 												<TextArea
+													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
-													showIcon={this.$props.showIcon}
-													showClear={this.$props.showClear}
-													iconPosition={this.$props.iconPosition}
 													ref={this.$props.innerRef}
 													class={getClassName(
 														this.$props.innerClass,
@@ -1505,10 +1773,7 @@ const SearchBox = defineComponent({
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
-													showFocusShortcutsIcon={
-														this.$props.showFocusShortcutsIcon
-													}
-													showVoiceSearch={this.$props.showVoiceSearch}
+													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {
@@ -1558,13 +1823,15 @@ const SearchBox = defineComponent({
 													themePreset={this.themePreset}
 													autocomplete="off"
 												/>
-												{this.renderIcons()}
 												{!expandSuggestionsContainer
 													&& renderSuggestionsDropdown()}
 											</InputWrapper>
-											{this.renderInputAddonAfter()}
-											{this.renderAskButtonElement()}
-											{this.renderEnterButtonElement()}
+											<ActionsContainer>
+												{this.renderRightIcons()}
+												{this.renderInputAddonAfter()}
+												{this.renderAskButtonElement()}
+												{this.renderEnterButtonElement()}
+											</ActionsContainer>
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsDropdown()}
 										{this.renderTags()}
@@ -1575,8 +1842,11 @@ const SearchBox = defineComponent({
 					</Downshift>
 				) : (
 					<div class={suggestionsContainer}>
-						<InputGroup ref={_inputGroupRef}>
-							{this.renderInputAddonBefore()}
+						<InputGroup searchBox ref={_inputGroupRef}>
+							<ActionsContainer>
+								{this.renderInputAddonBefore()}
+								{this.renderLeftIcons()}
+							</ActionsContainer>
 							<InputWrapper>
 								<TextArea
 									class={getClassName(this.$props.innerClass, 'input') || ''}
@@ -1607,10 +1877,12 @@ const SearchBox = defineComponent({
 									ref={this.$props.innerRef}
 									themePreset={this.themePreset}
 								/>
-								{this.renderIcons()}
 							</InputWrapper>
-							{this.renderInputAddonAfter()}
-							{this.renderEnterButtonElement()}
+							<ActionsContainer>
+								{this.renderRightIcons()}
+								{this.renderInputAddonAfter()}
+								{this.renderEnterButtonElement()}
+							</ActionsContainer>
 						</InputGroup>
 					</div>
 				)}
