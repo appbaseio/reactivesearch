@@ -34,8 +34,11 @@ const Main = () => {
 							error,
 							data,
 							value,
-							downshiftProps: { getItemProps },
+							downshiftProps: { getItemProps, isOpen },
 						}) => {
+							if(!isOpen){
+								return null
+							}
 							if (loading) {
 								return <div>Fetching Suggestions.</div>;
 							}
