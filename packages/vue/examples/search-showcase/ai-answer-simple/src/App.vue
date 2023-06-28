@@ -27,7 +27,6 @@
 					componentId="AIComponent"
 					:react="{ and: ['BookSensor'] }"
 					title="AI Chat Box"
-					:showInput="false"
 				></a-i-answer>
 			</div>
 		</reactive-base>

@@ -4,15 +4,13 @@
 			app="good-books-ds"
 			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
 		>
-		<search-box
+			<search-box
 				className="result-list-container"
 				componentId="BookSensor"
-				:dataField="['original_title', 'original_title.search', 'authors']"
+				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
 				:size="10"
-				searchboxId="good_books"
 				:autosuggest="true"
-				:showVoiceSearch="true"
 			/>
 			<reactive-list
 				componentId="SearchResult"

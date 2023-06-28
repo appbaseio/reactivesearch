@@ -33,7 +33,6 @@
       <div class="ai-answer-container">
         <a-i-answer
           :react="{ and: ['BookSensor'] }"
-          :show-input="false"
           class-name="ai-answer"
           component-id="AIComponent"
           title="AI Chat Box"

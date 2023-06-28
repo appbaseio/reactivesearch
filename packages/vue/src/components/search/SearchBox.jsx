@@ -1518,7 +1518,7 @@ const SearchBox = defineComponent({
 													return () => (
 														// When you change below also change the empty icon below
 														<img
-															style={{ maxHeight: '25px' }}
+															style={{ maxWidth: '25px' }}
 															src={xss(item.iconURL)}
 															alt={item.value}
 														/>

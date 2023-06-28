@@ -16,14 +16,6 @@
             :data-field="['original_title', 'original_title.search']"
             :urlparams="true"
             :size="10"
-            :enable-popular-suggestions="true"
-            :popular-suggestions-config="{ size: 3, minChars: 2, index: 'good-books-ds' }"
-            :enable-recent-suggestions="true"
-            :recent-suggestions-config="{
-              size: 3,
-              index: 'good-books-ds',
-              minChars: 4,
-            }"
             :show-voice-search="true"
             :autosuggest="true"
             component-id="BookSensor"

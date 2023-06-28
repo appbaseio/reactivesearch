@@ -1,5 +1,5 @@
 {
-	"name": "vue-search-showcase-searchbox-inline-ai-response",
+	"name": "search-box-autosuggestions",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
@@ -8,9 +8,8 @@
 		"preview": "vite preview --port 4173"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.0.0-rc.10",
-		"bootstrap": "^5.2.3",
-		"vue": "^3.2.37"
+		"vue": "^3.2.5",
+		"@appbaseio/reactivesearch-vue": "3.0.0-rc.10"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^3.0.1",
@@ -34,6 +33,6 @@
 	"browserslist": [
 		"> 1%",
 		"last 2 versions",
-		"not dead"
+		"not ie <= 8"
 	]
 }
