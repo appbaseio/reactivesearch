@@ -326,6 +326,9 @@ const TextArea = styled('textarea')`
 	height: 42px;
 	padding-left: 0;
 	padding-right: 0;
+	${({aiAnswer})=> aiAnswer && `
+		padding-left: 35px;
+	`}
 `;
 
 const Actions = styled('div')`
