@@ -23,6 +23,7 @@ ${
 	padding: 8px 12px 9px;
 	border: 1px solid transparent;
 	border-radius: 6px;
+	min-height: unset;
 `
 };
 `;
