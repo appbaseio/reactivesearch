@@ -370,6 +370,7 @@ export const MessageInput = styled(TextArea)`
 		    border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 	`}
+	padding-left: 35px;
 `;
 
 export const SendButton = styled(Button)`
