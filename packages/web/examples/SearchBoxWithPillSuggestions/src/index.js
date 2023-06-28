@@ -5,12 +5,6 @@ import { ReactiveBase, SearchBox, ReactiveList, ResultCard } from '@appbaseio/re
 import './index.css';
 
 const Main = () => {
-	const [value, setValue] = useState('');
-	const triggerQueryRef = useRef(null);
-
-	useEffect(() => {
-		if (triggerQueryRef.current) triggerQueryRef.current({ isOpen: true });
-	}, [value]);
 
 	return (
 		<ReactiveBase
@@ -24,11 +18,8 @@ const Main = () => {
 						defaultValue={'Free Guy'}
 						dataField={['original_title', 'original_title.search']}
 						componentId="MoviesSensor"
-						value={value}
-						onChange={(value, triggerQuery) => {
-							triggerQueryRef.current = triggerQuery;
-							setValue(value);
-						}}
+						autosuggest
+						showClear
 						render={({
 							loading,
 							error,
