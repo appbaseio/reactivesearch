@@ -1,6 +1,0 @@
-{
-    "template": "vue-cli",
-    "infiniteLoopProtection": true,
-    "hardReloadOnChange": false,
-    "view": "browser"
-}
