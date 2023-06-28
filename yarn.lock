@@ -216,32 +216,6 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch-vue@3.0.0-rc.10":
-  version "3.0.0-rc.10"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.10.tgz#6801917546afd3803030027ee4ddddb04514c693"
-  integrity sha512-LGJfzTOvxkETBoZsKMaPcaK7SW+Se1wy1pe7Js8fd7tk3jMtCxAWuEHd26qOlvtqKtRfE7JxT9H6RMfBTKSvBw==
-  dependencies:
-    "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.28"
-    "@appbaseio/vue-emotion" "0.6.0-alpha.6"
-    "@emotion/css" "^11.10.5"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.2.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "11.0.0"
-    hotkeys-js "^3.8.7"
-    ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    remarkable "^2.0.1"
-    url-search-params-polyfill "^7.0.0"
-    vue-google-maps-community-fork "^0.1.7"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component next
-    vue-types "^5.0.2"
-    xss "^1.0.11"
-
 "@appbaseio/reactivesearch-vue@3.0.0-rc.6.1":
   version "3.0.0-rc.6.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.1.tgz#ea707fc7d98d0d33135aa5b661c8abe61e2cc790"
