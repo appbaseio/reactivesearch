@@ -37046,7 +37046,7 @@ vue-types@^5.0.2:
   dependencies:
     is-plain-object "5.0.0"
 
-vue@3, vue@^3.2.37, vue@^3.2.45, vue@^3.2.5, vue@^3.3.4:
+vue@3, vue@^3.2.45, vue@^3.2.5, vue@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
