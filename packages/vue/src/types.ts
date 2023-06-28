@@ -1,3 +1,5 @@
+import { VNode } from 'vue';
+
 export type components = string[];
 
 export type children = any;
@@ -214,7 +216,7 @@ export interface AIConfig {
 export interface AIUIConfig {
 	loaderMessage: string; // slot #loaderMessage should also be supported
 	showSourceDocuments: boolean;
-	sourceDocumentLabel: string;
+	renderSourceDocument: (source: Object) => string | VNode;
 	onSourceClick: (source: Object) => void;
 	renderAskButton: (onClick: Function) => any;
 	askButton: boolean;

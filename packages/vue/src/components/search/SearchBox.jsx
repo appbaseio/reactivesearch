@@ -1132,7 +1132,7 @@ const SearchBox = defineComponent({
 				return;
 			}
 
-			this.$refs?.[this.$props.innerRef]?.focus(); // eslint-disable-line
+			this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 		},
 		listenForFocusShortcuts() {
 			const { focusShortcuts = ['/'] } = this.$props;
@@ -1314,11 +1314,17 @@ const SearchBox = defineComponent({
 		},
 		renderAIScreenFooter() {
 			const { AIUIConfig = {} } = this.$props;
-			const {
-				showSourceDocuments = true,
-				sourceDocumentLabel = '_id',
-				onSourceClick = () => {},
-			} = AIUIConfig || {};
+			const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+
+			const renderSourceDocumentLabel = (sourceObj) => {
+				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderSourceDocument) {
+					return this.$props.AIUIConfig.renderSourceDocument(sourceObj);
+				}
+				if (this.$slots.renderSourceDocument) {
+					return this.$slots.renderSourceDocument(sourceObj);
+				}
+				return sourceObj._id;
+			};
 
 			return showSourceDocuments
 				&& this.showAIScreenFooter
@@ -1334,11 +1340,10 @@ const SearchBox = defineComponent({
 									class={`--ai-source-tag ${
 										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
 									}`}
-									title={el[sourceDocumentLabel]}
 									info
 									onClick={() => onSourceClick && onSourceClick(el)}
 								>
-									{el[sourceDocumentLabel]}
+									{renderSourceDocumentLabel(el)}
 								</Button>
 							))}
 						</SourceTags>
@@ -1741,7 +1746,9 @@ const SearchBox = defineComponent({
 																return <div>No suggestions</div>;
 															},
 														)}
-													{this.$props.showSuggestionsFooter
+													{!this.showAIScreen
+													&& this.parsedSuggestions.length
+													&& this.$props.showSuggestionsFooter
 														? this.suggestionsFooter()
 														: null}
 												</ul>

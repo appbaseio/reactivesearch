@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"vue": "^3.2.5",
-		"@appbaseio/reactivesearch-vue": "3.0.0-rc.9"
+		"@appbaseio/reactivesearch-vue": "3.0.0-rc.10"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^3.0.1",
