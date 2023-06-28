@@ -1771,6 +1771,7 @@ const SearchBox = defineComponent({
 											</ActionsContainer>
 											<InputWrapper>
 												<TextArea
+													searchBox
 													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
 													ref={this.$props.innerRef}
@@ -1780,7 +1781,6 @@ const SearchBox = defineComponent({
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
-													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {
@@ -1856,6 +1856,7 @@ const SearchBox = defineComponent({
 							</ActionsContainer>
 							<InputWrapper>
 								<TextArea
+									searchBox
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
 									on={{
