@@ -3,19 +3,18 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build",
-		"lint": "vue-cli-service lint"
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview --port 4173"
 	},
 	"dependencies": {
 		"vue": "^3.2.5",
-		"@appbaseio/reactivesearch-vue": "3.0.0-rc.13"
+		"@appbaseio/reactivesearch-vue": "3.0.0-rc.11"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "~4.5.0",
-		"@vue/cli-plugin-eslint": "~4.5.0",
-		"@vue/cli-service": "~4.5.0",
-		"@vue/compiler-sfc": "^3.1.0"
+		"@vitejs/plugin-vue": "^3.0.1",
+		"@vitejs/plugin-vue-jsx": "^2.0.0",
+		"vite": "^3.0.4"
 	},
 	"eslintConfig": {
 		"root": true,
