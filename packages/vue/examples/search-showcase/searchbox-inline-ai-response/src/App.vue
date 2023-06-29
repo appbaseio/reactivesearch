@@ -76,7 +76,7 @@
                   :style="{
                     alignSelf: 'flex-start',
                     margin: 8,
-                    maxWidth: '70%',
+                    maxWidth: '100%',
                     padding: '5px'
                   }"
                 >
@@ -101,7 +101,7 @@
                   :style="{
                     alignSelf: 'flex-start',
                     margin: 8,
-                    maxWidth: '70%',
+                    maxWidth: '100%',
                     padding: '5px'
                   }"
                 >
