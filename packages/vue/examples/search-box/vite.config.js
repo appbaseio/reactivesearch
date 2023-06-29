@@ -13,15 +13,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: [
-      "@appbaseio/reactivecore",
-      "@appbaseio/reactivesearch-vue",
-      "fast-deep-equal",
-    ],
-  },
-  build: {
-    commonjsOptions: {
-      include: [/reactivecore/, /reactivesearch/, /node_modules/],
-    },
+    include: ["vue-google-maps-community-fork", "fast-deep-equal"],
   },
 });
