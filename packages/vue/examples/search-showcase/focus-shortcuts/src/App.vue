@@ -10,14 +10,6 @@
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
 				:size="10"
-				:enablePopularSuggestions="true"
-				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds' }"
-				:enableRecentSuggestions="true"
-				:recentSuggestionsConfig="{
-					size: 3,
-					index: 'good-books-ds',
-					minChars: 4,
-				}"
 				:showVoiceSearch="true"
 				:autosuggest="true"
 				:focusShortcuts="['⌘ + K']"
