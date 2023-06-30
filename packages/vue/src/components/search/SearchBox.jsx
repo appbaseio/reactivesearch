@@ -1682,8 +1682,7 @@ const SearchBox = defineComponent({
 																									},
 																								)}
 																								key={
-																									index
-																									+ sectionIndex
+																									`${sectionItem._id}_${index}_${sectionIndex}`
 																								}
 																								style={{
 																									justifyContent:
