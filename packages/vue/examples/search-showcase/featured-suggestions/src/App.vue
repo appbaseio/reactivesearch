@@ -13,7 +13,6 @@
 				searchboxId="good_books"
 				:autosuggest="true"
 				:showVoiceSearch="true"
-				:enableAI="true"
 			/>
 			<reactive-list
 				componentId="SearchResult"
