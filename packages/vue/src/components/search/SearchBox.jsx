@@ -11,10 +11,10 @@ import {
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
 import {
-	getObjectFromLocalStorage,
 	getQueryOptions,
 	suggestionTypes,
-	featuredSuggestionsActionTypes
+	featuredSuggestionsActionTypes,
+	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
 import {
@@ -34,7 +34,13 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import { suggestionsContainer, suggestions, searchboxSuggestions, TextArea } from '../../styles/Input';
+import {
+	suggestionsContainer,
+	suggestions,
+	searchboxSuggestions,
+	TextArea,
+	Actions as ActionsContainer,
+} from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
 import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
@@ -51,10 +57,10 @@ import CustomSvg from '../shared/CustomSvg';
 import AutofillSvg from '../shared/AutoFillSvg.jsx';
 import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
+import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import AIFeedback from '../shared/AIFeedback.jsx';
-import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer';
 
 const md = new Remarkable();
 
@@ -177,7 +183,7 @@ const SearchBox = defineComponent({
 			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
 				if (sectionsAccumulated.includes(d.sectionId)) return acc;
 				if (d.sectionId) {
-					acc[currentIndex] = suggestionsArray.filter(g => g.sectionId === d.sectionId);
+					acc[currentIndex] = suggestionsArray.filter((g) => g.sectionId === d.sectionId);
 					sectionsAccumulated.push(d.sectionId);
 				} else {
 					acc[currentIndex] = d;
@@ -185,7 +191,7 @@ const SearchBox = defineComponent({
 				return acc;
 			}, {});
 			return Object.values(sectionisedSuggestions);
-		}
+		},
 	},
 	props: {
 		autoFocus: VueTypes.bool,
@@ -271,7 +277,7 @@ const SearchBox = defineComponent({
 		recentSuggestionsConfig: VueTypes.object,
 		featuredSuggestionsConfig: VueTypes.shape({
 			maxSuggestionsPerSection: VueTypes.number,
-			sectionsOrder: VueTypes.arrayOf(VueTypes.string)
+			sectionsOrder: VueTypes.arrayOf(VueTypes.string),
 		}),
 		customEvents: VueTypes.object,
 		applyStopwords: VueTypes.bool,
@@ -805,7 +811,9 @@ const SearchBox = defineComponent({
 						suggestion.value,
 						true,
 						this.$props,
-						this.$options.isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+						this.$options.isTagsMode.current
+							? causes.SUGGESTION_SELECT
+							: causes.ENTER_PRESS,
 					);
 					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
 				}
@@ -1043,14 +1051,14 @@ const SearchBox = defineComponent({
 			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
 		},
 		suggestionsFooter() {
-			return (typeof renderSuggestionsFooter === 'function' ? (
+			return typeof renderSuggestionsFooter === 'function' ? (
 				this.$props.renderSuggestionsFooter()
 			) : (
 				<AutosuggestFooterContainer>
 					<div>↑↓ Navigate</div>
 					<div>↩ Go</div>
 				</AutosuggestFooterContainer>
-			))
+			);
 		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
@@ -1078,7 +1086,7 @@ const SearchBox = defineComponent({
 
 			return null;
 		},
-		renderShortcut () {
+		renderShortcut() {
 			if (this.$props.focusShortcuts && this.$props.focusShortcuts.length) {
 				let shortcut = this.$props.focusShortcuts[0];
 				shortcut = shortcut.toLowerCase();
@@ -1090,7 +1098,21 @@ const SearchBox = defineComponent({
 			}
 			return '/';
 		},
-		renderIcons() {
+		renderLeftIcons() {
+			const { iconPosition, showIcon } = this.$props;
+			return (
+				<div>
+					<IconGroup groupPosition="left">
+						{iconPosition === 'left' && showIcon && (
+							<IconWrapper onClick={this.handleSearchIconClick}>
+								{this.renderIcon()}
+							</IconWrapper>
+						)}
+					</IconGroup>
+				</div>
+			);
+		},
+		renderRightIcons() {
 			const {
 				iconPosition,
 				showClear,
@@ -1098,20 +1120,20 @@ const SearchBox = defineComponent({
 				getMicInstance,
 				showVoiceSearch,
 				showIcon,
-				showFocusShortcutsIcon
+				showFocusShortcutsIcon,
 			} = this.$props;
 			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
 			return (
 				<div>
-					<IconGroup groupPosition="right" positionType="absolute">
+					<IconGroup groupPosition="right">
 						{currentValue && showClear && (
 							<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
 								{this.renderCancelIcon()}
 							</IconWrapper>
 						)}
 						{showFocusShortcutsIcon && (
-							<ButtonIconWrapper onClick={e => this.focusSearchBox(e)}>
+							<ButtonIconWrapper onClick={(e) => this.focusSearchBox(e)}>
 								{this.renderShortcut()}
 							</ButtonIconWrapper>
 						)}
@@ -1124,14 +1146,6 @@ const SearchBox = defineComponent({
 							/>
 						)}
 						{iconPosition === 'right' && showIcon && (
-							<IconWrapper onClick={this.handleSearchIconClick}>
-								{this.renderIcon()}
-							</IconWrapper>
-						)}
-					</IconGroup>
-
-					<IconGroup groupPosition="left" positionType="absolute">
-						{iconPosition === 'left' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
 								{this.renderIcon()}
 							</IconWrapper>
@@ -1153,7 +1167,7 @@ const SearchBox = defineComponent({
 				return;
 			}
 
-			this.$refs?.[this.$props.innerRef]?.focus(); // eslint-disable-line
+			this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 		},
 		listenForFocusShortcuts() {
 			const { focusShortcuts = ['/'] } = this.$props;
@@ -1211,14 +1225,11 @@ const SearchBox = defineComponent({
 					);
 				}
 				return null;
-			} if (!suggestion._category) {
+			}
+			if (!suggestion._category) {
 				/* 👇 avoid showing autofill for category suggestions👇 */
 
-				return (
-					<AutofillSvg
-						onClick={handleAutoFillClick}
-					/>
-				);
+				return <AutofillSvg onClick={handleAutoFillClick} />;
 			}
 			return null;
 		},
@@ -1338,11 +1349,17 @@ const SearchBox = defineComponent({
 		},
 		renderAIScreenFooter() {
 			const { AIUIConfig = {} } = this.$props;
-			const {
-				showSourceDocuments = true,
-				sourceDocumentLabel = '_id',
-				onSourceClick = () => {},
-			} = AIUIConfig || {};
+			const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+
+			const renderSourceDocumentLabel = (sourceObj) => {
+				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderSourceDocument) {
+					return this.$props.AIUIConfig.renderSourceDocument(sourceObj);
+				}
+				if (this.$slots.renderSourceDocument) {
+					return this.$slots.renderSourceDocument(sourceObj);
+				}
+				return sourceObj._id;
+			};
 
 			return showSourceDocuments
 				&& this.showAIScreenFooter
@@ -1358,11 +1375,10 @@ const SearchBox = defineComponent({
 									class={`--ai-source-tag ${
 										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
 									}`}
-									title={el[sourceDocumentLabel]}
 									info
 									onClick={() => onSourceClick && onSourceClick(el)}
 								>
-									{el[sourceDocumentLabel]}
+									{renderSourceDocumentLabel(el)}
 								</Button>
 							))}
 						</SourceTags>
@@ -1438,7 +1454,6 @@ const SearchBox = defineComponent({
 				const height = Math.min(textArea.scrollHeight, maxHeight);
 				textArea.style.height = `${height}px`;
 				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
-
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
 					dropdownEle.style.top = `${textArea.style.height}`;
@@ -1520,33 +1535,39 @@ const SearchBox = defineComponent({
 												return popularSearchesIcon;
 											case suggestionTypes.Featured:
 												if (item.icon) {
-													return ()=>(
+													return () => (
 														<div
 															style={{ display: 'flex' }}
-															innerHTML={
-																 xss(item.icon)
-															}
+															innerHTML={xss(item.icon)}
 														/>
 													);
 												}
-												if(item.iconURL){
-													return ()=>(
+												if (item.iconURL) {
+													return () => (
 														// When you change below also change the empty icon below
 														<img
-															style={{ maxHeight: '25px' }}
+															style={{ maxWidth: '30px' }}
 															src={xss(item.iconURL)}
 															alt={item.value}
 														/>
 													);
 												}
 												// Render an empty icon when no icon is provided from the dashboard
-												return ()=>(<span style={{display: 'inline-block',height: '25px', width: leaveSpaceForIcon?'25px': 0}}></span>)
+												return () => (
+													<span
+														style={{
+															display: 'inline-block',
+															height: '30px',
+															width: leaveSpaceForIcon ? '30px' : 0,
+														}}
+													></span>
+												);
 
 											default:
 												return null;
 										}
 									};
-									let indexOffset = 0
+									let indexOffset = 0;
 									return (
 										<div>
 											{this.hasCustomRenderer
@@ -1581,116 +1602,184 @@ const SearchBox = defineComponent({
 														</SearchBoxAISection>
 													)}
 													{!this.showAIScreen
-														&& this.parsedSuggestions.map((item, itemIndex)=>{
-															const index = indexOffset + itemIndex;
-															if (Array.isArray(item)) {
-																const sectionHtml = xss(item[0].sectionLabel);
-																indexOffset += item.length - 1;
-																return <div class="section-container">
-																	{sectionHtml ? <div
-																		class={`section-header ${getClassName(
-																			this.$props.innerClass,
-																			'section-label',
-																		)}`}
-																		key={`${item[0].sectionId}`}
-																		innerHTML={sectionHtml}
-																	/>: null}
-																	<ul class="section-list">
-																		{item.map(
-																			(sectionItem, sectionIndex) => {
-																				const suggestionsHaveIcon = item.some(s=>s.icon || s.iconURL)
-																				return renderItem?(
-																					<li
-																						{...getItemProps({
-																							item: sectionItem,
-																						})}
-																						on={getItemEvents({
-																							item: sectionItem,
-																						})}
-																						key={index + sectionIndex}
-																						style={{
-																							justifyContent: 'flex-start',
-																							alignItems: 'center',
-																						}}
-																						class={`${
-																							highlightedIndex
-																					=== index + sectionIndex
-																								? `active-li-item ${getClassName(
-																									this.$props.innerClass,
-																									'active-suggestion-item',
-																						  )}`
-																								: `li-item ${getClassName(
-																									this.$props.innerClass,
-																									'suggestion-item',
-																						  )}`
-																						}`}
-																					>
-																						{renderItem(sectionItem)}
-																					</li>
-																				):(
-																					<li
-																						{...getItemProps({
-																							item: sectionItem,
-																						})}
-																						on={getItemEvents({
-																							item: sectionItem,
-																						})}
-																						key={index + sectionIndex}
-																						style={{
-																							justifyContent: 'flex-start',
-																							alignItems: 'center',
-																						}}
-																						class={`${
-																							highlightedIndex
-																					=== index + sectionIndex
-																								? `active-li-item ${getClassName(
-																									this.$props.innerClass,
-																									'active-suggestion-item',
-																						  )}`
-																								: `li-item ${getClassName(
-																									this.$props.innerClass,
-																									'suggestion-item',
-																						  )}`
-																						}`}
-																					>
-																						<div
-																							style={{
-																								padding: '0 10px 0 0',
-																								display: 'flex',
-																							}}
-																						>
-																							<CustomSvg
-																								key={`${sectionItem._suggestion_type}-${sectionIndex}`}
-																								className={
-																									getClassName(
-																										this.$props
-																											.innerClass,
-																										`${sectionItem._suggestion_type}-search-icon`,
-																									) || null
-																								}
-																								icon={getIcon(
-																									sectionItem._suggestion_type,
-																									sectionItem,
-																									suggestionsHaveIcon
+														&& this.parsedSuggestions.map(
+															(item, itemIndex) => {
+																const index
+																	= indexOffset + itemIndex;
+																if (Array.isArray(item)) {
+																	const sectionHtml = xss(
+																		item[0].sectionLabel,
+																	);
+																	indexOffset += item.length - 1;
+																	return (
+																		<div key={`section-${itemIndex}`} class="section-container">
+																			{sectionHtml ? (
+																				<div
+																					class={`section-header ${getClassName(
+																						this.$props
+																							.innerClass,
+																						'section-label',
+																					)}`}
+																					key={`${item[0].sectionId}`}
+																					innerHTML={
+																						sectionHtml
+																					}
+																				/>
+																			) : null}
+																			<ul class="section-list">
+																				{item.map(
+																					(
+																						sectionItem,
+																						sectionIndex,
+																					) => {
+																						const suggestionsHaveIcon
+																							= item.some(
+																								(
+																									s,
+																								) =>
+																									s.icon
+																									|| s.iconURL,
+																							);
+																						return renderItem ? (
+																							<li
+																								{...getItemProps(
+																									{
+																										item: sectionItem,
+																									},
 																								)}
-																								type={`${sectionItem._suggestion_type}-search-icon`}
-																							/>
-																						</div>
+																								on={getItemEvents(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								key={
+																									index
+																									+ sectionIndex
+																								}
+																								style={{
+																									justifyContent:
+																										'flex-start',
+																									alignItems:
+																										'center',
+																								}}
+																								class={`${
+																									highlightedIndex
+																									=== index
+																										+ sectionIndex
+																										? `active-li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'active-suggestion-item',
+																										  )}`
+																										: `li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'suggestion-item',
+																										  )}`
+																								}`}
+																							>
+																								{renderItem(
+																									sectionItem,
+																								)}
+																							</li>
+																						) : (
+																							<li
+																								{...getItemProps(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								on={getItemEvents(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								key={
+																									index
+																									+ sectionIndex
+																								}
+																								style={{
+																									justifyContent:
+																										'flex-start',
+																									alignItems:
+																										'center',
+																								}}
+																								class={`${
+																									highlightedIndex
+																									=== index
+																										+ sectionIndex
+																										? `active-li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'active-suggestion-item',
+																										  )}`
+																										: `li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'suggestion-item',
+																										  )}`
+																								}`}
+																							>
+																								<div
+																									style={{
+																										padding:
+																											'0 10px 0 0',
+																										display:
+																											'flex',
+																									}}
+																								>
+																									<CustomSvg
+																										key={`${sectionItem._suggestion_type}-${sectionIndex}`}
+																										className={
+																											getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												`${sectionItem._suggestion_type}-search-icon`,
+																											)
+																											|| null
+																										}
+																										icon={getIcon(
+																											sectionItem._suggestion_type,
+																											sectionItem,
+																											suggestionsHaveIcon,
+																										)}
+																										type={`${sectionItem._suggestion_type}-search-icon`}
+																									/>
+																								</div>
 
-																						<SuggestionItem
-																							currentValue={this.currentValue}
-																							suggestion={sectionItem}
-																						/>
-																						{this.renderActionIcon(sectionItem)}
-																					</li>
-																				)
-																			})}</ul>
-																</div>
-															}
-															return <div>No suggestions</div>
-
-														})}
-													{this.$props.showSuggestionsFooter ? this.suggestionsFooter() : null}
+																								<SuggestionItem
+																									currentValue={
+																										this
+																											.currentValue
+																									}
+																									suggestion={
+																										sectionItem
+																									}
+																								/>
+																								{this.renderActionIcon(
+																									sectionItem,
+																								)}
+																							</li>
+																						);
+																					},
+																				)}
+																			</ul>
+																		</div>
+																	);
+																}
+																return <div>No suggestions</div>;
+															},
+														)}
+													{!this.showAIScreen
+													&& this.parsedSuggestions.length
+													&& this.$props.showSuggestionsFooter
+														? this.suggestionsFooter()
+														: null}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
@@ -1700,14 +1789,20 @@ const SearchBox = defineComponent({
 								};
 								return (
 									<div class={suggestionsContainer}>
-										<InputGroup ref={_inputGroupRef}>
-											{this.renderInputAddonBefore()}
+										<InputGroup
+											searchBox
+											ref={_inputGroupRef}
+											isOpen={this.$data.isOpen}
+										>
+											<ActionsContainer>
+												{this.renderInputAddonBefore()}
+												{this.renderLeftIcons()}
+											</ActionsContainer>
 											<InputWrapper>
 												<TextArea
+													searchBox
+													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
-													showIcon={this.$props.showIcon}
-													showClear={this.$props.showClear}
-													iconPosition={this.$props.iconPosition}
 													ref={this.$props.innerRef}
 													class={getClassName(
 														this.$props.innerClass,
@@ -1769,13 +1864,15 @@ const SearchBox = defineComponent({
 													themePreset={this.themePreset}
 													autocomplete="off"
 												/>
-												{this.renderIcons()}
 												{!expandSuggestionsContainer
 													&& renderSuggestionsDropdown()}
 											</InputWrapper>
-											{this.renderInputAddonAfter()}
-											{this.renderAskButtonElement()}
-											{this.renderEnterButtonElement()}
+											<ActionsContainer>
+												{this.renderRightIcons()}
+												{this.renderInputAddonAfter()}
+												{this.renderAskButtonElement()}
+												{this.renderEnterButtonElement()}
+											</ActionsContainer>
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsDropdown()}
 										{this.renderTags()}
@@ -1786,10 +1883,14 @@ const SearchBox = defineComponent({
 					</Downshift>
 				) : (
 					<div class={suggestionsContainer}>
-						<InputGroup ref={_inputGroupRef}>
-							{this.renderInputAddonBefore()}
+						<InputGroup searchBox ref={_inputGroupRef}>
+							<ActionsContainer>
+								{this.renderInputAddonBefore()}
+								{this.renderLeftIcons()}
+							</ActionsContainer>
 							<InputWrapper>
 								<TextArea
+									searchBox
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
 									on={{
@@ -1818,10 +1919,12 @@ const SearchBox = defineComponent({
 									ref={this.$props.innerRef}
 									themePreset={this.themePreset}
 								/>
-								{this.renderIcons()}
 							</InputWrapper>
-							{this.renderInputAddonAfter()}
-							{this.renderEnterButtonElement()}
+							<ActionsContainer>
+								{this.renderRightIcons()}
+								{this.renderInputAddonAfter()}
+								{this.renderEnterButtonElement()}
+							</ActionsContainer>
 						</InputGroup>
 					</div>
 				)}

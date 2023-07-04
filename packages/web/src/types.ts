@@ -220,7 +220,7 @@ export interface AiConfig {
 export interface AIUIConfig {
 	loaderMessage?: string | children;
 	showSourceDocuments?: boolean;
-	sourceDocumentLabel?: string;
+	renderSourceDocument?: (sourceObject: object) => string | children;
 	onSourceClick?: (sourceObject: object) => void;
 	renderAskButton?: (onAskButtonClick: any) => children;
 	askButton?: boolean;

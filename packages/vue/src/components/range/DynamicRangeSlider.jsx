@@ -1,6 +1,8 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/antd.css';
 import Container from '../../styles/Container';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import NoSSR from '../basic/NoSSR.jsx';
@@ -328,7 +330,7 @@ const DynamicRangeSlider = {
 				)}
 				<NoSSR>
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-						<vue-slider-component
+						<VueSlider
 							ref="slider"
 							modelValue={[
 								Math.floor(Math.max(start, this.currentValue[0])),
