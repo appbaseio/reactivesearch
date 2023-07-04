@@ -487,7 +487,7 @@ const SearchBox = defineComponent({
 						this.AIResponse
 						&& this.AIResponse.response
 						&& this.AIResponse.response.question,
-					answer: this.mergedAIAnswerc,
+					answer: this.mergedAIAnswer,
 					documentIds:
 						(this.AIResponse
 							&& this.AIResponse.response
