@@ -840,9 +840,8 @@ const SearchBox = defineComponent({
 					true,
 					this.$props,
 					causes.SUGGESTION_SELECT,
-					true,
 					false,
-					suggestion._category,
+					undefined,
 					false
 				);
 				this.isOpen = true
