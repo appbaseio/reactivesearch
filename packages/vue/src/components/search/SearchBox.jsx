@@ -822,7 +822,7 @@ const SearchBox = defineComponent({
 				// else Downshift probably is focusing the dropdown
 				// and not letting it close
 				// eslint-disable-next-line no-unused-expressions
-				this.$refs?.[this.$props.innerRef]?.blur();
+				this.$refs?.[this.$props.innerRef]?.el?.blur();
 			} catch (e) {
 				console.error(
 					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
@@ -832,6 +832,10 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
+			// Empty the previous state
+			this.prefilledAIAnswer = ''
+
+			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
 				this.prefilledAIAnswer = (suggestion._answer);
@@ -844,19 +848,22 @@ const SearchBox = defineComponent({
 					undefined,
 					false
 				);
+				// Handle AI
+				// Independent of enableAI.
 				this.isOpen = true
 				this.showAIScreen = true;
 				return;
-			}
-			if (!this.$props.enableAI) this.isOpen = false;
-			else {
-				this.showAIScreen = true;
 			}
 			const { value } = this.$props;
 
 			// handle featured suggestions click event
 			if (suggestion._suggestion_type === suggestionTypes.Featured) {
 				this.handleFeaturedSuggestionClicked(suggestion);
+				// Handle AI
+				if (!this.$props.enableAI) this.isOpen = false;
+				else {
+					this.showAIScreen = true;
+				}
 				return;
 			}
 			// Record analytics for selected suggestions
@@ -903,6 +910,12 @@ const SearchBox = defineComponent({
 				causes.SUGGESTION_SELECT,
 				suggestion.source,
 			);
+
+			// Handle AI
+			if (!this.$props.enableAI) this.isOpen = false;
+			else {
+				this.showAIScreen = true;
+			}
 		},
 
 		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
@@ -1652,8 +1665,7 @@ const SearchBox = defineComponent({
 																									},
 																								)}
 																								key={
-																									index
-																									+ sectionIndex
+																									`${sectionItem._id}_${index}_${sectionIndex}`
 																								}
 																								style={{
 																									justifyContent:
