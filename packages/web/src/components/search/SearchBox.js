@@ -137,7 +137,8 @@ const SearchBox = (props) => {
 	const stats = () => getResultStats(props);
 
 	const [showAIScreen, setShowAIScreen] = useState(false);
-	const [prefilledAIAnswer, setPrefilledAIAnswer] = useState('');
+	const [faqAnswer, setFAQAnswer] = useState('');
+	const [faqQuestion, setFAQQuestion] = useState('');
 	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
 	const [showTypingEffect, setShowTypingEffect] = useState(true);
 	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
@@ -377,6 +378,16 @@ const SearchBox = (props) => {
 							: undefined;
 				}
 
+				if ((faqAnswer || faqQuestion) && value === '') {
+					// Reset state for FAQ answer.
+					// If an FAQ suggestion is selected,
+					// they can set below values after the setValue call.
+					setFAQAnswer('');
+					setFAQQuestion('');
+					setShowAIScreen(false);
+				}
+
+
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery({
@@ -488,8 +499,6 @@ const SearchBox = (props) => {
 	const onSuggestionSelected = (suggestion) => {
 		// handle when FAQ suggestion is clicked
 		if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
-			setPrefilledAIAnswer(suggestion._answer);
-			setShowAIScreen(true);
 			setValue(
 				suggestion.value,
 				true,
@@ -497,10 +506,12 @@ const SearchBox = (props) => {
 				causes.SUGGESTION_SELECT,
 				true,
 				false,
-				suggestion._category,
-				false,
+				undefined,
 				false,
 			);
+			setFAQAnswer(suggestion._answer);
+			setFAQQuestion(suggestion.value);
+			setShowAIScreen(true);
 			return;
 		}
 
@@ -884,6 +895,15 @@ const SearchBox = (props) => {
 			error, isLoading, rawData, AIResponse,
 		} = props;
 
+		const mergedAIAnswer = faqAnswer || (props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& props.AIResponse.response.answer
+				.text);
+		const mergedAIQuestion = faqQuestion || (props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.question);
+
 		const data = {
 			error,
 			loading: isLoading,
@@ -894,12 +914,8 @@ const SearchBox = (props) => {
 			resultStats: stats(),
 			rawData,
 			AIData: {
-				question: AIResponse && AIResponse.response && AIResponse.response.question,
-				answer:
-					AIResponse
-					&& AIResponse.response
-					&& AIResponse.response.answer
-					&& AIResponse.response.answer.text,
+				question: mergedAIQuestion,
+				answer: mergedAIAnswer,
 				documentIds:
 					(AIResponse
 						&& AIResponse.response
@@ -1509,11 +1525,14 @@ const SearchBox = (props) => {
 
 							let indexOffset = 0;
 
-							const aiAnswerToDisplay = prefilledAIAnswer || (props.AIResponse
+							const mergedAIAnswer = faqAnswer || (props.AIResponse
 							&& props.AIResponse.response
 							&& props.AIResponse.response.answer
 							&& props.AIResponse.response.answer
 								.text);
+							const mergedAIQuestion = faqQuestion || (props.AIResponse
+							&& props.AIResponse.response
+							&& props.AIResponse.response.question);
 
 							return (
 								<React.Fragment>
@@ -1542,10 +1561,8 @@ const SearchBox = (props) => {
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
 															question:
-																props.AIResponse
-																&& props.AIResponse.response
-																&& props.AIResponse.response.question,
-															answer: aiAnswerToDisplay,
+																mergedAIQuestion,
+															answer: mergedAIAnswer,
 															documentIds:
 																(props.AIResponse
 																	&& props.AIResponse.response
@@ -1571,7 +1588,7 @@ const SearchBox = (props) => {
 																			<TypingEffect
 																				key={currentValue}
 																				message={md.render(
-																					aiAnswerToDisplay,
+																					mergedAIAnswer,
 																				)}
 																				speed={5}
 																				onTypingComplete={() => {
@@ -1601,7 +1618,7 @@ const SearchBox = (props) => {
 																					}
 
 																					if (
-																						aiAnswerToDisplay
+																						mergedAIAnswer
 																					) {
 																						setShowTypingEffect(
 																							false,
