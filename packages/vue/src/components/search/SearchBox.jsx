@@ -164,6 +164,14 @@ const SearchBox = defineComponent({
 				suggestionsArray = [...withClickIds(this.suggestions)];
 			}
 
+			suggestionsArray = suggestionsArray.map(s =>{
+				if(s.sectionId){
+					return s
+				}
+				return {...s, sectionId: s._suggestion_type}
+
+			})
+
 			const sectionsAccumulated = [];
 			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
 				if (sectionsAccumulated.includes(d.sectionId)) return acc;
@@ -1518,7 +1526,7 @@ const SearchBox = defineComponent({
 													return () => (
 														// When you change below also change the empty icon below
 														<img
-															style={{ maxHeight: '25px' }}
+															style={{ maxWidth: '30px' }}
 															src={xss(item.iconURL)}
 															alt={item.value}
 														/>
@@ -1529,8 +1537,8 @@ const SearchBox = defineComponent({
 													<span
 														style={{
 															display: 'inline-block',
-															height: '25px',
-															width: leaveSpaceForIcon ? '25px' : 0,
+															height: '30px',
+															width: leaveSpaceForIcon ? '30px' : 0,
 														}}
 													></span>
 												);
@@ -1584,7 +1592,7 @@ const SearchBox = defineComponent({
 																	);
 																	indexOffset += item.length - 1;
 																	return (
-																		<div class="section-container">
+																		<div key={`section-${itemIndex}`} class="section-container">
 																			{sectionHtml ? (
 																				<div
 																					class={`section-header ${getClassName(
@@ -1705,6 +1713,7 @@ const SearchBox = defineComponent({
 																									}}
 																								>
 																									<CustomSvg
+																										key={`${sectionItem._suggestion_type}-${sectionIndex}`}
 																										className={
 																											getClassName(
 																												this
@@ -1771,6 +1780,7 @@ const SearchBox = defineComponent({
 											</ActionsContainer>
 											<InputWrapper>
 												<TextArea
+													searchBox
 													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
 													ref={this.$props.innerRef}
@@ -1780,7 +1790,6 @@ const SearchBox = defineComponent({
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
-													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {
@@ -1856,6 +1865,7 @@ const SearchBox = defineComponent({
 							</ActionsContainer>
 							<InputWrapper>
 								<TextArea
+									searchBox
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
 									on={{
