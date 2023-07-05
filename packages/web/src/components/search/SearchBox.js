@@ -1650,6 +1650,7 @@ const SearchBox = (props) => {
 																				}}
 																				showTypingEffect={
 																					showTypingEffect
+																				&& !isAITyping
 																				}
 																			/>
 																		</Answer>
