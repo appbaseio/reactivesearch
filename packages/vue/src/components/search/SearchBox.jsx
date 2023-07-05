@@ -97,7 +97,8 @@ const SearchBox = defineComponent({
 			showAIScreenFooter: false,
 			showFeedbackComponent: false,
 			feedbackState: null,
-			prefilledAIAnswer: ''
+			faqAnswer: '',
+			faqQuestion: ''
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -159,8 +160,13 @@ const SearchBox = defineComponent({
 		stats() {
 			return getResultStats(this);
 		},
+		mergedAIQuestion(){
+			return this.faqQuestion ||this.AIResponse
+			&& this.AIResponse.response
+			&& this.AIResponse.response.question
+		},
 		mergedAIAnswer(){
-			return this.prefilledAIAnswer || (this.AIResponse
+			return this.faqAnswer || (this.AIResponse
 						&& this.AIResponse.response
 						&& this.AIResponse.response.answer
 						&& this.AIResponse.response.answer.text)
@@ -483,10 +489,7 @@ const SearchBox = defineComponent({
 				value: currentValue,
 				resultStats: this.stats,
 				AIData: {
-					question:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.question,
+					question: this.mergedAIQuestion,
 					answer: this.mergedAIAnswer,
 					documentIds:
 						(this.AIResponse
@@ -562,6 +565,13 @@ const SearchBox = defineComponent({
 						= Array.isArray(this.selectedTags) && this.selectedTags.length
 							? this.selectedTags
 							: undefined;
+				}
+
+				if((this.faqAnswer || this.faqQuestion) && value === ''){
+					// Empty the previous state
+					this.faqAnswer = ''
+					this.faqQuestion = ''
+					this.showAIScreen = false
 				}
 
 				if (isDefaultValue) {
@@ -832,13 +842,9 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
-			// Empty the previous state
-			this.prefilledAIAnswer = ''
-
 			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
-				this.prefilledAIAnswer = (suggestion._answer);
 				this.setValue(
 					suggestion.value,
 					true,
@@ -850,6 +856,8 @@ const SearchBox = defineComponent({
 				);
 				// Handle AI
 				// Independent of enableAI.
+				this.faqAnswer = (suggestion._answer);
+				this.faqQuestion = suggestion.value
 				this.isOpen = true
 				this.showAIScreen = true;
 				return;
@@ -1401,10 +1409,7 @@ const SearchBox = defineComponent({
 			const customAIRenderer = this.$props.renderAIAnswer || this.$slots.renderAIAnswer;
 			if (customAIRenderer) {
 				return customAIRenderer({
-					question:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.question,
+					question: this.mergedAIQuestion,
 					answer: this.mergedAIAnswer,
 					documentIds:
 						(this.AIResponse
