@@ -144,6 +144,15 @@ const SearchBox = (props) => {
 	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
 	const [feedbackState, setFeedbackState] = useState(null);
 
+	const mergedAIAnswer = faqAnswer || (props.AIResponse
+		&& props.AIResponse.response
+		&& props.AIResponse.response.answer
+		&& props.AIResponse.response.answer
+			.text);
+	const mergedAIQuestion = faqQuestion || (props.AIResponse
+		&& props.AIResponse.response
+		&& props.AIResponse.response.question);
+
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
@@ -895,15 +904,6 @@ const SearchBox = (props) => {
 			error, isLoading, rawData, AIResponse,
 		} = props;
 
-		const mergedAIAnswer = faqAnswer || (props.AIResponse
-			&& props.AIResponse.response
-			&& props.AIResponse.response.answer
-			&& props.AIResponse.response.answer
-				.text);
-		const mergedAIQuestion = faqQuestion || (props.AIResponse
-			&& props.AIResponse.response
-			&& props.AIResponse.response.question);
-
 		const data = {
 			error,
 			loading: isLoading,
@@ -1524,15 +1524,6 @@ const SearchBox = (props) => {
 							};
 
 							let indexOffset = 0;
-
-							const mergedAIAnswer = faqAnswer || (props.AIResponse
-							&& props.AIResponse.response
-							&& props.AIResponse.response.answer
-							&& props.AIResponse.response.answer
-								.text);
-							const mergedAIQuestion = faqQuestion || (props.AIResponse
-							&& props.AIResponse.response
-							&& props.AIResponse.response.question);
 
 							return (
 								<React.Fragment>
