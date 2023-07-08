@@ -48,7 +48,7 @@ const ReactiveBase = {
 		mongodb: types.mongodb,
 		endpoint: types.endpointConfig,
 		preferences: VueTypes.object,
-		httpRequestTimeout: types.number,
+		httpRequestTimeout: VueTypes.number.def(30000),
 	},
 	provide() {
 		let createCacheFn = createCache;
