@@ -395,6 +395,9 @@ const SearchBox = (props) => {
 					setFAQQuestion('');
 					setShowAIScreen(false);
 				}
+				if (value === '') {
+					setShowAIScreen(false);
+				}
 
 
 				if (isDefaultValue) {
@@ -672,7 +675,7 @@ const SearchBox = (props) => {
 			props,
 			!isTagsMode.current ? causes.CLEAR_VALUE : undefined,
 			true,
-			false,
+			true,
 		);
 		if (onChange) {
 			onChange('', ({ isOpen } = {}) =>
