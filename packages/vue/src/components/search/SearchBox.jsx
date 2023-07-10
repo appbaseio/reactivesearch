@@ -1826,10 +1826,6 @@ const SearchBox = defineComponent({
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
-													showFocusShortcutsIcon={
-														this.$props.showFocusShortcutsIcon
-													}
-													showVoiceSearch={this.$props.showVoiceSearch}
 													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
