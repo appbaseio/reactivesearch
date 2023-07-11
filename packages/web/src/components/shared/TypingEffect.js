@@ -48,7 +48,7 @@ const TypingEffect = ({
 	}, [message]);
 
 	useEffect(() => {
-		if (executeOnWhileTyping && typing) {
+		if (executeOnWhileTyping && (typing || !showTypingEffect)) {
 			onWhileTyping();
 			setExecuteOnWhileTyping(false);
 		}
