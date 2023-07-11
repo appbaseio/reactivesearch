@@ -48,7 +48,7 @@ const ReactiveBase = {
 		mongodb: types.mongodb,
 		endpoint: types.endpointConfig,
 		preferences: VueTypes.object,
-		httpRequestTimeout: VueTypes.number.def(30000),
+		httpRequestTimeout: VueTypes.number.def(30),
 	},
 	provide() {
 		let createCacheFn = createCache;
@@ -151,7 +151,7 @@ const ReactiveBase = {
 				analyticsConfig: props.reactivesearchAPIConfig,
 				mongodb: props.mongodb,
 				endpoint: props.endpoint,
-				httpRequestTimeout: props.httpRequestTimeout || 30000,
+				httpRequestTimeout: (props.httpRequestTimeout || 0) * 1000 || 30000,
 			};
 			let queryParams = '';
 

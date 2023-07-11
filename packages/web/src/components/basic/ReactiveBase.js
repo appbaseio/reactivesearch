@@ -53,7 +53,7 @@ class ReactiveBase extends Component {
 			],
 			() => {
 				this.setStore(this.props);
-				this.setState(state => ({
+				this.setState((state) => ({
 					key: `${state.key}-0`,
 				}));
 			},
@@ -88,8 +88,8 @@ class ReactiveBase extends Component {
 			...headers,
 			...(endpoint &&
 				endpoint.headers && {
-				...endpoint.headers,
-			}),
+					...endpoint.headers,
+				}),
 		};
 	}
 
@@ -123,7 +123,7 @@ class ReactiveBase extends Component {
 			transformResponse: props.transformResponse,
 			mongodb: props.mongodb,
 			...(props.endpoint instanceof Object && { endpoint: props.endpoint }),
-			httpRequestTimeout: props.httpRequestTimeout,
+			httpRequestTimeout: props.httpRequestTimeout * 1000,
 		};
 
 		let queryParams = '';
@@ -270,7 +270,7 @@ ReactiveBase.defaultProps = {
 	graphQLUrl: '',
 	as: 'div',
 	endpoint: null,
-	httpRequestTimeout: 30000,
+	httpRequestTimeout: 30,
 };
 
 ReactiveBase.propTypes = {
