@@ -93,6 +93,7 @@ const SearchBox = defineComponent({
 			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
+			parsedSuggestions: [],
 			showAIScreen: false,
 			showAIScreenFooter: false,
 			showFeedbackComponent: false,
@@ -157,33 +158,6 @@ const SearchBox = defineComponent({
 		},
 		stats() {
 			return getResultStats(this);
-		},
-		parsedSuggestions() {
-			let suggestionsArray = [];
-			if (Array.isArray(this.suggestions) && this.suggestions.length) {
-				suggestionsArray = [...withClickIds(this.suggestions)];
-			}
-
-			suggestionsArray = suggestionsArray.map(s =>{
-				if(s.sectionId){
-					return s
-				}
-				return {...s, sectionId: s._suggestion_type}
-
-			})
-
-			const sectionsAccumulated = [];
-			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
-				if (sectionsAccumulated.includes(d.sectionId)) return acc;
-				if (d.sectionId) {
-					acc[currentIndex] = suggestionsArray.filter((g) => g.sectionId === d.sectionId);
-					sectionsAccumulated.push(d.sectionId);
-				} else {
-					acc[currentIndex] = d;
-				}
-				return acc;
-			}, {});
-			return Object.values(sectionisedSuggestions);
 		},
 	},
 	props: {
@@ -338,6 +312,28 @@ const SearchBox = defineComponent({
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
 			this.normalizedSuggestions = suggestionsList;
+
+			suggestionsList = suggestionsList.map(s =>{
+				if(s.sectionId){
+					return s
+				}
+				return {...s, sectionId: s._suggestion_type}
+
+			})
+
+			const sectionsAccumulated = [];
+			const sectionisedSuggestions = suggestionsList.reduce((acc, d, currentIndex) => {
+				if (sectionsAccumulated.includes(d.sectionId)) return acc;
+				if (d.sectionId) {
+					acc[currentIndex] = suggestionsList.filter((g) => g.sectionId === d.sectionId);
+					sectionsAccumulated.push(d.sectionId);
+				} else {
+					acc[currentIndex] = d;
+				}
+				return acc;
+			}, {});
+			this.parsedSuggestions = Object.values(sectionisedSuggestions);
+
 			this.handleTextAreaHeightChange();
 		},
 		selectedValue(newVal, oldVal) {
@@ -360,7 +356,12 @@ const SearchBox = defineComponent({
 				if (this.$options.isTagsMode) {
 					cause = causes.SUGGESTION_SELECT;
 				}
-				this.setValue(newVal || '', true, this.$props, cause);
+				if(this.$props.value === undefined){
+					this.setValue(newVal, newVal === '', this.$props, cause, false)
+				}else{
+
+					this.setValue(newVal || '', true, this.$props, cause);
+				}
 			}
 		},
 		focusShortcuts() {
@@ -679,6 +680,7 @@ const SearchBox = defineComponent({
 				&& results[0][0].transcript.trim()
 			) {
 				this.setValue(results[0][0].transcript.trim(), true);
+				this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 			}
 		},
 		triggerQuery({
@@ -725,6 +727,8 @@ const SearchBox = defineComponent({
 				'',
 				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
 			);
+			this.showAIScreen = false
+			this.isOpen = false
 		},
 
 		handleKeyDown(event, highlightedIndex = null) {
@@ -764,7 +768,7 @@ const SearchBox = defineComponent({
 
 			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(inputValue, false, this.$props, undefined);
+				this.setValue(inputValue, inputValue === '', this.$props, undefined, false);
 			} else {
 				this.$emit(
 					'change',
@@ -804,6 +808,7 @@ const SearchBox = defineComponent({
 						this.$options.isTagsMode.current
 							? causes.SUGGESTION_SELECT
 							: causes.ENTER_PRESS,
+						false
 					);
 					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
 				}
@@ -812,7 +817,7 @@ const SearchBox = defineComponent({
 				// else Downshift probably is focusing the dropdown
 				// and not letting it close
 				// eslint-disable-next-line no-unused-expressions
-				this.$refs?.[this.$props.innerRef]?.blur();
+				this.$refs?.[this.$props.innerRef]?.$el?.blur();
 			} catch (e) {
 				console.error(
 					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
@@ -862,7 +867,7 @@ const SearchBox = defineComponent({
 					this.$props,
 					causes.SUGGESTION_SELECT,
 					false,
-					suggestion._category,
+					suggestion._category
 				);
 				this.$emit('change', emitValue, ({ isOpen }) =>
 					this.triggerQuery({
@@ -1677,8 +1682,7 @@ const SearchBox = defineComponent({
 																									},
 																								)}
 																								key={
-																									index
-																									+ sectionIndex
+																									`${sectionItem._id}_${index}_${sectionIndex}`
 																								}
 																								style={{
 																									justifyContent:

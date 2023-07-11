@@ -7,19 +7,12 @@
 			<search-box
 				className="result-list-container"
 				componentId="BookSensor"
-				:dataField="['original_title', 'original_title.search']"
+				:dataField="['original_title', 'original_title.search', 'authors']"
 				:URLParams="true"
 				:size="10"
-				:enablePopularSuggestions="true"
-				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds', sectionLabel: '<b>Popular suggestions 🙌🏻</b>' }"
-				:enableRecentSuggestions="true"
-				:recentSuggestionsConfig="{
-					size: 3,
-					index: 'good-books-ds',
-					minChars: 4,
-					sectionLabel: '<b>Recent suggestions 🙌🏻</b>'
-				}"
+				searchboxId="good_books"
 				:autosuggest="true"
+				:showVoiceSearch="true"
 			/>
 			<reactive-list
 				componentId="SearchResult"
