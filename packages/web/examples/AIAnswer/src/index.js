@@ -46,53 +46,7 @@ const Main = () => (
 					}}
 					title={<b>AI Chatbox 🤩</b>}
 					enterButton={true}
-					onData={(param) => {
-						console.log('param', param);
-					}}
-					// render={({ loading, data, error, rawData }) => {
-					// 	if (loading) {
-					// 		return 'loading...';
-					// 	}
-					// 	if (error) {
-					// 		return <pre>JSON.stringify(error)</pre>;
-					// 	}
-					// 	if (data && Array.isArray(data)) {
-					// 		return (
-					// 			<div style={{ width: '80%', margin: '0 auto', padding: '20px' }}>
-					// 				{data.map((message, index) => {
-					// 					const isSender = message.role === 'user';
-					// 					const messageStyle = {
-					// 						backgroundColor: isSender ? '#cce5ff' : '#f8f9fa',
-					// 						padding: '10px',
-					// 						borderRadius: '7px',
-					// 						marginBottom: '10px',
-					// 						maxWidth: '80%',
-					// 						alignSelf: isSender ? 'flex-end' : 'flex-start',
-					// 						display: 'inline-block',
-					// 						border: '1px solid',
-					// 						color: isSender ? '#004085' : '#383d41',
-					// 						position: 'relative',
-					// 						whiteSpace: 'pre-wrap',
-					// 					};
-
-					// 					return (
-					// 						<div
-					// 							key={index}
-					// 							style={{
-					// 								display: 'flex',
-					// 								justifyContent: isSender
-					// 									? 'flex-end'
-					// 									: 'flex-start',
-					// 							}}
-					// 						>
-					// 							<div style={messageStyle}>{message.content}</div>
-					// 						</div>
-					// 					);
-					// 				})}
-					// 			</div>
-					// 		);
-					// 	}
-					// }}
+					showInput={false}
 				/>
 				<br />
 				<SelectedFilters />

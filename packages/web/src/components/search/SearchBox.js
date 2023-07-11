@@ -568,7 +568,7 @@ const SearchBox = (props) => {
 			setShowAIScreen(false);
 		}
 		if (value === undefined) {
-			setValue(inputValue, false, props, undefined, true, false);
+			setValue(inputValue, inputValue === '', props, undefined, true, false);
 		} else if (onChange) {
 			onChange(
 				inputValue,
@@ -686,15 +686,12 @@ const SearchBox = (props) => {
 		) {
 			setValue(
 				results[0][0].transcript.trim(),
-				true,
+				false,
 				props,
 				undefined,
 				true,
-				props.enableAI ? !isOpen && !showAIScreen : isOpen,
 			);
-			if (!showAIScreen && props.autosuggest) {
-				setShowAIScreen(true);
-			}
+			_inputRef.current.focus();
 		}
 	};
 

@@ -20,7 +20,8 @@ const Main = () => (
 					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
-					autosuggest
+					searchboxId='movies_app'
+					enableFeaturedSuggestions
 				/>
 				<br />
 				<ReactiveList
