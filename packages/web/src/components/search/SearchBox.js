@@ -604,9 +604,7 @@ const SearchBox = (props) => {
 		}
 	};
 
-	const onInputChange = (e) => {
-		const { value: inputValue } = e.target;
-
+	const handleInputChange = (inputValue, e) => {
 		if (!isOpen && props.autosuggest) {
 			setIsOpen(true);
 		}
@@ -629,6 +627,12 @@ const SearchBox = (props) => {
 			);
 		}
 	};
+	const onInputChange = (e) => {
+		const { value: inputValue } = e.target;
+
+		handleInputChange(inputValue, e);
+	};
+
 
 	const enterButtonOnClick = () => {
 		setShowAIScreen(false);
@@ -721,7 +725,7 @@ const SearchBox = (props) => {
 		}
 	};
 
-	const handleVoiceResults = ({ results }) => {
+	const onVoiceResults = ({ results }) => {
 		if (
 			results
 			&& results[0]
@@ -730,13 +734,7 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript
 			&& results[0][0].transcript.trim()
 		) {
-			setValue(
-				results[0][0].transcript.trim(),
-				false,
-				props,
-				undefined,
-				true,
-			);
+			handleInputChange(results[0][0].transcript.trim());
 			_inputRef.current.focus();
 		}
 	};
@@ -1075,7 +1073,7 @@ const SearchBox = (props) => {
 						<Mic
 							getInstance={getMicInstance}
 							render={renderMic}
-							onResult={handleVoiceResults}
+							onResult={onVoiceResults}
 							className={getClassName(innerClass, 'mic') || null}
 						/>
 					)}

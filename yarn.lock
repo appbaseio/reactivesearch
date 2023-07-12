@@ -171,32 +171,10 @@
     tocbot "4.5.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@10.0.0-alpha.21":
-  version "10.0.0-alpha.21"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.21.tgz#bb9889cbe9c1b26d4c7405dd3a7a4bbe29be13f2"
-  integrity sha512-0DvDQbXFxCsqo/9Vx3UNQ3CSWWwBcUawHHsTl0D/j71u3ShezZ7CbRqkEVOpBkhPjzWPsbrUuTmVbDMO9ySLYg==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
-"@appbaseio/reactivecore@10.0.0-alpha.24":
-  version "10.0.0-alpha.24"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.24.tgz#9c635b52cfbce357dd3e45dad1266c602878cdda"
-  integrity sha512-DTO/kmay7NElyqZq/04vwHM4AeoFsg17yLe3jr8A7aIlJ+u2b8G8OJPEUZGidOCEk2ouy63QxLW76qpYLNtITQ==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
-"@appbaseio/reactivecore@10.0.0-alpha.4":
-  version "10.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.4.tgz#6c01e07847a4177e2e9284c96f1eac4c9892ff4c"
-  integrity sha512-Dq2zCjYab+eOaR1fDv+8YzhhB19M/eZYFOh2sDzwENd5CZ7ivePOXIxSaIym9Hl7FzcWjbyXfNm0smJETB1QIA==
+"@appbaseio/reactivecore@10.0.0-alpha.30":
+  version "10.0.0-alpha.30"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.30.tgz#376e40a8ebfd6e141b268b82532178858db77ec9"
+  integrity sha512-jaVGb/QAhU9NNOE15B7hy6cmGl/3i2tgS5sCQ4KAAEUwOMR2g9+eg3MoWZAlBhlnf52z0ONzmkWdA7TQL8wK+Q==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -232,38 +210,13 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch-vue@3.0.0-rc.6.1":
-  version "3.0.0-rc.6.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.1.tgz#ea707fc7d98d0d33135aa5b661c8abe61e2cc790"
-  integrity sha512-y/CSdNxYoCbef9tNd30T/V7cJ0tWBMeJ8pS/tSPhEKowkPfyJBgqpMKc8tZOoSiSDfYAWFw+rvkXROxJ9VgCzQ==
+"@appbaseio/reactivesearch@4.0.0-rc.23":
+  version "4.0.0-rc.23"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.23.tgz#41b8e22bc11770ed252627ddfec1decadaef17ac"
+  integrity sha512-FWpgTlzG2tjspXu6YMhjEk9ZZ3heVkwhkIC05qsovxY7tKmUlZLYB8Ba4AgWgBmScJIS//pJU3b6ykNz1zrhvw==
   dependencies:
     "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.21"
-    "@appbaseio/vue-emotion" "0.6.0-alpha.6"
-    "@emotion/css" "^11.10.5"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.2.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "11.0.0"
-    hotkeys-js "^3.8.7"
-    ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    remarkable "^2.0.1"
-    url-search-params-polyfill "^7.0.0"
-    vue-google-maps-community-fork "^0.1.7"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component next
-    vue-types "^5.0.2"
-
-"@appbaseio/reactivesearch@4.0.0-rc.18.1":
-  version "4.0.0-rc.18.1"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.18.1.tgz#256b9bc09f51e63286ea0a65d0b287375bafffe7"
-  integrity sha512-A9FUGO6ZI0YTvQ95baGv4kut0UXVQfSgUmnIpsljfN5LEFF8iKzQYW0xuiwRBU9Gfu7WWD8In5RgTDCtf9E42w==
-  dependencies:
-    "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.24"
+    "@appbaseio/reactivecore" "10.0.0-alpha.30"
     "@appbaseio/rheostat" "^1.0.0-alpha.15"
     "@emotion/core" "^10.0.28"
     "@emotion/styled" "^10.0.27"
@@ -284,33 +237,7 @@
     url-search-params-polyfill "^7.0.0"
     xss "^1.0.11"
 
-"@appbaseio/reactivesearch@4.0.0-rc.3":
-  version "4.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-4.0.0-rc.3.tgz#a3fe6ddc26991976e0f6a0d3f636916138f6de74"
-  integrity sha512-f36N1cD4TRTVUUab02oj+uZgXBw1XhK595+Ap/kYj/CNc7d7WkGzJNPuxUVWi3SdxK938JCoJDXBIelWmle7Og==
-  dependencies:
-    "@appbaseio/analytics" "^1.1.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.4"
-    "@appbaseio/rheostat" "^1.0.0-alpha.15"
-    "@emotion/core" "^10.0.28"
-    "@emotion/styled" "^10.0.27"
-    appbase-js "^5.2.0"
-    cross-env "^5.2.0"
-    dayjs "^1.11.7"
-    downshift "^1.31.2"
-    echarts "^5.3.3"
-    echarts-for-react "^3.0.2"
-    emotion-theming "^10.0.27"
-    hoist-non-react-statics "^3.2.1"
-    hotkeys-js "^3.8.7"
-    polished "^1.9.3"
-    prop-types "^15.6.0"
-    react-day-picker "^7.0.5"
-    react-redux "^6.0.1"
-    url-search-params-polyfill "^7.0.0"
-    xss "^1.0.11"
-
-"@appbaseio/reactivesearch@^3.29.0", "@appbaseio/reactivesearch@^3.30.3":
+"@appbaseio/reactivesearch@^3.29.0":
   version "3.43.10"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.43.10.tgz#2c738f048ba6d3a8b049c2d120c3d482f3dd9e9f"
   integrity sha512-QV2NcoxNY72a1ntZitSIdnMa7x3MNvLSYtbgVHHSF2Dx/Yw2plq4H3kRBaWd6VSuDhvjXuk1kZPAkMQV1GynTg==
@@ -35693,6 +35620,16 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
+
+typescript@3.4.5:
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
+  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
+
+typescript@^2.8.1:
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+  integrity sha512-Gr4p6nFNaoufRIY4NMdpQRNmgxVIGMs4Fcu/ujdYk3nAZqk7supzBE9idmvfZIlH/Cuj//dvi+019qEue9lV0w==
 
 typescript@^5.0.0:
   version "5.1.6"
