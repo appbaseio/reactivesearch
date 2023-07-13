@@ -46,9 +46,12 @@ const ComponentWrapper = (
 		const componentProps = { ...this.$attrs };
 		// handle kebab case for props
 		const parsedProps = {};
-		Object.keys(componentProps).forEach((key) => {
+		Object.keys(componentProps).forEach(key => {
 			parsedProps[getCamelCase(key)] = componentProps[key];
 		});
+		if (options.componentType === componentTypes.AIAnswer) {
+			parsedProps.enableAI = true;
+		}
 		this.componentProps = parsedProps;
 		this.componentId = this.componentProps.componentId;
 		this.react = this.componentProps.react;
@@ -67,7 +70,7 @@ const ComponentWrapper = (
 				this.$emit('queryChange', ...args);
 				this.$emit('query-change', ...args);
 			};
-			const onError = (e) => {
+			const onError = e => {
 				this.$emit('error', e);
 			};
 			this.setQueryListener(this.componentId, onQueryChange, onError);

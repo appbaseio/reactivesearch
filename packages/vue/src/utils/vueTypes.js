@@ -164,6 +164,23 @@ const types = {
 		headers: VueTypes.object,
 		body: VueTypes.object,
 	}),
+	AIConfig: VueTypes.shape({
+		systemPrompt: VueTypes.string,
+		topDocsForContext: VueTypes.number,
+		maxTokens: VueTypes.number,
+		docTemplate: VueTypes.string,
+		queryTemplate: VueTypes.string,
+		temperature: VueTypes.number,
+	}),
+	AIUIConfig: VueTypes.shape({
+		loaderMessage: VueTypes.string, // slot #loaderMessage should also be supported
+		showSourceDocuments: VueTypes.bool,
+		renderSourceDocument: VueTypes.func,
+		onSourceClick: VueTypes.func,
+		// renderAskButton: VueTypes.func,has to be a slot
+		askButton: VueTypes.bool,
+		showFeedback: VueTypes.bool,
+	}),
 };
 
 export default types;
