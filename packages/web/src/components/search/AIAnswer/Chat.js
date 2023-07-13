@@ -299,7 +299,7 @@ const Chat = (props) => {
 				</MessagesContainer>
 			)}
 			{renderErrorEle()}
-			{props.showFeedback && (
+			{props.showFeedback && !props.isAIResponseLoading && !props.isAITyping && (
 				<div
 					className={`--ai-answer-feedback-container ${
 						getClassName(props.innerClass, 'ai-feedback') || ''
@@ -317,7 +317,7 @@ const Chat = (props) => {
 					/>
 				</div>
 			)}
-			{props.showInput && (
+			{props.showInput && !props.isAIResponseLoading && !props.isAITyping && (
 				<MessageInputContainer
 					className="--ai-input-container"
 					onSubmit={handleSendMessage}
@@ -382,6 +382,12 @@ Chat.propTypes = {
 	showFeedback: types.bool,
 	trackUsefullness: types.func,
 	currentSessionId: types.string,
+	showSourceDocuments: types.bool,
+	triggerOn: types.string,
+	renderTriggerMessage: types.children,
+	renderSourceDocument: types.func,
+	onSourceClick: types.func,
+	isAITyping: types.boolRequired,
 };
 
 export default Chat;
