@@ -111,12 +111,6 @@ const AIAnswer = (props) => {
 				).sessionId;
 			setCurrentSessionId(sessionIdToSet);
 			const { messages: messagesHistory, response } = props.AIResponse;
-			if (!props.isAITyping) {
-				console.log(
-					'🚀 ~ file: index.js:110 ~ useEffect ~ messagesHistory:',
-					messagesHistory,
-				);
-			}
 
 			const finalMessages = [];
 			if (response && response.error) {
