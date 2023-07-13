@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import PropTypes from 'prop-types';
@@ -43,6 +43,8 @@ md.set({
 const Chat = (props) => {
 	const { messages, onSendMessage } = props;
 	const [inputMessage, setInputMessage] = React.useState('');
+	const [sourceDocIds, setSourceDocIds] = useState(null);
+	const [initialHits, setInitialHits] = useState(null);
 	const messagesContainerRef = React.useRef(null);
 	const _inputRef = useRef(null);
 	const _inputWrapper = useRef(null);
@@ -54,9 +56,7 @@ const Chat = (props) => {
 
 	const handleSendMessage = (e) => {
 		e.preventDefault();
-		if (props.isAIResponseLoading || !props.currentSessionId) {
-			return;
-		}
+
 		if (inputMessage.trim()) {
 			onSendMessage(inputMessage);
 			setInputMessage('');
@@ -144,7 +144,6 @@ const Chat = (props) => {
 						onClick={onEnterButtonClick}
 						onKeyPress={handleKeyPress}
 						className={`enter-btn ${getClassName(props.innerClass, 'ai-enter-button')}`}
-						disabled={props.isAIResponseLoading || !props.currentSessionId}
 					>
 						Send
 					</SendButton>
@@ -241,21 +240,12 @@ const Chat = (props) => {
 		}
 	};
 	const getAISourceObjects = () => {
-		const localCache
-			= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
-			&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[props.componentId];
 		const sourceObjects = [];
 		if (!props.AIResponse) return sourceObjects;
-		const docIds
-			= (props.AIResponse
-				&& props.AIResponse.response
-				&& props.AIResponse.response.answer
-				&& props.AIResponse.response.answer.documentIds)
-			|| [];
-		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+		const docIds = sourceDocIds || [];
+		if (initialHits) {
 			docIds.forEach((id) => {
-				const foundSourceObj
-					= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+				const foundSourceObj = initialHits.find(hit => hit._id === id) || {};
 				if (foundSourceObj) {
 					const { _source = {}, ...rest } = foundSourceObj;
 
@@ -278,7 +268,12 @@ const Chat = (props) => {
 			showSourceDocuments = true,
 			onSourceClick = () => {},
 			renderSourceDocument,
+			isAIResponseLoading,
+			isAITyping,
 		} = props || {};
+		if (isAIResponseLoading || isAITyping) {
+			return null;
+		}
 		const renderSourceDocumentLabel = (sourceObj) => {
 			if (renderSourceDocument) {
 				return renderSourceDocument(sourceObj);
@@ -287,32 +282,53 @@ const Chat = (props) => {
 			return sourceObj._id;
 		};
 
-		return showSourceDocuments
+		return showSourceDocuments && Array.isArray(sourceDocIds) && sourceDocIds.length ? (
+			<Footer
+				themePreset={props.themePreset}
+				style={{ marginTop: '1.5rem', background: 'inherit' }}
+			>
+				Summary generated using the following sources:{' '}
+				<SourceTags>
+					{getAISourceObjects().map(el => (
+						<Button
+							className={`--ai-source-tag ${
+								getClassName(props.innerClass, 'ai-source-tag') || ''
+							}`}
+							info
+							onClick={() => onSourceClick && onSourceClick(el)}
+							key={el._id}
+						>
+							{renderSourceDocumentLabel(el)}
+						</Button>
+					))}
+				</SourceTags>
+			</Footer>
+		) : null;
+	};
+
+	React.useEffect(() => {
+		if (
+			props.showSourceDocuments
 			&& props.AIResponse
 			&& props.AIResponse.response
 			&& props.AIResponse.response.answer
-			&& props.AIResponse.response.answer.documentIds ? (
-				<Footer
-					themePreset={props.themePreset}
-					style={{ marginTop: '1.5rem', background: 'inherit' }}
-				>
-					Summary generated using the following sources:{' '}
-					<SourceTags>
-						{getAISourceObjects().map(el => (
-							<Button
-								className={`--ai-source-tag ${
-								getClassName(props.innerClass, 'ai-source-tag') || ''
-							}`}
-								info
-								onClick={() => onSourceClick && onSourceClick(el)}
-							>
-								{renderSourceDocumentLabel(el)}
-							</Button>
-						))}
-					</SourceTags>
-				</Footer>
-			) : null;
-	};
+			&& Array.isArray(props.AIResponse.response.answer.documentIds)
+		) {
+			setSourceDocIds(props.AIResponse.response.answer.documentIds);
+
+			const localCache
+				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[props.componentId];
+			if (
+				localCache
+				&& localCache.meta
+				&& localCache.meta.hits
+				&& localCache.meta.hits.hits
+			) {
+				setInitialHits(localCache.meta.hits.hits);
+			}
+		}
+	}, [props.AIResponse]);
 
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
@@ -412,7 +428,6 @@ const Chat = (props) => {
 								showIcon={props.showIcon}
 								iconPosition={props.iconPosition}
 								themePreset={props.themePreset}
-								disabled={props.isAIResponseLoading || !props.currentSessionId}
 								className={getClassName(props.innerClass, 'ai-input') || null}
 							/>{' '}
 							{renderIcons()}

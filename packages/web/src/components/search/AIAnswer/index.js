@@ -104,9 +104,19 @@ const AIAnswer = (props) => {
 		if (props.AIResponse) {
 			const sessionIdToSet
 				= ((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
-					.sessionId || null;
+					.sessionId
+				|| (
+					((getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[props.componentId] || {})
+						.response || {}
+				).sessionId;
 			setCurrentSessionId(sessionIdToSet);
 			const { messages: messagesHistory, response } = props.AIResponse;
+			if (!props.isAITyping) {
+				console.log(
+					'🚀 ~ file: index.js:110 ~ useEffect ~ messagesHistory:',
+					messagesHistory,
+				);
+			}
 
 			const finalMessages = [];
 			if (response && response.error) {
@@ -114,7 +124,7 @@ const AIAnswer = (props) => {
 			}
 
 			// pushing message history so far
-			if (messagesHistory && messagesHistory && Array.isArray(messagesHistory)) {
+			if (messagesHistory && Array.isArray(messagesHistory)) {
 				finalMessages.push(
 					...messagesHistory.filter(msg => msg.role !== AI_ROLES.SYSTEM),
 				);
@@ -184,7 +194,7 @@ const AIAnswer = (props) => {
 				themePreset={props.themePreset}
 				icon={props.icon}
 				iconURL={props.iconURL}
-				showVoiceInput={props.showVoiceInput && !loadingState && currentSessionId}
+				showVoiceInput={!!(props.showVoiceInput && !loadingState && currentSessionId)}
 				renderMic={props.renderMic}
 				getMicInstance={props.getMicInstance}
 				innerClass={props.innerClass}
@@ -250,7 +260,7 @@ AIAnswer.propTypes = {
 	showFeedback: types.bool,
 	trackUsefullness: types.funcRequired,
 	style: types.style,
-	componentError: types.componentObject.isRequired,
+	componentError: types.componentObject,
 	createAISession: types.funcRequired,
 	showSourceDocuments: types.bool,
 	triggerOn: types.string,
@@ -275,6 +285,7 @@ AIAnswer.defaultProps = {
 	style: {},
 	showSourceDocuments: true,
 	triggerOn: 'manual',
+	componentError: null,
 };
 
 const mapStateToProps = (state, props) => {
@@ -301,9 +312,11 @@ const mapStateToProps = (state, props) => {
 		isLoading: state.isLoading[props.componentId] || false,
 		sessionIdFromStore:
 			(state.AIResponses[props.componentId]
-				&& state.AIResponses[props.componentId].sessionId)
+				&& (state.AIResponses[props.componentId].sessionId
+					|| (state.AIResponses[props.componentId].response
+						&& state.AIResponses[props.componentId].response.sessionId)))
 			|| '',
-		componentError: state.error[props.componentId],
+		componentError: state.error[props.componentId] || null,
 		isAITyping:
 			(state.AIResponses[props.componentId]
 				&& state.AIResponses[props.componentId].response
