@@ -205,6 +205,11 @@ const AIAnswer = (props) => {
 				trackUsefullness={props.trackUsefullness}
 				currentSessionId={currentSessionId || ''}
 				isAITyping={props.isAITyping}
+				showSourceDocuments={props.showSourceDocuments}
+				renderSourceDocument={props.renderSourceDocument}
+				onSourceClick={props.onSourceClick}
+				triggerOn={props.triggerOn}
+				renderTriggerMessage={props.renderTriggerMessage}
 			/>
 		</Chatbox>
 	);

@@ -8,9 +8,10 @@ import {
 	hasCustomRenderer,
 	getComponent as getComponentUtilFunc,
 	isFunction,
+	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { Remarkable } from 'remarkable';
-import { AI_ROLES } from '@appbaseio/reactivecore/lib/utils/constants';
+import { AI_LOCAL_CACHE_KEY, AI_ROLES } from '@appbaseio/reactivecore/lib/utils/constants';
 import {
 	ChatContainer,
 	Message,
@@ -29,6 +30,7 @@ import IconWrapper from '../../../styles/IconWrapper';
 import Mic from '../addons/Mic';
 import Button from '../../../styles/Button';
 import AIFeedback from '../../shared/AIFeedback';
+import { Footer, SourceTags } from '../../../styles/SearchBoxAI';
 
 const md = new Remarkable();
 
@@ -238,6 +240,73 @@ const Chat = (props) => {
 			}
 		}
 	};
+	const getAISourceObjects = () => {
+		const localCache
+			= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+			&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[props.componentId];
+		const sourceObjects = [];
+		if (!props.AIResponse) return sourceObjects;
+		const docIds
+			= (props.AIResponse
+				&& props.AIResponse.response
+				&& props.AIResponse.response.answer
+				&& props.AIResponse.response.answer.documentIds)
+			|| [];
+		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+			docIds.forEach((id) => {
+				const foundSourceObj
+					= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+				if (foundSourceObj) {
+					const { _source = {}, ...rest } = foundSourceObj;
+
+					sourceObjects.push({ ...rest, ..._source });
+				}
+			});
+		} else {
+			sourceObjects.push(
+				...docIds.map(id => ({
+					_id: id,
+				})),
+			);
+		}
+
+		return sourceObjects;
+	};
+
+	const renderAIScreenFooter = () => {
+		const {
+			showSourceDocuments = true,
+			sourceDocumentLabel = '_id',
+			onSourceClick = () => {},
+		} = props || {};
+
+		return showSourceDocuments
+			&& props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& props.AIResponse.response.answer.documentIds ? (
+				<Footer
+					themePreset={props.themePreset}
+					style={{ marginTop: '1.5rem', background: 'inherit' }}
+				>
+					Summary generated using the following sources:{' '}
+					<SourceTags>
+						{getAISourceObjects().map(el => (
+							<Button
+								className={`--ai-source-tag ${
+								getClassName(props.innerClass, 'ai-source-tag') || ''
+							}`}
+								title={el[sourceDocumentLabel]}
+								info
+								onClick={() => onSourceClick && onSourceClick(el)}
+							>
+								{el[sourceDocumentLabel]}
+							</Button>
+						))}
+					</SourceTags>
+				</Footer>
+			) : null;
+	};
 
 	React.useEffect(() => {
 		if (messagesContainerRef.current) {
@@ -317,6 +386,7 @@ const Chat = (props) => {
 					/>
 				</div>
 			)}
+			{renderAIScreenFooter()}
 			{props.showInput && !props.isAIResponseLoading && !props.isAITyping && (
 				<MessageInputContainer
 					className="--ai-input-container"
