@@ -204,6 +204,12 @@ const AIAnswer = (props) => {
 				showFeedback={props.showFeedback}
 				trackUsefullness={props.trackUsefullness}
 				currentSessionId={currentSessionId || ''}
+				isAITyping={props.isAITyping}
+				showSourceDocuments={props.showSourceDocuments}
+				renderSourceDocument={props.renderSourceDocument}
+				onSourceClick={props.onSourceClick}
+				triggerOn={props.triggerOn}
+				renderTriggerMessage={props.renderTriggerMessage}
 			/>
 		</Chatbox>
 	);
@@ -246,6 +252,12 @@ AIAnswer.propTypes = {
 	style: types.style,
 	componentError: types.componentObject.isRequired,
 	createAISession: types.funcRequired,
+	showSourceDocuments: types.bool,
+	triggerOn: types.string,
+	renderTriggerMessage: types.children,
+	renderSourceDocument: types.func,
+	onSourceClick: types.func,
+	isAITyping: types.boolRequired,
 };
 
 AIAnswer.defaultProps = {
@@ -261,6 +273,8 @@ AIAnswer.defaultProps = {
 	showComponent: false,
 	showFeedback: true,
 	style: {},
+	showSourceDocuments: true,
+	triggerOn: 'manual',
 };
 
 const mapStateToProps = (state, props) => {
@@ -290,6 +304,11 @@ const mapStateToProps = (state, props) => {
 				&& state.AIResponses[props.componentId].sessionId)
 			|| '',
 		componentError: state.error[props.componentId],
+		isAITyping:
+			(state.AIResponses[props.componentId]
+				&& state.AIResponses[props.componentId].response
+				&& state.AIResponses[props.componentId].response.isTyping)
+			|| false,
 	};
 };
 
