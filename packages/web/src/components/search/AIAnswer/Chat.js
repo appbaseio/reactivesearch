@@ -276,9 +276,16 @@ const Chat = (props) => {
 	const renderAIScreenFooter = () => {
 		const {
 			showSourceDocuments = true,
-			sourceDocumentLabel = '_id',
 			onSourceClick = () => {},
+			renderSourceDocument,
 		} = props || {};
+		const renderSourceDocumentLabel = (sourceObj) => {
+			if (renderSourceDocument) {
+				return renderSourceDocument(sourceObj);
+			}
+
+			return sourceObj._id;
+		};
 
 		return showSourceDocuments
 			&& props.AIResponse
@@ -296,11 +303,10 @@ const Chat = (props) => {
 								className={`--ai-source-tag ${
 								getClassName(props.innerClass, 'ai-source-tag') || ''
 							}`}
-								title={el[sourceDocumentLabel]}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
 							>
-								{el[sourceDocumentLabel]}
+								{renderSourceDocumentLabel(el)}
 							</Button>
 						))}
 					</SourceTags>
