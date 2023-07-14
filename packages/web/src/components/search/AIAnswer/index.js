@@ -200,13 +200,17 @@ const AIAnswer = (props) => {
 		) {
 			setIsTriggered(true);
 		}
-	}, [props.showComponent]);
+	}, [props.showComponent, props.dependentComponentValue]);
 
 	useEffect(() => {
 		if (currentSessionId && isTriggered) {
 			handleSendMessage(props.dependentComponentValue, false, true);
 		}
 	}, [currentSessionId]);
+
+	useEffect(() => {
+		if (isTriggered) setIsTriggered();
+	}, [props.dependentComponentValue]);
 
 	useEffect(
 		() => () => {
