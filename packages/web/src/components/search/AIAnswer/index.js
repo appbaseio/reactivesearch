@@ -1,12 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'emotion-theming';
 import {
 	AI_LOCAL_CACHE_KEY,
 	AI_ROLES,
+	AI_TRIGGER_MODES,
 	componentTypes,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import hoistNonReactStatics from 'hoist-non-react-statics';
@@ -34,13 +35,15 @@ const AIAnswer = (props) => {
 	const [errorState, setErrorState] = React.useState(null);
 	const [loadingState, setLoadingState] = React.useState(false);
 	const [currentSessionId, setCurrentSessionId] = React.useState('');
+	const [isTriggered, setIsTriggered] = useState(false);
 
 	const errorMessageForMissingSessionId = `AISessionId for ${props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`;
 
-	const handleSendMessage = (text, isRetry = false) => {
+	const handleSendMessage = (text, isRetry = false, fetchMeta = false) => {
+		// meta refers to source documents IDs here
 		if (currentSessionId) {
 			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
-			props.getAIResponse(currentSessionId, props.componentId, text);
+			props.getAIResponse(currentSessionId, props.componentId, text, fetchMeta);
 		} else {
 			console.error(errorMessageForMissingSessionId);
 		}
@@ -58,6 +61,42 @@ const AIAnswer = (props) => {
 				setLoadingState(false);
 				console.error(e);
 			});
+	};
+
+	const renderTriggerMessageFunc = () => {
+		if (props.renderTriggerMessage) {
+			return props.renderTriggerMessage;
+		}
+
+		if (props.triggerOn === AI_TRIGGER_MODES.QUESTION) {
+			if (!props.dependentComponentValue.endsWith('?')) {
+				return (
+					<span>
+						<span role="img" aria-label="bulb">
+							💡
+						</span>
+						End your question with a question mark (?)
+					</span>
+				);
+			}
+		} else if (props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
+			return (
+				<span>
+					Click here to ask AI{' '}
+					<span role="img" aria-label="bulb">
+						🤖
+					</span>
+				</span>
+			);
+		}
+		return null;
+	};
+
+	const handleTriggerClick = () => {
+		if (props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
+			handleSendMessage(props.dependentComponentValue, false, true);
+			setIsTriggered(true);
+		}
 	};
 
 	useEffect(() => {
@@ -154,6 +193,21 @@ const AIAnswer = (props) => {
 		setLoadingState(props.isAIResponseLoading || props.isLoading);
 	}, [props.isAIResponseLoading, props.isLoading]);
 
+	useEffect(() => {
+		if (
+			props.triggerOn === AI_TRIGGER_MODES.QUESTION
+			&& props.dependentComponentValue.endsWith('?')
+		) {
+			setIsTriggered(true);
+		}
+	}, [props.showComponent]);
+
+	useEffect(() => {
+		if (currentSessionId && isTriggered) {
+			handleSendMessage(props.dependentComponentValue, false, true);
+		}
+	}, [currentSessionId]);
+
 	useEffect(
 		() => () => {
 			if (props.clearSessionOnDestroy) {
@@ -169,8 +223,22 @@ const AIAnswer = (props) => {
 		[],
 	);
 
-	if (!props.showComponent) {
+	if (!props.showComponent || (!currentSessionId && isTriggered)) {
 		return null;
+	}
+
+	if (!isTriggered) {
+		return (
+			<Chatbox style={props.style} className="--ai-chat-box-wrapper">
+				<div
+					className="--trigger-message-wrapper"
+					onClick={handleTriggerClick}
+					aria-hidden="true"
+				>
+					{renderTriggerMessageFunc()}
+				</div>
+			</Chatbox>
+		);
 	}
 
 	return (
@@ -262,6 +330,7 @@ AIAnswer.propTypes = {
 	renderSourceDocument: types.func,
 	onSourceClick: types.func,
 	isAITyping: types.boolRequired,
+	dependentComponentValue: types.string,
 };
 
 AIAnswer.defaultProps = {
@@ -292,9 +361,14 @@ const mapStateToProps = (state, props) => {
 		state.selectedValues[dependencyComponent]
 			&& state.selectedValues[dependencyComponent].value,
 	);
+	const dependentComponentValue
+		= (state.selectedValues[dependencyComponent]
+			&& state.selectedValues[dependencyComponent].value)
+		|| '';
 
 	return {
 		showComponent,
+		dependentComponentValue,
 		AIResponse:
 			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
 		isAIResponseLoading:
@@ -320,8 +394,8 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchtoProps = dispatch => ({
-	getAIResponse: (sessionId, componentId, message) =>
-		dispatch(fetchAIResponse(sessionId, componentId, message)),
+	getAIResponse: (sessionId, componentId, message, shouldFetchMeta = false) =>
+		dispatch(fetchAIResponse(sessionId, componentId, message, null, shouldFetchMeta)),
 	trackUsefullness: (sessionId, otherInfo) =>
 		dispatch(recordAISessionUsefulness(sessionId, otherInfo)),
 	createAISession: () => dispatch(createAISessionAction()),

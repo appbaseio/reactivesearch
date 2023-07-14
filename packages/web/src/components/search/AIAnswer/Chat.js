@@ -241,6 +241,7 @@ const Chat = (props) => {
 	};
 	const getAISourceObjects = () => {
 		const sourceObjects = [];
+
 		if (!props.AIResponse) return sourceObjects;
 		const docIds = sourceDocIds || [];
 		if (initialHits) {
@@ -339,6 +340,12 @@ const Chat = (props) => {
 	React.useEffect(() => {
 		handleTextAreaHeightChange();
 	}, [inputMessage]);
+
+	React.useEffect(() => {
+		if (props.rawData && props.rawData.hits && props.rawData.hits.hits) {
+			setInitialHits(props.rawData.hits.hits);
+		}
+	}, [props.rawData]);
 
 	return (
 		<ChatContainer
