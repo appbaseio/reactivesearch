@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { CommonProps } from '../..';
 import * as types from '../../types';
+import { children } from '../../../types';
 
 export interface AIAnswerProps extends CommonProps {
 	children?: (data: any) => any;
@@ -24,6 +25,11 @@ export interface AIAnswerProps extends CommonProps {
 	enterButton?: boolean;
 	renderEnterButton?: (onClick: any) => types.children;
 	showFeedback?: boolean;
+	showSourceDocuments?: boolean;
+	triggerOn?: 'manual' | 'question';
+	renderTriggerMessage?: children | string;
+	renderSourceDocument?: (obj: any) => types.children;
+	onSourceClick?: (sourceObject: object) => void;
 }
 
 declare const AIAnswer: React.ComponentClass<AIAnswerProps>;

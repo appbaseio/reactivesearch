@@ -353,6 +353,7 @@ const SearchBox = defineComponent({
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
 			this.normalizedSuggestions = suggestionsList;
+
 			this.handleTextAreaHeightChange();
 		},
 		selectedValue(newVal, oldVal) {
@@ -375,7 +376,12 @@ const SearchBox = defineComponent({
 				if (this.$options.isTagsMode) {
 					cause = causes.SUGGESTION_SELECT;
 				}
-				this.setValue(newVal || '', true, this.$props, cause);
+				if(this.$props.value === undefined){
+					this.setValue(newVal, newVal === '', this.$props, cause, false)
+				}else{
+
+					this.setValue(newVal || '', true, this.$props, cause);
+				}
 			}
 		},
 		focusShortcuts() {
@@ -699,6 +705,7 @@ const SearchBox = defineComponent({
 				&& results[0][0].transcript.trim()
 			) {
 				this.setValue(results[0][0].transcript.trim(), true);
+				this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 			}
 		},
 		triggerQuery({
@@ -745,6 +752,8 @@ const SearchBox = defineComponent({
 				'',
 				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
 			);
+			this.showAIScreen = false
+			this.isOpen = false
 		},
 
 		handleKeyDown(event, highlightedIndex = null) {
@@ -784,7 +793,7 @@ const SearchBox = defineComponent({
 
 			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(inputValue, false, this.$props, undefined);
+				this.setValue(inputValue, inputValue === '', this.$props, undefined, false);
 			} else {
 				this.$emit(
 					'change',
@@ -824,6 +833,7 @@ const SearchBox = defineComponent({
 						this.$options.isTagsMode.current
 							? causes.SUGGESTION_SELECT
 							: causes.ENTER_PRESS,
+						false
 					);
 					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
 				}
@@ -903,7 +913,7 @@ const SearchBox = defineComponent({
 					this.$props,
 					causes.SUGGESTION_SELECT,
 					false,
-					suggestion._category,
+					suggestion._category
 				);
 				this.$emit('change', emitValue, ({ isOpen }) =>
 					this.triggerQuery({
@@ -1713,8 +1723,7 @@ const SearchBox = defineComponent({
 																									},
 																								)}
 																								key={
-																									index
-																									+ sectionIndex
+																									`${sectionItem._id}_${index}_${sectionIndex}`
 																								}
 																								style={{
 																									justifyContent:
