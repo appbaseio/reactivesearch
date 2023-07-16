@@ -124,6 +124,20 @@ const SearchBox = (props) => {
 		isAITyping,
 	} = props;
 
+	const currentTriggerMode
+		= (props.AIUIConfig && props.AIUIConfig.triggerOn) || AI_TRIGGER_MODES.MANUAL;
+	let renderTriggerMessage
+		= props.enableAI && props.AIUIConfig && props.AIUIConfig.renderTriggerMessage
+			? props.AIUIConfig.renderTriggerMessage
+			: null;
+	if (
+		!renderTriggerMessage
+		&& currentTriggerMode === AI_TRIGGER_MODES.MANUAL
+		&& (props.AIUIConfig ? !props.AIUIConfig.askButton : true)
+	) {
+		renderTriggerMessage = 'Click to trigger AIAnswer';
+	}
+
 	const internalComponent = getInternalComponentID(componentId);
 	const [currentValue, setCurrentValue] = useState('');
 	// eslint-disable-next-line prefer-const
@@ -160,6 +174,13 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
+		if (renderTriggerMessage) {
+			suggestionsArray.unshift({
+				label: 'AI_TRIGGER_MESSAGE',
+				value: 'AI_TRIGGER_MESSAGE',
+				_suggestion_type: '_internal_a_i_trigger',
+			});
+		}
 
 		const sectionsAccumulated = [];
 		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -174,6 +195,7 @@ const SearchBox = (props) => {
 		}, {});
 		return Object.values(sectionisedSuggestions);
 	};
+
 	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
 		const tagName = elt.tagName;
@@ -427,7 +449,12 @@ const SearchBox = (props) => {
 
 						triggerDefaultQuery(
 							newCurrentValue,
-							props.enableAI ? { enableAI: true } : {},
+							props.enableAI
+								&& (currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+									? newCurrentValue.endsWith('?')
+									: true)
+								? { enableAI: true }
+								: {},
 							shouldExecuteQuery,
 						);
 					}
@@ -528,7 +555,14 @@ const SearchBox = (props) => {
 		}
 	};
 
+	const askButtonOnClick = () => {
+		setShowAIScreen(true);
+		setIsOpen(true);
+		triggerDefaultQuery(currentValue, { enableAI: true });
+	};
+
 	const onSuggestionSelected = (suggestion) => {
+		const suggestionValue = suggestion.value;
 		// handle when FAQ suggestion is clicked
 		if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
 			setValue(
@@ -545,13 +579,15 @@ const SearchBox = (props) => {
 			setFAQQuestion(suggestion.value);
 			setShowAIScreen(true);
 			return;
+		} else if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
+			setShowAIScreen(true);
+			askButtonOnClick();
+			return;
 		}
 
 		if (!props.enableAI) setIsOpen(false);
 		else if (
-			props.AIUIConfig
-			&& props.AIUIConfig.triggerOn === AI_TRIGGER_MODES.QUESTION
-			&& suggestion.value.endsWith('?')
+			currentTriggerMode === AI_TRIGGER_MODES.QUESTION ? suggestion.value.endsWith('?') : true
 		) {
 			setShowAIScreen(true);
 		}
@@ -560,8 +596,6 @@ const SearchBox = (props) => {
 			handleFeaturedSuggestionClicked(suggestion);
 			return;
 		}
-
-		const suggestionValue = suggestion.value;
 
 		if (value === undefined) {
 			setValue(
@@ -660,12 +694,6 @@ const SearchBox = (props) => {
 	const enterButtonOnClick = () => {
 		setShowAIScreen(false);
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
-	};
-
-	const askButtonOnClick = () => {
-		setShowAIScreen(true);
-		setIsOpen(true);
-		triggerDefaultQuery(currentValue, { enableAI: true });
 	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
@@ -1722,6 +1750,34 @@ const SearchBox = (props) => {
 											)}
 											{!showAIScreen && (
 												<Fragment>
+													{/* {props.enableAI && renderTriggerMessage ? (
+														<li
+															{...getItemProps({
+																item: {
+																	label: 'custom AI trigger message',
+																	value: 'custom AI trigger message',
+																},
+															})}
+															key="ai-trigger-message"
+															style={{
+																justifyContent: 'flex-start',
+																alignItems: 'center',
+															}}
+															className={`${
+																highlightedIndex === -1
+																	? `active-li-item ${getClassName(
+																		props.innerClass,
+																		'active-suggestion-item',
+																	  )}`
+																	: `li-item ${getClassName(
+																		props.innerClass,
+																		'suggestion-item',
+																	  )}`
+															}`}
+														>
+															{renderTriggerMessage}
+														</li>
+													) : null} */}
 													{parsedSuggestions().map((item, itemIndex) => {
 														const index = indexOffset + itemIndex;
 														if (Array.isArray(item)) {
@@ -1856,6 +1912,49 @@ const SearchBox = (props) => {
 															);
 														}
 
+														if (
+															item._suggestion_type
+															=== '_internal_a_i_trigger'
+														) {
+															return (
+																<li
+																	{...getItemProps({ item })}
+																	key={`${index + 1}-${
+																		item.value
+																	}`}
+																	style={{
+																		justifyContent:
+																			'flex-start',
+																		alignItems: 'center',
+																	}}
+																	className={`${
+																		highlightedIndex === index
+																			? `active-li-item ${getClassName(
+																				props.innerClass,
+																				'active-suggestion-item',
+																			  )}`
+																			: `li-item ${getClassName(
+																				props.innerClass,
+																				'suggestion-item',
+																			  )}`
+																	}`}
+																>
+																	{props.renderItem ? (
+																		props.renderItem(item)
+																	) : (
+																		<React.Fragment>
+																			<SuggestionItem
+																				currentValue={
+																					currentValue
+																					|| ''
+																				}
+																				suggestion={item}
+																			/>
+																		</React.Fragment>
+																	)}
+																</li>
+															);
+														}
 														return (
 															<li
 																{...getItemProps({ item })}
