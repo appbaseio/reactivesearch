@@ -4,6 +4,7 @@ import { jsx } from '@emotion/core';
 
 import {
 	AI_LOCAL_CACHE_KEY,
+	AI_TRIGGER_MODES,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -144,14 +145,15 @@ const SearchBox = (props) => {
 	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
 	const [feedbackState, setFeedbackState] = useState(null);
 
-	const mergedAIAnswer = faqAnswer || (props.AIResponse
-		&& props.AIResponse.response
-		&& props.AIResponse.response.answer
-		&& props.AIResponse.response.answer
-			.text);
-	const mergedAIQuestion = faqQuestion || (props.AIResponse
-		&& props.AIResponse.response
-		&& props.AIResponse.response.question);
+	const mergedAIAnswer
+		= faqAnswer
+		|| (props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& props.AIResponse.response.answer.text);
+	const mergedAIQuestion
+		= faqQuestion
+		|| (props.AIResponse && props.AIResponse.response && props.AIResponse.response.question);
 
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
@@ -258,17 +260,24 @@ const SearchBox = (props) => {
 			// Update calculated default query in store
 			updateDefaultQuery(componentId, props, value);
 		}
-		props.updateQuery({
-			componentId: internalComponent,
-			query,
-			value,
-			componentType: componentTypes.searchBox,
-			meta,
-		}, shouldExecuteQuery);
+		props.updateQuery(
+			{
+				componentId: internalComponent,
+				query,
+				value,
+				componentType: componentTypes.searchBox,
+				meta,
+			},
+			shouldExecuteQuery,
+		);
 	};
 
 	// fires query to fetch results(dependent components are affected here)
-	const triggerCustomQuery = (paramValue, categoryValue = undefined, shouldExecuteQuery = true) => {
+	const triggerCustomQuery = (
+		paramValue,
+		categoryValue = undefined,
+		shouldExecuteQuery = true,
+	) => {
 		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		if (isTagsMode.current) {
 			value = paramValue;
@@ -285,25 +294,31 @@ const SearchBox = (props) => {
 			}
 			updateCustomQuery(componentId, props, value);
 		}
-		props.updateQuery({
-			componentId,
-			value,
-			query,
-			label: filterLabel,
-			showFilter,
-			URLParams,
-			componentType: componentTypes.searchBox,
-			...(!isTagsMode.current ? { category: categoryValue } : {}),
-		}, shouldExecuteQuery);
+		props.updateQuery(
+			{
+				componentId,
+				value,
+				query,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+				componentType: componentTypes.searchBox,
+				...(!isTagsMode.current ? { category: categoryValue } : {}),
+			},
+			shouldExecuteQuery,
+		);
 	};
 
-	const triggerQuery = ({
-		isOpen = undefined,
-		customQuery = false,
-		defaultQuery = false,
-		value = undefined,
-		categoryValue = undefined,
-	} = {}, shouldExecuteQuery = true) => {
+	const triggerQuery = (
+		{
+			isOpen = undefined,
+			customQuery = false,
+			defaultQuery = false,
+			value = undefined,
+			categoryValue = undefined,
+		} = {},
+		shouldExecuteQuery = true,
+	) => {
 		if (typeof isOpen === 'boolean') {
 			setIsOpen(isOpen);
 		}
@@ -399,14 +414,16 @@ const SearchBox = (props) => {
 					setShowAIScreen(false);
 				}
 
-
 				if (isDefaultValue) {
 					if (props.autosuggest) {
-						triggerQuery({
-							...(toggleIsOpen && { isOpen: !isOpen }),
-							defaultQuery: false,
-							value,
-						}, shouldExecuteQuery);
+						triggerQuery(
+							{
+								...(toggleIsOpen && { isOpen: !isOpen }),
+								defaultQuery: false,
+								value,
+							},
+							shouldExecuteQuery,
+						);
 
 						triggerDefaultQuery(
 							newCurrentValue,
@@ -448,12 +465,15 @@ const SearchBox = (props) => {
 				}
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
-				triggerQuery({
-					defaultQuery: props.autosuggest,
-					customQuery: true,
-					value,
-					categoryValue: isTagsMode.current ? undefined : categoryValue,
-				}, shouldExecuteQuery);
+				triggerQuery(
+					{
+						defaultQuery: props.autosuggest,
+						customQuery: true,
+						value,
+						categoryValue: isTagsMode.current ? undefined : categoryValue,
+					},
+					shouldExecuteQuery,
+				);
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
 		};
@@ -528,7 +548,11 @@ const SearchBox = (props) => {
 		}
 
 		if (!props.enableAI) setIsOpen(false);
-		else {
+		else if (
+			props.AIUIConfig
+			&& props.AIUIConfig.triggerOn === AI_TRIGGER_MODES.QUESTION
+			&& suggestion.value.endsWith('?')
+		) {
 			setShowAIScreen(true);
 		}
 		// handle featured suggestions click event
@@ -633,7 +657,6 @@ const SearchBox = (props) => {
 		handleInputChange(inputValue, e);
 	};
 
-
 	const enterButtonOnClick = () => {
 		setShowAIScreen(false);
 		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
@@ -734,7 +757,7 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript
 			&& results[0][0].transcript.trim()
 		) {
-			handleInputChange(results[0][0].transcript.trim());
+			setValue(results[0][0].transcript.trim(), false, props, undefined, true);
 			_inputRef.current.focus();
 		}
 	};
@@ -1549,8 +1572,7 @@ const SearchBox = (props) => {
 												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
-															question:
-																mergedAIQuestion,
+															question: mergedAIQuestion,
 															answer: mergedAIAnswer,
 															documentIds:
 																(props.AIResponse

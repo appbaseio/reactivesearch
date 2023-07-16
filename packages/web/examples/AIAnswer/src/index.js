@@ -46,7 +46,12 @@ const Main = () => (
 					}}
 					title={<b>AI Chatbox 🤩</b>}
 					enterButton={true}
-					showInput={false}
+					showInput={true}
+					renderSourceDocument={(obj) => {
+						return <span>❤️ {obj.original_title}</span>;
+					}}
+					renderTriggerMessage={'This is good till now'}
+					triggerOn="question"
 				/>
 				<br />
 				<SelectedFilters />

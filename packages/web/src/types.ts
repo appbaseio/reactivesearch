@@ -225,4 +225,6 @@ export interface AIUIConfig {
 	renderAskButton?: (onAskButtonClick: any) => children;
 	askButton?: boolean;
 	showFeedback?: boolean;
+	triggerOn?: string;
+	renderTriggerMessage?: children;
 }

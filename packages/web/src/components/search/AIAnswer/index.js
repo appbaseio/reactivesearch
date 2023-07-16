@@ -351,7 +351,7 @@ AIAnswer.defaultProps = {
 	showFeedback: true,
 	style: {},
 	showSourceDocuments: true,
-	triggerOn: 'manual',
+	triggerOn: AI_TRIGGER_MODES.MANUAL,
 	componentError: null,
 };
 
