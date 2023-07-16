@@ -2,6 +2,7 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
+import xss from 'xss';
 import { Remarkable } from 'remarkable';
 import {
 	AI_LOCAL_CACHE_KEY,
@@ -16,7 +17,6 @@ import {
 	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
-import xss from 'xss';
 import {
 	connect,
 	getComponent,
@@ -93,11 +93,12 @@ const SearchBox = defineComponent({
 			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
-			parsedSuggestions: [],
 			showAIScreen: false,
 			showAIScreenFooter: false,
 			showFeedbackComponent: false,
 			feedbackState: null,
+			faqAnswer: '',
+			faqQuestion: ''
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -159,6 +160,44 @@ const SearchBox = defineComponent({
 		stats() {
 			return getResultStats(this);
 		},
+		mergedAIQuestion(){
+			return this.faqQuestion ||this.AIResponse
+			&& this.AIResponse.response
+			&& this.AIResponse.response.question
+		},
+		mergedAIAnswer(){
+			return this.faqAnswer || (this.AIResponse
+						&& this.AIResponse.response
+						&& this.AIResponse.response.answer
+						&& this.AIResponse.response.answer.text)
+		},
+		parsedSuggestions(){
+			let suggestionsArray = [];
+			if (Array.isArray(this.suggestions) && this.suggestions.length) {
+				suggestionsArray = [...withClickIds(this.suggestions)];
+			}
+
+			suggestionsArray = suggestionsArray.map(s =>{
+				if(s.sectionId){
+					return s
+				}
+				return {...s, sectionId: s._suggestion_type}
+
+			})
+
+			const sectionsAccumulated = [];
+			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+				if (sectionsAccumulated.includes(d.sectionId)) return acc;
+				if (d.sectionId) {
+					acc[currentIndex] = suggestionsArray.filter((g) => g.sectionId === d.sectionId);
+					sectionsAccumulated.push(d.sectionId);
+				} else {
+					acc[currentIndex] = d;
+				}
+				return acc;
+			}, {});
+			return Object.values(sectionisedSuggestions);
+		},
 	},
 	props: {
 		autoFocus: VueTypes.bool,
@@ -194,6 +233,8 @@ const SearchBox = defineComponent({
 		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSuggestions: VueTypes.bool.def(false),
+		enableFAQSuggestions: VueTypes.bool.def(false),
+		FAQSuggestionsConfig: VueTypes.shape({sectionLabel: VueTypes.string, size: VueTypes.number}),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -312,27 +353,6 @@ const SearchBox = defineComponent({
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
 			this.normalizedSuggestions = suggestionsList;
-
-			suggestionsList = suggestionsList.map(s =>{
-				if(s.sectionId){
-					return s
-				}
-				return {...s, sectionId: s._suggestion_type}
-
-			})
-
-			const sectionsAccumulated = [];
-			const sectionisedSuggestions = suggestionsList.reduce((acc, d, currentIndex) => {
-				if (sectionsAccumulated.includes(d.sectionId)) return acc;
-				if (d.sectionId) {
-					acc[currentIndex] = suggestionsList.filter((g) => g.sectionId === d.sectionId);
-					sectionsAccumulated.push(d.sectionId);
-				} else {
-					acc[currentIndex] = d;
-				}
-				return acc;
-			}, {});
-			this.parsedSuggestions = Object.values(sectionisedSuggestions);
 
 			this.handleTextAreaHeightChange();
 		},
@@ -475,15 +495,8 @@ const SearchBox = defineComponent({
 				value: currentValue,
 				resultStats: this.stats,
 				AIData: {
-					question:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.question,
-					answer:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.answer
-						&& this.AIResponse.response.answer.text,
+					question: this.mergedAIQuestion,
+					answer: this.mergedAIAnswer,
 					documentIds:
 						(this.AIResponse
 							&& this.AIResponse.response
@@ -524,6 +537,7 @@ const SearchBox = defineComponent({
 			cause,
 			toggleIsOpen = true,
 			categoryValue = undefined,
+			shouldExecuteQuery = true
 		) {
 			const performUpdate = () => {
 				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
@@ -559,6 +573,13 @@ const SearchBox = defineComponent({
 							: undefined;
 				}
 
+				if((this.faqAnswer || this.faqQuestion) && value === ''){
+					// Empty the previous state
+					this.faqAnswer = ''
+					this.faqQuestion = ''
+					this.showAIScreen = false
+				}
+
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
@@ -568,6 +589,7 @@ const SearchBox = defineComponent({
 							this.triggerDefaultQuery(
 								this.currentValue,
 								props.enableAI ? { enableAI: true } : {},
+								shouldExecuteQuery
 							);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -581,6 +603,7 @@ const SearchBox = defineComponent({
 							this.triggerCustomQuery(
 								queryHandlerValue,
 								this.$options.isTagsMode ? undefined : categoryValue,
+								shouldExecuteQuery
 							);
 						} else {
 							this.setValue('', true);
@@ -590,9 +613,11 @@ const SearchBox = defineComponent({
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
 					) {
+						this.showAIScreen = false
 						this.triggerCustomQuery(
 							queryHandlerValue,
 							this.$options.isTagsMode ? undefined : categoryValue,
+							shouldExecuteQuery
 						);
 					}
 				} else {
@@ -606,7 +631,7 @@ const SearchBox = defineComponent({
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		triggerDefaultQuery(paramValue, meta = {}) {
+		triggerDefaultQuery(paramValue, meta = {}, shouldExecuteQuery = true) {
 			if (!this.$props.autosuggest) {
 				return;
 			}
@@ -632,9 +657,9 @@ const SearchBox = defineComponent({
 				value,
 				componentType: componentTypes.searchBox,
 				meta,
-			});
+			}, shouldExecuteQuery);
 		},
-		triggerCustomQuery(paramValue, categoryValue = undefined) {
+		triggerCustomQuery(paramValue, categoryValue = undefined, shouldExecuteQuery = true) {
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
 			let value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
 			if (this.$options.isTagsMode) {
@@ -662,7 +687,7 @@ const SearchBox = defineComponent({
 				URLParams,
 				componentType: componentTypes.searchBox,
 				category: categoryValue,
-			});
+			}, shouldExecuteQuery);
 		},
 		handleFocus(event) {
 			if (this.$props.autosuggest) {
@@ -817,7 +842,7 @@ const SearchBox = defineComponent({
 				// else Downshift probably is focusing the dropdown
 				// and not letting it close
 				// eslint-disable-next-line no-unused-expressions
-				this.$refs?.[this.$props.innerRef]?.$el?.blur();
+				this.$refs?.[this.$props.innerRef]?.el?.blur();
 			} catch (e) {
 				console.error(
 					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
@@ -827,15 +852,36 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
-			if (!this.$props.enableAI) this.isOpen = false;
-			else {
+			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
+			// handle when FAQ suggestion is clicked
+			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
+				this.setValue(
+					suggestion.value,
+					true,
+					this.$props,
+					causes.SUGGESTION_SELECT,
+					false,
+					undefined,
+					false
+				);
+				// Handle AI
+				// Independent of enableAI.
+				this.faqAnswer = (suggestion._answer);
+				this.faqQuestion = suggestion.value
+				this.isOpen = true
 				this.showAIScreen = true;
+				return;
 			}
 			const { value } = this.$props;
 
 			// handle featured suggestions click event
 			if (suggestion._suggestion_type === suggestionTypes.Featured) {
 				this.handleFeaturedSuggestionClicked(suggestion);
+				// Handle AI
+				if (!this.$props.enableAI) this.isOpen = false;
+				else {
+					this.showAIScreen = true;
+				}
 				return;
 			}
 			// Record analytics for selected suggestions
@@ -882,6 +928,12 @@ const SearchBox = defineComponent({
 				causes.SUGGESTION_SELECT,
 				suggestion.source,
 			);
+
+			// Handle AI
+			if (!this.$props.enableAI) this.isOpen = false;
+			else {
+				this.showAIScreen = true;
+			}
 		},
 
 		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
@@ -1367,15 +1419,8 @@ const SearchBox = defineComponent({
 			const customAIRenderer = this.$props.renderAIAnswer || this.$slots.renderAIAnswer;
 			if (customAIRenderer) {
 				return customAIRenderer({
-					question:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.question,
-					answer:
-						this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.answer
-						&& this.AIResponse.response.answer.text,
+					question: this.mergedAIQuestion,
+					answer: this.mergedAIAnswer,
 					documentIds:
 						(this.AIResponse
 							&& this.AIResponse.response
@@ -1396,10 +1441,7 @@ const SearchBox = defineComponent({
 				<div>
 					<Answer
 						innerHTML={md.render(
-							this.AIResponse
-								&& this.AIResponse.response
-								&& this.AIResponse.response.answer
-								&& this.AIResponse.response.answer.text,
+							this.mergedAIAnswer,
 						)}
 					/>
 					{this.renderAIScreenFooter()}
@@ -1638,8 +1680,7 @@ const SearchBox = defineComponent({
 																									},
 																								)}
 																								key={
-																									index
-																									+ sectionIndex
+																									`${sectionItem._id}_${index}_${sectionIndex}`
 																								}
 																								style={{
 																									justifyContent:
@@ -1794,6 +1835,7 @@ const SearchBox = defineComponent({
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
+													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {
@@ -1966,7 +2008,6 @@ const mapStateToProps = (state, props) => ({
 	themePreset: state.config.themePreset,
 	isLoading: !!state.isLoading[`${props.componentId}`],
 	error: state.error[props.componentId],
-
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
