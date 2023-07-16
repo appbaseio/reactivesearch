@@ -131,7 +131,8 @@ const SearchBox = (props) => {
 			? props.AIUIConfig.renderTriggerMessage
 			: null;
 	if (
-		!renderTriggerMessage
+		props.enableAI
+		&& !renderTriggerMessage
 		&& currentTriggerMode === AI_TRIGGER_MODES.MANUAL
 		&& (props.AIUIConfig ? !props.AIUIConfig.askButton : true)
 	) {
