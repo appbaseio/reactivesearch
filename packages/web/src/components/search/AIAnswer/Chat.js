@@ -481,7 +481,6 @@ Chat.propTypes = {
 	trackUsefullness: types.func,
 	currentSessionId: types.string,
 	showSourceDocuments: types.bool,
-	triggerOn: types.string,
 	renderTriggerMessage: types.children,
 	renderSourceDocument: types.func,
 	onSourceClick: types.func,

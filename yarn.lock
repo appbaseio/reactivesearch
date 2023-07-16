@@ -125,18 +125,13 @@
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
-<<<<<<< Updated upstream
-    gatsby "^4.25.0"
-    gatsby-plugin-catch-links "4.11.0"
-=======
     gatsby "^4.9.2"
     gatsby-image "^3.11.0"
     gatsby-plugin-catch-links "4.9.0"
->>>>>>> Stashed changes
     gatsby-plugin-dark-mode "^1.1.2"
     gatsby-plugin-force-trailing-slashes "1.0.6"
     gatsby-plugin-google-analytics "^4.9.0"
-    gatsby-plugin-image "^2.10.0"
+    gatsby-plugin-image "^2.9.1"
     gatsby-plugin-manifest "^4.9.0"
     gatsby-plugin-offline "^5.9.0"
     gatsby-plugin-page-progress "^2.2.1"
@@ -145,13 +140,9 @@
     gatsby-plugin-react-helmet "5.9.0"
     gatsby-plugin-react-svg "3.1.0"
     gatsby-plugin-remove-serviceworker "1.0.0"
-<<<<<<< Updated upstream
-    gatsby-plugin-sharp "^4.11.0"
-=======
     gatsby-plugin-sharp "^4.9.0"
->>>>>>> Stashed changes
     gatsby-plugin-webpack-bundle-analyser-v2 "^1.1.26"
-    gatsby-remark-autolink-headers "5.11.0"
+    gatsby-remark-autolink-headers "5.9.0"
     gatsby-remark-check-links "^2.1.0"
     gatsby-remark-code-titles "1.1.0"
     gatsby-remark-embed-snippet "7.9.0"
@@ -161,28 +152,18 @@
     gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
-<<<<<<< Updated upstream
-    gatsby-transformer-remark "5.11.0"
-    gatsby-transformer-sharp "^4.25.0"
-=======
     gatsby-transformer-remark "5.9.0"
     gatsby-transformer-sharp "^4.9.0"
->>>>>>> Stashed changes
     gatsby-transformer-yaml "4.9.0"
     hotkeys-js "^3.8.7"
     js-search "^1.4.2"
     moment "^2.29.2"
     prismjs "1.27.0"
-<<<<<<< Updated upstream
-    prop-types "^15.8.1"
-    react "^16.9.0"
-=======
     react "16.8.4"
->>>>>>> Stashed changes
     react-autosuggest "9.4.3"
-    react-dom "^16.9.0"
+    react-dom "16.8.4"
     react-dropdown "^1.6.4"
-    react-helmet "^6.0.0"
+    react-helmet "5.2.0"
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
@@ -194,6 +175,17 @@
   version "10.0.0-alpha.28"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.28.tgz#52946a203196c366790d3c2243e0b275e94147e9"
   integrity sha512-4XwIlhHT9BGZorkDyCT+WDHHEtZT3QX1KLyl+8qmA5KuIeZRc/FASck4SidLD1NZFggXrDTS7PFcMs5+pgL4bQ==
+  dependencies:
+    cross-fetch "^3.0.4"
+    dayjs "^1.11.7"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
+"@appbaseio/reactivecore@10.0.0-alpha.30":
+  version "10.0.0-alpha.30"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.30.tgz#376e40a8ebfd6e141b268b82532178858db77ec9"
+  integrity sha512-jaVGb/QAhU9NNOE15B7hy6cmGl/3i2tgS5sCQ4KAAEUwOMR2g9+eg3MoWZAlBhlnf52z0ONzmkWdA7TQL8wK+Q==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -1697,11 +1689,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-<<<<<<< Updated upstream
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.0", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.2.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.21.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
-=======
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.0", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.6", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.2.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.21.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
->>>>>>> Stashed changes
   version "7.22.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.6.tgz#57d64b9ae3cff1d67eb067ae117dac087f5bd438"
   integrity sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==
@@ -4689,31 +4677,6 @@
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.7.1.tgz#fea7ac35ae4014637c130011f59428f618730498"
   integrity sha512-bgVQM4ZJ2u2CM8k1ey70o1ePFXsEzYVZoWghh6WjM8p59jQ7HxzbHW4SbnWFG7V9ig9chLawQxDTZ3xzOF8MkQ==
 
-<<<<<<< Updated upstream
-"@restart/hooks@^0.4.9":
-  version "0.4.10"
-  resolved "https://registry.yarnpkg.com/@restart/hooks/-/hooks-0.4.10.tgz#651741c7965738650e8a2c3d5624a85892f05376"
-  integrity sha512-HVZhYHb+9xnN6vDPyiTmw6N4V5wD9tatL3y0zpHFeeatP1ooOD1edzd3MnJCXYlb3OeleDg+Vv16EikGrH57eA==
-  dependencies:
-    dequal "^2.0.3"
-
-"@restart/ui@^1.6.3":
-  version "1.6.6"
-  resolved "https://registry.yarnpkg.com/@restart/ui/-/ui-1.6.6.tgz#3481e2eaf15d7cae55bb2f518624e10d19c75800"
-  integrity sha512-eC3puKuWE1SRYbojWHXnvCNHGgf3uzHCb6JOhnF4OXPibOIPEkR1sqDSkL643ydigxwh+ruCa1CmYHlzk7ikKA==
-  dependencies:
-    "@babel/runtime" "^7.21.0"
-    "@popperjs/core" "^2.11.6"
-    "@react-aria/ssr" "^3.5.0"
-    "@restart/hooks" "^0.4.9"
-    "@types/warning" "^3.0.0"
-    dequal "^2.0.3"
-    dom-helpers "^5.2.0"
-    uncontrollable "^8.0.1"
-    warning "^4.0.3"
-
-=======
->>>>>>> Stashed changes
 "@rollup/plugin-alias@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-alias/-/plugin-alias-5.0.0.tgz#70f3d504bd17d8922e35c6b61c08b40a6ec25af2"
@@ -7200,24 +7163,10 @@
   dependencies:
     "@types/react" "*"
 
-<<<<<<< Updated upstream
-"@types/react-transition-group@^4.4.5":
-  version "4.4.6"
-  resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.6.tgz#18187bcda5281f8e10dfc48f0943e2fdf4f75e2e"
-  integrity sha512-VnCdSxfcm08KjsJVQcfBmhEQAPnLB8G08hAxn39azX1qYBQ/5RVQuoHuKIcfKOdncuaUvEpFKFzEvbtIMsfVew==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react@*", "@types/react@>=16.9.11", "@types/react@^18.0.0":
-  version "18.2.15"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.15.tgz#14792b35df676c20ec3cf595b262f8c615a73066"
-  integrity sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==
-=======
 "@types/react@*", "@types/react@^18.0.0":
   version "18.2.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.14.tgz#fa7a6fecf1ce35ca94e74874f70c56ce88f7a127"
   integrity sha512-A0zjq+QN/O0Kpe30hA1GidzyFjatVvrpIvWLxD+xv67Vt91TWWgco9IvrJBkeyHm1trGaFS/FSGqPlhyeZRm0g==
->>>>>>> Stashed changes
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -18362,7 +18311,7 @@ gatsby-cli@^4.25.0:
     yoga-layout-prebuilt "^1.10.0"
     yurnalist "^2.1.0"
 
-gatsby-core-utils@^3.11.0, gatsby-core-utils@^3.25.0, gatsby-core-utils@^3.9.0:
+gatsby-core-utils@^3.25.0, gatsby-core-utils@^3.9.0:
   version "3.25.0"
   resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-3.25.0.tgz#6ebfd2b8c95f3bbc3b52a9619a1ff26c68109c25"
   integrity sha512-lmMDwbnKpqAi+8WWd7MvCTCx3E0u7j8sbVgydERNCYVxKVpzD/aLCH4WPb4EE9m1H1rSm76w0Z+MaentyB/c/Q==
@@ -18389,6 +18338,15 @@ gatsby-graphiql-explorer@^2.25.0:
   integrity sha512-/NDsaW4x3/KtvzmxYvedhDwUW1kb7gQO6iOhCkillVJSYBd6mPB8aOSulM49fyCT76UXGYFtRaUI8fyOkmpWhg==
   dependencies:
     "@babel/runtime" "^7.15.4"
+
+gatsby-image@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/gatsby-image/-/gatsby-image-3.11.0.tgz#9070ffd1e656b801052acfa9e470c34427c099e0"
+  integrity sha512-vRMhGLrgyQRH2RYs8leyZ1UyWYIew+NOZEsKur1w6gnWDf0U9UVmYFa9OIE1Vedlo1W+on3AuZ3/KwM+cI69VQ==
+  dependencies:
+    "@babel/runtime" "^7.14.6"
+    object-fit-images "^3.2.4"
+    prop-types "^15.7.2"
 
 gatsby-legacy-polyfills@^2.25.0:
   version "2.25.0"
@@ -18448,10 +18406,10 @@ gatsby-parcel-config@0.16.0:
     "@parcel/transformer-js" "2.6.2"
     "@parcel/transformer-json" "2.6.2"
 
-gatsby-plugin-catch-links@4.11.0:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-catch-links/-/gatsby-plugin-catch-links-4.11.0.tgz#14b309760a1e8754cd6c875f08e58927e3dab872"
-  integrity sha512-IaIoUnI+Z+b1e2lxbVEjjw7X6LPGLPuDxVxVbpa1L8WqOOOVuXeFGtank2VNcWYw8n3I8gQgWmaTAwzR52Tilg==
+gatsby-plugin-catch-links@4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-catch-links/-/gatsby-plugin-catch-links-4.9.0.tgz#99e5ac3802fcc832b27f18012d3048fc041f0cf1"
+  integrity sha512-Eq5yxHiObwcU4yJUYUGCiDFSyJbkZ286YsG4awZHEBE8zSu36rQWE9A0aUxavRswyAk2yaa4oVQtUqhFyzeIAQ==
   dependencies:
     "@babel/runtime" "^7.15.4"
     escape-string-regexp "^1.0.5"
@@ -18593,11 +18551,7 @@ gatsby-plugin-remove-serviceworker@1.0.0:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-remove-serviceworker/-/gatsby-plugin-remove-serviceworker-1.0.0.tgz#9fb433bc8bd766e14e1d3711c4ac6f051e1dff7c"
   integrity sha512-8uQ/6PiM718BTZAgmQeEO6ULrJgLugmDVAkUGv5xxF0luBNrbboDgpsG0z1fbsotSDTzLWyULR0zzGNfWZaY7w==
 
-<<<<<<< Updated upstream
-gatsby-plugin-sharp@^4.11.0:
-=======
 gatsby-plugin-sharp@^4.9.0:
->>>>>>> Stashed changes
   version "4.25.1"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-4.25.1.tgz#dcc31bdc698511501acc9b95ba277844c15a7576"
   integrity sha512-cGRb8lmwJkzwT1Qze0R+VL+55BIb9weM17m+dUf6gs5Z++lQltqge+L8a1qWWsGL6KfLQN7+bIqjhmTTscIPMQ==
@@ -18796,15 +18750,6 @@ gatsby-telemetry@^3.25.0:
     lodash "^4.17.21"
     node-fetch "^2.6.7"
 
-<<<<<<< Updated upstream
-gatsby-transformer-remark@5.11.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-5.11.0.tgz#190c0c915d32ea29ceee3a60c140cc16607129d8"
-  integrity sha512-yChU0MeRNJAKXc8Hr1nO8AiFywl91OjNk6y2w1Ps4MqkgpPAkomD0vArcrUlbooHMx8T3kLwkyTY5tYVhH+dcQ==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    gatsby-core-utils "^3.11.0"
-=======
 gatsby-transformer-remark@5.9.0:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-5.9.0.tgz#5c28df3fe4a9b80ede971e3bf430852e8ed4d553"
@@ -18812,7 +18757,6 @@ gatsby-transformer-remark@5.9.0:
   dependencies:
     "@babel/runtime" "^7.15.4"
     gatsby-core-utils "^3.9.0"
->>>>>>> Stashed changes
     gray-matter "^4.0.3"
     hast-util-raw "^6.0.2"
     hast-util-to-html "^7.1.3"
@@ -18834,7 +18778,7 @@ gatsby-transformer-remark@5.9.0:
     unist-util-select "^3.0.4"
     unist-util-visit "^2.0.3"
 
-gatsby-transformer-sharp@^4.25.0:
+gatsby-transformer-sharp@^4.9.0:
   version "4.25.0"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-sharp/-/gatsby-transformer-sharp-4.25.0.tgz#978e15c20111f4616dec599809daa1678de79881"
   integrity sha512-7aqecTvOUFiNB96ij77UnAGJs7Un0TlkpamG//dSl6Nru9EylGz/NW/Eg0vioQyHLCYdMvd5xO8V3BOHJADsnw==
@@ -18866,11 +18810,7 @@ gatsby-worker@^1.25.0:
     "@babel/core" "^7.15.5"
     "@babel/runtime" "^7.15.4"
 
-<<<<<<< Updated upstream
-gatsby@^4.25.0:
-=======
 gatsby@^4.9.2:
->>>>>>> Stashed changes
   version "4.25.7"
   resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-4.25.7.tgz#56a0c7f9e25fcf895864d88fd648f97e26dd560f"
   integrity sha512-kspM1XokxDw2YqC2hkPKQTfWSNSq/AnY8PNYSrUM+MCsyIKFuGqSVchNonZN1g8/nCoh4jQpBYXH5Uw2Hrs6Sw==
@@ -26730,6 +26670,11 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
+object-fit-images@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/object-fit-images/-/object-fit-images-3.2.4.tgz#6c299d38fdf207746e5d2d46c2877f6f25d15b52"
+  integrity sha512-G+7LzpYfTfqUyrZlfrou/PLLLAPNC52FTy5y1CBywX+1/FkxIloOyQXBmZ3Zxa2AWO+lMF0JTuvqbr7G5e5CWg==
+
 object-hash@^1.1.4:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.1.tgz#fde452098a951cb145f039bb7d455449ddc126df"
@@ -31487,19 +31432,7 @@ react-tween-state@^0.1.5:
     raf "^3.1.0"
     tween-functions "^1.0.1"
 
-<<<<<<< Updated upstream
-react-use-fusejs@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-use-fusejs/-/react-use-fusejs-1.0.1.tgz#38430b83077a599960c4c307cc2eb550d799a8dd"
-  integrity sha512-Tt1KRnfr9tnDDej/n1f2yFXBGLTvyI1dAz9q0ga7Y49Msfa4RaRetaRC8TAUeBYTsN8DugJk+tBJKbaZzJKAIA==
-  dependencies:
-    fuse.js "^6.0.0"
-    react "^18.0.0"
-
-react@16.14.0, react@^16.8.3, react@^16.9.0:
-=======
 react@16.14.0, react@^16.8.3:
->>>>>>> Stashed changes
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
@@ -31507,6 +31440,16 @@ react@16.14.0, react@^16.8.3:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
+
+react@16.8.4:
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"
+  integrity sha512-0GQ6gFXfUH7aZcjGVymlPOASTuSjlQL4ZtVC5YKH+3JL6bBLCVO21DknzmaPlI90LN253ojj02nsapy+j7wIjg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.13.4"
 
 react@^17.0.0:
   version "17.0.2"
@@ -32871,6 +32814,14 @@ scheduler@0.17.0:
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.17.0.tgz#7c9c673e4ec781fac853927916d1c426b6f3ddfe"
   integrity sha512-7rro8Io3tnCPuY4la/NuI5F2yfESpnfZyT6TtkXnSWVkcu0BCDJ+8gk5ozUaFaxpIyNuWAPXrH0yFcSi28fnDA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.13.4:
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
+  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

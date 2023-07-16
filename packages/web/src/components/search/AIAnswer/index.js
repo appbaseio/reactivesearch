@@ -98,6 +98,11 @@ const AIAnswer = (props) => {
 			setIsTriggered(true);
 		}
 	};
+	useEffect(() => {
+		if (props.triggerOn === AI_TRIGGER_MODES.ALWAYS && !isTriggered) {
+			setIsTriggered(true);
+		}
+	}, [props.triggerOn]);
 
 	useEffect(() => {
 		setErrorState(props.AIResponseError);
@@ -284,7 +289,6 @@ const AIAnswer = (props) => {
 				showSourceDocuments={props.showSourceDocuments}
 				renderSourceDocument={props.renderSourceDocument}
 				onSourceClick={props.onSourceClick}
-				triggerOn={props.triggerOn}
 				renderTriggerMessage={props.renderTriggerMessage}
 			/>
 		</Chatbox>
@@ -351,7 +355,7 @@ AIAnswer.defaultProps = {
 	showFeedback: true,
 	style: {},
 	showSourceDocuments: true,
-	triggerOn: AI_TRIGGER_MODES.MANUAL,
+	triggerOn: AI_TRIGGER_MODES.ALWAYS,
 	componentError: null,
 };
 
