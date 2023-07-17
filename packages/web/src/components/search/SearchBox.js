@@ -130,6 +130,7 @@ const SearchBox = (props) => {
 		= props.enableAI && props.AIUIConfig && props.AIUIConfig.renderTriggerMessage
 			? props.AIUIConfig.renderTriggerMessage
 			: null;
+
 	if (
 		props.enableAI
 		&& !renderTriggerMessage
@@ -175,7 +176,7 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
-		if (renderTriggerMessage) {
+		if (renderTriggerMessage && currentValue && !props.isLoading) {
 			suggestionsArray.unshift({
 				label: 'AI_TRIGGER_MESSAGE',
 				value: 'AI_TRIGGER_MESSAGE',
@@ -451,9 +452,8 @@ const SearchBox = (props) => {
 						triggerDefaultQuery(
 							newCurrentValue,
 							props.enableAI
-								&& (currentTriggerMode === AI_TRIGGER_MODES.QUESTION
-									? newCurrentValue.endsWith('?')
-									: true)
+								&& currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+								&& newCurrentValue.endsWith('?')
 								? { enableAI: true }
 								: {},
 							shouldExecuteQuery,
@@ -588,7 +588,8 @@ const SearchBox = (props) => {
 
 		if (!props.enableAI) setIsOpen(false);
 		else if (
-			currentTriggerMode === AI_TRIGGER_MODES.QUESTION ? suggestion.value.endsWith('?') : true
+			currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+			&& suggestion.value.endsWith('?')
 		) {
 			setShowAIScreen(true);
 		}
@@ -1751,34 +1752,6 @@ const SearchBox = (props) => {
 											)}
 											{!showAIScreen && (
 												<Fragment>
-													{/* {props.enableAI && renderTriggerMessage ? (
-														<li
-															{...getItemProps({
-																item: {
-																	label: 'custom AI trigger message',
-																	value: 'custom AI trigger message',
-																},
-															})}
-															key="ai-trigger-message"
-															style={{
-																justifyContent: 'flex-start',
-																alignItems: 'center',
-															}}
-															className={`${
-																highlightedIndex === -1
-																	? `active-li-item ${getClassName(
-																		props.innerClass,
-																		'active-suggestion-item',
-																	  )}`
-																	: `li-item ${getClassName(
-																		props.innerClass,
-																		'suggestion-item',
-																	  )}`
-															}`}
-														>
-															{renderTriggerMessage}
-														</li>
-													) : null} */}
 													{parsedSuggestions().map((item, itemIndex) => {
 														const index = indexOffset + itemIndex;
 														if (Array.isArray(item)) {
