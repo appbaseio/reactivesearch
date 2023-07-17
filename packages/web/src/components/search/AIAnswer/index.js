@@ -238,6 +238,11 @@ const AIAnswer = (props) => {
 	if (!isTriggered) {
 		return (
 			<Chatbox style={props.style} className="--ai-chat-box-wrapper">
+				{props.title && (
+					<Title className={getClassName(props.innerClass, 'ai-title') || null}>
+						{props.title}
+					</Title>
+				)}
 				<div
 					className="--trigger-message-wrapper"
 					onClick={handleTriggerClick}
