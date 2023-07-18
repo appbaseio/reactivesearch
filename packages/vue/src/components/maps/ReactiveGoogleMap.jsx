@@ -11,6 +11,7 @@ const ReactiveGoogleMap = {
 	props: {
 		className: types.string,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		dataField: types.stringRequired,
 		defaultQuery: VueTypes.func,
 		loader: types.title,

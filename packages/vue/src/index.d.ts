@@ -2,6 +2,7 @@ import * as types from './types.ts';
 
 export interface CommonProps {
 	componentId: string;
+	compoundClause: string;
 	URLParams?: boolean;
 	uRLParams?: boolean;
 	className?: string;
