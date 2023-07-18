@@ -99,7 +99,7 @@ const AIAnswer = (props) => {
 		}
 	};
 	useEffect(() => {
-		if (props.triggerOn === AI_TRIGGER_MODES.ALWAYS && !isTriggered) {
+		if (props.triggerOn === AI_TRIGGER_MODES.ALWAYS) {
 			setIsTriggered(true);
 		}
 	}, [props.triggerOn]);
@@ -214,7 +214,7 @@ const AIAnswer = (props) => {
 	}, [currentSessionId]);
 
 	useEffect(() => {
-		if (isTriggered) setIsTriggered();
+		if (isTriggered && props.triggerOn !== AI_TRIGGER_MODES.ALWAYS) setIsTriggered(false);
 	}, [props.dependentComponentValue]);
 
 	useEffect(
@@ -232,13 +232,17 @@ const AIAnswer = (props) => {
 		[],
 	);
 
-	if (!props.showComponent || (!currentSessionId && isTriggered)) {
+	if (!props.showComponent) {
 		return null;
 	}
-
 	if (!isTriggered) {
 		return (
 			<Chatbox style={props.style} className="--ai-chat-box-wrapper">
+				{props.title && (
+					<Title className={getClassName(props.innerClass, 'ai-title') || null}>
+						{props.title}
+					</Title>
+				)}
 				<div
 					className="--trigger-message-wrapper"
 					onClick={handleTriggerClick}
