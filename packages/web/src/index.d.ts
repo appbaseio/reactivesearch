@@ -5,6 +5,7 @@ import getServerState from './server';
 
 export interface CommonProps {
 	componentId: string;
+	compoundClause: "filter" | "must";
 	URLParams?: boolean;
 	className?: string;
 	onQueryChange?: (...args: any[]) => any;

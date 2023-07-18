@@ -709,6 +709,7 @@ ReactiveChart.propTypes = {
 	// ---- user props ---
 	// props to configure query
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	URLParams: types.bool,
 	dataField: types.stringRequired,
 	showFilter: types.bool,
