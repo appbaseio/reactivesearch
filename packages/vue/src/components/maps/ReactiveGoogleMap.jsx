@@ -161,6 +161,7 @@ const ReactiveGoogleMap = {
 				getMapRef={this.getMapRef}
 				renderMap={this.renderMap}
 				componentId={this.componentId}
+				compoundClause={this.compoundClause}
 				className={this.className}
 				dataField={this.dataField}
 				defaultZoom={this.defaultZoom}
