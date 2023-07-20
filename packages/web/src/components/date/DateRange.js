@@ -533,6 +533,7 @@ DateRange.propTypes = {
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	dataField: types.dataFieldArray,
 	dayPickerInputProps: types.props,
 	defaultValue: types.dateObject,

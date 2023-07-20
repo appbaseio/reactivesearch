@@ -1639,6 +1639,7 @@ DataSearch.propTypes = {
 	className: types.string,
 	clearIcon: types.children,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	customHighlight: types.func,
 	highlightConfig: types.componentObject,
 	customQuery: types.func,

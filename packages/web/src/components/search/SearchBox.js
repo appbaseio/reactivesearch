@@ -1611,6 +1611,7 @@ SearchBox.propTypes = {
 	className: types.string,
 	clearIcon: types.children,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	customHighlight: types.func,
 	customQuery: types.func,
 	defaultQuery: types.func,

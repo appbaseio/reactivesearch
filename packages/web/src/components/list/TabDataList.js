@@ -74,6 +74,7 @@ TabDataList.propTypes = {
 	displayAsVertical: bool,
 	children: types.func,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	dataField: types.stringRequired,
 	onChange: types.func,
 	react: types.react,
