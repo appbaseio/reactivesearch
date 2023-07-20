@@ -12,6 +12,7 @@ const ReactiveGoogleMap = {
 	props: {
 		className: types.string,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		dataField: types.stringRequired,
 		defaultQuery: VueTypes.func,
 		loader: types.title,
@@ -161,6 +162,7 @@ const ReactiveGoogleMap = {
 				getMapPromise={this.getMapRefPromise}
 				renderMap={this.renderMap}
 				componentId={this.componentId}
+				compoundClause={this.compoundClause}
 				className={this.className}
 				dataField={this.dataField}
 				defaultZoom={this.defaultZoom}

@@ -39,6 +39,7 @@ const RangeSlider = {
 		}),
 		rangeLabels: types.rangeLabels,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
