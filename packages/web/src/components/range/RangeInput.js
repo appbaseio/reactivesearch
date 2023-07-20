@@ -494,6 +494,7 @@ RangeInput.propTypes = {
 	themePreset: types.themePreset,
 	showHistogram: types.bool,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	includeNullValues: types.bool,
 	enableAppbase: types.bool,
 	index: types.string,

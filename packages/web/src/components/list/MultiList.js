@@ -706,6 +706,7 @@ MultiList.propTypes = {
 	children: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	customQuery: types.func,
 	defaultQuery: types.func,
 	dataField: types.stringRequired,

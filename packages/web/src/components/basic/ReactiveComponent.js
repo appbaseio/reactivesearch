@@ -337,6 +337,7 @@ ReactiveComponent.propTypes = {
 	// component props
 	children: types.func,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	defaultQuery: types.func,
 	customQuery: types.func,
 	defaultValue: types.any, // eslint-disable-line
