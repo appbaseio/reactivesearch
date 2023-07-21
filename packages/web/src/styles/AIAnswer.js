@@ -15,6 +15,10 @@ export const Chatbox = styled.div`
 	margin-bottom: 20px;
 	background-color: ${props =>
 	(props.theme && props.theme.colors ? props.theme.colors.backgroundColor : '#fff')};
+
+	.--trigger-message-wrapper {
+		cursor: pointer;
+	}
 `;
 export const ChatContainer = styled.div`
 	display: flex;
