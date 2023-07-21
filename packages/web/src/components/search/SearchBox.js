@@ -574,6 +574,9 @@ const SearchBox = (props) => {
 			if (onChange) {
 				onChange(suggestion.value, () => {});
 			}
+			if (onValueSelected) {
+				onValueSelected(suggestionValue);
+			}
 			return;
 		} else if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
 			setShowAIScreen(true);
