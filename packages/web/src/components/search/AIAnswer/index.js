@@ -43,12 +43,7 @@ const AIAnswer = (props) => {
 		// meta refers to source documents IDs here
 		if (currentSessionId) {
 			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
-			props.getAIResponse(
-				currentSessionId,
-				props.componentId,
-				!isTriggered ? text : '',
-				fetchMeta,
-			);
+			props.getAIResponse(currentSessionId, props.componentId, text, fetchMeta);
 		} else {
 			console.error(errorMessageForMissingSessionId);
 		}
@@ -99,7 +94,7 @@ const AIAnswer = (props) => {
 
 	const handleTriggerClick = () => {
 		if (props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
-			handleSendMessage(props.dependentComponentValue, false, true);
+			handleSendMessage('', false, true);
 			setIsTriggered(true);
 		}
 	};
