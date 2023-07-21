@@ -863,6 +863,9 @@ const SearchBox = defineComponent({
 				this.isOpen = true
 				this.showAIScreen = true;
 				this.$emit('change', suggestion.value, ()=>{} );
+				this.onValueSelectedHandler(
+					suggestion.value,
+				);
 				return;
 			}
 			const { value } = this.$props;
