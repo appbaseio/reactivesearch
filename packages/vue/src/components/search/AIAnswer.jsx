@@ -45,6 +45,8 @@ md.set({
 	html: true,
 	breaks: true,
 	xhtmlOut: true,
+	linkify: true,
+	linkTarget: '_blank',
 });
 
 const _inputWrapperRef = 'inputWrapperRef';
