@@ -43,7 +43,12 @@ const AIAnswer = (props) => {
 		// meta refers to source documents IDs here
 		if (currentSessionId) {
 			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
-			props.getAIResponse(currentSessionId, props.componentId, text, fetchMeta);
+			props.getAIResponse(
+				currentSessionId,
+				props.componentId,
+				!isTriggered ? text : '',
+				fetchMeta,
+			);
 		} else {
 			console.error(errorMessageForMissingSessionId);
 		}
