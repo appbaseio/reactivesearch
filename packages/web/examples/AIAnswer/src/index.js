@@ -50,8 +50,6 @@ const Main = () => (
 					renderSourceDocument={(obj) => {
 						return <span>❤️ {obj.original_title}</span>;
 					}}
-					renderTriggerMessage={'This is good till now'}
-					triggerOn="question"
 				/>
 				<br />
 				<SelectedFilters />
