@@ -855,21 +855,14 @@ const SearchBox = defineComponent({
 			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
-				this.setValue(
-					suggestion.value,
-					true,
-					this.$props,
-					causes.SUGGESTION_SELECT,
-					false,
-					undefined,
-					false
-				);
+				this.currentValue= suggestion.value;
 				// Handle AI
 				// Independent of enableAI.
 				this.faqAnswer = (suggestion._answer);
 				this.faqQuestion = suggestion.value
 				this.isOpen = true
 				this.showAIScreen = true;
+				this.$emit('change', suggestion.value, ()=>{} );
 				return;
 			}
 			const { value } = this.$props;

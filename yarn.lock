@@ -110,7 +110,7 @@
     react-slick "^0.24.0"
     slick-carousel "^1.8.1"
 
-"@appbaseio/docs@appbaseio/Docs#dd417dd", docs@appbaseio/Docs#dd417dd:
+"@appbaseio/docs@appbaseio/Docs#dev", docs@appbaseio/Docs#dev:
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/dd417dda9fd62a26c45bf971fb04f0df1ee5f499"
   dependencies:

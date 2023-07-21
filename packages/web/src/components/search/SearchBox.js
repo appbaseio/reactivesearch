@@ -355,6 +355,7 @@ const SearchBox = (props) => {
 		}
 	};
 
+
 	const onValueSelected = (valueSelected = currentValue, cause, suggestion = null) => {
 		const { onValueSelected } = props;
 		if (onValueSelected) {
@@ -566,19 +567,13 @@ const SearchBox = (props) => {
 		const suggestionValue = suggestion.value;
 		// handle when FAQ suggestion is clicked
 		if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
-			setValue(
-				suggestion.value,
-				true,
-				props,
-				causes.SUGGESTION_SELECT,
-				true,
-				false,
-				undefined,
-				false,
-			);
+			setCurrentValue(suggestion.value);
 			setFAQAnswer(suggestion._answer);
 			setFAQQuestion(suggestion.value);
 			setShowAIScreen(true);
+			if (onChange) {
+				onChange(suggestion.value, () => {});
+			}
 			return;
 		} else if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
 			setShowAIScreen(true);
@@ -629,6 +624,8 @@ const SearchBox = (props) => {
 				false,
 				suggestion._category,
 			);
+
+
 			onChange(emitValue, () =>
 				triggerQuery({
 					customQuery: true,
