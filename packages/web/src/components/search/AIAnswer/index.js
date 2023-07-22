@@ -42,7 +42,13 @@ const AIAnswer = (props) => {
 	const handleSendMessage = (text, isRetry = false, fetchMeta = false) => {
 		// meta refers to source documents IDs here
 		if (currentSessionId) {
-			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
+			if (!isRetry) {
+				const finalMessages = [...messages];
+				if (text) {
+					finalMessages.push({ content: text, role: AI_ROLES.USER });
+				}
+				setMessages([...finalMessages]);
+			}
 			props.getAIResponse(currentSessionId, props.componentId, text, fetchMeta);
 		} else {
 			console.error(errorMessageForMissingSessionId);
