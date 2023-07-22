@@ -209,7 +209,7 @@ const AIAnswer = (props) => {
 
 	useEffect(() => {
 		if (currentSessionId && isTriggered) {
-			handleSendMessage(props.dependentComponentValue, false, true);
+			handleSendMessage('', false, true);
 		}
 	}, [currentSessionId]);
 
