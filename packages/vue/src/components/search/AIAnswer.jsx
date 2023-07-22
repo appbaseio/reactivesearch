@@ -2,6 +2,7 @@ import VueTypes from 'vue-types';
 import {
 	AI_LOCAL_CACHE_KEY,
 	AI_ROLES,
+	AI_TRIGGER_MODES,
 	componentTypes,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { defineComponent } from 'vue';
@@ -65,6 +66,7 @@ const AIAnswer = defineComponent({
 			error: null,
 			sourceDocIds: null,
 			initialHits: null,
+			isTriggered: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -74,7 +76,20 @@ const AIAnswer = defineComponent({
 			from: 'theme_reactivesearch',
 		},
 	},
-	created() {},
+	created() {
+		if (this.$props.triggerOn === AI_TRIGGER_MODES.ALWAYS) {
+			this.isTriggered = true;
+		} else if (
+			this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+			&& this.dependentComponentValue
+			&& this.dependentComponentValue.endsWith('?')
+		) {
+			this.isTriggered = true;
+			if (this.AISessionId) {
+				this.handleSendMessage(null, false, '', true);
+			}
+		}
+	},
 	computed: {
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
@@ -87,6 +102,9 @@ const AIAnswer = defineComponent({
 		},
 		errorMessageForMissingSessionId() {
 			return `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISessionId to function. Try reloading the App.`;
+		},
+		hasTriggered() {
+			return this.isTriggered;
 		},
 	},
 	props: {
@@ -130,6 +148,8 @@ const AIAnswer = defineComponent({
 		renderSourceDocument: types.func,
 		onSourceClick: types.func,
 		isAITyping: types.boolRequired,
+		triggerOn: VueTypes.string.def(AI_TRIGGER_MODES.ALWAYS),
+		renderTriggerMessage: types.func,
 	},
 	mounted() {},
 	watch: {
@@ -166,6 +186,7 @@ const AIAnswer = defineComponent({
 						).response || {}
 					).sessionId;
 				const { messages: messagesHistory, response } = newVal;
+
 				const finalMessages = [];
 
 				if (response && response.error) {
@@ -296,13 +317,85 @@ const AIAnswer = defineComponent({
 					});
 			}
 		},
+		showComponent() {
+			if (
+				this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+				&& this.$props.dependentComponentValue.endsWith('?')
+			) {
+				this.isTriggered = true;
+			}
+		},
+		dependentComponentValue(newVal) {
+			if (
+				this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+				&& newVal
+				&& newVal.endsWith('?')
+			) {
+				this.isTriggered = true;
+				if (this.AISessionId) {
+					this.handleSendMessage(null, false, '', true);
+				}
+			} else if (this.hasTriggered && this.$props.triggerOn !== AI_TRIGGER_MODES.ALWAYS) {
+				this.isTriggered = false;
+			}
+		},
 		AISessionId(newVal) {
 			if (newVal) {
-				this.handleSendMessage(null, false, '', true);
+				if (
+					(this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+						&& this.dependentComponentValue
+						&& this.dependentComponentValue.endsWith('?'))
+					|| this.$props.triggerOn === AI_TRIGGER_MODES.ALWAYS
+				) {
+					this.handleSendMessage(null, false, '', true);
+				}
+			}
+		},
+		triggerOn(newVal) {
+			if (newVal === AI_TRIGGER_MODES.ALWAYS) {
+				this.isTriggered = true;
 			}
 		},
 	},
 	methods: {
+		renderTriggerMessageFunc() {
+			const { triggerOn } = this.$props;
+
+			if (this.$props.renderTriggerMessage) {
+				return this.$props.renderTriggerMessage;
+			}
+			if (this.$slots.renderTriggerMessage) {
+				return this.$slots.renderTriggerMessage();
+			}
+			if (triggerOn === AI_TRIGGER_MODES.QUESTION) {
+				if (!this.dependentComponentValue.endsWith('?')) {
+					return (
+						<span>
+							<span role="img" aria-label="bulb">
+								💡
+							</span>
+							End your question with a question mark (?)
+						</span>
+					);
+				}
+			} else if (triggerOn === AI_TRIGGER_MODES.MANUAL) {
+				return (
+					<span>
+						Click here to ask AI{' '}
+						<span role="img" aria-label="bulb">
+							🤖
+						</span>
+					</span>
+				);
+			}
+			return null;
+		},
+		handleTriggerClick() {
+			if (this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
+				this.handleSendMessage(null, false, '', true);
+				this.isTriggered = true;
+			}
+		},
 		getAISourceObjects() {
 			const sourceObjects = [];
 			if (!this.AIResponse) return sourceObjects;
@@ -478,7 +571,6 @@ const AIAnswer = defineComponent({
 			return null;
 		},
 		handleKeyPress(e) {
-			window.console.log('e', e);
 			if (e.key === 'Enter') {
 				this.handleSendMessage(e);
 				this.inputMessage = '';
@@ -629,10 +721,28 @@ const AIAnswer = defineComponent({
 		if (!this.shouldShowComponent) {
 			return null;
 		}
+		if (!this.isTriggered) {
+			return (
+				<Chatbox style={props.style || {}}>
+					{props.title && (
+						<Title class={getClassName(props.innerClass, 'ai-title') || null}>
+							{props.title}
+						</Title>
+					)}
+					<div
+						class="--trigger-message-wrapper"
+						onClick={this.handleTriggerClick}
+						aria-hidden="true"
+					>
+						{this.renderTriggerMessageFunc()}
+					</div>
+				</Chatbox>
+			);
+		}
 		return (
 			<Chatbox style={props.style || {}}>
 				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
+					<Title class={getClassName(this.$props.innerClass, 'ai-title') || ''}>
 						{this.$props.title}
 					</Title>
 				)}
@@ -756,11 +866,16 @@ const mapStateToProps = (state, props) => {
 		dependencyComponent = dependencyComponent[0];
 	}
 
-	const showComponent
-		= state.selectedValues[dependencyComponent]
-		&& state.selectedValues[dependencyComponent].value;
+	const showComponent = !!(
+		state.selectedValues[dependencyComponent] && state.selectedValues[dependencyComponent].value
+	);
+	const dependentComponentValue
+		= (state.selectedValues[dependencyComponent]
+			&& state.selectedValues[dependencyComponent].value)
+		|| '';
 	return {
 		showComponent,
+		dependentComponentValue,
 		AIResponse:
 			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
 		isAIResponseLoading:
@@ -775,7 +890,7 @@ const mapStateToProps = (state, props) => {
 				&& state.AIResponses[props.componentId].response
 				&& state.AIResponses[props.componentId].response.sessionId)
 			|| '',
-		componentError: state.error[props.componentId],
+		componentError: state.error[props.componentId] || null,
 		isAITyping:
 			(state.AIResponses[props.componentId]
 				&& state.AIResponses[props.componentId].response
