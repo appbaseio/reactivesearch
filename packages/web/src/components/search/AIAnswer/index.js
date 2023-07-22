@@ -220,7 +220,7 @@ const AIAnswer = (props) => {
 	}, [currentSessionId]);
 
 	useEffect(() => {
-		if (isTriggered && props.triggerOn !== AI_TRIGGER_MODES.ALWAYS) setIsTriggered(false);
+		if (isTriggered && props.triggerOn === AI_TRIGGER_MODES.MANUAL) setIsTriggered(false);
 	}, [props.dependentComponentValue]);
 
 	useEffect(
