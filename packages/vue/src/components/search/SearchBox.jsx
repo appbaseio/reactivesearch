@@ -875,7 +875,7 @@ const SearchBox = defineComponent({
 				this.faqQuestion = suggestion.value;
 				this.isOpen = true;
 				this.showAIScreen = true;
-				this.$emit('change', suggestion.value, ()=>{} );
+				if (value !== undefined) this.$emit('change', suggestion.value, ()=>{} );
 				this.onValueSelectedHandler(
 					suggestion.value,
 				);
