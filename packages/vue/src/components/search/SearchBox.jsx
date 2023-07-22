@@ -865,6 +865,7 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
+			const { value } = this.$props;
 			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
@@ -881,7 +882,6 @@ const SearchBox = defineComponent({
 				);
 				return;
 			}
-			const { value } = this.$props;
 
 			// handle featured suggestions click event
 			if (suggestion._suggestion_type === suggestionTypes.Featured) {
