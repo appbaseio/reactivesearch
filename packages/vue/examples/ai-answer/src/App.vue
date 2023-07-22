@@ -19,7 +19,7 @@
 					index: 'good-books-ds',
 					minChars: 4,
 				}"
-				enableAI="false"
+				:enableAI="false"
 				:autosuggest="true"
 			/>
 			<a-i-answer
@@ -27,6 +27,13 @@
 				componentId="AIComponent"
 				:react="{ and: ['BookSensor'] }"
 				title="AI Chat Box"
+				:showSourceDocuments="true"
+				:onSourceClick="
+					(sourceObj) => {
+						// perform any side effects
+						console.log('sourceObj', sourceObj);
+					}
+				"
 			>
 				<!-- <template v-slot:render="{ loading, data, error }">
 					<div v-if="loading">loading...</div>

@@ -38,6 +38,7 @@ import InputGroup from '../../styles/InputGroup';
 import SearchSvg from '../shared/SearchSvg';
 import Button from '../../styles/Button';
 import AIFeedback from '../shared/AIFeedback.jsx';
+import { Footer, SourceTags } from '../../styles/SearchBoxAI';
 
 const md = new Remarkable();
 
@@ -62,6 +63,8 @@ const AIAnswer = defineComponent({
 			inputMessage: '',
 			AISessionId: '',
 			error: null,
+			sourceDocIds: null,
+			initialHits: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -123,17 +126,45 @@ const AIAnswer = defineComponent({
 		showComponent: types.boolRequired,
 		componentError: types.componentObject,
 		style: types.style,
+		showSourceDocuments: VueTypes.bool.def(false),
+		renderSourceDocument: types.func,
+		onSourceClick: types.func,
+		isAITyping: types.boolRequired,
 	},
 	mounted() {},
 	watch: {
 		AIResponse(newVal) {
 			if (newVal) {
+				if (
+					this.$props.showSourceDocuments
+					&& newVal.response
+					&& newVal.response.answer
+					&& Array.isArray(newVal.response.answer.documentIds)
+				) {
+					this.sourceDocIds = newVal.response.answer.documentIds;
+
+					const localCache
+						= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+						&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.$props.componentId];
+
+					if (localCache && localCache.meta && localCache.meta.hits) {
+						this.initialHits = localCache.meta.hits;
+					}
+				}
+
 				this.AISessionId
 					= (
 						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
 							this.$props.componentId
 						] || {}
-					).sessionId || null;
+					).sessionId
+					|| (
+						(
+							(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+								this.$props.componentId
+							] || {}
+						).response || {}
+					).sessionId;
 				const { messages: messagesHistory, response } = newVal;
 				const finalMessages = [];
 
@@ -142,7 +173,7 @@ const AIAnswer = defineComponent({
 				}
 
 				// pushing message history so far
-				if (messagesHistory && messagesHistory && Array.isArray(messagesHistory)) {
+				if (messagesHistory && Array.isArray(messagesHistory)) {
 					finalMessages.push(
 						...messagesHistory.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
 					);
@@ -164,6 +195,10 @@ const AIAnswer = defineComponent({
 				loading: this.$props.isAIResponseLoading || this.$props.isLoading,
 				error: this.$props.AIResponseError,
 			});
+
+			if (newVal && newVal.hits && newVal.hits.hits) {
+				this.initialHits = newVal.hits.hits;
+			}
 		},
 		isAIResponseLoading(newVal) {
 			this.$emit('on-data', {
@@ -193,7 +228,14 @@ const AIAnswer = defineComponent({
 					(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
 						this.$props.componentId
 					] || {}
-				).sessionId || null;
+				).sessionId
+				|| (
+					(
+						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+							this.$props.componentId
+						] || {}
+					).response || {}
+				).sessionId;
 			if (this.error && !this.AISessionId) {
 				const errorMessage = this.errorMessageForMissingSessionId;
 				this.error = {
@@ -218,7 +260,14 @@ const AIAnswer = defineComponent({
 						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
 							this.$props.componentId
 						] || {}
-					).sessionId || null;
+					).sessionId
+					|| (
+						(
+							(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+								this.$props.componentId
+							] || {}
+						).response || {}
+					).sessionId;
 				if (!this.AISessionId) {
 					this.generateNewSessionId();
 				}
@@ -247,8 +296,81 @@ const AIAnswer = defineComponent({
 					});
 			}
 		},
+		AISessionId(newVal) {
+			if (newVal) {
+				this.handleSendMessage(null, false, '', true);
+			}
+		},
 	},
 	methods: {
+		getAISourceObjects() {
+			const sourceObjects = [];
+			if (!this.AIResponse) return sourceObjects;
+			const docIds = this.sourceDocIds || [];
+			if (this.initialHits) {
+				docIds.forEach((id) => {
+					const foundSourceObj = this.initialHits.find((hit) => hit._id === id) || {};
+					if (foundSourceObj) {
+						const { _source = {}, ...rest } = foundSourceObj;
+
+						sourceObjects.push({ ...rest, ..._source });
+					}
+				});
+			} else {
+				sourceObjects.push(
+					...docIds.map((id) => ({
+						_id: id,
+					})),
+				);
+			}
+
+			return sourceObjects;
+		},
+		renderAIScreenFooter() {
+			const {
+				showSourceDocuments = true,
+				onSourceClick = () => {},
+				renderSourceDocument,
+			} = this.$props || {};
+
+			const customRenderSourceDoc = renderSourceDocument || this.$slots.renderSourceDocument;
+
+			if (this.isLoadingState || this.isAITyping) {
+				return null;
+			}
+			const renderSourceDocumentLabel = (sourceObj) => {
+				if (customRenderSourceDoc) {
+					return customRenderSourceDoc(sourceObj);
+				}
+
+				return sourceObj._id;
+			};
+
+			return showSourceDocuments
+				&& Array.isArray(this.sourceDocIds)
+				&& this.sourceDocIds.length ? (
+					<Footer
+						themePreset={this.$props.themePreset}
+						style={{ marginTop: '1.5rem', background: 'inherit' }}
+					>
+					Summary generated using the following sources:{' '}
+						<SourceTags>
+							{this.getAISourceObjects().map((el) => (
+								<Button
+									class={`--ai-source-tag ${
+										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
+									}`}
+									info
+									onClick={() => onSourceClick && onSourceClick(el)}
+									key={el._id}
+								>
+									{renderSourceDocumentLabel(el)}
+								</Button>
+							))}
+						</SourceTags>
+					</Footer>
+				) : null;
+		},
 		generateNewSessionId() {
 			const newSessionPromise = this.createAISession();
 			newSessionPromise
@@ -275,7 +397,7 @@ const AIAnswer = defineComponent({
 			this.inputMessage = e.target.value;
 			this.handleTextAreaHeightChange();
 		},
-		handleSendMessage(e, isRetry = false, text = this.inputMessage) {
+		handleSendMessage(e, isRetry = false, text = this.inputMessage, fetchMeta = false) {
 			if (typeof e === 'object' && e !== null) e.preventDefault();
 			if (text.trim()) {
 				if (this.isLoadingState) {
@@ -284,7 +406,7 @@ const AIAnswer = defineComponent({
 				if (this.AISessionId) {
 					if (!isRetry)
 						this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
-					this.getAIResponse(this.AISessionId, this.componentId, text);
+					this.getAIResponse(this.AISessionId, this.componentId, text, fetchMeta);
 				} else {
 					console.error(this.errorMessageForMissingSessionId);
 					this.error = {
@@ -591,8 +713,9 @@ const AIAnswer = defineComponent({
 								}}
 							/>
 						</div>
-					)}
-					{props.showInput && (
+					)}{' '}
+					{this.renderAIScreenFooter()}
+					{props.showInput && !this.isLoadingState && !this.isAITyping && (
 						<MessageInputContainer
 							class="--ai-input-container"
 							onSubmit={this.handleSendMessage}
@@ -653,10 +776,16 @@ const mapStateToProps = (state, props) => {
 				&& state.AIResponses[props.componentId].response.sessionId)
 			|| '',
 		componentError: state.error[props.componentId],
+		isAITyping:
+			(state.AIResponses[props.componentId]
+				&& state.AIResponses[props.componentId].response
+				&& state.AIResponses[props.componentId].response.isTyping)
+			|| false,
 	};
 };
 const mapDispatchToProps = {
-	getAIResponse: fetchAIResponse,
+	getAIResponse: (sessionId, componentId, message, shouldFetchMeta = false) =>
+		fetchAIResponse(sessionId, componentId, message, null, shouldFetchMeta),
 	trackUsefullness: recordAISessionUsefulness,
 	createAISession,
 };
