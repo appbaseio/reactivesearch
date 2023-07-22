@@ -32,6 +32,11 @@ export interface AIAnswerProps extends CommonProps {
 	renderError?: (data: object) => VNode[];
 	isLoading?: boolean;
 	style?: types.style;
+	showSourceDocuments?: boolean;
+	triggerOn?: 'manual' | 'question';
+	renderTriggerMessage?: types.children | string;
+	renderSourceDocument?: (obj: any) => types.children;
+	onSourceClick?: (sourceObject: object) => void;
 }
 
 declare function AIAnswer(props: AIAnswerProps): JSX.Element;
