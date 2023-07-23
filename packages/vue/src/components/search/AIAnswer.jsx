@@ -704,6 +704,18 @@ const AIAnswer = defineComponent({
 				this.$forceUpdate();
 			}
 		},
+		getTitle() {
+			const hasTitle = this.$props.title || this.$slots.title || null;
+			if (hasTitle) {
+				return (
+					<Title class={getClassName(this.$props.innerClass, 'ai-title') || null}>
+						{this.$props.title || this.$slots.title()}
+					</Title>
+				);
+			}
+
+			return null;
+		},
 	},
 	beforeUnmount() {
 		if (this.$props.clearSessionOnDestroy) {
@@ -724,11 +736,7 @@ const AIAnswer = defineComponent({
 		if (!this.isTriggered) {
 			return (
 				<Chatbox style={props.style || {}}>
-					{props.title && (
-						<Title class={getClassName(props.innerClass, 'ai-title') || null}>
-							{props.title}
-						</Title>
-					)}
+					{this.getTitle()}
 					<div
 						class="--trigger-message-wrapper"
 						onClick={this.handleTriggerClick}
@@ -741,11 +749,7 @@ const AIAnswer = defineComponent({
 		}
 		return (
 			<Chatbox style={props.style || {}}>
-				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'ai-title') || ''}>
-						{this.$props.title}
-					</Title>
-				)}
+				{this.getTitle()}
 				<ChatContainer
 					class="--ai-chat-container"
 					theme={props.theme}
