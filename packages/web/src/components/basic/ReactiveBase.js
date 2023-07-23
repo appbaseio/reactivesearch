@@ -74,7 +74,7 @@ class ReactiveBase extends Component {
 			],
 			() => {
 				this.setStore(this.props);
-				this.setState(state => ({
+				this.setState((state) => ({
 					key: `${state.key}-0`,
 				}));
 			},
@@ -104,30 +104,28 @@ class ReactiveBase extends Component {
 	}
 
 	get headers() {
-		const {
-			enableAppbase, headers, appbaseConfig, mongodb, endpoint,
-		} = this.props;
+		const { enableAppbase, headers, appbaseConfig, mongodb, endpoint } = this.props;
 		const { enableTelemetry } = appbaseConfig || {};
 		return {
-			...(enableAppbase
-				&& !mongodb && {
-				'X-Search-Client': X_SEARCH_CLIENT,
-				...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-			}),
+			...(enableAppbase &&
+				!mongodb && {
+					'X-Search-Client': X_SEARCH_CLIENT,
+					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+				}),
 			...headers,
-			...(enableAppbase
-				&& endpoint
-				&& endpoint.headers && {
-				...endpoint.headers,
-			}),
+			...(enableAppbase &&
+				endpoint &&
+				endpoint.headers && {
+					...endpoint.headers,
+				}),
 		};
 	}
 
 	setStore = (props) => {
 		this.type = props.type ? props.type : '*';
 
-		const credentials
-			= props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
+		const credentials =
+			props.url && props.url.trim() !== '' && !props.credentials ? null : props.credentials;
 
 		const appbaseConfig = {
 			...props.analyticsConfig, // TODO: remove in 4.0
@@ -157,8 +155,9 @@ class ReactiveBase extends Component {
 			graphQLUrl: props.graphQLUrl,
 			transformResponse: props.transformResponse,
 			mongodb: props.mongodb,
-			...(props.enableAppbase
-				&& props.endpoint instanceof Object && { endpoint: props.endpoint }),
+			...(props.enableAppbase &&
+				props.endpoint instanceof Object && { endpoint: props.endpoint }),
+			httpRequestTimeout: props.httpRequestTimeout * 1000,
 		};
 
 		let queryParams = '';
@@ -220,12 +219,13 @@ class ReactiveBase extends Component {
 			if (this.props.endpoint && this.props.endpoint.url) {
 				// Remove parts between '//' and first '/' in the url
 				analyticsInitConfig.url = this.props.endpoint.url.replace(/\/\/(.*?)\/.*/, '//$1');
-				const headerCredentials = this.props.endpoint.headers
-										&& this.props.endpoint.headers.Authorization;
-				analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
+				const headerCredentials =
+					this.props.endpoint.headers && this.props.endpoint.headers.Authorization;
+				analyticsInitConfig.credentials =
+					headerCredentials && headerCredentials.replace('Basic ', '');
 				// Decode the credentials
-				analyticsInitConfig.credentials = analyticsInitConfig.credentials
-												&& atob(analyticsInitConfig.credentials);
+				analyticsInitConfig.credentials =
+					analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 			}
 		} catch (e) {
 			console.error('Endpoint not set correctly for analytics');
@@ -291,6 +291,7 @@ ReactiveBase.defaultProps = {
 	as: 'div',
 	enableAppbase: false,
 	endpoint: null,
+	httpRequestTimeout: 30,
 };
 
 ReactiveBase.propTypes = {
@@ -322,6 +323,7 @@ ReactiveBase.propTypes = {
 	mongodb: types.mongodb,
 	preferences: types.preferences,
 	endpoint: types.endpoint,
+	httpRequestTimeout: types.number,
 };
 
 export default ReactiveBase;
