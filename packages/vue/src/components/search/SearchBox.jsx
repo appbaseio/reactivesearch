@@ -6,6 +6,7 @@ import xss from 'xss';
 import { Remarkable } from 'remarkable';
 import {
 	AI_LOCAL_CACHE_KEY,
+	AI_TRIGGER_MODES,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -156,6 +157,12 @@ const SearchBox = defineComponent({
 	},
 
 	computed: {
+		currentTriggerMode() {
+			return (
+				(this.$props.AIUIConfig && this.$props.AIUIConfig.triggerOn)
+				|| AI_TRIGGER_MODES.MANUAL
+			);
+		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
 		},
@@ -181,6 +188,13 @@ const SearchBox = defineComponent({
 			let suggestionsArray = [];
 			if (Array.isArray(this.suggestions) && this.suggestions.length) {
 				suggestionsArray = [...withClickIds(this.suggestions)];
+			}
+			if (this.renderTriggerMessage() && this.currentValue && !this.isLoading) {
+				suggestionsArray.unshift({
+					label: this.renderTriggerMessage(),
+					value: 'AI_TRIGGER_MESSAGE',
+					_suggestion_type: '_internal_a_i_trigger',
+				});
 			}
 
 			suggestionsArray = suggestionsArray.map((s) => {
@@ -481,6 +495,23 @@ const SearchBox = defineComponent({
 		},
 	},
 	methods: {
+		renderTriggerMessage() {
+			if (this.$props.enableAI) {
+				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderTriggerMessage) {
+					return this.$props.AIUIConfig.renderTriggerMessage;
+				}
+				if (this.$slots.renderTriggerMessage) {
+					return this.$slots.renderTriggerMessage();
+				}
+				if (
+					this.currentTriggerMode === AI_TRIGGER_MODES.MANUAL
+					&& (this.$props.AIUIConfig ? !this.$props.AIUIConfig.askButton : true)
+				) {
+					return 'Click to trigger AIAnswer';
+				}
+			}
+			return null;
+		},
 		handleText(value, cause) {
 			if (cause === causes.CLEAR_VALUE) {
 				this.triggerCustomQuery(value);
@@ -595,7 +626,11 @@ const SearchBox = defineComponent({
 						if (typeof this.currentValue === 'string')
 							this.triggerDefaultQuery(
 								this.currentValue,
-								props.enableAI ? { enableAI: true } : {},
+								props.enableAI
+									&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+									&& this.currentValue.endsWith('?')
+									? { enableAI: true }
+									: {},
 								shouldExecuteQuery,
 							);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
@@ -869,17 +904,20 @@ const SearchBox = defineComponent({
 			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
-				this.currentValue= suggestion.value;
+				this.currentValue = suggestion.value;
 				// Handle AI
 				// Independent of enableAI.
 				this.faqAnswer = suggestion._answer;
 				this.faqQuestion = suggestion.value;
 				this.isOpen = true;
 				this.showAIScreen = true;
-				if (value !== undefined) this.$emit('change', suggestion.value, ()=>{} );
-				this.onValueSelectedHandler(
-					suggestion.value,
-				);
+				if (value !== undefined) this.$emit('change', suggestion.value, () => {});
+				this.onValueSelectedHandler(suggestion.value);
+				return;
+			}
+			if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
+				this.showAIScreen = true;
+				this.askButtonOnClick();
 				return;
 			}
 
@@ -940,7 +978,10 @@ const SearchBox = defineComponent({
 
 			// Handle AI
 			if (!this.$props.enableAI) this.isOpen = false;
-			else {
+			else if (
+				this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+				&& suggestion.value.endsWith('?')
+			) {
 				this.showAIScreen = true;
 			}
 		},
@@ -1675,48 +1716,108 @@ const SearchBox = defineComponent({
 																									s.icon
 																									|| s.iconURL,
 																							);
-																						return renderItem ? (
-																							<li
-																								{...getItemProps(
-																									{
-																										item: sectionItem,
-																									},
-																								)}
-																								on={getItemEvents(
-																									{
-																										item: sectionItem,
-																									},
-																								)}
-																								key={`${sectionItem._id}_${index}_${sectionIndex}`}
-																								style={{
-																									justifyContent:
-																										'flex-start',
-																									alignItems:
-																										'center',
-																								}}
-																								class={`${
-																									highlightedIndex
-																									=== index
-																										+ sectionIndex
-																										? `active-li-item ${getClassName(
+
+																						if (
+																							renderItem
+																						) {
+																							return (
+																								<li
+																									{...getItemProps(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									on={getItemEvents(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																									style={{
+																										justifyContent:
+																											'flex-start',
+																										alignItems:
+																											'center',
+																									}}
+																									class={`${
+																										highlightedIndex
+																										=== index
+																											+ sectionIndex
+																											? `active-li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'active-suggestion-item',
+																											  )}`
+																											: `li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'suggestion-item',
+																											  )}`
+																									}`}
+																								>
+																									{renderItem(
+																										sectionItem,
+																									)}
+																								</li>
+																							);
+																						}
+
+																						if (
+																							sectionItem._suggestion_type
+																							=== '_internal_a_i_trigger'
+																						) {
+																							return (
+																								<li
+																									{...getItemProps(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									on={getItemEvents(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																									style={{
+																										justifyContent:
+																											'flex-start',
+																										alignItems:
+																											'center',
+																									}}
+																									class={`${
+																										highlightedIndex
+																										=== index
+																											+ sectionIndex
+																											? `active-li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'active-suggestion-item',
+																											  )}`
+																											: `li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'suggestion-item',
+																											  )}`
+																									}`}
+																								>
+																									<SuggestionItem
+																										currentValue={
 																											this
-																												.$props
-																												.innerClass,
-																											'active-suggestion-item',
-																										  )}`
-																										: `li-item ${getClassName(
-																											this
-																												.$props
-																												.innerClass,
-																											'suggestion-item',
-																										  )}`
-																								}`}
-																							>
-																								{renderItem(
-																									sectionItem,
-																								)}
-																							</li>
-																						) : (
+																												.currentValue
+																										}
+																										suggestion={
+																											sectionItem
+																										}
+																									/>
+																								</li>
+																							);
+																						}
+																						return (
 																							<li
 																								{...getItemProps(
 																									{
