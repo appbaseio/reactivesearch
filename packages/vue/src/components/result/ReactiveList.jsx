@@ -119,6 +119,7 @@ const ReactiveList = {
 		// component props
 		className: types.string,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		dataField: types.stringRequired,
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,

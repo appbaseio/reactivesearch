@@ -185,6 +185,28 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
+"@appbaseio/reactivecore@10.0.0-alpha.25":
+  version "10.0.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.25.tgz#a93921ae90a73b9ac25bfcef71755514d99f9971"
+  integrity sha512-iemIE58vdq62L88kwAkyrcIPeYJ1GMMsfLdC3HrUPKibE1O4rhQ4ESchNCTyFpSLwBInIpq6nG9x0AeAzEzVTA==
+  dependencies:
+    cross-fetch "^3.0.4"
+    dayjs "^1.11.7"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
+"@appbaseio/reactivecore@9.14.40":
+  version "9.14.40"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.40.tgz#346cac1a476b4e9b5e9305e849746fd858d947f1"
+  integrity sha512-PIq31VBQRV45nNMVxmOBgYu05h2TxXw+GOQhBmPdAyDiX8Y/nNNua5SPNqZ/OHomIOIT1fGSygkKR6E/iZYdlA==
+  dependencies:
+    cross-fetch "^3.0.4"
+    dayjs "^1.11.7"
+    prop-types "^15.6.0"
+    redux "^4.0.0"
+    redux-thunk "^2.3.0"
+
 "@appbaseio/reactivemaps@4.0.0-rc":
   version "4.0.0-rc"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-4.0.0-rc.tgz#f410820e3a9e38595e4e9f434cb95bfd4ca78d9f"
@@ -201,6 +223,31 @@
     ngeohash "^0.6.3"
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
+
+"@appbaseio/reactivesearch-vue@3.0.0-rc.6.4":
+  version "3.0.0-rc.6.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.4.tgz#cbaaa49ff326a239114f6576606fbe5d2e2db0b1"
+  integrity sha512-ZKJCxjRIt+3Rv/E1Ua2fgTN0P6aLMeuLd7cXydFau4gXoAo7ws/K6QZYstEcvLVUNaQ/2+Sgu4zy8esl4blzbw==
+  dependencies:
+    "@appbaseio/analytics" "^1.2.0-alpha.1"
+    "@appbaseio/reactivecore" "10.0.0-alpha.25"
+    "@appbaseio/vue-emotion" "0.6.0-alpha.6"
+    "@emotion/css" "^11.10.5"
+    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
+    appbase-js "^5.2.0"
+    compute-scroll-into-view "^1.0.11"
+    emotion "11.0.0"
+    hotkeys-js "^3.8.7"
+    ngeohash "^0.6.3"
+    polished "^2.2.0"
+    redux "^4.0.0"
+    remarkable "^2.0.1"
+    url-search-params-polyfill "^7.0.0"
+    vue-google-maps-community-fork "^0.1.7"
+    vue-highlight-words "^1.2.0"
+    vue-no-ssr "^1.1.0"
+    vue-slider-component next
+    vue-types "^5.0.2"
 
 "@appbaseio/reactivesearch@4.0.0-rc.18.1":
   version "4.0.0-rc.18.1"
@@ -15850,6 +15897,69 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
+docs@appbaseio/Docs#dev:
+  version "0.0.2"
+  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/16fe4bd337c0ca730b7e53fdcfe471fe3e07357b"
+  dependencies:
+    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/reactivemaps" "^3.0.0"
+    "@appbaseio/reactivesearch" "^3.30.3"
+    "@loadable/component" "^5.15.2"
+    "@reach/router" "^1.2.1"
+    "@typeform/embed" "^1.34.1"
+    "@typeform/embed-react" "^1.13.0"
+    add "^2.0.6"
+    antd "^4.19.1"
+    emotion "9.2.4"
+    emotion-server "9.2.4"
+    gatsby "^4.9.2"
+    gatsby-image "^3.11.0"
+    gatsby-plugin-catch-links "4.9.0"
+    gatsby-plugin-dark-mode "^1.1.2"
+    gatsby-plugin-force-trailing-slashes "1.0.6"
+    gatsby-plugin-google-analytics "^4.9.0"
+    gatsby-plugin-image "^2.9.1"
+    gatsby-plugin-manifest "^4.9.0"
+    gatsby-plugin-offline "^5.9.0"
+    gatsby-plugin-page-progress "^2.2.1"
+    gatsby-plugin-perf-budgets "^0.0.18"
+    gatsby-plugin-postcss "5.9.0"
+    gatsby-plugin-react-helmet "5.9.0"
+    gatsby-plugin-react-svg "3.1.0"
+    gatsby-plugin-remove-serviceworker "1.0.0"
+    gatsby-plugin-sharp "^4.9.0"
+    gatsby-plugin-webpack-bundle-analyser-v2 "^1.1.26"
+    gatsby-remark-autolink-headers "5.9.0"
+    gatsby-remark-check-links "^2.1.0"
+    gatsby-remark-code-titles "1.1.0"
+    gatsby-remark-embed-snippet "7.9.0"
+    gatsby-remark-external-links "0.0.4"
+    gatsby-remark-images "6.9.0"
+    gatsby-remark-prismjs "6.9.0"
+    gatsby-remark-prismjs-copy-button "^0.3.1"
+    gatsby-source-filesystem "4.9.0"
+    gatsby-source-ghost "4.2.4"
+    gatsby-transformer-remark "5.25.1"
+    gatsby-transformer-sharp "^4.9.0"
+    gatsby-transformer-yaml "4.9.0"
+    hotkeys-js "^3.8.7"
+    js-search "^1.4.2"
+    lodash "^4.17.21"
+    moment "^2.29.4"
+    prismjs "1.27.0"
+    react "16.8.4"
+    react-autosuggest "9.4.3"
+    react-dom "16.8.4"
+    react-dropdown "^1.6.4"
+    react-helmet "5.2.0"
+    react-modal "3.8.1"
+    react-responsive-modal "^4.0.1"
+    react-router "^6.0.1"
+    react-router-dom "^4.3.1"
+    react-use-fusejs "^1.0.1"
+    tocbot "^4.18.0"
+    yarn "^1.22.18"
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
@@ -19784,7 +19894,35 @@ gatsby-transformer-remark@5.11.0:
     unist-util-select "^3.0.4"
     unist-util-visit "^2.0.3"
 
-gatsby-transformer-sharp@^4.25.0:
+gatsby-transformer-remark@5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-5.9.0.tgz#5c28df3fe4a9b80ede971e3bf430852e8ed4d553"
+  integrity sha512-y8TrA5DgZ/hHkXQjYnjKDE27n+JA+yyRJkUfnsfiZCCGRdPCQ1KD/p9CaJgmY+u2QVnTHlfc8G7eU1gcR67nPw==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    gatsby-core-utils "^3.9.0"
+    gray-matter "^4.0.3"
+    hast-util-raw "^6.0.2"
+    hast-util-to-html "^7.1.3"
+    lodash "^4.17.21"
+    mdast-util-to-hast "^10.2.0"
+    mdast-util-to-string "^2.0.0"
+    mdast-util-toc "^5.1.0"
+    remark "^13.0.0"
+    remark-footnotes "^3.0.0"
+    remark-gfm "^1.0.0"
+    remark-parse "^9.0.0"
+    remark-retext "^4.0.0"
+    remark-stringify "^9.0.1"
+    retext-english "^3.0.4"
+    sanitize-html "^1.27.5"
+    underscore.string "^3.3.6"
+    unified "^9.2.2"
+    unist-util-remove-position "^3.0.0"
+    unist-util-select "^3.0.4"
+    unist-util-visit "^2.0.3"
+
+gatsby-transformer-sharp@^4.25.0, gatsby-transformer-sharp@^4.9.0:
   version "4.25.0"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-sharp/-/gatsby-transformer-sharp-4.25.0.tgz#978e15c20111f4616dec599809daa1678de79881"
   integrity sha512-7aqecTvOUFiNB96ij77UnAGJs7Un0TlkpamG//dSl6Nru9EylGz/NW/Eg0vioQyHLCYdMvd5xO8V3BOHJADsnw==
@@ -37301,6 +37439,11 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
+
+tocbot@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.5.0.tgz#55ba16887742acc1ce37b19171c76b9a40aabfa7"
+  integrity sha512-JwTyKlU2JgkmGJqxKJkiizlLwjQJ+f3WnDG08+DrWhrPgsVVjMh3quq3Apx09DCvulKbtYoxBT/c3HfkGWyZhw==
 
 tocbot@^4.18.0:
   version "4.21.0"

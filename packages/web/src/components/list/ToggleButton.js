@@ -281,6 +281,7 @@ ToggleButton.propTypes = {
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	data: types.data,
 	dataField: types.stringRequired,
 	defaultValue: types.stringOrArray,

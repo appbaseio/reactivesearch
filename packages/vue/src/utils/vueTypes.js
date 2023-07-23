@@ -42,6 +42,7 @@ const types = {
 	boolRequired: VueTypes.bool.isRequired,
 	components: VueTypes.arrayOf(VueTypes.string),
 	children: VueTypes.any,
+	compoundClause: VueTypes.oneOf(['filter', 'must']),
 	data: VueTypes.arrayOf(VueTypes.object),
 	dataFieldArray: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)])
 		.isRequired,

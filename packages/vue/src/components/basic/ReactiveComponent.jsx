@@ -24,6 +24,7 @@ const ReactiveComponent = {
 	name: 'ReactiveComponent',
 	props: {
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,
 		size: VueTypes.number,
