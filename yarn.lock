@@ -110,13 +110,13 @@
     react-slick "^0.24.0"
     slick-carousel "^1.8.1"
 
-"@appbaseio/docs@appbaseio/Docs#dev", docs@appbaseio/Docs#dev:
+"@appbaseio/docs@appbaseio/Docs#dev":
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/dd417dda9fd62a26c45bf971fb04f0df1ee5f499"
   dependencies:
     "@appbaseio/designkit" "^0.13.0"
-    "@appbaseio/reactivemaps" "^3.0.0"
-    "@appbaseio/reactivesearch" "^3.30.3"
+    "@appbaseio/reactivemaps" "^3.0.0-beta.17"
+    "@appbaseio/reactivesearch" "^3.29.0"
     "@loadable/component" "^5.15.2"
     "@reach/router" "^1.2.1"
     "@typeform/embed" "^1.34.1"
@@ -125,12 +125,13 @@
     antd "^4.19.1"
     emotion "9.2.4"
     emotion-server "9.2.4"
-    gatsby "^4.25.0"
-    gatsby-plugin-catch-links "4.11.0"
+    gatsby "^4.9.2"
+    gatsby-image "^3.11.0"
+    gatsby-plugin-catch-links "4.9.0"
     gatsby-plugin-dark-mode "^1.1.2"
     gatsby-plugin-force-trailing-slashes "1.0.6"
     gatsby-plugin-google-analytics "^4.9.0"
-    gatsby-plugin-image "^2.10.0"
+    gatsby-plugin-image "^2.9.1"
     gatsby-plugin-manifest "^4.9.0"
     gatsby-plugin-offline "^5.9.0"
     gatsby-plugin-page-progress "^2.2.1"
@@ -139,9 +140,9 @@
     gatsby-plugin-react-helmet "5.9.0"
     gatsby-plugin-react-svg "3.1.0"
     gatsby-plugin-remove-serviceworker "1.0.0"
-    gatsby-plugin-sharp "^4.11.0"
+    gatsby-plugin-sharp "^4.9.0"
     gatsby-plugin-webpack-bundle-analyser-v2 "^1.1.26"
-    gatsby-remark-autolink-headers "5.11.0"
+    gatsby-remark-autolink-headers "5.9.0"
     gatsby-remark-check-links "^2.1.0"
     gatsby-remark-code-titles "1.1.0"
     gatsby-remark-embed-snippet "7.9.0"
@@ -151,55 +152,29 @@
     gatsby-remark-prismjs-copy-button "^0.3.1"
     gatsby-source-filesystem "4.9.0"
     gatsby-source-ghost "4.2.4"
-    gatsby-transformer-remark "5.11.0"
-    gatsby-transformer-sharp "^4.25.0"
+    gatsby-transformer-remark "5.9.0"
+    gatsby-transformer-sharp "^4.9.0"
     gatsby-transformer-yaml "4.9.0"
     hotkeys-js "^3.8.7"
     js-search "^1.4.2"
-    lodash "^4.17.21"
-    moment "^2.29.4"
+    moment "^2.29.2"
     prismjs "1.27.0"
-    prop-types "^15.8.1"
-    react "^16.9.0"
+    react "16.8.4"
     react-autosuggest "9.4.3"
-    react-dom "^16.9.0"
+    react-dom "16.8.4"
     react-dropdown "^1.6.4"
-    react-helmet "^6.0.0"
+    react-helmet "5.2.0"
     react-modal "3.8.1"
     react-responsive-modal "^4.0.1"
     react-router "^6.0.1"
     react-router-dom "^4.3.1"
-    react-use-fusejs "^1.0.1"
-    searchbox-showcase "https://github.com/awesome-reactivesearch/searchbox-showcase.git#95e7f82"
-    tocbot "^4.18.0"
+    tocbot "4.5.0"
     yarn "^1.22.18"
 
 "@appbaseio/reactivecore@10.0.0-alpha.24":
   version "10.0.0-alpha.24"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.24.tgz#9c635b52cfbce357dd3e45dad1266c602878cdda"
   integrity sha512-DTO/kmay7NElyqZq/04vwHM4AeoFsg17yLe3jr8A7aIlJ+u2b8G8OJPEUZGidOCEk2ouy63QxLW76qpYLNtITQ==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
-"@appbaseio/reactivecore@10.0.0-alpha.25":
-  version "10.0.0-alpha.25"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.0.0-alpha.25.tgz#a93921ae90a73b9ac25bfcef71755514d99f9971"
-  integrity sha512-iemIE58vdq62L88kwAkyrcIPeYJ1GMMsfLdC3HrUPKibE1O4rhQ4ESchNCTyFpSLwBInIpq6nG9x0AeAzEzVTA==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
-"@appbaseio/reactivecore@9.14.40":
-  version "9.14.40"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.14.40.tgz#346cac1a476b4e9b5e9305e849746fd858d947f1"
-  integrity sha512-PIq31VBQRV45nNMVxmOBgYu05h2TxXw+GOQhBmPdAyDiX8Y/nNNua5SPNqZ/OHomIOIT1fGSygkKR6E/iZYdlA==
   dependencies:
     cross-fetch "^3.0.4"
     dayjs "^1.11.7"
@@ -224,30 +199,28 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch-vue@3.0.0-rc.6.4":
-  version "3.0.0-rc.6.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.6.4.tgz#cbaaa49ff326a239114f6576606fbe5d2e2db0b1"
-  integrity sha512-ZKJCxjRIt+3Rv/E1Ua2fgTN0P6aLMeuLd7cXydFau4gXoAo7ws/K6QZYstEcvLVUNaQ/2+Sgu4zy8esl4blzbw==
+"@appbaseio/reactivesearch-vue@1.34.1":
+  version "1.34.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-1.34.1.tgz#7c0d4e68088752c2b6cea5d9cfe6d4bb4f7e8076"
+  integrity sha512-bp1JvkTza8saDkcKB2vR5TPeLpWoQo6UqGydtRY/j/lrhzZK1WSOxsMeTtN8jlR7CkTznkCV2+qTYLUKW8RREg==
   dependencies:
-    "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.25"
-    "@appbaseio/vue-emotion" "0.6.0-alpha.6"
-    "@emotion/css" "^11.10.5"
+    "@appbaseio/analytics" "^1.1.1"
+    "@appbaseio/reactivecore" "9.15.1"
+    "@appbaseio/vue-emotion" "0.4.4"
     "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.2.0"
+    appbase-js "^5.3.4"
     compute-scroll-into-view "^1.0.11"
-    emotion "11.0.0"
+    emotion "9.2.12"
+    gmap-vue "^3.5.4"
     hotkeys-js "^3.8.7"
     ngeohash "^0.6.3"
     polished "^2.2.0"
     redux "^4.0.0"
-    remarkable "^2.0.1"
     url-search-params-polyfill "^7.0.0"
-    vue-google-maps-community-fork "^0.1.7"
     vue-highlight-words "^1.2.0"
     vue-no-ssr "^1.1.0"
-    vue-slider-component next
-    vue-types "^5.0.2"
+    vue-slider-component "^3.2.15"
+    vue-types "^1.7.0"
 
 "@appbaseio/reactivesearch@4.0.0-rc.18.1":
   version "4.0.0-rc.18.1"
@@ -1946,7 +1919,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.0", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.2.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.21.5", "@babel/runtime@^7.22.6", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.0", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.14.6", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.16.7", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.2.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.21.5", "@babel/runtime@^7.22.6", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.22.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.22.6.tgz#57d64b9ae3cff1d67eb067ae117dac087f5bd438"
   integrity sha512-wDb5pWm4WDdF6LFUde3Jl8WzPA+3ZbxYqkC6xAXuD3irdEHN1k0NfTRrJD8ZD378SJ61miMLCqIOXYhd8x+AJQ==
@@ -19464,6 +19437,15 @@ gatsby-graphiql-explorer@^2.25.0:
   dependencies:
     "@babel/runtime" "^7.15.4"
 
+gatsby-image@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/gatsby-image/-/gatsby-image-3.11.0.tgz#9070ffd1e656b801052acfa9e470c34427c099e0"
+  integrity sha512-vRMhGLrgyQRH2RYs8leyZ1UyWYIew+NOZEsKur1w6gnWDf0U9UVmYFa9OIE1Vedlo1W+on3AuZ3/KwM+cI69VQ==
+  dependencies:
+    "@babel/runtime" "^7.14.6"
+    object-fit-images "^3.2.4"
+    prop-types "^15.7.2"
+
 gatsby-legacy-polyfills@^2.25.0:
   version "2.25.0"
   resolved "https://registry.yarnpkg.com/gatsby-legacy-polyfills/-/gatsby-legacy-polyfills-2.25.0.tgz#1a8633df7fff795a70cdf4d43a8d0251674940ab"
@@ -19530,6 +19512,14 @@ gatsby-plugin-catch-links@4.11.0:
     "@babel/runtime" "^7.15.4"
     escape-string-regexp "^1.0.5"
 
+gatsby-plugin-catch-links@4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-catch-links/-/gatsby-plugin-catch-links-4.9.0.tgz#99e5ac3802fcc832b27f18012d3048fc041f0cf1"
+  integrity sha512-Eq5yxHiObwcU4yJUYUGCiDFSyJbkZ286YsG4awZHEBE8zSu36rQWE9A0aUxavRswyAk2yaa4oVQtUqhFyzeIAQ==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    escape-string-regexp "^1.0.5"
+
 gatsby-plugin-dark-mode@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-dark-mode/-/gatsby-plugin-dark-mode-1.1.2.tgz#9bab271da9f913cd64687a2b2d85b1d62a3605d8"
@@ -19553,7 +19543,7 @@ gatsby-plugin-google-analytics@^4.9.0:
     minimatch "3.0.4"
     web-vitals "^1.1.2"
 
-gatsby-plugin-image@^2.10.0:
+gatsby-plugin-image@^2.10.0, gatsby-plugin-image@^2.9.1:
   version "2.25.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-image/-/gatsby-plugin-image-2.25.0.tgz#3ce19dd2101a7858c17dfabe884ec004bb4fa15b"
   integrity sha512-Q1TRjvBF7x50alS22i91rksl7A3g42S0jIdPEQcT9bl8MbFaJiboHGna/jp78nxm9vu4qtUJ1IziRSOu0bgHNQ==
@@ -19667,7 +19657,7 @@ gatsby-plugin-remove-serviceworker@1.0.0:
   resolved "https://registry.yarnpkg.com/gatsby-plugin-remove-serviceworker/-/gatsby-plugin-remove-serviceworker-1.0.0.tgz#9fb433bc8bd766e14e1d3711c4ac6f051e1dff7c"
   integrity sha512-8uQ/6PiM718BTZAgmQeEO6ULrJgLugmDVAkUGv5xxF0luBNrbboDgpsG0z1fbsotSDTzLWyULR0zzGNfWZaY7w==
 
-gatsby-plugin-sharp@^4.11.0:
+gatsby-plugin-sharp@^4.11.0, gatsby-plugin-sharp@^4.9.0:
   version "4.25.1"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-4.25.1.tgz#dcc31bdc698511501acc9b95ba277844c15a7576"
   integrity sha512-cGRb8lmwJkzwT1Qze0R+VL+55BIb9weM17m+dUf6gs5Z++lQltqge+L8a1qWWsGL6KfLQN7+bIqjhmTTscIPMQ==
@@ -19733,6 +19723,17 @@ gatsby-remark-autolink-headers@5.11.0:
   version "5.11.0"
   resolved "https://registry.yarnpkg.com/gatsby-remark-autolink-headers/-/gatsby-remark-autolink-headers-5.11.0.tgz#ec9c3d9c2723f285928976321df944fe4ac9abb5"
   integrity sha512-jS9kNDAQTnxv/aX5EkwdQ6zLf9MDEr/1KrNO+V0LH6a4hQFa5OZ4NVpOBhtvF+2s02qwz/lnJuZ5iDPyOnp54Q==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+    github-slugger "^1.3.0"
+    lodash "^4.17.21"
+    mdast-util-to-string "^2.0.0"
+    unist-util-visit "^2.0.3"
+
+gatsby-remark-autolink-headers@5.9.0:
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-autolink-headers/-/gatsby-remark-autolink-headers-5.9.0.tgz#afe3abd8405697a00f87e5a3c598cc33e6ca1f71"
+  integrity sha512-LLR4kWpg9U4XW/eHhT/7J8nNByKQPcjuKj5oKAmoQUww4pEBkV5X4PU5tOvaqZrhNuyMHfc0YV922DnBKCPCjQ==
   dependencies:
     "@babel/runtime" "^7.15.4"
     github-slugger "^1.3.0"
@@ -19894,13 +19895,13 @@ gatsby-transformer-remark@5.11.0:
     unist-util-select "^3.0.4"
     unist-util-visit "^2.0.3"
 
-gatsby-transformer-remark@5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-5.9.0.tgz#5c28df3fe4a9b80ede971e3bf430852e8ed4d553"
-  integrity sha512-y8TrA5DgZ/hHkXQjYnjKDE27n+JA+yyRJkUfnsfiZCCGRdPCQ1KD/p9CaJgmY+u2QVnTHlfc8G7eU1gcR67nPw==
+gatsby-transformer-remark@5.25.1:
+  version "5.25.1"
+  resolved "https://registry.yarnpkg.com/gatsby-transformer-remark/-/gatsby-transformer-remark-5.25.1.tgz#6df0117dbe3bb39c06e05c85db494948a565b7c8"
+  integrity sha512-6k3uOnZYsJSgmZIWq9Y+Cqb6pysusCUBYpQY1+V9ofpSRbrZGGfuoCeFKd27x/c0jI5jneuL3NXnxwn/JJK1Ig==
   dependencies:
     "@babel/runtime" "^7.15.4"
-    gatsby-core-utils "^3.9.0"
+    gatsby-core-utils "^3.25.0"
     gray-matter "^4.0.3"
     hast-util-raw "^6.0.2"
     hast-util-to-html "^7.1.3"
@@ -19954,7 +19955,7 @@ gatsby-worker@^1.25.0:
     "@babel/core" "^7.15.5"
     "@babel/runtime" "^7.15.4"
 
-gatsby@^4.25.0:
+gatsby@^4.25.0, gatsby@^4.9.2:
   version "4.25.7"
   resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-4.25.7.tgz#56a0c7f9e25fcf895864d88fd648f97e26dd560f"
   integrity sha512-kspM1XokxDw2YqC2hkPKQTfWSNSq/AnY8PNYSrUM+MCsyIKFuGqSVchNonZN1g8/nCoh4jQpBYXH5Uw2Hrs6Sw==
@@ -28113,6 +28114,11 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
+object-fit-images@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/object-fit-images/-/object-fit-images-3.2.4.tgz#6c299d38fdf207746e5d2d46c2877f6f25d15b52"
+  integrity sha512-G+7LzpYfTfqUyrZlfrou/PLLLAPNC52FTy5y1CBywX+1/FkxIloOyQXBmZ3Zxa2AWO+lMF0JTuvqbr7G5e5CWg==
+
 object-hash@^1.1.4:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-1.3.1.tgz#fde452098a951cb145f039bb7d455449ddc126df"
@@ -32789,6 +32795,16 @@ react-dom@16.14.0, react-dom@^16.8.3, react-dom@^16.9.0:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-dom@16.8.4:
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.4.tgz#1061a8e01a2b3b0c8160037441c3bf00a0e3bc48"
+  integrity sha512-Ob2wK7XG2tUDt7ps7LtLzGYYB6DXMCLj0G5fO6WeEICtT4/HdpOi7W/xLzZnR6RCG1tYza60nMdqtxzA8FaPJQ==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.13.4"
+
 react-dom@^17.0.0:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
@@ -32882,6 +32898,16 @@ react-helmet-async@^1.0.2:
     prop-types "^15.7.2"
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
+
+react-helmet@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"
+  integrity sha512-pYv2rvW8ktPw63IhrUc7NE3thNGXyaQiH5RzWB7bpRc3oh53B4Il79274uD6LSYo+wJqYueD8JOMMcHu+iSh4A==
+  dependencies:
+    deep-equal "^1.0.1"
+    object-assign "^4.1.1"
+    prop-types "^15.5.4"
+    react-side-effect "^1.1.0"
 
 react-helmet@^6.0.0:
   version "6.1.0"
@@ -33055,7 +33081,7 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
@@ -33428,6 +33454,13 @@ react-shallow-renderer@^16.15.0:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
 
+react-side-effect@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.2.0.tgz#0e940c78faba0c73b9b0eba9cd3dda8dfb7e7dae"
+  integrity sha512-v1ht1aHg5k/thv56DRcjw+WtojuuDHFUgGfc+bFHOWsF4ZK6C2V57DO0Or0GPsg6+LSTE0M6Ry/gfzhzSwbc5w==
+  dependencies:
+    shallowequal "^1.0.1"
+
 react-side-effect@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.2.tgz#dc6345b9e8f9906dc2eeb68700b615e0b4fe752a"
@@ -33569,6 +33602,16 @@ react@16.14.0, react@^16.8.3, react@^16.9.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
+
+react@16.8.4:
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"
+  integrity sha512-0GQ6gFXfUH7aZcjGVymlPOASTuSjlQL4ZtVC5YKH+3JL6bBLCVO21DknzmaPlI90LN253ojj02nsapy+j7wIjg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.13.4"
 
 react@^17.0.0:
   version "17.0.2"
@@ -34947,6 +34990,14 @@ scheduler@0.17.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
+scheduler@^0.13.4:
+  version "0.13.6"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
+  integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
 scheduler@^0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
@@ -35337,7 +35388,7 @@ shallowequal@^0.2.2:
   dependencies:
     lodash.keys "^3.1.2"
 
-shallowequal@^1.1.0:
+shallowequal@^1.0.1, shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
   integrity sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==
@@ -37439,11 +37490,6 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
-
-tocbot@4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/tocbot/-/tocbot-4.5.0.tgz#55ba16887742acc1ce37b19171c76b9a40aabfa7"
-  integrity sha512-JwTyKlU2JgkmGJqxKJkiizlLwjQJ+f3WnDG08+DrWhrPgsVVjMh3quq3Apx09DCvulKbtYoxBT/c3HfkGWyZhw==
 
 tocbot@^4.18.0:
   version "4.21.0"
