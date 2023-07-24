@@ -205,22 +205,27 @@ const AIAnswer = (props) => {
 	}, [props.isAIResponseLoading, props.isLoading]);
 
 	useEffect(() => {
-		if (
-			props.triggerOn === AI_TRIGGER_MODES.QUESTION
-			&& props.dependentComponentValue.endsWith('?')
-		) {
-			setIsTriggered(true);
+		if (props.triggerOn === AI_TRIGGER_MODES.QUESTION) {
+			setIsTriggered(props.dependentComponentValue.endsWith('?'));
 		}
 	}, [props.showComponent, props.dependentComponentValue]);
 
 	useEffect(() => {
-		if (currentSessionId && isTriggered) {
-			handleSendMessage('', false, true);
+		if (currentSessionId) {
+			if (
+				props.triggerOn === AI_TRIGGER_MODES.ALWAYS
+				|| (props.triggerOn === AI_TRIGGER_MODES.QUESTION
+					&& props.dependentComponentValue.endsWith('?'))
+			) {
+				handleSendMessage('', false, true);
+			}
 		}
 	}, [currentSessionId]);
 
 	useEffect(() => {
-		if (isTriggered && props.triggerOn === AI_TRIGGER_MODES.MANUAL) setIsTriggered(false);
+		if (isTriggered && props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
+			setIsTriggered(false);
+		}
 	}, [props.dependentComponentValue]);
 
 	useEffect(
