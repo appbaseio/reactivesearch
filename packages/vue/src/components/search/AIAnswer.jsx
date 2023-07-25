@@ -391,6 +391,10 @@ const AIAnswer = defineComponent({
 			return null;
 		},
 		handleTriggerClick() {
+			window.console.log(
+				'this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL',
+				this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL,
+			);
 			if (this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
 				this.handleSendMessage(null, false, '', true);
 				this.isTriggered = true;
@@ -492,13 +496,19 @@ const AIAnswer = defineComponent({
 		},
 		handleSendMessage(e, isRetry = false, text = this.inputMessage, fetchMeta = false) {
 			if (typeof e === 'object' && e !== null) e.preventDefault();
-			if (text.trim()) {
+			if (text.trim() || (!text && !e)) {
 				if (this.isLoadingState) {
 					return;
 				}
 				if (this.AISessionId) {
-					if (!isRetry)
-						this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
+					if (!isRetry) {
+						const finalMessages = [...this.messages];
+						if (text) {
+							finalMessages.push({ content: text, role: AI_ROLES.USER });
+						}
+
+						this.messages = [...finalMessages];
+					}
 					this.getAIResponse(this.AISessionId, this.componentId, text, fetchMeta);
 				} else {
 					console.error(this.errorMessageForMissingSessionId);
@@ -810,7 +820,7 @@ const AIAnswer = defineComponent({
 						</MessagesContainer>
 					)}
 					{this.renderErrorComponent()}{' '}
-					{props.showFeedback && (
+					{props.showFeedback && !this.isLoadingState && !this.isAITyping && (
 						<div
 							class={`--ai-answer-feedback-container ${
 								getClassName(props.innerClass, 'ai-feedback') || ''
