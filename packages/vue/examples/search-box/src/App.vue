@@ -19,8 +19,7 @@
 					minChars: 4,
 					sectionLabel: '<b>Recent suggestions 🙌🏻</b>'
 				}"
-				:autosuggest="true"
-				:focus-shortcuts="['CMD + K']"
+				:autosuggest="true"				
 			/>
 			<reactive-list
 				componentId="SearchResult"
