@@ -221,6 +221,8 @@ export const resetCSS = (props) => `
 	}
 	pre {
 		margin: 10px auto;
+		white-space: pre-wrap;
+
 	}
 	table {
 		margin: 10px auto;
@@ -248,7 +250,18 @@ export const resetCSS = (props) => `
 			: props.theme.colors.borderColor
 		: props.theme.colors.borderColor
 };
+
 	}
+
+	pre{
+		color: ${
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+};}
 
 	code {
 		line-height: normal;

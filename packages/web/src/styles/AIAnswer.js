@@ -246,6 +246,17 @@ export const resetCSS = props => css`
 				: props.theme.colors.borderColor
 		};
 	}
+	pre {
+		color: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.primaryTextColor
+		};
+		white-space: pre-wrap;
+	}
 	code {
 		line-height: normal;
 		color: ${
