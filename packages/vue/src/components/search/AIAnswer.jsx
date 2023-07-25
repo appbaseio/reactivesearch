@@ -391,10 +391,6 @@ const AIAnswer = defineComponent({
 			return null;
 		},
 		handleTriggerClick() {
-			window.console.log(
-				'this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL',
-				this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL,
-			);
 			if (this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
 				this.handleSendMessage(null, false, '', true);
 				this.isTriggered = true;
