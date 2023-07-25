@@ -815,10 +815,20 @@ const SearchBox = defineComponent({
 						true,
 						this.$props,
 						this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
-						!this.$props.enableAI,
+						!(
+							this.$props.enableAI
+							&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+							&& event.target.value.endsWith('?')
+						),
 					);
-					if (this.$props.enableAI && !this.showAIScreen) {
+					if (
+						this.$props.enableAI
+						&& !this.showAIScreen
+						&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+						&& event.target.value.endsWith('?')
+					) {
 						this.showAIScreen = true;
+						this.isOpen = true;
 					}
 					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 				}
