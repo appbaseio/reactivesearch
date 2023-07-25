@@ -270,6 +270,20 @@ export const resetCSS = (props) => `
 		width: fit-content;
 		max-width: 100%;
 	}
+
+code[class*='language-'],
+	pre[class*='language-'] {
+		color: ${
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+};
+		text-shadow: none;
+	}
+
 	ul,
 	ol {
 		list-style-position: inside;
