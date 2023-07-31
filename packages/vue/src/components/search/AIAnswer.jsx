@@ -2,6 +2,7 @@ import VueTypes from 'vue-types';
 import {
 	AI_LOCAL_CACHE_KEY,
 	AI_ROLES,
+	AI_TRIGGER_MODES,
 	componentTypes,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { defineComponent } from 'vue';
@@ -38,6 +39,7 @@ import InputGroup from '../../styles/InputGroup';
 import SearchSvg from '../shared/SearchSvg';
 import Button from '../../styles/Button';
 import AIFeedback from '../shared/AIFeedback.jsx';
+import { Footer, SourceTags } from '../../styles/SearchBoxAI';
 
 const md = new Remarkable();
 
@@ -45,6 +47,8 @@ md.set({
 	html: true,
 	breaks: true,
 	xhtmlOut: true,
+	linkify: true,
+	linkTarget: '_blank',
 });
 
 const _inputWrapperRef = 'inputWrapperRef';
@@ -60,6 +64,9 @@ const AIAnswer = defineComponent({
 			inputMessage: '',
 			AISessionId: '',
 			error: null,
+			sourceDocIds: null,
+			initialHits: null,
+			isTriggered: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -69,7 +76,20 @@ const AIAnswer = defineComponent({
 			from: 'theme_reactivesearch',
 		},
 	},
-	created() {},
+	created() {
+		if (this.$props.triggerOn === AI_TRIGGER_MODES.ALWAYS) {
+			this.isTriggered = true;
+		} else if (
+			this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+			&& this.dependentComponentValue
+			&& this.dependentComponentValue.endsWith('?')
+		) {
+			this.isTriggered = true;
+			if (this.AISessionId) {
+				this.handleSendMessage(null, false, '', true);
+			}
+		}
+	},
 	computed: {
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
@@ -82,6 +102,9 @@ const AIAnswer = defineComponent({
 		},
 		errorMessageForMissingSessionId() {
 			return `AISessionId for ${this.$props.componentId} is missing! AIAnswer component requires an AISessionId to function. Try reloading the App.`;
+		},
+		hasTriggered() {
+			return this.isTriggered;
 		},
 	},
 	props: {
@@ -121,18 +144,49 @@ const AIAnswer = defineComponent({
 		showComponent: types.boolRequired,
 		componentError: types.componentObject,
 		style: types.style,
+		showSourceDocuments: VueTypes.bool.def(false),
+		renderSourceDocument: types.func,
+		onSourceClick: types.func,
+		isAITyping: types.boolRequired,
+		triggerOn: VueTypes.string.def(AI_TRIGGER_MODES.ALWAYS),
+		renderTriggerMessage: types.func,
 	},
 	mounted() {},
 	watch: {
 		AIResponse(newVal) {
 			if (newVal) {
+				if (
+					this.$props.showSourceDocuments
+					&& newVal.response
+					&& newVal.response.answer
+					&& Array.isArray(newVal.response.answer.documentIds)
+				) {
+					this.sourceDocIds = newVal.response.answer.documentIds;
+
+					const localCache
+						= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+						&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.$props.componentId];
+
+					if (localCache && localCache.meta && localCache.meta.hits) {
+						this.initialHits = localCache.meta.hits;
+					}
+				}
+
 				this.AISessionId
 					= (
 						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
 							this.$props.componentId
 						] || {}
-					).sessionId || null;
+					).sessionId
+					|| (
+						(
+							(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+								this.$props.componentId
+							] || {}
+						).response || {}
+					).sessionId;
 				const { messages: messagesHistory, response } = newVal;
+
 				const finalMessages = [];
 
 				if (response && response.error) {
@@ -140,7 +194,7 @@ const AIAnswer = defineComponent({
 				}
 
 				// pushing message history so far
-				if (messagesHistory && messagesHistory && Array.isArray(messagesHistory)) {
+				if (messagesHistory && Array.isArray(messagesHistory)) {
 					finalMessages.push(
 						...messagesHistory.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
 					);
@@ -162,6 +216,10 @@ const AIAnswer = defineComponent({
 				loading: this.$props.isAIResponseLoading || this.$props.isLoading,
 				error: this.$props.AIResponseError,
 			});
+
+			if (newVal && newVal.hits && newVal.hits.hits) {
+				this.initialHits = newVal.hits.hits;
+			}
 		},
 		isAIResponseLoading(newVal) {
 			this.$emit('on-data', {
@@ -191,7 +249,14 @@ const AIAnswer = defineComponent({
 					(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
 						this.$props.componentId
 					] || {}
-				).sessionId || null;
+				).sessionId
+				|| (
+					(
+						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+							this.$props.componentId
+						] || {}
+					).response || {}
+				).sessionId;
 			if (this.error && !this.AISessionId) {
 				const errorMessage = this.errorMessageForMissingSessionId;
 				this.error = {
@@ -216,7 +281,14 @@ const AIAnswer = defineComponent({
 						(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
 							this.$props.componentId
 						] || {}
-					).sessionId || null;
+					).sessionId
+					|| (
+						(
+							(getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY) || {})[
+								this.$props.componentId
+							] || {}
+						).response || {}
+					).sessionId;
 				if (!this.AISessionId) {
 					this.generateNewSessionId();
 				}
@@ -245,8 +317,153 @@ const AIAnswer = defineComponent({
 					});
 			}
 		},
+		showComponent() {
+			if (
+				this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+				&& this.$props.dependentComponentValue.endsWith('?')
+			) {
+				this.isTriggered = true;
+			}
+		},
+		dependentComponentValue(newVal) {
+			if (
+				this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+				&& newVal
+				&& newVal.endsWith('?')
+			) {
+				this.isTriggered = true;
+				if (this.AISessionId) {
+					this.handleSendMessage(null, false, '', true);
+				}
+			} else if (this.hasTriggered && this.$props.triggerOn !== AI_TRIGGER_MODES.ALWAYS) {
+				this.isTriggered = false;
+			}
+		},
+		AISessionId(newVal) {
+			if (newVal) {
+				if (
+					(this.$props.triggerOn === AI_TRIGGER_MODES.QUESTION
+						&& this.dependentComponentValue
+						&& this.dependentComponentValue.endsWith('?'))
+					|| this.$props.triggerOn === AI_TRIGGER_MODES.ALWAYS
+				) {
+					this.handleSendMessage(null, false, '', true);
+				}
+			}
+		},
+		triggerOn(newVal) {
+			if (newVal === AI_TRIGGER_MODES.ALWAYS) {
+				this.isTriggered = true;
+			}
+		},
 	},
 	methods: {
+		renderTriggerMessageFunc() {
+			const { triggerOn } = this.$props;
+
+			if (this.$props.renderTriggerMessage) {
+				return this.$props.renderTriggerMessage;
+			}
+			if (this.$slots.renderTriggerMessage) {
+				return this.$slots.renderTriggerMessage();
+			}
+			if (triggerOn === AI_TRIGGER_MODES.QUESTION) {
+				if (!this.dependentComponentValue.endsWith('?')) {
+					return (
+						<span>
+							<span role="img" aria-label="bulb">
+								💡
+							</span>
+							End your question with a question mark (?)
+						</span>
+					);
+				}
+			} else if (triggerOn === AI_TRIGGER_MODES.MANUAL) {
+				return (
+					<span>
+						Click here to ask AI{' '}
+						<span role="img" aria-label="bulb">
+							🤖
+						</span>
+					</span>
+				);
+			}
+			return null;
+		},
+		handleTriggerClick() {
+			if (this.$props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
+				this.handleSendMessage(null, false, '', true);
+				this.isTriggered = true;
+			}
+		},
+		getAISourceObjects() {
+			const sourceObjects = [];
+			if (!this.AIResponse) return sourceObjects;
+			const docIds = this.sourceDocIds || [];
+			if (this.initialHits) {
+				docIds.forEach((id) => {
+					const foundSourceObj = this.initialHits.find((hit) => hit._id === id) || {};
+					if (foundSourceObj) {
+						const { _source = {}, ...rest } = foundSourceObj;
+
+						sourceObjects.push({ ...rest, ..._source });
+					}
+				});
+			} else {
+				sourceObjects.push(
+					...docIds.map((id) => ({
+						_id: id,
+					})),
+				);
+			}
+
+			return sourceObjects;
+		},
+		renderAIScreenFooter() {
+			const {
+				showSourceDocuments = true,
+				onSourceClick = () => {},
+				renderSourceDocument,
+			} = this.$props || {};
+
+			const customRenderSourceDoc = renderSourceDocument || this.$slots.renderSourceDocument;
+
+			if (this.isLoadingState || this.isAITyping) {
+				return null;
+			}
+			const renderSourceDocumentLabel = (sourceObj) => {
+				if (customRenderSourceDoc) {
+					return customRenderSourceDoc(sourceObj);
+				}
+
+				return sourceObj._id;
+			};
+
+			return showSourceDocuments
+				&& Array.isArray(this.sourceDocIds)
+				&& this.sourceDocIds.length ? (
+					<Footer
+						themePreset={this.$props.themePreset}
+						style={{ marginTop: '1.5rem', background: 'inherit' }}
+					>
+					Summary generated using the following sources:{' '}
+						<SourceTags>
+							{this.getAISourceObjects().map((el) => (
+								<Button
+									class={`--ai-source-tag ${
+										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
+									}`}
+									info
+									onClick={() => onSourceClick && onSourceClick(el)}
+									key={el._id}
+								>
+									{renderSourceDocumentLabel(el)}
+								</Button>
+							))}
+						</SourceTags>
+					</Footer>
+				) : null;
+		},
 		generateNewSessionId() {
 			const newSessionPromise = this.createAISession();
 			newSessionPromise
@@ -273,16 +490,22 @@ const AIAnswer = defineComponent({
 			this.inputMessage = e.target.value;
 			this.handleTextAreaHeightChange();
 		},
-		handleSendMessage(e, isRetry = false, text = this.inputMessage) {
+		handleSendMessage(e, isRetry = false, text = this.inputMessage, fetchMeta = false) {
 			if (typeof e === 'object' && e !== null) e.preventDefault();
-			if (text.trim()) {
+			if (text.trim() || (!text && !e)) {
 				if (this.isLoadingState) {
 					return;
 				}
 				if (this.AISessionId) {
-					if (!isRetry)
-						this.messages = [...this.messages, { content: text, role: AI_ROLES.USER }];
-					this.getAIResponse(this.AISessionId, this.componentId, text);
+					if (!isRetry) {
+						const finalMessages = [...this.messages];
+						if (text) {
+							finalMessages.push({ content: text, role: AI_ROLES.USER });
+						}
+
+						this.messages = [...finalMessages];
+					}
+					this.getAIResponse(this.AISessionId, this.componentId, text, fetchMeta);
 				} else {
 					console.error(this.errorMessageForMissingSessionId);
 					this.error = {
@@ -354,7 +577,6 @@ const AIAnswer = defineComponent({
 			return null;
 		},
 		handleKeyPress(e) {
-			window.console.log('e', e);
 			if (e.key === 'Enter') {
 				this.handleSendMessage(e);
 				this.inputMessage = '';
@@ -488,6 +710,18 @@ const AIAnswer = defineComponent({
 				this.$forceUpdate();
 			}
 		},
+		getTitle() {
+			const hasTitle = this.$props.title || this.$slots.title || null;
+			if (hasTitle) {
+				return (
+					<Title class={getClassName(this.$props.innerClass, 'ai-title') || null}>
+						{this.$props.title || this.$slots.title()}
+					</Title>
+				);
+			}
+
+			return null;
+		},
 	},
 	beforeUnmount() {
 		if (this.$props.clearSessionOnDestroy) {
@@ -505,13 +739,23 @@ const AIAnswer = defineComponent({
 		if (!this.shouldShowComponent) {
 			return null;
 		}
+		if (!this.isTriggered) {
+			return (
+				<Chatbox style={props.style || {}}>
+					{this.getTitle()}
+					<div
+						class="--trigger-message-wrapper"
+						onClick={this.handleTriggerClick}
+						aria-hidden="true"
+					>
+						{this.renderTriggerMessageFunc()}
+					</div>
+				</Chatbox>
+			);
+		}
 		return (
 			<Chatbox style={props.style || {}}>
-				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title') || ''}>
-						{this.$props.title}
-					</Title>
-				)}
+				{this.getTitle()}
 				<ChatContainer
 					class="--ai-chat-container"
 					theme={props.theme}
@@ -572,7 +816,7 @@ const AIAnswer = defineComponent({
 						</MessagesContainer>
 					)}
 					{this.renderErrorComponent()}{' '}
-					{props.showFeedback && (
+					{props.showFeedback && !this.isLoadingState && !this.isAITyping && (
 						<div
 							class={`--ai-answer-feedback-container ${
 								getClassName(props.innerClass, 'ai-feedback') || ''
@@ -589,8 +833,9 @@ const AIAnswer = defineComponent({
 								}}
 							/>
 						</div>
-					)}
-					{props.showInput && (
+					)}{' '}
+					{this.renderAIScreenFooter()}
+					{props.showInput && !this.isLoadingState && !this.isAITyping && (
 						<MessageInputContainer
 							class="--ai-input-container"
 							onSubmit={this.handleSendMessage}
@@ -631,11 +876,16 @@ const mapStateToProps = (state, props) => {
 		dependencyComponent = dependencyComponent[0];
 	}
 
-	const showComponent
-		= state.selectedValues[dependencyComponent]
-		&& state.selectedValues[dependencyComponent].value;
+	const showComponent = !!(
+		state.selectedValues[dependencyComponent] && state.selectedValues[dependencyComponent].value
+	);
+	const dependentComponentValue
+		= (state.selectedValues[dependencyComponent]
+			&& state.selectedValues[dependencyComponent].value)
+		|| '';
 	return {
 		showComponent,
+		dependentComponentValue,
 		AIResponse:
 			state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response,
 		isAIResponseLoading:
@@ -650,11 +900,17 @@ const mapStateToProps = (state, props) => {
 				&& state.AIResponses[props.componentId].response
 				&& state.AIResponses[props.componentId].response.sessionId)
 			|| '',
-		componentError: state.error[props.componentId],
+		componentError: state.error[props.componentId] || null,
+		isAITyping:
+			(state.AIResponses[props.componentId]
+				&& state.AIResponses[props.componentId].response
+				&& state.AIResponses[props.componentId].response.isTyping)
+			|| false,
 	};
 };
 const mapDispatchToProps = {
-	getAIResponse: fetchAIResponse,
+	getAIResponse: (sessionId, componentId, message, shouldFetchMeta = false) =>
+		fetchAIResponse(sessionId, componentId, message, null, shouldFetchMeta),
 	trackUsefullness: recordAISessionUsefulness,
 	createAISession,
 };

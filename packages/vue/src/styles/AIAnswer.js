@@ -16,6 +16,10 @@ export const Chatbox = styled('div')`
 	margin-bottom: 20px;
 	background-color: ${(props) =>
 		props.theme && props.theme.colors ? props.theme.colors.backgroundColor : '#fff'};
+
+	.--trigger-message-wrapper {
+		cursor: pointer;
+	}
 `;
 export const ChatContainer = styled('div')`
 	display: flex;
@@ -217,6 +221,8 @@ export const resetCSS = (props) => `
 	}
 	pre {
 		margin: 10px auto;
+		white-space: pre-wrap;
+
 	}
 	table {
 		margin: 10px auto;
@@ -244,7 +250,18 @@ export const resetCSS = (props) => `
 			: props.theme.colors.borderColor
 		: props.theme.colors.borderColor
 };
+
 	}
+
+	pre{
+		color: ${
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+};}
 
 	code {
 		line-height: normal;
@@ -266,6 +283,20 @@ export const resetCSS = (props) => `
 		width: fit-content;
 		max-width: 100%;
 	}
+
+code[class*='language-'],
+	pre[class*='language-'] {
+		color: ${
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+};
+		text-shadow: none;
+	}
+
 	ul,
 	ol {
 		list-style-position: inside;

@@ -6,6 +6,7 @@ import xss from 'xss';
 import { Remarkable } from 'remarkable';
 import {
 	AI_LOCAL_CACHE_KEY,
+	AI_TRIGGER_MODES,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
@@ -68,6 +69,8 @@ md.set({
 	html: true,
 	breaks: true,
 	xhtmlOut: true,
+	linkify: true,
+	linkTarget: '_blank',
 });
 const _dropdownULRef = 'dropdownULRef';
 const _inputGroupRef = 'inputGroupRef';
@@ -98,7 +101,7 @@ const SearchBox = defineComponent({
 			showFeedbackComponent: false,
 			feedbackState: null,
 			faqAnswer: '',
-			faqQuestion: ''
+			faqQuestion: '',
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -154,36 +157,52 @@ const SearchBox = defineComponent({
 	},
 
 	computed: {
+		currentTriggerMode() {
+			return (
+				(this.$props.AIUIConfig && this.$props.AIUIConfig.triggerOn)
+				|| AI_TRIGGER_MODES.MANUAL
+			);
+		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
 		},
 		stats() {
 			return getResultStats(this);
 		},
-		mergedAIQuestion(){
-			return this.faqQuestion ||this.AIResponse
-			&& this.AIResponse.response
-			&& this.AIResponse.response.question
+		mergedAIQuestion() {
+			return (
+				this.faqQuestion
+				|| (this.AIResponse && this.AIResponse.response && this.AIResponse.response.question)
+			);
 		},
-		mergedAIAnswer(){
-			return this.faqAnswer || (this.AIResponse
-						&& this.AIResponse.response
-						&& this.AIResponse.response.answer
-						&& this.AIResponse.response.answer.text)
+		mergedAIAnswer() {
+			return (
+				this.faqAnswer
+				|| (this.AIResponse
+					&& this.AIResponse.response
+					&& this.AIResponse.response.answer
+					&& this.AIResponse.response.answer.text)
+			);
 		},
-		parsedSuggestions(){
+		parsedSuggestions() {
 			let suggestionsArray = [];
 			if (Array.isArray(this.suggestions) && this.suggestions.length) {
 				suggestionsArray = [...withClickIds(this.suggestions)];
 			}
+			if (this.renderTriggerMessage() && this.currentValue && !this.isLoading) {
+				suggestionsArray.unshift({
+					label: this.renderTriggerMessage(),
+					value: 'AI_TRIGGER_MESSAGE',
+					_suggestion_type: '_internal_a_i_trigger',
+				});
+			}
 
-			suggestionsArray = suggestionsArray.map(s =>{
-				if(s.sectionId){
-					return s
+			suggestionsArray = suggestionsArray.map((s) => {
+				if (s.sectionId) {
+					return s;
 				}
-				return {...s, sectionId: s._suggestion_type}
-
-			})
+				return { ...s, sectionId: s._suggestion_type };
+			});
 
 			const sectionsAccumulated = [];
 			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -235,7 +254,10 @@ const SearchBox = defineComponent({
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSuggestions: VueTypes.bool.def(false),
 		enableFAQSuggestions: VueTypes.bool.def(false),
-		FAQSuggestionsConfig: VueTypes.shape({sectionLabel: VueTypes.string, size: VueTypes.number}),
+		FAQSuggestionsConfig: VueTypes.shape({
+			sectionLabel: VueTypes.string,
+			size: VueTypes.number,
+		}),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -377,10 +399,9 @@ const SearchBox = defineComponent({
 				if (this.$options.isTagsMode) {
 					cause = causes.SUGGESTION_SELECT;
 				}
-				if(this.$props.value === undefined){
-					this.setValue(newVal, newVal === '', this.$props, cause, false)
-				}else{
-
+				if (this.$props.value === undefined) {
+					this.setValue(newVal, newVal === '', this.$props, cause, false);
+				} else {
 					this.setValue(newVal || '', true, this.$props, cause);
 				}
 			}
@@ -475,6 +496,23 @@ const SearchBox = defineComponent({
 		},
 	},
 	methods: {
+		renderTriggerMessage() {
+			if (this.$props.enableAI) {
+				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderTriggerMessage) {
+					return this.$props.AIUIConfig.renderTriggerMessage;
+				}
+				if (this.$slots.renderTriggerMessage) {
+					return this.$slots.renderTriggerMessage();
+				}
+				if (
+					this.currentTriggerMode === AI_TRIGGER_MODES.MANUAL
+					&& (this.$props.AIUIConfig ? !this.$props.AIUIConfig.askButton : true)
+				) {
+					return 'Click to trigger AIAnswer';
+				}
+			}
+			return null;
+		},
 		handleText(value, cause) {
 			if (cause === causes.CLEAR_VALUE) {
 				this.triggerCustomQuery(value);
@@ -538,7 +576,7 @@ const SearchBox = defineComponent({
 			cause,
 			toggleIsOpen = true,
 			categoryValue = undefined,
-			shouldExecuteQuery = true
+			shouldExecuteQuery = true,
 		) {
 			const performUpdate = () => {
 				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
@@ -574,11 +612,11 @@ const SearchBox = defineComponent({
 							: undefined;
 				}
 
-				if((this.faqAnswer || this.faqQuestion) && value === ''){
+				if ((this.faqAnswer || this.faqQuestion) && value === '') {
 					// Empty the previous state
-					this.faqAnswer = ''
-					this.faqQuestion = ''
-					this.showAIScreen = false
+					this.faqAnswer = '';
+					this.faqQuestion = '';
+					this.showAIScreen = false;
 				}
 
 				if (isDefaultValue) {
@@ -589,8 +627,12 @@ const SearchBox = defineComponent({
 						if (typeof this.currentValue === 'string')
 							this.triggerDefaultQuery(
 								this.currentValue,
-								props.enableAI ? { enableAI: true } : {},
-								shouldExecuteQuery
+								props.enableAI
+									&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+									&& this.currentValue.endsWith('?')
+									? { enableAI: true }
+									: {},
+								shouldExecuteQuery,
 							);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -604,7 +646,7 @@ const SearchBox = defineComponent({
 							this.triggerCustomQuery(
 								queryHandlerValue,
 								this.$options.isTagsMode ? undefined : categoryValue,
-								shouldExecuteQuery
+								shouldExecuteQuery,
 							);
 						} else {
 							this.setValue('', true);
@@ -614,11 +656,11 @@ const SearchBox = defineComponent({
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
 					) {
-						this.showAIScreen = false
+						this.showAIScreen = false;
 						this.triggerCustomQuery(
 							queryHandlerValue,
 							this.$options.isTagsMode ? undefined : categoryValue,
-							shouldExecuteQuery
+							shouldExecuteQuery,
 						);
 					}
 				} else {
@@ -652,13 +694,16 @@ const SearchBox = defineComponent({
 					value,
 				);
 			}
-			this.updateQuery({
-				componentId: this.internalComponent,
-				query,
-				value,
-				componentType: componentTypes.searchBox,
-				meta,
-			}, shouldExecuteQuery);
+			this.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+					value,
+					componentType: componentTypes.searchBox,
+					meta,
+				},
+				shouldExecuteQuery,
+			);
 		},
 		triggerCustomQuery(paramValue, categoryValue = undefined, shouldExecuteQuery = true) {
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
@@ -679,16 +724,19 @@ const SearchBox = defineComponent({
 				}
 				updateCustomQuery(this.$props.componentId, this.setCustomQuery, this.$props, value);
 			}
-			this.updateQuery({
-				componentId: this.$props.componentId,
-				query,
-				value,
-				label: filterLabel,
-				showFilter,
-				URLParams,
-				componentType: componentTypes.searchBox,
-				category: categoryValue,
-			}, shouldExecuteQuery);
+			this.updateQuery(
+				{
+					componentId: this.$props.componentId,
+					query,
+					value,
+					label: filterLabel,
+					showFilter,
+					URLParams,
+					componentType: componentTypes.searchBox,
+					category: categoryValue,
+				},
+				shouldExecuteQuery,
+			);
 		},
 		handleFocus(event) {
 			if (this.$props.autosuggest) {
@@ -753,8 +801,8 @@ const SearchBox = defineComponent({
 				'',
 				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
 			);
-			this.showAIScreen = false
-			this.isOpen = false
+			this.showAIScreen = false;
+			this.isOpen = false;
 		},
 
 		handleKeyDown(event, highlightedIndex = null) {
@@ -768,10 +816,20 @@ const SearchBox = defineComponent({
 						true,
 						this.$props,
 						this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
-						!this.$props.enableAI,
+						!(
+							this.$props.enableAI
+							&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+							&& event.target.value.endsWith('?')
+						),
 					);
-					if (this.$props.enableAI && !this.showAIScreen) {
+					if (
+						this.$props.enableAI
+						&& !this.showAIScreen
+						&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+						&& event.target.value.endsWith('?')
+					) {
 						this.showAIScreen = true;
+						this.isOpen = true;
 					}
 					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 				}
@@ -834,7 +892,7 @@ const SearchBox = defineComponent({
 						this.$options.isTagsMode.current
 							? causes.SUGGESTION_SELECT
 							: causes.ENTER_PRESS,
-						false
+						false,
 					);
 					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
 				}
@@ -853,27 +911,26 @@ const SearchBox = defineComponent({
 		},
 
 		onSuggestionSelected(suggestion) {
+			const { value } = this.$props;
 			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
 			// handle when FAQ suggestion is clicked
 			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
-				this.setValue(
-					suggestion.value,
-					true,
-					this.$props,
-					causes.SUGGESTION_SELECT,
-					false,
-					undefined,
-					false
-				);
+				this.currentValue = suggestion.value;
 				// Handle AI
 				// Independent of enableAI.
-				this.faqAnswer = (suggestion._answer);
-				this.faqQuestion = suggestion.value
-				this.isOpen = true
+				this.faqAnswer = suggestion._answer;
+				this.faqQuestion = suggestion.value;
+				this.isOpen = true;
 				this.showAIScreen = true;
+				if (value !== undefined) this.$emit('change', suggestion.value, () => {});
+				this.onValueSelectedHandler(suggestion.value);
 				return;
 			}
-			const { value } = this.$props;
+			if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
+				this.showAIScreen = true;
+				this.askButtonOnClick();
+				return;
+			}
 
 			// handle featured suggestions click event
 			if (suggestion._suggestion_type === suggestionTypes.Featured) {
@@ -914,7 +971,7 @@ const SearchBox = defineComponent({
 					this.$props,
 					causes.SUGGESTION_SELECT,
 					false,
-					suggestion._category
+					suggestion._category,
 				);
 				this.$emit('change', emitValue, ({ isOpen }) =>
 					this.triggerQuery({
@@ -932,7 +989,10 @@ const SearchBox = defineComponent({
 
 			// Handle AI
 			if (!this.$props.enableAI) this.isOpen = false;
-			else {
+			else if (
+				this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+				&& suggestion.value.endsWith('?')
+			) {
 				this.showAIScreen = true;
 			}
 		},
@@ -1440,11 +1500,7 @@ const SearchBox = defineComponent({
 
 			return (
 				<div>
-					<Answer
-						innerHTML={md.render(
-							this.mergedAIAnswer,
-						)}
-					/>
+					<Answer innerHTML={md.render(this.mergedAIAnswer)} />
 					{this.renderAIScreenFooter()}
 					{this.showFeedbackComponent && (
 						<div class={`${getClassName(this.$props.innerClass, 'ai-feedback') || ''}`}>
@@ -1640,7 +1696,10 @@ const SearchBox = defineComponent({
 																	);
 																	indexOffset += item.length - 1;
 																	return (
-																		<div key={`section-${itemIndex}`} class="section-container">
+																		<div
+																			key={`section-${itemIndex}`}
+																			class="section-container"
+																		>
 																			{sectionHtml ? (
 																				<div
 																					class={`section-header ${getClassName(
@@ -1668,7 +1727,108 @@ const SearchBox = defineComponent({
 																									s.icon
 																									|| s.iconURL,
 																							);
-																						return renderItem ? (
+
+																						if (
+																							renderItem
+																						) {
+																							return (
+																								<li
+																									{...getItemProps(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									on={getItemEvents(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																									style={{
+																										justifyContent:
+																											'flex-start',
+																										alignItems:
+																											'center',
+																									}}
+																									class={`${
+																										highlightedIndex
+																										=== index
+																											+ sectionIndex
+																											? `active-li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'active-suggestion-item',
+																											  )}`
+																											: `li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'suggestion-item',
+																											  )}`
+																									}`}
+																								>
+																									{renderItem(
+																										sectionItem,
+																									)}
+																								</li>
+																							);
+																						}
+
+																						if (
+																							sectionItem._suggestion_type
+																							=== '_internal_a_i_trigger'
+																						) {
+																							return (
+																								<li
+																									{...getItemProps(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									on={getItemEvents(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																									style={{
+																										justifyContent:
+																											'flex-start',
+																										alignItems:
+																											'center',
+																									}}
+																									class={`${
+																										highlightedIndex
+																										=== index
+																											+ sectionIndex
+																											? `active-li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'active-suggestion-item',
+																											  )}`
+																											: `li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'suggestion-item',
+																											  )}`
+																									}`}
+																								>
+																									<SuggestionItem
+																										currentValue={
+																											this
+																												.currentValue
+																										}
+																										suggestion={
+																											sectionItem
+																										}
+																									/>
+																								</li>
+																							);
+																						}
+																						return (
 																							<li
 																								{...getItemProps(
 																									{
@@ -1680,52 +1840,7 @@ const SearchBox = defineComponent({
 																										item: sectionItem,
 																									},
 																								)}
-																								key={
-																									`${sectionItem._id}_${index}_${sectionIndex}`
-																								}
-																								style={{
-																									justifyContent:
-																										'flex-start',
-																									alignItems:
-																										'center',
-																								}}
-																								class={`${
-																									highlightedIndex
-																									=== index
-																										+ sectionIndex
-																										? `active-li-item ${getClassName(
-																											this
-																												.$props
-																												.innerClass,
-																											'active-suggestion-item',
-																										  )}`
-																										: `li-item ${getClassName(
-																											this
-																												.$props
-																												.innerClass,
-																											'suggestion-item',
-																										  )}`
-																								}`}
-																							>
-																								{renderItem(
-																									sectionItem,
-																								)}
-																							</li>
-																						) : (
-																							<li
-																								{...getItemProps(
-																									{
-																										item: sectionItem,
-																									},
-																								)}
-																								on={getItemEvents(
-																									{
-																										item: sectionItem,
-																									},
-																								)}
-																								key={
-																									`${sectionItem._id}_${index}_${sectionIndex}`
-																								}
+																								key={`${sectionItem._id}_${index}_${sectionIndex}`}
 																								style={{
 																									justifyContent:
 																										'flex-start',

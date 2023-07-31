@@ -99,6 +99,7 @@ export interface SearchBoxProps extends CommonProps {
 	enableAI?: boolean;
 	AIConfig?: types.AIConfig;
 	AIUIConfig?: types.AIUIConfig;
+	renderAIAnswer?: (data: any) => types.children | string | any;
 }
 
 declare function SearchBox(props: SearchBoxProps): JSX.Element;

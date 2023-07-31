@@ -214,11 +214,13 @@ export interface AIConfig {
 	temperature?: number;
 }
 export interface AIUIConfig {
-	loaderMessage: string; // slot #loaderMessage should also be supported
-	showSourceDocuments: boolean;
-	renderSourceDocument: (source: Object) => string | VNode;
-	onSourceClick: (source: Object) => void;
-	renderAskButton: (onClick: Function) => any;
-	askButton: boolean;
-	showFeedback: boolean;
+	loaderMessage?: string; // slot #loaderMessage should also be supported
+	showSourceDocuments?: boolean;
+	renderSourceDocument?: (source: Object) => string | VNode;
+	onSourceClick?: (source: Object) => void;
+	renderAskButton?: (onClick: Function) => any;
+	askButton?: boolean;
+	showFeedback?: boolean;
+	triggerOn?: string;
+	renderTriggerMessage?: children;
 }

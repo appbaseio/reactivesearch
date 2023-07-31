@@ -15,6 +15,10 @@ export const Chatbox = styled.div`
 	margin-bottom: 20px;
 	background-color: ${props =>
 	(props.theme && props.theme.colors ? props.theme.colors.backgroundColor : '#fff')};
+
+	.--trigger-message-wrapper {
+		cursor: pointer;
+	}
 `;
 export const ChatContainer = styled.div`
 	display: flex;
@@ -242,6 +246,17 @@ export const resetCSS = props => css`
 				: props.theme.colors.borderColor
 		};
 	}
+	pre {
+		color: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.primaryTextColor
+		};
+		white-space: pre-wrap;
+	}
 	code {
 		line-height: normal;
 		color: ${
@@ -260,6 +275,19 @@ export const resetCSS = props => css`
 		overflow: auto;
 		width: fit-content;
 		max-width: 100%;
+	}
+
+	code[class*='language-'],
+	pre[class*='language-'] {
+		color: ${
+			// eslint-disable-next-line no-nested-ternary
+			props.isSender
+				? props.themePreset !== 'dark'
+					? props.theme.colors.primaryTextColor
+					: props.theme.colors.textColor
+				: props.theme.colors.primaryTextColor
+		};
+		text-shadow: none;
 	}
 	ul,
 	ol {

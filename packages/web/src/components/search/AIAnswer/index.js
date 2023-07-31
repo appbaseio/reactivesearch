@@ -42,7 +42,13 @@ const AIAnswer = (props) => {
 	const handleSendMessage = (text, isRetry = false, fetchMeta = false) => {
 		// meta refers to source documents IDs here
 		if (currentSessionId) {
-			if (!isRetry) setMessages([...messages, { content: text, role: AI_ROLES.USER }]);
+			if (!isRetry) {
+				const finalMessages = [...messages];
+				if (text) {
+					finalMessages.push({ content: text, role: AI_ROLES.USER });
+				}
+				setMessages([...finalMessages]);
+			}
 			props.getAIResponse(currentSessionId, props.componentId, text, fetchMeta);
 		} else {
 			console.error(errorMessageForMissingSessionId);
@@ -94,7 +100,7 @@ const AIAnswer = (props) => {
 
 	const handleTriggerClick = () => {
 		if (props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
-			handleSendMessage(props.dependentComponentValue, false, true);
+			handleSendMessage('', false, true);
 			setIsTriggered(true);
 		}
 	};
@@ -199,22 +205,27 @@ const AIAnswer = (props) => {
 	}, [props.isAIResponseLoading, props.isLoading]);
 
 	useEffect(() => {
-		if (
-			props.triggerOn === AI_TRIGGER_MODES.QUESTION
-			&& props.dependentComponentValue.endsWith('?')
-		) {
-			setIsTriggered(true);
+		if (props.triggerOn === AI_TRIGGER_MODES.QUESTION) {
+			setIsTriggered(props.dependentComponentValue.endsWith('?'));
 		}
 	}, [props.showComponent, props.dependentComponentValue]);
 
 	useEffect(() => {
-		if (currentSessionId && isTriggered) {
-			handleSendMessage(props.dependentComponentValue, false, true);
+		if (currentSessionId) {
+			if (
+				props.triggerOn === AI_TRIGGER_MODES.ALWAYS
+				|| (props.triggerOn === AI_TRIGGER_MODES.QUESTION
+					&& props.dependentComponentValue.endsWith('?'))
+			) {
+				handleSendMessage('', false, true);
+			}
 		}
 	}, [currentSessionId]);
 
 	useEffect(() => {
-		if (isTriggered && props.triggerOn !== AI_TRIGGER_MODES.ALWAYS) setIsTriggered(false);
+		if (isTriggered && props.triggerOn === AI_TRIGGER_MODES.MANUAL) {
+			setIsTriggered(false);
+		}
 	}, [props.dependentComponentValue]);
 
 	useEffect(
