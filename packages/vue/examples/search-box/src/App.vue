@@ -11,14 +11,15 @@
 				:URLParams="true"
 				:size="10"
 				:enablePopularSuggestions="true"
-				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds' }"
+				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds', sectionLabel: '<b>Popular suggestions 🙌🏻</b>' }"
 				:enableRecentSuggestions="true"
 				:recentSuggestionsConfig="{
 					size: 3,
 					index: 'good-books-ds',
 					minChars: 4,
+					sectionLabel: '<b>Recent suggestions 🙌🏻</b>'
 				}"
-				:autosuggest="true"
+				:autosuggest="true"				
 			/>
 			<reactive-list
 				componentId="SearchResult"

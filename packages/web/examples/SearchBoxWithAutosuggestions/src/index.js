@@ -20,29 +20,7 @@ const Main = () => (
 					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
-					enableIndexSuggestions
-					indexSuggestionsConfig={{
-						sectionLabel: '<b>Index suggestions 🙌🏻</b>',
-						size: 5,
-						index: 'movies-demo-app', // further restrict the index to search on
-					}}
-					enablePopularSuggestions
-					popularSuggestionsConfig={{
-						size: 5,
-						minCount: 5,
-						minChars: 3,
-						showGlobal: false,
-						index: 'movies-demo-app', // further restrict the index to search on
-						sectionLabel: '<b>Popular suggestions 🙌🏻</b>',
-					}}
-					enableRecentSuggestions
-					recentSuggestionsConfig={{
-						size: 5,
-						minHits: 2,
-						minChars: 3,
-						index: 'movies-demo-app', // further restrict the index to search on
-						sectionLabel: '<b>Recent suggestions 🙌🏻</b>',
-					}}
+					autosuggest
 				/>
 				<br />
 				<ReactiveList

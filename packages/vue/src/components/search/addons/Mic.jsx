@@ -15,7 +15,6 @@ const STATUS = {
 };
 
 const Mic = {
-
 	name: 'Mic',
 	props: {
 		children: types.title,

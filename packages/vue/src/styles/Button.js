@@ -1,3 +1,4 @@
+import { hexToRGBA } from '@appbaseio/reactivecore/lib/utils/helper';
 import { styled } from '@appbaseio/vue-emotion';
 import { css } from '@emotion/css';
 import { darken, lighten, rgba } from 'polished';
@@ -99,7 +100,15 @@ const disabled = ({ theme }) => `
 };
 	}
 `;
-
+const info = ({ theme }) => `
+	border: 1px solid ${theme.colors.primaryColor};
+	color: ${theme.colors.primaryColor};
+	background-color: ${theme.colors.primaryTextColor};
+	&:hover,
+	&:focus {
+		background-color: ${darken(0.1, hexToRGBA(theme.colors.primaryTextColor))};
+	}
+`;
 const Button = styled('button')`
 	display: inline-flex;
 	justify-content: center;
@@ -135,10 +144,10 @@ const Button = styled('button')`
 			? `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`
 			: ''};
 	}
-
-	${(props) => (props.primary ? primary : null)};
+	${(props) => (props.info ? info : null)};
 	${(props) => (props.disabled ? disabled : null)};
 	${(props) => props.large && large};
+	${(props) => (props.primary ? primary : null)};
 
 	&.enter-btn {
 		border-top-left-radius: 0px;

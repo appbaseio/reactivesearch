@@ -1030,6 +1030,7 @@ ReactiveMap.propTypes = {
 	center: types.location,
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	dataField: types.stringRequired,
 	defaultCenter: types.location,
 	defaultMapStyle: types.string,

@@ -41,6 +41,7 @@ const types = {
 	bool: VueTypes.bool,
 	boolRequired: VueTypes.bool.isRequired,
 	components: VueTypes.arrayOf(VueTypes.string),
+	compoundClause: VueTypes.oneOf(['filter', 'must']),
 	children: VueTypes.any,
 	data: VueTypes.arrayOf(VueTypes.object),
 	dataFieldArray: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)])
@@ -163,6 +164,23 @@ const types = {
 		method: VueTypes.string,
 		headers: VueTypes.object,
 		body: VueTypes.object,
+	}),
+	AIConfig: VueTypes.shape({
+		systemPrompt: VueTypes.string,
+		topDocsForContext: VueTypes.number,
+		maxTokens: VueTypes.number,
+		docTemplate: VueTypes.string,
+		queryTemplate: VueTypes.string,
+		temperature: VueTypes.number,
+	}),
+	AIUIConfig: VueTypes.shape({
+		loaderMessage: VueTypes.string, // slot #loaderMessage should also be supported
+		showSourceDocuments: VueTypes.bool,
+		renderSourceDocument: VueTypes.func,
+		onSourceClick: VueTypes.func,
+		// renderAskButton: VueTypes.func,has to be a slot
+		askButton: VueTypes.bool,
+		showFeedback: VueTypes.bool,
 	}),
 };
 

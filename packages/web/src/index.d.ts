@@ -5,6 +5,7 @@ import getServerState from './server';
 
 export interface CommonProps {
 	componentId: string;
+	compoundClause: "filter" | "must";
 	URLParams?: boolean;
 	className?: string;
 	onQueryChange?: (...args: any[]) => any;
@@ -49,6 +50,8 @@ export { default as ResultCard } from './components/result/ResultCard';
 export { default as ResultList } from './components/result/ResultList';
 
 export { default as SearchBox } from './components/search/SearchBox';
+
+export { default as AIAnswer } from './components/search/AIAnswer';
 
 export { default as ReactiveChart } from './components/chart/ReactiveChart';
 

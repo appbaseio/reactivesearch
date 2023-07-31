@@ -235,6 +235,7 @@ DatePicker.propTypes = {
 	className: types.string,
 	clickUnselectsDay: types.bool,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	dataField: types.stringRequired,
 	dayPickerInputProps: types.props,
 	defaultValue: types.date,

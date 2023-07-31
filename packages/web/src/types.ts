@@ -196,9 +196,35 @@ export interface featuredSuggestionsConfig {
 	sectionsOrder?: stringArray;
 }
 
+export interface FAQSuggestionsConfig {
+	sectionLabel?: string;
+	size?: number;
+}
+
 export interface endpointConfig {
 	url: string;
 	headers?: object;
 	body?: object;
 	method?: string;
+}
+
+export interface AiConfig {
+	systemPrompt?: string;
+	topDocsForContext?: number;
+	maxTokens?: number;
+	docTemplate?: string;
+	queryTemplate?: string;
+	temperature?: number;
+}
+
+export interface AIUIConfig {
+	loaderMessage?: string | children;
+	showSourceDocuments?: boolean;
+	renderSourceDocument?: (sourceObject: object) => string | children;
+	onSourceClick?: (sourceObject: object) => void;
+	renderAskButton?: (onAskButtonClick: any) => children;
+	askButton?: boolean;
+	showFeedback?: boolean;
+	triggerOn?: string;
+	renderTriggerMessage?: children;
 }
