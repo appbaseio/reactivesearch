@@ -42,7 +42,7 @@
 		"@appbaseio/rheostat": "^1.0.0-alpha.15",
 		"@emotion/core": "^10.0.28",
 		"@emotion/styled": "^10.0.27",
-		"appbase-js": "^5.2.0",
+		"appbase-js": "^5.3.3",
 		"cross-env": "^5.2.0",
 		"dayjs": "^1.11.7",
 		"downshift": "^1.31.2",

@@ -61,7 +61,6 @@ const URLParamsProvider = {
 					);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
-					console.error(e);
 				}
 			});
 		};
