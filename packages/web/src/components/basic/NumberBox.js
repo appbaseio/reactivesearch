@@ -188,6 +188,7 @@ NumberBox.propTypes = {
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	data: types.dataNumberBox,
 	dataField: types.stringRequired,
 	defaultValue: types.number,

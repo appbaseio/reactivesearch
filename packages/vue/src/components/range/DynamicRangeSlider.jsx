@@ -43,6 +43,7 @@ const DynamicRangeSlider = {
 		className: VueTypes.string.def(''),
 		rangeLabels: types.func,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
