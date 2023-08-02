@@ -177,7 +177,7 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
-		if (renderTriggerMessage && currentValue && suggestionsArray.length) {
+		if (renderTriggerMessage && currentValue) {
 			suggestionsArray.unshift({
 				label: renderTriggerMessage,
 				value: renderTriggerMessage,
