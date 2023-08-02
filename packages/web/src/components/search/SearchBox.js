@@ -132,7 +132,6 @@ const SearchBox = (props) => {
 		= props.enableAI && props.AIUIConfig && props.AIUIConfig.renderTriggerMessage
 			? props.AIUIConfig.renderTriggerMessage
 			: null;
-
 	if (
 		props.enableAI
 		&& !renderTriggerMessage
@@ -178,10 +177,10 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
-		if (renderTriggerMessage && currentValue && !props.isLoading) {
+		if (renderTriggerMessage && currentValue && suggestionsArray.length) {
 			suggestionsArray.unshift({
-				label: 'AI_TRIGGER_MESSAGE',
-				value: 'AI_TRIGGER_MESSAGE',
+				label: renderTriggerMessage,
+				value: renderTriggerMessage,
 				_suggestion_type: '_internal_a_i_trigger',
 			});
 		}
@@ -574,7 +573,7 @@ const SearchBox = (props) => {
 			setFAQQuestion(suggestion.value);
 			setShowAIScreen(true);
 			if (onChange) {
-				onChange(suggestion.value, () => {});
+				onChange(suggestion.value, () => { });
 			}
 			if (onValueSelected) {
 				onValueSelected(suggestionValue);
@@ -715,8 +714,19 @@ const SearchBox = (props) => {
 					true,
 					!props.enableAI,
 				);
-				if (props.enableAI && !showAIScreen) {
-					setShowAIScreen(true);
+				if (props.enableAI) {
+					if (currentTriggerMode === AI_TRIGGER_MODES.QUESTION) {
+						if (event.target.value.endsWith('?')) {
+							setShowAIScreen(true);
+							setIsOpen(true);
+						} else {
+							setShowAIScreen(false);
+							setIsOpen(false);
+						}
+					} else {
+						setShowAIScreen(false);
+						setIsOpen(false);
+					}
 				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
@@ -863,9 +873,8 @@ const SearchBox = (props) => {
 				if (renderError) {
 					return (
 						<div
-							className={`--ai-answer-error-container ${
-								getClassName(props.innerClass, 'ai-error') || ''
-							}`}
+							className={`--ai-answer-error-container ${getClassName(props.innerClass, 'ai-error') || ''
+								}`}
 						>
 							{isFunction(renderError) ? renderError(AIResponseError) : renderError}
 						</div>
@@ -873,9 +882,8 @@ const SearchBox = (props) => {
 				}
 				return (
 					<div
-						className={`--ai-answer-error-container ${
-							getClassName(props.innerClass, 'ai-error') || ''
-						}`}
+						className={`--ai-answer-error-container ${getClassName(props.innerClass, 'ai-error') || ''
+							}`}
 					>
 						<div className="--default-error-element">
 							<span>
@@ -1294,7 +1302,7 @@ const SearchBox = (props) => {
 
 	const renderAIScreenFooter = () => {
 		const { AIUIConfig = {} } = props;
-		const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+		const { showSourceDocuments = true, onSourceClick = () => { } } = AIUIConfig || {};
 
 		const renderSourceDocumentLabel = (sourceObj) => {
 			if (props.AIUIConfig && props.AIUIConfig.renderSourceDocument) {
@@ -1315,9 +1323,8 @@ const SearchBox = (props) => {
 					<SourceTags>
 						{getAISourceObjects().map(el => (
 							<Button
-								className={`--ai-source-tag ${
-								getClassName(props.innerClass, 'ai-source-tag') || ''
-							}`}
+								className={`--ai-source-tag ${getClassName(props.innerClass, 'ai-source-tag') || ''
+								}`}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
 							>
@@ -1623,7 +1630,7 @@ const SearchBox = (props) => {
 													) : (
 														<Fragment>
 															{props.isAIResponseLoading
-															|| props.isLoading ? (
+																|| props.isLoading ? (
 																	renderAIScreenLoader()
 																) : (
 																	<Fragment>
@@ -1645,9 +1652,9 @@ const SearchBox = (props) => {
 																					}
 																					if (
 																						(props.AIUIConfig
-																					&& typeof props
-																						.AIUIConfig
-																						.showFeedback
+																						&& typeof props
+																							.AIUIConfig
+																							.showFeedback
 																						=== 'boolean'
 																							? props
 																								.AIUIConfig
@@ -1701,12 +1708,11 @@ const SearchBox = (props) => {
 
 																		{showFeedbackComponent && (
 																			<div
-																				className={`${
-																				getClassName(
+																				className={`${getClassName(
 																					props.innerClass,
 																					'ai-feedback',
 																				) || ''
-																			}`}
+																				}`}
 																			>
 																				{' '}
 																				<AIFeedback
@@ -1789,31 +1795,28 @@ const SearchBox = (props) => {
 																							item: sectionItem,
 																						},
 																					)}
-																					key={`${
-																						sectionItem.sectionId
+																					key={`${sectionItem.sectionId
 																						+ sectionIndex
-																					}-${
-																						sectionItem.value
-																					}`}
+																						}-${sectionItem.value
+																						}`}
 																					style={{
 																						justifyContent:
 																							'flex-start',
 																						alignItems:
 																							'center',
 																					}}
-																					className={`${
-																						highlightedIndex
+																					className={`${highlightedIndex
 																						=== index
-																							+ sectionIndex
-																							? `active-li-item ${getClassName(
-																								props.innerClass,
-																								'active-suggestion-item',
-																							  )}`
-																							: `li-item ${getClassName(
-																								props.innerClass,
-																								'suggestion-item',
-																							  )}`
-																					}`}
+																						+ sectionIndex
+																						? `active-li-item ${getClassName(
+																							props.innerClass,
+																							'active-suggestion-item',
+																						)}`
+																						: `li-item ${getClassName(
+																							props.innerClass,
+																							'suggestion-item',
+																						)}`
+																						}`}
 																				>
 																					{props.renderItem ? (
 																						props.renderItem(
@@ -1830,13 +1833,11 @@ const SearchBox = (props) => {
 																								}}
 																							>
 																								<CustomSvg
-																									iconId={`${
-																										sectionIndex
+																									iconId={`${sectionIndex
 																										+ index
 																										+ 1
-																									}-${
-																										sectionItem.value
-																									}-icon`}
+																										}-${sectionItem.value
+																										}-icon`}
 																									className={
 																										getClassName(
 																											props.innerClass,
@@ -1895,25 +1896,23 @@ const SearchBox = (props) => {
 															return (
 																<li
 																	{...getItemProps({ item })}
-																	key={`${index + 1}-${
-																		item.value
-																	}`}
+																	key={`${index + 1}-${item.value
+																		}`}
 																	style={{
 																		justifyContent:
 																			'flex-start',
 																		alignItems: 'center',
 																	}}
-																	className={`${
-																		highlightedIndex === index
-																			? `active-li-item ${getClassName(
-																				props.innerClass,
-																				'active-suggestion-item',
-																			  )}`
-																			: `li-item ${getClassName(
-																				props.innerClass,
-																				'suggestion-item',
-																			  )}`
-																	}`}
+																	className={`${highlightedIndex === index
+																		? `active-li-item ${getClassName(
+																			props.innerClass,
+																			'active-suggestion-item',
+																		)}`
+																		: `li-item ${getClassName(
+																			props.innerClass,
+																			'suggestion-item',
+																		)}`
+																		}`}
 																>
 																	{props.renderItem ? (
 																		props.renderItem(item)
@@ -1939,17 +1938,16 @@ const SearchBox = (props) => {
 																	justifyContent: 'flex-start',
 																	alignItems: 'center',
 																}}
-																className={`${
-																	highlightedIndex === index
-																		? `active-li-item ${getClassName(
-																			props.innerClass,
-																			'active-suggestion-item',
-																		  )}`
-																		: `li-item ${getClassName(
-																			props.innerClass,
-																			'suggestion-item',
-																		  )}`
-																}`}
+																className={`${highlightedIndex === index
+																	? `active-li-item ${getClassName(
+																		props.innerClass,
+																		'active-suggestion-item',
+																	)}`
+																	: `li-item ${getClassName(
+																		props.innerClass,
+																		'suggestion-item',
+																	)}`
+																	}`}
 															>
 																{props.renderItem ? (
 																	props.renderItem(item)
@@ -1965,11 +1963,9 @@ const SearchBox = (props) => {
 																			}}
 																		>
 																			<CustomSvg
-																				iconId={`${
-																					index + 1
-																				}-${
-																					item.value
-																				}-icon`}
+																				iconId={`${index + 1
+																					}-${item.value
+																					}-icon`}
 																				className={
 																					getClassName(
 																						props.innerClass,
