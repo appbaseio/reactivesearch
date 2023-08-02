@@ -202,32 +202,6 @@
     prop-types "^15.6.0"
     react-leaflet "^2.1.3"
 
-"@appbaseio/reactivesearch-vue@3.0.0-rc.18":
-  version "3.0.0-rc.18"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch-vue/-/reactivesearch-vue-3.0.0-rc.18.tgz#0bb522de28e0197e6937c6dd0ffe1e24816e7747"
-  integrity sha512-JYwOopyqf4l+3Df40lWWvEafw9GbAiCC4XY69DtYCUNJiGyEIQOKHHyAgFfxRmg/bRToFG7FpXlBCzQ/ovT1Qw==
-  dependencies:
-    "@appbaseio/analytics" "^1.2.0-alpha.1"
-    "@appbaseio/reactivecore" "10.0.0-alpha.34"
-    "@appbaseio/vue-emotion" "0.6.0-alpha.6"
-    "@emotion/css" "^11.10.5"
-    "@vue/babel-helper-vue-jsx-merge-props" "^1.0.0"
-    appbase-js "^5.2.0"
-    compute-scroll-into-view "^1.0.11"
-    emotion "11.0.0"
-    hotkeys-js "^3.8.7"
-    ngeohash "^0.6.3"
-    polished "^2.2.0"
-    redux "^4.0.0"
-    remarkable "^2.0.1"
-    url-search-params-polyfill "^7.0.0"
-    vue-google-maps-community-fork "^0.1.7"
-    vue-highlight-words "^1.2.0"
-    vue-no-ssr "^1.1.0"
-    vue-slider-component next
-    vue-types "^5.0.2"
-    xss "^1.0.11"
-
 "@appbaseio/reactivesearch@^3.30.3":
   version "3.45.0"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivesearch/-/reactivesearch-3.45.0.tgz#cc39018bf3f0e30588041e63910c9cae99814322"
@@ -31040,7 +31014,7 @@ react-native-iphone-x-helper@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-"react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
