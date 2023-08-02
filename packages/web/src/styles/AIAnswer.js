@@ -238,35 +238,35 @@ export const resetCSS = props => css`
 	code {
 		padding: 0.6em 0.4em;
 		background: ${
-			// eslint-disable-next-line no-nested-ternary
-			props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryColor
-					: props.theme.colors.borderColor
-				: props.theme.colors.borderColor
-		};
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryColor
+			: props.theme.colors.borderColor
+		: props.theme.colors.borderColor
+	};
 	}
 	pre {
 		color: ${
-			// eslint-disable-next-line no-nested-ternary
-			props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
-					: props.theme.colors.textColor
-				: props.theme.colors.primaryTextColor
-		};
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+	};
 		white-space: pre-wrap;
 	}
 	code {
 		line-height: normal;
 		color: ${
-			// eslint-disable-next-line no-nested-ternary
-			props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
-					: props.theme.colors.textColor
-				: props.theme.colors.primaryTextColor
-		};
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+	};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
@@ -280,13 +280,13 @@ export const resetCSS = props => css`
 	code[class*='language-'],
 	pre[class*='language-'] {
 		color: ${
-			// eslint-disable-next-line no-nested-ternary
-			props.isSender
-				? props.themePreset !== 'dark'
-					? props.theme.colors.primaryTextColor
-					: props.theme.colors.textColor
-				: props.theme.colors.primaryTextColor
-		};
+	// eslint-disable-next-line no-nested-ternary
+	props.isSender
+		? props.themePreset !== 'dark'
+			? props.theme.colors.primaryTextColor
+			: props.theme.colors.textColor
+		: props.theme.colors.primaryTextColor
+	};
 		text-shadow: none;
 	}
 	ul,
@@ -296,6 +296,15 @@ export const resetCSS = props => css`
 	p {
 		margin: 8px auto;
 	}
+
+	${
+	// eslint-disable-next-line no-nested-ternary
+	props.themePreset !== 'dark'
+	&& `a{
+	color: cornflowerblue
+	}
+		`
+	};
 `;
 
 const messageBGColor = (props) => {
