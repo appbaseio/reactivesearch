@@ -102,6 +102,7 @@ const SearchBox = defineComponent({
 			feedbackState: null,
 			faqAnswer: '',
 			faqQuestion: '',
+			initialHits: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -189,7 +190,7 @@ const SearchBox = defineComponent({
 			if (Array.isArray(this.suggestions) && this.suggestions.length) {
 				suggestionsArray = [...withClickIds(this.suggestions)];
 			}
-			if (this.renderTriggerMessage() && this.currentValue && !this.isLoading) {
+			if (this.renderTriggerMessage() && this.currentValue) {
 				suggestionsArray.unshift({
 					label: this.renderTriggerMessage(),
 					value: 'AI_TRIGGER_MESSAGE',
@@ -327,6 +328,28 @@ const SearchBox = defineComponent({
 		this.listenForFocusShortcuts();
 	},
 	watch: {
+		AIResponse(newVal) {
+			if (newVal) {
+				if (
+					this.$props.AIUIConfig
+					&& this.$props.AIUIConfig.showSourceDocuments
+					&& newVal.response
+					&& newVal.response.answer
+					&& Array.isArray(newVal.response.answer.documentIds)
+				) {
+					this.sourceDocIds = newVal.response.answer.documentIds;
+
+					const localCache
+						= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+						&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.$props.componentId];
+
+					if (localCache && localCache.meta && localCache.meta.hits) {
+						this.initialHits = localCache.meta.hits;
+					}
+				}
+
+			}
+		},
 		dataField(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.triggerCustomQuery(this.$data.currentValue);
@@ -417,6 +440,9 @@ const SearchBox = defineComponent({
 				loading: this.isLoading,
 				error: this.isError,
 			});
+			if (newVal && newVal.hits && newVal.hits.hits) {
+				this.initialHits = newVal.hits.hits;
+			}
 		},
 		aggregationData(newVal) {
 			this.$emit('on-data', {
@@ -1390,9 +1416,6 @@ const SearchBox = defineComponent({
 			);
 		},
 		getAISourceObjects() {
-			const localCache
-				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
-				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.componentId];
 			const sourceObjects = [];
 			if (!this.AIResponse) return sourceObjects;
 			const docIds
@@ -1402,14 +1425,11 @@ const SearchBox = defineComponent({
 					&& this.AIResponse.response.answer.documentIds)
 				|| [];
 			if (
-				localCache
-				&& localCache.meta
-				&& localCache.meta.hits
-				&& localCache.meta.hits.hits
+				this.initialHits
 			) {
 				docIds.forEach((id) => {
 					const foundSourceObj
-						= localCache.meta.hits.hits.find((hit) => hit._id === id) || {};
+						= this.initialHits.find((hit) => hit._id === id) || {};
 					if (foundSourceObj) {
 						const { _source = {}, ...rest } = foundSourceObj;
 
