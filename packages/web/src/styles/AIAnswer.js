@@ -313,7 +313,7 @@ const messageBGColor = (props) => {
 		finalBGColor
 			= props.themePreset !== 'dark'
 				? props.theme.colors.primaryColor
-				: props.theme.colors.borderColor;
+				: lighten(0.1, props.theme.colors.backgroundColor);
 	} else {
 		finalBGColor
 			= props.themePreset !== 'dark'
