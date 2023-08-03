@@ -161,6 +161,8 @@ const SearchBox = (props) => {
 	const [showTypingEffect, setShowTypingEffect] = useState(true);
 	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
 	const [feedbackState, setFeedbackState] = useState(null);
+	const [initialHits, setInitialHits] = useState(null);
+	const [sourceDocIds, setSourceDocIds] = useState(null);
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -355,7 +357,6 @@ const SearchBox = (props) => {
 			triggerDefaultQuery(value, {}, shouldExecuteQuery);
 		}
 	};
-
 
 	const onValueSelected = (valueSelected = currentValue, cause, suggestion = null) => {
 		const { onValueSelected } = props;
@@ -573,7 +574,7 @@ const SearchBox = (props) => {
 			setFAQQuestion(suggestion.value);
 			setShowAIScreen(true);
 			if (onChange) {
-				onChange(suggestion.value, () => { });
+				onChange(suggestion.value, () => {});
 			}
 			if (onValueSelected) {
 				onValueSelected(suggestionValue);
@@ -628,7 +629,6 @@ const SearchBox = (props) => {
 				false,
 				suggestion._category,
 			);
-
 
 			onChange(emitValue, () =>
 				triggerQuery({
@@ -873,8 +873,10 @@ const SearchBox = (props) => {
 				if (renderError) {
 					return (
 						<div
-							className={`--ai-answer-error-container ${getClassName(props.innerClass, 'ai-error') || ''
-								}`}
+							className={`--ai-answer-error-container ${getClassName(
+								props.innerClass,
+								'ai-error',
+							) || ''}`}
 						>
 							{isFunction(renderError) ? renderError(AIResponseError) : renderError}
 						</div>
@@ -882,8 +884,10 @@ const SearchBox = (props) => {
 				}
 				return (
 					<div
-						className={`--ai-answer-error-container ${getClassName(props.innerClass, 'ai-error') || ''
-							}`}
+						className={`--ai-answer-error-container ${getClassName(
+							props.innerClass,
+							'ai-error',
+						) || ''}`}
 					>
 						<div className="--default-error-element">
 							<span>
@@ -928,21 +932,12 @@ const SearchBox = (props) => {
 	};
 
 	const getAISourceObjects = () => {
-		const localCache
-			= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
-			&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
 		const sourceObjects = [];
 		if (!props.AIResponse) return sourceObjects;
-		const docIds
-			= (props.AIResponse
-				&& props.AIResponse.response
-				&& props.AIResponse.response.answer
-				&& props.AIResponse.response.answer.documentIds)
-			|| [];
-		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+		const docIds = sourceDocIds || [];
+		if (initialHits) {
 			docIds.forEach((id) => {
-				const foundSourceObj
-					= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+				const foundSourceObj = initialHits.find(hit => hit._id === id) || {};
 				if (foundSourceObj) {
 					const { _source = {}, ...rest } = foundSourceObj;
 
@@ -1302,7 +1297,7 @@ const SearchBox = (props) => {
 
 	const renderAIScreenFooter = () => {
 		const { AIUIConfig = {} } = props;
-		const { showSourceDocuments = true, onSourceClick = () => { } } = AIUIConfig || {};
+		const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
 
 		const renderSourceDocumentLabel = (sourceObj) => {
 			if (props.AIUIConfig && props.AIUIConfig.renderSourceDocument) {
@@ -1323,8 +1318,10 @@ const SearchBox = (props) => {
 					<SourceTags>
 						{getAISourceObjects().map(el => (
 							<Button
-								className={`--ai-source-tag ${getClassName(props.innerClass, 'ai-source-tag') || ''
-								}`}
+								className={`--ai-source-tag ${getClassName(
+									props.innerClass,
+									'ai-source-tag',
+								) || ''}`}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
 							>
@@ -1355,6 +1352,9 @@ const SearchBox = (props) => {
 				loading: isLoading,
 				error,
 			});
+		}
+		if (rawData && rawData.hits && rawData.hits.hits) {
+			setInitialHits(rawData.hits.hits);
 		}
 	}, [rawData, aggregationData, isLoading, error]);
 
@@ -1492,6 +1492,30 @@ const SearchBox = (props) => {
 	useEffect(() => {
 		handleTextAreaHeightChange();
 	}, [currentValue, props.suggestions]);
+	React.useEffect(() => {
+		if (
+			props.AIUIConfig
+			&& props.AIUIConfig.showSourceDocuments
+			&& props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& Array.isArray(props.AIResponse.response.answer.documentIds)
+		) {
+			setSourceDocIds(props.AIResponse.response.answer.documentIds);
+
+			const localCache
+				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[props.componentId];
+			if (
+				localCache
+				&& localCache.meta
+				&& localCache.meta.hits
+				&& localCache.meta.hits.hits
+			) {
+				setInitialHits(localCache.meta.hits.hits);
+			}
+		}
+	}, [props.AIResponse]);
 
 	useEffect(() => {
 		hasMounted.current = true;
@@ -1630,7 +1654,7 @@ const SearchBox = (props) => {
 													) : (
 														<Fragment>
 															{props.isAIResponseLoading
-																|| props.isLoading ? (
+															|| props.isLoading ? (
 																	renderAIScreenLoader()
 																) : (
 																	<Fragment>
@@ -1652,9 +1676,9 @@ const SearchBox = (props) => {
 																					}
 																					if (
 																						(props.AIUIConfig
-																						&& typeof props
-																							.AIUIConfig
-																							.showFeedback
+																					&& typeof props
+																						.AIUIConfig
+																						.showFeedback
 																						=== 'boolean'
 																							? props
 																								.AIUIConfig
@@ -1678,7 +1702,8 @@ const SearchBox = (props) => {
 																					setTimeout(() => {
 																						_dropdownULRef.current.scrollTo(
 																							{
-																								top: _dropdownULRef
+																								top:
+																								_dropdownULRef
 																									.current
 																									.scrollHeight,
 																								behavior:
@@ -1690,7 +1715,8 @@ const SearchBox = (props) => {
 																				onWhileTyping={() => {
 																					_dropdownULRef.current.scrollTo(
 																						{
-																							top: _dropdownULRef
+																							top:
+																							_dropdownULRef
 																								.current
 																								.scrollHeight,
 																							behavior:
@@ -1711,8 +1737,7 @@ const SearchBox = (props) => {
 																				className={`${getClassName(
 																					props.innerClass,
 																					'ai-feedback',
-																				) || ''
-																				}`}
+																				) || ''}`}
 																			>
 																				{' '}
 																				<AIFeedback
@@ -1734,8 +1759,7 @@ const SearchBox = (props) => {
 																						setFeedbackState(
 																							{
 																								isRecorded: true,
-																								feedbackType:
-																								useful
+																								feedbackType: useful
 																									? 'positive'
 																									: 'negative',
 																							},
@@ -1796,27 +1820,28 @@ const SearchBox = (props) => {
 																						},
 																					)}
 																					key={`${sectionItem.sectionId
-																						+ sectionIndex
-																						}-${sectionItem.value
-																						}`}
+																						+ sectionIndex}-${
+																						sectionItem.value
+																					}`}
 																					style={{
 																						justifyContent:
 																							'flex-start',
 																						alignItems:
 																							'center',
 																					}}
-																					className={`${highlightedIndex
+																					className={`${
+																						highlightedIndex
 																						=== index
-																						+ sectionIndex
-																						? `active-li-item ${getClassName(
-																							props.innerClass,
-																							'active-suggestion-item',
-																						)}`
-																						: `li-item ${getClassName(
-																							props.innerClass,
-																							'suggestion-item',
-																						)}`
-																						}`}
+																							+ sectionIndex
+																							? `active-li-item ${getClassName(
+																								props.innerClass,
+																								'active-suggestion-item',
+																							  )}`
+																							: `li-item ${getClassName(
+																								props.innerClass,
+																								'suggestion-item',
+																							  )}`
+																					}`}
 																				>
 																					{props.renderItem ? (
 																						props.renderItem(
@@ -1835,9 +1860,9 @@ const SearchBox = (props) => {
 																								<CustomSvg
 																									iconId={`${sectionIndex
 																										+ index
-																										+ 1
-																										}-${sectionItem.value
-																										}-icon`}
+																										+ 1}-${
+																										sectionItem.value
+																									}-icon`}
 																									className={
 																										getClassName(
 																											props.innerClass,
@@ -1896,23 +1921,25 @@ const SearchBox = (props) => {
 															return (
 																<li
 																	{...getItemProps({ item })}
-																	key={`${index + 1}-${item.value
-																		}`}
+																	key={`${index + 1}-${
+																		item.value
+																	}`}
 																	style={{
 																		justifyContent:
 																			'flex-start',
 																		alignItems: 'center',
 																	}}
-																	className={`${highlightedIndex === index
-																		? `active-li-item ${getClassName(
-																			props.innerClass,
-																			'active-suggestion-item',
-																		)}`
-																		: `li-item ${getClassName(
-																			props.innerClass,
-																			'suggestion-item',
-																		)}`
-																		}`}
+																	className={`${
+																		highlightedIndex === index
+																			? `active-li-item ${getClassName(
+																				props.innerClass,
+																				'active-suggestion-item',
+																			  )}`
+																			: `li-item ${getClassName(
+																				props.innerClass,
+																				'suggestion-item',
+																			  )}`
+																	}`}
 																>
 																	{props.renderItem ? (
 																		props.renderItem(item)
@@ -1938,16 +1965,17 @@ const SearchBox = (props) => {
 																	justifyContent: 'flex-start',
 																	alignItems: 'center',
 																}}
-																className={`${highlightedIndex === index
-																	? `active-li-item ${getClassName(
-																		props.innerClass,
-																		'active-suggestion-item',
-																	)}`
-																	: `li-item ${getClassName(
-																		props.innerClass,
-																		'suggestion-item',
-																	)}`
-																	}`}
+																className={`${
+																	highlightedIndex === index
+																		? `active-li-item ${getClassName(
+																			props.innerClass,
+																			'active-suggestion-item',
+																		  )}`
+																		: `li-item ${getClassName(
+																			props.innerClass,
+																			'suggestion-item',
+																		  )}`
+																}`}
 															>
 																{props.renderItem ? (
 																	props.renderItem(item)
@@ -1963,9 +1991,10 @@ const SearchBox = (props) => {
 																			}}
 																		>
 																			<CustomSvg
-																				iconId={`${index + 1
-																					}-${item.value
-																					}-icon`}
+																				iconId={`${index +
+																					1}-${
+																					item.value
+																				}-icon`}
 																				className={
 																					getClassName(
 																						props.innerClass,
@@ -2042,8 +2071,7 @@ const SearchBox = (props) => {
 													setHighlightedIndex(null);
 												},
 												onKeyPress: withTriggerQuery(props.onKeyPress),
-												onKeyDown: e =>
-													handleKeyDown(e, highlightedIndex),
+												onKeyDown: e => handleKeyDown(e, highlightedIndex),
 												onKeyUp: withTriggerQuery(props.onKeyUp),
 												autoFocus: props.autoFocus,
 											})}
