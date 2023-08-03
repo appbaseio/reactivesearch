@@ -343,8 +343,8 @@ const SearchBox = defineComponent({
 						= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
 						&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.$props.componentId];
 
-					if (localCache && localCache.meta && localCache.meta.hits) {
-						this.initialHits = localCache.meta.hits;
+					if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+						this.initialHits = localCache.meta.hits.hits;
 					}
 				}
 
@@ -1423,7 +1423,7 @@ const SearchBox = defineComponent({
 					&& this.AIResponse.response
 					&& this.AIResponse.response.answer
 					&& this.AIResponse.response.answer.documentIds)
-				|| [];
+				|| [];			
 			if (
 				this.initialHits
 			) {
