@@ -13,8 +13,8 @@ export const Chatbox = styled.div`
 	box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
 	border-radius: 6px;
 	margin-bottom: 20px;
-	background-color: ${props =>
-	(props.theme && props.theme.colors ? props.theme.colors.backgroundColor : '#fff')};
+	background-color: ${({ theme }) =>
+	(theme.colors.backgroundColor ? lighten(0.1, theme.colors.backgroundColor) : '#fff')};
 
 	.--trigger-message-wrapper {
 		cursor: pointer;
@@ -237,36 +237,30 @@ export const resetCSS = props => css`
 	pre,
 	code {
 		padding: 0.6em 0.4em;
-		background: ${
-	// eslint-disable-next-line no-nested-ternary
-	props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryColor
-			: props.theme.colors.borderColor
-		: props.theme.colors.borderColor
-	};
+		background: ${// eslint-disable-next-line no-nested-ternary
+		props.isSender
+			? props.themePreset !== 'dark'
+				? props.theme.colors.primaryColor
+				: props.theme.colors.borderColor
+			: props.theme.colors.borderColor};
 	}
 	pre {
-		color: ${
-	// eslint-disable-next-line no-nested-ternary
-	props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryTextColor
-			: props.theme.colors.textColor
-		: props.theme.colors.primaryTextColor
-	};
+		color: ${// eslint-disable-next-line no-nested-ternary
+		props.isSender
+			? props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor
+			: props.theme.colors.primaryTextColor};
 		white-space: pre-wrap;
 	}
 	code {
 		line-height: normal;
-		color: ${
-	// eslint-disable-next-line no-nested-ternary
-	props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryTextColor
-			: props.theme.colors.textColor
-		: props.theme.colors.primaryTextColor
-	};
+		color: ${// eslint-disable-next-line no-nested-ternary
+		props.isSender
+			? props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor
+			: props.theme.colors.primaryTextColor};
 		border-radius: 3px;
 		font-size: 85%;
 		padding: 0.2em 0.4em;
@@ -279,14 +273,12 @@ export const resetCSS = props => css`
 
 	code[class*='language-'],
 	pre[class*='language-'] {
-		color: ${
-	// eslint-disable-next-line no-nested-ternary
-	props.isSender
-		? props.themePreset !== 'dark'
-			? props.theme.colors.primaryTextColor
-			: props.theme.colors.textColor
-		: props.theme.colors.primaryTextColor
-	};
+		color: ${// eslint-disable-next-line no-nested-ternary
+		props.isSender
+			? props.themePreset !== 'dark'
+				? props.theme.colors.primaryTextColor
+				: props.theme.colors.textColor
+			: props.theme.colors.primaryTextColor};
 		text-shadow: none;
 	}
 	ul,
@@ -297,14 +289,12 @@ export const resetCSS = props => css`
 		margin: 8px auto;
 	}
 
-	${
-	// eslint-disable-next-line no-nested-ternary
+	${// eslint-disable-next-line no-nested-ternary
 	props.themePreset === 'dark'
-	&& `a{
+		&& `a{
 	color: cornflowerblue
 	}
-		`
-	};
+		`};
 `;
 
 const messageBGColor = (props) => {
@@ -313,7 +303,7 @@ const messageBGColor = (props) => {
 		finalBGColor
 			= props.themePreset !== 'dark'
 				? props.theme.colors.primaryColor
-				: lighten(0.1, props.theme.colors.backgroundColor);
+				: props.theme.colors.borderColor;
 	} else {
 		finalBGColor
 			= props.themePreset !== 'dark'
