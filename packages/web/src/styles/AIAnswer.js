@@ -299,7 +299,7 @@ export const resetCSS = props => css`
 
 	${
 	// eslint-disable-next-line no-nested-ternary
-	props.themePreset !== 'dark'
+	props.themePreset === 'dark'
 	&& `a{
 	color: cornflowerblue
 	}
