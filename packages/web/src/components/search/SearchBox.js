@@ -1258,7 +1258,7 @@ const SearchBox = (props) => {
 	};
 
 	const renderTags = () => {
-		if (!Array.isArray(selectedTags)) {
+		if (!Array.isArray(selectedTags) || props.mode !== SEARCH_COMPONENTS_MODES.TAG) {
 			return null;
 		}
 		const tagsList = [...selectedTags];
@@ -1516,6 +1516,13 @@ const SearchBox = (props) => {
 			}
 		}
 	}, [props.AIResponse]);
+
+	useEffect(() => {
+		if (props.mode !== SEARCH_COMPONENTS_MODES.TAG) {
+			setSelectedTags(false);
+			isTagsMode.current = false;
+		} else { isTagsMode.current = true; }
+	}, [props.mode]);
 
 	useEffect(() => {
 		hasMounted.current = true;
