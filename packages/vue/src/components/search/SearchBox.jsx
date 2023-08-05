@@ -327,6 +327,14 @@ const SearchBox = defineComponent({
 	mounted() {
 		this.listenForFocusShortcuts();
 	},
+	updated() {
+		if (this.$props.mode === SEARCH_COMPONENTS_MODES.SELECT && this.$options.isTagsMode === true) {
+			this.$options.isTagsMode = false;
+			this.selectedTags = [];
+		} else if(this.$props.mode === SEARCH_COMPONENTS_MODES.TAG&& this.$options.isTagsMode === false){
+			this.$options.isTagsMode = true;
+		}
+	},
 	watch: {
 		AIResponse(newVal) {
 			if (newVal) {
@@ -1423,7 +1431,7 @@ const SearchBox = defineComponent({
 					&& this.AIResponse.response
 					&& this.AIResponse.response.answer
 					&& this.AIResponse.response.answer.documentIds)
-				|| [];			
+				|| [];
 			if (
 				this.initialHits
 			) {
