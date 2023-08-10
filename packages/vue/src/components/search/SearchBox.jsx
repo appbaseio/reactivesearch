@@ -354,6 +354,10 @@ const SearchBox = defineComponent({
 					if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
 						this.initialHits = localCache.meta.hits.hits;
 					}
+
+					if (!this.showAIScreenFooter) {
+						this.showAIScreenFooter = true;
+					}
 				}
 
 			}
@@ -525,7 +529,7 @@ const SearchBox = defineComponent({
 				this.showFeedbackComponent = false;
 			}
 		},
-		currentValue() {			
+		currentValue() {
 			this.$nextTick(this.handleTextAreaHeightChange)
 		},
 	},
@@ -1427,10 +1431,10 @@ const SearchBox = defineComponent({
 			const sourceObjects = [];
 			if (!this.AIResponse) return sourceObjects;
 			const docIds
-				= (this.AIResponse
-					&& this.AIResponse.response
-					&& this.AIResponse.response.answer
-					&& this.AIResponse.response.answer.documentIds)
+			= (this.AIResponse
+				&& this.AIResponse.response
+				&& this.AIResponse.response.answer
+				&& this.AIResponse.response.answer.documentIds)
 				|| [];
 			if (
 				this.initialHits
@@ -1468,7 +1472,7 @@ const SearchBox = defineComponent({
 		},
 		renderAIScreenFooter() {
 			const { AIUIConfig = {} } = this.$props;
-			const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+			const { showSourceDocuments = false, onSourceClick = () => {} } = AIUIConfig || {};
 
 			const renderSourceDocumentLabel = (sourceObj) => {
 				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderSourceDocument) {
@@ -1558,13 +1562,13 @@ const SearchBox = defineComponent({
 		},
 		handleTextAreaHeightChange() {
 			const textArea = this.$refs[this.$props.innerRef]?.$el;
-			const inputGroupEle = this.$refs[_inputGroupRef]?.$el;		
+			const inputGroupEle = this.$refs[_inputGroupRef]?.$el;
 			if (textArea) {
 				textArea.style.height = '42px';
 				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
 				const maxHeight = lineHeight * 4; // max height for 3 lines
-				const height = Math.min(textArea.scrollHeight, maxHeight);				
-				textArea.style.height = `${height}px`;				
+				const height = Math.min(textArea.scrollHeight, maxHeight);
+				textArea.style.height = `${height}px`;
 				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
