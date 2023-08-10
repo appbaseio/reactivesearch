@@ -525,8 +525,8 @@ const SearchBox = defineComponent({
 				this.showFeedbackComponent = false;
 			}
 		},
-		currentValue() {
-			this.handleTextAreaHeightChange();
+		currentValue() {			
+			this.$nextTick(this.handleTextAreaHeightChange)
 		},
 	},
 	methods: {
@@ -1558,13 +1558,13 @@ const SearchBox = defineComponent({
 		},
 		handleTextAreaHeightChange() {
 			const textArea = this.$refs[this.$props.innerRef]?.$el;
-			const inputGroupEle = this.$refs[_inputGroupRef]?.$el;
+			const inputGroupEle = this.$refs[_inputGroupRef]?.$el;		
 			if (textArea) {
 				textArea.style.height = '42px';
 				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
 				const maxHeight = lineHeight * 4; // max height for 3 lines
-				const height = Math.min(textArea.scrollHeight, maxHeight);
-				textArea.style.height = `${height}px`;
+				const height = Math.min(textArea.scrollHeight, maxHeight);				
+				textArea.style.height = `${height}px`;				
 				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
