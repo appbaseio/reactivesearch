@@ -195,6 +195,12 @@ export interface featuredSuggestionsConfig {
 	maxSuggestionsPerSection?: number;
 	sectionsOrder?: stringArray;
 }
+export interface documentSuggestionsConfig {
+	size?: number;
+	maxChars?: number;
+	from?: number;
+	sectionLabel?: string;
+}
 
 export interface FAQSuggestionsConfig {
 	sectionLabel?: string;
