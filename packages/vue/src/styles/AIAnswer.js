@@ -390,17 +390,6 @@ export const MessageInput = styled(TextArea)`
 			? props.theme.colors.titleColor
 			: props.theme.colors.textColor};
 
-	::placeholder {
-		color: ${(props) => props.theme.colors.textColor};
-	}
-
-	:-ms-input-placeholder {
-		color: ${(props) => props.theme.colors.textColor};
-	}
-
-	::-ms-input-placeholder {
-		color: ${(props) => props.theme.colors.textColor};
-	}
 	${({ enterButton }) =>
 		enterButton
 		&& `

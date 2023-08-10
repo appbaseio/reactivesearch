@@ -326,6 +326,8 @@ const TextArea = styled('textarea')`
 	height: 42px;
 	padding-left: 0;
 	padding-right: 0;
+	border-color: transparent;
+
 `;
 
 const Actions = styled('div')`
