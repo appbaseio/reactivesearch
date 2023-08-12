@@ -163,6 +163,8 @@ const SearchBox = (props) => {
 	const [feedbackState, setFeedbackState] = useState(null);
 	const [initialHits, setInitialHits] = useState(null);
 	const [sourceDocIds, setSourceDocIds] = useState(null);
+	const [isUserScrolling, setIsUserScrolling] = useState(false);
+	const [lastScrollTop, setLastScrollTop] = useState(0);
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -1306,13 +1308,9 @@ const SearchBox = (props) => {
 
 			return sourceObj._id;
 		};
-
 		return showSourceDocuments
 			&& showAIScreenFooter
-			&& props.AIResponse
-			&& props.AIResponse.response
-			&& props.AIResponse.response.answer
-			&& props.AIResponse.response.answer.documentIds ? (
+			&& sourceDocIds ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
@@ -1342,6 +1340,35 @@ const SearchBox = (props) => {
 
 		return <HorizontalSkeletonLoader />;
 	};
+
+
+	// eslint-disable-next-line consistent-return
+	useEffect(() => {
+		if (_dropdownULRef.current) {
+			const handleScroll = () => {
+				const scrollTop = _dropdownULRef.current.scrollTop;
+				setLastScrollTop(scrollTop);
+
+				if (scrollTop < lastScrollTop) {
+				// User is scrolling up
+					setIsUserScrolling(true);
+				} else {
+				// User is scrolling down
+					setIsUserScrolling(false);
+				}
+
+				// Update lastScrollTop with the current scroll position
+				setLastScrollTop(scrollTop);
+			};
+
+			_dropdownULRef.current.addEventListener('scroll', handleScroll);
+
+			return () => {
+				if (_dropdownULRef.current)_dropdownULRef.current.removeEventListener('scroll', handleScroll);
+			};
+		}
+	}, [lastScrollTop]);
+
 
 	useEffect(() => {
 		if (onData) {
@@ -1720,16 +1747,13 @@ const SearchBox = (props) => {
 																					}, 100);
 																				}}
 																				onWhileTyping={() => {
-																					_dropdownULRef.current.scrollTo(
-																						{
-																							top:
-																							_dropdownULRef
-																								.current
-																								.scrollHeight,
-																							behavior:
-																							'smooth',
-																						},
-																					);
+																					if (!isUserScrolling) {
+																						_dropdownULRef.current.scrollTo({
+																							top: _dropdownULRef.current.scrollHeight,
+																							behavior: 'smooth',
+																						});
+																						setLastScrollTop(_dropdownULRef.current.scrollHeight);
+																					}
 																				}}
 																				showTypingEffect={
 																					showTypingEffect
