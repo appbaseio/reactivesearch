@@ -326,6 +326,26 @@ const SearchBox = defineComponent({
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
+		const dropdownEle = this.$refs[_dropdownULRef];
+		if (dropdownEle) {
+			const handleScroll = () => {
+				const { scrollTop } = dropdownEle;
+				this.lastScrollTop = scrollTop;
+
+				if (scrollTop < this.lastScrollTop) {
+				// User is scrolling up
+					clearInterval(this.scrollTimerRef);
+					this.isUserScrolling = true;
+				}
+				// Update lastScrollTop with the current scroll position
+				this.lastScrollTop = scrollTop;
+
+			};
+
+			dropdownEle.addEventListener('scroll', handleScroll);
+
+
+		}
 	},
 	updated() {
 		if (this.$props.mode === SEARCH_COMPONENTS_MODES.SELECT && this.$options.isTagsMode === true) {
@@ -490,6 +510,7 @@ const SearchBox = defineComponent({
 		},
 		isAITyping(newVal, oldVal) {
 			const scrollAIContainer = () => {
+				if (this.isUserScrolling) return;
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
 					dropdownEle.scrollTo({
@@ -500,6 +521,7 @@ const SearchBox = defineComponent({
 			};
 
 			if (!newVal && oldVal) {
+				clearInterval(this.scrollTimerRef)
 				this.showAIScreenFooter = true;
 				if (
 					this.$props.AIUIConfig
@@ -514,7 +536,7 @@ const SearchBox = defineComponent({
 					scrollAIContainer();
 				}, 500);
 			} else if (newVal) {
-				this.scrollTimerRef = setTimeout(() => {
+				this.scrollTimerRef = setInterval(() => {
 					scrollAIContainer();
 				}, 2000);
 			}
