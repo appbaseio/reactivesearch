@@ -1511,7 +1511,8 @@ const SearchBox = defineComponent({
 				&& this.AIResponse
 				&& this.AIResponse.response
 				&& this.AIResponse.response.answer
-				&& this.AIResponse.response.answer.documentIds ? (
+				&& this.AIResponse.response.answer.documentIds
+				&& this.AIResponse.response.answer.documentIds.length ? (
 					<Footer themePreset={this.$props.themePreset}>
 					Summary generated using the following sources:{' '}
 						<SourceTags>

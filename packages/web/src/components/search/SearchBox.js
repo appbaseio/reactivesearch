@@ -1310,7 +1310,7 @@ const SearchBox = (props) => {
 		};
 		return showSourceDocuments
 			&& showAIScreenFooter
-			&& sourceDocIds ? (
+			&& Array.isArray(sourceDocIds) && sourceDocIds.length ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
