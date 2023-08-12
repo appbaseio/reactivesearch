@@ -8,7 +8,6 @@ const alertBorder = ({ theme }) => css`
 const input = searchBox => css`
 	width: 100%;
 	line-height: 1.5;
-	min-height: 42px;
 	padding: 8px 12px;
 	border: 1px solid #ccc;
 	background-color: #fafafa;
