@@ -1615,7 +1615,7 @@ const SearchBox = defineComponent({
 		const { expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		const hasSuggestions
-			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+			= Array.isArray(this.parsedSuggestions) && this.parsedSuggestions.length;
 		const renderItem = this.$slots.renderItem || this.$props.renderItem;
 
 		return (
