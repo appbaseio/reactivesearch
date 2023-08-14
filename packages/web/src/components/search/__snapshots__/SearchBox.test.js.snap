@@ -48,6 +48,7 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -63,16 +64,21 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
   border: 1px solid transparent;
   border-radius: 6px;
   padding-right: 36px;
+  padding-right: 32px;
+  padding-right: 50px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -277,7 +283,7 @@ exports[`should display/ hide (search/ clear )icon when (showIcon/ showClear )pr
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -401,6 +407,7 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -416,16 +423,20 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -630,7 +641,7 @@ exports[`should not render enterButton when enterButton prop is false 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -789,6 +800,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-11 {
@@ -804,18 +816,22 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-11:focus {
   background-color: #fff;
 }
 
-.emotion-11[type='search']::-webkit-search-decoration,
-.emotion-11[type='search']::-webkit-search-cancel-button,
-.emotion-11[type='search']::-webkit-search-results-button,
-.emotion-11[type='search']::-webkit-search-results-decoration {
+.emotion-11::-webkit-search-decoration,
+.emotion-11::-webkit-search-cancel-button,
+.emotion-11::-webkit-search-results-button,
+.emotion-11::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -1208,7 +1224,7 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
         <div
           className="emotion-9 emotion-10"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={true}
@@ -1769,6 +1785,7 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-11 {
@@ -1784,16 +1801,20 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-11:focus {
   background-color: #fff;
 }
 
-.emotion-11[type='search']::-webkit-search-decoration,
-.emotion-11[type='search']::-webkit-search-cancel-button,
-.emotion-11[type='search']::-webkit-search-results-button,
-.emotion-11[type='search']::-webkit-search-results-decoration {
+.emotion-11::-webkit-search-decoration,
+.emotion-11::-webkit-search-cancel-button,
+.emotion-11::-webkit-search-results-button,
+.emotion-11::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -2005,7 +2026,7 @@ exports[`should render (prefixed/ suffixed) UI nodes with searchbox when (addonB
         <div
           className="emotion-9 emotion-10"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -2132,6 +2153,7 @@ exports[`should render SearchBox 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -2147,16 +2169,20 @@ exports[`should render SearchBox 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -2361,7 +2387,7 @@ exports[`should render SearchBox 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -2482,6 +2508,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -2497,18 +2524,22 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -2903,7 +2934,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={true}
@@ -3574,6 +3605,7 @@ exports[`should render SearchBox with tags 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -3589,16 +3621,20 @@ exports[`should render SearchBox with tags 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -3835,7 +3871,7 @@ exports[`should render SearchBox with tags 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -3996,6 +4032,7 @@ exports[`should render SearchBox with title 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-11 {
@@ -4011,16 +4048,20 @@ exports[`should render SearchBox with title 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-11:focus {
   background-color: #fff;
 }
 
-.emotion-11[type='search']::-webkit-search-decoration,
-.emotion-11[type='search']::-webkit-search-cancel-button,
-.emotion-11[type='search']::-webkit-search-results-button,
-.emotion-11[type='search']::-webkit-search-results-decoration {
+.emotion-11::-webkit-search-decoration,
+.emotion-11::-webkit-search-cancel-button,
+.emotion-11::-webkit-search-results-button,
+.emotion-11::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -4217,7 +4258,7 @@ exports[`should render SearchBox with title 1`] = `
     style={Object {}}
   >
     <h2
-      className="emotion-4 emotion-5"
+      className=" emotion-4 emotion-5"
     >
       Mock SearchBox
     </h2>
@@ -4230,7 +4271,7 @@ exports[`should render SearchBox with title 1`] = `
         <div
           className="emotion-9 emotion-10"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -4351,6 +4392,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -4367,18 +4409,23 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   border-radius: 6px;
   padding-left: 36px;
   padding-right: 36px;
+  padding-right: 32px;
+  padding-right: 50px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -4764,7 +4811,7 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={true}
@@ -5278,6 +5325,7 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -5293,18 +5341,22 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -5509,7 +5561,7 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={true}
@@ -5573,90 +5625,92 @@ exports[`should render custom dropdown UI when render prop is set 1`] = `
           </div>
         </div>
       </div>
-      <div
-        style={
-          Object {
-            "border": "1px solid #ddd",
-            "borderRadius": 4,
-            "color": "#424242",
-            "fontSize": "0.9rem",
-            "marginTop": 10,
-            "padding": 10,
-            "position": "absolute",
-            "width": "100%",
+      <div>
+        <div
+          style={
+            Object {
+              "border": "1px solid #ddd",
+              "borderRadius": 4,
+              "color": "#424242",
+              "fontSize": "0.9rem",
+              "marginTop": 10,
+              "padding": 10,
+              "position": "absolute",
+              "width": "100%",
+            }
           }
-        }
-      >
-        <div>
-          <div
-            id="MockSearchBox-downshift-item-0"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            style={
-              Object {
-                "background": "transparent",
-                "padding": 10,
+        >
+          <div>
+            <div
+              id="MockSearchBox-downshift-item-0"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "background": "transparent",
+                  "padding": 10,
+                }
               }
-            }
-          >
-            harry potter
-          </div>
-          <div
-            id="MockSearchBox-downshift-item-1"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            style={
-              Object {
-                "background": "transparent",
-                "padding": 10,
+            >
+              harry potter
+            </div>
+            <div
+              id="MockSearchBox-downshift-item-1"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "background": "transparent",
+                  "padding": 10,
+                }
               }
-            }
-          >
-            complete night harry potter film wizardry boxed set
-          </div>
-          <div
-            id="MockSearchBox-downshift-item-2"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            style={
-              Object {
-                "background": "transparent",
-                "padding": 10,
+            >
+              complete night harry potter film wizardry boxed set
+            </div>
+            <div
+              id="MockSearchBox-downshift-item-2"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "background": "transparent",
+                  "padding": 10,
+                }
               }
-            }
-          >
-            harry potter complete series
-          </div>
-          <div
-            id="MockSearchBox-downshift-item-3"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            style={
-              Object {
-                "background": "transparent",
-                "padding": 10,
+            >
+              harry potter complete series
+            </div>
+            <div
+              id="MockSearchBox-downshift-item-3"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "background": "transparent",
+                  "padding": 10,
+                }
               }
-            }
-          >
-            night harry potter film wizardry boxed set
-          </div>
-          <div
-            id="MockSearchBox-downshift-item-4"
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseMove={[Function]}
-            style={
-              Object {
-                "background": "transparent",
-                "padding": 10,
+            >
+              night harry potter film wizardry boxed set
+            </div>
+            <div
+              id="MockSearchBox-downshift-item-4"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "background": "transparent",
+                  "padding": 10,
+                }
               }
-            }
-          >
-            harry potter film wizardry
+            >
+              harry potter film wizardry
+            </div>
           </div>
         </div>
       </div>
@@ -5716,6 +5770,7 @@ exports[`should render custom enterButton 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -5731,16 +5786,20 @@ exports[`should render custom enterButton 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -5945,7 +6004,7 @@ exports[`should render custom enterButton 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -6096,6 +6155,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -6111,16 +6171,20 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -6379,7 +6443,7 @@ exports[`should render enterButton when enterButton prop is true 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -6510,6 +6574,7 @@ exports[`should render search icon on the right 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -6525,18 +6590,24 @@ exports[`should render search icon on the right 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-right: 36px;
+  padding-right: 32px;
+  padding-right: 66px;
+  padding-right: 66px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -6741,7 +6812,7 @@ exports[`should render search icon on the right 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={true}
@@ -6860,6 +6931,7 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -6875,16 +6947,20 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -7089,7 +7165,7 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
@@ -7209,6 +7285,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   -ms-flex: 1;
   flex: 1;
   position: relative;
+  height: 42px;
 }
 
 .emotion-9 {
@@ -7224,16 +7301,23 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
   border: 1px solid transparent;
   border-radius: 6px;
   padding-left: 36px;
+  padding-right: 36px;
+  padding-right: 32px;
+  padding-right: 50px;
+  padding-right: 66px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
 }
 
 .emotion-9:focus {
   background-color: #fff;
 }
 
-.emotion-9[type='search']::-webkit-search-decoration,
-.emotion-9[type='search']::-webkit-search-cancel-button,
-.emotion-9[type='search']::-webkit-search-results-button,
-.emotion-9[type='search']::-webkit-search-results-decoration {
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
   display: none;
 }
 
@@ -7438,7 +7522,7 @@ exports[`should show voice search when showVoiceSearch prop is set 1`] = `
         <div
           className="emotion-7 emotion-8"
         >
-          <input
+          <textarea
             aria-activedescendant={null}
             aria-autocomplete="list"
             aria-expanded={false}
