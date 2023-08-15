@@ -39,6 +39,7 @@ import {
 	setCustomQuery,
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
+import { removeAIResponse } from '@appbaseio/reactivecore/lib/actions/misc';
 import hotkeys from 'hotkeys-js';
 import XSS from 'xss';
 import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
@@ -439,6 +440,7 @@ const SearchBox = (props) => {
 				}
 				if (value === '') {
 					setShowAIScreen(false);
+					props.removeAIResponse(componentId);
 				}
 
 				if (isDefaultValue) {
@@ -1470,11 +1472,21 @@ const SearchBox = (props) => {
 	}, [isAITyping]);
 
 	useEffect(() => {
+		const { AIResponse } = props;
 		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
 			setShowAIScreenFooter(false);
 			setShowFeedbackComponent(false);
 		}
-	}, [showAIScreen, props.isAIResponseLoading]);
+		if (!showAIScreen && AIResponse && AIResponse.response.answer
+			&& AIResponse.response.answer.text) {
+			setShowAIScreen(true);
+			setIsOpen(true);
+		}
+		if (!(AIResponse && AIResponse.response)) {
+			setShowAIScreen(false);
+			setIsOpen(false);
+		}
+	}, [showAIScreen, props.isAIResponseLoading, props.AIResponse]);
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -1591,7 +1603,7 @@ const SearchBox = (props) => {
 										})}
 									{isOpen && renderLoader()}
 									{isOpen && renderError()}
-									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
+									{isOpen ? (
 										<ul
 											css={searchboxSuggestions(
 												props.themePreset,
@@ -1600,7 +1612,7 @@ const SearchBox = (props) => {
 											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{showAIScreen && (
+											{showAIScreen ? (
 												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
@@ -1751,8 +1763,8 @@ const SearchBox = (props) => {
 													)}
 													{renderError(true)}
 												</SearchBoxAISection>
-											)}
-											{!showAIScreen && (
+											) : null}
+											{!showAIScreen && hasSuggestions() && !hasCustomRenderer(props) ? (
 												<Fragment>
 													{parsedSuggestions().map((item, itemIndex) => {
 														const index = indexOffset + itemIndex;
@@ -2002,11 +2014,12 @@ const SearchBox = (props) => {
 														<SuggestionsFooter />
 													) : null}
 												</Fragment>
-											)}
+											) : null}
+											{!showAIScreen && !hasSuggestions()
+												? renderNoSuggestion(parsedSuggestions()) : null
+											}
 										</ul>
-									) : (
-										renderNoSuggestion(parsedSuggestions())
-									)}
+									) : null}
 								</React.Fragment>
 							);
 						};
@@ -2258,6 +2271,7 @@ SearchBox.propTypes = {
 	trackUsefullness: types.funcRequired,
 	sessionIdFromStore: types.string,
 	isAITyping: types.boolRequired,
+	removeAIResponse: types.func,
 };
 
 SearchBox.defaultProps = {
@@ -2346,6 +2360,7 @@ const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	trackUsefullness: (sessionId, otherInfo) =>
 		dispatch(recordAISessionUsefulness(sessionId, otherInfo)),
+	removeAIResponse: componentId => dispatch(removeAIResponse(componentId)),
 });
 
 // Add componentType for SSR
