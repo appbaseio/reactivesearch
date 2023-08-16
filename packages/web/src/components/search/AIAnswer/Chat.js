@@ -423,7 +423,7 @@ const Chat = (props) => {
 					className="--ai-input-container"
 					onSubmit={handleSendMessage}
 				>
-					<InputGroup isOpen={false}>
+					<InputGroup style={{ height: 'max-content' }} isOpen={false}>
 						<InputWrapper ref={_inputWrapper} enableAI>
 							<MessageInput
 								type="text"

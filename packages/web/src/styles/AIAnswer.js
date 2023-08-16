@@ -353,7 +353,7 @@ export const MessageInputContainer = styled.form`
 
 	.ai-enter-button-wrapper {
 		align-self: baseline;
-		height: 41px;
+		height: 42px;
 	}
 `;
 
@@ -362,7 +362,7 @@ export const MessageInput = styled(TextArea)`
 	border-radius: 5px;
 	border: 1px solid #ccc;
 	color: ${props => props.theme.colors.textColor};
-	
+	height: 42px;
 
 	${({ enterButton }) =>
 	enterButton
