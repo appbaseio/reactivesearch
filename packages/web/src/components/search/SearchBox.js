@@ -1472,19 +1472,9 @@ const SearchBox = (props) => {
 	}, [isAITyping]);
 
 	useEffect(() => {
-		const { AIResponse } = props;
 		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
 			setShowAIScreenFooter(false);
 			setShowFeedbackComponent(false);
-		}
-		if (!showAIScreen && AIResponse && AIResponse.response.answer
-			&& AIResponse.response.answer.text) {
-			setShowAIScreen(true);
-			setIsOpen(true);
-		}
-		if (!(AIResponse && AIResponse.response)) {
-			setShowAIScreen(false);
-			setIsOpen(false);
 		}
 	}, [showAIScreen, props.isAIResponseLoading, props.AIResponse]);
 
