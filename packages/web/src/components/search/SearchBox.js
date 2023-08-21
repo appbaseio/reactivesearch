@@ -76,6 +76,7 @@ import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/Sea
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
+import { innerText } from './innerText';
 
 const md = new Remarkable();
 
@@ -186,6 +187,21 @@ const SearchBox = (props) => {
 				_suggestion_type: '_internal_a_i_trigger',
 			});
 		}
+
+		suggestionsArray = suggestionsArray.map((suggestion) => {
+			if (suggestion._suggestion_type === 'document') {
+				// Document suggestions don't have a meaningful label and value
+				const newSuggestion = { ...suggestion };
+				newSuggestion.label = 'For recent document suggestion, please implement a renderItem method to display label.';
+				if (typeof props.renderItem === 'function') {
+					const jsxEl = props.renderItem(newSuggestion);
+					const innerValue = innerText(jsxEl);
+					newSuggestion.value = XSS(innerValue);
+				}
+				return newSuggestion;
+			}
+			return suggestion;
+		});
 
 		const sectionsAccumulated = [];
 		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
