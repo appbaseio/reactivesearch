@@ -1,0 +1,888 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render AIAnswer 1`] = `
+@keyframes animation-0 {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-2 {
+  position: relative;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #fafafa;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.emotion-2 .--trigger-message-wrapper {
+  cursor: pointer;
+}
+
+.emotion-4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.emotion-4 .--ai-answer-error-container {
+  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  bottom: 48px;
+  z-index: 1;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 100%;
+}
+
+.emotion-4 .--ai-answer-error-container .--default-error-element {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 -5px 5px -2px #fff;
+}
+
+.emotion-4 .--ai-answer-error-container .--default-error-element span {
+  margin-bottom: 5px;
+}
+
+.emotion-4 .--ai-answer-feedback-container {
+  margin-top: 15px;
+  margin-bottom: -10px;
+}
+
+.emotion-6 {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.emotion-8 {
+  background-color: #e0e0e0;
+  color: #595959;
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  max-width: 80%;
+  -webkit-align-self: flex-start;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  display: inline-block;
+  position: relative;
+  overflow-wrap: anywhere;
+}
+
+.emotion-8 html,
+.emotion-8 body,
+.emotion-8 div,
+.emotion-8 span,
+.emotion-8 applet,
+.emotion-8 object,
+.emotion-8 iframe,
+.emotion-8 h1,
+.emotion-8 h2,
+.emotion-8 h3,
+.emotion-8 h4,
+.emotion-8 h5,
+.emotion-8 h6,
+.emotion-8 p,
+.emotion-8 blockquote,
+.emotion-8 pre,
+.emotion-8 a,
+.emotion-8 abbr,
+.emotion-8 acronym,
+.emotion-8 address,
+.emotion-8 big,
+.emotion-8 cite,
+.emotion-8 code,
+.emotion-8 del,
+.emotion-8 dfn,
+.emotion-8 em,
+.emotion-8 img,
+.emotion-8 ins,
+.emotion-8 kbd,
+.emotion-8 q,
+.emotion-8 s,
+.emotion-8 samp,
+.emotion-8 small,
+.emotion-8 strike,
+.emotion-8 strong,
+.emotion-8 sub,
+.emotion-8 sup,
+.emotion-8 tt,
+.emotion-8 var,
+.emotion-8 b,
+.emotion-8 u,
+.emotion-8 i,
+.emotion-8 center,
+.emotion-8 dl,
+.emotion-8 dt,
+.emotion-8 dd,
+.emotion-8 ol,
+.emotion-8 ul,
+.emotion-8 li,
+.emotion-8 fieldset,
+.emotion-8 form,
+.emotion-8 label,
+.emotion-8 legend,
+.emotion-8 table,
+.emotion-8 caption,
+.emotion-8 tbody,
+.emotion-8 tfoot,
+.emotion-8 thead,
+.emotion-8 tr,
+.emotion-8 th,
+.emotion-8 td,
+.emotion-8 article,
+.emotion-8 aside,
+.emotion-8 canvas,
+.emotion-8 details,
+.emotion-8 embed,
+.emotion-8 figure,
+.emotion-8 figcaption,
+.emotion-8 footer,
+.emotion-8 header,
+.emotion-8 hgroup,
+.emotion-8 menu,
+.emotion-8 nav,
+.emotion-8 output,
+.emotion-8 ruby,
+.emotion-8 section,
+.emotion-8 summary,
+.emotion-8 time,
+.emotion-8 mark,
+.emotion-8 audio,
+.emotion-8 video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.emotion-8 pre {
+  margin: 10px auto;
+}
+
+.emotion-8 table {
+  margin: 10px auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.emotion-8 tr {
+  border-bottom: 1px solid #ccc;
+}
+
+.emotion-8 th,
+.emotion-8 td {
+  text-align: left;
+  padding: 4px;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+.emotion-8 pre,
+.emotion-8 code {
+  padding: 0.6em 0.4em;
+  background: #595959;
+}
+
+.emotion-8 pre {
+  color: #fff;
+  white-space: pre-wrap;
+}
+
+.emotion-8 code {
+  line-height: normal;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+  margin-top: 5px;
+  display: inline-block;
+  overflow: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.emotion-8 code[class*='language-'],
+.emotion-8 pre[class*='language-'] {
+  color: #fff;
+  text-shadow: none;
+}
+
+.emotion-8 ul,
+.emotion-8 ol {
+  padding-left: 1rem;
+}
+
+.emotion-8 p {
+  margin: 8px auto;
+}
+
+.emotion-10 .--feedback-svgs-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.emotion-10 .--feedback-svgs-wrapper svg {
+  cursor: pointer;
+  -webkit-transition: all ease-in 0.1s;
+  transition: all ease-in 0.1s;
+}
+
+.emotion-10 .--feedback-svgs-wrapper svg.selected {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+  cursor: default;
+}
+
+.emotion-10 .--feedback-svgs-wrapper svg:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.emotion-10 .--feedback-input-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 7px;
+}
+
+.emotion-12 {
+  color: #777;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-animation: animation-0 0.5s ease-out;
+  animation: animation-0 0.5s ease-out;
+  padding: 10px 0;
+  background: white;
+  color: #424242;
+}
+
+.emotion-14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.emotion-14 .--ai-source-tag {
+  display: inline-block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emotion-16 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  background-color: #fff;
+}
+
+.emotion-16:hover,
+.emotion-16:focus {
+  background-color: #ccc;
+}
+
+.emotion-16:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-16:hover,
+.emotion-16:focus {
+  background-color: #e6e6e6;
+}
+
+.emotion-16.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 12px;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  margin-top: 10px;
+}
+
+.emotion-30 .ai-enter-button-wrapper {
+  -webkit-align-self: baseline;
+  -ms-flex-item-align: baseline;
+  align-self: baseline;
+  height: 42px;
+}
+
+.emotion-32 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-34 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-36 {
+  width: 100%;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding-left: 36px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  color: #424242;
+  height: 42px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.emotion-36:focus {
+  background-color: #fff;
+}
+
+.emotion-36::-webkit-search-decoration,
+.emotion-36::-webkit-search-cancel-button,
+.emotion-36::-webkit-search-results-button,
+.emotion-36::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-36:disabled {
+  cursor: not-allowed;
+}
+
+.emotion-38 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+  top: 0%;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  height: 42px;
+}
+
+.emotion-40 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+  top: 0%;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  height: 42px;
+}
+
+.emotion-42 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-42 svg,
+.emotion-42 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-42 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-42 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-42 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-42 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-42 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-42 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-42 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-42 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-42 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-42 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-42 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-42 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-42 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-44 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #0B6AFF;
+  color: #fff;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 8px;
+  outline: none;
+  padding: 10px;
+  text-align: center;
+}
+
+.emotion-44:hover,
+.emotion-44:focus {
+  background-color: #ccc;
+}
+
+.emotion-44:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-44:hover,
+.emotion-44:focus {
+  background-color: #0054d7;
+}
+
+.emotion-44.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="--ai-chat-box-wrapper emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="--ai-chat-container emotion-4 emotion-5"
+    >
+      <div
+        className="--ai-messages-container emotion-6 emotion-7"
+      >
+        <div
+          className="--ai-answer-message  emotion-8 emotion-9"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<p>&quot;Grasshopper Jungle&quot; is a young adult science fiction novel written by Andrew Smith. It tells the story of Austin Szerba, a teenager living in the small town of Ealing, Iowa. The town is suddenly invaded by giant, man-eating praying mantises that were created as part of a military experiment gone wrong.</p>
+<p>As Austin and his best friend Robby navigate through the chaos, they also grapple with their own personal struggles. Austin finds himself torn between his girlfriend, Shann, and his confusing feelings towards both her and his openly gay best friend, Robby.The novel touches on themes of sexuality, friendship, and identity, while also exploring the idea of humanity and what it means to be human. It combines elements of coming-of-age with science fiction, creating a unique and thought-provoking story.&quot;Grasshopper Jungle&quot; received critical acclaim for its unconventional storytelling, strong character development, and exploration of complex social issues. It has been described as a dark, thrilling, and sometimes humorous tale that challenges traditional notions of literature for young adults.</p>
+",
+            }
+          }
+        />
+      </div>
+      <div
+        className="--ai-answer-feedback-container "
+      >
+        <div
+          className="emotion-10 emotion-11"
+        >
+          <div
+            className="--feedback-svgs-wrapper"
+          >
+            <svg
+              fill="none"
+              height="1em"
+              onClick={[Function]}
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
+              />
+            </svg>
+            <svg
+              fill="none"
+              height="1em"
+              onClick={[Function]}
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        className="emotion-12 emotion-13"
+        style={
+          Object {
+            "background": "inherit",
+            "marginTop": "1.5rem",
+          }
+        }
+      >
+        Summary generated using the following sources:
+         
+        <div
+          className="emotion-14 emotion-15"
+        >
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            2TftXXEBdEU4aeo6Gdqs
+          </a>
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            nj7tXXEBhDwVijd9MkkX
+          </a>
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            2TftXXEBdEU4aeo6hOBa
+          </a>
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            grDtXXEB2-YohfeSsMfi
+          </a>
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            GLDtXXEB2-YohfeSysvk
+          </a>
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            kD7tXXEBhDwVijd94lyY
+          </a>
+          <a
+            className="--ai-source-tag  emotion-16 emotion-17"
+            onClick={[Function]}
+          >
+            FT7tXXEBhDwVijd9MksX
+          </a>
+        </div>
+      </div>
+      <form
+        className="--ai-input-container emotion-30 emotion-31"
+        onSubmit={[Function]}
+      >
+        <div
+          className="input-group emotion-32 emotion-33"
+          style={
+            Object {
+              "height": "max-content",
+            }
+          }
+        >
+          <div
+            className="emotion-34 emotion-35"
+          >
+            <textarea
+              className="emotion-36 emotion-37"
+              id="MockAIAnswer-ai-input"
+              onChange={[Function]}
+              onKeyPress={[Function]}
+              placeholder="Ask a question"
+              type="text"
+              value=""
+            />
+             
+            <div>
+              <div
+                className="emotion-38 emotion-39"
+              />
+              <div
+                className="emotion-40 emotion-39"
+              >
+                <div
+                  className="emotion-42 emotion-43"
+                >
+                  <svg
+                    alt="Search"
+                    className="search-icon"
+                    height="12"
+                    style={
+                      Object {
+                        "position": "relative",
+                        "transform": "scale(1.35)",
+                      }
+                    }
+                    viewBox="0 0 15 15"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      Search
+                    </title>
+                    <path
+                      d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="ai-enter-button-wrapper"
+        >
+          <a
+            className="enter-btn  emotion-44 emotion-45"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={0}
+            type="submit"
+          >
+            Send
+          </a>
+        </div>
+      </form>
+       
+    </div>
+  </div>
+</div>
+`;

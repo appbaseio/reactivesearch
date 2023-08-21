@@ -40,6 +40,9 @@ const AIAnswer = (props) => {
 	const errorMessageForMissingSessionId = `AISessionId for ${props.componentId} is missing! AIAnswer component requires an AISession to function. Trying reloading the App.`;
 
 	const handleSendMessage = (text, isRetry = false, fetchMeta = false) => {
+		if (props.testMode) {
+			return;
+		}
 		// meta refers to source documents IDs here
 		if (currentSessionId) {
 			if (!isRetry) {
@@ -357,6 +360,7 @@ AIAnswer.propTypes = {
 	onSourceClick: types.func,
 	isAITyping: types.boolRequired,
 	dependentComponentValue: types.string,
+	testMode: types.bool,
 };
 
 AIAnswer.defaultProps = {
@@ -378,7 +382,7 @@ AIAnswer.defaultProps = {
 };
 
 const mapStateToProps = (state, props) => {
-	let dependencyComponent = Object.values(props.react)[0];
+	let dependencyComponent = Object.values(props.react || {})[0];
 	if (Array.isArray(dependencyComponent)) {
 		dependencyComponent = dependencyComponent[0];
 	}
@@ -386,7 +390,7 @@ const mapStateToProps = (state, props) => {
 	const showComponent = Boolean(
 		state.selectedValues[dependencyComponent]
 			&& state.selectedValues[dependencyComponent].value,
-	);
+	) || props.testMode;
 	const dependentComponentValue
 		= (state.selectedValues[dependencyComponent]
 			&& state.selectedValues[dependencyComponent].value)
