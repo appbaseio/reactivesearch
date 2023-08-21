@@ -553,7 +553,7 @@ it('should render AIAnswer', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -577,7 +577,7 @@ it('should render voice Input', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -601,7 +601,7 @@ it('should not render icon', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -625,7 +625,7 @@ it('should not render input', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -649,7 +649,7 @@ it('should not render enterButton', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -673,7 +673,7 @@ it('should render custom icon', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -697,7 +697,7 @@ it('should render custom placeholder', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -721,7 +721,7 @@ it('should render icon on right(iconPosition=\'right\')', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -747,7 +747,7 @@ it('should render custom enterButton)', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -771,7 +771,7 @@ it('should render custom title)', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -796,7 +796,7 @@ it('should render dark theme)', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -872,7 +872,7 @@ it('should render custom UI using \'render\' Prop)', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -897,7 +897,7 @@ it('should not render source Documents)', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -923,7 +923,7 @@ it('should render custom source Documents)', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -948,7 +948,7 @@ it('should render with triggerOn=\'manual\')', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -973,7 +973,7 @@ it('should render with triggerOn=\'question\')', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -999,7 +999,7 @@ it('should render custom trigger message & triggerOn=\'question\')', async () =>
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
@@ -1024,7 +1024,7 @@ it('should render custom trigger message & triggerOn=\'manual\')', async () => {
 
 	// Wait for all updates to complete
 	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
