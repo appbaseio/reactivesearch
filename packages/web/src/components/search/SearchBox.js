@@ -77,6 +77,7 @@ import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
 import { innerText } from './innerText';
+import TextWithTooltip from './TooltipText';
 
 const md = new Remarkable();
 
@@ -1872,13 +1873,12 @@ const SearchBox = (props) => {
 																							<div className="trim">
 																								<Flex direction="column">
 																									{sectionItem.label && (
-																										<div
+																										<TextWithTooltip
+																											title={sectionItem.label}
 																											className="section-list-item__label"
-																											dangerouslySetInnerHTML={{
-																												__html: XSS(
-																													sectionItem.label,
-																												),
-																											}}
+																											innerHTML={
+																												sectionItem.label
+																											}
 																										/>
 																									)}
 																									{sectionItem.description && (
