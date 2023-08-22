@@ -254,6 +254,12 @@ const SearchBox = defineComponent({
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSuggestions: VueTypes.bool.def(false),
 		enableFAQSuggestions: VueTypes.bool.def(false),
+		enableDocumentSuggestions: VueTypes.bool.def(false),
+		documentSuggestionsConfig: VueTypes.shape({
+			size: VueTypes.number,
+			from: VueTypes.number,
+			maxChars: VueTypes.number
+		}),
 		FAQSuggestionsConfig: VueTypes.shape({
 			sectionLabel: VueTypes.string,
 			size: VueTypes.number,
