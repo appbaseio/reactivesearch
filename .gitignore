@@ -11,3 +11,5 @@ stats.json
 packages/web/src/types.js.map
 data
 yarn-error.log
+
+.yarn
