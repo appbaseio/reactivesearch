@@ -634,7 +634,6 @@ exports[`should render search/count when showSearch/showCount are true 1`] = `
 .emotion-10 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;

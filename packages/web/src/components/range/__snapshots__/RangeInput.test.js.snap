@@ -179,7 +179,6 @@ exports[`should not render histogram when showHistogram is set to false 1`] = `
 .emotion-15 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -523,7 +522,6 @@ exports[`should not render slider when ShowSlider is false 1`] = `
 .emotion-10 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1263,7 +1261,6 @@ exports[`should render histogram when showHistogram is set to true 1`] = `
 .emotion-218 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -2235,7 +2232,6 @@ exports[`should render range labels 1`] = `
 .emotion-15 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -2597,7 +2593,6 @@ exports[`should render range with slider 1`] = `
 .emotion-15 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -2947,7 +2942,6 @@ exports[`should render title 1`] = `
 .emotion-12 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -3300,7 +3294,6 @@ exports[`should select default value 1`] = `
 .emotion-15 {
   width: 100%;
   line-height: 1.5;
-  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
