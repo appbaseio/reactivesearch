@@ -275,11 +275,11 @@ const noSuggestions = (themePreset, theme) => css`
 	list-style: none;
 	max-height: 260px;
 	overflow-y: auto;
-    border-radius: 6px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
-    border-top: 1px solid #f2f0f0;
+	border-radius: 6px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+	border-top: 1px solid #f2f0f0;
 
 	&.small {
 		top: 30px;
