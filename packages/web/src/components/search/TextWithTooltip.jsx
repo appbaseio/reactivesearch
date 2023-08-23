@@ -14,11 +14,12 @@ const TextWithTooltip = ({
 	useEffect(() => {
 		const container = containerRef.current;
 		const content = contentRef.current;
+		if (container && content) {
+			const containerWidth = container.offsetWidth;
+			const contentWidth = content.scrollWidth;
 
-		const containerWidth = container.offsetWidth;
-		const contentWidth = content.scrollWidth;
-
-		setIsOverflowing(contentWidth > containerWidth);
+			setIsOverflowing(contentWidth > containerWidth);
+		}
 	}, [innerHTML, title]);
 
 	return (

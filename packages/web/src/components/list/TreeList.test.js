@@ -586,7 +586,7 @@ function renderLists(transformedData, parentPath, isExpanded, selectedValues, ha
 it('should render TreeList', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -602,7 +602,7 @@ it('should render TreeList', () => {
 it('should render with title', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -619,7 +619,7 @@ it('should render with title', () => {
 it('should render with showRadio', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -637,7 +637,7 @@ it('should render with showRadio', () => {
 it('should render with showCheckbox', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -655,7 +655,7 @@ it('should render with showCheckbox', () => {
 it('should render with showIcon', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -672,7 +672,7 @@ it('should render with showIcon', () => {
 it('should render with showLeafIcon', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -689,7 +689,7 @@ it('should render with showLeafIcon', () => {
 it('should render with showSwitcherIcon', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -706,7 +706,7 @@ it('should render with showSwitcherIcon', () => {
 it('should render with showLine', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -723,7 +723,7 @@ it('should render with showLine', () => {
 it('should render with showSearch', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -740,7 +740,7 @@ it('should render with showSearch', () => {
 it('should render with custom icon', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -762,7 +762,7 @@ it('should render with custom icon', () => {
 it('should render with custom leafIcon', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -784,7 +784,7 @@ it('should render with custom leafIcon', () => {
 it('should render with custom switcherIcon', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -802,7 +802,7 @@ it('should render with custom switcherIcon', () => {
 it('should render with renderItem', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -823,7 +823,7 @@ it('should render with renderItem', () => {
 it('should render with custom UI', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"
@@ -851,7 +851,7 @@ it('should render with custom UI', () => {
 it('should render no results', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TreeList
 					testMode
 					componentId="tree-list"

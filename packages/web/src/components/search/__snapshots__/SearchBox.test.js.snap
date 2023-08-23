@@ -2379,6 +2379,1123 @@ exports[`should render SearchBox 1`] = `
 </div>
 `;
 
+exports[`should render SearchBox with FAQ suggestions 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+  padding-right: 32px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-19 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+  max-height: min(100vh,401px);
+  border: none;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
+}
+
+.emotion-19.small {
+  top: 30px;
+}
+
+.emotion-19 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-19 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-19 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: unset;
+}
+
+.emotion-19 li .trim {
+  line-height: 20px;
+}
+
+.emotion-19 li.li-item {
+  background-color: #fff;
+}
+
+.emotion-19 li.li-item svg {
+  fill: #0B6AFF;
+}
+
+.emotion-19 li.active-li-item {
+  background-color: #2d84f6;
+  color: #fff;
+}
+
+.emotion-19 li.active-li-item svg {
+  -webkit-transition: fill 0.3s ease-in;
+  transition: fill 0.3s ease-in;
+  fill: #fff!important;
+}
+
+.emotion-19 .section-container {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f2f0f0;
+}
+
+.emotion-19 .section-container .section-header {
+  padding: 10px;
+  font-size: 12px;
+  color: #7f7c7c;
+  background: #f9f9f9;
+}
+
+.emotion-19 .section-container .section-list {
+  padding-left: 0;
+}
+
+.emotion-19 .section-container .section-list-item__label,
+.emotion-19 .section-container .section-list-item__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 .section-container .section-list-item__label *,
+.emotion-19 .section-container .section-list-item__description * {
+  margin: 0;
+  padding: 0;
+}
+
+.emotion-19 .section-container .section-list-item__description {
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-20 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-20 svg.cancel-icon {
+  cursor: pointer;
+  fill: #595959;
+  -webkit-flex-basis: 30px;
+  -ms-flex-preferred-size: 30px;
+  flex-basis: 30px;
+}
+
+.emotion-20 svg.cancel-icon:hover {
+  fill: #424242;
+}
+
+.emotion-24 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-24 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 17px;
+}
+
+.emotion-24:hover svg {
+  fill: #1c1a1a;
+}
+
+.emotion-46 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={true}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-11 emotion-12"
+            >
+              <div
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul
+        className=" emotion-19"
+      >
+        <div
+          className="section-container"
+        >
+          <div
+            className="section-header "
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Navigation Links",
+              }
+            }
+          />
+          <ul
+            className="section-list"
+          >
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-0"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <div>
+                  <div
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<img src=\\"data:image/png;base64,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\\" />",
+                      }
+                    }
+                    style={
+                      Object {
+                        "display": "flex",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "Go to <mark>Home</mark>",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                  <div
+                    className="section-list-item__description"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Blazing fast search with Appbase",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="section-container"
+        >
+          <div
+            className="section-header "
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Tutorbals 🪲",
+              }
+            }
+          />
+          <ul
+            className="section-list"
+          >
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-1"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <div>
+                  <img
+                    alt="SearchBox: Tutorial"
+                    src="https://camo.githubusercontent.com/95874e325a752e6ffb604991feb719c6e8bae6a552ed23d4a566bc4d518bc090/68747470733a2f2f692e696d6775722e636f6d2f696952397741732e706e67"
+                    style={
+                      Object {
+                        "maxHeight": "25px",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "Go to <mark>SearchBox</mark> getting started guide",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                  <div
+                    className="section-list-item__description"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Headless API to build search interface, easy to use and understand",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+              <button
+                className="emotion-24 emotion-25"
+                style={
+                  Object {
+                    "pointerEvents": "none",
+                    "transform": "rotate(135deg)",
+                  }
+                }
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="section-container"
+        >
+          <div
+            className="section-header "
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Recent Suggestions",
+              }
+            }
+          />
+          <ul
+            className="section-list"
+          >
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-2"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Recent Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "chasing harry winston",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="emotion-24 emotion-25"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-3"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Recent Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "harry",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="emotion-24 emotion-25"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-4"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Recent Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "harry pott",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="emotion-24 emotion-25"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="section-container"
+        >
+          <div
+            className="section-header "
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Popular Suggestions",
+              }
+            }
+          />
+          <ul
+            className="section-list"
+          >
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-5"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Popular Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "sea",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="emotion-24 emotion-25"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+            <li
+              className="li-item "
+              id="MockSearchBox-downshift-item-6"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+              onMouseMove={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "justifyContent": "flex-start",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "display": "flex",
+                    "padding": "0 10px 0 0",
+                  }
+                }
+              >
+                <svg
+                  alt="Popular Search"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="trim"
+              >
+                <div
+                  className="emotion-20 emotion-21"
+                  direction="column"
+                >
+                  <div
+                    title=""
+                  >
+                    <div
+                      className="section-list-item__label"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "sea shore",
+                        }
+                      }
+                      style={undefined}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                className="emotion-24 emotion-25"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="emotion-46 emotion-47"
+        >
+          <div>
+            ↑↓ Navigate
+          </div>
+          <div>
+            ↩ Go
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should render SearchBox with featured suggestions 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
