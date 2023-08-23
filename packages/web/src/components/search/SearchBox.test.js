@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactiveBase from '../basic/ReactiveBase';
 import SearchBox from './SearchBox';
-import { FAQ_SUGGESTIONS, DEFAULT_SUGGESTIONS as MOCK_HITS_DATA, FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS } from './mockData/suggestions';
+import { DOCUMENT_SUGGESTIONS, FAQ_SUGGESTIONS, DEFAULT_SUGGESTIONS as MOCK_HITS_DATA, FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS } from './mockData/suggestions';
 
 const CustomRecentIcon = () => (
 	<svg
@@ -96,6 +96,7 @@ it('should render search icon on the right', () => {
 		.toJSON();
 	expect(elem).toMatchSnapshot();
 });
+
 
 it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props are set to (false/ true)', () => {
 	const elem = renderer
@@ -379,6 +380,23 @@ it('should render SearchBox with FAQ suggestions', () => {
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: FAQ_SUGGESTIONS }}
+					isOpen
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should render SearchBox with Document suggestions', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{ hits: DOCUMENT_SUGGESTIONS }}
 					isOpen
 				/>
 			</ReactiveBase>,
