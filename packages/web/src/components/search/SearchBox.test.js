@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactiveBase from '../basic/ReactiveBase';
 import SearchBox from './SearchBox';
-import { DOCUMENT_SUGGESTIONS, FAQ_SUGGESTIONS, DEFAULT_SUGGESTIONS as MOCK_HITS_DATA, FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS } from './mockData/suggestions';
+import { DEFAULT_SUGGESTIONS, DOCUMENT_SUGGESTIONS, FAQ_SUGGESTIONS, DEFAULT_SUGGESTIONS as MOCK_HITS_DATA, FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS } from './mockData/suggestions';
 
 const CustomRecentIcon = () => (
 	<svg
@@ -107,6 +107,24 @@ it('should render SearchBox with keyboard shortcuts', () => {
 					dataField="original_title"
 					focusShortcuts={['CMD + A']}
 					mockData={{ hits: [] }}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should hide navigation footer', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					showSuggestionsFooter={false}
+					isOpen
+					mockData={{ hits: DEFAULT_SUGGESTIONS }}
 				/>
 			</ReactiveBase>,
 		)
