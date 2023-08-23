@@ -5244,6 +5244,344 @@ exports[`should render SearchBox with featured suggestions 1`] = `
 </div>
 `;
 
+exports[`should render SearchBox with keyboard shortcuts 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+  padding-right: 32px;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-11 emotion-12"
+            >
+              <div
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                CMD + A
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should render SearchBox with tags 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;

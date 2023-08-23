@@ -97,6 +97,23 @@ it('should render search icon on the right', () => {
 	expect(elem).toMatchSnapshot();
 });
 
+it('should render SearchBox with keyboard shortcuts', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					focusShortcuts={['CMD + A']}
+					mockData={{ hits: [] }}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
 
 it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props are set to (false/ true)', () => {
 	const elem = renderer
