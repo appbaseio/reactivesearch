@@ -36,10 +36,10 @@ const TextWithTooltip = ({
 };
 
 TextWithTooltip.propTypes = {
-	title: string.isRequired,
-	className: string.isRequired,
+	title: string,
+	className: string,
 	// eslint-disable-next-line react/forbid-prop-types
-	style: object.isRequired,
+	style: object,
 	innerHTML: string.isRequired,
 };
 
