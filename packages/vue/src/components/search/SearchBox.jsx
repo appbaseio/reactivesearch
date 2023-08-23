@@ -62,6 +62,7 @@ import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer'
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import AIFeedback from '../shared/AIFeedback.jsx';
+import { innerText } from './innerText';
 
 const md = new Remarkable();
 
@@ -197,12 +198,29 @@ const SearchBox = defineComponent({
 				});
 			}
 
-			suggestionsArray = suggestionsArray.map((s) => {
-				if (s.sectionId) {
-					return s;
-				}
-				return { ...s, sectionId: s._suggestion_type };
-			});
+			suggestionsArray
+			= suggestionsArray
+					.map((s) => {
+						if (s.sectionId) {
+							return s;
+						}
+						return { ...s, sectionId: s._suggestion_type };
+					})
+					.map((suggestion) => {
+						if (suggestion._suggestion_type === 'document') {
+							// Document suggestions don't have a meaningful label and value
+							const newSuggestion = { ...suggestion };
+							newSuggestion.label = 'For recent document suggestion, please implement a renderItem method to display label.';
+							const renderItem = this.$slots.renderItem || this.$props.renderItem;
+							if (typeof renderItem === 'function') {
+								const jsxEl = renderItem(newSuggestion);
+								const innerValue = innerText(jsxEl);
+								newSuggestion.value = xss(innerValue);
+							}
+							return newSuggestion;
+						}
+						return suggestion;
+					});
 
 			const sectionsAccumulated = [];
 			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
