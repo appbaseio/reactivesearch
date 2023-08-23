@@ -12,8 +12,8 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@appbaseio/reactivemaps": "4.0.0-rc",
-        "@appbaseio/reactivesearch": "4.0.0",
+        "@appbaseio/reactivemaps": "4.0.0",
+        "@appbaseio/reactivesearch": "4.0.5",
         "@emotion/css": "^11.9.0",
         "emotion": "*",
         "react": "^18.2.0",

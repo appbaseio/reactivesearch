@@ -5,8 +5,8 @@ const InputAddon = styled('span')`
   align-items: center;
   justify-content: center;
   background-color: #fafafa;
-  border: 1px solid #ccc;
-  border-radius: 2px;
+  border: 1px solid transparent;
+  border-radius: 6px;
   color: rgba(0, 0, 0, 0.85);
   font-size: 14px;
   font-weight: 400;

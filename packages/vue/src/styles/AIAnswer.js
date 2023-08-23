@@ -15,7 +15,7 @@ export const Chatbox = styled('div')`
 	border-radius: 6px;
 	margin-bottom: 20px;
 	background-color: ${(props) =>
-		props.theme && props.theme.colors ? props.theme.colors.backgroundColor : '#fff'};
+		props.theme && props.theme.colors && props.theme.colors.backgroundColor ? lighten(0.1, props.theme.colors.backgroundColor) : '#fff'};
 
 	.--trigger-message-wrapper {
 		cursor: pointer;
@@ -316,6 +316,12 @@ code[class*='language-'],
 	p {
 		margin: inherit;
 	}
+
+	${props.themePreset === 'dark'
+		&& `a{
+		color: cornflowerblue
+		}`
+};
 `;
 const messageBGColor = (props) => {
 	let finalBGColor;
@@ -384,17 +390,6 @@ export const MessageInput = styled(TextArea)`
 			? props.theme.colors.titleColor
 			: props.theme.colors.textColor};
 
-	::placeholder {
-		color: ${(props) => props.theme.colors.textColor};
-	}
-
-	:-ms-input-placeholder {
-		color: ${(props) => props.theme.colors.textColor};
-	}
-
-	::-ms-input-placeholder {
-		color: ${(props) => props.theme.colors.textColor};
-	}
 	${({ enterButton }) =>
 		enterButton
 		&& `

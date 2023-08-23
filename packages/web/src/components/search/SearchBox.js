@@ -132,7 +132,6 @@ const SearchBox = (props) => {
 		= props.enableAI && props.AIUIConfig && props.AIUIConfig.renderTriggerMessage
 			? props.AIUIConfig.renderTriggerMessage
 			: null;
-
 	if (
 		props.enableAI
 		&& !renderTriggerMessage
@@ -162,6 +161,10 @@ const SearchBox = (props) => {
 	const [showTypingEffect, setShowTypingEffect] = useState(true);
 	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
 	const [feedbackState, setFeedbackState] = useState(null);
+	const [initialHits, setInitialHits] = useState(null);
+	const [sourceDocIds, setSourceDocIds] = useState(null);
+	const [isUserScrolling, setIsUserScrolling] = useState(false);
+	const [lastScrollTop, setLastScrollTop] = useState(0);
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -178,10 +181,10 @@ const SearchBox = (props) => {
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
-		if (renderTriggerMessage && currentValue && !props.isLoading) {
+		if (renderTriggerMessage && currentValue) {
 			suggestionsArray.unshift({
-				label: 'AI_TRIGGER_MESSAGE',
-				value: 'AI_TRIGGER_MESSAGE',
+				label: renderTriggerMessage,
+				value: renderTriggerMessage,
 				_suggestion_type: '_internal_a_i_trigger',
 			});
 		}
@@ -356,7 +359,6 @@ const SearchBox = (props) => {
 			triggerDefaultQuery(value, {}, shouldExecuteQuery);
 		}
 	};
-
 
 	const onValueSelected = (valueSelected = currentValue, cause, suggestion = null) => {
 		const { onValueSelected } = props;
@@ -630,7 +632,6 @@ const SearchBox = (props) => {
 				suggestion._category,
 			);
 
-
 			onChange(emitValue, () =>
 				triggerQuery({
 					customQuery: true,
@@ -715,8 +716,19 @@ const SearchBox = (props) => {
 					true,
 					!props.enableAI,
 				);
-				if (props.enableAI && !showAIScreen) {
-					setShowAIScreen(true);
+				if (props.enableAI) {
+					if (currentTriggerMode === AI_TRIGGER_MODES.QUESTION) {
+						if (event.target.value.endsWith('?')) {
+							setShowAIScreen(true);
+							setIsOpen(true);
+						} else {
+							setShowAIScreen(false);
+							setIsOpen(false);
+						}
+					} else {
+						setShowAIScreen(false);
+						setIsOpen(false);
+					}
 				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
@@ -863,9 +875,10 @@ const SearchBox = (props) => {
 				if (renderError) {
 					return (
 						<div
-							className={`--ai-answer-error-container ${
-								getClassName(props.innerClass, 'ai-error') || ''
-							}`}
+							className={`--ai-answer-error-container ${getClassName(
+								props.innerClass,
+								'ai-error',
+							) || ''}`}
 						>
 							{isFunction(renderError) ? renderError(AIResponseError) : renderError}
 						</div>
@@ -873,9 +886,10 @@ const SearchBox = (props) => {
 				}
 				return (
 					<div
-						className={`--ai-answer-error-container ${
-							getClassName(props.innerClass, 'ai-error') || ''
-						}`}
+						className={`--ai-answer-error-container ${getClassName(
+							props.innerClass,
+							'ai-error',
+						) || ''}`}
 					>
 						<div className="--default-error-element">
 							<span>
@@ -920,21 +934,12 @@ const SearchBox = (props) => {
 	};
 
 	const getAISourceObjects = () => {
-		const localCache
-			= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
-			&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[componentId];
 		const sourceObjects = [];
 		if (!props.AIResponse) return sourceObjects;
-		const docIds
-			= (props.AIResponse
-				&& props.AIResponse.response
-				&& props.AIResponse.response.answer
-				&& props.AIResponse.response.answer.documentIds)
-			|| [];
-		if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+		const docIds = sourceDocIds || [];
+		if (initialHits) {
 			docIds.forEach((id) => {
-				const foundSourceObj
-					= localCache.meta.hits.hits.find(hit => hit._id === id) || {};
+				const foundSourceObj = initialHits.find(hit => hit._id === id) || {};
 				if (foundSourceObj) {
 					const { _source = {}, ...rest } = foundSourceObj;
 
@@ -1255,7 +1260,7 @@ const SearchBox = (props) => {
 	};
 
 	const renderTags = () => {
-		if (!Array.isArray(selectedTags)) {
+		if (!Array.isArray(selectedTags) || props.mode !== SEARCH_COMPONENTS_MODES.TAG) {
 			return null;
 		}
 		const tagsList = [...selectedTags];
@@ -1303,21 +1308,18 @@ const SearchBox = (props) => {
 
 			return sourceObj._id;
 		};
-
 		return showSourceDocuments
 			&& showAIScreenFooter
-			&& props.AIResponse
-			&& props.AIResponse.response
-			&& props.AIResponse.response.answer
-			&& props.AIResponse.response.answer.documentIds ? (
+			&& Array.isArray(sourceDocIds) && sourceDocIds.length ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
 						{getAISourceObjects().map(el => (
 							<Button
-								className={`--ai-source-tag ${
-								getClassName(props.innerClass, 'ai-source-tag') || ''
-							}`}
+								className={`--ai-source-tag ${getClassName(
+									props.innerClass,
+									'ai-source-tag',
+								) || ''}`}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
 							>
@@ -1339,6 +1341,35 @@ const SearchBox = (props) => {
 		return <HorizontalSkeletonLoader />;
 	};
 
+
+	// eslint-disable-next-line consistent-return
+	useEffect(() => {
+		if (_dropdownULRef.current) {
+			const handleScroll = () => {
+				const scrollTop = _dropdownULRef.current.scrollTop;
+				setLastScrollTop(scrollTop);
+
+				if (scrollTop < lastScrollTop) {
+				// User is scrolling up
+					setIsUserScrolling(true);
+				} else {
+				// User is scrolling down
+					setIsUserScrolling(false);
+				}
+
+				// Update lastScrollTop with the current scroll position
+				setLastScrollTop(scrollTop);
+			};
+
+			_dropdownULRef.current.addEventListener('scroll', handleScroll);
+
+			return () => {
+				if (_dropdownULRef.current)_dropdownULRef.current.removeEventListener('scroll', handleScroll);
+			};
+		}
+	}, [lastScrollTop]);
+
+
 	useEffect(() => {
 		if (onData) {
 			onData({
@@ -1348,6 +1379,9 @@ const SearchBox = (props) => {
 				loading: isLoading,
 				error,
 			});
+		}
+		if (rawData && rawData.hits && rawData.hits.hits) {
+			setInitialHits(rawData.hits.hits);
 		}
 	}, [rawData, aggregationData, isLoading, error]);
 
@@ -1485,6 +1519,37 @@ const SearchBox = (props) => {
 	useEffect(() => {
 		handleTextAreaHeightChange();
 	}, [currentValue, props.suggestions]);
+	React.useEffect(() => {
+		if (
+			props.AIUIConfig
+			&& props.AIUIConfig.showSourceDocuments
+			&& props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& Array.isArray(props.AIResponse.response.answer.documentIds)
+		) {
+			setSourceDocIds(props.AIResponse.response.answer.documentIds);
+
+			const localCache
+				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[props.componentId];
+			if (
+				localCache
+				&& localCache.meta
+				&& localCache.meta.hits
+				&& localCache.meta.hits.hits
+			) {
+				setInitialHits(localCache.meta.hits.hits);
+			}
+		}
+	}, [props.AIResponse]);
+
+	useEffect(() => {
+		if (props.mode !== SEARCH_COMPONENTS_MODES.TAG) {
+			setSelectedTags(false);
+			isTagsMode.current = false;
+		} else { isTagsMode.current = true; }
+	}, [props.mode]);
 
 	useEffect(() => {
 		hasMounted.current = true;
@@ -1671,7 +1736,8 @@ const SearchBox = (props) => {
 																					setTimeout(() => {
 																						_dropdownULRef.current.scrollTo(
 																							{
-																								top: _dropdownULRef
+																								top:
+																								_dropdownULRef
 																									.current
 																									.scrollHeight,
 																								behavior:
@@ -1681,15 +1747,13 @@ const SearchBox = (props) => {
 																					}, 100);
 																				}}
 																				onWhileTyping={() => {
-																					_dropdownULRef.current.scrollTo(
-																						{
-																							top: _dropdownULRef
-																								.current
-																								.scrollHeight,
-																							behavior:
-																							'smooth',
-																						},
-																					);
+																					if (!isUserScrolling) {
+																						_dropdownULRef.current.scrollTo({
+																							top: _dropdownULRef.current.scrollHeight,
+																							behavior: 'smooth',
+																						});
+																						setLastScrollTop(_dropdownULRef.current.scrollHeight);
+																					}
 																				}}
 																				showTypingEffect={
 																					showTypingEffect
@@ -1701,12 +1765,10 @@ const SearchBox = (props) => {
 
 																		{showFeedbackComponent && (
 																			<div
-																				className={`${
-																				getClassName(
+																				className={`${getClassName(
 																					props.innerClass,
 																					'ai-feedback',
-																				) || ''
-																			}`}
+																				) || ''}`}
 																			>
 																				{' '}
 																				<AIFeedback
@@ -1728,8 +1790,7 @@ const SearchBox = (props) => {
 																						setFeedbackState(
 																							{
 																								isRecorded: true,
-																								feedbackType:
-																								useful
+																								feedbackType: useful
 																									? 'positive'
 																									: 'negative',
 																							},
@@ -1789,10 +1850,8 @@ const SearchBox = (props) => {
 																							item: sectionItem,
 																						},
 																					)}
-																					key={`${
-																						sectionItem.sectionId
-																						+ sectionIndex
-																					}-${
+																					key={`${sectionItem.sectionId
+																						+ sectionIndex}-${
 																						sectionItem.value
 																					}`}
 																					style={{
@@ -1830,11 +1889,9 @@ const SearchBox = (props) => {
 																								}}
 																							>
 																								<CustomSvg
-																									iconId={`${
-																										sectionIndex
+																									iconId={`${sectionIndex
 																										+ index
-																										+ 1
-																									}-${
+																										+ 1}-${
 																										sectionItem.value
 																									}-icon`}
 																									className={
@@ -1965,9 +2022,8 @@ const SearchBox = (props) => {
 																			}}
 																		>
 																			<CustomSvg
-																				iconId={`${
-																					index + 1
-																				}-${
+																				iconId={`${index +
+																					1}-${
 																					item.value
 																				}-icon`}
 																				className={
@@ -2046,8 +2102,7 @@ const SearchBox = (props) => {
 													setHighlightedIndex(null);
 												},
 												onKeyPress: withTriggerQuery(props.onKeyPress),
-												onKeyDown: e =>
-													handleKeyDown(e, highlightedIndex),
+												onKeyDown: e => handleKeyDown(e, highlightedIndex),
 												onKeyUp: withTriggerQuery(props.onKeyUp),
 												autoFocus: props.autoFocus,
 											})}

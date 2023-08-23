@@ -37,6 +37,11 @@ export const SearchBoxAISection = styled('div')`
 	(themePreset === 'dark' ? '#424242' : theme.colors.backgroundColor)};
 	color: ${({ theme }) => theme.colors.textColor};
 
+	.--typing-effect-message {
+		li p {
+			margin-left: 0;
+		}
+	}
 	.--ai-answer-error-container {
 		position: absolute;
 		top: 50%;

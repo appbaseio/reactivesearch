@@ -192,12 +192,15 @@ const AIAnswer = defineComponent({
 				if (response && response.error) {
 					this.error = { message: response.error };
 				}
-
 				// pushing message history so far
 				if (messagesHistory && Array.isArray(messagesHistory)) {
 					finalMessages.push(
 						...messagesHistory.filter((msg) => msg.role !== AI_ROLES.SYSTEM),
 					);
+
+					if (finalMessages[0].role === AI_ROLES.USER) {
+						finalMessages.shift();
+					}
 				} else if (response && response.answer && response.answer.text) {
 					finalMessages.push({ role: AI_ROLES.ASSISTANT, content: response.answer.text });
 					if (!this.AISessionId)
