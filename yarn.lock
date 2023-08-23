@@ -197,10 +197,10 @@
     redux "^4.0.0"
     redux-thunk "^2.3.0"
 
-"@appbaseio/reactivemaps@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-4.0.0.tgz#abb785782b40285272956685939d519358f61bc7"
-  integrity sha512-siFWqJEJ8n7HbWAkxhoIHkPdT84cDVSxWQyL5gjF/vF4ot03eFfhZ5FnUsAKWCj4bxsjqNr6WILnNDCKt5Js9w==
+"@appbaseio/reactivemaps@4.0.0-rc":
+  version "4.0.0-rc"
+  resolved "https://registry.yarnpkg.com/@appbaseio/reactivemaps/-/reactivemaps-4.0.0-rc.tgz#f410820e3a9e38595e4e9f434cb95bfd4ca78d9f"
+  integrity sha512-4ZZtTrjC+2H1rEnwHNBPhRNMwsGHY7mDtnBj0SvLp8+G+LIzvy0A547K563vKhpM8zp8SnmNJeEHnrGF3XRXaA==
   dependencies:
     "@appbaseio/rheostat" "^1.0.0-alpha.15"
     "@emotion/core" "^10.0.28"
