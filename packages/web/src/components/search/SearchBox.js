@@ -77,7 +77,7 @@ import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
 import { innerText } from './innerText';
-import TextWithTooltip from './TooltipText';
+import TextWithTooltip from './TextWithTooltip';
 
 const md = new Remarkable();
 
