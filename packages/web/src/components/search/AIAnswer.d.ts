@@ -1,8 +1,9 @@
+
 import * as React from 'react';
 
 import { CommonProps } from '../..';
 import * as types from '../../types';
-import { children } from '../../../types';
+import { children } from '../../types';
 
 export interface AIAnswerProps extends CommonProps {
 	children?: (data: any) => any;

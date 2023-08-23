@@ -8,7 +8,6 @@ const alertBorder = ({ theme }) => css`
 const input = searchBox => css`
 	width: 100%;
 	line-height: 1.5;
-	min-height: 42px;
 	padding: 8px 12px;
 	border: 1px solid #ccc;
 	background-color: #fafafa;
@@ -173,7 +172,6 @@ const Input = styled('input')`
 const noSuggestions = (themePreset, theme) => css`
 	display: block;
 	width: 100%;
-	border: 1px solid #ccc;
 	border-top: none;
 	background-color: #fff;
 	font-size: 0.9rem;
@@ -184,6 +182,11 @@ const noSuggestions = (themePreset, theme) => css`
 	list-style: none;
 	max-height: 260px;
 	overflow-y: auto;
+    border-radius: 6px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+    border-top: 1px solid #f2f0f0;
 
 	&.small {
 		top: 30px;

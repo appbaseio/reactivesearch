@@ -103,6 +103,7 @@ const SearchBox = defineComponent({
 			feedbackState: null,
 			faqAnswer: '',
 			faqQuestion: '',
+			initialHits: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -190,7 +191,7 @@ const SearchBox = defineComponent({
 			if (Array.isArray(this.suggestions) && this.suggestions.length) {
 				suggestionsArray = [...withClickIds(this.suggestions)];
 			}
-			if (this.renderTriggerMessage() && this.currentValue && !this.isLoading) {
+			if (this.renderTriggerMessage() && this.currentValue) {
 				suggestionsArray.unshift({
 					label: this.renderTriggerMessage(),
 					value: 'AI_TRIGGER_MESSAGE',
@@ -349,8 +350,62 @@ const SearchBox = defineComponent({
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
+		const dropdownEle = this.$refs[_dropdownULRef];
+		if (dropdownEle) {
+			const handleScroll = () => {
+				const { scrollTop } = dropdownEle;
+				this.lastScrollTop = scrollTop;
+
+				if (scrollTop < this.lastScrollTop) {
+				// User is scrolling up
+					clearInterval(this.scrollTimerRef);
+					this.isUserScrolling = true;
+				}
+				// Update lastScrollTop with the current scroll position
+				this.lastScrollTop = scrollTop;
+
+			};
+
+			dropdownEle.addEventListener('scroll', handleScroll);
+
+
+		}
+	},
+	updated() {
+		if (this.$props.mode === SEARCH_COMPONENTS_MODES.SELECT && this.$options.isTagsMode === true) {
+			this.$options.isTagsMode = false;
+			this.selectedTags = [];
+		} else if(this.$props.mode === SEARCH_COMPONENTS_MODES.TAG&& this.$options.isTagsMode === false){
+			this.$options.isTagsMode = true;
+		}
 	},
 	watch: {
+		AIResponse(newVal) {
+			if (newVal) {
+				if (
+					this.$props.AIUIConfig
+					&& this.$props.AIUIConfig.showSourceDocuments
+					&& newVal.response
+					&& newVal.response.answer
+					&& Array.isArray(newVal.response.answer.documentIds)
+				) {
+					this.sourceDocIds = newVal.response.answer.documentIds;
+
+					const localCache
+						= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+						&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.$props.componentId];
+
+					if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+						this.initialHits = localCache.meta.hits.hits;
+					}
+
+					if (!this.showAIScreenFooter) {
+						this.showAIScreenFooter = true;
+					}
+				}
+
+			}
+		},
 		dataField(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.triggerCustomQuery(this.$data.currentValue);
@@ -441,6 +496,9 @@ const SearchBox = defineComponent({
 				loading: this.isLoading,
 				error: this.isError,
 			});
+			if (newVal && newVal.hits && newVal.hits.hits) {
+				this.initialHits = newVal.hits.hits;
+			}
 		},
 		aggregationData(newVal) {
 			this.$emit('on-data', {
@@ -476,6 +534,7 @@ const SearchBox = defineComponent({
 		},
 		isAITyping(newVal, oldVal) {
 			const scrollAIContainer = () => {
+				if (this.isUserScrolling) return;
 				const dropdownEle = this.$refs[_dropdownULRef];
 				if (dropdownEle) {
 					dropdownEle.scrollTo({
@@ -486,6 +545,7 @@ const SearchBox = defineComponent({
 			};
 
 			if (!newVal && oldVal) {
+				clearInterval(this.scrollTimerRef)
 				this.showAIScreenFooter = true;
 				if (
 					this.$props.AIUIConfig
@@ -500,7 +560,7 @@ const SearchBox = defineComponent({
 					scrollAIContainer();
 				}, 500);
 			} else if (newVal) {
-				this.scrollTimerRef = setTimeout(() => {
+				this.scrollTimerRef = setInterval(() => {
 					scrollAIContainer();
 				}, 2000);
 			}
@@ -516,7 +576,7 @@ const SearchBox = defineComponent({
 			}
 		},
 		currentValue() {
-			this.handleTextAreaHeightChange();
+			this.$nextTick(this.handleTextAreaHeightChange)
 		},
 	},
 	methods: {
@@ -1414,26 +1474,20 @@ const SearchBox = defineComponent({
 			);
 		},
 		getAISourceObjects() {
-			const localCache
-				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
-				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.componentId];
 			const sourceObjects = [];
 			if (!this.AIResponse) return sourceObjects;
 			const docIds
-				= (this.AIResponse
-					&& this.AIResponse.response
-					&& this.AIResponse.response.answer
-					&& this.AIResponse.response.answer.documentIds)
+			= (this.AIResponse
+				&& this.AIResponse.response
+				&& this.AIResponse.response.answer
+				&& this.AIResponse.response.answer.documentIds)
 				|| [];
 			if (
-				localCache
-				&& localCache.meta
-				&& localCache.meta.hits
-				&& localCache.meta.hits.hits
+				this.initialHits
 			) {
 				docIds.forEach((id) => {
 					const foundSourceObj
-						= localCache.meta.hits.hits.find((hit) => hit._id === id) || {};
+						= this.initialHits.find((hit) => hit._id === id) || {};
 					if (foundSourceObj) {
 						const { _source = {}, ...rest } = foundSourceObj;
 
@@ -1464,7 +1518,7 @@ const SearchBox = defineComponent({
 		},
 		renderAIScreenFooter() {
 			const { AIUIConfig = {} } = this.$props;
-			const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+			const { showSourceDocuments = false, onSourceClick = () => {} } = AIUIConfig || {};
 
 			const renderSourceDocumentLabel = (sourceObj) => {
 				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderSourceDocument) {
@@ -1481,7 +1535,8 @@ const SearchBox = defineComponent({
 				&& this.AIResponse
 				&& this.AIResponse.response
 				&& this.AIResponse.response.answer
-				&& this.AIResponse.response.answer.documentIds ? (
+				&& this.AIResponse.response.answer.documentIds
+				&& this.AIResponse.response.answer.documentIds.length ? (
 					<Footer themePreset={this.$props.themePreset}>
 					Summary generated using the following sources:{' '}
 						<SourceTags>
@@ -1607,7 +1662,7 @@ const SearchBox = defineComponent({
 		const { expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		const hasSuggestions
-			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+			= Array.isArray(this.parsedSuggestions) && this.parsedSuggestions.length;
 		const renderItem = this.$slots.renderItem || this.$props.renderItem;
 
 		return (
