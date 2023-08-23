@@ -2780,7 +2780,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
   fill: #424242;
 }
 
-.emotion-24 {
+.emotion-22 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2795,17 +2795,17 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
   z-index: 111;
 }
 
-.emotion-24 svg {
+.emotion-22 svg {
   cursor: pointer;
   fill: #707070;
   height: 17px;
 }
 
-.emotion-24:hover svg {
+.emotion-22:hover svg {
   fill: #1c1a1a;
 }
 
-.emotion-46 {
+.emotion-40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2915,7 +2915,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
             className="section-header "
             dangerouslySetInnerHTML={
               Object {
-                "__html": "Navigation Links",
+                "__html": "FAQ",
               }
             }
           />
@@ -2943,20 +2943,28 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                   }
                 }
               >
-                <div>
-                  <div
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "<img src=\\"data:image/png;base64,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\\" />",
-                      }
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "left": "3px",
+                      "marginRight": "8px",
+                      "position": "relative",
+                      "transform": "scale(1.35)",
                     }
-                    style={
-                      Object {
-                        "display": "flex",
-                      }
-                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
                   />
-                </div>
+                </svg>
               </div>
               <div
                 className="trim"
@@ -2972,39 +2980,27 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "Go to <mark>Home</mark>",
+                          "__html": "Answer the query: 'harry potter collection (harry potter, #1-6)'. Think step-by-step, cite the source after the answer and ensure the source is from the provided context.",
                         }
                       }
                       style={undefined}
                     />
                   </div>
-                  <div
-                    className="section-list-item__description"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "Blazing fast search with Appbase",
-                      }
-                    }
-                  />
                 </div>
               </div>
+              <button
+                className="emotion-22 emotion-23"
+                onClick={[Function]}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+                  />
+                </svg>
+              </button>
             </li>
-          </ul>
-        </div>
-        <div
-          className="section-container"
-        >
-          <div
-            className="section-header "
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "Tutorbals 🪲",
-              }
-            }
-          />
-          <ul
-            className="section-list"
-          >
             <li
               className="li-item "
               id="MockSearchBox-downshift-item-1"
@@ -3026,17 +3022,28 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                   }
                 }
               >
-                <div>
-                  <img
-                    alt="SearchBox: Tutorial"
-                    src="https://camo.githubusercontent.com/95874e325a752e6ffb604991feb719c6e8bae6a552ed23d4a566bc4d518bc090/68747470733a2f2f692e696d6775722e636f6d2f696952397741732e706e67"
-                    style={
-                      Object {
-                        "maxHeight": "25px",
-                      }
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "left": "3px",
+                      "marginRight": "8px",
+                      "position": "relative",
+                      "transform": "scale(1.35)",
                     }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
                   />
-                </div>
+                </svg>
               </div>
               <div
                 className="trim"
@@ -3052,30 +3059,17 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "Go to <mark>SearchBox</mark> getting started guide",
+                          "__html": " Who is Jason barnie?",
                         }
                       }
                       style={undefined}
                     />
                   </div>
-                  <div
-                    className="section-list-item__description"
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "Headless API to build search interface, easy to use and understand",
-                      }
-                    }
-                  />
                 </div>
               </div>
               <button
-                className="emotion-24 emotion-25"
-                style={
-                  Object {
-                    "pointerEvents": "none",
-                    "transform": "rotate(135deg)",
-                  }
-                }
+                className="emotion-22 emotion-23"
+                onClick={[Function]}
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -3095,7 +3089,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
             className="section-header "
             dangerouslySetInnerHTML={
               Object {
-                "__html": "Recent Suggestions",
+                "__html": "Quick start guide",
               }
             }
           />
@@ -3123,21 +3117,17 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                   }
                 }
               >
-                <svg
-                  alt="Recent Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
+                <div>
+                  <img
+                    alt="vue quick start"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1184px-Vue.js_Logo_2.svg.png"
+                    style={
+                      Object {
+                        "maxHeight": "25px",
+                      }
+                    }
                   />
-                  <path
-                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                  />
-                </svg>
+                </div>
               </div>
               <div
                 className="trim"
@@ -3153,26 +3143,22 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "chasing harry winston",
+                          "__html": "Vue Integration",
                         }
                       }
                       style={undefined}
                     />
                   </div>
+                  <div
+                    className="section-list-item__description"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Step-by-step guide to build search UI with ReactiveSearch(Vue)",
+                      }
+                    }
+                  />
                 </div>
               </div>
-              <button
-                className="emotion-24 emotion-25"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
             </li>
             <li
               className="li-item "
@@ -3195,21 +3181,17 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                   }
                 }
               >
-                <svg
-                  alt="Recent Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
+                <div>
+                  <img
+                    alt="react integration "
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png"
+                    style={
+                      Object {
+                        "maxHeight": "25px",
+                      }
+                    }
                   />
-                  <path
-                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
-                  />
-                </svg>
+                </div>
               </div>
               <div
                 className="trim"
@@ -3225,27 +3207,31 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "harry",
+                          "__html": "React Integration",
                         }
                       }
                       style={undefined}
                     />
                   </div>
+                  <div
+                    className="section-list-item__description"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Step-by-step guide to build search UI with ReactiveSearch(React)",
+                      }
+                    }
+                  />
                 </div>
               </div>
-              <button
-                className="emotion-24 emotion-25"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
             </li>
+          </ul>
+        </div>
+        <div
+          className="section-container"
+        >
+          <ul
+            className="section-list"
+          >
             <li
               className="li-item "
               id="MockSearchBox-downshift-item-4"
@@ -3268,18 +3254,25 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 }
               >
                 <svg
-                  alt="Recent Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "left": "3px",
+                      "marginRight": "8px",
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
                   xmlns="http://www.w3.org/2000/svg"
                 >
+                  <title>
+                    Search
+                  </title>
                   <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
                   />
                 </svg>
               </div>
@@ -3297,7 +3290,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "harry pott",
+                          "__html": "Paradise Lost",
                         }
                       }
                       style={undefined}
@@ -3306,7 +3299,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-24 emotion-25"
+                className="emotion-22 emotion-23"
                 onClick={[Function]}
               >
                 <svg
@@ -3318,22 +3311,6 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </svg>
               </button>
             </li>
-          </ul>
-        </div>
-        <div
-          className="section-container"
-        >
-          <div
-            className="section-header "
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "Popular Suggestions",
-              }
-            }
-          />
-          <ul
-            className="section-list"
-          >
             <li
               className="li-item "
               id="MockSearchBox-downshift-item-5"
@@ -3356,90 +3333,25 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 }
               >
                 <svg
-                  alt="Popular Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
-                  />
-                </svg>
-              </div>
-              <div
-                className="trim"
-              >
-                <div
-                  className="emotion-20 emotion-21"
-                  direction="column"
-                >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "sea",
-                        }
-                      }
-                      style={undefined}
-                    />
-                  </div>
-                </div>
-              </div>
-              <button
-                className="emotion-24 emotion-25"
-                onClick={[Function]}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
-                  />
-                </svg>
-              </button>
-            </li>
-            <li
-              className="li-item "
-              id="MockSearchBox-downshift-item-6"
-              onClick={[Function]}
-              onMouseDown={[Function]}
-              onMouseMove={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "justifyContent": "flex-start",
-                }
-              }
-            >
-              <div
-                style={
-                  Object {
-                    "display": "flex",
-                    "padding": "0 10px 0 0",
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "left": "3px",
+                      "marginRight": "8px",
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
                   }
-                }
-              >
-                <svg
-                  alt="Popular Search"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  width="20"
+                  viewBox="0 0 15 15"
                   xmlns="http://www.w3.org/2000/svg"
                 >
+                  <title>
+                    Search
+                  </title>
                   <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
                   />
                 </svg>
               </div>
@@ -3457,7 +3369,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "sea shore",
+                          "__html": "Antigone",
                         }
                       }
                       style={undefined}
@@ -3466,7 +3378,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </div>
               </div>
               <button
-                className="emotion-24 emotion-25"
+                className="emotion-22 emotion-23"
                 onClick={[Function]}
               >
                 <svg
@@ -3481,7 +3393,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
           </ul>
         </div>
         <div
-          className="emotion-46 emotion-47"
+          className="emotion-40 emotion-41"
         >
           <div>
             ↑↓ Navigate
