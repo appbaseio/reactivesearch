@@ -4247,6 +4247,2792 @@ exports[`should render AI response & askButton & enterButton 1`] = `
 </div>
 `;
 
+exports[`should render AI response & custom source documents 1`] = `
+@keyframes animation-0 {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+  padding-right: 32px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+  top: 0%;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  height: 42px;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+  top: 0%;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  height: 42px;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-19 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+  max-height: min(100vh,401px);
+  border: none;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
+}
+
+.emotion-19.small {
+  top: 30px;
+}
+
+.emotion-19 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-19 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-19 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: unset;
+}
+
+.emotion-19 li .trim {
+  line-height: 20px;
+}
+
+.emotion-19 li.li-item {
+  background-color: #fff;
+}
+
+.emotion-19 li.li-item svg {
+  fill: #0B6AFF;
+}
+
+.emotion-19 li.active-li-item {
+  background-color: #2d84f6;
+  color: #fff;
+}
+
+.emotion-19 li.active-li-item svg {
+  -webkit-transition: fill 0.3s ease-in;
+  transition: fill 0.3s ease-in;
+  fill: #fff!important;
+}
+
+.emotion-19 .section-container {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f2f0f0;
+}
+
+.emotion-19 .section-container .section-header {
+  padding: 10px;
+  font-size: 12px;
+  color: #7f7c7c;
+  background: #f9f9f9;
+}
+
+.emotion-19 .section-container .section-list {
+  padding-left: 0;
+}
+
+.emotion-19 .section-container .section-list-item__label,
+.emotion-19 .section-container .section-list-item__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 .section-container .section-list-item__label *,
+.emotion-19 .section-container .section-list-item__description * {
+  margin: 0;
+  padding: 0;
+}
+
+.emotion-19 .section-container .section-list-item__description {
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-20 {
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 200px;
+  padding-top: 20px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  color: #424242;
+}
+
+.emotion-20 .--typing-effect-message li p {
+  margin-left: 0;
+}
+
+.emotion-20 .--ai-answer-error-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.emotion-20 .--ai-answer-error-container .--default-error-element {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.emotion-22 {
+  position: relative;
+  margin-bottom: 5px;
+  min-height: 100px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.emotion-22 html,
+.emotion-22 body,
+.emotion-22 div,
+.emotion-22 span,
+.emotion-22 applet,
+.emotion-22 object,
+.emotion-22 iframe,
+.emotion-22 h1,
+.emotion-22 h2,
+.emotion-22 h3,
+.emotion-22 h4,
+.emotion-22 h5,
+.emotion-22 h6,
+.emotion-22 p,
+.emotion-22 blockquote,
+.emotion-22 pre,
+.emotion-22 a,
+.emotion-22 abbr,
+.emotion-22 acronym,
+.emotion-22 address,
+.emotion-22 big,
+.emotion-22 cite,
+.emotion-22 code,
+.emotion-22 del,
+.emotion-22 dfn,
+.emotion-22 em,
+.emotion-22 img,
+.emotion-22 ins,
+.emotion-22 kbd,
+.emotion-22 q,
+.emotion-22 s,
+.emotion-22 samp,
+.emotion-22 small,
+.emotion-22 strike,
+.emotion-22 strong,
+.emotion-22 sub,
+.emotion-22 sup,
+.emotion-22 tt,
+.emotion-22 var,
+.emotion-22 b,
+.emotion-22 u,
+.emotion-22 i,
+.emotion-22 center,
+.emotion-22 dl,
+.emotion-22 dt,
+.emotion-22 dd,
+.emotion-22 ol,
+.emotion-22 ul,
+.emotion-22 li,
+.emotion-22 fieldset,
+.emotion-22 form,
+.emotion-22 label,
+.emotion-22 legend,
+.emotion-22 table,
+.emotion-22 caption,
+.emotion-22 tbody,
+.emotion-22 tfoot,
+.emotion-22 thead,
+.emotion-22 tr,
+.emotion-22 th,
+.emotion-22 td,
+.emotion-22 article,
+.emotion-22 aside,
+.emotion-22 canvas,
+.emotion-22 details,
+.emotion-22 embed,
+.emotion-22 figure,
+.emotion-22 figcaption,
+.emotion-22 footer,
+.emotion-22 header,
+.emotion-22 hgroup,
+.emotion-22 menu,
+.emotion-22 nav,
+.emotion-22 output,
+.emotion-22 ruby,
+.emotion-22 section,
+.emotion-22 summary,
+.emotion-22 time,
+.emotion-22 mark,
+.emotion-22 audio,
+.emotion-22 video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.emotion-22 pre {
+  margin: 10px auto;
+}
+
+.emotion-22 table {
+  margin: 10px auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.emotion-22 tr {
+  border-bottom: 1px solid #ccc;
+}
+
+.emotion-22 th,
+.emotion-22 td {
+  text-align: left;
+  padding: 4px;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+.emotion-22 pre,
+.emotion-22 code {
+  padding: 0.6em 0.4em;
+  background: #595959;
+}
+
+.emotion-22 pre {
+  color: #fff;
+  white-space: pre-wrap;
+}
+
+.emotion-22 code {
+  line-height: normal;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+  margin-top: 5px;
+  display: inline-block;
+  overflow: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.emotion-22 code[class*='language-'],
+.emotion-22 pre[class*='language-'] {
+  color: #fff;
+  text-shadow: none;
+}
+
+.emotion-22 ul,
+.emotion-22 ol {
+  padding-left: 1rem;
+}
+
+.emotion-22 p {
+  margin: 8px auto;
+}
+
+.emotion-22 pre {
+  white-space: pre-wrap;
+}
+
+.emotion-22 code,
+.emotion-22 pre {
+  display: revert;
+}
+
+.emotion-24 {
+  color: #777;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-animation: animation-0 0.5s ease-out;
+  animation: animation-0 0.5s ease-out;
+  padding: 10px 0;
+  background: white;
+  color: #424242;
+}
+
+.emotion-26 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.emotion-26 .--ai-source-tag {
+  display: inline-block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emotion-28 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  background-color: #fff;
+}
+
+.emotion-28:hover,
+.emotion-28:focus {
+  background-color: #ccc;
+}
+
+.emotion-28:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-28:hover,
+.emotion-28:focus {
+  background-color: #e6e6e6;
+}
+
+.emotion-28.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-42 .--feedback-svgs-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.emotion-42 .--feedback-svgs-wrapper svg {
+  cursor: pointer;
+  -webkit-transition: all ease-in 0.1s;
+  transition: all ease-in 0.1s;
+}
+
+.emotion-42 .--feedback-svgs-wrapper svg.selected {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+  cursor: default;
+}
+
+.emotion-42 .--feedback-svgs-wrapper svg:hover {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.emotion-42 .--feedback-input-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 7px;
+}
+
+.emotion-44 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-44 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 17px;
+}
+
+.emotion-44:hover svg {
+  fill: #1c1a1a;
+}
+
+.emotion-58 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={true}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-11 emotion-12"
+            >
+              <div
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul
+        className=" emotion-19"
+      >
+        <div
+          className="emotion-20 emotion-21"
+        >
+          <div
+            className="emotion-22 emotion-23"
+          >
+            <div
+              className="--typing-effect-message"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<p>&quot;Grasshopper Jungle&quot; is a young adult science fiction novel written by Andrew Smith. It tells the story of Austin Szerba, a teenager living in the small town of Ealing, Iowa. The town is suddenly invaded by giant, man-eating praying mantises that were created as part of a military experiment gone wrong.As Austin and his best friend Robby navigate through the chaos, they also grapple with their own personal struggles. Austin finds himself torn between his girlfriend, Shann, and his confusing feelings towards both her and his openly gay best friend, Robby.The novel touches on themes of sexuality, friendship, and identity, while also exploring the idea of humanity and what it means to be human. It combines elements of coming-of-age with science fiction, creating a unique and thought-provoking story.&quot;Grasshopper Jungle&quot; received critical acclaim for its unconventional storytelling, strong character development, and exploration of complex social issues. It has been described as a dark, thrilling, and sometimes humorous tale that challenges traditional notions of literature for young adults.</p>
+",
+                }
+              }
+            />
+          </div>
+          <div
+            className="emotion-24 emotion-25"
+          >
+            Summary generated using the following sources:
+             
+            <div
+              className="emotion-26 emotion-27"
+            >
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                2TftXXEBdEU4aeo6Gdqs
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                nj7tXXEBhDwVijd9MkkX
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                2TftXXEBdEU4aeo6hOBa
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                grDtXXEB2-YohfeSsMfi
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                GLDtXXEB2-YohfeSysvk
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                kD7tXXEBhDwVijd94lyY
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                FT7tXXEBhDwVijd9MksX
+              </a>
+            </div>
+          </div>
+          <div>
+             
+            <div
+              className="emotion-42 emotion-43"
+            >
+              <div
+                className="--feedback-svgs-wrapper"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  onClick={[Function]}
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
+                  />
+                </svg>
+                <svg
+                  fill="none"
+                  height="1em"
+                  onClick={[Function]}
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-2"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-3"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-4"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-5"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-6"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-44 emotion-45"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <div
+          className="emotion-58 emotion-59"
+        >
+          <div>
+            ↑↓ Navigate
+          </div>
+          <div>
+            ↩ Go
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render AI response & custom source documents 2`] = `
+@keyframes animation-0 {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    -ms-transform: translateY(20px);
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+}
+
+.emotion-7 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-9 {
+  width: 100%;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding-left: 36px;
+  padding-right: 32px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+}
+
+.emotion-9:focus {
+  background-color: #fff;
+}
+
+.emotion-9::-webkit-search-decoration,
+.emotion-9::-webkit-search-cancel-button,
+.emotion-9::-webkit-search-results-button,
+.emotion-9::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
+  top: 0%;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  height: 42px;
+}
+
+.emotion-13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-13 svg,
+.emotion-13 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-13 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-13 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-13 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-13 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-13 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-13 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-13 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-13 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-13 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-13 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-13 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-13 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-13 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 0;
+  top: 0%;
+  -webkit-transform: translateY(0);
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  height: 42px;
+}
+
+.emotion-17 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-17 svg,
+.emotion-17 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-17 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-17 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-17 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-17 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-17 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-17 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-17 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-17 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-17 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-17 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-17 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-17 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-17 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-19 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 375px;
+  overflow-y: auto;
+  max-height: min(100vh,401px);
+  border: none;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
+}
+
+.emotion-19.small {
+  top: 30px;
+}
+
+.emotion-19 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-19 li .trim {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: #eee;
+}
+
+.emotion-19 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-19 li:hover,
+.emotion-19 li:focus {
+  background-color: unset;
+}
+
+.emotion-19 li .trim {
+  line-height: 20px;
+}
+
+.emotion-19 li.li-item {
+  background-color: #fff;
+}
+
+.emotion-19 li.li-item svg {
+  fill: #0B6AFF;
+}
+
+.emotion-19 li.active-li-item {
+  background-color: #2d84f6;
+  color: #fff;
+}
+
+.emotion-19 li.active-li-item svg {
+  -webkit-transition: fill 0.3s ease-in;
+  transition: fill 0.3s ease-in;
+  fill: #fff!important;
+}
+
+.emotion-19 .section-container {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f2f0f0;
+}
+
+.emotion-19 .section-container .section-header {
+  padding: 10px;
+  font-size: 12px;
+  color: #7f7c7c;
+  background: #f9f9f9;
+}
+
+.emotion-19 .section-container .section-list {
+  padding-left: 0;
+}
+
+.emotion-19 .section-container .section-list-item__label,
+.emotion-19 .section-container .section-list-item__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-19 .section-container .section-list-item__label *,
+.emotion-19 .section-container .section-list-item__description * {
+  margin: 0;
+  padding: 0;
+}
+
+.emotion-19 .section-container .section-list-item__description {
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-20 {
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 200px;
+  padding-top: 20px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  color: #424242;
+}
+
+.emotion-20 .--typing-effect-message li p {
+  margin-left: 0;
+}
+
+.emotion-20 .--ai-answer-error-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.emotion-20 .--ai-answer-error-container .--default-error-element {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.emotion-22 {
+  position: relative;
+  margin-bottom: 5px;
+  min-height: 100px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.emotion-22 html,
+.emotion-22 body,
+.emotion-22 div,
+.emotion-22 span,
+.emotion-22 applet,
+.emotion-22 object,
+.emotion-22 iframe,
+.emotion-22 h1,
+.emotion-22 h2,
+.emotion-22 h3,
+.emotion-22 h4,
+.emotion-22 h5,
+.emotion-22 h6,
+.emotion-22 p,
+.emotion-22 blockquote,
+.emotion-22 pre,
+.emotion-22 a,
+.emotion-22 abbr,
+.emotion-22 acronym,
+.emotion-22 address,
+.emotion-22 big,
+.emotion-22 cite,
+.emotion-22 code,
+.emotion-22 del,
+.emotion-22 dfn,
+.emotion-22 em,
+.emotion-22 img,
+.emotion-22 ins,
+.emotion-22 kbd,
+.emotion-22 q,
+.emotion-22 s,
+.emotion-22 samp,
+.emotion-22 small,
+.emotion-22 strike,
+.emotion-22 strong,
+.emotion-22 sub,
+.emotion-22 sup,
+.emotion-22 tt,
+.emotion-22 var,
+.emotion-22 b,
+.emotion-22 u,
+.emotion-22 i,
+.emotion-22 center,
+.emotion-22 dl,
+.emotion-22 dt,
+.emotion-22 dd,
+.emotion-22 ol,
+.emotion-22 ul,
+.emotion-22 li,
+.emotion-22 fieldset,
+.emotion-22 form,
+.emotion-22 label,
+.emotion-22 legend,
+.emotion-22 table,
+.emotion-22 caption,
+.emotion-22 tbody,
+.emotion-22 tfoot,
+.emotion-22 thead,
+.emotion-22 tr,
+.emotion-22 th,
+.emotion-22 td,
+.emotion-22 article,
+.emotion-22 aside,
+.emotion-22 canvas,
+.emotion-22 details,
+.emotion-22 embed,
+.emotion-22 figure,
+.emotion-22 figcaption,
+.emotion-22 footer,
+.emotion-22 header,
+.emotion-22 hgroup,
+.emotion-22 menu,
+.emotion-22 nav,
+.emotion-22 output,
+.emotion-22 ruby,
+.emotion-22 section,
+.emotion-22 summary,
+.emotion-22 time,
+.emotion-22 mark,
+.emotion-22 audio,
+.emotion-22 video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.emotion-22 pre {
+  margin: 10px auto;
+}
+
+.emotion-22 table {
+  margin: 10px auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.emotion-22 tr {
+  border-bottom: 1px solid #ccc;
+}
+
+.emotion-22 th,
+.emotion-22 td {
+  text-align: left;
+  padding: 4px;
+  border: 1px solid;
+  border-collapse: collapse;
+}
+
+.emotion-22 pre,
+.emotion-22 code {
+  padding: 0.6em 0.4em;
+  background: #595959;
+}
+
+.emotion-22 pre {
+  color: #fff;
+  white-space: pre-wrap;
+}
+
+.emotion-22 code {
+  line-height: normal;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+  margin-top: 5px;
+  display: inline-block;
+  overflow: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.emotion-22 code[class*='language-'],
+.emotion-22 pre[class*='language-'] {
+  color: #fff;
+  text-shadow: none;
+}
+
+.emotion-22 ul,
+.emotion-22 ol {
+  padding-left: 1rem;
+}
+
+.emotion-22 p {
+  margin: 8px auto;
+}
+
+.emotion-22 pre {
+  white-space: pre-wrap;
+}
+
+.emotion-22 code,
+.emotion-22 pre {
+  display: revert;
+}
+
+.emotion-24 {
+  color: #777;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1rem;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-animation: animation-0 0.5s ease-out;
+  animation: animation-0 0.5s ease-out;
+  padding: 10px 0;
+  background: white;
+  color: #424242;
+}
+
+.emotion-26 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.emotion-26 .--ai-source-tag {
+  display: inline-block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.emotion-28 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  min-height: 30px;
+  word-wrap: break-word;
+  padding: 5px 12px;
+  line-height: 1.2rem;
+  background-color: #eee;
+  color: #424242;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  background-color: #fff;
+}
+
+.emotion-28:hover,
+.emotion-28:focus {
+  background-color: #ccc;
+}
+
+.emotion-28:focus {
+  outline: 0;
+  border-color: rgba(11,106,255,0.6);
+  box-shadow: 0 0 0 2px rgba(11,106,255,0.3);
+}
+
+.emotion-28:hover,
+.emotion-28:focus {
+  background-color: #e6e6e6;
+}
+
+.emotion-28.enter-btn {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  height: 100%;
+}
+
+.emotion-42 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-42 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 17px;
+}
+
+.emotion-42:hover svg {
+  fill: #1c1a1a;
+}
+
+.emotion-56 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={true}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-9 emotion-10"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+          <div>
+            <div
+              className="emotion-11 emotion-12"
+            >
+              <div
+                className="emotion-13 emotion-14"
+                onClick={[Function]}
+              >
+                /
+              </div>
+            </div>
+            <div
+              className="emotion-15 emotion-12"
+            >
+              <div
+                className="emotion-17 emotion-18"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul
+        className=" emotion-19"
+      >
+        <div
+          className="emotion-20 emotion-21"
+        >
+          <div
+            className="emotion-22 emotion-23"
+          >
+            <div
+              className="--typing-effect-message"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "<p>&quot;Grasshopper Jungle&quot; is a young adult science fiction novel written by Andrew Smith. It tells the story of Austin Szerba, a teenager living in the small town of Ealing, Iowa. The town is suddenly invaded by giant, man-eating praying mantises that were created as part of a military experiment gone wrong.As Austin and his best friend Robby navigate through the chaos, they also grapple with their own personal struggles. Austin finds himself torn between his girlfriend, Shann, and his confusing feelings towards both her and his openly gay best friend, Robby.The novel touches on themes of sexuality, friendship, and identity, while also exploring the idea of humanity and what it means to be human. It combines elements of coming-of-age with science fiction, creating a unique and thought-provoking story.&quot;Grasshopper Jungle&quot; received critical acclaim for its unconventional storytelling, strong character development, and exploration of complex social issues. It has been described as a dark, thrilling, and sometimes humorous tale that challenges traditional notions of literature for young adults.</p>
+",
+                }
+              }
+            />
+          </div>
+          <div
+            className="emotion-24 emotion-25"
+          >
+            Summary generated using the following sources:
+             
+            <div
+              className="emotion-26 emotion-27"
+            >
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  Grasshopper Jungle
+                </span>
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  The Jungle
+                </span>
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  Rubyfruit Jungle
+                </span>
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  Lipstick Jungle
+                </span>
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  The Jungle Books
+                </span>
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  The Jungle Book
+                </span>
+              </a>
+              <a
+                className="--ai-source-tag  emotion-28 emotion-29"
+                onClick={[Function]}
+              >
+                <span
+                  aria-label="img"
+                  role="img"
+                >
+                  ❤️ 
+                  Welcome to the Jungle
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-2"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-3"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-4"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-5"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-6"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-42 emotion-43"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <div
+          className="emotion-56 emotion-57"
+        >
+          <div>
+            ↑↓ Navigate
+          </div>
+          <div>
+            ↩ Go
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should render AI response & showSourceDocuments 1`] = `
 @keyframes animation-0 {
   0% {
