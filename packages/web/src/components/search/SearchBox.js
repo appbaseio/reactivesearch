@@ -1577,6 +1577,8 @@ const SearchBox = (props) => {
 	}, []);
 
 	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
+	// eslint-disable-next-line react/prop-types
+	const isTestingAI = props.testMode && props.enableAI;
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
@@ -1684,7 +1686,7 @@ const SearchBox = (props) => {
 											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{showAIScreen ? (
+											{showAIScreen || isTestingAI ? (
 												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
@@ -1776,7 +1778,7 @@ const SearchBox = (props) => {
 																				}}
 																				showTypingEffect={
 																					showTypingEffect
-																				&& !isAITyping
+																				&& !isAITyping && !isTestingAI
 																				}
 																			/>
 																		</Answer>
