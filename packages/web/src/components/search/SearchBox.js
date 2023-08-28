@@ -1342,6 +1342,7 @@ const SearchBox = (props) => {
 								) || ''}`}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
+								key={el._id}
 							>
 								{renderSourceDocumentLabel(el)}
 							</Button>
