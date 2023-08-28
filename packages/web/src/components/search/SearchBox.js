@@ -1327,10 +1327,9 @@ const SearchBox = (props) => {
 
 			return sourceObj._id;
 		};
-		return showSourceDocuments
-			// eslint-disable-next-line react/prop-types
-			&& (showAIScreenFooter || props.testMode)
-			&& Array.isArray(sourceDocIds) && sourceDocIds.length ? (
+		return (showSourceDocuments
+			&& (showAIScreenFooter)
+			&& Array.isArray(sourceDocIds) && sourceDocIds.length) || props.testMode ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>

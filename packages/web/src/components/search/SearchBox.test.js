@@ -562,6 +562,7 @@ it('should render AI response & triggerOn=manual', async () => {
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
+
 it('should render CUSTOM AI response ', async () => {
 	const elem = renderer
 		.create(
@@ -592,5 +593,6 @@ it('should render CUSTOM AI response ', async () => {
 	await act(async () => {
 		await new Promise(resolve => setTimeout(resolve, 0));
 	});
+
 	expect(elem.toJSON()).toMatchSnapshot();
 });
