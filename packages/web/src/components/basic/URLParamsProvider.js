@@ -201,7 +201,10 @@ class URLParamsProvider extends Component {
 			// TODO: support for NestedList
 			if (value.location) return value;
 			if (value.category) return value;
-			if (Object.hasOwn(value, 'mainLabel') || Object.hasOwn(value, 'secondaryLabel')) {
+			if (
+				Object.prototype.hasOwnProperty.call(value, 'mainLabel')
+				|| Object.prototype.hasOwnProperty.call(value, 'secondaryLabel')
+			) {
 				return value;
 			}
 			return value.label || value.key || null;

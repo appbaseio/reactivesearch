@@ -13,6 +13,7 @@ import SingleDropdownList from './components/list/SingleDropdownList.jsx';
 import MultiDropdownList from './components/list/MultiDropdownList.jsx';
 import ToggleButton from './components/list/ToggleButton.jsx';
 import ReactiveComponent from './components/basic/ReactiveComponent.jsx';
+import ReactiveComponentPrivate from './components/basic/ReactiveComponentPrivate.jsx';
 import SelectedFilters from './components/basic/SelectedFilters.jsx';
 import SingleRange from './components/range/SingleRange.jsx';
 import MultiRange from './components/range/MultiRange.jsx';
@@ -47,6 +48,7 @@ export {
 	RangeSlider,
 	DynamicRangeSlider,
 	ReactiveComponent,
+	ReactiveComponentPrivate,
 	SelectedFilters,
 	SingleDropdownList,
 	MultiDropdownList,

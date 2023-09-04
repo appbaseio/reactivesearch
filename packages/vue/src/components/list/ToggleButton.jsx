@@ -16,6 +16,7 @@ const ToggleButton = {
 	name: 'ToggleButton',
 	props: {
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,

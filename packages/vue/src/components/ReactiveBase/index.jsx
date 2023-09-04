@@ -3,7 +3,7 @@ import { isEqual, transformRequestUsingEndpoint } from '@appbaseio/reactivecore/
 import { updateAnalyticsConfig } from '@appbaseio/reactivecore/lib/actions/analytics';
 import VueTypes from 'vue-types';
 import Appbase from 'appbase-js';
-import AppbaseAnalytics from '@appbaseio/analytics'
+import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
 
 import Provider from '../Provider';
@@ -38,7 +38,6 @@ const ReactiveBase = {
 		enableAppbase: VueTypes.bool.def(false),
 		credentials: types.string,
 		headers: types.headers,
-		queryParams: types.string,
 		theme: VueTypes.object.def({}),
 		themePreset: VueTypes.string.def('light'),
 		type: types.string,
@@ -55,6 +54,7 @@ const ReactiveBase = {
 		mongodb: types.mongodb,
 		endpoint: types.endpointConfig,
 		preferences: VueTypes.object,
+		httpRequestTimeout: VueTypes.number.def(30),
 	},
 	provide() {
 		return {
@@ -95,23 +95,26 @@ const ReactiveBase = {
 		mongodb() {
 			this.updateState(this.$props);
 		},
+		httpRequestTimeout() {
+			this.updateState(this.$props);
+		},
 	},
 	computed: {
 		getHeaders() {
 			const { enableAppbase, headers, appbaseConfig, mongodb, endpoint } = this.$props;
 			const { enableTelemetry } = appbaseConfig || {};
 			return {
-				...(enableAppbase
-					&& !mongodb && {
-					'X-Search-Client': X_SEARCH_CLIENT,
-					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
-				}),
+				...(enableAppbase &&
+					!mongodb && {
+						'X-Search-Client': X_SEARCH_CLIENT,
+						...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
+					}),
 				...headers,
-				...(enableAppbase
-					&& endpoint
-					&& endpoint.headers && {
-					...endpoint.headers,
-				}),
+				...(enableAppbase &&
+					endpoint &&
+					endpoint.headers && {
+						...endpoint.headers,
+					}),
 			};
 		},
 	},
@@ -121,8 +124,8 @@ const ReactiveBase = {
 			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
-			const credentials
-				= props.url && props.url.trim() !== '' && !props.credentials
+			const credentials =
+				props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
 			let url = props.url && props.url.trim() !== '' ? props.url : '';
@@ -150,6 +153,7 @@ const ReactiveBase = {
 				analyticsConfig: props.appbaseConfig,
 				mongodb: props.mongodb,
 				endpoint: props.endpoint,
+				httpRequestTimeout: (props.httpRequestTimeout || 0) * 1000 || 30000,
 			};
 			let queryParams = '';
 
@@ -207,7 +211,8 @@ const ReactiveBase = {
 				credentials: appbaseRef.credentials,
 				// When endpoint prop is used index is not defined, so we use _default
 				index: appbaseRef.app || '_default',
-				globalCustomEvents: this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
+				globalCustomEvents:
+					this.$props.appbaseConfig && this.$props.appbaseConfig.customEvents,
 			};
 
 			try {
@@ -217,10 +222,13 @@ const ReactiveBase = {
 						/\/\/(.*?)\/.*/,
 						'//$1',
 					);
-					const headerCredentials = this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
-					analyticsInitConfig.credentials = headerCredentials && headerCredentials.replace('Basic ', '');
+					const headerCredentials =
+						this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
+					analyticsInitConfig.credentials =
+						headerCredentials && headerCredentials.replace('Basic ', '');
 					// Decode the credentials
-					analyticsInitConfig.credentials = analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
+					analyticsInitConfig.credentials =
+						analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 				}
 			} catch (e) {
 				console.error('Endpoint not set correctly for analytics');

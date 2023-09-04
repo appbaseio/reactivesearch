@@ -42,6 +42,7 @@ const types = {
 	boolRequired: VueTypes.bool.isRequired,
 	components: VueTypes.arrayOf(VueTypes.string),
 	children: VueTypes.any,
+	compoundClause: VueTypes.oneOf(['filter', 'must']),
 	data: VueTypes.arrayOf(VueTypes.object),
 	dataFieldArray: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)])
 		.isRequired,
@@ -159,6 +160,7 @@ const types = {
 		useCache: VueTypes.bool,
 		customEvents: VueTypes.object,
 		enableTelemetry: VueTypes.bool.def(true),
+		queryParams: VueTypes.object,
 	}).def({}),
 	mongodb: VueTypes.shape({
 		db: VueTypes.string,
