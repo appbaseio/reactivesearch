@@ -39,6 +39,11 @@ const ReactiveComponent = {
 		index: VueTypes.string,
 		endpoint: types.endpointConfig,
 	},
+	data() {
+		 return {
+			currentValue: this.selectedValue,
+		};
+	},
 	created() {
 		const props = this.$props;
 		this.internalComponent = null;
@@ -163,6 +168,12 @@ const ReactiveComponent = {
 		}
 	},
 	watch: {
+		  selectedValue(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.$emit('data', this.getData());
+				this.currentValue = newVal;
+			}
+		},
 		hits(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.$emit('data', this.getData());
@@ -262,13 +273,13 @@ const ReactiveComponent = {
 	render() {
 		try {
 			const dom = this.$scopedSlots.default;
-			const { error, isLoading, selectedValue } = this;
+			const { error, isLoading  } = this;
 			const propsToBePassed = {
 				error,
 				loading: isLoading,
 				...this.getData(),
-				value: selectedValue,
 				setQuery: this.setQuery,
+				value: this.currentValue,
 			};
 			return <div>{dom(propsToBePassed)}</div>;
 		} catch (e) {
