@@ -168,7 +168,7 @@ const ReactiveComponent = {
 		}
 	},
 	watch: {
-		  selectedValue(newVal, oldVal) {
+		selectedValue(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.$emit('data', this.getData());
 				this.currentValue = newVal;
