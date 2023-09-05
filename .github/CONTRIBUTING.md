@@ -118,3 +118,9 @@ The website source code is available in `/site` which also includes the demo app
 <hr />
 
 If you run into any problems please feel free to reach out to us 🙂
+
+# Snapshot tests
+
+When you make changes to `reactivecore` we would need to publish a new version of the `reactivecore` library.
+
+Because the CI environment uses the npm package and not the submodule, the snapshot tests would fail.
