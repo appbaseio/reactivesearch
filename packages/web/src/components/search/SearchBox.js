@@ -196,7 +196,7 @@ const SearchBox = (props) => {
 			if (suggestion._suggestion_type === 'document') {
 				// Document suggestions don't have a meaningful label and value
 				const newSuggestion = { ...suggestion };
-				newSuggestion.label = 'For recent document suggestion, please implement a renderItem method to display label.';
+				newSuggestion.label = 'For recent document suggestions, please implement a renderItem method to display label.';
 				if (typeof props.renderItem === 'function') {
 					const jsxEl = props.renderItem(newSuggestion);
 					const innerValue = innerText(jsxEl);
@@ -1539,7 +1539,8 @@ const SearchBox = (props) => {
 	useEffect(() => {
 		handleTextAreaHeightChange();
 	}, [currentValue, props.suggestions]);
-	React.useEffect(() => {
+
+	useEffect(() => {
 		if (
 			props.AIUIConfig
 			&& props.AIUIConfig.showSourceDocuments
@@ -1577,9 +1578,17 @@ const SearchBox = (props) => {
 		listenForFocusShortcuts();
 	}, []);
 
+	// Set testing environment
+	useEffect(() => {
+		if (props.testMode) {
+			setIsOpen(true);
+			if (props.enableAI) {
+				setShowAIScreen(true);
+			}
+		}
+	}, []);
+
 	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
-	// eslint-disable-next-line react/prop-types
-	const isTestingAI = props.testMode && props.enableAI;
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
@@ -1678,7 +1687,7 @@ const SearchBox = (props) => {
 										})}
 									{isOpen && renderLoader()}
 									{isOpen && renderError()}
-									{isOpen ? (
+									{isOpen && hasSuggestions() && !hasCustomRenderer(props) ? (
 										<ul
 											css={searchboxSuggestions(
 												props.themePreset,
@@ -1687,7 +1696,7 @@ const SearchBox = (props) => {
 											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{showAIScreen || isTestingAI ? (
+											{showAIScreen ? (
 												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
@@ -1779,7 +1788,7 @@ const SearchBox = (props) => {
 																				}}
 																				showTypingEffect={
 																					showTypingEffect
-																				&& !isAITyping && !isTestingAI
+																				&& !isAITyping && !props.testMode
 																				}
 																			/>
 																		</Answer>
@@ -1835,7 +1844,7 @@ const SearchBox = (props) => {
 													{renderError(true)}
 												</SearchBoxAISection>
 											) : null}
-											{!showAIScreen && hasSuggestions() && !hasCustomRenderer(props) ? (
+											{!showAIScreen ? (
 												<Fragment>
 													{parsedSuggestions().map((item, itemIndex) => {
 														const index = indexOffset + itemIndex;
@@ -2336,6 +2345,8 @@ SearchBox.propTypes = {
 	sessionIdFromStore: types.string,
 	isAITyping: types.boolRequired,
 	removeAIResponse: types.func,
+	// This is an internal prop just for testing
+	testMode: types.bool,
 };
 
 SearchBox.defaultProps = {
