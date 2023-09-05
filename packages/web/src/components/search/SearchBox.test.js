@@ -576,7 +576,7 @@ it('should render CUSTOM AI response ', async () => {
 						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
 						rawData: AI.MOCK_RAW_DATA,
 					}}
-					rendeAIAnswer={
+					renderAIAnswer={
 						({
 							answer,
 
