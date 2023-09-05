@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import renderer, { act, create } from 'react-test-renderer';
 import ReactiveBase from '../basic/ReactiveBase';
 import SearchBox from './SearchBox';
 import { AI, DEFAULT_SUGGESTIONS, DOCUMENT_SUGGESTIONS, FAQ_SUGGESTIONS, DEFAULT_SUGGESTIONS as MOCK_HITS_DATA, FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS } from './mockData/suggestions';
@@ -440,9 +440,11 @@ it('should render SearchBox with Document suggestions', () => {
 	expect(elem).toMatchSnapshot();
 });
 
-it('should render AI response', async () => {
-	const elem = renderer
-		.create(
+it('should render AI response', () => {
+	let elem;
+
+	act(() => {
+		elem = create(
 			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SearchBox
 					testMode
@@ -458,19 +460,17 @@ it('should render AI response', async () => {
 				/>
 			</ReactiveBase>,
 		);
-
-	// Wait for all updates to complete
-	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
 
-it('should render AI response & askButton & enterButton', async () => {
-	const elem = renderer
-		.create(
+it('should render AI response & askButton & enterButton', () => {
+	let elem;
+
+	act(() => {
+		elem = create(
 			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SearchBox
 					testMode
@@ -489,19 +489,16 @@ it('should render AI response & askButton & enterButton', async () => {
 				/>
 			</ReactiveBase>,
 		);
-
-	// Wait for all updates to complete
-	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
 
-it('should render AI response & triggerOn=question', async () => {
-	const elem = renderer
-		.create(
+it('should render AI response & triggerOn=question', () => {
+	let elem;
+	act(() => {
+		elem = create(
 			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SearchBox
 					componentId="MockSearchBox"
@@ -521,18 +518,15 @@ it('should render AI response & triggerOn=question', async () => {
 				/>
 			</ReactiveBase>,
 		);
-
-	// Wait for all updates to complete
-	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 0));
 	});
 
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
-it('should render AI response & triggerOn=manual', async () => {
-	const elem = renderer
-		.create(
+it('should render AI response & triggerOn=manual', () => {
+	let elem;
+	act(() => {
+		 elem = create(
 			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SearchBox
 					componentId="MockSearchBox"
@@ -553,19 +547,17 @@ it('should render AI response & triggerOn=manual', async () => {
 				/>
 			</ReactiveBase>,
 		);
-
-	// Wait for all updates to complete
-	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 0));
 	});
+
 
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
 
-it('should render CUSTOM AI response ', async () => {
-	const elem = renderer
-		.create(
+it('should render CUSTOM AI response ', () => {
+	let elem;
+	act(() => {
+		elem = create(
 			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SearchBox
 					testMode
@@ -588,11 +580,6 @@ it('should render CUSTOM AI response ', async () => {
 				/>
 			</ReactiveBase>,
 		);
-
-		// Wait for all updates to complete
-	await act(async () => {
-		await new Promise(resolve => setTimeout(resolve, 0));
 	});
-
 	expect(elem.toJSON()).toMatchSnapshot();
 });

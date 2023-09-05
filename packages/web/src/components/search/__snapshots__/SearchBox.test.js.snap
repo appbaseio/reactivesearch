@@ -3658,49 +3658,6 @@ exports[`should render AI response & askButton & enterButton 1`] = `
   text-overflow: ellipsis;
 }
 
-.emotion-30 .--feedback-svgs-wrapper {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  gap: 5px;
-}
-
-.emotion-30 .--feedback-svgs-wrapper svg {
-  cursor: pointer;
-  -webkit-transition: all ease-in 0.1s;
-  transition: all ease-in 0.1s;
-}
-
-.emotion-30 .--feedback-svgs-wrapper svg.selected {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
-  cursor: default;
-}
-
-.emotion-30 .--feedback-svgs-wrapper svg:hover {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
-.emotion-30 .--feedback-input-wrapper {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 7px;
-}
-
 <div
   className="emotion-0 emotion-1"
   style={Object {}}
@@ -3815,53 +3772,10 @@ exports[`should render AI response & askButton & enterButton 1`] = `
             className="emotion-26 emotion-27"
           >
             Summary generated using the following sources:
-
+             
             <div
               className="emotion-28 emotion-29"
             />
-          </div>
-          <div>
-
-            <div
-              className="emotion-30 emotion-31"
-            >
-              <div
-                className="--feedback-svgs-wrapper"
-              >
-                <svg
-                  fill="none"
-                  height="1em"
-                  onClick={[Function]}
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"
-                  />
-                </svg>
-                <svg
-                  fill="none"
-                  height="1em"
-                  onClick={[Function]}
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"
-                  />
-                </svg>
-              </div>
-            </div>
           </div>
         </div>
       </ul>
@@ -6669,7 +6583,7 @@ exports[`should render AI response 1`] = `
             className="emotion-24 emotion-25"
           >
             Summary generated using the following sources:
-
+             
             <div
               className="emotion-26 emotion-27"
             />
@@ -8155,7 +8069,7 @@ exports[`should render SearchBox with Document suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "For recent document suggestion, please implement a renderItem method to display label.",
+                          "__html": "For recent document suggestions, please implement a renderItem method to display label.",
                         }
                       }
                       style={undefined}
@@ -8234,7 +8148,7 @@ exports[`should render SearchBox with Document suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "For recent document suggestion, please implement a renderItem method to display label.",
+                          "__html": "For recent document suggestions, please implement a renderItem method to display label.",
                         }
                       }
                       style={undefined}
@@ -13243,7 +13157,7 @@ exports[`should render custom enterButton 1`] = `
               >
                 🔍
               </span>
-
+               
               Search
             </button>
           </div>
