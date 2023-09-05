@@ -84,7 +84,7 @@ export interface SearchBoxProps extends CommonProps {
 	enableFeaturedSuggestions?: boolean;
 	enableFAQSuggestions?: boolean;
 	FAQSuggestionsConfig?: types.FAQSuggestionsConfig,
-	enableDocumetSuggestions?: boolean;
+	enableDocumentSuggestions?: boolean;
 	documentSuggestionsConfig?: types.documentSuggestionsConfig;
 	showSuggestionsFooter?: boolean;
 	renderSuggestionsFooter?: () => types.children;
