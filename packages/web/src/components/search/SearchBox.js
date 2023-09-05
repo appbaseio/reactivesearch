@@ -196,7 +196,7 @@ const SearchBox = (props) => {
 			if (suggestion._suggestion_type === 'document') {
 				// Document suggestions don't have a meaningful label and value
 				const newSuggestion = { ...suggestion };
-				newSuggestion.label = 'For recent document suggestions, please implement a renderItem method to display label.';
+				newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
 				if (typeof props.renderItem === 'function') {
 					const jsxEl = props.renderItem(newSuggestion);
 					const innerValue = innerText(jsxEl);

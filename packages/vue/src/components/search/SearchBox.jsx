@@ -211,7 +211,7 @@ const SearchBox = defineComponent({
 						if (suggestion._suggestion_type === 'document') {
 							// Document suggestions don't have a meaningful label and value
 							const newSuggestion = { ...suggestion };
-							newSuggestion.label = 'For recent document suggestion, please implement a renderItem method to display label.';
+							newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
 							const renderItem = this.$slots.renderItem || this.$props.renderItem;
 							if (typeof renderItem === 'function') {
 								const jsxEl = renderItem(newSuggestion);
