@@ -1,4 +1,5 @@
-import { object, string } from 'prop-types';
+import { string } from 'prop-types';
+import types from '@appbaseio/reactivecore/lib/utils/types';
 import React, { useState, useEffect, useRef } from 'react';
 
 /**
@@ -39,8 +40,7 @@ const TextWithTooltip = ({
 TextWithTooltip.propTypes = {
 	title: string,
 	className: string,
-	// eslint-disable-next-line react/forbid-prop-types
-	style: object,
+	style: types.style,
 	innerHTML: string.isRequired,
 };
 
