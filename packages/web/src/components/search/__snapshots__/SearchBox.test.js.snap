@@ -8069,7 +8069,7 @@ exports[`should render SearchBox with Document suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "For recent document suggestions, please implement a renderItem method to display label.",
+                          "__html": "For document suggestions, please implement a renderItem method to display label.",
                         }
                       }
                       style={undefined}
@@ -8148,7 +8148,7 @@ exports[`should render SearchBox with Document suggestions 1`] = `
                       className="section-list-item__label"
                       dangerouslySetInnerHTML={
                         Object {
-                          "__html": "For recent document suggestions, please implement a renderItem method to display label.",
+                          "__html": "For document suggestions, please implement a renderItem method to display label.",
                         }
                       }
                       style={undefined}

@@ -1687,6 +1687,8 @@ const SearchBox = (props) => {
 										})}
 									{isOpen && renderLoader()}
 									{isOpen && renderError()}
+									{/* When custom renderer(render prop) is passed,
+									 it takes care of rendering the suggestion box. */}
 									{isOpen && hasSuggestions() && !hasCustomRenderer(props) ? (
 										<ul
 											css={searchboxSuggestions(
