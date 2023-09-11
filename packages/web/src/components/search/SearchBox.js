@@ -39,7 +39,6 @@ import {
 	setCustomQuery,
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
-import styled from '@emotion/styled';
 import hotkeys from 'hotkeys-js';
 import XSS from 'xss';
 import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
@@ -76,6 +75,7 @@ import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/Sea
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
+import { ImageDropdown } from './addons/ImageDropdown';
 
 const md = new Remarkable();
 
@@ -109,12 +109,6 @@ CameraIcon.propTypes = {
 CameraIcon.defaultProps = {
 	fill: 'blue',
 };
-
-const ImageModal = styled.div`
-	position: absolute;
-	width: 100%;
-
-`;
 
 /**
  * inputValue:
@@ -193,7 +187,8 @@ const SearchBox = (props) => {
 	const [sourceDocIds, setSourceDocIds] = useState(null);
 	const [isUserScrolling, setIsUserScrolling] = useState(false);
 	const [lastScrollTop, setLastScrollTop] = useState(0);
-	const [showImageModal, setShowImageModal] = useState(false);
+	const [showImageDropdown, setShowImageDropdown] = useState(false);
+	const [imageValue, setImageValue] = useState('');
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -232,18 +227,18 @@ const SearchBox = (props) => {
 		return Object.values(sectionisedSuggestions);
 	};
 
-	const handleShowImageModal = (nextState) => {
+	const handleShowImageDropdown = (nextState) => {
 		if (nextState) {
 			setIsOpen(false);
-			setShowImageModal(true);
+			setShowImageDropdown(true);
 		} else {
-			setShowImageModal(false);
+			setShowImageDropdown(false);
 		}
 	};
 	const handleSuggestionOpen = (nextState) => {
 		if (nextState) {
 			setIsOpen(true);
-			setShowImageModal(false);
+			setShowImageDropdown(false);
 		} else {
 			setIsOpen(false);
 		}
@@ -1185,7 +1180,7 @@ const SearchBox = (props) => {
 					)}
 					{props.showImageSearch ? (
 						<CameraIcon onClick={() => {
-							handleShowImageModal(!showImageModal);
+							handleShowImageDropdown(!showImageDropdown);
 						}}
 						/>
 					) : null}
@@ -2175,8 +2170,11 @@ const SearchBox = (props) => {
 												...rest,
 											)}
 										{
-											showImageModal && (
-												<ImageModal>Here goes the modal</ImageModal>
+											showImageDropdown && (
+												<ImageDropdown
+													imageValue={imageValue}
+													onChange={v => setImageValue(v)}
+												/>
 											)
 										}
 									</InputWrapper>
