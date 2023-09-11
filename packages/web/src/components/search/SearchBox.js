@@ -11,7 +11,7 @@ import {
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
 import { Remarkable } from 'remarkable';
 import { withTheme } from 'emotion-theming';
-import { oneOf, oneOfType } from 'prop-types';
+import { oneOf, oneOfType, string } from 'prop-types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
 import {
 	debounce,
@@ -39,6 +39,7 @@ import {
 	setCustomQuery,
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
+import styled from '@emotion/styled';
 import hotkeys from 'hotkeys-js';
 import XSS from 'xss';
 import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
@@ -87,6 +88,33 @@ md.set({
 });
 
 const { useConstructor } = HOOKS;
+
+const CameraIcon = ({ onClick }) => (
+	<IconWrapper onClick={onClick}>
+		<svg fill="currentColor" width="30px" height="30px" viewBox="0 -2 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+			<g id="Page-1" stroke="none" strokeWidth="1" fillRule="evenodd" >
+				<g id="Icon-Set-Filled" transform="translate(-258.000000, -467.000000)" >
+					<path d="M286,471 L283,471 L282,469 C281.411,467.837 281.104,467 280,467 L268,467 C266.896,467 266.53,467.954 266,469 L265,471 L262,471 C259.791,471 258,472.791 258,475 L258,491 C258,493.209 259.791,495 262,495 L286,495 C288.209,495 290,493.209 290,491 L290,475 C290,472.791 288.209,471 286,471 Z M274,491 C269.582,491 266,487.418 266,483 C266,478.582 269.582,475 274,475 C278.418,475 282,478.582 282,483 C282,487.418 278.418,491 274,491 Z M274,477 C270.687,477 268,479.687 268,483 C268,486.313 270.687,489 274,489 C277.313,489 280,486.313 280,483 C280,479.687 277.313,477 274,477 L274,477 Z" id="camera" />
+				</g>
+			</g>
+		</svg>
+	</IconWrapper>
+);
+
+CameraIcon.propTypes = {
+	fill: string,
+	onClick: types.func,
+};
+
+CameraIcon.defaultProps = {
+	fill: 'blue',
+};
+
+const ImageModal = styled.div`
+	position: absolute;
+	width: 100%;
+
+`;
 
 /**
  * inputValue:
@@ -165,6 +193,7 @@ const SearchBox = (props) => {
 	const [sourceDocIds, setSourceDocIds] = useState(null);
 	const [isUserScrolling, setIsUserScrolling] = useState(false);
 	const [lastScrollTop, setLastScrollTop] = useState(0);
+	const [showImageModal, setShowImageModal] = useState(false);
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -201,6 +230,23 @@ const SearchBox = (props) => {
 			return acc;
 		}, {});
 		return Object.values(sectionisedSuggestions);
+	};
+
+	const handleShowImageModal = (nextState) => {
+		if (nextState) {
+			setIsOpen(false);
+			setShowImageModal(true);
+		} else {
+			setShowImageModal(false);
+		}
+	};
+	const handleSuggestionOpen = (nextState) => {
+		if (nextState) {
+			setIsOpen(true);
+			setShowImageModal(false);
+		} else {
+			setIsOpen(false);
+		}
 	};
 
 	const focusSearchBox = (event) => {
@@ -349,7 +395,7 @@ const SearchBox = (props) => {
 		shouldExecuteQuery = true,
 	) => {
 		if (typeof isOpen === 'boolean') {
-			setIsOpen(isOpen);
+			handleSuggestionOpen(isOpen);
 		}
 
 		if (customQuery) {
@@ -401,7 +447,7 @@ const SearchBox = (props) => {
 					if (Array.isArray(selectedTags) && selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && selectedTags.includes(value)) {
-							setIsOpen(false);
+							handleSuggestionOpen(false);
 							return;
 						}
 
@@ -420,7 +466,7 @@ const SearchBox = (props) => {
 					newCurrentValue = decodeHtml(value);
 				}
 
-				if (toggleIsOpen) setIsOpen(!isOpen);
+				if (toggleIsOpen) handleSuggestionOpen(!isOpen);
 				setCurrentValue(newCurrentValue);
 
 				let queryHandlerValue = value;
@@ -563,7 +609,7 @@ const SearchBox = (props) => {
 
 	const askButtonOnClick = () => {
 		setShowAIScreen(true);
-		setIsOpen(true);
+		handleSuggestionOpen(true);
 		triggerDefaultQuery(currentValue, { enableAI: true });
 	};
 
@@ -588,7 +634,7 @@ const SearchBox = (props) => {
 			return;
 		}
 
-		if (!props.enableAI) setIsOpen(false);
+		if (!props.enableAI) handleSuggestionOpen(false);
 		else if (
 			currentTriggerMode === AI_TRIGGER_MODES.QUESTION
 			&& suggestion.value.endsWith('?')
@@ -617,7 +663,7 @@ const SearchBox = (props) => {
 				emitValue = Array.isArray(selectedTags) ? [...selectedTags] : [];
 				if (selectedTags && selectedTags.includes(suggestionValue)) {
 					// avoid duplicates in tags array
-					setIsOpen(false);
+					handleSuggestionOpen(false);
 					return;
 				}
 				emitValue.push(suggestionValue);
@@ -669,7 +715,7 @@ const SearchBox = (props) => {
 
 	const handleInputChange = (inputValue, e) => {
 		if (!isOpen && props.autosuggest) {
-			setIsOpen(true);
+			handleSuggestionOpen(true);
 		}
 		if (showAIScreen) {
 			setShowAIScreen(false);
@@ -720,14 +766,14 @@ const SearchBox = (props) => {
 					if (currentTriggerMode === AI_TRIGGER_MODES.QUESTION) {
 						if (event.target.value.endsWith('?')) {
 							setShowAIScreen(true);
-							setIsOpen(true);
+							handleSuggestionOpen(true);
 						} else {
 							setShowAIScreen(false);
-							setIsOpen(false);
+							handleSuggestionOpen(false);
 						}
 					} else {
 						setShowAIScreen(false);
-						setIsOpen(false);
+						handleSuggestionOpen(false);
 					}
 				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
@@ -770,7 +816,7 @@ const SearchBox = (props) => {
 		const { isOpen, type } = changes;
 		const { selectedItem } = stateAndHelpers;
 		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
-			setIsOpen(isOpen);
+			handleSuggestionOpen(isOpen);
 		}
 
 		// allow invoking click event repeatedly on featured suggestions
@@ -926,7 +972,7 @@ const SearchBox = (props) => {
 	};
 	const handleFocus = (event) => {
 		if (props.autosuggest) {
-			setIsOpen(true);
+			handleSuggestionOpen(true);
 		}
 		if (props.onFocus) {
 			props.onFocus(event, triggerQuery);
@@ -1137,6 +1183,12 @@ const SearchBox = (props) => {
 							className={getClassName(innerClass, 'mic') || null}
 						/>
 					)}
+					{props.showImageSearch ? (
+						<CameraIcon onClick={() => {
+							handleShowImageModal(!showImageModal);
+						}}
+						/>
+					) : null}
 					{iconPosition === 'right' && (
 						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
 							{renderIcon()}
@@ -1166,7 +1218,7 @@ const SearchBox = (props) => {
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
-		setIsOpen(true);
+		handleSuggestionOpen(true);
 		setCurrentValue(decodeHtml(value));
 		triggerDefaultQuery(value);
 	};
@@ -2122,11 +2174,17 @@ const SearchBox = (props) => {
 												setHighlightedIndex,
 												...rest,
 											)}
+										{
+											showImageModal && (
+												<ImageModal>Here goes the modal</ImageModal>
+											)
+										}
 									</InputWrapper>
 									{renderInputAddonAfter()}
 									{renderAskButtonElement()}
 									{renderEnterButtonElement()}
 								</InputGroup>
+
 
 								{props.expandSuggestionsContainer
 									&& renderSuggestionsDropdown(
@@ -2258,6 +2316,7 @@ SearchBox.propTypes = {
 	showFilter: types.bool,
 	showIcon: types.bool,
 	showVoiceSearch: types.bool,
+	showImageSearch: types.bool,
 	style: types.style,
 	title: types.title,
 	theme: types.style,

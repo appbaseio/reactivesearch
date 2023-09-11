@@ -171,7 +171,7 @@
     react-router "^6.0.1"
     react-router-dom "^4.3.1"
     react-use-fusejs "^1.0.1"
-    searchbox-showcase "https://github.com/awesome-reactivesearch/searchbox-showcase.git#95e7f82"
+    searchbox-showcase "https://github.com/awesome-reactivesearch/searchbox-showcase.git#ac58bba"
     tocbot "^4.18.0"
     yarn "^1.22.18"
 
@@ -33004,9 +33004,9 @@ scule@^1.0.0:
   resolved "https://registry.yarnpkg.com/scule/-/scule-1.0.0.tgz#895e6f4ba887e78d8b9b4111e23ae84fef82376d"
   integrity sha512-4AsO/FrViE/iDNEPaAQlb77tf0csuq27EsVpy6ett584EcRTp6pTDLoGWVxCD77y5iU5FauOvhsI4o1APwPoSQ==
 
-"searchbox-showcase@https://github.com/awesome-reactivesearch/searchbox-showcase.git#ac58bba":
+"searchbox-showcase@https://github.com/awesome-reactivesearch/searchbox-showcase.git#95e7f82":
   version "0.1.0"
-  resolved "https://github.com/awesome-reactivesearch/searchbox-showcase.git#ac58bba963d57cb7bdffeb0597d8914da90c6133"
+  resolved "https://github.com/awesome-reactivesearch/searchbox-showcase.git#95e7f827b0efa15b4022a5a7ce43982ae43359ab"
   dependencies:
     bootstrap "^5.2.3"
     react-bootstrap "^2.7.2"
