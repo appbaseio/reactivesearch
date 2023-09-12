@@ -336,7 +336,12 @@ const SearchBox = (props) => {
 				query,
 				value,
 				componentType: componentTypes.searchBox,
-				meta,
+				meta: {
+					...meta,
+					// vectorDataField is passed by the user of SearchBox
+					// imageValue is stored by the SearchBox component
+					imageValue,
+				},
 			},
 			shouldExecuteQuery,
 		);
@@ -373,6 +378,9 @@ const SearchBox = (props) => {
 				showFilter,
 				URLParams,
 				componentType: componentTypes.searchBox,
+				meta: {
+					imageValue,
+				},
 				...(!isTagsMode.current ? { category: categoryValue } : {}),
 			},
 			shouldExecuteQuery,
@@ -421,6 +429,7 @@ const SearchBox = (props) => {
 		}, props.debounce),
 	);
 
+	// Make a search query when value is changed
 	const setValue = (
 		value,
 		isDefaultValue = false,
@@ -2169,14 +2178,12 @@ const SearchBox = (props) => {
 												setHighlightedIndex,
 												...rest,
 											)}
-										{
-											showImageDropdown && (
-												<ImageDropdown
-													imageValue={imageValue}
-													onChange={v => setImageValue(v)}
-												/>
-											)
-										}
+										{/* Don't unmount the component. Only visually hide it. */}
+										<ImageDropdown
+											imageValue={imageValue}
+											visible={showImageDropdown}
+											onChange={v => setImageValue(v)}
+										/>
 									</InputWrapper>
 									{renderInputAddonAfter()}
 									{renderAskButtonElement()}
