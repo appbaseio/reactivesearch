@@ -44,7 +44,7 @@ const getBase64 = (inputString) => {
 // onChange is called when a url is changed or removed
 
 // eslint-disable-next-line
-export const ImageDropdown = ({ imageValue, onChange }) => {
+export const ImageDropdown = ({ imageValue, onChange, visible }) => {
 	const fileInputRef = useRef();
 	const imageRef = useRef();
 
@@ -61,7 +61,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 				() => {
 					// convert image file to base64 string
 					preview.src = reader.result;
-					onChange(onChange(getBase64(reader.result)));
+					onChange((getBase64(reader.result)));
 				},
 				false,
 			);
@@ -73,7 +73,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 	};
 
 	return (
-		<Container>
+		<Container style={visible ? { visibility: 'visible' } : { visibility: 'hidden' }}>
 			<FileInput ref={fileInputRef} onChange={handleChange} type="file" accept="image/*" />
 			<Preview ref={imageRef} />
 		</Container>
