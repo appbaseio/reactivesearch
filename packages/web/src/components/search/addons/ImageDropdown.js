@@ -68,6 +68,9 @@ export const ImageDropdown = ({ imageValue, onChange, visible }) => {
 
 			if (file) {
 				reader.readAsDataURL(file);
+			} else {
+				preview.src = '';
+				onChange('');
 			}
 		}
 	};
