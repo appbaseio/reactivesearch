@@ -76,8 +76,8 @@ import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/Sea
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
-import { innerText } from './innerText';
-import TextWithTooltip from './TextWithTooltip';
+import { innerText } from '../shared/innerText';
+import TextWithTooltip from './addons/TextWithTooltip';
 
 const md = new Remarkable();
 
@@ -193,7 +193,7 @@ const SearchBox = (props) => {
 		}
 
 		suggestionsArray = suggestionsArray.map((suggestion) => {
-			if (suggestion._suggestion_type === 'document') {
+			if (suggestion._suggestion_type === suggestionTypes.Document) {
 				// Document suggestions don't have a meaningful label and value
 				const newSuggestion = { ...suggestion };
 				newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
@@ -1329,7 +1329,8 @@ const SearchBox = (props) => {
 		};
 		return (showSourceDocuments
 			&& (showAIScreenFooter)
-			&& Array.isArray(sourceDocIds) && sourceDocIds.length) || props.testMode ? (
+			&& Array.isArray(sourceDocIds) && sourceDocIds.length)
+			|| (showSourceDocuments && props.testMode) ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
@@ -1672,6 +1673,9 @@ const SearchBox = (props) => {
 								return null;
 							};
 
+							const isTypingAIAnswer = showTypingEffect
+							&& !isAITyping && !props.testMode;
+
 							let indexOffset = 0;
 
 							return (
@@ -1789,8 +1793,7 @@ const SearchBox = (props) => {
 																					}
 																				}}
 																				showTypingEffect={
-																					showTypingEffect
-																				&& !isAITyping && !props.testMode
+																					isTypingAIAnswer
 																				}
 																			/>
 																		</Answer>

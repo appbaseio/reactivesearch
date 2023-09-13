@@ -12,7 +12,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-        "@appbaseio/reactivesearch": "4.1.0-alpha.14",
+        "@appbaseio/reactivesearch": "4.1.0-alpha.16",
         "emotion": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

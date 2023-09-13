@@ -62,7 +62,7 @@ import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer'
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import AIFeedback from '../shared/AIFeedback.jsx';
-import { innerText } from './innerText';
+import { innerText } from '../../utils/innerText';
 
 const md = new Remarkable();
 
@@ -208,7 +208,7 @@ const SearchBox = defineComponent({
 						return { ...s, sectionId: s._suggestion_type };
 					})
 					.map((suggestion) => {
-						if (suggestion._suggestion_type === 'document') {
+						if (suggestion._suggestion_type === suggestionTypes.Document) {
 							// Document suggestions don't have a meaningful label and value
 							const newSuggestion = { ...suggestion };
 							newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';

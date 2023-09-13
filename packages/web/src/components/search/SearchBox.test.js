@@ -553,6 +553,60 @@ it('should render AI response & triggerOn=manual', () => {
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
+it('should render AI response & showSourceDocuments', () => {
+	let elem;
+	act(() => {
+		elem = create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{
+						hits: AI.MOCK_HITS_DATA,
+						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
+						rawData: AI.MOCK_RAW_DATA,
+					}}
+					AIUIConfig={{
+						showSourceDocuments: true,
+					}}
+					enableAI
+					isOpen
+				/>
+			</ReactiveBase>,
+		);
+	});
+	expect(elem.toJSON()).toMatchSnapshot();
+});
+
+it('should render AI response & custom source documents', () => {
+	let elem;
+	act(() => {
+		elem = create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					mockData={{
+						hits: AI.MOCK_HITS_DATA,
+						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
+						rawData: AI.MOCK_RAW_DATA,
+					}}
+					AIUIConfig={{
+						showSourceDocuments: true,
+						renderSourceDocument: obj => <span role="img" aria-label="img">❤️ {obj.original_title}</span>,
+
+					}}
+					enableAI
+					isOpen
+				/>
+			</ReactiveBase>,
+		);
+	});
+	expect(elem.toJSON()).toMatchSnapshot();
+});
+
 
 it('should render CUSTOM AI response ', () => {
 	let elem;

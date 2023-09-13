@@ -6,8 +6,8 @@
     "author": "metagrover",
     "license": "Apache-2.0",
     "dependencies": {
-        "@appbaseio/reactivemaps": "4.0.0-rc",
-        "@appbaseio/reactivesearch": "4.1.0-alpha.14",
+        "@appbaseio/reactivemaps": "4.0.0",
+        "@appbaseio/reactivesearch": "4.1.0-alpha.16",
         "emotion": "^9.0.0",
         "prop-types": "^15.6.0",
         "react": "^18.2.0",
