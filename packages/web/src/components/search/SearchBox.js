@@ -2178,12 +2178,10 @@ const SearchBox = (props) => {
 												setHighlightedIndex,
 												...rest,
 											)}
-										{/* Don't unmount the component. Only visually hide it. */}
-										<ImageDropdown
+										{showImageDropdown ? <ImageDropdown
 											imageValue={imageValue}
-											visible={showImageDropdown}
 											onChange={v => setImageValue(v)}
-										/>
+										/> : null}
 									</InputWrapper>
 									{renderInputAddonAfter()}
 									{renderAskButtonElement()}

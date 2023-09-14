@@ -18,8 +18,5 @@
 			"directory": "vue-playground",
 			"changeProcessCWD": true
 		}
-	],
-	"[javascript]": {
-		"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-	}
+	]
 }

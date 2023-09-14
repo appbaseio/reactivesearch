@@ -1,58 +1,124 @@
+/* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
+import { bool, func, object, string } from 'prop-types';
 import React, { useRef } from 'react';
 
 const Container = styled.div`
 	position: absolute;
 	width: 100%;
 	padding: 10px;
-	background-color: lightgray;
+	background-color: white;
+	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+	border-radius: 0px 0px 10px 10px;
 `;
 
 const FileInput = styled.input`
 	width: 100%;
 	padding: 10px;
+	/*visually hide file input*/
+	opacity: 0;
+	position: absolute;
+	z-index: -1;
+`;
+const Preview = styled.div`
+	position: relative;
+	padding: 10px;
+	margin: auto;
+	width: min-content;
+`;
+const PreviewImg = styled.img`
+	min-width: 100px;
+	max-width: 250px;
 `;
 
-const Preview = styled.img`
-	display: block;
-	width: 100%;
+const ThemedSVG = styled.svg`
+	color: ${props => props.theme.colors.primaryColor};
 `;
 
-const getBase64 = (inputString) => {
-	// Define a generic regular expression to match any data URI and capture the Base64 part
-	const regex = /^data:[a-zA-Z0-9/+]+;base64,([A-Za-z0-9+/=]+)/;
+const StyledDeleteIcon = styled(ThemedSVG)`
+	color: #0B6AFF;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding: 4px;
+	background: rgb(250 250 250 / 90%);
+`;
 
-	// Use the exec() method to extract the Base64 string
-	const matches = regex.exec(inputString);
+const Label = styled.label`
+	cursor: pointer;
+    color: ${props => props.theme.colors.primaryColor};
+    text-decoration: underline;
+`;
 
-	// Check if there was a match
-	if (matches && matches.length > 1) {
-		const base64String = matches[1];
-		return base64String;
-	}
-	console.error('No Base64 string found in the input.');
-	return '';
+const Placeholder = ({ style }) => (
+	<ThemedSVG style={style} width="100px" height="100px" viewBox="0 0 24 24" color="blue" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" strokeWidth="1.5" />
+		<circle opacity="0.5" cx="16" cy="8" r="2" stroke="currentColor" strokeWidth="1.5" />
+		<path opacity="0.5" d="M5 13.307L5.81051 12.5542C6.73658 11.6941 8.18321 11.7424 9.04988 12.6623L11.6974 15.4727C12.2356 16.0439 13.1166 16.1209 13.7457 15.6516C14.6522 14.9753 15.9144 15.0522 16.7322 15.8334L19 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+	</ThemedSVG>
+);
+
+const DeleteIcon = props => (
+	<StyledDeleteIcon {...props} width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M10 12V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+		<path d="M14 12V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+		<path d="M4 7H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+		<path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+		<path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+	</StyledDeleteIcon>
+);
+
+Placeholder.propTypes = {
+	// eslint-disable-next-line react/forbid-prop-types
+	style: object,
 };
 
-/*
-    Image modal is responsible for showing the image preview
-    Image modal is responsible for taking user input and providing a base64 encoded string
-*/
-// image value is base64 encoded string
-// onChange is called when a new image is selected or removed
-// onChange is called when a url is changed or removed
 
-// eslint-disable-next-line
-export const ImageDropdown = ({ imageValue, onChange, visible }) => {
+/*
+*/
+/**
+ * *
+ * image value is base64 encoded string
+ * onChange is called when a new image is selected or removed
+ * onChange is called when a url is changed or removed
+ *
+ * Image modal is responsible for showing the image preview
+ * Image modal is responsible for taking user input and providing a base64 encoded string
+ *
+ * There are three ways to input an image
+ * 1. OS file browser
+ * 2. Drag and drop
+ * 3. URL
+ *
+ * When an image is selected, the image is converted to a base64 encoded string
+ *
+ * 1. Using the OS file browser
+ *
+ * The file browser maintains an internal state of the file
+ * which is accesible by input.files, where input is the file input element.
+ * When the file input element is unmounted this internal state is lost.
+ * Hence we should always use the imageValue provided by the user for the preview image
+ * On delete, we should also call onChange provided by the user with an empty string.
+ *
+ * 2. Drag and drop
+ *
+ * */
+// eslint-disable-next-line import/prefer-default-export
+export const ImageDropdown = ({ imageValue, onChange }) => {
 	const fileInputRef = useRef();
 	const imageRef = useRef();
 
+	const handleDelete = () => {
+		const image = imageRef.current;
+		if (image) {
+			onChange('');
+		}
+	};
+
 	const handleChange = () => {
 		const fileInput = fileInputRef.current;
-		const image = imageRef.current;
-		if (fileInput && image) {
-			const preview = image;
+		if (fileInput) {
 			const file = fileInput.files[0];
 			const reader = new FileReader();
 
@@ -60,8 +126,7 @@ export const ImageDropdown = ({ imageValue, onChange, visible }) => {
 				'load',
 				() => {
 					// convert image file to base64 string
-					preview.src = reader.result;
-					onChange((getBase64(reader.result)));
+					onChange(reader.result);
 				},
 				false,
 			);
@@ -69,16 +134,41 @@ export const ImageDropdown = ({ imageValue, onChange, visible }) => {
 			if (file) {
 				reader.readAsDataURL(file);
 			} else {
-				preview.src = '';
 				onChange('');
 			}
 		}
 	};
 
 	return (
-		<Container style={visible ? { visibility: 'visible' } : { visibility: 'hidden' }}>
-			<FileInput ref={fileInputRef} onChange={handleChange} type="file" accept="image/*" />
-			<Preview ref={imageRef} />
+		<Container>
+			{imageValue
+				? (
+					<Preview>
+						<PreviewImg ref={imageRef} src={imageValue} />
+						<DeleteIcon onClick={handleDelete} />
+					</Preview>
+				) : null}
+			{!imageValue
+				? (
+					<div>
+						<Placeholder />
+						<div>
+							<span>
+								Drag an image here or
+							</span>
+							<Label>
+								upload a file
+								<FileInput ref={fileInputRef} onChange={handleChange} type="file" accept="image/*" />
+							</Label>
+						</div>
+					</div>
+				) : null}
 		</Container>
 	);
+};
+
+ImageDropdown.propTypes = {
+	imageValue: string,
+	onChange: func.isRequired,
+	visible: bool,
 };
