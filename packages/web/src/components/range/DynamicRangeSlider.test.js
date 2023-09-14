@@ -418,7 +418,7 @@ const MOCK_RANGE_DATA = {
 it('should render slider', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
@@ -437,7 +437,7 @@ it('should render slider', () => {
 it('should render histogram when showHistogram is set to true', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
@@ -457,7 +457,7 @@ it('should render histogram when showHistogram is set to true', () => {
 it('should not render histogram when showHistogram is set to false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
@@ -477,7 +477,7 @@ it('should not render histogram when showHistogram is set to false', () => {
 it('should render title', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
@@ -497,7 +497,7 @@ it('should render title', () => {
 it('should render range labels', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"
@@ -520,7 +520,7 @@ it('should render range labels', () => {
 it('should display tooltip', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<DynamicRangeSlider
 					mode="test"
 					componentId="DynamicRangeMock"

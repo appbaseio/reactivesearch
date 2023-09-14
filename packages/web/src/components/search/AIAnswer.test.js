@@ -542,7 +542,7 @@ const MOCK_AI_RESPONSE = {
 it('should render AIAnswer', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -565,7 +565,7 @@ it('should render AIAnswer', async () => {
 it('should render voice Input', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -589,7 +589,7 @@ it('should render voice Input', async () => {
 it('should not render icon', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -613,7 +613,7 @@ it('should not render icon', async () => {
 it('should not render input', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -637,7 +637,7 @@ it('should not render input', async () => {
 it('should not render enterButton', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -661,7 +661,7 @@ it('should not render enterButton', async () => {
 it('should render custom icon', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -685,7 +685,7 @@ it('should render custom icon', async () => {
 it('should render custom placeholder', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -709,7 +709,7 @@ it('should render custom placeholder', async () => {
 it('should render icon on right(iconPosition=\'right\')', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -734,7 +734,7 @@ it('should render icon on right(iconPosition=\'right\')', async () => {
 it('should render custom enterButton)', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -759,7 +759,7 @@ it('should render custom enterButton)', async () => {
 it('should render custom title)', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -784,7 +784,7 @@ it('should render custom title)', async () => {
 it('should render dark theme)', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -809,7 +809,7 @@ it('should render dark theme)', async () => {
 it('should render custom UI using \'render\' Prop)', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -885,7 +885,7 @@ it('should render custom UI using \'render\' Prop)', async () => {
 it('should not render source Documents)', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -909,7 +909,7 @@ it('should not render source Documents)', async () => {
 it('should render custom source Documents)', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -936,7 +936,7 @@ it('should render custom source Documents)', async () => {
 it('should render with triggerOn=\'manual\')', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -961,7 +961,7 @@ it('should render with triggerOn=\'manual\')', async () => {
 it('should render with triggerOn=\'question\')', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -986,7 +986,7 @@ it('should render with triggerOn=\'question\')', async () => {
 it('should render custom trigger message & triggerOn=\'question\')', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"
@@ -1011,7 +1011,7 @@ it('should render custom trigger message & triggerOn=\'question\')', async () =>
 it('should render custom trigger message & triggerOn=\'manual\')', async () => {
 	const container = document.createElement('div');
 	const elem = renderer.create(
-		<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+		<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 			<AIAnswer
 				testMode
 				componentId="MockAIAnswer"

@@ -20,7 +20,7 @@ const MOCK_AGGREGATIONS_DATA = {
 it('should render no results message', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"
@@ -41,7 +41,7 @@ it('should render no results message', () => {
 it('should render list of items', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"
@@ -60,7 +60,7 @@ it('should render list of items', () => {
 it('should render search/count/checkbox when showSearch/showCount/showCheckbox are true', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"
@@ -82,7 +82,7 @@ it('should render search/count/checkbox when showSearch/showCount/showCheckbox a
 it('should not render search/count/checkbox when showSearch/showCount/showCheckbox are false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"
@@ -104,7 +104,7 @@ it('should not render search/count/checkbox when showSearch/showCount/showCheckb
 it('should use renderItem to render the list item', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"
@@ -133,7 +133,7 @@ it('should use renderItem to render the list item', () => {
 it('should use render prop to render the list item', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"
@@ -161,7 +161,7 @@ it('should use render prop to render the list item', () => {
 it('should select default value', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<SingleList
 					mode="test"
 					componentId="authors"

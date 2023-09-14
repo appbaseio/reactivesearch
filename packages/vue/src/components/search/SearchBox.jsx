@@ -62,6 +62,7 @@ import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer'
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
 import AIFeedback from '../shared/AIFeedback.jsx';
+import { innerText } from '../../utils/innerText';
 
 const md = new Remarkable();
 
@@ -198,12 +199,29 @@ const SearchBox = defineComponent({
 				});
 			}
 
-			suggestionsArray = suggestionsArray.map((s) => {
-				if (s.sectionId) {
-					return s;
-				}
-				return { ...s, sectionId: s._suggestion_type };
-			});
+			suggestionsArray
+			= suggestionsArray
+					.map((s) => {
+						if (s.sectionId) {
+							return s;
+						}
+						return { ...s, sectionId: s._suggestion_type };
+					})
+					.map((suggestion) => {
+						if (suggestion._suggestion_type === suggestionTypes.Document) {
+							// Document suggestions don't have a meaningful label and value
+							const newSuggestion = { ...suggestion };
+							newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
+							const renderItem = this.$slots.renderItem || this.$props.renderItem;
+							if (typeof renderItem === 'function') {
+								const jsxEl = renderItem(newSuggestion);
+								const innerValue = innerText(jsxEl);
+								newSuggestion.value = xss(innerValue);
+							}
+							return newSuggestion;
+						}
+						return suggestion;
+					});
 
 			const sectionsAccumulated = [];
 			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -255,6 +273,12 @@ const SearchBox = defineComponent({
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSuggestions: VueTypes.bool.def(false),
 		enableFAQSuggestions: VueTypes.bool.def(false),
+		enableDocumentSuggestions: VueTypes.bool.def(false),
+		documentSuggestionsConfig: VueTypes.shape({
+			size: VueTypes.number,
+			from: VueTypes.number,
+			maxChars: VueTypes.number
+		}),
 		FAQSuggestionsConfig: VueTypes.shape({
 			sectionLabel: VueTypes.string,
 			size: VueTypes.number,

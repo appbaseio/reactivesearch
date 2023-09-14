@@ -198,6 +198,18 @@ export interface featuredSuggestionsConfig {
 	sectionsOrder?: stringArray;
 }
 
+export interface documentSuggestionsConfig {
+	size?: number;
+	maxChars?: number;
+	from?: number;
+	sectionLabel?: string;
+}
+
+export interface FAQSuggestionsConfig {
+	sectionLabel?: string;
+	size?: number;
+}
+
 export interface endpointConfig {
 	url: string;
 	headers?: object;

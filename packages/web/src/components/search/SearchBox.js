@@ -39,6 +39,7 @@ import {
 	setCustomQuery,
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
+import { removeAIResponse } from '@appbaseio/reactivecore/lib/actions/misc';
 import hotkeys from 'hotkeys-js';
 import XSS from 'xss';
 import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
@@ -75,6 +76,8 @@ import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/Sea
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
+import { innerText } from '../shared/innerText';
+import TextWithTooltip from './addons/TextWithTooltip';
 
 const md = new Remarkable();
 
@@ -188,6 +191,21 @@ const SearchBox = (props) => {
 				_suggestion_type: '_internal_a_i_trigger',
 			});
 		}
+
+		suggestionsArray = suggestionsArray.map((suggestion) => {
+			if (suggestion._suggestion_type === suggestionTypes.Document) {
+				// Document suggestions don't have a meaningful label and value
+				const newSuggestion = { ...suggestion };
+				newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
+				if (typeof props.renderItem === 'function') {
+					const jsxEl = props.renderItem(newSuggestion);
+					const innerValue = innerText(jsxEl);
+					newSuggestion.value = XSS(innerValue);
+				}
+				return newSuggestion;
+			}
+			return suggestion;
+		});
 
 		const sectionsAccumulated = [];
 		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -441,6 +459,7 @@ const SearchBox = (props) => {
 				}
 				if (value === '') {
 					setShowAIScreen(false);
+					props.removeAIResponse(componentId);
 				}
 
 				if (isDefaultValue) {
@@ -1308,9 +1327,10 @@ const SearchBox = (props) => {
 
 			return sourceObj._id;
 		};
-		return showSourceDocuments
-			&& showAIScreenFooter
-			&& Array.isArray(sourceDocIds) && sourceDocIds.length ? (
+		return (showSourceDocuments
+			&& (showAIScreenFooter)
+			&& Array.isArray(sourceDocIds) && sourceDocIds.length)
+			|| (showSourceDocuments && props.testMode) ? (
 				<Footer themePreset={props.themePreset}>
 					Summary generated using the following sources:{' '}
 					<SourceTags>
@@ -1322,6 +1342,7 @@ const SearchBox = (props) => {
 								) || ''}`}
 								info
 								onClick={() => onSourceClick && onSourceClick(el)}
+								key={el._id}
 							>
 								{renderSourceDocumentLabel(el)}
 							</Button>
@@ -1508,7 +1529,7 @@ const SearchBox = (props) => {
 			setShowAIScreenFooter(false);
 			setShowFeedbackComponent(false);
 		}
-	}, [showAIScreen, props.isAIResponseLoading]);
+	}, [showAIScreen, props.isAIResponseLoading, props.AIResponse]);
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -1519,7 +1540,8 @@ const SearchBox = (props) => {
 	useEffect(() => {
 		handleTextAreaHeightChange();
 	}, [currentValue, props.suggestions]);
-	React.useEffect(() => {
+
+	useEffect(() => {
 		if (
 			props.AIUIConfig
 			&& props.AIUIConfig.showSourceDocuments
@@ -1555,6 +1577,16 @@ const SearchBox = (props) => {
 		hasMounted.current = true;
 		// register hotkeys for listening to focusShortcuts' key presses
 		listenForFocusShortcuts();
+	}, []);
+
+	// Set testing environment
+	useEffect(() => {
+		if (props.testMode) {
+			setIsOpen(true);
+			if (props.enableAI) {
+				setShowAIScreen(true);
+			}
+		}
 	}, []);
 
 	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
@@ -1641,6 +1673,9 @@ const SearchBox = (props) => {
 								return null;
 							};
 
+							const isTypingAIAnswer = showTypingEffect
+							&& !isAITyping && !props.testMode;
+
 							let indexOffset = 0;
 
 							return (
@@ -1656,7 +1691,9 @@ const SearchBox = (props) => {
 										})}
 									{isOpen && renderLoader()}
 									{isOpen && renderError()}
-									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
+									{/* When custom renderer(render prop) is passed,
+									 it takes care of rendering the suggestion box. */}
+									{isOpen && hasSuggestions() && !hasCustomRenderer(props) ? (
 										<ul
 											css={searchboxSuggestions(
 												props.themePreset,
@@ -1665,7 +1702,7 @@ const SearchBox = (props) => {
 											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{showAIScreen && (
+											{showAIScreen ? (
 												<SearchBoxAISection themePreset={props.themePreset}>
 													{typeof props.renderAIAnswer === 'function' ? (
 														props.renderAIAnswer({
@@ -1756,8 +1793,7 @@ const SearchBox = (props) => {
 																					}
 																				}}
 																				showTypingEffect={
-																					showTypingEffect
-																				&& !isAITyping
+																					isTypingAIAnswer
 																				}
 																			/>
 																		</Answer>
@@ -1812,8 +1848,8 @@ const SearchBox = (props) => {
 													)}
 													{renderError(true)}
 												</SearchBoxAISection>
-											)}
-											{!showAIScreen && (
+											) : null}
+											{!showAIScreen ? (
 												<Fragment>
 													{parsedSuggestions().map((item, itemIndex) => {
 														const index = indexOffset + itemIndex;
@@ -1911,13 +1947,12 @@ const SearchBox = (props) => {
 																							<div className="trim">
 																								<Flex direction="column">
 																									{sectionItem.label && (
-																										<div
+																										<TextWithTooltip
+																											title={sectionItem.label}
 																											className="section-list-item__label"
-																											dangerouslySetInnerHTML={{
-																												__html: XSS(
-																													sectionItem.label,
-																												),
-																											}}
+																											innerHTML={
+																												sectionItem.label
+																											}
 																										/>
 																									)}
 																									{sectionItem.description && (
@@ -2058,11 +2093,12 @@ const SearchBox = (props) => {
 														<SuggestionsFooter />
 													) : null}
 												</Fragment>
-											)}
+											) : null}
+											{!showAIScreen && !hasSuggestions()
+												? renderNoSuggestion(parsedSuggestions()) : null
+											}
 										</ul>
-									) : (
-										renderNoSuggestion(parsedSuggestions())
-									)}
+									) : null}
 								</React.Fragment>
 							);
 						};
@@ -2290,9 +2326,11 @@ SearchBox.propTypes = {
 	enableIndexSuggestions: types.bool,
 	enableFeaturedSuggestions: types.bool,
 	enableFAQSuggestions: types.bool,
+	enableDocumentSuggestions: types.bool,
 	FAQSuggestionsConfig: types.componentObject,
 	featuredSuggestionsConfig: types.componentObject,
 	indexSuggestionsConfig: types.componentObject,
+	documentSuggestionsConfig: types.componentObject,
 	enterButton: types.bool,
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
@@ -2311,6 +2349,9 @@ SearchBox.propTypes = {
 	trackUsefullness: types.funcRequired,
 	sessionIdFromStore: types.string,
 	isAITyping: types.boolRequired,
+	removeAIResponse: types.func,
+	// This is an internal prop just for testing
+	testMode: types.bool,
 };
 
 SearchBox.defaultProps = {
@@ -2399,6 +2440,7 @@ const mapDispatchtoProps = dispatch => ({
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
 	trackUsefullness: (sessionId, otherInfo) =>
 		dispatch(recordAISessionUsefulness(sessionId, otherInfo)),
+	removeAIResponse: componentId => dispatch(removeAIResponse(componentId)),
 });
 
 // Add componentType for SSR
