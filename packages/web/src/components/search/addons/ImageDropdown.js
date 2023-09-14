@@ -116,10 +116,9 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 		}
 	};
 
-	const handleChange = () => {
+	const readFile = (file) => {
 		const fileInput = fileInputRef.current;
 		if (fileInput) {
-			const file = fileInput.files[0];
 			const reader = new FileReader();
 
 			reader.addEventListener(
@@ -139,8 +138,41 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 		}
 	};
 
+	const handleFileSelect = () => {
+		const fileInput = fileInputRef.current;
+		if (fileInput) {
+			const file = fileInput.files[0];
+			readFile(file);
+		}
+	};
+	const handleFileDrop = (ev) => {
+		// Prevent default behavior (Prevent file from being opened)
+		ev.preventDefault();
+
+		if (ev.dataTransfer.items) {
+		  // Use DataTransferItemList interface to access the file(s)
+		  [...ev.dataTransfer.items].forEach((item) => {
+			// If dropped items aren't files, reject them
+				if (item[0].kind === 'file') {
+					const file = item[0].getAsFile();
+					// TODO: Below is same as onChange
+					readFile(file);
+			  }
+		  });
+		} else {
+		  // Use DataTransfer interface to access the file(s)
+		  [...ev.dataTransfer.files].forEach((file) => {
+				readFile(file);
+		  });
+		}
+	  };
+	  const handleDrag = (ev) => {
+		// Prevent default behavior (Prevent file from being opened)
+		ev.preventDefault();
+	  };
+
 	return (
-		<Container>
+		<Container onDrop={handleFileDrop} onDragOver={handleDrag}>
 			{imageValue
 				? (
 					<Preview>
@@ -153,12 +185,10 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 					<div>
 						<Placeholder />
 						<div>
-							<span>
-								Drag an image here or
-							</span>
+							<span>Drag an image here or </span>
 							<Label>
 								upload a file
-								<FileInput ref={fileInputRef} onChange={handleChange} type="file" accept="image/*" />
+								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept="image/*" />
 							</Label>
 						</div>
 					</div>
