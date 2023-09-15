@@ -8,8 +8,8 @@
 		"lint": "vue-cli-service lint"
 	},
 	"dependencies": {
+		"@appbaseio/reactivesearch-vue": "3.2.0",
 		"vue": "^3.2.5",
-		"@appbaseio/reactivesearch-vue": "3.0.6",
 		"vuejs-paginate": "^2.1.0"
 	},
 	"devDependencies": {
