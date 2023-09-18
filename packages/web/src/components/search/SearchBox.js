@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-
+import styled from '@emotion/styled';
 import {
 	AI_LOCAL_CACHE_KEY,
 	AI_TRIGGER_MODES,
@@ -112,6 +112,11 @@ CameraIcon.propTypes = {
 CameraIcon.defaultProps = {
 	fill: 'blue',
 };
+
+const Thumbnail = styled.img`
+	width: 30px;
+	height: 30px;
+`;
 
 /**
  * inputValue:
@@ -1168,6 +1173,13 @@ const SearchBox = (props) => {
 		return '/';
 	};
 
+	const ThumbnailOrIcon = props.showImageSearch && imageValue ? (
+		<Thumbnail src={imageValue} onClick={() => handleShowImageDropdown(!showImageDropdown)} />
+	) : (<CameraIcon onClick={() => {
+		handleShowImageDropdown(!showImageDropdown);
+	}}
+	/>);
+
 	const renderIcons = () => {
 		const {
 			showIcon,
@@ -1207,10 +1219,7 @@ const SearchBox = (props) => {
 						/>
 					)}
 					{props.showImageSearch ? (
-						<CameraIcon onClick={() => {
-							handleShowImageDropdown(!showImageDropdown);
-						}}
-						/>
+						ThumbnailOrIcon
 					) : null}
 					{iconPosition === 'right' && (
 						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
@@ -2217,6 +2226,7 @@ const SearchBox = (props) => {
 										{showImageDropdown ? <ImageDropdown
 											imageValue={imageValue}
 											onChange={v => setImageValue(v)}
+											onBlur={() => handleShowImageDropdown(false)}
 										/> : null}
 									</InputWrapper>
 									{renderInputAddonAfter()}
