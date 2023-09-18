@@ -50,6 +50,22 @@ const Label = styled.label`
     color: ${props => props.theme.colors.primaryColor};
     text-decoration: underline;
 `;
+const URLInput = styled.input`
+	display: block;
+	margin: 5px 0px;
+	padding: 5px;
+	border-radius: 10px;
+	border: 2px solid gray;
+`;
+
+const ORDivider = styled.div`
+	display: flex;
+	margin: 10px 0px;
+`;
+
+ORDivider.Divider = styled.hr`
+	width: 100%;
+`;
 
 const Placeholder = ({ style }) => (
 	<ThemedSVG style={style} width="100px" height="100px" viewBox="0 0 24 24" color="blue" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -191,6 +207,12 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept="image/*" />
 							</Label>
 						</div>
+						<ORDivider>
+							<ORDivider.Divider />
+							<div>OR</div>
+							<ORDivider.Divider />
+						</ORDivider>
+						<URLInput type="text" placeholder="Paste an image URL" />
 					</div>
 				) : null}
 		</Container>
