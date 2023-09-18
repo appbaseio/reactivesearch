@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
 import { bool, func, object, string } from 'prop-types';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 const Container = styled.div`
 	position: absolute;
@@ -56,6 +56,7 @@ const URLInput = styled.input`
 	padding: 5px;
 	border-radius: 10px;
 	border: 2px solid gray;
+	width: 100%;
 `;
 
 const ORDivider = styled.div`
@@ -119,16 +120,20 @@ Placeholder.propTypes = {
  *
  * 2. Drag and drop
  *
+ * 3. URL
  * */
 // eslint-disable-next-line import/prefer-default-export
 export const ImageDropdown = ({ imageValue, onChange }) => {
 	const fileInputRef = useRef();
 	const imageRef = useRef();
+	const [url, setURL] = useState('');
+	const urlValueTimer = useRef(null);
 
 	const handleDelete = () => {
 		const image = imageRef.current;
 		if (image) {
 			onChange('');
+			setURL('');
 		}
 	};
 
@@ -152,6 +157,28 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 				onChange('');
 			}
 		}
+	};
+
+	const fetchImageFromURL = (imageURL) => {
+		const DEBOUNCE_DELAY = 1000;
+		if (urlValueTimer.current) {
+			clearTimeout(urlValueTimer.current);
+		}
+		urlValueTimer.current = setTimeout(async () => {
+			if (imageURL) {
+				try {
+					const response = await fetch(imageURL);
+					const blob = await response.blob();
+					const fileName = imageURL.split('/').pop();
+					const fileType = blob.type;
+
+					const file = new File([blob], fileName, { type: fileType });
+					readFile(file);
+				} catch (e) {
+					console.error(e);
+				}
+			}
+		}, DEBOUNCE_DELAY);
 	};
 
 	const handleFileSelect = () => {
@@ -212,7 +239,15 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 							<div>OR</div>
 							<ORDivider.Divider />
 						</ORDivider>
-						<URLInput type="text" placeholder="Paste an image URL" />
+						<URLInput
+							type="text"
+							placeholder="Paste an image link"
+							value={url}
+							onChange={(e) => {
+								setURL(e.target.value);
+								fetchImageFromURL(e.target.value);
+							}}
+						/>
 					</div>
 				) : null}
 		</Container>
