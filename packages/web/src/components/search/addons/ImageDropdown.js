@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
 import { bool, func, object, string } from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Container = styled.div`
 	position: absolute;
@@ -68,6 +68,29 @@ ORDivider.Divider = styled.hr`
 	width: 100%;
 `;
 
+const ErrorMessage = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 3rem;
+`;
+
+const ErrorIcon = styled(ThemedSVG)`
+`;
+
+ErrorMessage.Icon = ({ size = '50px' }) => (
+	<ErrorIcon width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm-1.5-5.009c0-.867.659-1.491 1.491-1.491.85 0 1.509.624 1.509 1.491 0 .867-.659 1.509-1.509 1.509-.832 0-1.491-.642-1.491-1.509zM11.172 6a.5.5 0 0 0-.499.522l.306 7a.5.5 0 0 0 .5.478h1.043a.5.5 0 0 0 .5-.478l.305-7a.5.5 0 0 0-.5-.522h-1.655z" fill="crimson" /></ErrorIcon>
+);
+
+ErrorMessage.Text = styled.div`
+	text-align: center;
+`;
+
+ErrorMessage.Icon.propTypes = {
+	size: string,
+};
+
 const Placeholder = ({ style }) => (
 	<ThemedSVG style={style} width="100px" height="100px" viewBox="0 0 24 24" color="blue" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" strokeWidth="1.5" />
@@ -90,6 +113,17 @@ Placeholder.propTypes = {
 	// eslint-disable-next-line react/forbid-prop-types
 	style: object,
 };
+
+
+const ImageError = () => (
+	<ErrorMessage>
+		<ErrorMessage.Icon />
+		<ErrorMessage.Text>
+			Use an image in one of the formats
+			<code>.jpeg</code>, <code>.png</code>,
+			<code>.webp</code>, <code>.bmp</code> and <code>.tif</code>
+		</ErrorMessage.Text>
+	</ErrorMessage>);
 
 
 /*
@@ -127,6 +161,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 	const fileInputRef = useRef();
 	const imageRef = useRef();
 	const [url, setURL] = useState('');
+	const [showError, setShowError] = useState(false);
 	const urlValueTimer = useRef(null);
 
 	const handleDelete = () => {
@@ -134,6 +169,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 		if (image) {
 			onChange('');
 			setURL('');
+			setShowError(false);
 		}
 	};
 
@@ -145,11 +181,18 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 			reader.addEventListener(
 				'load',
 				() => {
+					if (!reader.result) {
+						setShowError(true);
+						return;
+					}
 					// convert image file to base64 string
 					onChange(reader.result);
 				},
 				false,
 			);
+			reader.addEventListener('error', () => {
+				setShowError(true);
+			});
 
 			if (file) {
 				reader.readAsDataURL(file);
@@ -158,6 +201,20 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		const imagePreview = imageRef.current;
+		if (imagePreview && imageValue) {
+			const image = new Image();
+			image.onerror = () => {
+				if (!image.width) {
+					onChange('');
+					setShowError(true);
+				}
+			};
+			image.src = imageValue;
+		}
+	}, [imageValue]);
 
 	const fetchImageFromURL = (imageURL) => {
 		const DEBOUNCE_DELAY = 1000;
@@ -215,18 +272,22 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 	  };
 
 	return (
-		<Container onDrop={handleFileDrop} onDragOver={handleDrag}>
-			{imageValue
+		<Container
+			onDrop={handleFileDrop}
+			onDragOver={handleDrag}
+		>
+			{imageValue && !showError
 				? (
 					<Preview>
 						<PreviewImg ref={imageRef} src={imageValue} />
 						<DeleteIcon onClick={handleDelete} />
 					</Preview>
 				) : null}
+
 			{!imageValue
 				? (
 					<div>
-						<Placeholder />
+						{showError ? <ImageError /> : <Placeholder />}
 						<div>
 							<span>Drag an image here or </span>
 							<Label>
