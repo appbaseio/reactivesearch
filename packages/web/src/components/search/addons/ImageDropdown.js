@@ -8,7 +8,7 @@ const Container = styled.div`
 	position: absolute;
 	width: 100%;
 	padding: 10px;
-	background-color: ${props => props.theme.colors.backgroundColor};
+	background-color: ${props => props.theme.colors.backgroundColor || 'white'};
 	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
 	border-radius: 0px 0px 10px 10px;
 	z-index: 1;
