@@ -8,7 +8,7 @@ const Container = styled.div`
 	position: absolute;
 	width: 100%;
 	padding: 10px;
-	background-color: white;
+	background-color: ${props => props.theme.colors.backgroundColor};
 	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
 	border-radius: 0px 0px 10px 10px;
 	z-index: 1;
@@ -63,6 +63,8 @@ const URLInput = styled.input`
 	border-radius: 10px;
 	border: 2px solid gray;
 	width: 100%;
+	background-color: ${props => props.theme.colors.backgroundColor};
+	color: ${props => props.theme.colors.textColor};
 `;
 
 const ORDivider = styled.div`
@@ -304,7 +306,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 							<span>Drag an image here or </span>
 							<Label>
 								upload a file
-								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept="image/*" />
+								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp" />
 							</Label>
 						</PlaceholderText>
 						<ORDivider>
