@@ -251,7 +251,10 @@ const SearchBox = (props) => {
 		return Object.values(sectionisedSuggestions);
 	};
 
-	const handleShowImageDropdown = (nextState) => {
+	const handleShowImageDropdown = (e, nextState) => {
+		// Image dropdown calls onOutsideClick if below is not stopped
+		// which changes the state again and hides the dropdown
+		e.stopPropagation();
 		if (nextState) {
 			setIsOpen(false);
 			setShowImageDropdown(true);
@@ -1189,11 +1192,11 @@ const SearchBox = (props) => {
 	const ThumbnailOrIcon = props.showImageSearch && currentImageValue ? (
 		<Thumbnail
 			src={currentImageValue}
-			onClick={() =>
-				handleShowImageDropdown(!showImageDropdown)}
+			onClick={e =>
+				handleShowImageDropdown(e, !showImageDropdown)}
 		/>
-	) : (<CameraIcon onClick={() => {
-		handleShowImageDropdown(!showImageDropdown);
+	) : (<CameraIcon onClick={(e) => {
+		handleShowImageDropdown(e, !showImageDropdown);
 	}}
 	/>);
 
@@ -2247,7 +2250,13 @@ const SearchBox = (props) => {
 										{showImageDropdown ? <ImageDropdown
 											imageValue={currentImageValue}
 											onChange={v => setCurrentImageValue(v)}
-											onBlur={() => handleShowImageDropdown(false)}
+											onOutsideClick={(e) => {
+												// When the user is clicking on the camera
+												// icon which is outside the image modal
+												if (showImageDropdown) {
+													handleShowImageDropdown(e, false);
+												}
+											}}
 										/> : null}
 									</InputWrapper>
 									{renderInputAddonAfter()}

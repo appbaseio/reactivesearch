@@ -169,9 +169,10 @@ const ImageError = () => (
  * 3. URL
  * */
 // eslint-disable-next-line import/prefer-default-export
-export const ImageDropdown = ({ imageValue, onChange }) => {
+export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 	const fileInputRef = useRef();
 	const imageRef = useRef();
+	const containerRef = useRef();
 	const [url, setURL] = useState('');
 	const [showError, setShowError] = useState(false);
 	const urlValueTimer = useRef(null);
@@ -228,6 +229,17 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 			image.src = imageValue;
 		}
 	}, [imageValue]);
+
+	useEffect(() => {
+		window.addEventListener('click', (e) => {
+			const container = containerRef.current;
+			if (container) {
+				if (!container.contains(e.target)) {
+					onOutsideClick(e);
+				}
+			}
+		});
+	}, []);
 
 	const fetchImageFromURL = (imageURL) => {
 		const DEBOUNCE_DELAY = 1000;
@@ -289,6 +301,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 		<Container
 			onDrop={handleFileDrop}
 			onDragOver={handleDrag}
+			ref={containerRef}
 		>
 			{imageValue && !showError
 				? (
@@ -333,4 +346,5 @@ ImageDropdown.propTypes = {
 	imageValue: string,
 	onChange: func.isRequired,
 	visible: bool,
+	onOutsideClick: func.isRequired,
 };
