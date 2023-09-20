@@ -113,7 +113,7 @@ class SelectedFilters extends Component {
 		return value;
 	};
 
-	renderFilterButton = (component, keyProp, handleRemove, label) => (
+	renderFilterButton = (component, keyProp, handleRemove, ...values) => (
 		<Button
 			className={getClassName(this.props.innerClass, 'button') || null}
 			key={keyProp}
@@ -121,7 +121,7 @@ class SelectedFilters extends Component {
 			onClick={handleRemove}
 			tabIndex="0"
 		>
-			<span>{label}</span>
+			<span>{values.map(v => (v))}</span>
 			<span>&#x2715;</span>
 		</Button>
 	);
@@ -133,8 +133,11 @@ class SelectedFilters extends Component {
 		);
 		return filterComponents
 			.map((component, index) => {
-				const { label, value, category } = selectedValues[component];
+				const {
+					label, value, category, meta,
+				} = selectedValues[component];
 				const isArray = Array.isArray(value);
+				const imageValue = meta && meta.imageValue;
 
 				if (label && ((isArray && value.length) || (!isArray && value))) {
 					const valueToRender = category
@@ -145,6 +148,15 @@ class SelectedFilters extends Component {
 						`${component}-${index + 1}`,
 						() => this.remove(component, value),
 						`${selectedValues[component].label}: ${decodeHtml(valueToRender)}`,
+						imageValue ? <img width="30px" alt="thumbnail" src={imageValue} /> : null,
+					);
+				} else if (label && imageValue) {
+					return this.renderFilterButton(
+						component,
+						`${component}-${index + 1}`,
+						() => this.remove(component, value),
+						`${selectedValues[component].label}: `,
+						imageValue ? <img width="30px" alt="thumbnail" src={imageValue} /> : null,
 					);
 				}
 				return null;

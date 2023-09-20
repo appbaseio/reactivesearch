@@ -11,6 +11,7 @@ const Container = styled.div`
 	background-color: white;
 	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
 	border-radius: 0px 0px 10px 10px;
+	z-index: 1;
 `;
 
 const FileInput = styled.input`

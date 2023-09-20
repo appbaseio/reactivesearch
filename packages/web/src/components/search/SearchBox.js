@@ -134,6 +134,7 @@ const Thumbnail = styled.img`
 const SearchBox = (props) => {
 	const {
 		selectedValue,
+		selectedImageValue,
 		selectedCategory,
 		value,
 		defaultValue,
@@ -196,7 +197,7 @@ const SearchBox = (props) => {
 	const [isUserScrolling, setIsUserScrolling] = useState(false);
 	const [lastScrollTop, setLastScrollTop] = useState(0);
 	const [showImageDropdown, setShowImageDropdown] = useState(false);
-	const [imageValue, setImageValue] = useState('');
+	const [currentImageValue, setCurrentImageValue] = useState('');
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -359,12 +360,7 @@ const SearchBox = (props) => {
 				query,
 				value,
 				componentType: componentTypes.searchBox,
-				meta: {
-					...meta,
-					// vectorDataField is passed by the user of SearchBox
-					// imageValue is stored by the SearchBox component
-					imageValue,
-				},
+				meta,
 			},
 			shouldExecuteQuery,
 		);
@@ -375,6 +371,7 @@ const SearchBox = (props) => {
 		paramValue,
 		categoryValue = undefined,
 		shouldExecuteQuery = true,
+		meta = {},
 	) => {
 		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		if (isTagsMode.current) {
@@ -401,9 +398,7 @@ const SearchBox = (props) => {
 				showFilter,
 				URLParams,
 				componentType: componentTypes.searchBox,
-				meta: {
-					imageValue,
-				},
+				meta,
 				...(!isTagsMode.current ? { category: categoryValue } : {}),
 			},
 			shouldExecuteQuery,
@@ -417,6 +412,7 @@ const SearchBox = (props) => {
 			defaultQuery = false,
 			value = undefined,
 			categoryValue = undefined,
+			meta = {},
 		} = {},
 		shouldExecuteQuery = true,
 	) => {
@@ -425,10 +421,10 @@ const SearchBox = (props) => {
 		}
 
 		if (customQuery) {
-			triggerCustomQuery(value, categoryValue, shouldExecuteQuery);
+			triggerCustomQuery(value, categoryValue, shouldExecuteQuery, meta);
 		}
 		if (defaultQuery) {
-			triggerDefaultQuery(value, {}, shouldExecuteQuery);
+			triggerDefaultQuery(value, meta, shouldExecuteQuery);
 		}
 	};
 
@@ -462,8 +458,12 @@ const SearchBox = (props) => {
 		toggleIsOpen = true,
 		categoryValue = undefined,
 		shouldExecuteQuery = true,
+		meta = {},
 	) => {
 		const performUpdate = () => {
+			// It may happen that imageValue is passed as an empty string to clear the input
+			const imageValue = meta && meta.imageValue !== undefined
+				? meta.imageValue : currentImageValue;
 			if (isTagsMode.current && isEqual(value, selectedTags)) {
 				return;
 			}
@@ -495,6 +495,7 @@ const SearchBox = (props) => {
 
 				if (toggleIsOpen) handleSuggestionOpen(!isOpen);
 				setCurrentValue(newCurrentValue);
+				setCurrentImageValue(imageValue);
 
 				let queryHandlerValue = value;
 				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
@@ -516,7 +517,6 @@ const SearchBox = (props) => {
 					setShowAIScreen(false);
 					props.removeAIResponse(componentId);
 				}
-
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery(
@@ -534,7 +534,7 @@ const SearchBox = (props) => {
 								&& currentTriggerMode === AI_TRIGGER_MODES.QUESTION
 								&& newCurrentValue.endsWith('?')
 								? { enableAI: true }
-								: {},
+								: { imageValue },
 							shouldExecuteQuery,
 						);
 					}
@@ -549,6 +549,12 @@ const SearchBox = (props) => {
 								queryHandlerValue,
 								isTagsMode.current ? undefined : categoryValue,
 								shouldExecuteQuery,
+								{
+									...meta,
+									// vectorDataField is passed by the user of SearchBox
+									// currentImageValue is stored by the SearchBox component
+									imageValue,
+								},
 							);
 						} else {
 							setValue('', true);
@@ -564,6 +570,12 @@ const SearchBox = (props) => {
 							queryHandlerValue,
 							isTagsMode.current ? undefined : categoryValue,
 							shouldExecuteQuery,
+							{
+								...meta,
+								// vectorDataField is passed by the user of SearchBox
+								// currentImageValue is stored by the SearchBox component
+								imageValue,
+							},
 						);
 					}
 				} else {
@@ -591,6 +603,7 @@ const SearchBox = (props) => {
 			performUpdate,
 		);
 	};
+
 	const withTriggerQuery = (func) => {
 		if (func) {
 			return e =>
@@ -1173,8 +1186,12 @@ const SearchBox = (props) => {
 		return '/';
 	};
 
-	const ThumbnailOrIcon = props.showImageSearch && imageValue ? (
-		<Thumbnail src={imageValue} onClick={() => handleShowImageDropdown(!showImageDropdown)} />
+	const ThumbnailOrIcon = props.showImageSearch && currentImageValue ? (
+		<Thumbnail
+			src={currentImageValue}
+			onClick={() =>
+				handleShowImageDropdown(!showImageDropdown)}
+		/>
 	) : (<CameraIcon onClick={() => {
 		handleShowImageDropdown(!showImageDropdown);
 	}}
@@ -1524,6 +1541,7 @@ const SearchBox = (props) => {
 			if (isTagsMode.current && Array.isArray(selectedValue)) {
 				selectedTags = []; // reset
 			}
+			// When value is not controlled by the user
 			if (value === undefined) {
 				setValue(
 					!selectedValue || isEmpty(selectedValue) ? '' : selectedValue,
@@ -1532,6 +1550,9 @@ const SearchBox = (props) => {
 					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
 					hasMounted.current,
 					false,
+					undefined,
+					true,
+					{ imageValue: props.showImageSearch ? selectedImageValue : undefined },
 				);
 			} else if (onChange) {
 				if (
@@ -1566,7 +1587,7 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-	}, [selectedValue]);
+	}, [selectedValue, selectedImageValue]);
 
 	useEffect(() => {
 		if (showAIScreen) {
@@ -2224,8 +2245,8 @@ const SearchBox = (props) => {
 												...rest,
 											)}
 										{showImageDropdown ? <ImageDropdown
-											imageValue={imageValue}
-											onChange={v => setImageValue(v)}
+											imageValue={currentImageValue}
+											onChange={v => setCurrentImageValue(v)}
 											onBlur={() => handleShowImageDropdown(false)}
 										/> : null}
 									</InputWrapper>
@@ -2295,6 +2316,7 @@ const SearchBox = (props) => {
 SearchBox.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
+	selectedImageValue: types.string,
 	selectedCategory: types.string,
 	suggestions: types.suggestions,
 	triggerAnalytics: types.funcRequired,
@@ -2470,6 +2492,9 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	selectedImageValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].meta
+		&& state.selectedValues[props.componentId].meta.imageValue) || null,
 	selectedCategory:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].category)

@@ -19,6 +19,12 @@ const filters = ({ colors: { borderColor } }) => css`
 			overflow: hidden;
 			text-overflow: ellipsis;
 			margin-right: 26px;
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: center;
+			align-items: center;
+			flex-wrap: nowrap;
+			width: max-content;
 		}
 
 		span:last-of-type {
