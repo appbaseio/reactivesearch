@@ -92,8 +92,8 @@ md.set({
 
 const { useConstructor } = HOOKS;
 
-const CameraIcon = ({ onClick }) => (
-	<IconWrapper onClick={onClick}>
+const CameraIcon = ({ onClick, title }) => (
+	<IconWrapper onClick={onClick} title={title}>
 		<svg fill="currentColor" width="30px" height="30px" viewBox="0 -2 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" >
 			<g id="Page-1" stroke="none" strokeWidth="1" fillRule="evenodd" >
 				<g id="Icon-Set-Filled" transform="translate(-258.000000, -467.000000)" >
@@ -106,6 +106,7 @@ const CameraIcon = ({ onClick }) => (
 
 CameraIcon.propTypes = {
 	fill: string,
+	title: string,
 	onClick: types.func,
 };
 
@@ -1192,13 +1193,17 @@ const SearchBox = (props) => {
 	const ThumbnailOrIcon = props.showImageSearch && currentImageValue ? (
 		<Thumbnail
 			src={currentImageValue}
+			title="Click to view full image"
 			onClick={e =>
 				handleShowImageDropdown(e, !showImageDropdown)}
 		/>
-	) : (<CameraIcon onClick={(e) => {
-		handleShowImageDropdown(e, !showImageDropdown);
-	}}
-	/>);
+	) : (
+		<CameraIcon
+			title={props.imageSearchTooltip || 'Search by image'}
+			onClick={(e) => {
+				handleShowImageDropdown(e, !showImageDropdown);
+			}}
+		/>);
 
 	const renderIcons = () => {
 		const {
@@ -2397,6 +2402,7 @@ SearchBox.propTypes = {
 	showIcon: types.bool,
 	showVoiceSearch: types.bool,
 	showImageSearch: types.bool,
+	imageSearchTooltip: types.string,
 	style: types.style,
 	title: types.title,
 	theme: types.style,
