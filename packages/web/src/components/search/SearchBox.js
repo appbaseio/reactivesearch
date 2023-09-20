@@ -124,6 +124,8 @@ CameraIcon.propTypes = {
 	fill: string,
 	title: string,
 	onClick: types.func,
+	iconURL: string,
+	icon: types.children,
 };
 
 CameraIcon.defaultProps = {
@@ -1213,14 +1215,16 @@ const SearchBox = (props) => {
 			onClick={e =>
 				handleShowImageDropdown(e, !showImageDropdown)}
 		/>
-	) : (<CameraIcon
-		title={props.imageSearchTooltip || 'Search by image'}
-		onClick={(e) => {
-			handleShowImageDropdown(e, !showImageDropdown);
-		}}
-		icon={props.imageSearchIcon}
-		iconURL={props.imageSearchIconURL}
-	/>);
+	) : (
+		<CameraIcon
+			title={props.imageSearchConfig.tooltip || 'Search by image'}
+			onClick={(e) => {
+				handleShowImageDropdown(e, !showImageDropdown);
+			}}
+			icon={props.imageSearchConfig.icon}
+			iconURL={props.imageSearchConfig.iconURL}
+		/>
+	);
 
 	const renderIcons = () => {
 		const {
@@ -2419,7 +2423,7 @@ SearchBox.propTypes = {
 	showIcon: types.bool,
 	showVoiceSearch: types.bool,
 	showImageSearch: types.bool,
-	imageSearchTooltip: types.string,
+	imageSearchConfig: types.componentObject,
 	style: types.style,
 	title: types.title,
 	theme: types.style,
@@ -2496,6 +2500,7 @@ SearchBox.defaultProps = {
 	showIcon: true,
 	showFocusShortcutsIcon: true,
 	showVoiceSearch: false,
+	imageSearchConfig: {},
 	style: {},
 	URLParams: false,
 	showClear: false,
