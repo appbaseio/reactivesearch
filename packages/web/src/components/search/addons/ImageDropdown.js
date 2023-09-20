@@ -26,11 +26,11 @@ const Preview = styled.div`
 	position: relative;
 	padding: 10px;
 	margin: auto;
-	width: min-content;
-`;
-const PreviewImg = styled.img`
 	min-width: 100px;
 	max-width: 250px;
+`;
+const PreviewImg = styled.img`
+	width: 100%;
 `;
 
 const ThemedSVG = styled.svg`
