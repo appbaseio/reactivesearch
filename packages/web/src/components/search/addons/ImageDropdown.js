@@ -37,6 +37,11 @@ const ThemedSVG = styled.svg`
 	color: ${props => props.theme.colors.primaryColor};
 `;
 
+const PlaceholderSVG = styled.svg`
+	display: block;
+	margin: auto;
+`;
+
 const StyledDeleteIcon = styled(ThemedSVG)`
 	color: #0B6AFF;
 	position: absolute;
@@ -93,12 +98,16 @@ ErrorMessage.Icon.propTypes = {
 };
 
 const Placeholder = ({ style }) => (
-	<ThemedSVG style={style} width="100px" height="100px" viewBox="0 0 24 24" color="blue" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<PlaceholderSVG style={style} width="100px" height="100px" viewBox="0 0 24 24" color="blue" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" strokeWidth="1.5" />
 		<circle opacity="0.5" cx="16" cy="8" r="2" stroke="currentColor" strokeWidth="1.5" />
 		<path opacity="0.5" d="M5 13.307L5.81051 12.5542C6.73658 11.6941 8.18321 11.7424 9.04988 12.6623L11.6974 15.4727C12.2356 16.0439 13.1166 16.1209 13.7457 15.6516C14.6522 14.9753 15.9144 15.0522 16.7322 15.8334L19 18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-	</ThemedSVG>
+	</PlaceholderSVG>
 );
+
+const PlaceholderText = styled.div`
+	text-align: center;
+`;
 
 const DeleteIcon = props => (
 	<StyledDeleteIcon {...props} width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -188,6 +197,7 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 					}
 					// convert image file to base64 string
 					onChange(reader.result);
+					setShowError(false);
 				},
 				false,
 			);
@@ -249,22 +259,23 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 	const handleFileDrop = (ev) => {
 		// Prevent default behavior (Prevent file from being opened)
 		ev.preventDefault();
-
-		if (ev.dataTransfer.items) {
+		if (!imageValue) {
+			if (ev.dataTransfer.items) {
 		  // Use DataTransferItemList interface to access the file(s)
 		  [...ev.dataTransfer.items].forEach((item) => {
-			// If dropped items aren't files, reject them
-				if (item[0].kind === 'file') {
-					const file = item[0].getAsFile();
-					// TODO: Below is same as onChange
-					readFile(file);
+					// If dropped items aren't files, reject them
+					if (item[0].kind === 'file') {
+						const file = item[0].getAsFile();
+						// TODO: Below is same as onChange
+						readFile(file);
 			  }
 		  });
-		} else {
+			} else {
 		  // Use DataTransfer interface to access the file(s)
 		  [...ev.dataTransfer.files].forEach((file) => {
-				readFile(file);
+					readFile(file);
 		  });
+			}
 		}
 	  };
 	  const handleDrag = (ev) => {
@@ -289,13 +300,13 @@ export const ImageDropdown = ({ imageValue, onChange }) => {
 				? (
 					<div>
 						{showError ? <ImageError /> : <Placeholder />}
-						<div>
+						<PlaceholderText>
 							<span>Drag an image here or </span>
 							<Label>
 								upload a file
 								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept="image/*" />
 							</Label>
-						</div>
+						</PlaceholderText>
 						<ORDivider>
 							<ORDivider.Divider />
 							<div>OR</div>
