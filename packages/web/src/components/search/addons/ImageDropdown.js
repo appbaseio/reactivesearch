@@ -72,6 +72,13 @@ const ORDivider = styled.div`
 
 ORDivider.Divider = styled.hr`
 	width: 100%;
+	height: 2px;
+	background-color: ${props => props.theme.colors.textColor};
+	border-color:  ${props => props.theme.colors.textColor};
+`;
+
+ORDivider.Text = styled.div`
+	margin: 0px 10px;
 `;
 
 const ErrorMessage = styled.div`
@@ -363,7 +370,7 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 						</PlaceholderText>
 						<ORDivider>
 							<ORDivider.Divider />
-							<div>OR</div>
+							<ORDivider.Text>OR</ORDivider.Text>
 							<ORDivider.Divider />
 						</ORDivider>
 						<URLInput
