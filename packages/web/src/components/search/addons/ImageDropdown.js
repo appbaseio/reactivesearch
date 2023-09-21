@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable jsx-a11y/alt-text */
 import styled from '@emotion/styled';
 import { bool, func, object, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
@@ -37,7 +35,7 @@ const ThemedSVG = styled.svg`
 	color: ${props => props.theme.colors.primaryColor};
 `;
 
-const PlaceholderSVG = styled.svg`
+const PlaceholderSVG = styled(ThemedSVG)`
 	display: block;
 	margin: auto;
 `;
@@ -187,32 +185,72 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 	};
 
 	const readFile = (file) => {
-		const fileInput = fileInputRef.current;
-		if (fileInput) {
-			const reader = new FileReader();
+		const reader = new FileReader();
 
-			reader.addEventListener(
-				'load',
-				() => {
-					if (!reader.result) {
-						setShowError(true);
-						return;
+		reader.addEventListener(
+			'load',
+			() => {
+				const img = document.createElement('img');
+				img.onload = () => {
+					const MAX_WIDTH = 512;
+					const MAX_HEIGHT = 512;
+
+					let width = img.width;
+					let height = img.height;
+
+					// Change the resizing logic
+					if (width > height) {
+						if (width > MAX_WIDTH) {
+							height *= (MAX_WIDTH / width);
+							width = MAX_WIDTH;
+						}
+					} else if (height > MAX_HEIGHT) {
+						width *= (MAX_HEIGHT / height);
+						height = MAX_HEIGHT;
 					}
-					// convert image file to base64 string
-					onChange(reader.result);
-					setShowError(false);
-				},
-				false,
-			);
-			reader.addEventListener('error', () => {
-				setShowError(true);
-			});
 
-			if (file) {
-				reader.readAsDataURL(file);
-			} else {
-				onChange('');
-			}
+					// Dynamically create a canvas element
+					const canvas = document.createElement('canvas');
+
+					canvas.width = width;
+					canvas.height = height;
+
+					// const canvas = document.getElementById("canvas");
+					const ctx = canvas.getContext('2d');
+
+					// Actual resizing
+					ctx.drawImage(img, 0, 0, width, height);
+
+					// Show resized image in preview element
+					const dataurl = canvas.toDataURL(file.type);
+
+					// Below would change the preview if the user changes the imageValue respecting below
+					onChange(dataurl);
+					setShowError(false);
+				};
+				img.onerror = () => {
+					if (!img.width) {
+						onChange('');
+						setShowError(true);
+					}
+				};
+
+				if (!reader.result) {
+					setShowError(true);
+					return;
+				}
+				img.src = reader.result;
+			},
+			false,
+		);
+		reader.addEventListener('error', () => {
+			setShowError(true);
+		});
+
+		if (file) {
+			reader.readAsDataURL(file);
+		} else {
+			onChange('');
 		}
 	};
 
@@ -317,6 +355,7 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 						{showError ? <ImageError /> : <Placeholder />}
 						<PlaceholderText>
 							<span>Drag an image here or </span>
+							{/* eslint-disable-next-line jsx-a11y/label-has-for */}
 							<Label>
 								upload a file
 								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp" />
@@ -346,5 +385,8 @@ ImageDropdown.propTypes = {
 	imageValue: string,
 	onChange: func.isRequired,
 	visible: bool,
+	/**
+	 * Called when user clicks outside the dropdown
+	 * */
 	onOutsideClick: func.isRequired,
 };
