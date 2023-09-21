@@ -807,7 +807,12 @@ const SearchBox = (props) => {
 
 	const enterButtonOnClick = () => {
 		setShowAIScreen(false);
-		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+		triggerQuery({
+			isOpen: false,
+			value: currentValue,
+			customQuery: true,
+			meta: { imageValue: currentImageValue },
+		});
 	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
@@ -2260,7 +2265,8 @@ const SearchBox = (props) => {
 											themePreset={props.themePreset}
 											type={props.type}
 											searchBox // a prop specific to Input styled-component
-											isOpen={isOpen} // is dropdown open or not
+											// Used to modify styles, is dropdown open or not.
+											isOpen={isOpen || showImageDropdown}
 										/>
 										{renderIcons()}
 										{!props.expandSuggestionsContainer
@@ -2273,22 +2279,23 @@ const SearchBox = (props) => {
 												setHighlightedIndex,
 												...rest,
 											)}
-										{showImageDropdown ? <ImageDropdown
-											imageValue={currentImageValue}
-											onChange={v => setCurrentImageValue(v)}
-											onOutsideClick={(e) => {
-												// When the user is clicking on the camera
-												// icon which is outside the image modal
-												if (showImageDropdown) {
-													handleShowImageDropdown(e, false);
-												}
-											}}
-										/> : null}
 									</InputWrapper>
 									{renderInputAddonAfter()}
 									{renderAskButtonElement()}
 									{renderEnterButtonElement()}
 								</InputGroup>
+
+								{showImageDropdown ? <ImageDropdown
+									imageValue={currentImageValue}
+									onChange={v => setCurrentImageValue(v)}
+									onOutsideClick={(e) => {
+										// When the user is clicking on the camera
+										// icon which is outside the image modal
+										if (showImageDropdown) {
+											handleShowImageDropdown(e, false);
+										}
+									}}
+								/> : null}
 
 
 								{props.expandSuggestionsContainer
@@ -2343,6 +2350,18 @@ const SearchBox = (props) => {
 						{renderAskButtonElement()}
 						{renderEnterButtonElement()}
 					</InputGroup>
+
+					{showImageDropdown ? <ImageDropdown
+						imageValue={currentImageValue}
+						onChange={v => setCurrentImageValue(v)}
+						onOutsideClick={(e) => {
+							// When the user is clicking on the camera
+							// icon which is outside the image modal
+							if (showImageDropdown) {
+								handleShowImageDropdown(e, false);
+							}
+						}}
+					/> : null}
 				</div>
 			)}
 		</Container>
