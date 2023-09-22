@@ -2336,6 +2336,13 @@ const SearchBox = (props) => {
 						imageValue={currentImageValue}
 						onChange={v => setCurrentImageValue(v)}
 						onOutsideClick={(e) => {
+							if (props.autosuggest === false) {
+								// don't close image dropdown,
+								// when autosuggest false and typing inside searchbox input
+								if (e.target === _inputRef.current) {
+									return;
+								}
+							}
 							// When the user is clicking on the camera
 							// icon which is outside the image modal
 							if (showImageDropdown) {
