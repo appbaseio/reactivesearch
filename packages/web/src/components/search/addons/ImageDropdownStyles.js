@@ -38,11 +38,22 @@ export const URLInput = styled.input`
 	display: block;
 	margin: 5px 0px;
 	padding: 5px;
-	border-radius: 10px;
-	border: 2px solid gray;
 	width: 100%;
-	background-color: ${props => props.theme.colors.backgroundColor};
-	color: ${props => props.theme.colors.textColor};
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	background-color: ${props => props.theme.colors.backgroundColor || '#fafafa'};
+	color: ${props => props.theme.colors.textColor || '#fff'};
+	box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+	border-radius: 6px;
+	&:focus-within {
+		background-color: ${props => props.theme.colors.backgroundColor || '#fff'};
+	}
+	${props =>
+	props.isOpen
+		&& `box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+		border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;`}
+	};
 `;
 export const ORDivider = styled.div`
 	display: flex;
