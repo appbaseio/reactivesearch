@@ -1680,15 +1680,15 @@ const SearchBox = (props) => {
 	// Show image dropdown, when showImageSearch is true,
 	// and someone is dragging an image inside the window
 	useEffect(() => {
-		if (props.showImageSearch) {
+		if (props.showImageSearch && document) {
 			const MAX_DELAY = 100;
 			const handleDragEnter = (e) => {
 				if (dragTimerId.current) {
 					clearTimeout(dragTimerId.current);
 				}
-				dragTimerId.current = setTimeout(() => {
+				if (!showImageDropdown) {
 					handleShowImageDropdown(e, true);
-				}, MAX_DELAY);
+				}
 			};
 			const handleDragLeave = (e) => {
 				if (dragTimerId.current) {
@@ -1699,19 +1699,19 @@ const SearchBox = (props) => {
 				}, MAX_DELAY);
 			};
 
-			document.addEventListener('dragenter', handleDragEnter);
-			document.addEventListener('pointerleave', handleDragLeave);
+			document.addEventListener('dragover', handleDragEnter);
+			document.addEventListener('dragleave', handleDragLeave);
 
 			return () => {
-				document.removeEventListener('dragenter', handleDragEnter);
-				document.removeEventListener('pointerleave', handleDragLeave);
+				document.removeEventListener('dragover', handleDragEnter);
+				document.removeEventListener('dragleave', handleDragLeave);
 				if (dragTimerId.current) {
 					clearTimeout(dragTimerId.current);
 				}
 			};
 		}
 		return () => {};
-	  }, [props.showImageSearch]);
+	  }, [props.showImageSearch, showImageDropdown]);
 
 	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
 	return (
