@@ -2,15 +2,18 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { ErrorIcon } from '../../shared/Icons';
 
+const DROP_PLACEHOLDER_HEIGHT = '250px';
+
 export const Container = styled.div`
 	position: absolute;
 	width: 100%;
-	padding: 10px;
+	padding: 20px;
 	background-color: ${props => props.theme.colors.backgroundColor || 'white'};
 	box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
 	border-radius: 0px 0px 10px 10px;
 	z-index: 1;
 `;
+
 export const FileInput = styled.input`
 	width: 100%;
 	padding: 10px;
@@ -18,6 +21,7 @@ export const FileInput = styled.input`
 	opacity: 0;
 	position: absolute;
 	z-index: -1;
+	top: -100px;
 `;
 export const Preview = styled.div`
 	position: relative;
@@ -83,11 +87,18 @@ export const PlaceholderText = styled.div`
 	text-align: center;
 `;
 
+Container.Body = styled.div`
+	min-height: ${DROP_PLACEHOLDER_HEIGHT};
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+`;
+
 export const DropPlaceholder = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	min-height: 250px;
+	height: ${DROP_PLACEHOLDER_HEIGHT};
 	background-color: #c5e4f7;
-    border: 1px dashed blue;
+	border: 1px dashed blue;
 `;

@@ -159,6 +159,17 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 		});
 	}, []);
 
+	useEffect(() => {
+		const handleDrag = (e) => {
+			if (!containerRef.current.contains(e.target) && isDropping) {
+				setIsDropping(false);
+			}
+		};
+		window.addEventListener('dragover', handleDrag);
+
+		return () => window.removeEventListener('dragover', handleDrag);
+	}, [isDropping]);
+
 	const fetchImageFromURL = (imageURL) => {
 		const DEBOUNCE_DELAY = 1000;
 		if (urlValueTimer.current) {
@@ -211,10 +222,10 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 		}
 		setIsDropping(false);
 	  };
-	  const handleDrag = (ev) => {
-		// Prevent default behavior (Prevent file from being opened)
-		ev.preventDefault();
-		if (!isDropping) {
+
+	  const handleDrag = (e) => {
+		e.preventDefault();
+		if (containerRef.current.contains(e.target) && !isDropping) {
 			setIsDropping(true);
 		}
 	  };
@@ -223,13 +234,16 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 		<Container
 			onDrop={handleFileDrop}
 			onDragOver={handleDrag}
-			onDragLeave={() => setIsDropping(false)}
 			ref={containerRef}
 		>
 			{
-				isDropping ? <DropPlaceholder>Drop an image here</DropPlaceholder>
+				isDropping
+					? (
+						<DropPlaceholder >
+							Drop an image here
+						</DropPlaceholder>)
 					: (
-						<div>
+						<div >
 							{imageValue && !showError
 								? (
 									<Preview>
@@ -240,7 +254,7 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 
 							{!imageValue
 								? (
-									<div>
+									<Container.Body>
 										{showError ? <ImageError /> : <Placeholder />}
 										<PlaceholderText>
 											<span>Drag an image here or </span>
@@ -264,7 +278,7 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 												fetchImageFromURL(e.target.value);
 											}}
 										/>
-									</div>
+									</Container.Body>
 								) : null}
 						</div>)
 			}
