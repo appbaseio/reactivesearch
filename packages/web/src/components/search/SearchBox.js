@@ -628,7 +628,12 @@ const SearchBox = (props) => {
 	const askButtonOnClick = () => {
 		setShowAIScreen(true);
 		handleSuggestionOpen(true);
-		triggerDefaultQuery(currentValue, { enableAI: true });
+		triggerDefaultQuery(currentValue,
+			 {
+				enableAI: true,
+				imageValue: currentImageValue || undefined,
+			},
+		);
 	};
 
 	const onSuggestionSelected = (suggestion) => {
