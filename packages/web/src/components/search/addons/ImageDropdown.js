@@ -1,6 +1,6 @@
 import { bool, func, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, ErrorMessage, FileInput, Label, ORDivider, PlaceholderText, Preview, PreviewImg, URLInput } from './ImageDropdownStyles';
+import { Container, DropPlaceholder, ErrorMessage, FileInput, Label, ORDivider, PlaceholderText, Preview, PreviewImg, URLInput } from './ImageDropdownStyles';
 import { DeleteIcon, Placeholder } from '../../shared/Icons';
 
 
@@ -52,6 +52,7 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 	const containerRef = useRef();
 	const [url, setURL] = useState('');
 	const [showError, setShowError] = useState(false);
+	const [isDropping, setIsDropping] = useState(false);
 	const urlValueTimer = useRef(null);
 
 	const handleDelete = () => {
@@ -208,54 +209,65 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 		  });
 			}
 		}
+		setIsDropping(false);
 	  };
 	  const handleDrag = (ev) => {
 		// Prevent default behavior (Prevent file from being opened)
 		ev.preventDefault();
+		if (!isDropping) {
+			setIsDropping(true);
+		}
 	  };
 
 	return (
 		<Container
 			onDrop={handleFileDrop}
 			onDragOver={handleDrag}
+			onDragLeave={() => setIsDropping(false)}
 			ref={containerRef}
 		>
-			{imageValue && !showError
-				? (
-					<Preview>
-						<PreviewImg ref={imageRef} src={imageValue} />
-						<DeleteIcon onClick={handleDelete} />
-					</Preview>
-				) : null}
+			{
+				isDropping ? <DropPlaceholder>Drop an image here</DropPlaceholder>
+					: (
+						<div>
+							{imageValue && !showError
+								? (
+									<Preview>
+										<PreviewImg ref={imageRef} src={imageValue} />
+										<DeleteIcon onClick={handleDelete} />
+									</Preview>
+								) : null}
 
-			{!imageValue
-				? (
-					<div>
-						{showError ? <ImageError /> : <Placeholder />}
-						<PlaceholderText>
-							<span>Drag an image here or </span>
-							{/* eslint-disable-next-line jsx-a11y/label-has-for */}
-							<Label>
-								upload a file
-								<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp" />
-							</Label>
-						</PlaceholderText>
-						<ORDivider>
-							<ORDivider.Divider />
-							<ORDivider.Text>OR</ORDivider.Text>
-							<ORDivider.Divider />
-						</ORDivider>
-						<URLInput
-							type="text"
-							placeholder="Paste an image link"
-							value={url}
-							onChange={(e) => {
-								setURL(e.target.value);
-								fetchImageFromURL(e.target.value);
-							}}
-						/>
-					</div>
-				) : null}
+							{!imageValue
+								? (
+									<div>
+										{showError ? <ImageError /> : <Placeholder />}
+										<PlaceholderText>
+											<span>Drag an image here or </span>
+											{/* eslint-disable-next-line jsx-a11y/label-has-for */}
+											<Label>
+												upload a file
+												<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp" />
+											</Label>
+										</PlaceholderText>
+										<ORDivider>
+											<ORDivider.Divider />
+											<ORDivider.Text>OR</ORDivider.Text>
+											<ORDivider.Divider />
+										</ORDivider>
+										<URLInput
+											type="text"
+											placeholder="Paste an image link"
+											value={url}
+											onChange={(e) => {
+												setURL(e.target.value);
+												fetchImageFromURL(e.target.value);
+											}}
+										/>
+									</div>
+								) : null}
+						</div>)
+			}
 		</Container>
 	);
 };

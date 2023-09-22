@@ -71,3 +71,12 @@ ErrorMessage.Text = styled.div`
 export const PlaceholderText = styled.div`
 	text-align: center;
 `;
+
+export const DropPlaceholder = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 250px;
+	background-color: #c5e4f7;
+    border: 1px dashed blue;
+`;
