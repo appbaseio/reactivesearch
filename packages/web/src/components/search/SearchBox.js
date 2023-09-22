@@ -876,7 +876,9 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript.trim()
 		) {
 			setValue(results[0][0].transcript.trim(), false, props, undefined, true);
-			_inputRef.current.focus();
+			if (_inputRef.current) {
+				_inputRef.current.focus();
+			}
 		}
 	};
 
@@ -2286,6 +2288,7 @@ const SearchBox = (props) => {
 								value={
 									Object.hasOwn(props, 'value') ? props.value : currentValue || ''
 								}
+								ref={_inputRef}
 								onChange={onInputChange}
 								onBlur={withTriggerQuery(props.onBlur)}
 								onFocus={withTriggerQuery(props.onFocus)}
