@@ -1,7 +1,7 @@
 import { bool, func, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, DropPlaceholder, ErrorMessage, FileInput, Label, ORDivider, PlaceholderText, Preview, PreviewImg, URLInput } from './ImageDropdownStyles';
-import { DeleteIcon, Placeholder } from '../../shared/Icons';
+import { Container, DropPlaceholder, ErrorMessage, FileInput, Label, ORDivider, PlaceholderText, Preview, PreviewImg, URLInput, StyledDeleteIcon } from './ImageDropdownStyles';
+import { Placeholder } from '../../shared/Icons';
 
 
 const ImageError = () => (
@@ -248,7 +248,7 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 								? (
 									<Preview>
 										<PreviewImg ref={imageRef} src={imageValue} />
-										<DeleteIcon onClick={handleDelete} />
+										<StyledDeleteIcon onClick={handleDelete} />
 									</Preview>
 								) : null}
 

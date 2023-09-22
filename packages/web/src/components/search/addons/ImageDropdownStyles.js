@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { ErrorIcon } from '../../shared/Icons';
+import { DeleteIcon, ErrorIcon } from '../../shared/Icons';
 
 const DROP_PLACEHOLDER_HEIGHT = '250px';
 
@@ -101,4 +101,14 @@ export const DropPlaceholder = styled.div`
 	height: ${DROP_PLACEHOLDER_HEIGHT};
 	background-color: #c5e4f7;
 	border: 1px dashed blue;
+`;
+
+export const StyledDeleteIcon = styled(DeleteIcon)`
+	color: #0B6AFF;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding: 4px;
+	background: rgb(250 250 250 / 90%);
+	cursor: pointer;
 `;
