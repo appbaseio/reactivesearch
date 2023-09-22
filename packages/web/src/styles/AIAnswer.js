@@ -363,6 +363,7 @@ export const MessageInput = styled(TextArea)`
 	border: 1px solid #ccc;
 	color: ${props => props.theme.colors.textColor};
 	height: 42px;
+	padding-left: 35px;
 
 	${({ enterButton }) =>
 	enterButton
