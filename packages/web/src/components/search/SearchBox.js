@@ -53,7 +53,7 @@ import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
+import { Actions as ActionContainer, searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
 import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
@@ -1192,8 +1192,22 @@ const SearchBox = (props) => {
 			iconURL={props.imageSearchConfig.iconURL}
 		/>
 	);
+	const renderLeftIcons = () => {
+		const { iconPosition, showIcon } = props;
+		return (
+			<div>
+				<IconGroup groupPosition="left">
+					{iconPosition === 'left' && showIcon && (
 
-	const renderIcons = () => {
+						<IconWrapper onClick={handleSearchIconClick}>
+							{renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+			</div>
+		  );
+	};
+	const renderRightIcons = () => {
 		const {
 			showIcon,
 			showClear,
@@ -1207,10 +1221,9 @@ const SearchBox = (props) => {
 		} = props;
 		return (
 			<div>
-				<IconGroup enableAI={enableAI} groupPosition="right" positionType="absolute">
+				<IconGroup groupPosition="right">
 					{currentValue && showClear && (
 						<IconWrapper
-							enableAI={enableAI}
 							onClick={clearValue}
 							showIcon={showIcon}
 							isClearIcon
@@ -1235,14 +1248,6 @@ const SearchBox = (props) => {
 						ThumbnailOrIcon
 					) : null}
 					{iconPosition === 'right' && (
-						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
-							{renderIcon()}
-						</IconWrapper>
-					)}
-				</IconGroup>
-
-				<IconGroup enableAI={enableAI} groupPosition="left" positionType="absolute">
-					{iconPosition === 'left' && (
 						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
 							{renderIcon()}
 						</IconWrapper>
@@ -2192,8 +2197,12 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup ref={_inputGroupRef} isOpen={isOpen}>
-									{renderInputAddonBefore()}
+								<InputGroup searchBox ref={_inputGroupRef} isOpen={isOpen || showImageDropdown}>
+
+									<ActionContainer>
+										{renderLeftIcons()}
+										{renderInputAddonBefore()}
+									</ActionContainer>
 									<InputWrapper>
 										<TextArea
 											showFocusShortcutsIcon={props.showFocusShortcutsIcon}
@@ -2230,7 +2239,6 @@ const SearchBox = (props) => {
 											// Used to modify styles, is dropdown open or not.
 											isOpen={isOpen || showImageDropdown}
 										/>
-										{renderIcons()}
 										{!props.expandSuggestionsContainer
 											&& renderSuggestionsDropdown(
 												getRootProps,
@@ -2242,9 +2250,12 @@ const SearchBox = (props) => {
 												...rest,
 											)}
 									</InputWrapper>
-									{renderInputAddonAfter()}
-									{renderAskButtonElement()}
-									{renderEnterButtonElement()}
+									<ActionContainer>
+										{renderRightIcons()}
+										{renderInputAddonAfter()}
+										{renderAskButtonElement()}
+										{renderEnterButtonElement()}
+									</ActionContainer>
 								</InputGroup>
 
 								{showImageDropdown ? <ImageDropdown
@@ -2278,8 +2289,12 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup ref={_inputGroupRef} isOpen={false}>
-						{renderInputAddonBefore()}
+					<InputGroup searchBox ref={_inputGroupRef} isOpen={showImageDropdown}>
+
+						<ActionContainer>
+							{renderLeftIcons()}
+							{renderInputAddonBefore()}
+						</ActionContainer>
 						<InputWrapper>
 							<TextArea
 								aria-label={props.componentId}
@@ -2300,18 +2315,21 @@ const SearchBox = (props) => {
 								showIcon={props.showIcon}
 								showClear={props.showClear}
 								themePreset={props.themePreset}
-								searchBox // a prop specific to Input styled-component
-								isOpen={false} // is dropdown open or not
 								type={props.type}
 								showFocusShortcutsIcon={props.showFocusShortcutsIcon}
 								showVoiceSearch={props.showVoiceSearch}
-							/>
-							{renderIcons()}
-						</InputWrapper>
 
-						{renderInputAddonAfter()}
-						{renderAskButtonElement()}
-						{renderEnterButtonElement()}
+								// Props used to modify styles
+								searchBox
+								isOpen={showImageDropdown}
+							/>
+						</InputWrapper>
+						<ActionContainer>
+							{renderRightIcons()}
+							{renderInputAddonAfter()}
+							{renderAskButtonElement()}
+							{renderEnterButtonElement()}
+						</ActionContainer>
 					</InputGroup>
 
 					{showImageDropdown ? <ImageDropdown
