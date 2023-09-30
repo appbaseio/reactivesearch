@@ -141,7 +141,7 @@ class SelectedFilters extends Component {
 							<Filter.Value>{
 								selectedValues[component].label}: {decodeHtml(valueToRender)}
 							</Filter.Value>
-							<Filter.ImageValue>{imageValue ? <img width="30px" alt="thumbnail" src={imageValue} /> : null}</Filter.ImageValue>
+							{imageValue ? <Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /> </Filter.ImageValue> : null}
 							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
 						</Button>
 					);
@@ -155,7 +155,7 @@ class SelectedFilters extends Component {
 							tabIndex="0"
 						>
 							<Filter.Value>{selectedValues[component].label}: </Filter.Value>
-							<Filter.ImageValue>{imageValue ? <img width="30px" alt="thumbnail" src={imageValue} /> : null}</Filter.ImageValue>
+							<Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /></Filter.ImageValue>
 							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
 						</Button>
 					);

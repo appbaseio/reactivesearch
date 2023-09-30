@@ -2575,7 +2575,7 @@ const mapStateToProps = (state, props) => ({
 		|| null,
 	selectedImageValue: (state.selectedValues[props.componentId]
 		&& state.selectedValues[props.componentId].meta
-		&& state.selectedValues[props.componentId].meta.imageValue) || null,
+		&& state.selectedValues[props.componentId].meta.imageValue) || '',
 	selectedCategory:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].category)

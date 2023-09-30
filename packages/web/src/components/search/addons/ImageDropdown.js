@@ -1,22 +1,33 @@
 import { bool, func, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, DropPlaceholder, ErrorMessage, FileInput, Label, ORDivider, PlaceholderText, Preview, PreviewImg, URLInput, StyledDeleteIcon } from './ImageDropdownStyles';
+import {
+	Container,
+	DropPlaceholder,
+	ErrorMessage,
+	FileInput,
+	Label,
+	ORDivider,
+	PlaceholderText,
+	Preview,
+	PreviewImg,
+	URLInput,
+	StyledDeleteIcon,
+} from './ImageDropdownStyles';
 import { Placeholder } from '../../shared/Icons';
-
 
 const ImageError = () => (
 	<ErrorMessage>
 		<ErrorMessage.Icon />
 		<ErrorMessage.Text>
 			Use an image in one of the formats
-			<code>.jpeg</code>, <code>.png</code>,
-			<code>.webp</code>, <code>.bmp</code> and <code>.tif</code>
+			<code>.jpeg</code>, <code>.png</code>,<code>.webp</code>, <code>.bmp</code> and{' '}
+			<code>.tif</code>
 		</ErrorMessage.Text>
-	</ErrorMessage>);
-
+	</ErrorMessage>
+);
 
 /*
-*/
+ */
 /**
  * *
  * image value is base64 encoded string
@@ -81,11 +92,11 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 					// Change the resizing logic
 					if (width > height) {
 						if (width > MAX_WIDTH) {
-							height *= (MAX_WIDTH / width);
+							height *= MAX_WIDTH / width;
 							width = MAX_WIDTH;
 						}
 					} else if (height > MAX_HEIGHT) {
-						width *= (MAX_HEIGHT / height);
+						width *= MAX_HEIGHT / height;
 						height = MAX_HEIGHT;
 					}
 
@@ -149,14 +160,18 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 	}, [imageValue]);
 
 	useEffect(() => {
-		window.addEventListener('click', (e) => {
+		const handleEvent = (e) => {
 			const container = containerRef.current;
 			if (container) {
 				if (!container.contains(e.target)) {
 					onOutsideClick(e);
 				}
 			}
-		});
+		};
+		window.addEventListener('click', handleEvent);
+		return () => {
+			window.removeEventListener('click', handleEvent);
+		};
 	}, []);
 
 	useEffect(() => {
@@ -204,86 +219,117 @@ export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
 		ev.preventDefault();
 		if (!imageValue) {
 			if (ev.dataTransfer.items) {
-		  // Use DataTransferItemList interface to access the file(s)
-		  [...ev.dataTransfer.items].forEach((item) => {
+				// Use DataTransferItemList interface to access the file(s)
+				[...ev.dataTransfer.items].forEach((item) => {
 					// If dropped items aren't files, reject them
 					if (item[0].kind === 'file') {
 						const file = item[0].getAsFile();
 						// TODO: Below is same as onChange
 						readFile(file);
-			  }
-		  });
+					}
+				});
 			} else {
-		  // Use DataTransfer interface to access the file(s)
-		  [...ev.dataTransfer.files].forEach((file) => {
+				// Use DataTransfer interface to access the file(s)
+				[...ev.dataTransfer.files].forEach((file) => {
 					readFile(file);
-		  });
+				});
 			}
 		}
 		setIsDropping(false);
-	  };
+	};
 
-	  const handleDrag = (e) => {
+	const handleDrag = (e) => {
 		e.preventDefault();
 		if (containerRef.current.contains(e.target) && !isDropping) {
 			setIsDropping(true);
 		}
-	  };
+	};
 
 	return (
-		<Container
-			onDrop={handleFileDrop}
-			onDragOver={handleDrag}
-			ref={containerRef}
-		>
-			{
-				isDropping
-					? (
-						<DropPlaceholder >
-							Drop an image here
-						</DropPlaceholder>)
-					: (
-						<div >
-							{imageValue && !showError
-								? (
-									<Preview>
-										<PreviewImg ref={imageRef} src={imageValue} />
-										<StyledDeleteIcon onClick={handleDelete} />
-									</Preview>
-								) : null}
-
-							{!imageValue
-								? (
-									<Container.Body>
-										{showError ? <ImageError /> : <Placeholder />}
-										<PlaceholderText>
-											<span>Drag an image here or </span>
-											{/* eslint-disable-next-line jsx-a11y/label-has-for */}
-											<Label>
-												upload a file
-												<FileInput ref={fileInputRef} onChange={handleFileSelect} type="file" accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp" />
-											</Label>
-										</PlaceholderText>
-										<ORDivider>
-											<ORDivider.Divider />
-											<ORDivider.Text>OR</ORDivider.Text>
-											<ORDivider.Divider />
-										</ORDivider>
-										<URLInput
-											type="text"
-											placeholder="Paste an image link"
-											value={url}
-											onChange={(e) => {
-												setURL(e.target.value);
-												fetchImageFromURL(e.target.value);
-											}}
-										/>
-									</Container.Body>
-								) : null}
-						</div>)
-			}
+		<Container onDrop={handleFileDrop} onDragOver={handleDrag} ref={containerRef}>
+			{isDropping ? (
+				<DropPlaceholder>Drop an image here</DropPlaceholder>
+			) : (
+				<ImageDropdown.Content
+					imageValue={imageValue}
+					showError={showError}
+					handleDelete={handleDelete}
+					handleFileSelect={handleFileSelect}
+					fileInputRef={fileInputRef}
+					imageRef={imageRef}
+					setURL={setURL}
+					fetchImageFromURL={fetchImageFromURL}
+					url={url}
+				/>
+			)}
 		</Container>
 	);
+};
+
+ImageDropdown.Content = ({
+	imageValue,
+	showError,
+	handleDelete,
+	handleFileSelect,
+	fileInputRef,
+	imageRef,
+	setURL,
+	fetchImageFromURL,
+	url,
+}) => (
+	<div>
+		{imageValue && !showError ? (
+			<Preview>
+				<PreviewImg ref={imageRef} src={imageValue} />
+				<StyledDeleteIcon onClick={handleDelete} />
+			</Preview>
+		) : null}
+
+		{!imageValue ? (
+			<Container.Body>
+				{showError ? <ImageError /> : <Placeholder />}
+				<PlaceholderText>
+					<span>Drag an image here or </span>
+					{/* eslint-disable-next-line jsx-a11y/label-has-for */}
+					<Label>
+						upload a file
+						<FileInput
+							ref={fileInputRef}
+							onChange={handleFileSelect}
+							type="file"
+							accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp"
+						/>
+					</Label>
+				</PlaceholderText>
+				<ORDivider>
+					<ORDivider.Divider />
+					<ORDivider.Text>OR</ORDivider.Text>
+					<ORDivider.Divider />
+				</ORDivider>
+				<URLInput
+					type="text"
+					placeholder="Paste an image link"
+					value={url}
+					onChange={(e) => {
+						setURL(e.target.value);
+						fetchImageFromURL(e.target.value);
+					}}
+				/>
+			</Container.Body>
+		) : null}
+	</div>
+);
+
+ImageDropdown.Content.propTypes = {
+	imageValue: string,
+	showError: bool,
+	handleDelete: func.isRequired,
+	handleFileSelect: func.isRequired,
+	fileInputRef: func.isRequired,
+	imageRef: func.isRequired,
+	setURL: func.isRequired,
+	fetchImageFromURL: func.isRequired,
+	url: string,
 };
 
 ImageDropdown.propTypes = {
