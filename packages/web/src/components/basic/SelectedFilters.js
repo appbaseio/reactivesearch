@@ -138,7 +138,7 @@ class SelectedFilters extends Component {
 							onClick={() => this.remove(component, value)}
 							tabIndex="0"
 						>
-							<Filter.Value>{
+							<Filter.Value title={decodeHtml(valueToRender)}>{
 								selectedValues[component].label}: {decodeHtml(valueToRender)}
 							</Filter.Value>
 							{imageValue ? <Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /> </Filter.ImageValue> : null}
@@ -154,7 +154,7 @@ class SelectedFilters extends Component {
 							onClick={() => this.remove(component, value)}
 							tabIndex="0"
 						>
-							<Filter.Value>{selectedValues[component].label}: </Filter.Value>
+							<Filter.Value>{selectedValues[component].label}:</Filter.Value>
 							<Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /></Filter.ImageValue>
 							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
 						</Button>
