@@ -261,7 +261,7 @@ const searchboxSuggestions = (themePreset, theme) => css`
 		border-bottom: 1px solid #f2f0f0;
 		${themePreset === 'dark'
 		&& css`
-			background: #161616;
+			background: #424242;
 		`};
 		.section-header {
 			padding: 10px;
