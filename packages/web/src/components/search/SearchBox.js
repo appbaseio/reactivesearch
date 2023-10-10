@@ -413,7 +413,7 @@ const SearchBox = (props) => {
 		}
 	};
 	const handleTextChange = useRef(
-		debounce((valueParam = undefined, cause = undefined) => {
+		debounce((valueParam = undefined, cause = undefined, meta) => {
 			const { enterButton } = props;
 			if (cause === causes.CLEAR_VALUE) {
 				triggerCustomQuery(valueParam);
@@ -421,7 +421,7 @@ const SearchBox = (props) => {
 			} else if (props.autosuggest) {
 				triggerDefaultQuery(valueParam);
 			} else if (value === undefined && !onChange && !enterButton) {
-				triggerCustomQuery(valueParam);
+				triggerCustomQuery(valueParam, undefined, true, meta);
 			}
 		}, props.debounce),
 	);
@@ -558,7 +558,7 @@ const SearchBox = (props) => {
 					}
 				} else {
 					// debounce for handling text while typing
-					handleTextChange.current(value, cause);
+					handleTextChange.current(value, cause, { ...meta, imageValue });
 				}
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
