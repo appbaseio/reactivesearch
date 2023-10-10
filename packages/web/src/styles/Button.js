@@ -35,7 +35,7 @@ Filter.ImageValue = styled(Filter.Value)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-left: 0.5rem;
+	margin-left: 0.25rem;
 `;
 
 Filter.CloseIcon = styled.span`
