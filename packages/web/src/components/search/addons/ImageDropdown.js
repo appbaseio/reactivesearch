@@ -1,4 +1,4 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, object, string } from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import {
 	Container,
@@ -57,7 +57,11 @@ const ImageError = () => (
  * 3. URL
  * */
 // eslint-disable-next-line import/prefer-default-export
-export const ImageDropdown = ({ imageValue, onChange, onOutsideClick }) => {
+export const ImageDropdown = ({
+	imageValue,
+	onChange,
+	onOutsideClick,
+}) => {
 	const fileInputRef = useRef();
 	const imageRef = useRef();
 	const containerRef = useRef();
@@ -325,8 +329,10 @@ ImageDropdown.Content.propTypes = {
 	showError: bool,
 	handleDelete: func.isRequired,
 	handleFileSelect: func.isRequired,
-	fileInputRef: func.isRequired,
-	imageRef: func.isRequired,
+	// eslint-disable-next-line react/forbid-prop-types
+	fileInputRef: object.isRequired,
+	// eslint-disable-next-line react/forbid-prop-types
+	imageRef: object.isRequired,
 	setURL: func.isRequired,
 	fetchImageFromURL: func.isRequired,
 	url: string,

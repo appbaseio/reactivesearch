@@ -16650,6 +16650,2134 @@ exports[`should render with a default value when defaultValue prop is set 1`] = 
 </div>
 `;
 
+exports[`should render with image dropdown open 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  background-color: #fafafa;
+  color: #424242;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.emotion-5:focus-within {
+  background-color: #fff;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  left: 0;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-11 svg,
+.emotion-11 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-11 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-11 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-11 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-11 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-11 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-11 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-11 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-11 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-11 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-11 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-11 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-11 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-11 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-13 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  min-height: unset;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-15::-webkit-search-decoration,
+.emotion-15::-webkit-search-cancel-button,
+.emotion-15::-webkit-search-results-button,
+.emotion-15::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  right: 0;
+}
+
+.emotion-21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-21 svg,
+.emotion-21 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-21 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-21 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-21 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-21 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-21 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-21 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-21 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-21 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-21 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-21 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-21 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-21 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-21 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-25 {
+  color: #0B6AFF;
+}
+
+.emotion-27 {
+  position: absolute;
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-radius: 0px 0px 10px 10px;
+  z-index: 1;
+}
+
+.emotion-29 {
+  min-height: 250px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.emotion-31 {
+  color: #0B6AFF;
+  display: block;
+  margin: auto;
+}
+
+.emotion-33 {
+  text-align: center;
+}
+
+.emotion-35 {
+  cursor: pointer;
+  color: #0B6AFF;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.emotion-37 {
+  width: 100%;
+  padding: 10px;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  top: -100px;
+}
+
+.emotion-39 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 0px;
+}
+
+.emotion-41 {
+  width: 100%;
+  height: 2px;
+  background-color: #424242;
+  border-color: #424242;
+}
+
+.emotion-43 {
+  margin: 0px 10px;
+}
+
+.emotion-47 {
+  display: block;
+  margin: 5px 0px;
+  padding: 5px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  color: #424242;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-47:focus-within {
+  background-color: #fff;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <div>
+            <div
+              className="emotion-9 emotion-10"
+            >
+              <div
+                className="emotion-11 emotion-12"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="emotion-13 emotion-14"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-15 emotion-16"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+        </div>
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <div>
+            <div
+              className="emotion-19 emotion-10"
+            >
+              <div
+                className="emotion-21 emotion-22"
+                onClick={[Function]}
+              >
+                /
+              </div>
+              <div
+                className="emotion-11 emotion-12"
+                onClick={[Function]}
+                title="Search by image"
+              >
+                <svg
+                  className="emotion-25 emotion-26"
+                  fill="currentColor"
+                  height="30px"
+                  version="1.1"
+                  viewBox="0 -2 32 32"
+                  width="30px"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fillRule="evenodd"
+                    id="Page-1"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g
+                      id="Icon-Set-Filled"
+                      transform="translate(-258.000000, -467.000000)"
+                    >
+                      <path
+                        d="M286,471 L283,471 L282,469 C281.411,467.837 281.104,467 280,467 L268,467 C266.896,467 266.53,467.954 266,469 L265,471 L262,471 C259.791,471 258,472.791 258,475 L258,491 C258,493.209 259.791,495 262,495 L286,495 C288.209,495 290,493.209 290,491 L290,475 C290,472.791 288.209,471 286,471 Z M274,491 C269.582,491 266,487.418 266,483 C266,478.582 269.582,475 274,475 C278.418,475 282,478.582 282,483 C282,487.418 278.418,491 274,491 Z M274,477 C270.687,477 268,479.687 268,483 C268,486.313 270.687,489 274,489 C277.313,489 280,486.313 280,483 C280,479.687 277.313,477 274,477 L274,477 Z"
+                        id="camera"
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="emotion-27 emotion-28"
+        onDragOver={[Function]}
+        onDrop={[Function]}
+      >
+        <div>
+          <div
+            className="emotion-29 emotion-30"
+          >
+            <svg
+              className="emotion-31 emotion-32"
+              color="blue"
+              fill="none"
+              height="100px"
+              style={undefined}
+              viewBox="0 0 24 24"
+              width="100px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <circle
+                cx="16"
+                cy="8"
+                opacity="0.5"
+                r="2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M5 13.307L5.81051 12.5542C6.73658 11.6941 8.18321 11.7424 9.04988 12.6623L11.6974 15.4727C12.2356 16.0439 13.1166 16.1209 13.7457 15.6516C14.6522 14.9753 15.9144 15.0522 16.7322 15.8334L19 18"
+                opacity="0.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+              />
+            </svg>
+            <div
+              className="emotion-33 emotion-34"
+            >
+              <span>
+                Drag an image here or 
+              </span>
+              <label
+                className="emotion-35 emotion-36"
+              >
+                upload a file
+                <input
+                  accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp"
+                  className="emotion-37 emotion-38"
+                  onChange={[Function]}
+                  type="file"
+                />
+              </label>
+            </div>
+            <div
+              className="emotion-39 emotion-40"
+            >
+              <hr
+                className="emotion-41 emotion-42"
+              />
+              <div
+                className="emotion-43 emotion-44"
+              >
+                OR
+              </div>
+              <hr
+                className="emotion-41 emotion-42"
+              />
+            </div>
+            <input
+              className="emotion-47 emotion-48"
+              onChange={[Function]}
+              placeholder="Paste an image link"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with image search and tooltip 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  background-color: #fafafa;
+  color: #424242;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.emotion-5:focus-within {
+  background-color: #fff;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  left: 0;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-11 svg,
+.emotion-11 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-11 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-11 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-11 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-11 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-11 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-11 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-11 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-11 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-11 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-11 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-11 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-11 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-11 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-13 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  min-height: unset;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-15::-webkit-search-decoration,
+.emotion-15::-webkit-search-cancel-button,
+.emotion-15::-webkit-search-results-button,
+.emotion-15::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  right: 0;
+}
+
+.emotion-21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-21 svg,
+.emotion-21 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-21 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-21 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-21 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-21 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-21 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-21 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-21 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-21 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-21 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-21 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-21 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-21 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-21 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-25 {
+  color: #0B6AFF;
+}
+
+.emotion-27 {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #fff;
+  font-size: 0.9rem;
+  z-index: 3;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: min(100vh,402px);
+  overflow-y: auto;
+  max-height: min(100vh,401px);
+  border: none;
+  border-radius: 6px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-top: 1px solid #f2f0f0;
+}
+
+.emotion-27.small {
+  top: 30px;
+}
+
+.emotion-27 li {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.emotion-27 li>.trim {
+  display: -webkit-box;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  max-height: 2.3rem;
+  line-height: 1.2rem;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-27 li:hover,
+.emotion-27 li:focus {
+  background-color: #eee;
+}
+
+.emotion-27 li {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+  position: relative;
+}
+
+.emotion-27 li:hover,
+.emotion-27 li:focus {
+  background-color: unset;
+}
+
+.emotion-27 li .trim {
+  line-height: 20px;
+}
+
+.emotion-27 li.li-item {
+  background-color: #fff;
+}
+
+.emotion-27 li.li-item svg {
+  fill: #0B6AFF;
+}
+
+.emotion-27 li.active-li-item {
+  background-color: #2d84f6;
+  color: #fff;
+}
+
+.emotion-27 li.active-li-item svg {
+  -webkit-transition: fill 0.3s ease-in;
+  transition: fill 0.3s ease-in;
+  fill: #fff!important;
+}
+
+.emotion-27 .section-container {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f2f0f0;
+}
+
+.emotion-27 .section-container .section-header {
+  padding: 10px;
+  font-size: 12px;
+  color: #7f7c7c;
+  background: #f9f9f9;
+}
+
+.emotion-27 .section-container .section-list {
+  padding-left: 0;
+}
+
+.emotion-27 .section-container .section-list-item__label,
+.emotion-27 .section-container .section-list-item__description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emotion-27 .section-container .section-list-item__label *,
+.emotion-27 .section-container .section-list-item__description * {
+  margin: 0;
+  padding: 0;
+}
+
+.emotion-27 .section-container .section-list-item__description {
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: auto;
+  position: relative;
+  right: -3px;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+  z-index: 111;
+}
+
+.emotion-28 svg {
+  cursor: pointer;
+  fill: #707070;
+  height: 17px;
+}
+
+.emotion-28:hover svg {
+  fill: #1c1a1a;
+}
+
+.emotion-42 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #8792a2;
+  background: #f7fafc;
+  padding: 10px;
+  height: 40px;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <div>
+            <div
+              className="emotion-9 emotion-10"
+            >
+              <div
+                className="emotion-11 emotion-12"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="emotion-13 emotion-14"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={true}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-15 emotion-16"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+        </div>
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <div>
+            <div
+              className="emotion-19 emotion-10"
+            >
+              <div
+                className="emotion-21 emotion-22"
+                onClick={[Function]}
+              >
+                /
+              </div>
+              <div
+                className="emotion-11 emotion-12"
+                onClick={[Function]}
+                title="Search by image"
+              >
+                <svg
+                  className="emotion-25 emotion-26"
+                  fill="currentColor"
+                  height="30px"
+                  version="1.1"
+                  viewBox="0 -2 32 32"
+                  width="30px"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fillRule="evenodd"
+                    id="Page-1"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g
+                      id="Icon-Set-Filled"
+                      transform="translate(-258.000000, -467.000000)"
+                    >
+                      <path
+                        d="M286,471 L283,471 L282,469 C281.411,467.837 281.104,467 280,467 L268,467 C266.896,467 266.53,467.954 266,469 L265,471 L262,471 C259.791,471 258,472.791 258,475 L258,491 C258,493.209 259.791,495 262,495 L286,495 C288.209,495 290,493.209 290,491 L290,475 C290,472.791 288.209,471 286,471 Z M274,491 C269.582,491 266,487.418 266,483 C266,478.582 269.582,475 274,475 C278.418,475 282,478.582 282,483 C282,487.418 278.418,491 274,491 Z M274,477 C270.687,477 268,479.687 268,483 C268,486.313 270.687,489 274,489 C277.313,489 280,486.313 280,483 C280,479.687 277.313,477 274,477 L274,477 Z"
+                        id="camera"
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul
+        className=" emotion-27"
+      >
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-0"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-1"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-2"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-3"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-4"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-5"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <li
+          className="li-item "
+          id="MockSearchBox-downshift-item-6"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseMove={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "justifyContent": "flex-start",
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "padding": "0 10px 0 0",
+              }
+            }
+          >
+            <svg
+              alt="Search"
+              className="search-icon"
+              height="12"
+              style={
+                Object {
+                  "left": "3px",
+                  "marginRight": "8px",
+                  "position": "relative",
+                  "transform": "scale(1.35)",
+                }
+              }
+              viewBox="0 0 15 15"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Search
+              </title>
+              <path
+                d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+              />
+            </svg>
+          </div>
+          <button
+            className="emotion-28 emotion-29"
+            onClick={[Function]}
+          >
+            <svg
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z"
+              />
+            </svg>
+          </button>
+        </li>
+        <div
+          className="emotion-42 emotion-43"
+        >
+          <div>
+            ↑↓ Navigate
+          </div>
+          <div>
+            ↩ Go
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render with image uploaded 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  position: relative;
+}
+
+.emotion-4 .cancel-icon {
+  cursor: pointer;
+}
+
+.emotion-5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 100%;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+  background-color: #fafafa;
+  color: #424242;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 15px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.emotion-5:focus-within {
+  background-color: #fff;
+}
+
+.emotion-7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.emotion-9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  left: 0;
+}
+
+.emotion-11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+}
+
+.emotion-11 svg,
+.emotion-11 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-11 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-11 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-11 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-11 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-11 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-11 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-11 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-11 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-11 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-11 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-11 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-11 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-11 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-13 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  position: relative;
+  height: 42px;
+}
+
+.emotion-15 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+  padding: 8px 12px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  min-height: unset;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  resize: none;
+  overflow: hidden;
+  height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
+}
+
+.emotion-15:focus {
+  background-color: #fff;
+}
+
+.emotion-15::-webkit-search-decoration,
+.emotion-15::-webkit-search-cancel-button,
+.emotion-15::-webkit-search-results-button,
+.emotion-15::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  grid-gap: 6px;
+  padding: 0 10px;
+  height: 100%;
+  right: 0;
+}
+
+.emotion-21 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  max-width: 23px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  cursor: pointer;
+  height: 100%;
+  min-width: 20px;
+  border-radius: 4px;
+  vertical-align: middle;
+  height: 25px;
+  font-size: 12px;
+  border: 1px solid #0B6AFF;
+  color: #0B6AFF;
+  max-width: unset;
+  padding: 5px;
+}
+
+.emotion-21 svg,
+.emotion-21 svg g#el_D93PK3GbmJ {
+  fill: #0B6AFF;
+}
+
+.emotion-21 svg.search-icon {
+  -webkit-transform: scale(1.25);
+  -ms-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.emotion-21 svg.cancel-icon {
+  fill: #595959;
+}
+
+.emotion-21 svg.--listen-svg {
+  fill: #0B6AFF;
+  -webkit-filter: hue-rotate(-10deg);
+  filter: hue-rotate(-10deg);
+}
+
+.emotion-21 svg.--listen-svg #el_-Vm65Ltfy7,
+.emotion-21 svg.--listen-svg #el_9bggsfQOtU,
+.emotion-21 svg.--listen-svg #el_zclQ34fvf7,
+.emotion-21 svg.--listen-svg #el_aa9sjx4H0vA,
+.emotion-21 svg.--listen-svg #el_z5u6RAFhx7d,
+.emotion-21 svg.--listen-svg #el__ZcqlS20zcw,
+.emotion-21 svg.--listen-svg #el_FYYKCI_u24e,
+.emotion-21 svg.--listen-svg #el_RMT1KUfbdF8,
+.emotion-21 svg.--listen-svg #el_uzZNtK32Zi,
+.emotion-21 svg.--listen-svg g#el_QJeJ_2CDw5>path:first-child {
+  fill: #0B6AFF!important;
+  -webkit-filter: hue-rotate(-10deg)!important;
+  filter: hue-rotate(-10deg)!important;
+}
+
+.emotion-25 {
+  color: #0B6AFF;
+}
+
+.emotion-27 {
+  position: absolute;
+  width: 100%;
+  padding: 20px;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 20%) 0px 10px 15px;
+  border-radius: 0px 0px 10px 10px;
+  z-index: 1;
+}
+
+.emotion-29 {
+  min-height: 250px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.emotion-31 {
+  color: #0B6AFF;
+  display: block;
+  margin: auto;
+}
+
+.emotion-33 {
+  text-align: center;
+}
+
+.emotion-35 {
+  cursor: pointer;
+  color: #0B6AFF;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.emotion-37 {
+  width: 100%;
+  padding: 10px;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  top: -100px;
+}
+
+.emotion-39 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px 0px;
+}
+
+.emotion-41 {
+  width: 100%;
+  height: 2px;
+  background-color: #424242;
+  border-color: #424242;
+}
+
+.emotion-43 {
+  margin: 0px 10px;
+}
+
+.emotion-47 {
+  display: block;
+  margin: 5px 0px;
+  padding: 5px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  color: #424242;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
+  border-radius: 6px;
+}
+
+.emotion-47:focus-within {
+  background-color: #fff;
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <div
+      className="emotion-4"
+    >
+      <div
+        className="input-group emotion-5 emotion-6"
+      >
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <div>
+            <div
+              className="emotion-9 emotion-10"
+            >
+              <div
+                className="emotion-11 emotion-12"
+                onClick={[Function]}
+              >
+                <svg
+                  alt="Search"
+                  className="search-icon"
+                  height="12"
+                  style={
+                    Object {
+                      "position": "relative",
+                      "transform": "scale(1.35)",
+                    }
+                  }
+                  viewBox="0 0 15 15"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Search
+                  </title>
+                  <path
+                    d=" M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609, 0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021, 0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338, 4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z "
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="emotion-13 emotion-14"
+        >
+          <textarea
+            aria-activedescendant={null}
+            aria-autocomplete="list"
+            aria-expanded={false}
+            aria-label="MockSearchBox"
+            autoComplete="off"
+            autoFocus={undefined}
+            className=" emotion-15 emotion-16"
+            id="MockSearchBox-downshift-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={undefined}
+            onKeyUp={undefined}
+            placeholder="Search"
+            role="combobox"
+            type="search"
+            value=""
+          />
+        </div>
+        <div
+          className="emotion-7 emotion-8"
+        >
+          <div>
+            <div
+              className="emotion-19 emotion-10"
+            >
+              <div
+                className="emotion-21 emotion-22"
+                onClick={[Function]}
+              >
+                /
+              </div>
+              <div
+                className="emotion-11 emotion-12"
+                onClick={[Function]}
+                title="Search by image"
+              >
+                <svg
+                  className="emotion-25 emotion-26"
+                  fill="currentColor"
+                  height="30px"
+                  version="1.1"
+                  viewBox="0 -2 32 32"
+                  width="30px"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g
+                    fillRule="evenodd"
+                    id="Page-1"
+                    stroke="none"
+                    strokeWidth="1"
+                  >
+                    <g
+                      id="Icon-Set-Filled"
+                      transform="translate(-258.000000, -467.000000)"
+                    >
+                      <path
+                        d="M286,471 L283,471 L282,469 C281.411,467.837 281.104,467 280,467 L268,467 C266.896,467 266.53,467.954 266,469 L265,471 L262,471 C259.791,471 258,472.791 258,475 L258,491 C258,493.209 259.791,495 262,495 L286,495 C288.209,495 290,493.209 290,491 L290,475 C290,472.791 288.209,471 286,471 Z M274,491 C269.582,491 266,487.418 266,483 C266,478.582 269.582,475 274,475 C278.418,475 282,478.582 282,483 C282,487.418 278.418,491 274,491 Z M274,477 C270.687,477 268,479.687 268,483 C268,486.313 270.687,489 274,489 C277.313,489 280,486.313 280,483 C280,479.687 277.313,477 274,477 L274,477 Z"
+                        id="camera"
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="emotion-27 emotion-28"
+        onDragOver={[Function]}
+        onDrop={[Function]}
+      >
+        <div>
+          <div
+            className="emotion-29 emotion-30"
+          >
+            <svg
+              className="emotion-31 emotion-32"
+              color="blue"
+              fill="none"
+              height="100px"
+              style={undefined}
+              viewBox="0 0 24 24"
+              width="100px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <circle
+                cx="16"
+                cy="8"
+                opacity="0.5"
+                r="2"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+              <path
+                d="M5 13.307L5.81051 12.5542C6.73658 11.6941 8.18321 11.7424 9.04988 12.6623L11.6974 15.4727C12.2356 16.0439 13.1166 16.1209 13.7457 15.6516C14.6522 14.9753 15.9144 15.0522 16.7322 15.8334L19 18"
+                opacity="0.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+              />
+            </svg>
+            <div
+              className="emotion-33 emotion-34"
+            >
+              <span>
+                Drag an image here or 
+              </span>
+              <label
+                className="emotion-35 emotion-36"
+              >
+                upload a file
+                <input
+                  accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp"
+                  className="emotion-37 emotion-38"
+                  onChange={[Function]}
+                  type="file"
+                />
+              </label>
+            </div>
+            <div
+              className="emotion-39 emotion-40"
+            >
+              <hr
+                className="emotion-41 emotion-42"
+              />
+              <div
+                className="emotion-43 emotion-44"
+              >
+                OR
+              </div>
+              <hr
+                className="emotion-41 emotion-42"
+              />
+            </div>
+            <input
+              className="emotion-47 emotion-48"
+              onChange={[Function]}
+              placeholder="Paste an image link"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`should show voice search when showVoiceSearch prop is set 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;

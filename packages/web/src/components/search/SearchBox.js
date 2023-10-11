@@ -1669,8 +1669,13 @@ const SearchBox = (props) => {
 
 	// Set testing environment
 	useEffect(() => {
-		if (props.testMode) {
+		const { testMode, __showImageDropdown } = props;
+
+		if (testMode) {
 			setIsOpen(true);
+			if (__showImageDropdown) {
+				handleShowImageDropdown(new MouseEvent('click'), true);
+			}
 			if (props.enableAI) {
 				setShowAIScreen(true);
 			}
@@ -2234,8 +2239,11 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup searchBox ref={_inputGroupRef} isOpen={isOpen || showImageDropdown}>
-
+								<InputGroup
+									searchBox
+									ref={_inputGroupRef}
+									isOpen={isOpen || showImageDropdown}
+								>
 									<ActionContainer>
 										{renderLeftIcons()}
 										{renderInputAddonBefore()}
@@ -2295,18 +2303,22 @@ const SearchBox = (props) => {
 									</ActionContainer>
 								</InputGroup>
 
-								{showImageDropdown ? <ImageDropdown
-									imageValue={currentImageValue}
-									onChange={v => setCurrentImageValue(v)}
-									onOutsideClick={(e) => {
-										// When the user is clicking on the camera
-										// icon which is outside the image modal
-										if (showImageDropdown) {
-											handleShowImageDropdown(e, false);
+								{showImageDropdown ? (
+									<ImageDropdown
+										__testMode={props.testMode}
+										imageValue={
+											!props.testMode ? currentImageValue : props.__dummyImage
 										}
-									}}
-								/> : null}
-
+										onChange={v => setCurrentImageValue(v)}
+										onOutsideClick={(e) => {
+											// When the user is clicking on the camera
+											// icon which is outside the image modal
+											if (showImageDropdown) {
+												handleShowImageDropdown(e, false);
+											}
+										}}
+									/>
+								) : null}
 
 								{props.expandSuggestionsContainer
 									&& renderSuggestionsDropdown(
@@ -2526,6 +2538,8 @@ SearchBox.propTypes = {
 	removeAIResponse: types.func,
 	// This is an internal prop just for testing
 	testMode: types.bool,
+	__showImageDropdown: types.bool,
+	__dummyImage: types.string,
 };
 
 SearchBox.defaultProps = {

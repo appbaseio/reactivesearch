@@ -2,7 +2,14 @@ import React from 'react';
 import renderer, { act, create } from 'react-test-renderer';
 import ReactiveBase from '../basic/ReactiveBase';
 import SearchBox from './SearchBox';
-import { AI, DEFAULT_SUGGESTIONS, DOCUMENT_SUGGESTIONS, FAQ_SUGGESTIONS, DEFAULT_SUGGESTIONS as MOCK_HITS_DATA, FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS } from './mockData/suggestions';
+import {
+	AI,
+	DEFAULT_SUGGESTIONS,
+	DOCUMENT_SUGGESTIONS,
+	FAQ_SUGGESTIONS,
+	DEFAULT_SUGGESTIONS as MOCK_HITS_DATA,
+	FEATURED_SUGGESTIONS as MOCK_HITS_DATA_FEATURED_SUGGESTIONS,
+} from './mockData/suggestions';
 
 const CustomRecentIcon = () => (
 	<svg
@@ -31,7 +38,10 @@ const CustomPopularIcon = () => (
 it('should render SearchBox', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -47,7 +57,10 @@ it('should render SearchBox', () => {
 it('should render SearchBox with tags', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -65,7 +78,10 @@ it('should render SearchBox with tags', () => {
 it('should render SearchBox with title', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -82,7 +98,10 @@ it('should render SearchBox with title', () => {
 it('should render search icon on the right', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -100,7 +119,10 @@ it('should render search icon on the right', () => {
 it('should render SearchBox with keyboard shortcuts', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -117,7 +139,10 @@ it('should render SearchBox with keyboard shortcuts', () => {
 it('should hide navigation footer', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -132,11 +157,13 @@ it('should hide navigation footer', () => {
 	expect(elem).toMatchSnapshot();
 });
 
-
 it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props are set to (false/ true)', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -155,7 +182,10 @@ it('should display/ hide (search/ clear )icon when (showIcon/ showClear )props a
 it('should render custom (search/ clear icon/ recent search icon/ popular search icon) when (icon/ clearIcon/ recentSearchesIcon/ popularSearchesIcon )props are set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -191,7 +221,10 @@ it('should render custom (search/ clear icon/ recent search icon/ popular search
 it('should show voice search when showVoiceSearch prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -208,7 +241,10 @@ it('should show voice search when showVoiceSearch prop is set', () => {
 it('should render custom dropdown UI when render prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -277,7 +313,10 @@ it('should render custom dropdown UI when render prop is set', () => {
 it('should render with a default value when defaultValue prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -294,7 +333,10 @@ it('should render with a default value when defaultValue prop is set', () => {
 it('should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore/ addonAfter) prop is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -311,7 +353,10 @@ it('should render (prefixed/ suffixed) UI nodes with searchbox when (addonBefore
 it('should not render expanded dropdown when expandSuggestionsContainer prop is set to false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -331,7 +376,10 @@ it('should not render expanded dropdown when expandSuggestionsContainer prop is 
 it('should render enterButton when enterButton prop is true', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -348,7 +396,10 @@ it('should render enterButton when enterButton prop is true', () => {
 it('should not render enterButton when enterButton prop is false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -365,14 +416,18 @@ it('should not render enterButton when enterButton prop is false', () => {
 it('should render custom enterButton', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
 					dataField="original_title"
 					mockData={{ hits: [] }}
 					enterButton
-					renderEnterButton={clickHandler => (
+					// eslint-disable-next-line arrow-parens
+					renderEnterButton={(clickHandler) => (
 						<div style={{ height: '100%', display: 'flex', alignItems: 'stretch' }}>
 							<button style={{ border: '1px solid #c3c3c3' }} onClick={clickHandler}>
 								<span aria-label="search" role="img">
@@ -392,7 +447,10 @@ it('should render custom enterButton', () => {
 it('should render SearchBox with featured suggestions', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -409,7 +467,10 @@ it('should render SearchBox with featured suggestions', () => {
 it('should render SearchBox with FAQ suggestions', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -426,7 +487,10 @@ it('should render SearchBox with FAQ suggestions', () => {
 it('should render SearchBox with Document suggestions', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -445,7 +509,10 @@ it('should render AI response', () => {
 
 	act(() => {
 		elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -465,13 +532,15 @@ it('should render AI response', () => {
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
-
 it('should render AI response & askButton & enterButton', () => {
 	let elem;
 
 	act(() => {
 		elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -494,12 +563,14 @@ it('should render AI response & askButton & enterButton', () => {
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
-
 it('should render AI response & triggerOn=question', () => {
 	let elem;
 	act(() => {
 		elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					componentId="MockSearchBox"
 					dataField="original_title"
@@ -526,8 +597,11 @@ it('should render AI response & triggerOn=question', () => {
 it('should render AI response & triggerOn=manual', () => {
 	let elem;
 	act(() => {
-		 elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+		elem = create(
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					componentId="MockSearchBox"
 					dataField="original_title"
@@ -549,7 +623,6 @@ it('should render AI response & triggerOn=manual', () => {
 		);
 	});
 
-
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
@@ -557,7 +630,10 @@ it('should render AI response & showSourceDocuments', () => {
 	let elem;
 	act(() => {
 		elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -583,7 +659,10 @@ it('should render AI response & custom source documents', () => {
 	let elem;
 	act(() => {
 		elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -595,8 +674,12 @@ it('should render AI response & custom source documents', () => {
 					}}
 					AIUIConfig={{
 						showSourceDocuments: true,
-						renderSourceDocument: obj => <span role="img" aria-label="img">❤️ {obj.original_title}</span>,
-
+						// eslint-disable-next-line arrow-parens
+						renderSourceDocument: (obj) => (
+							<span role="img" aria-label="img">
+								❤️ {obj.original_title}
+							</span>
+						),
 					}}
 					enableAI
 					isOpen
@@ -607,12 +690,14 @@ it('should render AI response & custom source documents', () => {
 	expect(elem.toJSON()).toMatchSnapshot();
 });
 
-
 it('should render CUSTOM AI response ', () => {
 	let elem;
 	act(() => {
 		elem = create(
-			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
 				<SearchBox
 					testMode
 					componentId="MockSearchBox"
@@ -622,14 +707,101 @@ it('should render CUSTOM AI response ', () => {
 						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
 						rawData: AI.MOCK_RAW_DATA,
 					}}
-					renderAIAnswer={
-						({
-							answer,
-
-							// eslint-disable-next-line jsx-a11y/accessible-emoji
-						}) => `⚡️ ${answer}`
-					}
+					renderAIAnswer={({
+						answer,
+						// eslint-disable-next-line jsx-a11y/accessible-emoji
+					}) => `⚡️ ${answer}`}
 					enableAI
+					isOpen
+				/>
+			</ReactiveBase>,
+		);
+	});
+	expect(elem.toJSON()).toMatchSnapshot();
+});
+
+it('should render with image search and tooltip', () => {
+	let elem;
+	act(() => {
+		elem = create(
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					showImageSearch
+					imageSearchConfig={{
+						iconTooltip: 'Search any image',
+					}}
+					mockData={{
+						hits: AI.MOCK_HITS_DATA,
+						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
+						rawData: AI.MOCK_RAW_DATA,
+					}}
+					isOpen
+				/>
+			</ReactiveBase>,
+		);
+	});
+	expect(elem.toJSON()).toMatchSnapshot();
+});
+
+it('should render with image dropdown open', () => {
+	let elem;
+	act(() => {
+		elem = create(
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					showImageSearch
+					__showImageDropdown
+					imageSearchConfig={{
+						iconTooltip: 'Search any image',
+					}}
+					mockData={{
+						hits: AI.MOCK_HITS_DATA,
+						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
+						rawData: AI.MOCK_RAW_DATA,
+					}}
+					isOpen
+				/>
+			</ReactiveBase>,
+		);
+	});
+	expect(elem.toJSON()).toMatchSnapshot();
+});
+
+it('should render with image uploaded', () => {
+	let elem;
+	act(() => {
+		elem = create(
+			<ReactiveBase
+				app="test"
+				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800"
+			>
+				<SearchBox
+					testMode
+					componentId="MockSearchBox"
+					dataField="original_title"
+					showImageSearch
+					__showImageDropdown
+					__dummyImage="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAACWCAYAAADwkd5lAAAAAXNSR0IArs4c6QAAESVJREFUeF7tnAmoptMfx39DZoq59u1ORMqSLSHJruyklBEiW7Jny5olhZSEkCVL9qVGlGQnWTIjexhbtq4lISbMhNHv"
+					imageSearchConfig={{
+						iconTooltip: 'Search any image',
+					}}
+					mockData={{
+						hits: AI.MOCK_HITS_DATA,
+						AI_RESPONSE: AI.MOCK_AI_RESPONSE,
+						rawData: AI.MOCK_RAW_DATA,
+					}}
 					isOpen
 				/>
 			</ReactiveBase>,
