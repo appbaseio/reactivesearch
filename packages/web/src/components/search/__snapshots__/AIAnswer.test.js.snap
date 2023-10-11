@@ -449,6 +449,10 @@ exports[`should not render enterButton 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -469,20 +473,24 @@ exports[`should not render enterButton 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
 }
 
 .emotion-36:focus {
@@ -1259,6 +1267,10 @@ exports[`should not render icon 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -1279,6 +1291,7 @@ exports[`should not render icon 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1287,11 +1300,15 @@ exports[`should not render icon 1`] = `
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -2564,6 +2581,10 @@ exports[`should not render source Documents) 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -2584,20 +2605,24 @@ exports[`should not render source Documents) 1`] = `
 .emotion-18 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -3393,6 +3418,10 @@ exports[`should render AIAnswer 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -3413,20 +3442,24 @@ exports[`should render AIAnswer 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -4098,6 +4131,10 @@ exports[`should render custom UI using 'render' Prop) 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -4118,20 +4155,24 @@ exports[`should render custom UI using 'render' Prop) 1`] = `
 .emotion-32 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -5174,6 +5215,10 @@ exports[`should render custom enterButton) 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -5194,20 +5239,24 @@ exports[`should render custom enterButton) 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -6005,6 +6054,10 @@ exports[`should render custom icon 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -6025,20 +6078,24 @@ exports[`should render custom icon 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -6878,6 +6935,10 @@ exports[`should render custom placeholder 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -6898,20 +6959,24 @@ exports[`should render custom placeholder 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -7765,6 +7830,10 @@ exports[`should render custom source Documents) 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -7785,20 +7854,24 @@ exports[`should render custom source Documents) 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -8700,6 +8773,10 @@ exports[`should render custom title) 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -8720,20 +8797,24 @@ exports[`should render custom title) 1`] = `
 .emotion-38 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -9714,6 +9795,10 @@ exports[`should render dark theme) 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -9734,20 +9819,24 @@ exports[`should render dark theme) 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -10601,6 +10690,10 @@ exports[`should render icon on right(iconPosition='right') 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -10621,20 +10714,24 @@ exports[`should render icon on right(iconPosition='right') 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-right: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -11488,6 +11585,10 @@ exports[`should render voice Input 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-align-items: stretch;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -11508,20 +11609,24 @@ exports[`should render voice Input 1`] = `
 .emotion-36 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
   font-size: 0.9rem;
   outline: none;
-  padding-left: 36px;
   resize: none;
   overflow: hidden;
   height: 42px;
+  padding-left: 0;
+  padding-right: 0;
+  border-color: transparent;
   width: 100%;
   border-radius: 5px;
   border: 1px solid #ccc;
   color: #424242;
   height: 42px;
+  padding-left: 35px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
