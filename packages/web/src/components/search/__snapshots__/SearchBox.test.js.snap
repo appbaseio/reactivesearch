@@ -18491,80 +18491,26 @@ exports[`should render with image uploaded 1`] = `
 }
 
 .emotion-29 {
-  min-height: 250px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  position: relative;
+  padding: 10px;
+  margin: auto;
+  min-width: 100px;
+  max-width: 250px;
 }
 
 .emotion-31 {
-  color: #0B6AFF;
-  display: block;
-  margin: auto;
-}
-
-.emotion-33 {
-  text-align: center;
-}
-
-.emotion-35 {
-  cursor: pointer;
-  color: #0B6AFF;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.emotion-37 {
   width: 100%;
-  padding: 10px;
-  opacity: 0;
+}
+
+.emotion-34 {
+  color: #0B6AFF;
+  color: #0B6AFF;
   position: absolute;
-  z-index: -1;
-  top: -100px;
-}
-
-.emotion-39 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 10px 0px;
-}
-
-.emotion-41 {
-  width: 100%;
-  height: 2px;
-  background-color: #424242;
-  border-color: #424242;
-}
-
-.emotion-43 {
-  margin: 0px 10px;
-}
-
-.emotion-47 {
-  display: block;
-  margin: 5px 0px;
-  padding: 5px;
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  background-color: #fafafa;
-  color: #424242;
-  box-shadow: rgb(0 0 0 / 20%) 0px 0px 6px;
-  border-radius: 6px;
-}
-
-.emotion-47:focus-within {
-  background-color: #fff;
+  top: 10px;
+  right: 10px;
+  padding: 4px;
+  background: rgb(250 250 250 / 90%);
+  cursor: pointer;
 }
 
 <div
@@ -18699,77 +18645,55 @@ exports[`should render with image uploaded 1`] = `
           <div
             className="emotion-29 emotion-30"
           >
-            <svg
+            <img
               className="emotion-31 emotion-32"
-              color="blue"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAACWCAYAAADwkd5lAAAAAXNSR0IArs4c6QAAESVJREFUeF7tnAmoptMfx39DZoq59u1ORMqSLSHJruyklBEiW7Jny5olhZSEkCVL9qVGlGQnWTIjexhbtq4lISbMhNHv"
+            />
+            <svg
+              className="emotion-33 emotion-34 emotion-26"
               fill="none"
-              height="100px"
-              style={undefined}
+              height="30px"
+              onClick={[Function]}
               viewBox="0 0 24 24"
-              width="100px"
+              width="30px"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-              <circle
-                cx="16"
-                cy="8"
-                opacity="0.5"
-                r="2"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M5 13.307L5.81051 12.5542C6.73658 11.6941 8.18321 11.7424 9.04988 12.6623L11.6974 15.4727C12.2356 16.0439 13.1166 16.1209 13.7457 15.6516C14.6522 14.9753 15.9144 15.0522 16.7322 15.8334L19 18"
-                opacity="0.5"
+                d="M10 12V17"
                 stroke="currentColor"
                 strokeLinecap="round"
-                strokeWidth="1.5"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+              <path
+                d="M14 12V17"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+              <path
+                d="M4 7H20"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+              <path
+                d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+              />
+              <path
+                d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
               />
             </svg>
-            <div
-              className="emotion-33 emotion-34"
-            >
-              <span>
-                Drag an image here or 
-              </span>
-              <label
-                className="emotion-35 emotion-36"
-              >
-                upload a file
-                <input
-                  accept=".svg,.png,.jpg,.jpeg,.bmp,.tif,.webp"
-                  className="emotion-37 emotion-38"
-                  onChange={[Function]}
-                  type="file"
-                />
-              </label>
-            </div>
-            <div
-              className="emotion-39 emotion-40"
-            >
-              <hr
-                className="emotion-41 emotion-42"
-              />
-              <div
-                className="emotion-43 emotion-44"
-              >
-                OR
-              </div>
-              <hr
-                className="emotion-41 emotion-42"
-              />
-            </div>
-            <input
-              className="emotion-47 emotion-48"
-              onChange={[Function]}
-              placeholder="Paste an image link"
-              type="text"
-              value=""
-            />
           </div>
         </div>
       </div>
