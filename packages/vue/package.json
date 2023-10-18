@@ -75,7 +75,7 @@
         "eslint-plugin-vue": "^4.7.1",
         "nps": "^5.9.3",
         "nps-utils": "^1.7.0",
-        "postcss": "^8.3.0",
+        "postcss": "^8.4.31",
         "rollup": "^1.20.3",
         "rollup-plugin-babel": "^4.3.3",
         "rollup-plugin-commonjs": "^10.1.0",
