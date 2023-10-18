@@ -282,6 +282,7 @@ exports[`should render list of items 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -608,6 +609,7 @@ exports[`should render search/count/checkbox when showSearch/showCount/showCheck
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -905,6 +907,7 @@ exports[`should select default value 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1203,6 +1206,7 @@ exports[`should use render prop to render the list item 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1281,6 +1285,7 @@ exports[`should use renderItem to render the list item 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;

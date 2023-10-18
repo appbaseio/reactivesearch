@@ -24,6 +24,7 @@ exports[`should render 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -331,6 +332,7 @@ exports[`should render with displayAsVertical 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -638,6 +640,7 @@ exports[`should render with renderItem 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -933,6 +936,7 @@ exports[`should render with showCount 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1250,6 +1254,7 @@ exports[`should render with showRadio 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1557,6 +1562,7 @@ exports[`should render with showRadio and displayAsVertical 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -1864,6 +1870,7 @@ exports[`should render with showRadio and showSearch 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -2171,6 +2178,7 @@ exports[`should render with showRadio, showSearch and displayAsVertical 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -2478,6 +2486,7 @@ exports[`should render with showSearch 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;
@@ -2785,6 +2794,7 @@ exports[`should render with title 1`] = `
 .emotion-4 {
   width: 100%;
   line-height: 1.5;
+  min-height: 42px;
   padding: 8px 12px;
   border: 1px solid #ccc;
   background-color: #fafafa;

@@ -10,7 +10,7 @@ import { setValue, clearValues, resetValuesToDefault } from '@appbaseio/reactive
 import { componentTypes, CLEAR_ALL } from '@appbaseio/reactivecore/lib/utils/constants';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/utils/helper';
-import Button, { filters } from '../../styles/Button';
+import Button, { Filter } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
 import { connect, decodeHtml } from '../../utils';
@@ -113,19 +113,6 @@ class SelectedFilters extends Component {
 		return value;
 	};
 
-	renderFilterButton = (component, keyProp, handleRemove, label) => (
-		<Button
-			className={getClassName(this.props.innerClass, 'button') || null}
-			key={keyProp}
-			onKeyPress={event => handleA11yAction(event, handleRemove)}
-			onClick={handleRemove}
-			tabIndex="0"
-		>
-			<span>{label}</span>
-			<span>&#x2715;</span>
-		</Button>
-	);
-
 	renderFilters = () => {
 		const { selectedValues } = this.props;
 		const filterComponents = Object.keys(selectedValues).filter(
@@ -133,18 +120,44 @@ class SelectedFilters extends Component {
 		);
 		return filterComponents
 			.map((component, index) => {
-				const { label, value, category } = selectedValues[component];
+				const {
+					label, value, category, meta,
+				} = selectedValues[component];
 				const isArray = Array.isArray(value);
+				const imageValue = meta && meta.imageValue;
 
 				if (label && ((isArray && value.length) || (!isArray && value))) {
 					const valueToRender = category
 						? this.renderValue(`${value} in ${category} category`, isArray)
 						: this.renderValue(value, isArray);
-					return this.renderFilterButton(
-						component,
-						`${component}-${index + 1}`,
-						() => this.remove(component, value),
-						`${selectedValues[component].label}: ${decodeHtml(valueToRender)}`,
+					return (
+						<Button
+							className={getClassName(this.props.innerClass, 'button') || null}
+							key={`${component}-${index + 1}`}
+							onKeyPress={event => handleA11yAction(event, () => this.remove(component, value))}
+							onClick={() => this.remove(component, value)}
+							tabIndex="0"
+						>
+							<Filter.Value title={decodeHtml(valueToRender)}>{
+								selectedValues[component].label}: {decodeHtml(valueToRender)}
+							</Filter.Value>
+							{imageValue ? <Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /> </Filter.ImageValue> : null}
+							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
+						</Button>
+					);
+				} else if (label && imageValue) {
+					return (
+						<Button
+							className={getClassName(this.props.innerClass, 'button') || null}
+							key={`${component}-${index + 1}`}
+							onKeyPress={event => handleA11yAction(event, () => this.remove(component, value))}
+							onClick={() => this.remove(component, value)}
+							tabIndex="0"
+						>
+							<Filter.Value>{selectedValues[component].label}:</Filter.Value>
+							<Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /></Filter.ImageValue>
+							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
+						</Button>
 					);
 				}
 				return null;
@@ -185,7 +198,7 @@ class SelectedFilters extends Component {
 		return (
 			<Container
 				style={this.props.style}
-				css={filters(theme)}
+				css={Filter(theme)}
 				className={`${this.props.className || ''}`}
 			>
 				{this.props.title && hasFilters && (

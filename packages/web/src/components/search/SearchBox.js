@@ -1,7 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-
 import {
 	AI_LOCAL_CACHE_KEY,
 	AI_TRIGGER_MODES,
@@ -54,7 +53,7 @@ import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
+import { Actions as ActionContainer, searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
 import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
@@ -76,8 +75,10 @@ import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/Sea
 import TypingEffect from '../shared/TypingEffect';
 import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
 import AIFeedback from '../shared/AIFeedback';
+import { ImageDropdown } from './addons/ImageDropdown';
 import { innerText } from '../shared/innerText';
 import TextWithTooltip from './addons/TextWithTooltip';
+import { Thumbnail, CameraIcon } from './addons/CameraIcon';
 
 const md = new Remarkable();
 
@@ -107,6 +108,7 @@ const { useConstructor } = HOOKS;
 const SearchBox = (props) => {
 	const {
 		selectedValue,
+		selectedImageValue,
 		selectedCategory,
 		value,
 		defaultValue,
@@ -154,6 +156,7 @@ const SearchBox = (props) => {
 	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
 	const prevPropsRefIsAITyping = useRef(undefined);
+	const dragTimerId = useRef(null);
 
 	const stats = () => getResultStats(props);
 
@@ -168,6 +171,8 @@ const SearchBox = (props) => {
 	const [sourceDocIds, setSourceDocIds] = useState(null);
 	const [isUserScrolling, setIsUserScrolling] = useState(false);
 	const [lastScrollTop, setLastScrollTop] = useState(0);
+	const [showImageDropdown, setShowImageDropdown] = useState(false);
+	const [currentImageValue, setCurrentImageValue] = useState('');
 
 	const mergedAIAnswer
 		= faqAnswer
@@ -219,6 +224,26 @@ const SearchBox = (props) => {
 			return acc;
 		}, {});
 		return Object.values(sectionisedSuggestions);
+	};
+
+	const handleShowImageDropdown = (e, nextState) => {
+		// Image dropdown calls onOutsideClick if below is not stopped
+		// which changes the state again and hides the dropdown
+		e.stopPropagation();
+		if (nextState) {
+			setIsOpen(false);
+			setShowImageDropdown(true);
+		} else {
+			setShowImageDropdown(false);
+		}
+	};
+	const handleSuggestionOpen = (nextState) => {
+		if (nextState) {
+			setIsOpen(true);
+			setShowImageDropdown(false);
+		} else {
+			setIsOpen(false);
+		}
 	};
 
 	const focusSearchBox = (event) => {
@@ -324,6 +349,7 @@ const SearchBox = (props) => {
 		paramValue,
 		categoryValue = undefined,
 		shouldExecuteQuery = true,
+		meta = {},
 	) => {
 		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		if (isTagsMode.current) {
@@ -350,6 +376,7 @@ const SearchBox = (props) => {
 				showFilter,
 				URLParams,
 				componentType: componentTypes.searchBox,
+				meta,
 				...(!isTagsMode.current ? { category: categoryValue } : {}),
 			},
 			shouldExecuteQuery,
@@ -363,18 +390,19 @@ const SearchBox = (props) => {
 			defaultQuery = false,
 			value = undefined,
 			categoryValue = undefined,
+			meta = {},
 		} = {},
 		shouldExecuteQuery = true,
 	) => {
 		if (typeof isOpen === 'boolean') {
-			setIsOpen(isOpen);
+			handleSuggestionOpen(isOpen);
 		}
 
 		if (customQuery) {
-			triggerCustomQuery(value, categoryValue, shouldExecuteQuery);
+			triggerCustomQuery(value, categoryValue, shouldExecuteQuery, meta);
 		}
 		if (defaultQuery) {
-			triggerDefaultQuery(value, {}, shouldExecuteQuery);
+			triggerDefaultQuery(value, meta, shouldExecuteQuery);
 		}
 	};
 
@@ -385,7 +413,7 @@ const SearchBox = (props) => {
 		}
 	};
 	const handleTextChange = useRef(
-		debounce((valueParam = undefined, cause = undefined) => {
+		debounce((valueParam = undefined, cause = undefined, meta) => {
 			const { enterButton } = props;
 			if (cause === causes.CLEAR_VALUE) {
 				triggerCustomQuery(valueParam);
@@ -393,11 +421,12 @@ const SearchBox = (props) => {
 			} else if (props.autosuggest) {
 				triggerDefaultQuery(valueParam);
 			} else if (value === undefined && !onChange && !enterButton) {
-				triggerCustomQuery(valueParam);
+				triggerCustomQuery(valueParam, undefined, true, meta);
 			}
 		}, props.debounce),
 	);
 
+	// Make a search query when value is changed
 	const setValue = (
 		value,
 		isDefaultValue = false,
@@ -407,8 +436,12 @@ const SearchBox = (props) => {
 		toggleIsOpen = true,
 		categoryValue = undefined,
 		shouldExecuteQuery = true,
+		meta = {},
 	) => {
 		const performUpdate = () => {
+			// It may happen that imageValue is passed as an empty string to clear the input
+			const imageValue = meta && meta.imageValue !== undefined
+				? meta.imageValue : currentImageValue;
 			if (isTagsMode.current && isEqual(value, selectedTags)) {
 				return;
 			}
@@ -419,7 +452,7 @@ const SearchBox = (props) => {
 					if (Array.isArray(selectedTags) && selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && selectedTags.includes(value)) {
-							setIsOpen(false);
+							handleSuggestionOpen(false);
 							return;
 						}
 
@@ -438,8 +471,9 @@ const SearchBox = (props) => {
 					newCurrentValue = decodeHtml(value);
 				}
 
-				if (toggleIsOpen) setIsOpen(!isOpen);
+				if (toggleIsOpen) handleSuggestionOpen(!isOpen);
 				setCurrentValue(newCurrentValue);
+				setCurrentImageValue(imageValue);
 
 				let queryHandlerValue = value;
 				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
@@ -461,7 +495,6 @@ const SearchBox = (props) => {
 					setShowAIScreen(false);
 					props.removeAIResponse(componentId);
 				}
-
 				if (isDefaultValue) {
 					if (props.autosuggest) {
 						triggerQuery(
@@ -479,7 +512,7 @@ const SearchBox = (props) => {
 								&& currentTriggerMode === AI_TRIGGER_MODES.QUESTION
 								&& newCurrentValue.endsWith('?')
 								? { enableAI: true }
-								: {},
+								: { imageValue },
 							shouldExecuteQuery,
 						);
 					}
@@ -494,6 +527,12 @@ const SearchBox = (props) => {
 								queryHandlerValue,
 								isTagsMode.current ? undefined : categoryValue,
 								shouldExecuteQuery,
+								{
+									...meta,
+									// vectorDataField is passed by the user of SearchBox
+									// currentImageValue is stored by the SearchBox component
+									imageValue,
+								},
 							);
 						} else {
 							setValue('', true);
@@ -509,11 +548,17 @@ const SearchBox = (props) => {
 							queryHandlerValue,
 							isTagsMode.current ? undefined : categoryValue,
 							shouldExecuteQuery,
+							{
+								...meta,
+								// vectorDataField is passed by the user of SearchBox
+								// currentImageValue is stored by the SearchBox component
+								imageValue,
+							},
 						);
 					}
 				} else {
 					// debounce for handling text while typing
-					handleTextChange.current(value, cause);
+					handleTextChange.current(value, cause, { ...meta, imageValue });
 				}
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
@@ -536,6 +581,7 @@ const SearchBox = (props) => {
 			performUpdate,
 		);
 	};
+
 	const withTriggerQuery = (func) => {
 		if (func) {
 			return e =>
@@ -582,8 +628,13 @@ const SearchBox = (props) => {
 
 	const askButtonOnClick = () => {
 		setShowAIScreen(true);
-		setIsOpen(true);
-		triggerDefaultQuery(currentValue, { enableAI: true });
+		handleSuggestionOpen(true);
+		triggerDefaultQuery(currentValue,
+			 {
+				enableAI: true,
+				imageValue: currentImageValue || undefined,
+			},
+		);
 	};
 
 	const onSuggestionSelected = (suggestion) => {
@@ -607,7 +658,7 @@ const SearchBox = (props) => {
 			return;
 		}
 
-		if (!props.enableAI) setIsOpen(false);
+		if (!props.enableAI) handleSuggestionOpen(false);
 		else if (
 			currentTriggerMode === AI_TRIGGER_MODES.QUESTION
 			&& suggestion.value.endsWith('?')
@@ -636,7 +687,7 @@ const SearchBox = (props) => {
 				emitValue = Array.isArray(selectedTags) ? [...selectedTags] : [];
 				if (selectedTags && selectedTags.includes(suggestionValue)) {
 					// avoid duplicates in tags array
-					setIsOpen(false);
+					handleSuggestionOpen(false);
 					return;
 				}
 				emitValue.push(suggestionValue);
@@ -688,7 +739,7 @@ const SearchBox = (props) => {
 
 	const handleInputChange = (inputValue, e) => {
 		if (!isOpen && props.autosuggest) {
-			setIsOpen(true);
+			handleSuggestionOpen(true);
 		}
 		if (showAIScreen) {
 			setShowAIScreen(false);
@@ -717,7 +768,12 @@ const SearchBox = (props) => {
 
 	const enterButtonOnClick = () => {
 		setShowAIScreen(false);
-		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+		triggerQuery({
+			isOpen: false,
+			value: currentValue,
+			customQuery: true,
+			meta: { imageValue: currentImageValue },
+		});
 	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
@@ -739,14 +795,14 @@ const SearchBox = (props) => {
 					if (currentTriggerMode === AI_TRIGGER_MODES.QUESTION) {
 						if (event.target.value.endsWith('?')) {
 							setShowAIScreen(true);
-							setIsOpen(true);
+							handleSuggestionOpen(true);
 						} else {
 							setShowAIScreen(false);
-							setIsOpen(false);
+							handleSuggestionOpen(false);
 						}
 					} else {
 						setShowAIScreen(false);
-						setIsOpen(false);
+						handleSuggestionOpen(false);
 					}
 				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
@@ -789,7 +845,7 @@ const SearchBox = (props) => {
 		const { isOpen, type } = changes;
 		const { selectedItem } = stateAndHelpers;
 		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
-			setIsOpen(isOpen);
+			handleSuggestionOpen(isOpen);
 		}
 
 		// allow invoking click event repeatedly on featured suggestions
@@ -821,7 +877,9 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript.trim()
 		) {
 			setValue(results[0][0].transcript.trim(), false, props, undefined, true);
-			_inputRef.current.focus();
+			if (_inputRef.current) {
+				_inputRef.current.focus();
+			}
 		}
 	};
 
@@ -945,7 +1003,7 @@ const SearchBox = (props) => {
 	};
 	const handleFocus = (event) => {
 		if (props.autosuggest) {
-			setIsOpen(true);
+			handleSuggestionOpen(true);
 		}
 		if (props.onFocus) {
 			props.onFocus(event, triggerQuery);
@@ -1118,7 +1176,39 @@ const SearchBox = (props) => {
 		return '/';
 	};
 
-	const renderIcons = () => {
+	const ThumbnailOrIcon = props.showImageSearch && currentImageValue ? (
+		<Thumbnail
+			src={currentImageValue}
+			title="Click to view full image"
+			onClick={e =>
+				handleShowImageDropdown(e, !showImageDropdown)}
+		/>
+	) : (
+		<CameraIcon
+			title={props.imageSearchConfig.tooltip || 'Search by image'}
+			onClick={(e) => {
+				handleShowImageDropdown(e, !showImageDropdown);
+			}}
+			icon={props.imageSearchConfig.icon}
+			iconURL={props.imageSearchConfig.iconURL}
+		/>
+	);
+	const renderLeftIcons = () => {
+		const { iconPosition, showIcon } = props;
+		return (
+			<div>
+				<IconGroup groupPosition="left">
+					{iconPosition === 'left' && showIcon && (
+
+						<IconWrapper onClick={handleSearchIconClick}>
+							{renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+			</div>
+		  );
+	};
+	const renderRightIcons = () => {
 		const {
 			showIcon,
 			showClear,
@@ -1132,10 +1222,9 @@ const SearchBox = (props) => {
 		} = props;
 		return (
 			<div>
-				<IconGroup enableAI={enableAI} groupPosition="right" positionType="absolute">
+				<IconGroup groupPosition="right">
 					{currentValue && showClear && (
 						<IconWrapper
-							enableAI={enableAI}
 							onClick={clearValue}
 							showIcon={showIcon}
 							isClearIcon
@@ -1156,15 +1245,10 @@ const SearchBox = (props) => {
 							className={getClassName(innerClass, 'mic') || null}
 						/>
 					)}
+					{props.showImageSearch ? (
+						ThumbnailOrIcon
+					) : null}
 					{iconPosition === 'right' && (
-						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
-							{renderIcon()}
-						</IconWrapper>
-					)}
-				</IconGroup>
-
-				<IconGroup enableAI={enableAI} groupPosition="left" positionType="absolute">
-					{iconPosition === 'left' && (
 						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
 							{renderIcon()}
 						</IconWrapper>
@@ -1185,7 +1269,7 @@ const SearchBox = (props) => {
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
-		setIsOpen(true);
+		handleSuggestionOpen(true);
 		setCurrentValue(decodeHtml(value));
 		triggerDefaultQuery(value);
 	};
@@ -1459,6 +1543,7 @@ const SearchBox = (props) => {
 			if (isTagsMode.current && Array.isArray(selectedValue)) {
 				selectedTags = []; // reset
 			}
+			// When value is not controlled by the user
 			if (value === undefined) {
 				setValue(
 					!selectedValue || isEmpty(selectedValue) ? '' : selectedValue,
@@ -1467,6 +1552,9 @@ const SearchBox = (props) => {
 					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
 					hasMounted.current,
 					false,
+					undefined,
+					true,
+					{ imageValue: props.showImageSearch ? selectedImageValue : undefined },
 				);
 			} else if (onChange) {
 				if (
@@ -1501,7 +1589,7 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-	}, [selectedValue]);
+	}, [selectedValue, selectedImageValue]);
 
 	useEffect(() => {
 		if (showAIScreen) {
@@ -1581,13 +1669,54 @@ const SearchBox = (props) => {
 
 	// Set testing environment
 	useEffect(() => {
-		if (props.testMode) {
+		const { testMode, __showImageDropdown } = props;
+
+		if (testMode) {
 			setIsOpen(true);
+			if (__showImageDropdown) {
+				handleShowImageDropdown(new MouseEvent('click'), true);
+			}
 			if (props.enableAI) {
 				setShowAIScreen(true);
 			}
 		}
 	}, []);
+
+	// Show image dropdown, when showImageSearch is true,
+	// and someone is dragging an image inside the window
+	useEffect(() => {
+		if (props.showImageSearch && document) {
+			const MAX_DELAY = 100;
+			const handleDragEnter = (e) => {
+				if (dragTimerId.current) {
+					clearTimeout(dragTimerId.current);
+				}
+				if (!showImageDropdown) {
+					handleShowImageDropdown(e, true);
+				}
+			};
+			const handleDragLeave = (e) => {
+				if (dragTimerId.current) {
+					clearTimeout(dragTimerId.current);
+				}
+				dragTimerId.current = setTimeout(() => {
+					handleShowImageDropdown(e, false);
+				}, MAX_DELAY);
+			};
+
+			document.addEventListener('dragover', handleDragEnter);
+			document.addEventListener('dragleave', handleDragLeave);
+
+			return () => {
+				document.removeEventListener('dragover', handleDragEnter);
+				document.removeEventListener('dragleave', handleDragLeave);
+				if (dragTimerId.current) {
+					clearTimeout(dragTimerId.current);
+				}
+			};
+		}
+		return () => {};
+	  }, [props.showImageSearch, showImageDropdown]);
 
 	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
 	return (
@@ -2110,8 +2239,15 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup ref={_inputGroupRef} isOpen={isOpen}>
-									{renderInputAddonBefore()}
+								<InputGroup
+									searchBox
+									ref={_inputGroupRef}
+									isOpen={isOpen || showImageDropdown}
+								>
+									<ActionContainer>
+										{renderLeftIcons()}
+										{renderInputAddonBefore()}
+									</ActionContainer>
 									<InputWrapper>
 										<TextArea
 											showFocusShortcutsIcon={props.showFocusShortcutsIcon}
@@ -2145,9 +2281,9 @@ const SearchBox = (props) => {
 											themePreset={props.themePreset}
 											type={props.type}
 											searchBox // a prop specific to Input styled-component
-											isOpen={isOpen} // is dropdown open or not
+											// Used to modify styles, is dropdown open or not.
+											isOpen={isOpen || showImageDropdown}
 										/>
-										{renderIcons()}
 										{!props.expandSuggestionsContainer
 											&& renderSuggestionsDropdown(
 												getRootProps,
@@ -2159,10 +2295,30 @@ const SearchBox = (props) => {
 												...rest,
 											)}
 									</InputWrapper>
-									{renderInputAddonAfter()}
-									{renderAskButtonElement()}
-									{renderEnterButtonElement()}
+									<ActionContainer>
+										{renderRightIcons()}
+										{renderInputAddonAfter()}
+										{renderAskButtonElement()}
+										{renderEnterButtonElement()}
+									</ActionContainer>
 								</InputGroup>
+
+								{showImageDropdown ? (
+									<ImageDropdown
+										__testMode={props.testMode}
+										imageValue={
+											!props.testMode ? currentImageValue : props.__dummyImage
+										}
+										onChange={v => setCurrentImageValue(v)}
+										onOutsideClick={(e) => {
+											// When the user is clicking on the camera
+											// icon which is outside the image modal
+											if (showImageDropdown) {
+												handleShowImageDropdown(e, false);
+											}
+										}}
+									/>
+								) : null}
 
 								{props.expandSuggestionsContainer
 									&& renderSuggestionsDropdown(
@@ -2182,8 +2338,12 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup ref={_inputGroupRef} isOpen={false}>
-						{renderInputAddonBefore()}
+					<InputGroup searchBox ref={_inputGroupRef} isOpen={showImageDropdown}>
+
+						<ActionContainer>
+							{renderLeftIcons()}
+							{renderInputAddonBefore()}
+						</ActionContainer>
 						<InputWrapper>
 							<TextArea
 								aria-label={props.componentId}
@@ -2192,6 +2352,7 @@ const SearchBox = (props) => {
 								value={
 									Object.hasOwn(props, 'value') ? props.value : currentValue || ''
 								}
+								ref={_inputRef}
 								onChange={onInputChange}
 								onBlur={withTriggerQuery(props.onBlur)}
 								onFocus={withTriggerQuery(props.onFocus)}
@@ -2203,19 +2364,41 @@ const SearchBox = (props) => {
 								showIcon={props.showIcon}
 								showClear={props.showClear}
 								themePreset={props.themePreset}
-								searchBox // a prop specific to Input styled-component
-								isOpen={false} // is dropdown open or not
 								type={props.type}
 								showFocusShortcutsIcon={props.showFocusShortcutsIcon}
 								showVoiceSearch={props.showVoiceSearch}
-							/>
-							{renderIcons()}
-						</InputWrapper>
 
-						{renderInputAddonAfter()}
-						{renderAskButtonElement()}
-						{renderEnterButtonElement()}
+								// Props used to modify styles
+								searchBox
+								isOpen={showImageDropdown}
+							/>
+						</InputWrapper>
+						<ActionContainer>
+							{renderRightIcons()}
+							{renderInputAddonAfter()}
+							{renderAskButtonElement()}
+							{renderEnterButtonElement()}
+						</ActionContainer>
 					</InputGroup>
+
+					{showImageDropdown ? <ImageDropdown
+						imageValue={currentImageValue}
+						onChange={v => setCurrentImageValue(v)}
+						onOutsideClick={(e) => {
+							if (props.autosuggest === false) {
+								// don't close image dropdown,
+								// when autosuggest false and typing inside searchbox input
+								if (e.target === _inputRef.current) {
+									return;
+								}
+							}
+							// When the user is clicking on the camera
+							// icon which is outside the image modal
+							if (showImageDropdown) {
+								handleShowImageDropdown(e, false);
+							}
+						}}
+					/> : null}
 				</div>
 			)}
 		</Container>
@@ -2224,6 +2407,7 @@ const SearchBox = (props) => {
 SearchBox.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
+	selectedImageValue: types.string,
 	selectedCategory: types.string,
 	suggestions: types.suggestions,
 	triggerAnalytics: types.funcRequired,
@@ -2294,6 +2478,8 @@ SearchBox.propTypes = {
 	showFilter: types.bool,
 	showIcon: types.bool,
 	showVoiceSearch: types.bool,
+	showImageSearch: types.bool,
+	imageSearchConfig: types.componentObject,
 	style: types.style,
 	title: types.title,
 	theme: types.style,
@@ -2352,6 +2538,8 @@ SearchBox.propTypes = {
 	removeAIResponse: types.func,
 	// This is an internal prop just for testing
 	testMode: types.bool,
+	__showImageDropdown: types.bool,
+	__dummyImage: types.string,
 };
 
 SearchBox.defaultProps = {
@@ -2370,6 +2558,7 @@ SearchBox.defaultProps = {
 	showIcon: true,
 	showFocusShortcutsIcon: true,
 	showVoiceSearch: false,
+	imageSearchConfig: {},
 	style: {},
 	URLParams: false,
 	showClear: false,
@@ -2398,6 +2587,9 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	selectedImageValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].meta
+		&& state.selectedValues[props.componentId].meta.imageValue) || '',
 	selectedCategory:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].category)
