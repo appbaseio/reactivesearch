@@ -79,6 +79,7 @@ import { ImageDropdown } from './addons/ImageDropdown';
 import { innerText } from '../shared/innerText';
 import TextWithTooltip from './addons/TextWithTooltip';
 import { Thumbnail, CameraIcon } from './addons/CameraIcon';
+import { FallbackRender } from './addons/FallbackRender';
 
 const md = new Remarkable();
 
@@ -202,6 +203,7 @@ const SearchBox = (props) => {
 				// Document suggestions don't have a meaningful label and value
 				const newSuggestion = { ...suggestion };
 				newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
+				// If renderItem is provided we can get the value from it's content
 				if (typeof props.renderItem === 'function') {
 					const jsxEl = props.renderItem(newSuggestion);
 					const innerValue = innerText(jsxEl);
@@ -2039,11 +2041,13 @@ const SearchBox = (props) => {
 																							  )}`
 																					}`}
 																				>
-																					{props.renderItem ? (
-																						props.renderItem(
-																							sectionItem,
-																						)
-																					) : (
+																					<FallbackRender
+																						item={typeof props.renderItem === 'function' ? (
+																							props.renderItem(
+																								sectionItem,
+																							)
+																						) : null}
+																					>
 																						<React.Fragment>
 																							<div
 																								style={{
@@ -2100,7 +2104,7 @@ const SearchBox = (props) => {
 																								sectionItem,
 																							)}
 																						</React.Fragment>
-																					)}
+																					</FallbackRender>
 																				</li>
 																			),
 																		)}
@@ -2136,9 +2140,13 @@ const SearchBox = (props) => {
 																			  )}`
 																	}`}
 																>
-																	{props.renderItem ? (
-																		props.renderItem(item)
-																	) : (
+																	<FallbackRender
+																		item={typeof props.renderItem === 'function' ? (
+																			props.renderItem(
+																				item,
+																			)
+																		) : null}
+																	>
 																		<React.Fragment>
 																			<SuggestionItem
 																				currentValue={
@@ -2148,7 +2156,7 @@ const SearchBox = (props) => {
 																				suggestion={item}
 																			/>
 																		</React.Fragment>
-																	)}
+																	</FallbackRender>
 																</li>
 															);
 														}
@@ -2172,9 +2180,13 @@ const SearchBox = (props) => {
 																		  )}`
 																}`}
 															>
-																{props.renderItem ? (
-																	props.renderItem(item)
-																) : (
+																<FallbackRender
+																	item={typeof props.renderItem === 'function' ? (
+																		props.renderItem(
+																			item,
+																		)
+																	) : null}
+																>
 																	<React.Fragment>
 																		{/* eslint-disable */}
 
@@ -2213,7 +2225,7 @@ const SearchBox = (props) => {
 
 																		{getActionIcon(item)}
 																	</React.Fragment>
-																)}
+																</FallbackRender>
 															</li>
 														);
 													})}
