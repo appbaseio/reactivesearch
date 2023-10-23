@@ -53,7 +53,7 @@ import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { Actions as ActionContainer, searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
+import { Actions as ActionContainer, searchboxSuggestions, Suggestion, SuggestionDescription, suggestionsContainer, TextArea } from '../../styles/Input';
 import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
@@ -68,7 +68,6 @@ import CancelSvg from '../shared/CancelSvg';
 import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
-import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 import HOOKS from '../../utils/hooks';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
@@ -2077,29 +2076,28 @@ const SearchBox = (props) => {
 																									type={`${sectionItem._suggestion_type}-search-icon`}
 																								/>
 																							</div>
-																							<div className="trim">
-																								<Flex direction="column">
-																									{sectionItem.label && (
-																										<TextWithTooltip
-																											title={sectionItem.label}
-																											className="section-list-item__label"
-																											innerHTML={
-																												sectionItem.label
-																											}
-																										/>
-																									)}
-																									{sectionItem.description && (
-																										<div
-																											className="section-list-item__description"
-																											dangerouslySetInnerHTML={{
-																												__html: XSS(
-																													sectionItem.description,
-																												),
-																											}}
-																										/>
-																									)}
-																								</Flex>
-																							</div>
+																							<Suggestion direction="column">
+																								{sectionItem.label && (
+																									<TextWithTooltip
+																										title={sectionItem.label}
+																										className="section-list-item__label"
+																										innerHTML={
+																											sectionItem.label
+																										}
+																									/>
+																								)}
+																								{sectionItem.description && (
+																									<SuggestionDescription
+																										lines={1}
+																										className="section-list-item__description"
+																										dangerouslySetInnerHTML={{
+																											__html: XSS(
+																												sectionItem.description,
+																											),
+																										}}
+																									/>
+																								)}
+																							</Suggestion>
 																							{getActionIcon(
 																								sectionItem,
 																							)}
