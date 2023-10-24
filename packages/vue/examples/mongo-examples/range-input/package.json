@@ -12,24 +12,9 @@
 		"vue": "^2.7.7"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "~4.5.0",
-		"@vue/cli-plugin-eslint": "~4.5.0",
-		"@vue/cli-service": "~4.5.0",
-		"@vue/compiler-sfc": "^3.1.0"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true
-		},
-		"extends": [
-			"plugin:vue/essential",
-			"eslint:recommended"
-		],
-		"rules": {},
-		"parserOptions": {
-			"parser": "babel-eslint"
-		}
+		"@babel/core": "^7.12.16",
+		"@vue/cli-plugin-babel": "~5.0.0",
+		"@vue/cli-service": "~5.0.0"
 	},
 	"browserslist": [
 		"> 1%",
