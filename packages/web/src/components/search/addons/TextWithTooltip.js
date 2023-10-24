@@ -2,6 +2,19 @@ import { string } from 'prop-types';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import React, { useState, useEffect, useRef } from 'react';
 
+import styled from '@emotion/styled';
+
+const Container = styled.div`
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+`;
+
+const Content = styled.span`
+	display: ${props => (props.isOverflowing ? 'inline' : 'block')};
+`;
+
 /**
  * Shows tooltip when text content overflows out of the container
  * */
@@ -15,6 +28,7 @@ const TextWithTooltip = ({
 	useEffect(() => {
 		const container = containerRef.current;
 		const content = contentRef.current;
+
 		if (container && content) {
 			const containerWidth = container.offsetWidth;
 			const contentWidth = content.scrollWidth;
@@ -24,16 +38,17 @@ const TextWithTooltip = ({
 	}, [innerHTML, title]);
 
 	return (
-		<div title={isOverflowing ? title : ''} ref={containerRef} >
-			<div
+		<Container title={isOverflowing ? title : ''} ref={containerRef} >
+			<Content
 				className={className}
 				style={style}
+				isOverflowing={isOverflowing}
 				ref={contentRef}
 				dangerouslySetInnerHTML={{
 					__html: innerHTML,
 				}}
 			/>
-		</div>
+		</Container>
 	);
 };
 
