@@ -172,7 +172,7 @@ Installing ReactiveSearch is just one command.
 npm install @appbaseio/reactivesearch
 ```
 
-You can check out the quickstart guide with React [here](https://docs.appbase.io/docs/reactivesearch/v3/overview/quickstart/).
+You can check out the quickstart guide with React [here](https://docs.reactivesearch.io/docs/reactivesearch/react/overview/quickstart/).
 
 -   If you're using reactivesearch for mobile (native)
 
