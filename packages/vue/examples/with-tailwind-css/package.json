@@ -12,9 +12,8 @@
 		"vue": "^2.6.11"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "~4.3.0",
-		"@vue/cli-plugin-eslint": "~4.3.0",
-		"@vue/cli-service": "~4.3.0",
+		"@vue/cli-plugin-babel": "^5.0.8",
+		"@vue/cli-service": "^5.0.8",
 		"tailwindcss": "^1.4.5",
 		"vue-template-compiler": "^2.6.11"
 	},
