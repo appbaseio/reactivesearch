@@ -181,17 +181,6 @@
     tocbot "^4.18.0"
     yarn "^1.22.18"
 
-"@appbaseio/reactivecore@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-10.2.0.tgz#44d3ad3f5f40062e24fdfadb877ab7dc2efcd4a3"
-  integrity sha512-unx9e8HLw/y7SO/1nL9ehpo95SsWsp4umoDvIraRxXJ3sfRYl+5dB91b2U9DG8D1XqBgbf18JTsfktu9yFQjDg==
-  dependencies:
-    cross-fetch "^3.0.4"
-    dayjs "^1.11.7"
-    prop-types "^15.6.0"
-    redux "^4.0.0"
-    redux-thunk "^2.3.0"
-
 "@appbaseio/reactivecore@9.15.1":
   version "9.15.1"
   resolved "https://registry.yarnpkg.com/@appbaseio/reactivecore/-/reactivecore-9.15.1.tgz#283dff65f5cb15db58a48702b8238bdf38940850"
