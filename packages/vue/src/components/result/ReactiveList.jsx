@@ -445,16 +445,16 @@ const ReactiveList = {
 				{!this.isLoading && hits && hits.length === 0 ? this.renderNoResult() : null}
 				{this.shouldRenderPagination
 					&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
-					<Pagination
-						pages={this.$props.pages}
-						totalPages={this.totalPages}
-						currentPage={this.currentPageState}
-						setPage={this.setPage}
-						innerClass={this.$props.innerClass}
-						prevLabel={this.$props.prevLabel}
-						nextLabel={this.$props.nextLabel}
-					/>
-				) : null}
+						<Pagination
+							pages={this.$props.pages}
+							totalPages={this.totalPages}
+							currentPage={this.currentPageState}
+							setPage={this.setPage}
+							innerClass={this.$props.innerClass}
+							prevLabel={this.$props.prevLabel}
+							nextLabel={this.$props.nextLabel}
+						/>
+					) : null}
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
 					? this.$scopedSlots.loader
@@ -472,17 +472,17 @@ const ReactiveList = {
 					: null}
 				{this.shouldRenderPagination
 					&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
-					<Pagination
-						pages={this.$props.pages}
-						totalPages={Math.ceil(this.$data.total / this.$props.size)}
-						currentPage={this.currentPageState}
-						setPage={this.setPage}
-						showEndPage={this.$props.showEndPage}
-						innerClass={this.$props.innerClass}
-						prevLabel={this.$props.prevLabel}
-						nextLabel={this.$props.nextLabel}
-					/>
-				) : null}
+						<Pagination
+							pages={this.$props.pages}
+							totalPages={Math.ceil(this.$data.total / this.$props.size)}
+							currentPage={this.currentPageState}
+							setPage={this.setPage}
+							showEndPage={this.$props.showEndPage}
+							innerClass={this.$props.innerClass}
+							prevLabel={this.$props.prevLabel}
+							nextLabel={this.$props.nextLabel}
+						/>
+					) : null}
 				{this.url.endsWith('appbase.io') && results.length ? (
 					<Flex
 						direction="row-reverse"
