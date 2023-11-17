@@ -332,6 +332,11 @@ const ReactiveList = {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
 		},
+		isLoading(newVal, oldVal) {
+			if (newVal !== oldVal) {
+				this.$emit('loading', newVal);
+			}
+		},
 	},
 	mounted() {
 		if (this.defaultPage < 0 && this.currentPage > 0) {
@@ -439,7 +444,7 @@ const ReactiveList = {
 				</Flex>
 				{!this.isLoading && hits && hits.length === 0 ? this.renderNoResult() : null}
 				{this.shouldRenderPagination
-				&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
+					&& (this.$props.paginationAt === 'top' || this.$props.paginationAt === 'both') ? (
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={this.totalPages}
@@ -453,7 +458,7 @@ const ReactiveList = {
 				{this.renderResults()}
 				{this.isLoading && !this.shouldRenderPagination
 					? this.$scopedSlots.loader
-					  || this.$props.loader || (
+					|| this.$props.loader || (
 						<div
 							style={{
 								textAlign: 'center',
@@ -461,12 +466,12 @@ const ReactiveList = {
 								color: '#666',
 							}}
 						>
-								Loading...
+							Loading...
 						</div>
-					  )
+					)
 					: null}
 				{this.shouldRenderPagination
-				&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
+					&& (this.$props.paginationAt === 'bottom' || this.$props.paginationAt === 'both') ? (
 						<Pagination
 							pages={this.$props.pages}
 							totalPages={Math.ceil(this.$data.total / this.$props.size)}
