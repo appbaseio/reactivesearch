@@ -341,7 +341,8 @@ const DynamicRangeSlider = {
 							]}
 							min={Math.floor(Math.min(start, this.currentValue[0]))}
 							max={Math.ceil(Math.max(end, this.currentValue[1]))}
-							onDrag-end={this.handleSlider}
+							onChange={this.handleSlider}
+							lazy={true}
 							dotSize={20}
 							height={4}
 							enable-cross={false}
