@@ -347,6 +347,7 @@ const DynamicRangeSlider = {
 							height={4}
 							enable-cross={false}
 							tooltip="always"
+							useKeyboard={true}
 							{...this.$props.sliderOptions}
 						/>
 
