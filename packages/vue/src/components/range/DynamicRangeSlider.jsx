@@ -320,7 +320,7 @@ const DynamicRangeSlider = {
 	},
 
 	render() {
-		if (!this.range || !this.currentValue) {
+		if (!this.range || !this.currentValue || this.range.start === null || this.range.end === null || this.range.start === this.range.end) {
 			return null;
 		}
 		const { start, end } = this.range;
