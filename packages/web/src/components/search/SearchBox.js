@@ -447,6 +447,9 @@ const SearchBox = (props) => {
 				return;
 			}
 			let newSelectedTags = [];
+			if (cause !== causes.CLEAR_ALL_TAGS) {
+				newSelectedTags = selectedTags;
+			}
 			let newCurrentValue = decodeHtml(value);
 			if (hasMounted) {
 				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
@@ -458,9 +461,9 @@ const SearchBox = (props) => {
 						}
 
 						if (typeof value === 'string' && !!value) {
-							newSelectedTags = [...selectedTags, value];
+							newSelectedTags = [...newSelectedTags, value];
 						} else if (Array.isArray(value) && !isEqual(selectedTags, value)) {
-							const mergedArray = Array.from(new Set([...selectedTags, ...value]));
+							const mergedArray = Array.from(new Set([...newSelectedTags, ...value]));
 							newSelectedTags = mergedArray;
 						}
 					} else if (value) {
@@ -745,6 +748,7 @@ const SearchBox = (props) => {
 		if (showAIScreen) {
 			setShowAIScreen(false);
 		}
+		// for !controlled usage, we need to update the value directly
 		if (value === undefined) {
 			setValue(inputValue, inputValue === '', props, undefined, true, false);
 		} else if (onChange) {
@@ -1329,7 +1333,7 @@ const SearchBox = (props) => {
 	const clearAllTags = () => {
 		setSelectedTags([]);
 
-		setValue('', true, props, causes.SUGGESTION_SELECT, hasMounted.current, false);
+		setValue('', true, props, causes.CLEAR_ALL_TAGS, hasMounted.current, false);
 		if (props.value !== undefined && typeof onChange === 'function') {
 			onChange([], ({ isOpen } = {}) =>
 				triggerQuery({

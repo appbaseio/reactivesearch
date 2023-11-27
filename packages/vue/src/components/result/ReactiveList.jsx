@@ -318,6 +318,11 @@ const ReactiveList = {
 				this.setPage(newVal >= 0 ? newVal : 0);
 			}
 		},
+		isLoading(newVal, oldVal) {
+			if (newVal !== oldVal) {
+				this.$emit('loading', newVal);
+			}
+		},
 	},
 	mounted() {
 		if (this.defaultPage < 0 && this.currentPage > 0) {
