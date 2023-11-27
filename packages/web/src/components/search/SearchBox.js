@@ -53,7 +53,7 @@ import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { Actions as ActionContainer, searchboxSuggestions, suggestionsContainer, TextArea } from '../../styles/Input';
+import { Actions as ActionContainer, searchboxSuggestions, Suggestion, SuggestionDescription, suggestionsContainer, TextArea } from '../../styles/Input';
 import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
@@ -68,7 +68,6 @@ import CancelSvg from '../shared/CancelSvg';
 import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
-import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
 import HOOKS from '../../utils/hooks';
 import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
@@ -79,6 +78,7 @@ import { ImageDropdown } from './addons/ImageDropdown';
 import { innerText } from '../shared/innerText';
 import TextWithTooltip from './addons/TextWithTooltip';
 import { Thumbnail, CameraIcon } from './addons/CameraIcon';
+import { FallbackRender } from './addons/FallbackRender';
 
 const md = new Remarkable();
 
@@ -202,6 +202,7 @@ const SearchBox = (props) => {
 				// Document suggestions don't have a meaningful label and value
 				const newSuggestion = { ...suggestion };
 				newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
+				// If renderItem is provided we can get the value from it's content
 				if (typeof props.renderItem === 'function') {
 					const jsxEl = props.renderItem(newSuggestion);
 					const innerValue = innerText(jsxEl);
@@ -2043,11 +2044,13 @@ const SearchBox = (props) => {
 																							  )}`
 																					}`}
 																				>
-																					{props.renderItem ? (
-																						props.renderItem(
-																							sectionItem,
-																						)
-																					) : (
+																					<FallbackRender
+																						item={typeof props.renderItem === 'function' ? (
+																							props.renderItem(
+																								sectionItem,
+																							)
+																						) : null}
+																					>
 																						<React.Fragment>
 																							<div
 																								style={{
@@ -2077,34 +2080,33 @@ const SearchBox = (props) => {
 																									type={`${sectionItem._suggestion_type}-search-icon`}
 																								/>
 																							</div>
-																							<div className="trim">
-																								<Flex direction="column">
-																									{sectionItem.label && (
-																										<TextWithTooltip
-																											title={sectionItem.label}
-																											className="section-list-item__label"
-																											innerHTML={
-																												sectionItem.label
-																											}
-																										/>
-																									)}
-																									{sectionItem.description && (
-																										<div
-																											className="section-list-item__description"
-																											dangerouslySetInnerHTML={{
-																												__html: XSS(
-																													sectionItem.description,
-																												),
-																											}}
-																										/>
-																									)}
-																								</Flex>
-																							</div>
+																							<Suggestion direction="column">
+																								{sectionItem.label && (
+																									<TextWithTooltip
+																										title={sectionItem.label}
+																										className="section-list-item__label"
+																										innerHTML={
+																											sectionItem.label
+																										}
+																									/>
+																								)}
+																								{sectionItem.description && (
+																									<SuggestionDescription
+																										lines={1}
+																										className="section-list-item__description"
+																										dangerouslySetInnerHTML={{
+																											__html: XSS(
+																												sectionItem.description,
+																											),
+																										}}
+																									/>
+																								)}
+																							</Suggestion>
 																							{getActionIcon(
 																								sectionItem,
 																							)}
 																						</React.Fragment>
-																					)}
+																					</FallbackRender>
 																				</li>
 																			),
 																		)}
@@ -2140,9 +2142,13 @@ const SearchBox = (props) => {
 																			  )}`
 																	}`}
 																>
-																	{props.renderItem ? (
-																		props.renderItem(item)
-																	) : (
+																	<FallbackRender
+																		item={typeof props.renderItem === 'function' ? (
+																			props.renderItem(
+																				item,
+																			)
+																		) : null}
+																	>
 																		<React.Fragment>
 																			<SuggestionItem
 																				currentValue={
@@ -2152,7 +2158,7 @@ const SearchBox = (props) => {
 																				suggestion={item}
 																			/>
 																		</React.Fragment>
-																	)}
+																	</FallbackRender>
 																</li>
 															);
 														}
@@ -2176,9 +2182,13 @@ const SearchBox = (props) => {
 																		  )}`
 																}`}
 															>
-																{props.renderItem ? (
-																	props.renderItem(item)
-																) : (
+																<FallbackRender
+																	item={typeof props.renderItem === 'function' ? (
+																		props.renderItem(
+																			item,
+																		)
+																	) : null}
+																>
 																	<React.Fragment>
 																		{/* eslint-disable */}
 
@@ -2217,7 +2227,7 @@ const SearchBox = (props) => {
 
 																		{getActionIcon(item)}
 																	</React.Fragment>
-																)}
+																</FallbackRender>
 															</li>
 														);
 													})}

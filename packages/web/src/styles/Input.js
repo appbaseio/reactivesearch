@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
+import Flex from './Flex';
 
 const alertBorder = ({ theme }) => `
 	border: 1px solid ${theme.colors.alertColor};
@@ -194,19 +195,8 @@ const suggestions = (themePreset, theme) => css`
 		cursor: pointer;
 		padding: 10px;
 		user-select: none;
-
-		& > .trim {
-			display: -webkit-box;
-			display: flex;
-			width: 100%;
-			max-height: 2.3rem;
-			line-height: 1.2rem;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
+		width: 100%;
+		overflow: hidden;
 
 		&:hover,
 		&:focus {
@@ -215,6 +205,15 @@ const suggestions = (themePreset, theme) => css`
 	}
 
 	${themePreset === 'dark' && theme && dark(theme)};
+`;
+
+const TrimmedText = styled.div`
+	display: -webkit-box;
+	width: 100%;
+	-webkit-line-clamp: ${props => props.lines || 2};
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const searchboxSuggestions = (themePreset, theme) => css`
@@ -278,28 +277,21 @@ const searchboxSuggestions = (themePreset, theme) => css`
 		.section-list {
 			padding-left: 0;
 		}
-		.section-list-item {
-			&__label,
-			&__description {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-
-				* {
-					margin: 0;
-					padding: 0;
-				}
-			}
-
-			&__label {
-			}
-			&__description {
-				margin-top: 5px;
-				opacity: 0.7;
-				font-size: 12px;
-			}
-		}
 	}
+`;
+const Suggestion = styled(Flex)`
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+`;
+
+const SuggestionDescription = styled(TrimmedText)`
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-top: 5px;
+	opacity: 0.7;
+	font-size: 12px;
 `;
 
 const suggestionsContainer = css`
@@ -346,4 +338,7 @@ export {
 	searchboxSuggestions,
 	TextArea,
 	Actions,
+	TrimmedText,
+	Suggestion,
+	SuggestionDescription,
 };

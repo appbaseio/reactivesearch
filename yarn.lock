@@ -136,7 +136,6 @@
     gatsby-plugin-dark-mode "^1.1.2"
     gatsby-plugin-force-trailing-slashes "1.0.6"
     gatsby-plugin-google-analytics "^4.9.0"
-    gatsby-plugin-google-gtag "^5.12.0"
     gatsby-plugin-image "^2.10.0"
     gatsby-plugin-manifest "^4.9.0"
     gatsby-plugin-offline "^5.9.0"
