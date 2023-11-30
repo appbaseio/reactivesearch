@@ -10,8 +10,8 @@
 	"scripts": {
 		"watch": "yarn run build -w",
 		"build": "babel src --out-dir lib",
-		"build:umd": "webpack --progress -p --config webpack.config.umd.js",
-		"stats": "webpack --progress -p --config webpack.config.umd.js --json > stats.json",
+		"build:umd": "webpack --progress --mode=production --config webpack.config.umd.js",
+		"stats": "webpack --progress --mode=production --config webpack.config.umd.js --json > stats.json",
 		"prepublishOnly": "yarn run build",
 		"version-upgrade": "nps upgrade-maps -c ../../package-scripts.js",
 		"postpublish": "yarn run version-upgrade"
