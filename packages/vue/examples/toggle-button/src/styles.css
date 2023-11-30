@@ -1,4 +1,4 @@
-.row {
+.parent-row, .row {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -156,4 +156,19 @@
 }
 .ml20 {
   margin-left: 20px;
+}
+
+
+@media only screen and (max-width: 1000px) {
+  .parent-row{
+    flex-direction: column;
+  }
+
+  .parent-row>.col{
+    width:100%;
+  }
+
+  .result-list-container {
+    width: 100%;
+  }
 }
