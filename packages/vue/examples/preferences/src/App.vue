@@ -1,69 +1,78 @@
 <template>
-	<div id="app">
-		<reactive-base
-			app="good-books-ds"
-			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			:preferences="preferences"
-		>
-			<search-box
-				componentId="BookSensor"
-				preferencesPath="pages.home.componentSettings.BookSensor"
-				class="result-list-container"
-			/>
-			<reactive-list
-				componentId="SearchResult"
-				class="result-list-container"
-				:react="{ and: ['BookSensor'] }"
-			>
-				<template #render="{ loading, error, data }">
-					<div v-if="loading">Fetching Results.</div>
-					<div v-if="Boolean(error)">
-						Something went wrong! Error details {JSON.stringify(error)}
-					</div>
-					<div v-bind:key="item._id" v-for="item in data">
-						<div class="flex book-content" key="item._id">
-							<img :src="item.image" alt="Book Cover" class="book-image" />
-							<div class="flex column justify-center ml20">
-								<div class="book-header">{{ item.original_title }}</div>
-								<div class="flex column justify-space-between">
-									<div>
-										<div>
-											by
-											<span class="authors-list">{{ item.authors }}</span>
-										</div>
-										<div class="ratings-list flex align-center">
-											<span class="stars">
-												<i
-													v-for="(item, index) in Array(
-														item.average_rating_rounded,
-													).fill('x')"
-													class="fas fa-star"
-													:key="index"
-												/>
-											</span>
-											<span class="avg-rating"
-												>({{ item.average_rating }} avg)</span
-											>
-										</div>
-									</div>
-									<span class="pub-year"
-										>Pub {{ item.original_publication_year }}</span
-									>
-								</div>
-							</div>
-						</div>
-					</div>
-				</template>
-			</reactive-list>
-		</reactive-base>
-	</div>
+  <div id="app">
+    <reactive-base
+      :preferences="preferences"
+      app="good-books-ds"
+      url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+    >
+      <search-box
+        component-id="BookSensor"
+        preferences-path="pages.home.componentSettings.BookSensor"
+        class="result-list-container"
+      />
+      <reactive-list
+        :react="{ and: ['BookSensor'] }"
+        component-id="SearchResult"
+        class="result-list-container"
+      >
+        <template #render="{ loading, error, data }">
+          <div v-if="loading">Fetching Results.</div>
+          <div v-if="Boolean(error)">
+            Something went wrong! Error details {JSON.stringify(error)}
+          </div>
+          <div 
+            v-for="item in data" 
+            :key="item._id">
+            <div 
+              key="item._id" 
+              class="flex book-content">
+              <img 
+                :src="item.image" 
+                alt="Book Cover" 
+                class="book-image" >
+              <div class="flex column justify-center ml20">
+                <div class="book-header">{{ item.original_title }}</div>
+                <div class="flex column justify-space-between">
+                  <div>
+                    <div>
+                      by
+                      <span class="authors-list">{{ item.authors }}</span>
+                    </div>
+                    <div class="ratings-list flex align-center">
+                      <span class="stars">
+                        <i
+                          v-for="(item, index) in Array(
+                            item.average_rating_rounded,
+                          ).fill('x')"
+                          :key="index"
+                          class="fas fa-star"
+                        />
+                      </span>
+                      <span 
+                        class="avg-rating"
+                      >({{ item.average_rating }} avg)</span
+                      >
+                    </div>
+                  </div>
+                  <span 
+                    class="pub-year"
+                  >Pub {{ item.original_publication_year }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </reactive-list>
+    </reactive-base>
+  </div>
 </template>
 <script>
 import './styles.css';
 import { SearchBox, ReactiveBase, ReactiveList } from '@appbaseio/reactivesearch-vue';
 
 export default {
-	name: 'app',
+	name: 'App',
 	components: {
 		SearchBox,
 		ReactiveBase,
