@@ -8,8 +8,7 @@ export default defineConfig({
 		include: [
 			'@appbaseio/reactivecore',
 			'@appbaseio/reactivesearch-vue',
-			'fast-deep-equal',
-			'@vue/babel-helper-vue-transform-on'
+			'fast-deep-equal'
 		],
 	},
 	plugins: [vue()],
