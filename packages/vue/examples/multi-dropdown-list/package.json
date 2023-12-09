@@ -1,38 +1,22 @@
 {
-	"name": "multi-dropdown-list",
-	"version": "0.1.0",
+	"name": "example-vue3",
 	"private": true,
+	"version": "0.0.0",
+	"type": "module",
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build",
-		"lint": "vue-cli-service lint"
+	  "serve": "volar-preview-vite",
+	  "build": "vue-tsc && vite build",
+	  "preview": "vite preview"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.3.0",
-		"vue": "^3.2.5"
+	  "@appbaseio/reactivesearch-vue": "3.3.0",
+	  "vue": "^3.3.9",
+	  "vuejs-paginate": "^2.1.0"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "^5.0.8",
-		"@vue/cli-service": "^5.0.8",
-		"@vue/compiler-sfc": "^3.1.0"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true
-		},
-		"extends": [
-			"plugin:vue/essential",
-			"eslint:recommended"
-		],
-		"rules": {},
-		"parserOptions": {
-			"parser": "babel-eslint"
-		}
-	},
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"not ie <= 8"
-	]
+	  "@codesandbox/vue-preview": "^0.1.1-alpha.16",
+	  "@vitejs/plugin-vue": "^4.5.0",
+	  "@vue/babel-preset-app": "^5.0.8",
+	  "vite": "^5.0.4"
+	}
 }

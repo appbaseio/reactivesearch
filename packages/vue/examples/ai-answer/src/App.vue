@@ -1,41 +1,41 @@
 <template>
-	<div id="app">
-		<reactive-base
-			app="good-books-ds"
-			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-			themePreset="light"
-		>
-			<search-box
-				className="result-list-container"
-				componentId="BookSensor"
-				:dataField="['original_title', 'original_title.search']"
-				:URLParams="true"
-				:size="10"
-				:enablePopularSuggestions="true"
-				:popularSuggestionsConfig="{ size: 3, minChars: 2, index: 'good-books-ds' }"
-				:enableRecentSuggestions="true"
-				:recentSuggestionsConfig="{
-					size: 3,
-					index: 'good-books-ds',
-					minChars: 4,
-				}"
-				:enableAI="false"
-				:autosuggest="true"
-			/>
-			<a-i-answer
-				className="ai-answer"
-				componentId="AIComponent"
-				:react="{ and: ['BookSensor'] }"
-				title="AI Chat Box"
-				:showSourceDocuments="true"
-				:onSourceClick="
-					(sourceObj) => {
-						// perform any side effects
-						console.log('sourceObj', sourceObj);
-					}
-				"
-			>
-				<!-- <template v-slot:render="{ loading, data, error }">
+  <div id="app">
+    <reactive-base
+      app="good-books-ds"
+      url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+      theme-preset="light"
+    >
+      <search-box
+        :data-field="['original_title', 'original_title.search']"
+        :urlparams="true"
+        :size="10"
+        :enable-popular-suggestions="true"
+        :popular-suggestions-config="{ size: 3, minChars: 2, index: 'good-books-ds' }"
+        :enable-recent-suggestions="true"
+        :recent-suggestions-config="{
+          size: 3,
+          index: 'good-books-ds',
+          minChars: 4,
+        }"
+        :enable-ai="false"
+        :autosuggest="true"
+        class-name="result-list-container"
+        component-id="BookSensor"
+      />
+      <a-i-answer
+        :react="{ and: ['BookSensor'] }"
+        :show-source-documents="true"
+        :on-source-click="
+          (sourceObj) => {
+            // perform any side effects
+            console.log('sourceObj', sourceObj);
+          }
+        "
+        class-name="ai-answer"
+        component-id="AIComponent"
+        title="AI Chat Box"
+      >
+        <!-- <template v-slot:render="{ loading, data, error }">
 					<div v-if="loading">loading...</div>
 					<pre v-else-if="error">{{ JSON.stringify(error) }}</pre>
 					<div
@@ -60,50 +60,58 @@
 					<div>{{ JSON.stringify(errorParam) }}</div>
 					<button v-on:click="handleRetry">fff</button>
 				</template> -->
-			</a-i-answer>
-			<reactive-list
-				componentId="SearchResult"
-				dataField="original_title.keyword"
-				className="result-list-container"
-				:pagination="true"
-				:size="5"
-				:react="{ and: ['BookSensor'] }"
-			>
-				<template #renderItem="{ item }">
-					<div :id="item._id" class="flex book-content" :key="item._id">
-						<img :src="item.image" alt="Book Cover" class="book-image" />
-						<div class="flex column justify-center ml20">
-							<div class="book-header">{{ item.original_title }}</div>
-							<div class="flex column justify-space-between">
-								<div>
-									<div>
-										by <span class="authors-list">{{ item.authors }}</span>
-									</div>
-									<div class="ratings-list flex align-center">
-										<span class="stars">
-											<i
-												v-for="(item, index) in Array(
-													item.average_rating_rounded,
-												).fill('x')"
-												class="fas fa-star"
-												:key="index"
-											/>
-										</span>
-										<span class="avg-rating"
-											>({{ item.average_rating }} avg)</span
-										>
-									</div>
-								</div>
-								<span class="pub-year"
-									>Pub {{ item.original_publication_year }}</span
-								>
-							</div>
-						</div>
-					</div>
-				</template>
-			</reactive-list>
-		</reactive-base>
-	</div>
+      </a-i-answer>
+      <reactive-list
+        :pagination="true"
+        :size="5"
+        :react="{ and: ['BookSensor'] }"
+        component-id="SearchResult"
+        data-field="original_title.keyword"
+        class-name="result-list-container"
+      >
+        <template #renderItem="{ item }">
+          <div 
+            :id="item._id" 
+            :key="item._id" 
+            class="flex book-content">
+            <img 
+              :src="item.image" 
+              alt="Book Cover" 
+              class="book-image" >
+            <div class="flex column justify-center ml20">
+              <div class="book-header">{{ item.original_title }}</div>
+              <div class="flex column justify-space-between">
+                <div>
+                  <div>
+                    by <span class="authors-list">{{ item.authors }}</span>
+                  </div>
+                  <div class="ratings-list flex align-center">
+                    <span class="stars">
+                      <i
+                        v-for="(item, index) in Array(
+                          item.average_rating_rounded,
+                        ).fill('x')"
+                        :key="index"
+                        class="fas fa-star"
+                      />
+                    </span>
+                    <span 
+                      class="avg-rating"
+                    >({{ item.average_rating }} avg)</span
+                    >
+                  </div>
+                </div>
+                <span 
+                  class="pub-year"
+                >Pub {{ item.original_publication_year }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </template>
+      </reactive-list>
+    </reactive-base>
+  </div>
 </template>
 
 <script>
@@ -111,7 +119,7 @@ import './styles.css';
 import { ReactiveBase, ReactiveList, SearchBox, AIAnswer } from '@appbaseio/reactivesearch-vue';
 
 export default {
-	name: 'app',
+	name: 'App',
 	components: { ReactiveBase, ReactiveList, SearchBox, AIAnswer },
 	methods: {
 		getMessageStyle(message) {
