@@ -1,6 +1,10 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+// eslint-disable-next-line import/extensions
+import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
+import 'vue-slider-component/dist-css/vue-slider-component.css'
+import 'vue-slider-component/theme/default.css'
 import Container from '../../styles/Container';
 import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
@@ -39,6 +43,7 @@ const RangeSlider = {
 		}),
 		rangeLabels: types.rangeLabels,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
@@ -184,7 +189,7 @@ const RangeSlider = {
 				{this.$props.range ? (
 					<NoSSR>
 						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-							<vue-slider-component
+							<VueSlider
 								ref="slider"
 								modelValue={this.currentValue}
 								min={this.$props.range.start}

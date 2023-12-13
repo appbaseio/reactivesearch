@@ -487,6 +487,7 @@ RangeInput.propTypes = {
 	themePreset: types.themePreset,
 	showHistogram: types.bool,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	includeNullValues: types.bool,
 	index: types.string,
 	queryFormat: oneOf([...Object.keys(dateFormats)]),

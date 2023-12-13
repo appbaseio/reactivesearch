@@ -26,6 +26,28 @@ const SuggestionItem = {
 	props: {
 		currentValue: types.string,
 		suggestion: types.any,
+		innerHTML: types.string.isRequired,
+	},
+	data(){
+		return {
+			isOverflowing: false
+		}
+	},
+	methods:{
+		updateOverflowing(){
+			if(this.$refs.container && this.$refs.content){
+				const {container, content} = this.$refs;
+				const containerWidth = container.offsetWidth;
+				const contentWidth = content.scrollWidth;
+
+				this.isOverflowing = (contentWidth > containerWidth);
+			}else {
+				this.isOverflowing = false
+			}
+		}
+	},
+	mounted(){
+		this.updateOverflowing()
 	},
 	render() {
 		const {
@@ -39,27 +61,28 @@ const SuggestionItem = {
 			_suggestion_type,
 			_category,
 		} = this.suggestion;
-
 		if (label) {
 			// label has highest precedence
 			return typeof label === 'string' ? (
-				<div class="trim">
-					{(
-						_category
-							? false
-							: isPredictiveSuggestion
+				<div ref="container" class="trim" title={this.isOverflowing ? label : ''}>
+					<div ref="content">
+						{(
+							_category
+								? false
+								: isPredictiveSuggestion
 							  // eslint-disable-next-line
 							  || !!_suggestion_type
-					) ? (
-							<PredictiveSuggestion innerHTML={label} />
-						) : (
-							<Highlight
-								searchWords={_category ? [_category] : this.currentValue.split(' ')}
-								textToHighlight={label}
-								autoEscape
-								highlightStyle={highlightStyle}
-							/>
-						)}
+						) ? (
+								<PredictiveSuggestion innerHTML={label} />
+							) : (
+								<Highlight
+									searchWords={_category ? [_category] : this.currentValue.split(' ')}
+									textToHighlight={label}
+									autoEscape
+									highlightStyle={highlightStyle}
+								/>
+							)}
+					</div>
 				</div>
 			) : (
 				label

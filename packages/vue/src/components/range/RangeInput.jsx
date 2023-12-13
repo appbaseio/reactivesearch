@@ -58,6 +58,7 @@ const RangeInput = {
 		stepValue: types.number,
 		componentStyle: types.style,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		includeNullValues: VueTypes.bool,
 		beforeValueChange: types.func,
 		customQuery: types.func,

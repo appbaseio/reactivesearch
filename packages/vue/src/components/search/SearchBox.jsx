@@ -1,11 +1,22 @@
+/* eslint-disable no-nested-ternary */
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
+import xss from 'xss';
+import { Remarkable } from 'remarkable';
 import {
+	AI_LOCAL_CACHE_KEY,
+	AI_TRIGGER_MODES,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
-import { getQueryOptions, suggestionTypes } from '@appbaseio/reactivecore/lib/utils/helper';
+import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
+import {
+	getQueryOptions,
+	suggestionTypes,
+	featuredSuggestionsActionTypes,
+	getObjectFromLocalStorage,
+} from '@appbaseio/reactivecore/lib/utils/helper';
 import { defineComponent } from 'vue';
 import {
 	connect,
@@ -24,9 +35,15 @@ import Title from '../../styles/Title';
 import InputGroup from '../../styles/InputGroup';
 import InputWrapper from '../../styles/InputWrapper';
 import InputAddon from '../../styles/InputAddon';
-import Input, { suggestionsContainer, suggestions } from '../../styles/Input';
+import {
+	suggestionsContainer,
+	suggestions,
+	searchboxSuggestions,
+	TextArea,
+	Actions as ActionsContainer,
+} from '../../styles/Input';
 import IconGroup from '../../styles/IconGroup';
-import IconWrapper from '../../styles/IconWrapper';
+import IconWrapper, { ButtonIconWrapper } from '../../styles/IconWrapper';
 import Downshift from '../basic/DownShift.jsx';
 import Container from '../../styles/Container';
 import types from '../../utils/vueTypes';
@@ -41,6 +58,23 @@ import CustomSvg from '../shared/CustomSvg';
 import AutofillSvg from '../shared/AutoFillSvg.jsx';
 import Button from '../../styles/Button';
 import { TagItem, TagsContainer } from '../../styles/Tags';
+import AutosuggestFooterContainer from '../../styles/AutosuggestFooterContainer';
+import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader.jsx';
+import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
+import AIFeedback from '../shared/AIFeedback.jsx';
+import { innerText } from '../../utils/innerText';
+
+const md = new Remarkable();
+
+md.set({
+	html: true,
+	breaks: true,
+	xhtmlOut: true,
+	linkify: true,
+	linkTarget: '_blank',
+});
+const _dropdownULRef = 'dropdownULRef';
+const _inputGroupRef = 'inputGroupRef';
 
 const { updateQuery, setCustomQuery, setDefaultQuery, recordSuggestionClick } = Actions;
 const {
@@ -63,6 +97,13 @@ const SearchBox = defineComponent({
 			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
+			showAIScreen: false,
+			showAIScreenFooter: false,
+			showFeedbackComponent: false,
+			feedbackState: null,
+			faqAnswer: '',
+			faqQuestion: '',
+			initialHits: null,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -118,11 +159,82 @@ const SearchBox = defineComponent({
 	},
 
 	computed: {
+		currentTriggerMode() {
+			return (
+				(this.$props.AIUIConfig && this.$props.AIUIConfig.triggerOn)
+				|| AI_TRIGGER_MODES.MANUAL
+			);
+		},
 		hasCustomRenderer() {
 			return hasCustomRenderer(this);
 		},
 		stats() {
 			return getResultStats(this);
+		},
+		mergedAIQuestion() {
+			return (
+				this.faqQuestion
+				|| (this.AIResponse && this.AIResponse.response && this.AIResponse.response.question)
+			);
+		},
+		mergedAIAnswer() {
+			return (
+				this.faqAnswer
+				|| (this.AIResponse
+					&& this.AIResponse.response
+					&& this.AIResponse.response.answer
+					&& this.AIResponse.response.answer.text)
+			);
+		},
+		parsedSuggestions() {
+			let suggestionsArray = [];
+			if (Array.isArray(this.suggestions) && this.suggestions.length) {
+				suggestionsArray = [...withClickIds(this.suggestions)];
+			}
+			if (this.renderTriggerMessage() && this.currentValue) {
+				suggestionsArray.unshift({
+					label: this.renderTriggerMessage(),
+					value: 'AI_TRIGGER_MESSAGE',
+					_suggestion_type: '_internal_a_i_trigger',
+				});
+			}
+
+			suggestionsArray
+			= suggestionsArray
+					.map((s) => {
+						if (s.sectionId) {
+							return s;
+						}
+						return { ...s, sectionId: s._suggestion_type };
+					})
+					.map((suggestion) => {
+						if (suggestion._suggestion_type === suggestionTypes.Document) {
+							// Document suggestions don't have a meaningful label and value
+							const newSuggestion = { ...suggestion };
+							newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
+							const renderItem = this.$slots.renderItem || this.$props.renderItem;
+							if (typeof renderItem === 'function') {
+								const jsxEl = renderItem(newSuggestion);
+								const innerValue = innerText(jsxEl);
+								newSuggestion.value = xss(innerValue);
+							}
+							return newSuggestion;
+						}
+						return suggestion;
+					});
+
+			const sectionsAccumulated = [];
+			const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
+				if (sectionsAccumulated.includes(d.sectionId)) return acc;
+				if (d.sectionId) {
+					acc[currentIndex] = suggestionsArray.filter((g) => g.sectionId === d.sectionId);
+					sectionsAccumulated.push(d.sectionId);
+				} else {
+					acc[currentIndex] = d;
+				}
+				return acc;
+			}, {});
+			return Object.values(sectionisedSuggestions);
 		},
 	},
 	props: {
@@ -132,6 +244,7 @@ const SearchBox = defineComponent({
 		className: VueTypes.string.def(''),
 		clearIcon: types.children,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customHighlight: types.func,
 		customQuery: types.func,
 		defaultQuery: types.func,
@@ -159,6 +272,17 @@ const SearchBox = defineComponent({
 		enableQuerySuggestions: VueTypes.bool.def(false),
 		enablePopularSuggestions: VueTypes.bool.def(false),
 		enableRecentSuggestions: VueTypes.bool.def(false),
+		enableFAQSuggestions: VueTypes.bool.def(false),
+		enableDocumentSuggestions: VueTypes.bool.def(false),
+		documentSuggestionsConfig: VueTypes.shape({
+			size: VueTypes.number,
+			from: VueTypes.number,
+			maxChars: VueTypes.number
+		}),
+		FAQSuggestionsConfig: VueTypes.shape({
+			sectionLabel: VueTypes.string,
+			size: VueTypes.number,
+		}),
 		fieldWeights: types.fieldWeights,
 		filterLabel: types.string,
 		fuzziness: types.fuzziness,
@@ -196,12 +320,20 @@ const SearchBox = defineComponent({
 		focusShortcuts: VueTypes.arrayOf(
 			VueTypes.oneOfType([VueTypes.string, VueTypes.number]),
 		).def(['/']),
+		showFocusShortcutsIcon: VueTypes.bool.def(true),
 		addonBefore: VueTypes.any,
 		addonAfter: VueTypes.any,
+		showSuggestionsFooter: VueTypes.bool.def(true),
 		expandSuggestionsContainer: VueTypes.bool.def(true),
+		renderSuggestionsFooter: VueTypes.func,
 		index: VueTypes.string,
 		popularSuggestionsConfig: VueTypes.object,
 		recentSuggestionsConfig: VueTypes.object,
+		featuredSuggestionsConfig: VueTypes.shape({
+			maxSuggestionsPerSection: VueTypes.number,
+			sectionsOrder: VueTypes.arrayOf(VueTypes.string),
+		}),
+		customEvents: VueTypes.object,
 		applyStopwords: VueTypes.bool,
 		customStopwords: types.stringArray,
 		onData: types.func,
@@ -212,11 +344,68 @@ const SearchBox = defineComponent({
 		renderSelectedTags: VueTypes.any,
 		searchboxId: VueTypes.string,
 		endpoint: types.endpointConfig,
+		enableAI: VueTypes.bool.def(false),
+		AIConfig: types.AIConfig,
+		AIUIConfig: types.AIUIConfig,
 	},
 	mounted() {
 		this.listenForFocusShortcuts();
+		const dropdownEle = this.$refs[_dropdownULRef];
+		if (dropdownEle) {
+			const handleScroll = () => {
+				const { scrollTop } = dropdownEle;
+				this.lastScrollTop = scrollTop;
+
+				if (scrollTop < this.lastScrollTop) {
+				// User is scrolling up
+					clearInterval(this.scrollTimerRef);
+					this.isUserScrolling = true;
+				}
+				// Update lastScrollTop with the current scroll position
+				this.lastScrollTop = scrollTop;
+
+			};
+
+			dropdownEle.addEventListener('scroll', handleScroll);
+
+
+		}
+	},
+	updated() {
+		if (this.$props.mode === SEARCH_COMPONENTS_MODES.SELECT && this.$options.isTagsMode === true) {
+			this.$options.isTagsMode = false;
+			this.selectedTags = [];
+		} else if(this.$props.mode === SEARCH_COMPONENTS_MODES.TAG&& this.$options.isTagsMode === false){
+			this.$options.isTagsMode = true;
+		}
 	},
 	watch: {
+		AIResponse(newVal) {
+			if (newVal) {
+				if (
+					this.$props.AIUIConfig
+					&& this.$props.AIUIConfig.showSourceDocuments
+					&& newVal.response
+					&& newVal.response.answer
+					&& Array.isArray(newVal.response.answer.documentIds)
+				) {
+					this.sourceDocIds = newVal.response.answer.documentIds;
+
+					const localCache
+						= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+						&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[this.$props.componentId];
+
+					if (localCache && localCache.meta && localCache.meta.hits && localCache.meta.hits.hits) {
+						this.initialHits = localCache.meta.hits.hits;
+					}
+
+					if (!this.showAIScreenFooter) {
+						this.showAIScreenFooter = true;
+					}
+				}
+
+			}
+		},
 		dataField(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.triggerCustomQuery(this.$data.currentValue);
@@ -266,6 +455,8 @@ const SearchBox = defineComponent({
 				suggestionsList = [...withClickIds(this.$props.defaultSuggestions)];
 			}
 			this.normalizedSuggestions = suggestionsList;
+
+			this.handleTextAreaHeightChange();
 		},
 		selectedValue(newVal, oldVal) {
 			if (
@@ -287,7 +478,11 @@ const SearchBox = defineComponent({
 				if (this.$options.isTagsMode) {
 					cause = causes.SUGGESTION_SELECT;
 				}
-				this.setValue(newVal || '', true, this.$props, cause);
+				if (this.$props.value === undefined) {
+					this.setValue(newVal, newVal === '', this.$props, cause, false);
+				} else {
+					this.setValue(newVal || '', true, this.$props, cause);
+				}
 			}
 		},
 		focusShortcuts() {
@@ -301,6 +496,9 @@ const SearchBox = defineComponent({
 				loading: this.isLoading,
 				error: this.isError,
 			});
+			if (newVal && newVal.hits && newVal.hits.hits) {
+				this.initialHits = newVal.hits.hits;
+			}
 		},
 		aggregationData(newVal) {
 			this.$emit('on-data', {
@@ -334,8 +532,71 @@ const SearchBox = defineComponent({
 				this.handleTextChange = debounce(this.handleText, newVal);
 			}
 		},
+		isAITyping(newVal, oldVal) {
+			const scrollAIContainer = () => {
+				if (this.isUserScrolling) return;
+				const dropdownEle = this.$refs[_dropdownULRef];
+				if (dropdownEle) {
+					dropdownEle.scrollTo({
+						top: dropdownEle.scrollHeight,
+						behavior: 'smooth',
+					});
+				}
+			};
+
+			if (!newVal && oldVal) {
+				clearInterval(this.scrollTimerRef)
+				this.showAIScreenFooter = true;
+				if (
+					this.$props.AIUIConfig
+					&& typeof this.$props.AIUIConfig.showFeedback === 'boolean'
+						? this.$props.AIUIConfig.showFeedback
+						: true
+				) {
+					this.showFeedbackComponent = true;
+				}
+
+				setTimeout(() => {
+					scrollAIContainer();
+				}, 500);
+			} else if (newVal) {
+				this.scrollTimerRef = setInterval(() => {
+					scrollAIContainer();
+				}, 2000);
+			}
+		},
+		showAIScreen(newVal) {
+			if (newVal) {
+				if (this.$refs?.[this.$props.innerRef] && this.$refs[this.$props.innerRef].$el) {
+					this.$refs[this.$props.innerRef].$el.blur();
+				}
+			} else {
+				this.feedbackState = null;
+				this.showFeedbackComponent = false;
+			}
+		},
+		currentValue() {
+			this.$nextTick(this.handleTextAreaHeightChange)
+		},
 	},
 	methods: {
+		renderTriggerMessage() {
+			if (this.$props.enableAI) {
+				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderTriggerMessage) {
+					return this.$props.AIUIConfig.renderTriggerMessage;
+				}
+				if (this.$slots.renderTriggerMessage) {
+					return this.$slots.renderTriggerMessage();
+				}
+				if (
+					this.currentTriggerMode === AI_TRIGGER_MODES.MANUAL
+					&& (this.$props.AIUIConfig ? !this.$props.AIUIConfig.askButton : true)
+				) {
+					return 'Click to trigger AIAnswer';
+				}
+			}
+			return null;
+		},
 		handleText(value, cause) {
 			if (cause === causes.CLEAR_VALUE) {
 				this.triggerCustomQuery(value);
@@ -356,8 +617,22 @@ const SearchBox = defineComponent({
 				rawData: this.rawData,
 				value: currentValue,
 				resultStats: this.stats,
+				AIData: {
+					question: this.mergedAIQuestion,
+					answer: this.mergedAIAnswer,
+					documentIds:
+						(this.AIResponse
+							&& this.AIResponse.response
+							&& this.AIResponse.response.answer
+							&& this.AIResponse.response.answer.documentIds)
+						|| [],
+					showAIScreen: this.showAIScreen,
+					sources: this.getAISourceObjects(),
+					isAILoading: this.isAIResponseLoading,
+					AIError: this.AIResponseError,
+				},
 			};
-			return getComponent(data, this);
+			return <div ref={_dropdownULRef}>{getComponent(data, this)}</div>;
 		},
 		// returns size and aggs property
 		getBasicQueryOptions() {
@@ -385,6 +660,7 @@ const SearchBox = defineComponent({
 			cause,
 			toggleIsOpen = true,
 			categoryValue = undefined,
+			shouldExecuteQuery = true,
 		) {
 			const performUpdate = () => {
 				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
@@ -420,13 +696,28 @@ const SearchBox = defineComponent({
 							: undefined;
 				}
 
+				if ((this.faqAnswer || this.faqQuestion) && value === '') {
+					// Empty the previous state
+					this.faqAnswer = '';
+					this.faqQuestion = '';
+					this.showAIScreen = false;
+				}
+
 				if (isDefaultValue) {
 					if (this.$props.autosuggest) {
 						if (toggleIsOpen) {
 							this.isOpen = false;
 						}
 						if (typeof this.currentValue === 'string')
-							this.triggerDefaultQuery(this.currentValue);
+							this.triggerDefaultQuery(
+								this.currentValue,
+								props.enableAI
+									&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+									&& this.currentValue.endsWith('?')
+									? { enableAI: true }
+									: {},
+								shouldExecuteQuery,
+							);
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
 					if (props.strictSelection) {
@@ -439,6 +730,7 @@ const SearchBox = defineComponent({
 							this.triggerCustomQuery(
 								queryHandlerValue,
 								this.$options.isTagsMode ? undefined : categoryValue,
+								shouldExecuteQuery,
 							);
 						} else {
 							this.setValue('', true);
@@ -448,9 +740,11 @@ const SearchBox = defineComponent({
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
 					) {
+						this.showAIScreen = false;
 						this.triggerCustomQuery(
 							queryHandlerValue,
 							this.$options.isTagsMode ? undefined : categoryValue,
+							shouldExecuteQuery,
 						);
 					}
 				} else {
@@ -464,7 +758,7 @@ const SearchBox = defineComponent({
 
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
-		triggerDefaultQuery(paramValue) {
+		triggerDefaultQuery(paramValue, meta = {}, shouldExecuteQuery = true) {
 			if (!this.$props.autosuggest) {
 				return;
 			}
@@ -484,14 +778,18 @@ const SearchBox = defineComponent({
 					value,
 				);
 			}
-			this.updateQuery({
-				componentId: this.internalComponent,
-				query,
-				value,
-				componentType: componentTypes.searchBox,
-			});
+			this.updateQuery(
+				{
+					componentId: this.internalComponent,
+					query,
+					value,
+					componentType: componentTypes.searchBox,
+					meta,
+				},
+				shouldExecuteQuery,
+			);
 		},
-		triggerCustomQuery(paramValue, categoryValue = undefined) {
+		triggerCustomQuery(paramValue, categoryValue = undefined, shouldExecuteQuery = true) {
 			const { customQuery, filterLabel, showFilter, URLParams } = this.$props;
 			let value = typeof paramValue !== 'string' ? this.$data.currentValue : paramValue;
 			if (this.$options.isTagsMode) {
@@ -510,16 +808,19 @@ const SearchBox = defineComponent({
 				}
 				updateCustomQuery(this.$props.componentId, this.setCustomQuery, this.$props, value);
 			}
-			this.updateQuery({
-				componentId: this.$props.componentId,
-				query,
-				value,
-				label: filterLabel,
-				showFilter,
-				URLParams,
-				componentType: componentTypes.searchBox,
-				category: categoryValue,
-			});
+			this.updateQuery(
+				{
+					componentId: this.$props.componentId,
+					query,
+					value,
+					label: filterLabel,
+					showFilter,
+					URLParams,
+					componentType: componentTypes.searchBox,
+					category: categoryValue,
+				},
+				shouldExecuteQuery,
+			);
 		},
 		handleFocus(event) {
 			if (this.$props.autosuggest) {
@@ -537,6 +838,7 @@ const SearchBox = defineComponent({
 				&& results[0][0].transcript.trim()
 			) {
 				this.setValue(results[0][0].transcript.trim(), true);
+				this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 			}
 		},
 		triggerQuery({
@@ -572,8 +874,19 @@ const SearchBox = defineComponent({
 		},
 
 		clearValue() {
-			this.setValue('', false, this.$props, causes.CLEAR_VALUE, false);
-			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
+			this.setValue(
+				'',
+				false,
+				this.$props,
+				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
+				false,
+			);
+			this.onValueSelectedHandler(
+				'',
+				!this.$options.isTagsMode ? causes.CLEAR_VALUE : undefined,
+			);
+			this.showAIScreen = false;
+			this.isOpen = false;
 		},
 
 		handleKeyDown(event, highlightedIndex = null) {
@@ -587,7 +900,21 @@ const SearchBox = defineComponent({
 						true,
 						this.$props,
 						this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+						!(
+							this.$props.enableAI
+							&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+							&& event.target.value.endsWith('?')
+						),
 					);
+					if (
+						this.$props.enableAI
+						&& !this.showAIScreen
+						&& this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+						&& event.target.value.endsWith('?')
+					) {
+						this.showAIScreen = true;
+						this.isOpen = true;
+					}
 					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 				}
 			}
@@ -603,15 +930,13 @@ const SearchBox = defineComponent({
 			if (!this.$data.isOpen && this.$props.autosuggest) {
 				this.isOpen = true;
 			}
+			if (this.showAIScreen) {
+				this.showAIScreen = false;
+			}
 
 			const { value } = this.$props;
 			if (value === undefined) {
-				this.setValue(
-					inputValue,
-					false,
-					this.$props,
-					inputValue === '' ? causes.CLEAR_VALUE : undefined,
-				);
+				this.setValue(inputValue, inputValue === '', this.$props, undefined, false);
 			} else {
 				this.$emit(
 					'change',
@@ -627,10 +952,80 @@ const SearchBox = defineComponent({
 				);
 			}
 		},
+		handleFeaturedSuggestionClicked(suggestion) {
+			try {
+				if (suggestion.action === featuredSuggestionsActionTypes.NAVIGATE) {
+					const { target = '_self', link = '/' } = JSON.parse(suggestion.subAction);
+
+					if (typeof window !== 'undefined') {
+						window.open(link, target);
+					}
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					const matchedValues = suggestion.subAction.match(/function\s*\(.*\)(.|\n)*/);
+					const functionStr = matchedValues && matchedValues[0];
+					// eslint-disable-next-line no-new-func
+					const func = new Function(`return ${functionStr}`)();
+					func(suggestion, this.$data.currentValue, this.$props.customEvents);
+				}
+				if (suggestion.action === featuredSuggestionsActionTypes.SELECT) {
+					this.setValue(
+						suggestion.value,
+						true,
+						this.$props,
+						this.$options.isTagsMode.current
+							? causes.SUGGESTION_SELECT
+							: causes.ENTER_PRESS,
+						false,
+					);
+					this.onValueSelectedHandler(suggestion.value, causes.SUGGESTION_SELECT);
+				}
+				// blur is important to close the dropdown
+				// on selecting one of featured suggestions
+				// else Downshift probably is focusing the dropdown
+				// and not letting it close
+				// eslint-disable-next-line no-unused-expressions
+				this.$refs?.[this.$props.innerRef]?.el?.blur();
+			} catch (e) {
+				console.error(
+					`Error: There was an error parsing the subAction for the featured suggestion with label, "${suggestion.label}"`,
+					e,
+				);
+			}
+		},
 
 		onSuggestionSelected(suggestion) {
-			this.isOpen = false;
 			const { value } = this.$props;
+			// The state of the suggestion is open by the time it reaches here. i.e. isOpen = true
+			// handle when FAQ suggestion is clicked
+			if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
+				this.currentValue = suggestion.value;
+				// Handle AI
+				// Independent of enableAI.
+				this.faqAnswer = suggestion._answer;
+				this.faqQuestion = suggestion.value;
+				this.isOpen = true;
+				this.showAIScreen = true;
+				if (value !== undefined) this.$emit('change', suggestion.value, () => {});
+				this.onValueSelectedHandler(suggestion.value);
+				return;
+			}
+			if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
+				this.showAIScreen = true;
+				this.askButtonOnClick();
+				return;
+			}
+
+			// handle featured suggestions click event
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				this.handleFeaturedSuggestionClicked(suggestion);
+				// Handle AI
+				if (!this.$props.enableAI) this.isOpen = false;
+				else {
+					this.showAIScreen = true;
+				}
+				return;
+			}
 			// Record analytics for selected suggestions
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
@@ -675,6 +1070,15 @@ const SearchBox = defineComponent({
 				causes.SUGGESTION_SELECT,
 				suggestion.source,
 			);
+
+			// Handle AI
+			if (!this.$props.enableAI) this.isOpen = false;
+			else if (
+				this.currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+				&& suggestion.value.endsWith('?')
+			) {
+				this.showAIScreen = true;
+			}
 		},
 
 		onValueSelectedHandler(currentValue = this.$data.currentValue, ...cause) {
@@ -705,8 +1109,48 @@ const SearchBox = defineComponent({
 			return null;
 		},
 
-		renderErrorComponent() {
+		renderErrorComponent(isAIError = false) {
 			const renderError = this.$slots.renderError || this.$props.renderError;
+			if (isAIError) {
+				if (this.showAIScreen && this.AIResponseError && !this.isAIResponseLoading) {
+					if (renderError) {
+						return (
+							<div
+								class={`--ai-answer-error-container ${
+									getClassName(this.$props.innerClass, 'ai-error') || ''
+								}`}
+							>
+								{renderError(this.AIResponseError)}
+							</div>
+						);
+					}
+					return (
+						<div
+							class={`--ai-answer-error-container ${
+								getClassName(this.$props.innerClass, 'ai-error') || ''
+							}`}
+						>
+							<div class="--default-error-element">
+								<span>
+									{typeof this.AIResponseError === 'string'
+										? this.AIResponseError
+										: this.AIResponseError.message
+											? this.AIResponseError.message
+											: 'There was an error in generating the response.'}
+									{this.AIResponseError.code
+										? `Code:
+							${this.AIResponseError.code}`
+										: ''}
+								</span>
+
+								{/* <Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button> */}
+							</div>
+						</div>
+					);
+				}
+			}
 			if (this.error && renderError && this.$data.currentValue && !this.isLoading) {
 				return (
 					<SuggestionWrapper
@@ -778,7 +1222,18 @@ const SearchBox = defineComponent({
 			return null;
 		},
 		enterButtonOnClick() {
+			this.showAIScreen = false;
 			this.triggerQuery({ isOpen: false, value: this.currentValue, customQuery: true });
+		},
+		suggestionsFooter() {
+			return typeof renderSuggestionsFooter === 'function' ? (
+				this.$props.renderSuggestionsFooter()
+			) : (
+				<AutosuggestFooterContainer>
+					<div>↑↓ Navigate</div>
+					<div>↩ Go</div>
+				</AutosuggestFooterContainer>
+			);
 		},
 		renderEnterButtonElement() {
 			const { enterButton, innerClass } = this.$props;
@@ -806,7 +1261,33 @@ const SearchBox = defineComponent({
 
 			return null;
 		},
-		renderIcons() {
+		renderShortcut() {
+			if (this.$props.focusShortcuts && this.$props.focusShortcuts.length) {
+				let shortcut = this.$props.focusShortcuts[0];
+				shortcut = shortcut.toLowerCase();
+				shortcut = shortcut.replace('shift', '⬆️');
+				shortcut = shortcut.replace('command', 'cmd');
+				shortcut = shortcut.replace('control', 'ctrl');
+				shortcut = shortcut.replace('option', 'alt');
+				return shortcut.toUpperCase();
+			}
+			return '/';
+		},
+		renderLeftIcons() {
+			const { iconPosition, showIcon } = this.$props;
+			return (
+				<div>
+					<IconGroup groupPosition="left">
+						{iconPosition === 'left' && showIcon && (
+							<IconWrapper onClick={this.handleSearchIconClick}>
+								{this.renderIcon()}
+							</IconWrapper>
+						)}
+					</IconGroup>
+				</div>
+			);
+		},
+		renderRightIcons() {
 			const {
 				iconPosition,
 				showClear,
@@ -814,16 +1295,22 @@ const SearchBox = defineComponent({
 				getMicInstance,
 				showVoiceSearch,
 				showIcon,
+				showFocusShortcutsIcon,
 			} = this.$props;
 			const renderMic = this.$slots.renderMic || this.$props.renderMic;
 			const { currentValue } = this.$data;
 			return (
 				<div>
-					<IconGroup groupPosition="right" positionType="absolute">
+					<IconGroup groupPosition="right">
 						{currentValue && showClear && (
 							<IconWrapper onClick={this.clearValue} showIcon={showIcon} isClearIcon>
 								{this.renderCancelIcon()}
 							</IconWrapper>
+						)}
+						{showFocusShortcutsIcon && (
+							<ButtonIconWrapper onClick={(e) => this.focusSearchBox(e)}>
+								{this.renderShortcut()}
+							</ButtonIconWrapper>
 						)}
 						{showVoiceSearch && (
 							<Mic
@@ -834,14 +1321,6 @@ const SearchBox = defineComponent({
 							/>
 						)}
 						{iconPosition === 'right' && showIcon && (
-							<IconWrapper onClick={this.handleSearchIconClick}>
-								{this.renderIcon()}
-							</IconWrapper>
-						)}
-					</IconGroup>
-
-					<IconGroup groupPosition="left" positionType="absolute">
-						{iconPosition === 'left' && showIcon && (
 							<IconWrapper onClick={this.handleSearchIconClick}>
 								{this.renderIcon()}
 							</IconWrapper>
@@ -863,7 +1342,7 @@ const SearchBox = defineComponent({
 				return;
 			}
 
-			this.$refs?.[this.$props.innerRef]?.focus(); // eslint-disable-line
+			this.$refs?.[this.$props.innerRef]?.$el?.focus(); // eslint-disable-line
 		},
 		listenForFocusShortcuts() {
 			const { focusShortcuts = ['/'] } = this.$props;
@@ -904,13 +1383,30 @@ const SearchBox = defineComponent({
 			this.currentValue = decodeHtml(value);
 			this.triggerDefaultQuery(value);
 		},
-		renderAutoFill(suggestion) {
+		renderActionIcon(suggestion) {
 			const handleAutoFillClick = (e) => {
 				e.stopPropagation();
 				this.onAutofillClick(suggestion);
 			};
-			/* 👇 avoid showing autofill for category suggestions👇 */
-			return suggestion._category ? null : <AutofillSvg onClick={handleAutoFillClick} />;
+			if (suggestion._suggestion_type === suggestionTypes.Featured) {
+				if (suggestion.action === featuredSuggestionsActionTypes.FUNCTION) {
+					return (
+						<AutofillSvg
+							style={{
+								transform: 'rotate(135deg)',
+								pointerEvents: 'none',
+							}}
+						/>
+					);
+				}
+				return null;
+			}
+			if (!suggestion._category) {
+				/* 👇 avoid showing autofill for category suggestions👇 */
+
+				return <AutofillSvg onClick={handleAutoFillClick} />;
+			}
+			return null;
 		},
 		renderTag(item) {
 			const { innerClass } = this.$props;
@@ -977,12 +1473,196 @@ const SearchBox = defineComponent({
 				</TagsContainer>
 			);
 		},
+		getAISourceObjects() {
+			const sourceObjects = [];
+			if (!this.AIResponse) return sourceObjects;
+			const docIds
+			= (this.AIResponse
+				&& this.AIResponse.response
+				&& this.AIResponse.response.answer
+				&& this.AIResponse.response.answer.documentIds)
+				|| [];
+			if (
+				this.initialHits
+			) {
+				docIds.forEach((id) => {
+					const foundSourceObj
+						= this.initialHits.find((hit) => hit._id === id) || {};
+					if (foundSourceObj) {
+						const { _source = {}, ...rest } = foundSourceObj;
+
+						sourceObjects.push({ ...rest, ..._source });
+					}
+				});
+			} else {
+				sourceObjects.push(
+					...docIds.map((id) => ({
+						_id: id,
+					})),
+				);
+			}
+
+			return sourceObjects;
+		},
+		renderAIScreenLoader() {
+			const { AIUIConfig = {} } = this.$props;
+			const { loaderMessage } = AIUIConfig || {};
+			if (loaderMessage) {
+				return loaderMessage;
+			}
+			if (this.$slots.AILoaderMessage) {
+				return this.$slots.AILoaderMessage();
+			}
+
+			return <HorizontalSkeletonLoader />;
+		},
+		renderAIScreenFooter() {
+			const { AIUIConfig = {} } = this.$props;
+			const { showSourceDocuments = false, onSourceClick = () => {} } = AIUIConfig || {};
+
+			const renderSourceDocumentLabel = (sourceObj) => {
+				if (this.$props.AIUIConfig && this.$props.AIUIConfig.renderSourceDocument) {
+					return this.$props.AIUIConfig.renderSourceDocument(sourceObj);
+				}
+				if (this.$slots.renderSourceDocument) {
+					return this.$slots.renderSourceDocument(sourceObj);
+				}
+				return sourceObj._id;
+			};
+
+			return showSourceDocuments
+				&& this.showAIScreenFooter
+				&& this.AIResponse
+				&& this.AIResponse.response
+				&& this.AIResponse.response.answer
+				&& this.AIResponse.response.answer.documentIds
+				&& this.AIResponse.response.answer.documentIds.length ? (
+					<Footer themePreset={this.$props.themePreset}>
+					Summary generated using the following sources:{' '}
+						<SourceTags>
+							{this.getAISourceObjects().map((el) => (
+								<Button
+									class={`--ai-source-tag ${
+										getClassName(this.$props.innerClass, 'ai-source-tag') || ''
+									}`}
+									info
+									onClick={() => onSourceClick && onSourceClick(el)}
+								>
+									{renderSourceDocumentLabel(el)}
+								</Button>
+							))}
+						</SourceTags>
+					</Footer>
+				) : null;
+		},
+		renderAIScreen() {
+			const customAIRenderer = this.$props.renderAIAnswer || this.$slots.renderAIAnswer;
+			if (customAIRenderer) {
+				return customAIRenderer({
+					question: this.mergedAIQuestion,
+					answer: this.mergedAIAnswer,
+					documentIds:
+						(this.AIResponse
+							&& this.AIResponse.response
+							&& this.AIResponse.response.answer
+							&& this.AIResponse.response.answer.documentIds)
+						|| [],
+					loading: this.isAIResponseLoading || this.isLoading,
+					sources: this.getAISourceObjects(),
+					error: this.AIResponseError,
+				});
+			}
+
+			if (this.isAIResponseLoading || this.isLoading) {
+				return this.renderAIScreenLoader();
+			}
+
+			return (
+				<div>
+					<Answer innerHTML={md.render(this.mergedAIAnswer)} />
+					{this.renderAIScreenFooter()}
+					{this.showFeedbackComponent && (
+						<div class={`${getClassName(this.$props.innerClass, 'ai-feedback') || ''}`}>
+							<AIFeedback
+								overrideState={this.feedbackState}
+								hideUI={
+									this.isAIResponseLoading
+									|| this.isLoading
+									|| !this.sessionIdFromStore
+								}
+								key={this.sessionIdFromStore}
+								onFeedbackSubmit={(useful, reason) => {
+									this.feedbackState = {
+										isRecorded: true,
+										feedbackType: useful ? 'positive' : 'negative',
+									};
+									this.recordAISessionUsefulness(this.sessionIdFromStore, {
+										useful,
+										reason,
+									});
+								}}
+							/>
+						</div>
+					)}
+				</div>
+			);
+		},
+		handleTextAreaHeightChange() {
+			const textArea = this.$refs[this.$props.innerRef]?.$el;
+			const inputGroupEle = this.$refs[_inputGroupRef]?.$el;
+			if (textArea) {
+				textArea.style.height = '42px';
+				const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+				const maxHeight = lineHeight * 4; // max height for 3 lines
+				const height = Math.min(textArea.scrollHeight, maxHeight);
+				textArea.style.height = `${height}px`;
+				textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+				const dropdownEle = this.$refs[_dropdownULRef];
+				if (dropdownEle) {
+					dropdownEle.style.top = `${textArea.style.height}`;
+				}
+				if (inputGroupEle) {
+					inputGroupEle.style.height = `${textArea.style.height}`;
+				}
+			}
+		},
+		askButtonOnClick() {
+			this.showAIScreen = true;
+			this.isOpen = true;
+			this.triggerDefaultQuery(this.currentValue, { enableAI: true });
+		},
+		renderAskButtonElement() {
+			const { AIUIConfig, innerClass } = this.$props;
+			const { askButton } = AIUIConfig || {};
+			const { renderAskButton } = this.$slots;
+			if (askButton) {
+				const getEnterButtonMarkup = () => {
+					if (renderAskButton) {
+						return renderAskButton(this.askButtonOnClick);
+					}
+
+					return (
+						<Button
+							class={`enter-btn ${getClassName(innerClass, 'ask-button')}`}
+							info
+							onClick={this.askButtonOnClick}
+						>
+							Ask
+						</Button>
+					);
+				};
+
+				return <div class="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+			}
+
+			return null;
+		},
 	},
 	render() {
 		const { expandSuggestionsContainer } = this.$props;
 		const { recentSearchesIcon, popularSearchesIcon } = this.$slots;
 		const hasSuggestions
-			= Array.isArray(this.normalizedSuggestions) && this.normalizedSuggestions.length;
+			= Array.isArray(this.parsedSuggestions) && this.parsedSuggestions.length;
 		const renderItem = this.$slots.renderItem || this.$props.renderItem;
 
 		return (
@@ -1010,16 +1690,47 @@ const SearchBox = defineComponent({
 								setHighlightedIndex,
 							}) => {
 								const renderSuggestionsDropdown = () => {
-									const getIcon = (iconType) => {
+									const getIcon = (iconType, item, leaveSpaceForIcon) => {
 										switch (iconType) {
 											case suggestionTypes.Recent:
 												return recentSearchesIcon;
 											case suggestionTypes.Popular:
 												return popularSearchesIcon;
+											case suggestionTypes.Featured:
+												if (item.icon) {
+													return () => (
+														<div
+															style={{ display: 'flex' }}
+															innerHTML={xss(item.icon)}
+														/>
+													);
+												}
+												if (item.iconURL) {
+													return () => (
+														// When you change below also change the empty icon below
+														<img
+															style={{ maxWidth: '30px' }}
+															src={xss(item.iconURL)}
+															alt={item.value}
+														/>
+													);
+												}
+												// Render an empty icon when no icon is provided from the dashboard
+												return () => (
+													<span
+														style={{
+															display: 'inline-block',
+															height: '30px',
+															width: leaveSpaceForIcon ? '30px' : 0,
+														}}
+													></span>
+												);
+
 											default:
 												return null;
 										}
 									};
+									let indexOffset = 0;
 									return (
 										<div>
 											{this.hasCustomRenderer
@@ -1038,77 +1749,257 @@ const SearchBox = defineComponent({
 													)} ${getClassName(
 														this.$props.innerClass,
 														'list',
-													)}`}
-												>
-													{this.normalizedSuggestions.map((item, index) =>
-														renderItem ? (
-															<li
-																{...getItemProps({
-																	item,
-																})}
-																{...getItemEvents({
-																	item,
-																})}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-															>
-																{renderItem(item)}
-															</li>
-														) : (
-															<li
-																{...getItemProps({
-																	item,
-																})}
-																on={getItemEvents({
-																	item,
-																})}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			index,
-																		),
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-															>
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																		display: 'flex',
-																	}}
-																>
-																	<CustomSvg
-																		className={
-																			getClassName(
-																				this.$props
-																					.innerClass,
-																				`${item._suggestion_type}-search-icon`,
-																			) || null
-																		}
-																		icon={getIcon(
-																			item._suggestion_type,
-																		)}
-																		type={`${item._suggestion_type}-search-icon`}
-																	/>
-																</div>
-																<SuggestionItem
-																	currentValue={this.currentValue}
-																	suggestion={item}
-																/>
-																{this.renderAutoFill(item)}
-															</li>
-														),
+													)} ${searchboxSuggestions(
+														this.themePreset,
+														this.theme,
 													)}
+													`}
+													ref={_dropdownULRef}
+												>
+													{this.showAIScreen && (
+														<SearchBoxAISection
+															themePreset={this.$props.themePreset}
+														>
+															{this.renderAIScreen()}{' '}
+															{this.renderErrorComponent(true)}
+														</SearchBoxAISection>
+													)}
+													{!this.showAIScreen
+														&& this.parsedSuggestions.map(
+															(item, itemIndex) => {
+																const index
+																	= indexOffset + itemIndex;
+																if (Array.isArray(item)) {
+																	const sectionHtml = xss(
+																		item[0].sectionLabel,
+																	);
+																	indexOffset += item.length - 1;
+																	return (
+																		<div
+																			key={`section-${itemIndex}`}
+																			class="section-container"
+																		>
+																			{sectionHtml ? (
+																				<div
+																					class={`section-header ${getClassName(
+																						this.$props
+																							.innerClass,
+																						'section-label',
+																					)}`}
+																					key={`${item[0].sectionId}`}
+																					innerHTML={
+																						sectionHtml
+																					}
+																				/>
+																			) : null}
+																			<ul class="section-list">
+																				{item.map(
+																					(
+																						sectionItem,
+																						sectionIndex,
+																					) => {
+																						const suggestionsHaveIcon
+																							= item.some(
+																								(
+																									s,
+																								) =>
+																									s.icon
+																									|| s.iconURL,
+																							);
+
+																						if (
+																							renderItem
+																						) {
+																							return (
+																								<li
+																									{...getItemProps(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									on={getItemEvents(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																									style={{
+																										justifyContent:
+																											'flex-start',
+																										alignItems:
+																											'center',
+																									}}
+																									class={`${
+																										highlightedIndex
+																										=== index
+																											+ sectionIndex
+																											? `active-li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'active-suggestion-item',
+																											  )}`
+																											: `li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'suggestion-item',
+																											  )}`
+																									}`}
+																								>
+																									{renderItem(
+																										sectionItem,
+																									)}
+																								</li>
+																							);
+																						}
+
+																						if (
+																							sectionItem._suggestion_type
+																							=== '_internal_a_i_trigger'
+																						) {
+																							return (
+																								<li
+																									{...getItemProps(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									on={getItemEvents(
+																										{
+																											item: sectionItem,
+																										},
+																									)}
+																									key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																									style={{
+																										justifyContent:
+																											'flex-start',
+																										alignItems:
+																											'center',
+																									}}
+																									class={`${
+																										highlightedIndex
+																										=== index
+																											+ sectionIndex
+																											? `active-li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'active-suggestion-item',
+																											  )}`
+																											: `li-item ${getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												'suggestion-item',
+																											  )}`
+																									}`}
+																								>
+																									<SuggestionItem
+																										currentValue={
+																											this
+																												.currentValue
+																										}
+																										suggestion={
+																											sectionItem
+																										}
+																									/>
+																								</li>
+																							);
+																						}
+																						return (
+																							<li
+																								{...getItemProps(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								on={getItemEvents(
+																									{
+																										item: sectionItem,
+																									},
+																								)}
+																								key={`${sectionItem._id}_${index}_${sectionIndex}`}
+																								style={{
+																									justifyContent:
+																										'flex-start',
+																									alignItems:
+																										'center',
+																								}}
+																								class={`${
+																									highlightedIndex
+																									=== index
+																										+ sectionIndex
+																										? `active-li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'active-suggestion-item',
+																										  )}`
+																										: `li-item ${getClassName(
+																											this
+																												.$props
+																												.innerClass,
+																											'suggestion-item',
+																										  )}`
+																								}`}
+																							>
+																								<div
+																									style={{
+																										padding:
+																											'0 10px 0 0',
+																										display:
+																											'flex',
+																									}}
+																								>
+																									<CustomSvg
+																										key={`${sectionItem._suggestion_type}-${sectionIndex}`}
+																										className={
+																											getClassName(
+																												this
+																													.$props
+																													.innerClass,
+																												`${sectionItem._suggestion_type}-search-icon`,
+																											)
+																											|| null
+																										}
+																										icon={getIcon(
+																											sectionItem._suggestion_type,
+																											sectionItem,
+																											suggestionsHaveIcon,
+																										)}
+																										type={`${sectionItem._suggestion_type}-search-icon`}
+																									/>
+																								</div>
+
+																								<SuggestionItem
+																									currentValue={
+																										this
+																											.currentValue
+																									}
+																									suggestion={
+																										sectionItem
+																									}
+																								/>
+																								{this.renderActionIcon(
+																									sectionItem,
+																								)}
+																							</li>
+																						);
+																					},
+																				)}
+																			</ul>
+																		</div>
+																	);
+																}
+																return <div>No suggestions</div>;
+															},
+														)}
+													{!this.showAIScreen
+													&& this.parsedSuggestions.length
+													&& this.$props.showSuggestionsFooter
+														? this.suggestionsFooter()
+														: null}
 												</ul>
 											) : (
 												this.renderNoSuggestions(this.normalizedSuggestions)
@@ -1118,14 +2009,20 @@ const SearchBox = defineComponent({
 								};
 								return (
 									<div class={suggestionsContainer}>
-										<InputGroup>
-											{this.renderInputAddonBefore()}
+										<InputGroup
+											searchBox
+											ref={_inputGroupRef}
+											isOpen={this.$data.isOpen}
+										>
+											<ActionsContainer>
+												{this.renderInputAddonBefore()}
+												{this.renderLeftIcons()}
+											</ActionsContainer>
 											<InputWrapper>
-												<Input
+												<TextArea
+													searchBox
+													isOpen={this.$data.isOpen}
 													id={`${this.$props.componentId}-input`}
-													showIcon={this.$props.showIcon}
-													showClear={this.$props.showClear}
-													iconPosition={this.$props.iconPosition}
 													ref={this.$props.innerRef}
 													class={getClassName(
 														this.$props.innerClass,
@@ -1133,6 +2030,7 @@ const SearchBox = defineComponent({
 													)}
 													placeholder={this.$props.placeholder}
 													autoFocus={this.$props.autoFocus}
+													searchBox
 													on={getInputEvents({
 														onInput: this.onInputChange,
 														onBlur: (e) => {
@@ -1182,12 +2080,15 @@ const SearchBox = defineComponent({
 													themePreset={this.themePreset}
 													autocomplete="off"
 												/>
-												{this.renderIcons()}
 												{!expandSuggestionsContainer
 													&& renderSuggestionsDropdown()}
 											</InputWrapper>
-											{this.renderInputAddonAfter()}
-											{this.renderEnterButtonElement()}
+											<ActionsContainer>
+												{this.renderRightIcons()}
+												{this.renderInputAddonAfter()}
+												{this.renderAskButtonElement()}
+												{this.renderEnterButtonElement()}
+											</ActionsContainer>
 										</InputGroup>
 										{expandSuggestionsContainer && renderSuggestionsDropdown()}
 										{this.renderTags()}
@@ -1198,10 +2099,14 @@ const SearchBox = defineComponent({
 					</Downshift>
 				) : (
 					<div class={suggestionsContainer}>
-						<InputGroup>
-							{this.renderInputAddonBefore()}
+						<InputGroup searchBox ref={_inputGroupRef}>
+							<ActionsContainer>
+								{this.renderInputAddonBefore()}
+								{this.renderLeftIcons()}
+							</ActionsContainer>
 							<InputWrapper>
-								<Input
+								<TextArea
+									searchBox
 									class={getClassName(this.$props.innerClass, 'input') || ''}
 									placeholder={this.$props.placeholder}
 									on={{
@@ -1230,10 +2135,12 @@ const SearchBox = defineComponent({
 									ref={this.$props.innerRef}
 									themePreset={this.themePreset}
 								/>
-								{this.renderIcons()}
 							</InputWrapper>
-							{this.renderInputAddonAfter()}
-							{this.renderEnterButtonElement()}
+							<ActionsContainer>
+								{this.renderRightIcons()}
+								{this.renderInputAddonAfter()}
+								{this.renderEnterButtonElement()}
+							</ActionsContainer>
 						</InputGroup>
 					</div>
 				)}
@@ -1294,18 +2201,35 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId] || [],
 	themePreset: state.config.themePreset,
-	isLoading: !!state.isLoading[`${props.componentId}_active`],
+	isLoading: !!state.isLoading[`${props.componentId}`],
 	error: state.error[props.componentId],
-
 	time: (state.hits[props.componentId] && state.hits[props.componentId].time) || 0,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
+	AIResponse:
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
+		|| null,
+	isAIResponseLoading:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+	AIResponseError:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+	sessionIdFromStore:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.sessionId)
+		|| '',
+	isAITyping:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.isTyping)
+		|| false,
 });
 const mapDispatchToProps = {
 	updateQuery,
 	setCustomQuery,
 	setDefaultQuery,
 	recordSuggestionClick,
+	recordAISessionUsefulness,
 };
 export const SBConnected = PreferencesConsumer(
 	ComponentWrapper(connect(mapStateToProps, mapDispatchToProps)(SearchBox), {

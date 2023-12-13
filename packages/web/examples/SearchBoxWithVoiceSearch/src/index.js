@@ -5,7 +5,6 @@ import { ReactiveBase, SearchBox, ReactiveList, ResultCard } from '@appbaseio/re
 import './index.css';
 
 const Main = () => {
-	const [value, setValue] = useState('');
 
 	return (
 		<ReactiveBase
@@ -20,43 +19,7 @@ const Main = () => {
 						componentId="MoviesSensor"
 						showVoiceSearch
 						showFocusShortcutsIcon={false}
-						value={value}
-						onChange={(value) => {
-							setValue(value);
-						}}
-						render={({
-							loading,
-							error,
-							data,
-							value,
-							downshiftProps: { isOpen, getItemProps },
-						}) => {
-							if (loading) {
-								return <div>Fetching Suggestions.</div>;
-							}
-							if (error) {
-								return (
-									<div>
-										Something went wrong! Error details {JSON.stringify(error)}
-									</div>
-								);
-							}
-							return isOpen && Boolean(value.length) ? (
-								<div className="pill-wrapper">
-									{data.map((suggestion, index) => (
-										<button
-											className="pill-btn"
-											key={suggestion.value}
-											title={suggestion.value}
-											{...getItemProps({ item: suggestion })}
-											dangerouslySetInnerHTML={{
-												__html: suggestion.value,
-											}}
-										></button>
-									))}
-								</div>
-							) : null;
-						}}
+						autosuggest
 					/>
 					<br />
 					<ReactiveList

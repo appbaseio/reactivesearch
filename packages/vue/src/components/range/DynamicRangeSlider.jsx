@@ -1,6 +1,10 @@
 import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
+// eslint-disable-next-line import/extensions
+import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
+import 'vue-slider-component/dist-css/vue-slider-component.css'
+import 'vue-slider-component/theme/default.css'
 import Container from '../../styles/Container';
 import PreferencesConsumer from '../basic/PreferencesConsumer.jsx';
 import NoSSR from '../basic/NoSSR.jsx';
@@ -41,6 +45,7 @@ const DynamicRangeSlider = {
 		className: VueTypes.string.def(''),
 		rangeLabels: types.func,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customQuery: types.func,
 		data: types.data,
 		dataField: types.stringRequired,
@@ -315,7 +320,7 @@ const DynamicRangeSlider = {
 	},
 
 	render() {
-		if (!this.range || !this.currentValue) {
+		if (!this.range || !this.currentValue || this.range.start === null || this.range.end === null || this.range.start === this.range.end) {
 			return null;
 		}
 		const { start, end } = this.range;
@@ -328,7 +333,7 @@ const DynamicRangeSlider = {
 				)}
 				<NoSSR>
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-						<vue-slider-component
+						<VueSlider
 							ref="slider"
 							modelValue={[
 								Math.floor(Math.max(start, this.currentValue[0])),
@@ -336,11 +341,13 @@ const DynamicRangeSlider = {
 							]}
 							min={Math.floor(Math.min(start, this.currentValue[0]))}
 							max={Math.ceil(Math.max(end, this.currentValue[1]))}
-							onDrag-end={this.handleSlider}
+							onChange={this.handleSlider}
+							lazy={true}
 							dotSize={20}
 							height={4}
 							enable-cross={false}
 							tooltip="always"
+							useKeyboard={false}
 							{...this.$props.sliderOptions}
 						/>
 

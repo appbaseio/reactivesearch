@@ -1,0 +1,279 @@
+.container {
+	display: flex;
+	padding-top: 52px;
+}
+.container .nav {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ff3a4e;
+	color: #fff;
+	height: 52px;
+	padding: 0 25px;
+}
+.container .nav .search {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+.container .left-col {
+	width: 320px;
+	height: 100%;
+	padding: 15px 20px;
+	position: fixed;
+	left: 0;
+	right: 0;
+	border-right: 1px solid #f0f0f0;
+}
+.container .left-col > div {
+	margin: 40px 0;
+}
+@media all and (max-width: 768px) {
+	.container .left-col {
+		position: static;
+		width: 100%;
+		height: auto;
+		border-right: 0;
+		border-bottom: 1px solid #f0f0f0;
+	}
+}
+.container .right-col {
+	width: calc(100% - 320px);
+	position: relative;
+	left: 320px;
+	padding: 25px 30px;
+	background-color: #fbfbfb;
+}
+.container .right-col .list {
+	margin-bottom: 30px;
+}
+.container .right-col .list-item {
+	max-width: none;
+	min-width: 0;
+	width: calc(30% - 16px);
+	height: auto;
+	background-color: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	position: relative;
+	padding: 0;
+}
+.container .right-col .list-item h2 {
+	padding-bottom: 4px;
+}
+.container .right-col .list-item .image {
+	background-size: cover;
+}
+.container .right-col .list-item .price {
+	width: 70px;
+	height: 44px;
+	background-color: #424242;
+	position: absolute;
+	top: 160px;
+	left: 0;
+	color: #fafafa;
+	font-size: 18px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	letter-spacing: 0.03rem;
+}
+.container .right-col .list-item .info {
+	color: #555;
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+.container .right-col .result-stats {
+	text-align: right;
+	color: #666;
+	font-size: 15px;
+}
+@media all and (min-width: 1441px) {
+	.container .right-col .list-item {
+		width: calc(25% - 16px);
+	}
+}
+@media all and (max-width: 1024px) {
+	.container .right-col .list-item {
+		width: calc(50% - 16px);
+	}
+}
+@media all and (max-width: 768px) {
+	.container .right-col {
+		width: 100%;
+		position: static;
+		padding: 25px 15px;
+	}
+}
+@media all and (max-width: 480px) {
+	.container .right-col .list-item {
+		width: calc(100% - 16px);
+		margin-bottom: 20px;
+	}
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.row.dark {
+	background: #303030;
+}
+
+.col {
+	width: calc(100% - 400px);
+	padding: 15px;
+}
+
+.row > .col:first-child {
+	border-right: 1px solid #ccc;
+	max-width: 400px;
+}
+
+.result-list-container {
+	width: 75%;
+	padding: 0 40px;
+	display: inline-flex;
+	flex-direction: column;
+}
+
+.ratings-container {
+	width: 25%;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.row > .col:last-child {
+	background: #fafafa;
+}
+
+.row.dark > .col:last-child {
+	background: #303030;
+}
+
+.flex {
+	display: flex;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.authors-list {
+	color: #9d9d9d;
+	font-weight: bold;
+}
+
+.dark .authors-list {
+	color: #fafafa;
+}
+
+.ratings-list {
+	padding: 10px 0;
+}
+
+.avg-rating {
+	color: #6b6b6b;
+}
+
+.dark .avg-rating {
+	color: #fafafa;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-space-between {
+	justify-content: space-between;
+}
+
+.stars {
+	color: gold;
+}
+
+.location {
+	color: salmon;
+	margin-right: 5px;
+}
+
+.meetup-location {
+	margin: 4px 0;
+}
+
+.book-title {
+	white-space: normal;
+	margin-top: 4px;
+}
+
+.book-title-card {
+	white-space: normal;
+	margin-top: 4px;
+	max-height: 45px;
+}
+
+.book-image {
+	height: 150px;
+	width: 110px;
+	background-size: cover;
+}
+
+.book-header {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.book-content {
+	background: white;
+	margin: 10px 0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.meetup-title {
+	white-space: normal;
+}
+
+.meetup-topics {
+	height: 35px;
+	overflow: hidden;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.meetup-topic {
+	background-color: #dedede;
+	color: #555;
+	padding: 5px 10px;
+	margin: 5px;
+	border-radius: 4px;
+}
+
+.meetup-topic:first-child {
+	margin-left: 0;
+}
+
+.col .meetup-list-image {
+	background-size: cover;
+}
+.ml20 {
+	margin-left: 20px;
+}

@@ -31,7 +31,7 @@ const ReactiveBase = {
 		credentials: types.string,
 		headers: types.headers,
 		queryParams: types.string,
-		theme: VueTypes.object.def({}),
+		theme: VueTypes.oneOf([VueTypes.bool, VueTypes.object.def({})]),
 		themePreset: VueTypes.string.def('light'),
 		type: types.string,
 		url: types.string,
@@ -48,6 +48,7 @@ const ReactiveBase = {
 		mongodb: types.mongodb,
 		endpoint: types.endpointConfig,
 		preferences: VueTypes.object,
+		httpRequestTimeout: VueTypes.number.def(30),
 	},
 	provide() {
 		let createCacheFn = createCache;
@@ -94,6 +95,9 @@ const ReactiveBase = {
 		mongodb() {
 			this.updateState(this.$props);
 		},
+		httpRequestTimeout() {
+			this.updateState(this.$props);
+		},
 	},
 	computed: {
 		getHeaders() {
@@ -105,10 +109,10 @@ const ReactiveBase = {
 					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 				}),
 				...headers,
-				...(endpoint
-					&& endpoint.headers && {
-					...endpoint.headers,
-				}),
+				...(endpoint &&
+					endpoint.headers && {
+						...endpoint.headers,
+					}),
 			};
 		},
 	},
@@ -118,8 +122,8 @@ const ReactiveBase = {
 			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
-			const credentials
-				= props.url && props.url.trim() !== '' && !props.credentials
+			const credentials =
+				props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
 			let url = props.url && props.url.trim() !== '' ? props.url : '';
@@ -147,6 +151,7 @@ const ReactiveBase = {
 				analyticsConfig: props.reactivesearchAPIConfig,
 				mongodb: props.mongodb,
 				endpoint: props.endpoint,
+				httpRequestTimeout: (props.httpRequestTimeout || 0) * 1000 || 30000,
 			};
 			let queryParams = '';
 
@@ -203,8 +208,8 @@ const ReactiveBase = {
 				// When endpoint prop is used index is not defined, so we use _default
 				index: appbaseRef.app || '_default',
 				globalCustomEvents:
-					this.$props.reactivesearchAPIConfig
-					&& this.$props.reactivesearchAPIConfig.customEvents,
+					this.$props.reactivesearchAPIConfig &&
+					this.$props.reactivesearchAPIConfig.customEvents,
 			};
 
 			try {
@@ -214,13 +219,13 @@ const ReactiveBase = {
 						/\/\/(.*?)\/.*/,
 						'//$1',
 					);
-					const headerCredentials
-						= this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
-					analyticsInitConfig.credentials
-						= headerCredentials && headerCredentials.replace('Basic ', '');
+					const headerCredentials =
+						this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
+					analyticsInitConfig.credentials =
+						headerCredentials && headerCredentials.replace('Basic ', '');
 					// Decode the credentials
-					analyticsInitConfig.credentials
-						= analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
+					analyticsInitConfig.credentials =
+						analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 				}
 			} catch (e) {
 				console.error('Endpoint not set correctly for analytics');
@@ -275,6 +280,7 @@ const ReactiveBase = {
 					className={className}
 					getSearchParams={this.getSearchParams}
 					setSearchParams={this.setSearchParams}
+					userThemeProp={this.$props.theme}
 				>
 					{children()}
 				</URLParamsProvider>

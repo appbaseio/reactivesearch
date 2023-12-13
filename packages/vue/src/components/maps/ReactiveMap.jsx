@@ -99,6 +99,7 @@ const ReactiveMap = {
 	props: {
 		className: types.string,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		dataField: types.stringRequired,
 		react: types.react,
 		size: types.number,

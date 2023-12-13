@@ -24,7 +24,7 @@ const MOCK_AGGREGATIONS_DATA = {
 it('should render', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -42,7 +42,7 @@ it('should render', () => {
 it('should render with title', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -61,7 +61,7 @@ it('should render with title', () => {
 it('should render with renderItem', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -81,7 +81,7 @@ it('should render with renderItem', () => {
 it('should render with showCount', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -104,7 +104,7 @@ it('should render with showCount', () => {
 it('should render with displayAsVertical', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -128,7 +128,7 @@ it('should render with displayAsVertical', () => {
 it('should render with showSearch', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -152,7 +152,7 @@ it('should render with showSearch', () => {
 it('should render with showRadio', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -176,7 +176,7 @@ it('should render with showRadio', () => {
 it('should render with showRadio and displayAsVertical', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -201,7 +201,7 @@ it('should render with showRadio and displayAsVertical', () => {
 it('should render with showRadio, showSearch and displayAsVertical', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"
@@ -226,7 +226,7 @@ it('should render with showRadio, showSearch and displayAsVertical', () => {
 it('should render with showRadio and showSearch', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<TabDataList
 					mode="test"
 					componentId="authors"

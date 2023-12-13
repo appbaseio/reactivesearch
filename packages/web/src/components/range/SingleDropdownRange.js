@@ -169,6 +169,7 @@ SingleDropdownRange.propTypes = {
 	beforeValueChange: types.func,
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	customQuery: types.func,
 	data: types.data,
 	dataField: types.stringRequired,

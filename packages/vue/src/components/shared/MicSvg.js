@@ -1,18 +1,4 @@
-import { createGlobalStyle } from '@appbaseio/vue-emotion';
-
-// eslint-disable-next-line
-createGlobalStyle`
-	#el_TvxDfTAtKp {
-		stroke: none;
-		stroke-width: 1;
-		fill: none;
-	}
-	#el_D93PK3GbmJ {
-		-webkit-transform: translate(163px, 131px);
-		transform: translate(163px, 131px);
-		fill: #d8d8d8;
-	}
-`;
+import './MicSvg.css'
 
 const MicSvg = {
 	name: 'MicSvg',

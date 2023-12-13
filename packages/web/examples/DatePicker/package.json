@@ -3,11 +3,11 @@
 	"description": "DatePicker example for ReactiveSearch",
 	"version": "0.1.0",
 	"dependencies": {
-		"@appbaseio/reactivesearch": "4.0.0-rc.3",
-		"moment": "^2.29.4",
+		"@appbaseio/reactivesearch": "4.2.2",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.4.0",
 		"@testing-library/user-event": "^13.5.0",
+		"moment": "^2.29.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-scripts": "5.0.1",

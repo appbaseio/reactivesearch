@@ -50,20 +50,6 @@ export const isIdentical = (a, b) => {
 };
 export const getValidPropsKeys = (props = {}) =>
 	Object.keys(props).filter(i => validProps.includes(i));
-/**
- * Handles the caret position for input components
- * @param {HTMLInputElement} e
- */
-export const handleCaretPosition = (e) => {
-	if (window) {
-		const caret = e.target.selectionStart;
-		const element = e.target;
-		window.requestAnimationFrame(() => {
-			element.selectionStart = caret;
-			element.selectionEnd = caret;
-		});
-	}
-};
 // elastic search query for including null values
 export const getNullValuesQuery = fieldName => ({
 	bool: {

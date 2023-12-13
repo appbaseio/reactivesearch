@@ -1,8 +1,9 @@
+import { hexToRGBA } from '@appbaseio/reactivecore/lib/utils/helper';
 import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { darken, lighten, rgba } from 'polished';
 
-const filters = ({ colors: { borderColor } }) => css`
+const Filter = () => css`
 	margin: 0 -3px;
 	max-width: 100%;
 
@@ -11,34 +12,41 @@ const filters = ({ colors: { borderColor } }) => css`
 		padding: 5px 8px;
 		font-size: 0.85rem;
 		position: relative;
-
-		span:first-of-type {
-			max-width: 260px;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			margin-right: 26px;
-		}
-
-		span:last-of-type {
-			display: flex;
-			height: 100%;
-			top: 0;
-			right: 8px;
-			position: absolute;
-			align-items: center;
-			border-left: 1px solid ${borderColor || '#fff'};
-			padding-left: 8px;
-			margin-left: 8px;
-		}
-
-		&:hover,
-		&:focus {
-			span:first-of-type {
-				text-decoration: line-through;
-			}
-		}
 	}
+`;
+
+Filter.Value = styled.span`
+	max-width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	width: max-content;
+
+	&:hover,
+	&:focus {
+		text-decoration: line-through;
+	}
+`;
+
+
+Filter.ImageValue = styled(Filter.Value)`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 0.25rem;
+`;
+
+Filter.CloseIcon = styled.span`
+	display: flex;
+	height: 100%;
+	top: 0;
+	right: 8px;
+	align-items: center;
+	border-left: 1px solid ${props => props.theme.colors.textColor || '#000'};
+	padding-left: 8px;
+	margin-left: 8px;
 `;
 
 const pagination = css`
@@ -84,6 +92,16 @@ const primary = ({ theme }) => css`
 	&:hover,
 	&:focus {
 		background-color: ${darken(0.1, theme.colors.primaryColor)};
+	}
+`;
+
+const info = ({ theme }) => css`
+	border: 1px solid ${theme.colors.primaryColor};
+	color: ${theme.colors.primaryColor};
+	background-color: ${theme.colors.primaryTextColor};
+	&:hover,
+	&:focus {
+		background-color: ${darken(0.1, hexToRGBA(theme.colors.primaryTextColor))};
 	}
 `;
 
@@ -135,8 +153,9 @@ const Button = styled('a')`
 		box-shadow: ${({ theme }) => `0 0 0 2px ${rgba(theme.colors.primaryColor, 0.3)}`};
 	}
 
-	${props => (props.primary ? primary : null)};
 	${props => (props.disabled ? disabled : null)};
+	${props => (props.primary ? primary : null)};
+	${props => (props.info ? info : null)};
 	${props => props.large && large};
 
 	&.enter-btn {
@@ -164,5 +183,5 @@ const Button = styled('a')`
 		`};
 `;
 
-export { pagination, filters, toggleButtons, numberBoxContainer, loadMoreContainer };
+export { pagination, Filter, toggleButtons, numberBoxContainer, loadMoreContainer };
 export default Button;

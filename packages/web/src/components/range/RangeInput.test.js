@@ -413,7 +413,7 @@ const HISTOGRAM_DATA = {
 it('should render range with slider', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
@@ -436,7 +436,7 @@ it('should render range with slider', () => {
 it('should not render slider when ShowSlider is false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
@@ -460,7 +460,7 @@ it('should not render slider when ShowSlider is false', () => {
 it('should render histogram when showHistogram is set to true', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
@@ -485,7 +485,7 @@ it('should render histogram when showHistogram is set to true', () => {
 it('should not render histogram when showHistogram is set to false', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
@@ -510,7 +510,7 @@ it('should not render histogram when showHistogram is set to false', () => {
 it('should render title', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
@@ -530,7 +530,7 @@ it('should render title', () => {
 it('should render range labels', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"
@@ -553,7 +553,7 @@ it('should render range labels', () => {
 it('should select default value', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<RangeInput
 					mode="test"
 					componentId="range-input-test"

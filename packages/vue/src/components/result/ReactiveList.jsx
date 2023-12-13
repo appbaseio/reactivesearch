@@ -105,6 +105,7 @@ const ReactiveList = {
 		// component props
 		className: types.string,
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		dataField: types.stringRequired,
 		aggregationField: types.string,
 		aggregationSize: VueTypes.number,
@@ -315,6 +316,11 @@ const ReactiveList = {
 		defaultPage(newVal, oldVal) {
 			if (this.currentPageState !== newVal && oldVal !== newVal) {
 				this.setPage(newVal >= 0 ? newVal : 0);
+			}
+		},
+		isLoading(newVal, oldVal) {
+			if (newVal !== oldVal) {
+				this.$emit('loading', newVal);
 			}
 		},
 	},

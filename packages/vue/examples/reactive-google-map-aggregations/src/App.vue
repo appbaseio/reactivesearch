@@ -1,67 +1,67 @@
 <template>
-	<div id="app">
-		<reactive-base
-			app="earthquakes"
-			url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
-		>
-			<div class="row">
-				<div class="col">
-					<single-list
-						title="Places"
-						component-id="places"
-						data-field="place.keyword"
-						:size="50"
-						show-search
-					/>
-				</div>
+  <div id="app">
+    <reactive-base
+      app="earthquakes"
+      url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+    >
+      <div class="row">
+        <div class="col">
+          <single-list
+            :size="50"
+            title="Places"
+            component-id="places"
+            data-field="place.keyword"
+            show-search
+          />
+        </div>
 
-				<div class="col">
-					<selected-filters />
-					<reactive-google-map
-						component-id="map"
-						data-field="location"
-						:size="50"
-						:style="{ height: '90vh', minWidth: '300px' }"
-						:react="{ and: 'places' }"
-						:default-zoom="3"
-						:show-marker-clusters="true"
-						:default-query="defaultQuery"
-						:calculate-markers="handleCalculateMarkers"
-						@zoom-changed="handleZoomChange"
-						:auto-close-popover="true"
-					>
-						<template
-							#renderItem="{ doc_count }"
-							:style="{
-								background: 'dodgerblue',
-								color: '#fff',
-								paddingLeft: '5px',
-								paddingRight: '5px',
-								borderRadius: '3px',
-								padding: '10px',
-							}"
-						>
-							<i class="fas fa-globe-europe" />
-							&nbsp;{{ doc_count }}
-						</template>
-						<template #renderPopover="{ doc_count }">
-							{{ doc_count }}
-						</template>
-					</reactive-google-map>
-				</div>
-			</div>
-		</reactive-base>
-	</div>
+        <div class="col">
+          <selected-filters />
+          <reactive-google-map
+            :size="50"
+            :style="{ height: '90vh', minWidth: '300px' }"
+            :react="{ and: 'places' }"
+            :default-zoom="3"
+            :show-marker-clusters="true"
+            :default-query="defaultQuery"
+            :calculate-markers="handleCalculateMarkers"
+            :auto-close-popover="true"
+            component-id="map"
+            data-field="location"
+            @zoom-changed="handleZoomChange"
+          >
+            <template
+              :style="{
+                background: 'dodgerblue',
+                color: '#fff',
+                paddingLeft: '5px',
+                paddingRight: '5px',
+                borderRadius: '3px',
+                padding: '10px',
+              }"
+              #renderItem="{ doc_count }"
+            >
+              <i class="fas fa-globe-europe" />
+              &nbsp;{{ doc_count }}
+            </template>
+            <template #renderPopover="{ doc_count }">
+              {{ doc_count }}
+            </template>
+          </reactive-google-map>
+        </div>
+      </div>
+    </reactive-base>
+  </div>
 </template>
 <script>
 import './styles.css';
 
 export default {
-	name: 'app',
+	name: 'App',
 	methods: {
 		handleCalculateMarkers({ rawData }) {
 			const markers = rawData && rawData.aggregations && rawData.aggregations.results.buckets.map(bucket => ({
-			...bucket,
+				...bucket,
 				_id: bucket.key,
 				location: bucket.cetroid.location
 			}))
@@ -88,7 +88,7 @@ export default {
 			};
 		},
 		handleZoomChange(zoom) {
-			console.log("Current Zoom", zoom)
+			console.log('Current Zoom', zoom)
 		}
 	},
 };

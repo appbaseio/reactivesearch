@@ -919,6 +919,7 @@ ReactiveList.propTypes = {
 	// component props
 	className: types.string,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	children: types.func,
 	dataField: types.stringRequired,
 	aggregationField: types.string,

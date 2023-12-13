@@ -17,6 +17,7 @@ const URLParamsProvider = {
 		getSearchParams: types.func,
 		setSearchParams: types.func,
 		as: VueTypes.string.def('div'),
+		userThemeProp: VueTypes.oneOf([VueTypes.bool, VueTypes.object.def({})]),
 	},
 	mounted() {
 		this.init();
@@ -60,7 +61,6 @@ const URLParamsProvider = {
 					);
 				} catch (e) {
 					// Do not set value if JSON parsing fails.
-					console.error(e);
 				}
 			});
 		};
@@ -238,7 +238,11 @@ const URLParamsProvider = {
 	render() {
 		const children = this.$slots.default();
 		return (
-			<Base as={this.$props.as} class={this.$props.className}>
+			<Base
+				as={this.$props.as}
+				class={this.$props.className}
+				userThemeProp={this.$props.userThemeProp}
+			>
 				{children}
 			</Base>
 		);

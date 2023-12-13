@@ -50,6 +50,7 @@ const MultiDropdownList = {
 		beforeValueChange: types.func,
 		className: VueTypes.string.def(''),
 		componentId: types.stringRequired,
+		compoundClause: types.compoundClause,
 		customQuery: types.func,
 		dataField: types.stringRequired,
 		defaultValue: types.stringArray,

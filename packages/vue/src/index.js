@@ -6,6 +6,7 @@ import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import ReactiveList from './components/result/ReactiveList.jsx';
 import ReactiveBase from './components/ReactiveBase/index.jsx';
 import SearchBox from './components/search/SearchBox.jsx';
+import AIAnswer from './components/search/AIAnswer.jsx';
 import SingleList from './components/list/SingleList.jsx';
 import MultiList from './components/list/MultiList.jsx';
 import TreeList from './components/list/TreeList/index.jsx';
@@ -40,6 +41,7 @@ export {
 	ResultList,
 	ReactiveBase,
 	SearchBox,
+	AIAnswer,
 	SingleList,
 	MultiList,
 	TreeList,

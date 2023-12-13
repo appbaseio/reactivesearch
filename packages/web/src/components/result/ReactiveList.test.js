@@ -214,7 +214,7 @@ const BooksCard = data => (
 it('should render items in a list layout', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -234,7 +234,7 @@ it('should render items in a list layout', () => {
 it('should render items in a card layout', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -261,7 +261,7 @@ it('should render items in a card layout', () => {
 it('should render no results message', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -282,7 +282,7 @@ it('should render no results message', () => {
 it('should render pagination when pagination is set to true', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -304,7 +304,7 @@ it('should render pagination when pagination is set to true', () => {
 it('should render pagination at top', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -327,7 +327,7 @@ it('should render pagination at top', () => {
 it('should render pagination at bottom', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -350,7 +350,7 @@ it('should render pagination at bottom', () => {
 it('should render pagination at both', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -373,7 +373,7 @@ it('should render pagination at both', () => {
 it('should render item as defined in renderItem', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -393,7 +393,7 @@ it('should render item as defined in renderItem', () => {
 it('should display result stats when showResultStats is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -414,7 +414,7 @@ it('should display result stats when showResultStats is set', () => {
 it('should hide result stats when showResultStats is set', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -435,7 +435,7 @@ it('should hide result stats when showResultStats is set', () => {
 it('should render custom result stats message', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -468,7 +468,7 @@ it('should render custom result stats message', () => {
 it('should render data export buttons', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"
@@ -489,7 +489,7 @@ it('should render data export buttons', () => {
 it('should custom render data export buttons', () => {
 	const elem = renderer
 		.create(
-			<ReactiveBase app="test" url="https://foo:bar@localhost:800">
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
 				<ReactiveList
 					mode="test"
 					componentId="MockSearchResult"

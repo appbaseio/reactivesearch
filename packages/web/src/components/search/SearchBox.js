@@ -1,13 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-
 import {
+	AI_LOCAL_CACHE_KEY,
+	AI_TRIGGER_MODES,
 	componentTypes,
 	SEARCH_COMPONENTS_MODES,
 } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-
+import { Remarkable } from 'remarkable';
 import { withTheme } from 'emotion-theming';
 import { oneOf, oneOfType } from 'prop-types';
 import causes from '@appbaseio/reactivecore/lib/utils/causes';
@@ -25,10 +26,11 @@ import {
 	suggestionTypes,
 	featuredSuggestionsActionTypes,
 	isEqual,
+	getObjectFromLocalStorage,
 } from '@appbaseio/reactivecore/lib/utils/helper';
 import Downshift from 'downshift';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import {
 	updateQuery,
@@ -36,8 +38,10 @@ import {
 	setCustomQuery,
 	setDefaultQuery,
 } from '@appbaseio/reactivecore/lib/actions';
+import { removeAIResponse } from '@appbaseio/reactivecore/lib/actions/misc';
 import hotkeys from 'hotkeys-js';
 import XSS from 'xss';
+import { recordAISessionUsefulness } from '@appbaseio/reactivecore/lib/actions/analytics';
 import PreferencesConsumer from '../basic/PreferencesConsumer';
 import ComponentWrapper from '../basic/ComponentWrapper';
 import InputGroup from '../../styles/InputGroup';
@@ -49,14 +53,13 @@ import SearchSvg from '../shared/SearchSvg';
 import { TagItem, TagsContainer } from '../../styles/Tags';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import Input, { searchboxSuggestions, suggestionsContainer } from '../../styles/Input';
+import { Actions as ActionContainer, searchboxSuggestions, Suggestion, SuggestionDescription, suggestionsContainer, TextArea } from '../../styles/Input';
 import Button from '../../styles/Button';
 import SuggestionItem from './addons/SuggestionItem';
 import {
 	connect,
 	decodeHtml,
 	extractModifierKeysFromFocusShortcuts,
-	handleCaretPosition,
 	isEmpty,
 	parseFocusShortcuts,
 } from '../../utils';
@@ -65,19 +68,47 @@ import CancelSvg from '../shared/CancelSvg';
 import CustomSvg from '../shared/CustomSvg';
 import SuggestionWrapper from './addons/SuggestionWrapper';
 import AutofillSvg from '../shared/AutofillSvg';
-import Flex from '../../styles/Flex';
 import AutosuggestFooterContainer from '../../styles/AutoSuggestFooterContainer';
+import HOOKS from '../../utils/hooks';
+import { Answer, Footer, SearchBoxAISection, SourceTags } from '../../styles/SearchBoxAI';
+import TypingEffect from '../shared/TypingEffect';
+import HorizontalSkeletonLoader from '../shared/HorizontalSkeletonLoader';
+import AIFeedback from '../shared/AIFeedback';
+import { ImageDropdown } from './addons/ImageDropdown';
+import { innerText } from '../shared/innerText';
+import TextWithTooltip from './addons/TextWithTooltip';
+import { Thumbnail, CameraIcon } from './addons/CameraIcon';
+import { FallbackRender } from './addons/FallbackRender';
 
-const useConstructor = (callBack = () => {}) => {
-	const [hasBeenCalled, setHasBeenCalled] = useState(false);
-	if (hasBeenCalled) return;
-	callBack();
-	setHasBeenCalled(true);
-};
+const md = new Remarkable();
+
+md.set({
+	html: true,
+	breaks: true,
+	xhtmlOut: true,
+	linkify: true,
+	linkTarget: '_blank',
+});
+
+const { useConstructor } = HOOKS;
+
+/**
+ * inputValue:
+ * The value which is passed to the html input box.
+ * The onChange handler(event listener on input box) should directly update inputValue.
+ *
+ * For uncontrolled components, we maintain the input value(useState - currentValue).
+ * Hence, onChange should call setValue to update currentValue directly.
+ *
+ * For controlled components, we get the input value(props.value).
+ * Hence, onChange should call props.onChange,
+ * which then updates currentValue by calling setValue in useEffect.
+ */
 
 const SearchBox = (props) => {
 	const {
 		selectedValue,
+		selectedImageValue,
 		selectedCategory,
 		value,
 		defaultValue,
@@ -97,7 +128,23 @@ const SearchBox = (props) => {
 		customEvents,
 		showSuggestionsFooter,
 		renderSuggestionsFooter,
+		isAITyping,
 	} = props;
+
+	const currentTriggerMode
+		= (props.AIUIConfig && props.AIUIConfig.triggerOn) || AI_TRIGGER_MODES.MANUAL;
+	let renderTriggerMessage
+		= props.enableAI && props.AIUIConfig && props.AIUIConfig.renderTriggerMessage
+			? props.AIUIConfig.renderTriggerMessage
+			: null;
+	if (
+		props.enableAI
+		&& !renderTriggerMessage
+		&& currentTriggerMode === AI_TRIGGER_MODES.MANUAL
+		&& (props.AIUIConfig ? !props.AIUIConfig.askButton : true)
+	) {
+		renderTriggerMessage = 'Click to trigger AIAnswer';
+	}
 
 	const internalComponent = getInternalComponentID(componentId);
 	const [currentValue, setCurrentValue] = useState('');
@@ -105,14 +152,66 @@ const SearchBox = (props) => {
 	let [selectedTags, setSelectedTags] = useState([]);
 	const [isOpen, setIsOpen] = useState(props.isOpen);
 	const _inputRef = useRef(null);
+	const _inputGroupRef = useRef(null);
+	const _dropdownULRef = useRef(null);
 	const isTagsMode = useRef(false);
+	const prevPropsRefIsAITyping = useRef(undefined);
+	const dragTimerId = useRef(null);
+
 	const stats = () => getResultStats(props);
+
+	const [showAIScreen, setShowAIScreen] = useState(false);
+	const [faqAnswer, setFAQAnswer] = useState('');
+	const [faqQuestion, setFAQQuestion] = useState('');
+	const [showAIScreenFooter, setShowAIScreenFooter] = useState(false);
+	const [showTypingEffect, setShowTypingEffect] = useState(true);
+	const [showFeedbackComponent, setShowFeedbackComponent] = useState(false);
+	const [feedbackState, setFeedbackState] = useState(null);
+	const [initialHits, setInitialHits] = useState(null);
+	const [sourceDocIds, setSourceDocIds] = useState(null);
+	const [isUserScrolling, setIsUserScrolling] = useState(false);
+	const [lastScrollTop, setLastScrollTop] = useState(0);
+	const [showImageDropdown, setShowImageDropdown] = useState(false);
+	const [currentImageValue, setCurrentImageValue] = useState('');
+
+	const mergedAIAnswer
+		= faqAnswer
+		|| (props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& props.AIResponse.response.answer.text);
+	const mergedAIQuestion
+		= faqQuestion
+		|| (props.AIResponse && props.AIResponse.response && props.AIResponse.response.question);
 
 	const parsedSuggestions = () => {
 		let suggestionsArray = [];
 		if (Array.isArray(props.suggestions) && props.suggestions.length) {
 			suggestionsArray = [...withClickIds(props.suggestions)];
 		}
+		if (renderTriggerMessage && currentValue) {
+			suggestionsArray.unshift({
+				label: renderTriggerMessage,
+				value: renderTriggerMessage,
+				_suggestion_type: '_internal_a_i_trigger',
+			});
+		}
+
+		suggestionsArray = suggestionsArray.map((suggestion) => {
+			if (suggestion._suggestion_type === suggestionTypes.Document) {
+				// Document suggestions don't have a meaningful label and value
+				const newSuggestion = { ...suggestion };
+				newSuggestion.label = 'For document suggestions, please implement a renderItem method to display label.';
+				// If renderItem is provided we can get the value from it's content
+				if (typeof props.renderItem === 'function') {
+					const jsxEl = props.renderItem(newSuggestion);
+					const innerValue = innerText(jsxEl);
+					newSuggestion.value = XSS(innerValue);
+				}
+				return newSuggestion;
+			}
+			return suggestion;
+		});
 
 		const sectionsAccumulated = [];
 		const sectionisedSuggestions = suggestionsArray.reduce((acc, d, currentIndex) => {
@@ -127,6 +226,27 @@ const SearchBox = (props) => {
 		}, {});
 		return Object.values(sectionisedSuggestions);
 	};
+
+	const handleShowImageDropdown = (e, nextState) => {
+		// Image dropdown calls onOutsideClick if below is not stopped
+		// which changes the state again and hides the dropdown
+		e.stopPropagation();
+		if (nextState) {
+			setIsOpen(false);
+			setShowImageDropdown(true);
+		} else {
+			setShowImageDropdown(false);
+		}
+	};
+	const handleSuggestionOpen = (nextState) => {
+		if (nextState) {
+			setIsOpen(true);
+			setShowImageDropdown(false);
+		} else {
+			setIsOpen(false);
+		}
+	};
+
 	const focusSearchBox = (event) => {
 		const elt = event.target || event.srcElement;
 		const tagName = elt.tagName;
@@ -197,8 +317,9 @@ const SearchBox = (props) => {
 			searchOperators: props.searchOperators,
 		},
 	});
+
 	// fires query to fetch suggestion
-	const triggerDefaultQuery = (paramValue) => {
+	const triggerDefaultQuery = (paramValue, meta = {}, shouldExecuteQuery = true) => {
 		if (!props.autosuggest) {
 			return;
 		}
@@ -212,16 +333,25 @@ const SearchBox = (props) => {
 			// Update calculated default query in store
 			updateDefaultQuery(componentId, props, value);
 		}
-		props.updateQuery({
-			componentId: internalComponent,
-			query,
-			value,
-			componentType: componentTypes.searchBox,
-		});
+		props.updateQuery(
+			{
+				componentId: internalComponent,
+				query,
+				value,
+				componentType: componentTypes.searchBox,
+				meta,
+			},
+			shouldExecuteQuery,
+		);
 	};
 
 	// fires query to fetch results(dependent components are affected here)
-	const triggerCustomQuery = (paramValue, categoryValue = undefined) => {
+	const triggerCustomQuery = (
+		paramValue,
+		categoryValue = undefined,
+		shouldExecuteQuery = true,
+		meta = {},
+	) => {
 		let value = typeof paramValue !== 'string' ? currentValue : paramValue;
 		if (isTagsMode.current) {
 			value = paramValue;
@@ -238,34 +368,42 @@ const SearchBox = (props) => {
 			}
 			updateCustomQuery(componentId, props, value);
 		}
-		props.updateQuery({
-			componentId,
-			value,
-			query,
-			label: filterLabel,
-			showFilter,
-			URLParams,
-			componentType: componentTypes.searchBox,
-			...(!isTagsMode.current ? { category: categoryValue } : {}),
-		});
+		props.updateQuery(
+			{
+				componentId,
+				value,
+				query,
+				label: filterLabel,
+				showFilter,
+				URLParams,
+				componentType: componentTypes.searchBox,
+				meta,
+				...(!isTagsMode.current ? { category: categoryValue } : {}),
+			},
+			shouldExecuteQuery,
+		);
 	};
 
-	const triggerQuery = ({
-		isOpen = undefined,
-		customQuery = false,
-		defaultQuery = false,
-		value = undefined,
-		categoryValue = undefined,
-	} = {}) => {
+	const triggerQuery = (
+		{
+			isOpen = undefined,
+			customQuery = false,
+			defaultQuery = false,
+			value = undefined,
+			categoryValue = undefined,
+			meta = {},
+		} = {},
+		shouldExecuteQuery = true,
+	) => {
 		if (typeof isOpen === 'boolean') {
-			setIsOpen(isOpen);
+			handleSuggestionOpen(isOpen);
 		}
 
 		if (customQuery) {
-			triggerCustomQuery(value, categoryValue);
+			triggerCustomQuery(value, categoryValue, shouldExecuteQuery, meta);
 		}
 		if (defaultQuery) {
-			triggerDefaultQuery(value);
+			triggerDefaultQuery(value, meta, shouldExecuteQuery);
 		}
 	};
 
@@ -276,7 +414,7 @@ const SearchBox = (props) => {
 		}
 	};
 	const handleTextChange = useRef(
-		debounce((valueParam = undefined, cause = undefined) => {
+		debounce((valueParam = undefined, cause = undefined, meta) => {
 			const { enterButton } = props;
 			if (cause === causes.CLEAR_VALUE) {
 				triggerCustomQuery(valueParam);
@@ -284,11 +422,12 @@ const SearchBox = (props) => {
 			} else if (props.autosuggest) {
 				triggerDefaultQuery(valueParam);
 			} else if (value === undefined && !onChange && !enterButton) {
-				triggerCustomQuery(valueParam);
+				triggerCustomQuery(valueParam, undefined, true, meta);
 			}
 		}, props.debounce),
 	);
 
+	// Make a search query when value is changed
 	const setValue = (
 		value,
 		isDefaultValue = false,
@@ -297,26 +436,34 @@ const SearchBox = (props) => {
 		hasMounted = true,
 		toggleIsOpen = true,
 		categoryValue = undefined,
+		shouldExecuteQuery = true,
+		meta = {},
 	) => {
 		const performUpdate = () => {
+			// It may happen that imageValue is passed as an empty string to clear the input
+			const imageValue = meta && meta.imageValue !== undefined
+				? meta.imageValue : currentImageValue;
 			if (isTagsMode.current && isEqual(value, selectedTags)) {
 				return;
 			}
 			let newSelectedTags = [];
+			if (cause !== causes.CLEAR_ALL_TAGS) {
+				newSelectedTags = selectedTags;
+			}
 			let newCurrentValue = decodeHtml(value);
 			if (hasMounted) {
 				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
 					if (Array.isArray(selectedTags) && selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && selectedTags.includes(value)) {
-							setIsOpen(false);
+							handleSuggestionOpen(false);
 							return;
 						}
 
 						if (typeof value === 'string' && !!value) {
-							newSelectedTags = [...selectedTags, value];
+							newSelectedTags = [...newSelectedTags, value];
 						} else if (Array.isArray(value) && !isEqual(selectedTags, value)) {
-							const mergedArray = Array.from(new Set([...selectedTags, ...value]));
+							const mergedArray = Array.from(new Set([...newSelectedTags, ...value]));
 							newSelectedTags = mergedArray;
 						}
 					} else if (value) {
@@ -328,8 +475,9 @@ const SearchBox = (props) => {
 					newCurrentValue = decodeHtml(value);
 				}
 
-				if (toggleIsOpen) setIsOpen(!isOpen);
+				if (toggleIsOpen) handleSuggestionOpen(!isOpen);
 				setCurrentValue(newCurrentValue);
+				setCurrentImageValue(imageValue);
 
 				let queryHandlerValue = value;
 				if (isTagsMode.current && cause === causes.SUGGESTION_SELECT) {
@@ -339,15 +487,38 @@ const SearchBox = (props) => {
 							: undefined;
 				}
 
+				if ((faqAnswer || faqQuestion) && value === '') {
+					// Reset state for FAQ answer.
+					// If an FAQ suggestion is selected,
+					// they can set below values after the setValue call.
+					setFAQAnswer('');
+					setFAQQuestion('');
+					setShowAIScreen(false);
+				}
+				if (value === '') {
+					setShowAIScreen(false);
+					props.removeAIResponse(componentId);
+				}
 				if (isDefaultValue) {
 					if (props.autosuggest) {
-						triggerQuery({
-							...(toggleIsOpen && { isOpen: !isOpen }),
-							defaultQuery: false,
-							value,
-						});
+						triggerQuery(
+							{
+								...(toggleIsOpen && { isOpen: !isOpen }),
+								defaultQuery: false,
+								value,
+							},
+							shouldExecuteQuery,
+						);
 
-						triggerDefaultQuery(newCurrentValue);
+						triggerDefaultQuery(
+							newCurrentValue,
+							props.enableAI
+								&& currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+								&& newCurrentValue.endsWith('?')
+								? { enableAI: true }
+								: { imageValue },
+							shouldExecuteQuery,
+						);
 					}
 					// in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
@@ -359,6 +530,13 @@ const SearchBox = (props) => {
 							triggerCustomQuery(
 								queryHandlerValue,
 								isTagsMode.current ? undefined : categoryValue,
+								shouldExecuteQuery,
+								{
+									...meta,
+									// vectorDataField is passed by the user of SearchBox
+									// currentImageValue is stored by the SearchBox component
+									imageValue,
+								},
 							);
 						} else {
 							setValue('', true);
@@ -373,20 +551,30 @@ const SearchBox = (props) => {
 						triggerCustomQuery(
 							queryHandlerValue,
 							isTagsMode.current ? undefined : categoryValue,
+							shouldExecuteQuery,
+							{
+								...meta,
+								// vectorDataField is passed by the user of SearchBox
+								// currentImageValue is stored by the SearchBox component
+								imageValue,
+							},
 						);
 					}
 				} else {
 					// debounce for handling text while typing
-					handleTextChange.current(value, cause);
+					handleTextChange.current(value, cause, { ...meta, imageValue });
 				}
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			} else {
-				triggerQuery({
-					defaultQuery: props.autosuggest,
-					customQuery: true,
-					value,
-					categoryValue: isTagsMode.current ? undefined : categoryValue,
-				});
+				triggerQuery(
+					{
+						defaultQuery: props.autosuggest,
+						customQuery: true,
+						value,
+						categoryValue: isTagsMode.current ? undefined : categoryValue,
+					},
+					shouldExecuteQuery,
+				);
 				if (setValueProps.onValueChange) setValueProps.onValueChange(value);
 			}
 		};
@@ -397,6 +585,7 @@ const SearchBox = (props) => {
 			performUpdate,
 		);
 	};
+
 	const withTriggerQuery = (func) => {
 		if (func) {
 			return e =>
@@ -441,15 +630,50 @@ const SearchBox = (props) => {
 		}
 	};
 
+	const askButtonOnClick = () => {
+		setShowAIScreen(true);
+		handleSuggestionOpen(true);
+		triggerDefaultQuery(currentValue,
+			 {
+				enableAI: true,
+				imageValue: currentImageValue || undefined,
+			},
+		);
+	};
+
 	const onSuggestionSelected = (suggestion) => {
-		setIsOpen(false);
+		const suggestionValue = suggestion.value;
+		// handle when FAQ suggestion is clicked
+		if (suggestion && suggestion._suggestion_type === suggestionTypes.FAQ) {
+			setCurrentValue(suggestion.value);
+			setFAQAnswer(suggestion._answer);
+			setFAQQuestion(suggestion.value);
+			setShowAIScreen(true);
+			if (onChange) {
+				onChange(suggestion.value, () => {});
+			}
+			if (onValueSelected) {
+				onValueSelected(suggestionValue);
+			}
+			return;
+		} else if (suggestion && suggestion._suggestion_type === '_internal_a_i_trigger') {
+			setShowAIScreen(true);
+			askButtonOnClick();
+			return;
+		}
+
+		if (!props.enableAI) handleSuggestionOpen(false);
+		else if (
+			currentTriggerMode === AI_TRIGGER_MODES.QUESTION
+			&& suggestion.value.endsWith('?')
+		) {
+			setShowAIScreen(true);
+		}
 		// handle featured suggestions click event
 		if (suggestion._suggestion_type === suggestionTypes.Featured) {
 			handleFeaturedSuggestionClicked(suggestion);
 			return;
 		}
-
-		const suggestionValue = suggestion.value;
 
 		if (value === undefined) {
 			setValue(
@@ -467,7 +691,7 @@ const SearchBox = (props) => {
 				emitValue = Array.isArray(selectedTags) ? [...selectedTags] : [];
 				if (selectedTags && selectedTags.includes(suggestionValue)) {
 					// avoid duplicates in tags array
-					setIsOpen(false);
+					handleSuggestionOpen(false);
 					return;
 				}
 				emitValue.push(suggestionValue);
@@ -481,6 +705,7 @@ const SearchBox = (props) => {
 				false,
 				suggestion._category,
 			);
+
 			onChange(emitValue, () =>
 				triggerQuery({
 					customQuery: true,
@@ -497,18 +722,36 @@ const SearchBox = (props) => {
 		// uncontrolled component behavior
 		onValueSelected(suggestionValue, causes.SUGGESTION_SELECT, suggestion);
 	};
-
-	const onInputChange = (e) => {
-		const { value: inputValue } = e.target;
-		if (!isOpen && props.autosuggest) {
-			setIsOpen(true);
+	const handleTextAreaHeightChange = () => {
+		const textArea = _inputRef.current;
+		const inputGroupEle = _inputGroupRef.current;
+		if (textArea) {
+			textArea.style.height = '42px';
+			const lineHeight = parseInt(getComputedStyle(textArea).lineHeight, 10);
+			const maxHeight = lineHeight * 4; // max height for 3 lines
+			const height = Math.min(textArea.scrollHeight, maxHeight);
+			textArea.style.height = `${height}px`;
+			textArea.style.overflowY = height === maxHeight ? 'auto' : 'hidden';
+			if (inputGroupEle) {
+				inputGroupEle.style.height = `${textArea.style.height}`;
+			}
+			if (_dropdownULRef && _dropdownULRef.current) {
+				_dropdownULRef.current.style.top = `${textArea.style.height}`;
+			}
 		}
-		if (value === undefined) {
-			setValue(inputValue, false, props, undefined, true, false);
-		} else if (onChange) {
-			// handle caret position in controlled components
-			handleCaretPosition(e);
+	};
 
+	const handleInputChange = (inputValue, e) => {
+		if (!isOpen && props.autosuggest) {
+			handleSuggestionOpen(true);
+		}
+		if (showAIScreen) {
+			setShowAIScreen(false);
+		}
+		// for !controlled usage, we need to update the value directly
+		if (value === undefined) {
+			setValue(inputValue, inputValue === '', props, undefined, true, false);
+		} else if (onChange) {
 			onChange(
 				inputValue,
 				({ isOpen } = {}) => {
@@ -522,8 +765,21 @@ const SearchBox = (props) => {
 			);
 		}
 	};
-	const enterButtonOnClick = () =>
-		triggerQuery({ isOpen: false, value: currentValue, customQuery: true });
+	const onInputChange = (e) => {
+		const { value: inputValue } = e.target;
+
+		handleInputChange(inputValue, e);
+	};
+
+	const enterButtonOnClick = () => {
+		setShowAIScreen(false);
+		triggerQuery({
+			isOpen: false,
+			value: currentValue,
+			customQuery: true,
+			meta: { imageValue: currentImageValue },
+		});
+	};
 
 	const handleKeyDown = (event, highlightedIndex = null) => {
 		// if a suggestion was selected, delegate the handling
@@ -537,7 +793,23 @@ const SearchBox = (props) => {
 					true,
 					props,
 					isTagsMode.current ? causes.SUGGESTION_SELECT : causes.ENTER_PRESS,
+					true,
+					!props.enableAI,
 				);
+				if (props.enableAI) {
+					if (currentTriggerMode === AI_TRIGGER_MODES.QUESTION) {
+						if (event.target.value.endsWith('?')) {
+							setShowAIScreen(true);
+							handleSuggestionOpen(true);
+						} else {
+							setShowAIScreen(false);
+							handleSuggestionOpen(false);
+						}
+					} else {
+						setShowAIScreen(false);
+						handleSuggestionOpen(false);
+					}
+				}
 				onValueSelected(event.target.value, causes.ENTER_PRESS);
 			}
 		}
@@ -554,7 +826,7 @@ const SearchBox = (props) => {
 			props,
 			!isTagsMode.current ? causes.CLEAR_VALUE : undefined,
 			true,
-			false,
+			true,
 		);
 		if (onChange) {
 			onChange('', ({ isOpen } = {}) =>
@@ -578,7 +850,7 @@ const SearchBox = (props) => {
 		const { isOpen, type } = changes;
 		const { selectedItem } = stateAndHelpers;
 		if (type === Downshift.stateChangeTypes.mouseUp && isOpen !== undefined) {
-			setIsOpen(isOpen);
+			handleSuggestionOpen(isOpen);
 		}
 
 		// allow invoking click event repeatedly on featured suggestions
@@ -600,7 +872,7 @@ const SearchBox = (props) => {
 		}
 	};
 
-	const handleVoiceResults = ({ results }) => {
+	const onVoiceResults = ({ results }) => {
 		if (
 			results
 			&& results[0]
@@ -609,7 +881,10 @@ const SearchBox = (props) => {
 			&& results[0][0].transcript
 			&& results[0][0].transcript.trim()
 		) {
-			setValue(results[0][0].transcript.trim(), true, props, undefined, true, isOpen);
+			setValue(results[0][0].transcript.trim(), false, props, undefined, true);
+			if (_inputRef.current) {
+				_inputRef.current.focus();
+			}
 		}
 	};
 
@@ -666,10 +941,57 @@ const SearchBox = (props) => {
 		return null;
 	};
 
-	const renderError = () => {
+	const renderError = (isAIError = false) => {
 		const {
-			error, renderError, themePreset, theme, isLoading, innerClass,
+			error,
+			renderError,
+			themePreset,
+			theme,
+			isLoading,
+			innerClass,
+			AIResponseError,
+			isAIResponseLoading,
 		} = props;
+		if (isAIError) {
+			if (showAIScreen && AIResponseError && !isAIResponseLoading) {
+				if (renderError) {
+					return (
+						<div
+							className={`--ai-answer-error-container ${getClassName(
+								props.innerClass,
+								'ai-error',
+							) || ''}`}
+						>
+							{isFunction(renderError) ? renderError(AIResponseError) : renderError}
+						</div>
+					);
+				}
+				return (
+					<div
+						className={`--ai-answer-error-container ${getClassName(
+							props.innerClass,
+							'ai-error',
+						) || ''}`}
+					>
+						<div className="--default-error-element">
+							<span>
+								{AIResponseError.message
+									? AIResponseError.message
+									: 'There was an error in generating the response.'}{' '}
+								{AIResponseError.code
+									? `Code:
+							${AIResponseError.code}`
+									: ''}
+							</span>
+
+							{/* <Button primary onClick={handleRetryRequest}>
+								Try again
+							</Button> */}
+						</div>
+					</div>
+				);
+			}
+		}
 		if (error && renderError && currentValue && !isLoading) {
 			return (
 				<SuggestionWrapper
@@ -686,15 +1008,41 @@ const SearchBox = (props) => {
 	};
 	const handleFocus = (event) => {
 		if (props.autosuggest) {
-			setIsOpen(true);
+			handleSuggestionOpen(true);
 		}
 		if (props.onFocus) {
 			props.onFocus(event, triggerQuery);
 		}
 	};
 
+	const getAISourceObjects = () => {
+		const sourceObjects = [];
+		if (!props.AIResponse) return sourceObjects;
+		const docIds = sourceDocIds || [];
+		if (initialHits) {
+			docIds.forEach((id) => {
+				const foundSourceObj = initialHits.find(hit => hit._id === id) || {};
+				if (foundSourceObj) {
+					const { _source = {}, ...rest } = foundSourceObj;
+
+					sourceObjects.push({ ...rest, ..._source });
+				}
+			});
+		} else {
+			sourceObjects.push(
+				...docIds.map(id => ({
+					_id: id,
+				})),
+			);
+		}
+
+		return sourceObjects;
+	};
+
 	const getComponent = (downshiftProps = {}) => {
-		const { error, isLoading, rawData } = props;
+		const {
+			error, isLoading, rawData, AIResponse,
+		} = props;
 
 		const data = {
 			error,
@@ -705,8 +1053,22 @@ const SearchBox = (props) => {
 			triggerClickAnalytics,
 			resultStats: stats(),
 			rawData,
+			AIData: {
+				question: mergedAIQuestion,
+				answer: mergedAIAnswer,
+				documentIds:
+					(AIResponse
+						&& AIResponse.response
+						&& AIResponse.response.answer
+						&& AIResponse.response.answer.documentIds)
+					|| [],
+				showAIScreen,
+				sources: getAISourceObjects(),
+				isAILoading: props.isAIResponseLoading,
+				AIError: props.AIResponseError,
+			},
 		};
-		return getComponentUtilFunc(data, props);
+		return <div ref={_dropdownULRef}>{getComponentUtilFunc(data, props)}</div>;
 	};
 	const renderInputAddonBefore = () => {
 		const { addonBefore, expandSuggestionsContainer } = props;
@@ -759,6 +1121,32 @@ const SearchBox = (props) => {
 		return null;
 	};
 
+	const renderAskButtonElement = () => {
+		const { AIUIConfig, innerClass } = props;
+		const { askButton, renderAskButton } = AIUIConfig;
+		if (askButton) {
+			const getEnterButtonMarkup = () => {
+				if (typeof renderAskButton === 'function') {
+					return renderAskButton(askButtonOnClick);
+				}
+
+				return (
+					<Button
+						className={`enter-btn ${getClassName(innerClass, 'ask-button')}`}
+						info
+						onClick={askButtonOnClick}
+					>
+						Ask
+					</Button>
+				);
+			};
+
+			return <div className="enter-button-wrapper">{getEnterButtonMarkup()}</div>;
+		}
+
+		return null;
+	};
+
 	const renderIcon = () => {
 		if (props.showIcon) {
 			if (props.icon) {
@@ -793,7 +1181,39 @@ const SearchBox = (props) => {
 		return '/';
 	};
 
-	const renderIcons = () => {
+	const ThumbnailOrIcon = props.showImageSearch && currentImageValue ? (
+		<Thumbnail
+			src={currentImageValue}
+			title="Click to view full image"
+			onClick={e =>
+				handleShowImageDropdown(e, !showImageDropdown)}
+		/>
+	) : (
+		<CameraIcon
+			title={props.imageSearchConfig.tooltip || 'Search by image'}
+			onClick={(e) => {
+				handleShowImageDropdown(e, !showImageDropdown);
+			}}
+			icon={props.imageSearchConfig.icon}
+			iconURL={props.imageSearchConfig.iconURL}
+		/>
+	);
+	const renderLeftIcons = () => {
+		const { iconPosition, showIcon } = props;
+		return (
+			<div>
+				<IconGroup groupPosition="left">
+					{iconPosition === 'left' && showIcon && (
+
+						<IconWrapper onClick={handleSearchIconClick}>
+							{renderIcon()}
+						</IconWrapper>
+					)}
+				</IconGroup>
+			</div>
+		  );
+	};
+	const renderRightIcons = () => {
 		const {
 			showIcon,
 			showClear,
@@ -803,12 +1223,17 @@ const SearchBox = (props) => {
 			iconPosition,
 			innerClass,
 			showFocusShortcutsIcon,
+			enableAI,
 		} = props;
 		return (
 			<div>
-				<IconGroup groupPosition="right" positionType="absolute">
+				<IconGroup groupPosition="right">
 					{currentValue && showClear && (
-						<IconWrapper onClick={clearValue} showIcon={showIcon} isClearIcon>
+						<IconWrapper
+							onClick={clearValue}
+							showIcon={showIcon}
+							isClearIcon
+						>
 							{renderCancelIcon()}
 						</IconWrapper>
 					)}
@@ -821,18 +1246,17 @@ const SearchBox = (props) => {
 						<Mic
 							getInstance={getMicInstance}
 							render={renderMic}
-							onResult={handleVoiceResults}
+							onResult={onVoiceResults}
 							className={getClassName(innerClass, 'mic') || null}
 						/>
 					)}
+					{props.showImageSearch ? (
+						ThumbnailOrIcon
+					) : null}
 					{iconPosition === 'right' && (
-						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
-					)}
-				</IconGroup>
-
-				<IconGroup groupPosition="left" positionType="absolute">
-					{iconPosition === 'left' && (
-						<IconWrapper onClick={handleSearchIconClick}>{renderIcon()}</IconWrapper>
+						<IconWrapper enableAI={enableAI} onClick={handleSearchIconClick}>
+							{renderIcon()}
+						</IconWrapper>
 					)}
 				</IconGroup>
 			</div>
@@ -850,7 +1274,7 @@ const SearchBox = (props) => {
 
 	const onAutofillClick = (suggestion) => {
 		const { value } = suggestion;
-		setIsOpen(true);
+		handleSuggestionOpen(true);
 		setCurrentValue(decodeHtml(value));
 		triggerDefaultQuery(value);
 	};
@@ -909,7 +1333,7 @@ const SearchBox = (props) => {
 	const clearAllTags = () => {
 		setSelectedTags([]);
 
-		setValue('', true, props, causes.SUGGESTION_SELECT, hasMounted.current, false);
+		setValue('', true, props, causes.CLEAR_ALL_TAGS, hasMounted.current, false);
 		if (props.value !== undefined && typeof onChange === 'function') {
 			onChange([], ({ isOpen } = {}) =>
 				triggerQuery({
@@ -944,7 +1368,7 @@ const SearchBox = (props) => {
 	};
 
 	const renderTags = () => {
-		if (!Array.isArray(selectedTags)) {
+		if (!Array.isArray(selectedTags) || props.mode !== SEARCH_COMPONENTS_MODES.TAG) {
 			return null;
 		}
 		const tagsList = [...selectedTags];
@@ -980,6 +1404,82 @@ const SearchBox = (props) => {
 			</TagsContainer>
 		);
 	};
+
+	const renderAIScreenFooter = () => {
+		const { AIUIConfig = {} } = props;
+		const { showSourceDocuments = true, onSourceClick = () => {} } = AIUIConfig || {};
+
+		const renderSourceDocumentLabel = (sourceObj) => {
+			if (props.AIUIConfig && props.AIUIConfig.renderSourceDocument) {
+				return props.AIUIConfig.renderSourceDocument(sourceObj);
+			}
+
+			return sourceObj._id;
+		};
+		return (showSourceDocuments
+			&& (showAIScreenFooter)
+			&& Array.isArray(sourceDocIds) && sourceDocIds.length)
+			|| (showSourceDocuments && props.testMode) ? (
+				<Footer themePreset={props.themePreset}>
+					Summary generated using the following sources:{' '}
+					<SourceTags>
+						{getAISourceObjects().map(el => (
+							<Button
+								className={`--ai-source-tag ${getClassName(
+									props.innerClass,
+									'ai-source-tag',
+								) || ''}`}
+								info
+								onClick={() => onSourceClick && onSourceClick(el)}
+								key={el._id}
+							>
+								{renderSourceDocumentLabel(el)}
+							</Button>
+						))}
+					</SourceTags>
+				</Footer>
+			) : null;
+	};
+
+	const renderAIScreenLoader = () => {
+		const { AIUIConfig = {} } = props;
+		const { loaderMessage } = AIUIConfig || {};
+		if (loaderMessage) {
+			return loaderMessage;
+		}
+
+		return <HorizontalSkeletonLoader />;
+	};
+
+
+	// eslint-disable-next-line consistent-return
+	useEffect(() => {
+		if (_dropdownULRef.current) {
+			const handleScroll = () => {
+				const scrollTop = _dropdownULRef.current.scrollTop;
+				setLastScrollTop(scrollTop);
+
+				if (scrollTop < lastScrollTop) {
+				// User is scrolling up
+					setIsUserScrolling(true);
+				} else {
+				// User is scrolling down
+					setIsUserScrolling(false);
+				}
+
+				// Update lastScrollTop with the current scroll position
+				setLastScrollTop(scrollTop);
+			};
+
+			_dropdownULRef.current.addEventListener('scroll', handleScroll);
+
+			return () => {
+				if (_dropdownULRef.current)_dropdownULRef.current.removeEventListener('scroll', handleScroll);
+			};
+		}
+	}, [lastScrollTop]);
+
+
 	useEffect(() => {
 		if (onData) {
 			onData({
@@ -990,8 +1490,16 @@ const SearchBox = (props) => {
 				error,
 			});
 		}
+		if (rawData && rawData.hits && rawData.hits.hits) {
+			setInitialHits(rawData.hits.hits);
+		}
 	}, [rawData, aggregationData, isLoading, error]);
 
+	/**
+	 * For uncontrolled component,
+	 * props.value would be changed directly,
+	 * which then needs to update currentValue by calling setValue
+	 */
 	useEffect(() => {
 		if (hasMounted.current) {
 			if (
@@ -1040,6 +1548,7 @@ const SearchBox = (props) => {
 			if (isTagsMode.current && Array.isArray(selectedValue)) {
 				selectedTags = []; // reset
 			}
+			// When value is not controlled by the user
 			if (value === undefined) {
 				setValue(
 					!selectedValue || isEmpty(selectedValue) ? '' : selectedValue,
@@ -1048,6 +1557,9 @@ const SearchBox = (props) => {
 					isTagsMode.current ? causes.SUGGESTION_SELECT : undefined,
 					hasMounted.current,
 					false,
+					undefined,
+					true,
+					{ imageValue: props.showImageSearch ? selectedImageValue : undefined },
 				);
 			} else if (onChange) {
 				if (
@@ -1082,7 +1594,77 @@ const SearchBox = (props) => {
 				);
 			}
 		}
-	}, [selectedValue]);
+	}, [selectedValue, selectedImageValue]);
+
+	useEffect(() => {
+		if (showAIScreen) {
+			if (_inputRef.current) {
+				_inputRef.current.blur();
+			}
+			setShowTypingEffect(true);
+		}
+	}, [showAIScreen]);
+
+	useEffect(() => {
+		if (prevPropsRefIsAITyping.current === true && !isAITyping) {
+			setShowAIScreenFooter(true);
+			setShowFeedbackComponent(true);
+		} else if (prevPropsRefIsAITyping.current === undefined && isAITyping) {
+			prevPropsRefIsAITyping.current = true;
+			setShowTypingEffect(false);
+			setShowAIScreenFooter(false);
+			setShowFeedbackComponent(false);
+		}
+	}, [isAITyping]);
+
+	useEffect(() => {
+		if (!(showAIScreen || props.isAIResponseLoading || props.isLoading) && showAIScreenFooter) {
+			setShowAIScreenFooter(false);
+			setShowFeedbackComponent(false);
+		}
+	}, [showAIScreen, props.isAIResponseLoading, props.AIResponse]);
+
+	useEffect(() => {
+		if (!isOpen) {
+			setShowTypingEffect(false);
+		}
+	}, [isOpen]);
+
+	useEffect(() => {
+		handleTextAreaHeightChange();
+	}, [currentValue, props.suggestions]);
+
+	useEffect(() => {
+		if (
+			props.AIUIConfig
+			&& props.AIUIConfig.showSourceDocuments
+			&& props.AIResponse
+			&& props.AIResponse.response
+			&& props.AIResponse.response.answer
+			&& Array.isArray(props.AIResponse.response.answer.documentIds)
+		) {
+			setSourceDocIds(props.AIResponse.response.answer.documentIds);
+
+			const localCache
+				= getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)
+				&& getObjectFromLocalStorage(AI_LOCAL_CACHE_KEY)[props.componentId];
+			if (
+				localCache
+				&& localCache.meta
+				&& localCache.meta.hits
+				&& localCache.meta.hits.hits
+			) {
+				setInitialHits(localCache.meta.hits.hits);
+			}
+		}
+	}, [props.AIResponse]);
+
+	useEffect(() => {
+		if (props.mode !== SEARCH_COMPONENTS_MODES.TAG) {
+			setSelectedTags(false);
+			isTagsMode.current = false;
+		} else { isTagsMode.current = true; }
+	}, [props.mode]);
 
 	useEffect(() => {
 		hasMounted.current = true;
@@ -1090,11 +1672,62 @@ const SearchBox = (props) => {
 		listenForFocusShortcuts();
 	}, []);
 
+	// Set testing environment
+	useEffect(() => {
+		const { testMode, __showImageDropdown } = props;
+
+		if (testMode) {
+			setIsOpen(true);
+			if (__showImageDropdown) {
+				handleShowImageDropdown(new MouseEvent('click'), true);
+			}
+			if (props.enableAI) {
+				setShowAIScreen(true);
+			}
+		}
+	}, []);
+
+	// Show image dropdown, when showImageSearch is true,
+	// and someone is dragging an image inside the window
+	useEffect(() => {
+		if (props.showImageSearch && document) {
+			const MAX_DELAY = 100;
+			const handleDragEnter = (e) => {
+				if (dragTimerId.current) {
+					clearTimeout(dragTimerId.current);
+				}
+				if (!showImageDropdown) {
+					handleShowImageDropdown(e, true);
+				}
+			};
+			const handleDragLeave = (e) => {
+				if (dragTimerId.current) {
+					clearTimeout(dragTimerId.current);
+				}
+				dragTimerId.current = setTimeout(() => {
+					handleShowImageDropdown(e, false);
+				}, MAX_DELAY);
+			};
+
+			document.addEventListener('dragover', handleDragEnter);
+			document.addEventListener('dragleave', handleDragLeave);
+
+			return () => {
+				document.removeEventListener('dragover', handleDragEnter);
+				document.removeEventListener('dragleave', handleDragLeave);
+				if (dragTimerId.current) {
+					clearTimeout(dragTimerId.current);
+				}
+			};
+		}
+		return () => {};
+	  }, [props.showImageSearch, showImageDropdown]);
+
 	const hasSuggestions = () => Array.isArray(parsedSuggestions()) && parsedSuggestions().length;
 	return (
 		<Container style={props.style} className={props.className}>
 			{props.title && (
-				<Title className={getClassName(props.innerClass, 'title') || null}>
+				<Title className={getClassName(props.innerClass, 'title') || ''}>
 					{props.title}
 				</Title>
 			)}
@@ -1174,7 +1807,11 @@ const SearchBox = (props) => {
 								return null;
 							};
 
+							const isTypingAIAnswer = showTypingEffect
+							&& !isAITyping && !props.testMode;
+
 							let indexOffset = 0;
+
 							return (
 								<React.Fragment>
 									{hasCustomRenderer(props)
@@ -1188,207 +1825,423 @@ const SearchBox = (props) => {
 										})}
 									{isOpen && renderLoader()}
 									{isOpen && renderError()}
-									{!hasCustomRenderer(props) && isOpen && hasSuggestions() ? (
+									{/* When custom renderer(render prop) is passed,
+									 it takes care of rendering the suggestion box. */}
+									{isOpen && hasSuggestions() && !hasCustomRenderer(props) ? (
 										<ul
 											css={searchboxSuggestions(
 												props.themePreset,
 												props.theme,
 											)}
+											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{parsedSuggestions().map((item, itemIndex) => {
-												const index = indexOffset + itemIndex;
-												if (Array.isArray(item)) {
-													const sectionHtml = XSS(item[0].sectionLabel);
-													indexOffset += item.length - 1;
-													return (
-														<div
-															className="section-container"
-															key={`${item[0].sectionId}`}
-														>
-															{sectionHtml && (
+											{showAIScreen ? (
+												<SearchBoxAISection themePreset={props.themePreset}>
+													{typeof props.renderAIAnswer === 'function' ? (
+														props.renderAIAnswer({
+															question: mergedAIQuestion,
+															answer: mergedAIAnswer,
+															documentIds:
+																(props.AIResponse
+																	&& props.AIResponse.response
+																	&& props.AIResponse.response
+																		.answer
+																	&& props.AIResponse.response.answer
+																		.documentIds)
+																|| [],
+															loading:
+																props.isAIResponseLoading
+																|| props.isLoading,
+															sources: getAISourceObjects(),
+															error: props.AIResponseError,
+														})
+													) : (
+														<Fragment>
+															{props.isAIResponseLoading
+															|| props.isLoading ? (
+																	renderAIScreenLoader()
+																) : (
+																	<Fragment>
+																		<Answer>
+																			<TypingEffect
+																				key={currentValue}
+																				message={md.render(
+																					mergedAIAnswer,
+																				)}
+																				speed={5}
+																				onTypingComplete={() => {
+																					if (
+																						prevPropsRefIsAITyping.current
+																					=== undefined
+																					) {
+																						setShowAIScreenFooter(
+																							true,
+																						);
+																					}
+																					if (
+																						(props.AIUIConfig
+																					&& typeof props
+																						.AIUIConfig
+																						.showFeedback
+																						=== 'boolean'
+																							? props
+																								.AIUIConfig
+																								.showFeedback
+																							: true)
+																					&& showTypingEffect
+																					) {
+																						setShowFeedbackComponent(
+																							true,
+																						);
+																					}
+
+																					if (
+																						mergedAIAnswer
+																					) {
+																						setShowTypingEffect(
+																							false,
+																						);
+																					}
+
+																					setTimeout(() => {
+																						_dropdownULRef.current.scrollTo(
+																							{
+																								top:
+																								_dropdownULRef
+																									.current
+																									.scrollHeight,
+																								behavior:
+																								'smooth',
+																							},
+																						);
+																					}, 100);
+																				}}
+																				onWhileTyping={() => {
+																					if (!isUserScrolling) {
+																						_dropdownULRef.current.scrollTo({
+																							top: _dropdownULRef.current.scrollHeight,
+																							behavior: 'smooth',
+																						});
+																						setLastScrollTop(_dropdownULRef.current.scrollHeight);
+																					}
+																				}}
+																				showTypingEffect={
+																					isTypingAIAnswer
+																				}
+																			/>
+																		</Answer>
+																		{renderAIScreenFooter()}
+
+																		{showFeedbackComponent && (
+																			<div
+																				className={`${getClassName(
+																					props.innerClass,
+																					'ai-feedback',
+																				) || ''}`}
+																			>
+																				{' '}
+																				<AIFeedback
+																					overrideState={
+																						feedbackState
+																					}
+																					hideUI={
+																						props.isAIResponseLoading
+																					|| props.isLoading
+																					|| !props.sessionIdFromStore
+																					}
+																					key={
+																						props.sessionIdFromStore
+																					}
+																					onFeedbackSubmit={(
+																						useful,
+																						reason,
+																					) => {
+																						setFeedbackState(
+																							{
+																								isRecorded: true,
+																								feedbackType: useful
+																									? 'positive'
+																									: 'negative',
+																							},
+																						);
+																						props.trackUsefullness(
+																							props.sessionIdFromStore,
+																							{
+																								useful,
+																								reason,
+																							},
+																						);
+																					}}
+																				/>
+																			</div>
+																		)}
+																	</Fragment>
+																)}
+														</Fragment>
+													)}
+													{renderError(true)}
+												</SearchBoxAISection>
+											) : null}
+											{!showAIScreen ? (
+												<Fragment>
+													{parsedSuggestions().map((item, itemIndex) => {
+														const index = indexOffset + itemIndex;
+														if (Array.isArray(item)) {
+															const sectionHtml = XSS(
+																item[0].sectionLabel,
+															);
+															indexOffset += item.length - 1;
+															return (
 																<div
-																	className={`section-header ${getClassName(
-																		props.innerClass,
-																		'section-label',
-																	)}`}
-																	dangerouslySetInnerHTML={{
-																		__html: sectionHtml,
-																	}}
-																/>
-															)}
-															<ul className="section-list">
-																{item.map(
-																	(sectionItem, sectionIndex) => (
-																		<li
-																			{...getItemProps({
-																				item: sectionItem,
-																			})}
-																			key={`${
-																				sectionItem.sectionId
-																				+ sectionIndex
-																			}-${sectionItem.value}`}
-																			style={{
-																				justifyContent:
-																					'flex-start',
-																				alignItems:
-																					'center',
+																	className="section-container"
+																	key={`${item[0].sectionId}`}
+																>
+																	{sectionHtml && (
+																		<div
+																			className={`section-header ${getClassName(
+																				props.innerClass,
+																				'section-label',
+																			)}`}
+																			dangerouslySetInnerHTML={{
+																				__html: sectionHtml,
 																			}}
-																			className={`${
-																				highlightedIndex
-																				=== index + sectionIndex
-																					? `active-li-item ${getClassName(
-																						props.innerClass,
-																						'active-suggestion-item',
-																					  )}`
-																					: `li-item ${getClassName(
-																						props.innerClass,
-																						'suggestion-item',
-																					  )}`
-																			}`}
-																		>
-																			{props.renderItem ? (
-																				props.renderItem(
-																					sectionItem,
-																				)
-																			) : (
-																				<React.Fragment>
-																					<div
-																						style={{
-																							padding:
-																								'0 10px 0 0',
-																							display:
-																								'flex',
-																						}}
+																		/>
+																	)}
+																	<ul className="section-list">
+																		{item.map(
+																			(
+																				sectionItem,
+																				sectionIndex,
+																			) => (
+																				<li
+																					{...getItemProps(
+																						{
+																							item: sectionItem,
+																						},
+																					)}
+																					key={`${sectionItem.sectionId
+																						+ sectionIndex}-${
+																						sectionItem.value
+																					}`}
+																					style={{
+																						justifyContent:
+																							'flex-start',
+																						alignItems:
+																							'center',
+																					}}
+																					className={`${
+																						highlightedIndex
+																						=== index
+																							+ sectionIndex
+																							? `active-li-item ${getClassName(
+																								props.innerClass,
+																								'active-suggestion-item',
+																							  )}`
+																							: `li-item ${getClassName(
+																								props.innerClass,
+																								'suggestion-item',
+																							  )}`
+																					}`}
+																				>
+																					<FallbackRender
+																						item={typeof props.renderItem === 'function' ? (
+																							props.renderItem(
+																								sectionItem,
+																							)
+																						) : null}
 																					>
-																						<CustomSvg
-																							iconId={`${
-																								sectionIndex
-																								+ index
-																								+ 1
-																							}-${
-																								sectionItem.value
-																							}-icon`}
-																							className={
-																								getClassName(
-																									props.innerClass,
-																									`${sectionItem._suggestion_type}-search-icon`,
-																								)
-																								|| null
-																							}
-																							icon={getIcon(
-																								sectionItem._suggestion_type,
+																						<React.Fragment>
+																							<div
+																								style={{
+																									padding:
+																										'0 10px 0 0',
+																									display:
+																										'flex',
+																								}}
+																							>
+																								<CustomSvg
+																									iconId={`${sectionIndex
+																										+ index
+																										+ 1}-${
+																										sectionItem.value
+																									}-icon`}
+																									className={
+																										getClassName(
+																											props.innerClass,
+																											`${sectionItem._suggestion_type}-search-icon`,
+																										)
+																										|| null
+																									}
+																									icon={getIcon(
+																										sectionItem._suggestion_type,
+																										sectionItem,
+																									)}
+																									type={`${sectionItem._suggestion_type}-search-icon`}
+																								/>
+																							</div>
+																							<Suggestion direction="column">
+																								{sectionItem.label && (
+																									<TextWithTooltip
+																										title={sectionItem.label}
+																										className="section-list-item__label"
+																										innerHTML={
+																											sectionItem.label
+																										}
+																									/>
+																								)}
+																								{sectionItem.description && (
+																									<SuggestionDescription
+																										lines={1}
+																										className="section-list-item__description"
+																										dangerouslySetInnerHTML={{
+																											__html: XSS(
+																												sectionItem.description,
+																											),
+																										}}
+																									/>
+																								)}
+																							</Suggestion>
+																							{getActionIcon(
 																								sectionItem,
 																							)}
-																							type={`${sectionItem._suggestion_type}-search-icon`}
-																						/>
-																					</div>
-																					<div className="trim">
-																						<Flex direction="column">
-																							{sectionItem.label && (
-																								<div
-																									className="section-list-item__label"
-																									dangerouslySetInnerHTML={{
-																										__html: XSS(
-																											sectionItem.label,
-																										),
-																									}}
-																								/>
-																							)}
-																							{sectionItem.description && (
-																								<div
-																									className="section-list-item__description"
-																									dangerouslySetInnerHTML={{
-																										__html: XSS(
-																											sectionItem.description,
-																										),
-																									}}
-																								/>
-																							)}
-																						</Flex>
-																					</div>
-																					{getActionIcon(
-																						sectionItem,
-																					)}
-																				</React.Fragment>
-																			)}
-																		</li>
-																	),
-																)}
-															</ul>
-														</div>
-													);
-												}
-
-												return (
-													<li
-														{...getItemProps({ item })}
-														key={`${index + 1}-${item.value}`}
-														style={{
-															justifyContent: 'flex-start',
-															alignItems: 'center',
-														}}
-														className={`${
-															highlightedIndex === index
-																? `active-li-item ${getClassName(
-																	props.innerClass,
-																	'active-suggestion-item',
-																  )}`
-																: `li-item ${getClassName(
-																	props.innerClass,
-																	'suggestion-item',
-																  )}`
-														}`}
-													>
-														{props.renderItem ? (
-															props.renderItem(item)
-														) : (
-															<React.Fragment>
-																{/* eslint-disable */}
-
-																<div
-																	style={{
-																		padding: '0 10px 0 0',
-																		display: 'flex',
-																	}}
-																>
-																	<CustomSvg
-																		iconId={`${index + 1}-${
-																			item.value
-																		}-icon`}
-																		className={
-																			getClassName(
-																				props.innerClass,
-																				`${item._suggestion_type}-search-icon`,
-																			) || null
-																		}
-																		icon={getIcon(
-																			item._suggestion_type,
-																			item,
+																						</React.Fragment>
+																					</FallbackRender>
+																				</li>
+																			),
 																		)}
-																		type={`${item._suggestion_type}-search-icon`}
-																	/>
+																	</ul>
 																</div>
-																{/* eslint-enable */}
-																<SuggestionItem
-																	currentValue={
-																		currentValue || ''
-																	}
-																	suggestion={item}
-																/>
+															);
+														}
 
-																{getActionIcon(item)}
-															</React.Fragment>
-														)}
-													</li>
-												);
-											})}
+														if (
+															item._suggestion_type
+															=== '_internal_a_i_trigger'
+														) {
+															return (
+																<li
+																	{...getItemProps({ item })}
+																	key={`${index + 1}-${
+																		item.value
+																	}`}
+																	style={{
+																		justifyContent:
+																			'flex-start',
+																		alignItems: 'center',
+																	}}
+																	className={`${
+																		highlightedIndex === index
+																			? `active-li-item ${getClassName(
+																				props.innerClass,
+																				'active-suggestion-item',
+																			  )}`
+																			: `li-item ${getClassName(
+																				props.innerClass,
+																				'suggestion-item',
+																			  )}`
+																	}`}
+																>
+																	<FallbackRender
+																		item={typeof props.renderItem === 'function' ? (
+																			props.renderItem(
+																				item,
+																			)
+																		) : null}
+																	>
+																		<React.Fragment>
+																			<SuggestionItem
+																				currentValue={
+																					currentValue
+																					|| ''
+																				}
+																				suggestion={item}
+																			/>
+																		</React.Fragment>
+																	</FallbackRender>
+																</li>
+															);
+														}
+														return (
+															<li
+																{...getItemProps({ item })}
+																key={`${index + 1}-${item.value}`}
+																style={{
+																	justifyContent: 'flex-start',
+																	alignItems: 'center',
+																}}
+																className={`${
+																	highlightedIndex === index
+																		? `active-li-item ${getClassName(
+																			props.innerClass,
+																			'active-suggestion-item',
+																		  )}`
+																		: `li-item ${getClassName(
+																			props.innerClass,
+																			'suggestion-item',
+																		  )}`
+																}`}
+															>
+																<FallbackRender
+																	item={typeof props.renderItem === 'function' ? (
+																		props.renderItem(
+																			item,
+																		)
+																	) : null}
+																>
+																	<React.Fragment>
+																		{/* eslint-disable */}
 
-											{showSuggestionsFooter ? <SuggestionsFooter /> : null}
+																		<div
+																			style={{
+																				padding:
+																					'0 10px 0 0',
+																				display: 'flex',
+																			}}
+																		>
+																			<CustomSvg
+																				iconId={`${index +
+																					1}-${
+																					item.value
+																				}-icon`}
+																				className={
+																					getClassName(
+																						props.innerClass,
+																						`${item._suggestion_type}-search-icon`,
+																					) || null
+																				}
+																				icon={getIcon(
+																					item._suggestion_type,
+																					item,
+																				)}
+																				type={`${item._suggestion_type}-search-icon`}
+																			/>
+																		</div>
+																		{/* eslint-enable */}
+																		<SuggestionItem
+																			currentValue={
+																				currentValue || ''
+																			}
+																			suggestion={item}
+																		/>
+
+																		{getActionIcon(item)}
+																	</React.Fragment>
+																</FallbackRender>
+															</li>
+														);
+													})}
+
+													{showSuggestionsFooter ? (
+														<SuggestionsFooter />
+													) : null}
+												</Fragment>
+											) : null}
+											{!showAIScreen && !hasSuggestions()
+												? renderNoSuggestion(parsedSuggestions()) : null
+											}
 										</ul>
-									) : (
-										renderNoSuggestion(parsedSuggestions())
-									)}
+									) : null}
 								</React.Fragment>
 							);
 						};
@@ -1400,10 +2253,19 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup isOpen={isOpen}>
-									{renderInputAddonBefore()}
+								<InputGroup
+									searchBox
+									ref={_inputGroupRef}
+									isOpen={isOpen || showImageDropdown}
+								>
+									<ActionContainer>
+										{renderLeftIcons()}
+										{renderInputAddonBefore()}
+									</ActionContainer>
 									<InputWrapper>
-										<Input
+										<TextArea
+											showFocusShortcutsIcon={props.showFocusShortcutsIcon}
+											showVoiceSearch={props.showVoiceSearch}
 											aria-label={props.componentId}
 											id={`${props.componentId}-input`}
 											showIcon={props.showIcon}
@@ -1413,7 +2275,11 @@ const SearchBox = (props) => {
 											{...getInputProps({
 												className: getClassName(props.innerClass, 'input'),
 												placeholder: props.placeholder,
-												value: currentValue === null ? '' : currentValue,
+												// When props.value is defined,
+												// it means SearchBox is used as a controlled component
+												value: Object.hasOwn(props, 'value')
+													? props.value
+													: currentValue || '',
 												onChange: onInputChange,
 												onBlur: withTriggerQuery(props.onBlur),
 												onFocus: handleFocus,
@@ -1422,17 +2288,16 @@ const SearchBox = (props) => {
 													setHighlightedIndex(null);
 												},
 												onKeyPress: withTriggerQuery(props.onKeyPress),
-												onKeyDown: e =>
-													handleKeyDown(e, highlightedIndex),
+												onKeyDown: e => handleKeyDown(e, highlightedIndex),
 												onKeyUp: withTriggerQuery(props.onKeyUp),
 												autoFocus: props.autoFocus,
 											})}
 											themePreset={props.themePreset}
 											type={props.type}
 											searchBox // a prop specific to Input styled-component
-											isOpen={isOpen} // is dropdown open or not
+											// Used to modify styles, is dropdown open or not.
+											isOpen={isOpen || showImageDropdown}
 										/>
-										{renderIcons()}
 										{!props.expandSuggestionsContainer
 											&& renderSuggestionsDropdown(
 												getRootProps,
@@ -1444,9 +2309,30 @@ const SearchBox = (props) => {
 												...rest,
 											)}
 									</InputWrapper>
-									{renderInputAddonAfter()}
-									{renderEnterButtonElement()}
+									<ActionContainer>
+										{renderRightIcons()}
+										{renderInputAddonAfter()}
+										{renderAskButtonElement()}
+										{renderEnterButtonElement()}
+									</ActionContainer>
 								</InputGroup>
+
+								{showImageDropdown ? (
+									<ImageDropdown
+										__testMode={props.testMode}
+										imageValue={
+											!props.testMode ? currentImageValue : props.__dummyImage
+										}
+										onChange={v => setCurrentImageValue(v)}
+										onOutsideClick={(e) => {
+											// When the user is clicking on the camera
+											// icon which is outside the image modal
+											if (showImageDropdown) {
+												handleShowImageDropdown(e, false);
+											}
+										}}
+									/>
+								) : null}
 
 								{props.expandSuggestionsContainer
 									&& renderSuggestionsDropdown(
@@ -1466,14 +2352,21 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup isOpen={false}>
-						{renderInputAddonBefore()}
+					<InputGroup searchBox ref={_inputGroupRef} isOpen={showImageDropdown}>
+
+						<ActionContainer>
+							{renderLeftIcons()}
+							{renderInputAddonBefore()}
+						</ActionContainer>
 						<InputWrapper>
-							<Input
+							<TextArea
 								aria-label={props.componentId}
 								className={getClassName(props.innerClass, 'input') || null}
 								placeholder={props.placeholder}
-								value={currentValue || ''}
+								value={
+									Object.hasOwn(props, 'value') ? props.value : currentValue || ''
+								}
+								ref={_inputRef}
 								onChange={onInputChange}
 								onBlur={withTriggerQuery(props.onBlur)}
 								onFocus={withTriggerQuery(props.onFocus)}
@@ -1485,16 +2378,41 @@ const SearchBox = (props) => {
 								showIcon={props.showIcon}
 								showClear={props.showClear}
 								themePreset={props.themePreset}
-								searchBox // a prop specific to Input styled-component
-								isOpen={false} // is dropdown open or not
 								type={props.type}
-							/>
-							{renderIcons()}
-						</InputWrapper>
+								showFocusShortcutsIcon={props.showFocusShortcutsIcon}
+								showVoiceSearch={props.showVoiceSearch}
 
-						{renderInputAddonAfter()}
-						{renderEnterButtonElement()}
+								// Props used to modify styles
+								searchBox
+								isOpen={showImageDropdown}
+							/>
+						</InputWrapper>
+						<ActionContainer>
+							{renderRightIcons()}
+							{renderInputAddonAfter()}
+							{renderAskButtonElement()}
+							{renderEnterButtonElement()}
+						</ActionContainer>
 					</InputGroup>
+
+					{showImageDropdown ? <ImageDropdown
+						imageValue={currentImageValue}
+						onChange={v => setCurrentImageValue(v)}
+						onOutsideClick={(e) => {
+							if (props.autosuggest === false) {
+								// don't close image dropdown,
+								// when autosuggest false and typing inside searchbox input
+								if (e.target === _inputRef.current) {
+									return;
+								}
+							}
+							// When the user is clicking on the camera
+							// icon which is outside the image modal
+							if (showImageDropdown) {
+								handleShowImageDropdown(e, false);
+							}
+						}}
+					/> : null}
 				</div>
 			)}
 		</Container>
@@ -1503,6 +2421,7 @@ const SearchBox = (props) => {
 SearchBox.propTypes = {
 	updateQuery: types.funcRequired,
 	selectedValue: types.selectedValue,
+	selectedImageValue: types.string,
 	selectedCategory: types.string,
 	suggestions: types.suggestions,
 	triggerAnalytics: types.funcRequired,
@@ -1525,6 +2444,7 @@ SearchBox.propTypes = {
 	className: types.string,
 	clearIcon: types.children,
 	componentId: types.stringRequired,
+	compoundClause: types.compoundClause,
 	customHighlight: types.func,
 	customQuery: types.func,
 	defaultQuery: types.func,
@@ -1572,6 +2492,8 @@ SearchBox.propTypes = {
 	showFilter: types.bool,
 	showIcon: types.bool,
 	showVoiceSearch: types.bool,
+	showImageSearch: types.bool,
+	imageSearchConfig: types.componentObject,
 	style: types.style,
 	title: types.title,
 	theme: types.style,
@@ -1603,8 +2525,12 @@ SearchBox.propTypes = {
 	isOpen: types.bool,
 	enableIndexSuggestions: types.bool,
 	enableFeaturedSuggestions: types.bool,
+	enableFAQSuggestions: types.bool,
+	enableDocumentSuggestions: types.bool,
+	FAQSuggestionsConfig: types.componentObject,
 	featuredSuggestionsConfig: types.componentObject,
 	indexSuggestionsConfig: types.componentObject,
+	documentSuggestionsConfig: types.componentObject,
 	enterButton: types.bool,
 	renderEnterButton: types.func,
 	customEvents: types.componentObject,
@@ -1613,6 +2539,21 @@ SearchBox.propTypes = {
 	mode: oneOf(['select', 'tag']),
 	highlightConfig: types.componentObject,
 	renderSelectedTags: types.func,
+	enableAI: types.bool,
+	AIConfig: types.componentObject,
+	AIResponse: types.componentObject,
+	isAIResponseLoading: types.bool,
+	AIResponseError: types.componentObject,
+	renderAIAnswer: types.func,
+	AIUIConfig: types.componentObject,
+	trackUsefullness: types.funcRequired,
+	sessionIdFromStore: types.string,
+	isAITyping: types.boolRequired,
+	removeAIResponse: types.func,
+	// This is an internal prop just for testing
+	testMode: types.bool,
+	__showImageDropdown: types.bool,
+	__dummyImage: types.string,
 };
 
 SearchBox.defaultProps = {
@@ -1631,6 +2572,7 @@ SearchBox.defaultProps = {
 	showIcon: true,
 	showFocusShortcutsIcon: true,
 	showVoiceSearch: false,
+	imageSearchConfig: {},
 	style: {},
 	URLParams: false,
 	showClear: false,
@@ -1649,6 +2591,9 @@ SearchBox.defaultProps = {
 	enterButton: false,
 	type: 'search',
 	mode: 'select',
+	enableAI: false,
+	AIConfig: null,
+	AIUIConfig: {},
 };
 
 const mapStateToProps = (state, props) => ({
@@ -1656,6 +2601,9 @@ const mapStateToProps = (state, props) => ({
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].value)
 		|| null,
+	selectedImageValue: (state.selectedValues[props.componentId]
+		&& state.selectedValues[props.componentId].meta
+		&& state.selectedValues[props.componentId].meta.imageValue) || '',
 	selectedCategory:
 		(state.selectedValues[props.componentId]
 			&& state.selectedValues[props.componentId].category)
@@ -1664,20 +2612,41 @@ const mapStateToProps = (state, props) => ({
 	rawData: state.rawData[props.componentId],
 	aggregationData: state.compositeAggregations[props.componentId],
 	themePreset: state.config.themePreset,
-	isLoading: !!state.isLoading[`${props.componentId}_active`],
+	isLoading: !!state.isLoading[`${props.componentId}`],
 	error: state.error[props.componentId],
 	time: state.hits[props.componentId] && state.hits[props.componentId].time,
 	total: state.hits[props.componentId] && state.hits[props.componentId].total,
 	hidden: state.hits[props.componentId] && state.hits[props.componentId].hidden,
 	customEvents: state.config.analyticsConfig ? state.config.analyticsConfig.customEvents : {},
+	AIResponse:
+		(state.AIResponses[props.componentId] && state.AIResponses[props.componentId].response)
+		|| null,
+	isAIResponseLoading:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].isLoading,
+	AIResponseError:
+		state.AIResponses[props.componentId] && state.AIResponses[props.componentId].error,
+	sessionIdFromStore:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.sessionId)
+		|| '',
+	isAITyping:
+		(state.AIResponses[props.componentId]
+			&& state.AIResponses[props.componentId].response
+			&& state.AIResponses[props.componentId].response.isTyping)
+		|| false,
 });
 
 const mapDispatchtoProps = dispatch => ({
-	updateQuery: updateQueryObject => dispatch(updateQuery(updateQueryObject)),
+	updateQuery: (updateQueryObject, execute = true) =>
+		dispatch(updateQuery(updateQueryObject, execute)),
 	triggerAnalytics: (searchPosition, documentId) =>
 		dispatch(recordSuggestionClick(searchPosition, documentId)),
 	setCustomQuery: (component, query) => dispatch(setCustomQuery(component, query)),
 	setDefaultQuery: (component, query) => dispatch(setDefaultQuery(component, query)),
+	trackUsefullness: (sessionId, otherInfo) =>
+		dispatch(recordAISessionUsefulness(sessionId, otherInfo)),
+	removeAIResponse: componentId => dispatch(removeAIResponse(componentId)),
 });
 
 // Add componentType for SSR

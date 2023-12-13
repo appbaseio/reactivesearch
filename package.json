@@ -19,6 +19,7 @@
 		"packages/web/examples/mongo-examples/*",
 		"packages/vue/examples/*",
 		"packages/vue/examples/mongo-examples/*",
+		"packages/vue/examples/search-showcase/*",
 		"packages/vue/demos/*",
 		"packages/maps/examples/*",
 		"packages/maps/examples/mongo-examples/*",
@@ -36,7 +37,9 @@
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^7.5.2",
+		"babel-core": "^6.26.3",
 		"babel-eslint": "^10.1.0",
+		"babel-loader": "^8.2.3",
 		"concurrently": "^3.5.1",
 		"eslint": "^7.29.0",
 		"eslint-config-airbnb": "^16.1.0",
@@ -50,10 +53,12 @@
 		"nps": "^5.9.5",
 		"nps-utils": "^1.7.0",
 		"prettier": "^2.3.2",
-		"babel-core": "^6.26.3",
-		"babel-loader": "^8.2.3"
+		"yorkie": "^2.0.0"
 	},
 	"engines": {
 		"node": ">=10.16"
+	},
+	"volta": {
+		"node": "16.20.2"
 	}
 }

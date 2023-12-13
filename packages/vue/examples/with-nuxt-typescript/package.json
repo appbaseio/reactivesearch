@@ -1,0 +1,19 @@
+{
+	"version": "0.1.0",
+	"private": true,
+	"name": "with-nuxt-typescript",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"nuxt": "^3.1.0"
+	},
+	"dependencies": {
+		"@appbaseio/reactivesearch-vue": "3.3.0",
+		"@nuxtjs/emotion": "^1.0.0"
+	}
+}
