@@ -1,5 +1,5 @@
 {
-	"name": "example-vue3",
+	"name": "reactive-component",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
