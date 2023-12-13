@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "3.3.1",
+	"version": "3.3.2",
 	"main": "dist/cjs/index.js",
 	"jsnext:main": "dist/es/index.js",
 	"module": "dist/es/index.js",
@@ -34,7 +34,7 @@
 	"sideEffects": false,
 	"dependencies": {
 		"@appbaseio/analytics": "^1.2.0-alpha.1",
-		"@appbaseio/reactivecore": "10.2.1",
+		"@appbaseio/reactivecore": "10.3.0",
 		"@appbaseio/vue-emotion": "0.6.0-alpha.6",
 		"@appbaseio/vue-google-maps-community-fork": "1.0.0-alpha.1",
 		"@emotion/css": "^11.10.5",
