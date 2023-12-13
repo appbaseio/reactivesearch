@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "3.3.0",
+	"version": "3.3.1",
 	"main": "dist/cjs/index.js",
 	"jsnext:main": "dist/es/index.js",
 	"module": "dist/es/index.js",
@@ -33,13 +33,8 @@
 	],
 	"sideEffects": false,
 	"dependencies": {
-<<<<<<< HEAD
-		"@appbaseio/analytics": "^1.1.1",
-		"@appbaseio/reactivecore": "10.0.0-alpha.22.1",
-=======
 		"@appbaseio/analytics": "^1.2.0-alpha.1",
 		"@appbaseio/reactivecore": "10.2.1",
->>>>>>> next
 		"@appbaseio/vue-emotion": "0.6.0-alpha.6",
 		"@appbaseio/vue-google-maps-community-fork": "1.0.0-alpha.1",
 		"@emotion/css": "^11.10.5",
@@ -53,10 +48,7 @@
 		"redux": "^4.0.0",
 		"remarkable": "^2.0.1",
 		"url-search-params-polyfill": "^7.0.0",
-<<<<<<< HEAD
-=======
 		"vue-google-maps-community-fork": "^0.3.1",
->>>>>>> next
 		"vue-highlight-words": "^1.2.0",
 		"vue-no-ssr": "^1.1.0",
 		"vue-slider-component": "next",
