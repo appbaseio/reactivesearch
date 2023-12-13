@@ -26,7 +26,8 @@
 		"test": "nps test",
 		"precommit": "lint-staged",
 		"prepare": "npm start validate",
-		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js"
+		"version-upgrade": "nps upgrade-vue -c ../../package-scripts.js",
+		"postpublish": "yarn run version-upgrade"
 	},
 	"files": [
 		"dist"
