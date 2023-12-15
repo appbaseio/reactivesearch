@@ -54,7 +54,7 @@
 		"vue-no-ssr": "^1.1.0",
 		"vue-slider-component": "next",
 		"vue-types": "^5.0.2",
-		"xss": "^1.0.11"
+		"isomorphic-dompurify": "^1.12.0"
 	},
 	"peerDependencies": {
 		"vue": "^3.1.0"
