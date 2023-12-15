@@ -2,7 +2,7 @@
 import { Actions, helper, causes } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import hotkeys from 'hotkeys-js';
-import { sanitize } from 'isomorphic-dompurify';
+import DOMPurify from 'isomorphic-dompurify';
 import { Remarkable } from 'remarkable';
 import {
 	AI_LOCAL_CACHE_KEY,
@@ -216,7 +216,7 @@ const SearchBox = defineComponent({
 							if (typeof renderItem === 'function') {
 								const jsxEl = renderItem(newSuggestion);
 								const innerValue = innerText(jsxEl);
-								newSuggestion.value = sanitize(innerValue);
+								newSuggestion.value = DOMPurify.sanitize(innerValue);
 							}
 							return newSuggestion;
 						}
@@ -1701,7 +1701,7 @@ const SearchBox = defineComponent({
 													return () => (
 														<div
 															style={{ display: 'flex' }}
-															innerHTML={sanitize(item.icon)}
+															innerHTML={DOMPurify.sanitize(item.icon)}
 														/>
 													);
 												}
@@ -1710,7 +1710,7 @@ const SearchBox = defineComponent({
 														// When you change below also change the empty icon below
 														<img
 															style={{ maxWidth: '30px' }}
-															src={sanitize(item.iconURL)}
+															src={DOMPurify.sanitize(item.iconURL)}
 															alt={item.value}
 														/>
 													);
@@ -1770,7 +1770,7 @@ const SearchBox = defineComponent({
 																const index
 																	= indexOffset + itemIndex;
 																if (Array.isArray(item)) {
-																	const sectionHtml = sanitize(
+																	const sectionHtml = DOMPurify.sanitize(
 																		item[0].sectionLabel,
 																	);
 																	indexOffset += item.length - 1;
