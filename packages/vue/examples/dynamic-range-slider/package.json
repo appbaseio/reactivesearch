@@ -15,7 +15,8 @@
 	},
 	"devDependencies": {
 		"@codesandbox/vue-preview": "^0.1.1-alpha.16",
-		"@vitejs/plugin-vue": "^4.5.0",
+		"@vitejs/plugin-vue": "^4.0.0",
+		"@vitejs/plugin-vue-jsx": "^3.1.0",
 		"@vue/babel-preset-app": "^5.0.8",
 		"vite": "^5.0.4"
 	}
