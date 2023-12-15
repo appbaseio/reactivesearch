@@ -1,4 +1,4 @@
-import { Marker } from 'vue-google-maps-community-fork';
+import { Marker } from '@appbaseio/vue-google-maps-community-fork';
 import { Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
 import { connect } from '../../utils/index';

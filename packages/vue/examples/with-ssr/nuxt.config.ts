@@ -1,28 +1,27 @@
+// eslint-disable-next-line no-undef
 export default defineNuxtConfig({
-	telemetry: false,
 	build: {
 		transpile: ['@appbaseio/reactivesearch-vue'],
 	},
+	telemetry: false,
 	css: ['@/assets/css/airbnb.css'],
 	modules: ['@nuxtjs/emotion'],
 	webpack: {
 		terser: false,
 	},
+	nitro: {
+		preset: 'vercel',
+	},
 	vite: {
 		optimizeDeps: {
 			include: [
-				'@appbaseio/reactivecore',
-				'@appbaseio/reactivesearch-vue',
-				'fast-deep-equal',
+				'@vue/babel-helper-vue-transform-on',
+				'url-parser-lite',
+				'cross-fetch',
+				'querystring',
+				'highlight-words-core',
+				'ngeohash',
 			],
 		},
-		build: {
-			commonjsOptions: {
-				include: [/reactivecore/, /reactivesearch/, /node_modules/],
-			},
-		},
 	},
-	nitro:{
-		preset: 'vercel'
-	}
 });

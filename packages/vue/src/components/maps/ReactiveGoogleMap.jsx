@@ -1,4 +1,4 @@
-import VueGoogleMaps, { Map } from 'vue-google-maps-community-fork';
+import VueGoogleMaps, { Map } from '@appbaseio/vue-google-maps-community-fork';
 import VueTypes from 'vue-types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { css } from '@emotion/css';
