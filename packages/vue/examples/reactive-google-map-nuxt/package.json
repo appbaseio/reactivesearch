@@ -1,24 +1,22 @@
 {
 	"name": "reactive-google-map-nuxt",
-	"version": "1.0.0",
-	"description": "A reactivesearch example with Nuxt.js",
-	"author": "Kuldeep Saxena",
 	"private": true,
+	"type": "module",
 	"scripts": {
-		"dev": "nuxt",
 		"build": "nuxt build",
-		"start": "nuxt start",
-		"generate": "nuxt generate"
-	},
-	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.3.3",
-		"cross-env": "^5.2.0",
-		"nuxt": "^3.4.3"
+		"dev": "nuxt dev --port 5173",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
-		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
-		"node-sass": "^7.0.0",
-		"nodemon": "^1.11.0",
-		"sass-loader": "^7.1.0"
+		"@nuxt/devtools": "latest",
+		"nuxt": "^3.8.2",
+		"vue": "^3.3.10",
+		"vue-router": "^4.2.5"
+	},
+	"dependencies": {
+		"@appbaseio/reactivesearch-vue": "3.3.4",
+		"@babel/plugin-syntax-dynamic-import": "^7.8.3"
 	}
 }

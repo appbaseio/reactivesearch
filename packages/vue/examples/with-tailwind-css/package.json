@@ -1,39 +1,23 @@
 {
-	"name": "with-tailwind-css",
-	"version": "0.1.0",
+	"name": "with-tailwindcss",
 	"private": true,
+	"version": "0.0.0",
+	"type": "module",
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build",
-		"lint": "vue-cli-service lint"
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.3.3",
-		"vue": "^2.6.11"
+		"@appbaseio/reactivesearch-vue": "3.3.4",
+		"vue": "^3.3.11"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "^5.0.8",
-		"@vue/cli-service": "^5.0.8",
-		"tailwindcss": "^1.4.5",
-		"vue-template-compiler": "^2.6.11"
-	},
-	"eslintConfig": {
-		"root": true,
-		"env": {
-			"node": true
-		},
-		"extends": [
-			"plugin:vue/essential",
-			"eslint:recommended"
-		],
-		"parserOptions": {
-			"parser": "babel-eslint"
-		},
-		"rules": {}
-	},
-	"browserslist": [
-		"> 1%",
-		"last 2 versions",
-		"not dead"
-	]
+		"@vitejs/plugin-vue": "^4.5.2",
+		"@vitejs/plugin-vue-jsx": "^3.1.0",
+		"autoprefixer": "^10.4.16",
+		"postcss": "^8.4.32",
+		"tailwindcss": "^3.3.6",
+		"vite": "^5.0.8"
+	}
 }

@@ -1,7 +1,5 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-import '@/assets/css/custom.css';
-import '@/assets/css/tailwind.css';
+import { createApp } from 'vue'
+import './styles.css'
+import App from './App.vue'
 
-const app = createApp(App);
-app.mount('#app'); // Vue Instance - Root component
+createApp(App).mount('#app')

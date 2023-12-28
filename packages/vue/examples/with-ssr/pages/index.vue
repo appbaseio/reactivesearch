@@ -5,7 +5,7 @@ import Search from '../components/search.vue';
 // eslint-disable-next-line no-undef
 const route = useRoute();
 // eslint-disable-next-line no-unused-vars,no-undef
-const { data, pending, error, refresh } = await useAsyncData(() =>
+const { data } = await useAsyncData(() =>
 	getServerState(Search, route.query),
 );
 // eslint-disable-next-line no-unused-vars
