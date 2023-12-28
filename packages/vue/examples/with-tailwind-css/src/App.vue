@@ -1,13 +1,13 @@
 <template>
-  <div 
-    id="app" 
-    class="p-3 bg-gradient-to-r from-green-400 to-blue-500">
+  <div
+    id="app"
+    class="p-3 bg-gradient-to-r from-green-400 to-blue-500 text-center">
     <reactive-base
       app="good-books-ds"
       url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
     >
       <search-box
-        :data-field="['original_title', 'original_title.search']"
+        :data-field="['original_title', 'original_title.search', 'authors', 'authors.search']"
         :urlparams="true"
         :size="3"
         :enable-popular-suggestions="true"
@@ -27,13 +27,13 @@
         class-name="result-list-container"
       >
         <template #renderItem="{ item }">
-          <div 
-            :id="item._id" 
-            :key="item._id" 
+          <div
+            :id="item._id"
+            :key="item._id"
             class="flex book-content">
-            <img 
-              :src="item.image" 
-              alt="Book Cover" 
+            <img
+              :src="item.image"
+              alt="Book Cover"
               class="book-image" >
             <div class="flex column justify-center ml20">
               <div class="book-header">{{ item.original_title }}</div>
@@ -52,13 +52,13 @@
                         class="fas fa-star"
                       />
                     </span>
-                    <span 
+                    <span
                       class="avg-rating"
                     >({{ item.average_rating }} avg)</span
                     >
                   </div>
                 </div>
-                <span 
+                <span
                   class="pub-year"
                 >Pub {{ item.original_publication_year }}</span
                 >
