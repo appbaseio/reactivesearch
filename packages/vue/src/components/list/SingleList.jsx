@@ -97,6 +97,11 @@ const SingleList = {
 		}
 	},
 	watch: {
+		selectedValue(newVal) {
+			if (this.$data.currentValue !== newVal) {
+				this.setValue(newVal || '');
+			}
+		},
 		options(newVal) {
 			if (newVal) {
 				this.modifiedOptions = newVal[this.$props.dataField]
@@ -120,11 +125,6 @@ const SingleList = {
 		value(newVal, oldVal) {
 			if (!isEqual(newVal, oldVal)) {
 				this.setValue(newVal);
-			}
-		},
-		selectedValue(newVal) {
-			if (this.$data.currentValue !== newVal) {
-				this.setValue(newVal || '');
 			}
 		},
 		defaultQuery(newVal, oldVal) {
@@ -472,8 +472,7 @@ const mapStateToProps = (state, props) => ({
 	isLoading: state.isLoading[props.componentId],
 	selectedValue:
 		(state.selectedValues[props.componentId]
-			&& state.selectedValues[props.componentId].value)
-		|| '',
+			&& state.selectedValues[props.componentId].value) || '',
 	totalDocumentCount: state.hits[props.componentId] && state.hits[props.componentId].total,
 	themePreset: state.config.themePreset,
 	error: state.error[props.componentId],
