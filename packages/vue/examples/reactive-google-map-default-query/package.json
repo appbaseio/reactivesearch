@@ -9,7 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.3.3",
+		"@appbaseio/reactivesearch-vue": "3.3.4",
 		"vue": "^3.3.9",
 		"vuejs-paginate": "^2.1.0"
 	},
