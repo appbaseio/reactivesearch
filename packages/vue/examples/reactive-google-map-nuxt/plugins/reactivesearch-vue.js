@@ -7,5 +7,5 @@ export default defineNuxtPlugin(nuxtApp => {
 	nuxtApp.vueApp.component('ReactiveBase', ReactiveBase);
 	nuxtApp.vueApp.component('SelectedFilters', SelectedFilters);
 	nuxtApp.vueApp.component('SingleList', SingleList);
-	nuxtApp.vueApp.use(ReactiveGoogleMap, { key: 'AIzaSyApin_jORcTsknjwBKCEsJsR07q0Hn9J-s' });
+	nuxtApp.vueApp.use(ReactiveGoogleMap, { key: 'AIzaSyA9JzjtHeXg_C_hh_GdTBdLxREWdj3nsOU' });
 });
