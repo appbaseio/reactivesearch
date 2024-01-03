@@ -63,6 +63,7 @@ const SearchBox = {
 			selectedTags: [],
 			isOpen: false,
 			normalizedSuggestions: [],
+			isSuggestionSelected: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -307,7 +308,9 @@ const SearchBox = {
 				if (this.$options.isTagsMode) {
 					cause = causes.SUGGESTION_SELECT;
 				}
-				this.setValue(newVal || '', true, this.$props, cause);
+				if (!this.isSuggestionSelected) {
+				    this.setValue(newVal || '', true, this.$props, cause);
+				}
 			}
 		},
 		focusShortcuts() {
@@ -433,10 +436,11 @@ const SearchBox = {
 			categoryValue = undefined,
 		) {
 			const performUpdate = () => {
+				let isTagAdded = false;
 				if (this.$options.isTagsMode && isEqual(value, this.selectedTags)) {
 					return;
 				}
-				if (this.$options.isTagsMode && cause === causes.SUGGESTION_SELECT) {
+				if (this.$options.isTagsMode) {
 					if (Array.isArray(this.selectedTags) && this.selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && this.selectedTags.includes(value)) {
@@ -446,14 +450,36 @@ const SearchBox = {
 						this.selectedTags = [...this.selectedTags];
 
 						if (typeof value === 'string' && !!value) {
-							this.selectedTags.push(value);
+							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
+							    this.selectedTags.push(value);
+							    isTagAdded = true;
+							} else if (!props.strictSelection) {
+								this.selectedTags.push(value);
+							    isTagAdded = true;
+							}
 						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
-							this.selectedTags = value;
+							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
+								this.selectedTags = value;
+								isTagAdded = true;
+							} else if (!props.strictSelection) {
+								this.selectedTags.push(value);
+							    isTagAdded = true;
+							}
 						}
 					} else if (value) {
-						this.selectedTags = typeof value !== 'string' ? value : [...value];
+						if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
+							this.selectedTags = typeof value !== 'string' ? value : [...value];
+							isTagAdded = true;
+						} else if (!props.strictSelection) {
+							this.selectedTags = typeof value !== 'string' ? value : [...value];
+							isTagAdded = true;
+						}
 					}
-					this.currentValue = '';
+					if (props.strictSelection && !isTagAdded) {
+						this.currentValue = value;
+					} else {
+						this.currentValue = '';
+					}
 				} else {
 					this.currentValue = decodeHtml(value);
 				}
@@ -471,11 +497,16 @@ const SearchBox = {
 						if (toggleIsOpen) {
 							this.isOpen = false;
 						}
-						if (typeof this.currentValue === 'string')
-							this.triggerDefaultQuery(this.currentValue);
+						if (typeof this.currentValue === 'string') {
+							if (this.$options.isTagsMode && props.strictSelection && isTagAdded) {
+							    this.triggerDefaultQuery(this.currentValue);
+							} else if (!this.$options.isTagsMode) {
+								this.triggerDefaultQuery(this.currentValue);
+							}
+						}
 					} // in case of strict selection only SUGGESTION_SELECT should be able
 					// to set the query otherwise the value should reset
-					if (props.strictSelection) {
+					if (this.$options.isTagsMode && props.strictSelection && isTagAdded) {
 						if (
 							cause === causes.SUGGESTION_SELECT
 							|| (this.$options.isTagsMode
@@ -486,14 +517,14 @@ const SearchBox = {
 								queryHandlerValue,
 								this.$options.isTagsMode ? undefined : categoryValue,
 							);
-						} else {
+						} else if (!props.strictSelection) {
 							this.setValue('', true);
 						}
-					} else if (
+					} else if (!this.$options.isTagsMode && (
 						props.value === undefined
 						|| cause === causes.SUGGESTION_SELECT
 						|| cause === causes.CLEAR_VALUE
-					) {
+					)) {
 						this.triggerCustomQuery(
 							queryHandlerValue,
 							this.$options.isTagsMode ? undefined : categoryValue,
@@ -628,11 +659,15 @@ const SearchBox = {
 				if (this.$props.autosuggest === false) {
 					this.enterButtonOnClick();
 				} else if (highlightedIndex === null) {
+					this.isSuggestionSelected = true;
+					setTimeout(() => {
+						this.isSuggestionSelected = false;
+					}, 50);
 					this.setValue(
 						event.target.value,
 						true,
 						this.$props,
-						this.$options.isTagsMode ? causes.SUGGESTION_SELECT : undefined, // to handle tags
+						undefined, // to handle tags
 					);
 					this.onValueSelectedHandler(event.target.value, causes.ENTER_PRESS);
 				}
@@ -699,7 +734,6 @@ const SearchBox = {
 					}
 					emitValue.push(suggestion.value);
 				}
-
 				this.setValue(
 					emitValue,
 					true,
