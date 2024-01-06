@@ -56,7 +56,10 @@ const types = {
 	excludeFields: VueTypes.arrayOf(VueTypes.string),
 	fieldWeights: VueTypes.arrayOf(VueTypes.number),
 	filterLabel: VueTypes.string,
-	func: VueTypes.func,
+	func: {
+		type: Function,
+		required: false
+	},
 	funcRequired: VueTypes.func.isRequired,
 	fuzziness: VueTypes.oneOf([0, 1, 2, 'AUTO']),
 	headers: VueTypes.object,
@@ -107,7 +110,10 @@ const types = {
 	),
 	sortByWithCount: VueTypes.oneOf(['asc', 'desc', 'count']),
 	stats: VueTypes.arrayOf(VueTypes.object),
-	string: VueTypes.string,
+	string: {
+		type: String,
+		required: false
+	},
 	stringArray: VueTypes.arrayOf(VueTypes.string),
 	stringOrArray: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)]),
 	stringRequired: VueTypes.string.isRequired,

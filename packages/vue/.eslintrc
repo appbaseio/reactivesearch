@@ -5,7 +5,7 @@
 		"es6": true,
 		"node": true
 	},
-	"extends": ["airbnb-base", "plugin:vue/recommended", "prettier"],
+	"extends": ["airbnb-base", "plugin:vue/recommended", "plugin:vue-types/recommended", "prettier"],
 	"parserOptions": {
 		"parser": "babel-eslint",
 		"ecmaVersion": 2017,
