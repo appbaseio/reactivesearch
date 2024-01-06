@@ -272,7 +272,6 @@ const ReactiveBase =defineComponent( {
 	render() {
 		const children = this.$slots.default;
 		const { style, className } = this.$props;
-		window.console.log('🚀 ~ file: pppppppp');
 		return (
 			<Provider store={this.store} analyticsRef={this.analyticsRef}>
 				<URLParamsProvider
