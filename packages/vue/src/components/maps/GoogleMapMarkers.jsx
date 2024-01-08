@@ -53,7 +53,6 @@ const GoogleMapMarkers = {
 		const { openMarkers } = this;
 		const markerProps = {
 			openMarkers,
-			setMarkerOnTop: this.setMarkerOnTop,
 			setOpenMarkers: this.setOpenMarkers,
 			getPosition: this.getPosition,
 			renderItem: this.renderItem,

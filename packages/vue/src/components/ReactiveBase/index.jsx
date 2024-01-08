@@ -6,7 +6,6 @@ import Appbase from 'appbase-js';
 import AppbaseAnalytics from '@appbaseio/analytics';
 import 'url-search-params-polyfill';
 import { createCache } from '@appbaseio/vue-emotion';
-import { defineComponent } from 'vue';
 import Provider from '../Provider';
 import { composeThemeObject, X_SEARCH_CLIENT } from '../../utils/index';
 import types from '../../utils/vueTypes';
@@ -14,7 +13,7 @@ import URLParamsProvider from '../URLParamsProvider.jsx';
 import getTheme from '../../styles/theme';
 
 const { setValues } = Actions;
-const ReactiveBase =defineComponent( {
+const ReactiveBase = {
 	name: 'ReactiveBase',
 	data() {
 		this.state = {
@@ -110,10 +109,10 @@ const ReactiveBase =defineComponent( {
 					...(enableTelemetry === false && { 'X-Enable-Telemetry': false }),
 				}),
 				...headers,
-				...(endpoint
-					&& endpoint.headers && {
-					...endpoint.headers,
-				}),
+				...(endpoint &&
+					endpoint.headers && {
+						...endpoint.headers,
+					}),
 			};
 		},
 	},
@@ -123,8 +122,8 @@ const ReactiveBase =defineComponent( {
 			this.key = `${this.state.key}-0`;
 		},
 		setStore(props) {
-			const credentials
-				= props.url && props.url.trim() !== '' && !props.credentials
+			const credentials =
+				props.url && props.url.trim() !== '' && !props.credentials
 					? null
 					: props.credentials;
 			let url = props.url && props.url.trim() !== '' ? props.url : '';
@@ -209,8 +208,8 @@ const ReactiveBase =defineComponent( {
 				// When endpoint prop is used index is not defined, so we use _default
 				index: appbaseRef.app || '_default',
 				globalCustomEvents:
-					this.$props.reactivesearchAPIConfig
-					&& this.$props.reactivesearchAPIConfig.customEvents,
+					this.$props.reactivesearchAPIConfig &&
+					this.$props.reactivesearchAPIConfig.customEvents,
 			};
 
 			try {
@@ -220,13 +219,13 @@ const ReactiveBase =defineComponent( {
 						/\/\/(.*?)\/.*/,
 						'//$1',
 					);
-					const headerCredentials
-						= this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
-					analyticsInitConfig.credentials
-						= headerCredentials && headerCredentials.replace('Basic ', '');
+					const headerCredentials =
+						this.$props.endpoint.headers && this.$props.endpoint.headers.Authorization;
+					analyticsInitConfig.credentials =
+						headerCredentials && headerCredentials.replace('Basic ', '');
 					// Decode the credentials
-					analyticsInitConfig.credentials
-						= analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
+					analyticsInitConfig.credentials =
+						analyticsInitConfig.credentials && atob(analyticsInitConfig.credentials);
 				}
 			} catch (e) {
 				console.error('Endpoint not set correctly for analytics');
@@ -288,7 +287,7 @@ const ReactiveBase =defineComponent( {
 			</Provider>
 		);
 	},
-});
+};
 ReactiveBase.install = function (Vue) {
 	Vue.component(ReactiveBase.name, ReactiveBase);
 };

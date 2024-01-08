@@ -39,7 +39,10 @@ function validateLocation(value) {
 const types = {
 	any: VueTypes.any,
 	bool: VueTypes.bool,
-	boolRequired: VueTypes.bool.isRequired,
+	boolRequired: {
+		type: Boolean,
+		required: true
+	},
 	components: VueTypes.arrayOf(VueTypes.string),
 	compoundClause: VueTypes.oneOf(['filter', 'must']),
 	children: VueTypes.any,
@@ -114,7 +117,10 @@ const types = {
 		type: String,
 		required: false
 	},
-	stringArray: VueTypes.arrayOf(VueTypes.string),
+	stringArray: {
+		type: [String],
+		required: false
+	},
 	stringOrArray: VueTypes.oneOfType([VueTypes.string, VueTypes.arrayOf(VueTypes.string)]),
 	stringRequired: VueTypes.string.isRequired,
 	style: VueTypes.object,
