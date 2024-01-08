@@ -146,6 +146,7 @@ const ReactiveMap = {
 			currentPageState,
 			mapBoxBounds: null,
 			markersData: null,
+			filteredResults: null
 		};
 		return this.__state;
 	},

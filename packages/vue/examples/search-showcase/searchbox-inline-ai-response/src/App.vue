@@ -45,6 +45,7 @@
         }"
         :AIUIConfig="{
           askButton: true,
+          triggerOn: 'question'
         }"
         distinct-field="meta_title.keyword"
         class="mx-5 mt-2"

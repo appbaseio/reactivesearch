@@ -2,9 +2,9 @@ import VueTypes from 'vue-types';
 import { Actions, helper } from '@appbaseio/reactivecore';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 // eslint-disable-next-line import/extensions
-import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
-import 'vue-slider-component/dist-css/vue-slider-component.css'
-import 'vue-slider-component/theme/default.css'
+import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js';
+import 'vue-slider-component/dist-css/vue-slider-component.css';
+import 'vue-slider-component/theme/default.css';
 import Container from '../../styles/Container';
 import { connect, updateCustomQuery, isQueryIdentical } from '../../utils/index';
 import ComponentWrapper from '../basic/ComponentWrapper.jsx';
