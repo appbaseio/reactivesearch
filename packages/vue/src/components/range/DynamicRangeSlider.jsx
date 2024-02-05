@@ -339,12 +339,8 @@ const DynamicRangeSlider = {
 		const { start, end } = this.range;
 		return (
 			<Container class={this.$props.className}>
-				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title')}>
-						{this.$props.title}
-					</Title>
-				)}
-				<NoSSR>
+				{this.$scopedSlots.title ? this.$scopedSlots.title() : null}
+				<NoSSR class={getClassName(this.$props.innerClass, 'outer')}>
 					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
 						<vue-slider-component
 							ref="slider"
