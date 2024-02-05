@@ -204,6 +204,14 @@ const DynamicRangeSlider = {
 				this.range ? Math.min(this.range.end, currentValue[1]) : currentValue[1],
 			];
 
+			if (currentValue[0] === null) {
+				normalizedValue[0] = this.range.start
+			}
+
+			if (currentValue[1] === null) {
+				normalizedValue[1] = this.range.end
+			}
+
 			const performUpdate = () => {
 				this.currentValue = normalizedValue;
 				this.updateQueryHandler(normalizedValue, this.$props);
@@ -240,8 +248,11 @@ const DynamicRangeSlider = {
 			const { start, end } = this.range || { start: value[0], end: value[1] };
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
-			const isInitialValue = currentStart === start && currentEnd === end;
-
+			const isInitialValue = currentStart === start && currentEnd === end
+				|| !this.range
+				|| !this.currentValue
+				|| start === null
+				|| end === null
 
 			this.updateQuery({
 				componentId: this.$props.componentId,
