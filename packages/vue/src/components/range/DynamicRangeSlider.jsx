@@ -204,12 +204,14 @@ const DynamicRangeSlider = {
 				this.range ? Math.min(this.range.end, currentValue[1]) : currentValue[1],
 			];
 
-			if (currentValue[0] === null) {
-				normalizedValue[0] = this.range.start
-			}
+			if(this.range) {
+				if (currentValue[0] === null) {
+					normalizedValue[0] = this.range.start
+				}
 
-			if (currentValue[1] === null) {
-				normalizedValue[1] = this.range.end
+				if (currentValue[1] === null) {
+					normalizedValue[1] = this.range.end
+				}
 			}
 
 			const performUpdate = () => {
