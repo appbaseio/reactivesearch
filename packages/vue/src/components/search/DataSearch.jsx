@@ -388,6 +388,7 @@ const DataSearch = {
 			}
 		},
 		suggestions(newVal) {
+
 			if (this.isLoading) {
 				this.normalizedSuggestions = [];
 				return;
@@ -604,7 +605,7 @@ const DataSearch = {
 				this.$emit('value-change', value);
 				// Set the already fetched suggestions if query is same as used last to fetch the hits
 				if (value === this.lastUsedQuery) {
-					this.suggestions = this.onSuggestions(this.suggestions);
+					this.normalizedSuggestions = this.onSuggestions(this.suggestions);
 					// invoke on suggestions
 					this.$emit('suggestions', this.suggestions);
 				} else if (!value) {
