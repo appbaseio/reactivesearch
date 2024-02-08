@@ -40,7 +40,7 @@ const ReactiveComponent = {
 		endpoint: types.endpointConfig,
 	},
 	data() {
-		 return {
+		return {
 			currentValue: this.selectedValue,
 		};
 	},
@@ -48,6 +48,7 @@ const ReactiveComponent = {
 		const props = this.$props;
 		this.internalComponent = null;
 		this.$defaultQuery = null;
+		this.currentValue = this.selectedValue;
 		// Set custom query in store
 		updateCustomQuery(this.componentId, this.setCustomQuery, this.$props, this.selectedValue);
 
@@ -169,7 +170,7 @@ const ReactiveComponent = {
 	},
 	watch: {
 		selectedValue(newVal, oldVal) {
-			if (!isEqual(newVal, oldVal)) {
+			if (!isEqual(newVal, oldVal) || !isEqual(newVal, this.currentValue)) {
 				this.$emit('data', this.getData());
 				this.currentValue = newVal;
 			}
@@ -273,7 +274,7 @@ const ReactiveComponent = {
 	render() {
 		try {
 			const dom = this.$scopedSlots.default;
-			const { error, isLoading  } = this;
+			const { error, isLoading } = this;
 			const propsToBePassed = {
 				error,
 				loading: isLoading,

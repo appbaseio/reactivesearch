@@ -383,12 +383,25 @@ const DataSearch = {
 				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
+		isLoading(newVal) {
+			if (newVal) {
+				this.suggestions = [];
+			}
+		},
 		suggestions(newVal) {
+
+			if (this.isLoading) {
+				this.normalizedSuggestions = [];
+				return;
+			}
+
 			if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
 				// shallow check allows us to set suggestions even if the next set
 				// of suggestions are same as the current one
 				this.$emit('suggestions', newVal);
-				this.normalizedSuggestions = this.onSuggestions(newVal);
+				if (!isEqual(this.normalizedSuggestions, newVal)) {
+					this.normalizedSuggestions = this.onSuggestions(newVal);
+				}
 			}
 		},
 		selectedValue(newVal, oldVal) {
@@ -529,9 +542,12 @@ const DataSearch = {
 					return;
 				}
 				// Refresh recent searches when value becomes empty
-				if (!value && props.enableDefaultSuggestions === false) {
-					this.resetStoreForComponent(props.componentId);
-				} else if (!value && this.currentValue && this.enableRecentSearches) {
+				if (
+					props.enableDefaultSuggestions
+					&& !value
+					&& this.currentValue
+					&& this.enableRecentSearches
+				) {
 					this.getRecentSearches();
 				}
 				if (isTagsMode) {
@@ -613,12 +629,12 @@ const DataSearch = {
 				this.$emit('value-change', value);
 				// Set the already fetched suggestions if query is same as used last to fetch the hits
 				if (value === this.lastUsedQuery) {
-					this.suggestions = this.onSuggestions(this.suggestions);
+					this.normalizedSuggestions = this.onSuggestions(this.suggestions);
 					// invoke on suggestions
 					this.$emit('suggestions', this.suggestions);
 				} else if (!value) {
 					// reset suggestions
-					this.suggestions = [];
+					this.normalizedSuggestions = [];
 					// invoke on suggestions
 					this.$emit('suggestions', this.suggestions);
 				}
@@ -627,11 +643,6 @@ const DataSearch = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		updateDefaultQueryHandler(value, props = this.$props, execute) {
-			if (!value && props.enableDefaultSuggestions === false) {
-				// clear Component data from store
-				this.resetStoreForComponent(props.componentId);
-				return;
-			}
 			let defaultQueryOptions;
 			let query = DataSearch.defaultQuery(value, props);
 			if (this.defaultQuery) {
