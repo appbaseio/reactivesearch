@@ -77,7 +77,6 @@ const DataSearch = {
 			isOpen: false,
 			normalizedSuggestions: [],
 			isPending: false,
-			isSuggestionSelected: false,
 		};
 		this.internalComponent = `${props.componentId}__internal`;
 		return this.__state;
@@ -383,25 +382,13 @@ const DataSearch = {
 				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
-		isLoading(newVal) {
-			if (newVal) {
-				this.suggestions = [];
-			}
-		},
 		suggestions(newVal) {
-
-			if (this.isLoading) {
-				this.normalizedSuggestions = [];
-				return;
-			}
 
 			if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
 				// shallow check allows us to set suggestions even if the next set
 				// of suggestions are same as the current one
 				this.$emit('suggestions', newVal);
-				if (!isEqual(this.normalizedSuggestions, newVal)) {
-					this.normalizedSuggestions = this.onSuggestions(newVal);
-				}
+				this.normalizedSuggestions = this.onSuggestions(newVal);
 			}
 		},
 		selectedValue(newVal, oldVal) {
@@ -542,16 +529,12 @@ const DataSearch = {
 					return;
 				}
 				// Refresh recent searches when value becomes empty
-				if (
-					props.enableDefaultSuggestions
-					&& !value
-					&& this.currentValue
-					&& this.enableRecentSearches
-				) {
+				if (!value && props.enableDefaultSuggestions === false) {
+					this.resetStoreForComponent(props.componentId);
+				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
 				if (isTagsMode) {
-					let isTagAdded = false;
 					if (Array.isArray(this.selectedTags) && this.selectedTags.length) {
 						// check if value already present in selectedTags
 						if (typeof value === 'string' && this.selectedTags.includes(value)) {
@@ -561,36 +544,14 @@ const DataSearch = {
 						this.selectedTags = [...this.selectedTags];
 
 						if (typeof value === 'string' && !!value) {
-							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
-							    this.selectedTags.push(value);
-							    isTagAdded = true;
-							} else if (!props.strictSelection) {
-								this.selectedTags.push(value);
-							    isTagAdded = true;
-							}
+							this.selectedTags.push(value);
 						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
-							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
-								this.selectedTags = value;
-								isTagAdded = true;
-							} else if (!props.strictSelection) {
-								this.selectedTags.push(value);
-							    isTagAdded = true;
-							}
+							this.selectedTags = value;
 						}
 					} else if (value) {
-						if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
-							this.selectedTags = typeof value !== 'string' ? value : [...value];
-							isTagAdded = true;
-						} else if (!props.strictSelection) {
-							this.selectedTags = typeof value !== 'string' ? value : [...value];
-							isTagAdded = true;
-						}
+						this.selectedTags = typeof value !== 'string' ? value : [...value];
 					}
-					if (props.strictSelection && !isTagAdded) {
-						this.currentValue = value;
-					} else {
-						this.currentValue = '';
-					}
+					this.currentValue = '';
 				} else {
 					this.currentValue = value;
 				}
@@ -614,7 +575,7 @@ const DataSearch = {
 					if (props.strictSelection && props.autosuggest) {
 						if (cause === causes.SUGGESTION_SELECT || props.value !== undefined) {
 							this.updateQueryHandler(props.componentId, queryHandlerValue, props);
-						} else if (this.currentValue !== '' && !props.strictSelection) {
+						} else if (this.currentValue !== '') {
 							this.setValue('', true);
 						}
 					} else {
@@ -643,6 +604,11 @@ const DataSearch = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		updateDefaultQueryHandler(value, props = this.$props, execute) {
+			if (!value && props.enableDefaultSuggestions === false) {
+				// clear Component data from store
+				this.resetStoreForComponent(props.componentId);
+				return;
+			}
 			let defaultQueryOptions;
 			let query = DataSearch.defaultQuery(value, props);
 			if (this.defaultQuery) {
@@ -754,7 +720,7 @@ const DataSearch = {
 
 		handleKeyDown(event, highlightedIndex) {
 			const { value: targetValue } = event.target;
-			const { value, size } = this.$props;
+			const { value, strictSelection, size, autosuggest } = this.$props;
 			if (value !== undefined) {
 				this.isPending = true;
 			}
@@ -771,16 +737,14 @@ const DataSearch = {
 						].length)
 			) {
 				this.isPending = false;
-				if (!this.isSuggestionSelected) {
-					this.setValue(
-						targetValue,
-						true,
-						this.$props,
-						undefined,
-						false,
-					);
-					this.onValueSelectedHandler(targetValue, causes.ENTER_PRESS);
-				}
+				this.setValue(
+					this.$options.isTagsMode && autosuggest && strictSelection ? '' : targetValue,
+					true,
+					this.$props,
+					undefined,
+					false,
+				);
+				this.onValueSelectedHandler(targetValue, causes.ENTER_PRESS);
 			}
 			// Need to review
 			this.$emit('keyDown', event, this.triggerQuery);
@@ -822,10 +786,6 @@ const DataSearch = {
 			this.triggerClickAnalytics(suggestion._click_id);
 			if (value === undefined) {
 				this.setValue(suggestion.value, true, this.$props, causes.SUGGESTION_SELECT);
-				this.isSuggestionSelected = true;
-				setTimeout(() => {
-					this.isSuggestionSelected = false;
-				}, 50);
 			} else if (this.$options.isTagsMode) {
 				const emitValue = Array.isArray(this.selectedTags) ? [...this.selectedTags] : [];
 				if (this.selectedTags.includes(suggestion.value)) {
@@ -1641,7 +1601,7 @@ const mapStateToProps = (state, props) => ({
 	componentProps: state.props[props.componentId],
 	lastUsedQuery: state.queryToHits[props.componentId],
 	recentSearches: state.recentSearches.data,
-});
+})
 const mapDispatchToProps = {
 	setQueryOptions,
 	updateQuery,
