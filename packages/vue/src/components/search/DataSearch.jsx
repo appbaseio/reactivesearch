@@ -374,7 +374,6 @@ const DataSearch = {
 			}
 		},
 		defaultQuery(newVal, oldVal) {
-			console.log('🚀 ~ defaultQuery ~ newVal, oldVal:', newVal, oldVal);
 			if (!isQueryIdentical(newVal, oldVal, this.$data.currentValue, this.$props)) {
 				this.updateDefaultQueryHandlerDebounced(this.$data.currentValue, this.$props);
 			}
@@ -628,11 +627,6 @@ const DataSearch = {
 			checkValueChange(props.componentId, value, props.beforeValueChange, performUpdate);
 		},
 		updateDefaultQueryHandler(value, props = this.$props, execute) {
-			if (!value && props.enableDefaultSuggestions === false) {
-				// clear Component data from store
-				this.resetStoreForComponent(props.componentId);
-				return;
-			}
 			let defaultQueryOptions;
 			let query = DataSearch.defaultQuery(value, props);
 			if (this.defaultQuery) {
@@ -645,23 +639,28 @@ const DataSearch = {
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
-			this.setQueryOptions(
-				this.internalComponent,
-				{
-					...this.queryOptions,
-					...defaultQueryOptions,
-				},
-				execute,
-			);
-			this.updateQuery(
-				{
-					componentId: this.internalComponent,
-					query,
-					value,
-					componentType: componentTypes.dataSearch,
-				},
-				execute,
-			);
+			if (!value && props.enableDefaultSuggestions === false) {
+				// clear Component data from store
+				this.resetStoreForComponent(props.componentId);
+
+			} else {
+				this.setQueryOptions(
+					this.internalComponent,
+					{
+						...this.queryOptions,
+						...defaultQueryOptions,
+					},
+					execute,
+				);
+				this.updateQuery(
+					{
+						componentId: this.internalComponent,
+						query,
+						value,
+						componentType: componentTypes.dataSearch,
+					},
+					execute,
+				);}
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
