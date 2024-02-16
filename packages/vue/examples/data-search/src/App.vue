@@ -13,9 +13,12 @@
 				:dataField="['original_title', 'original_title.search']"
 				:URLParams="true"
 				:size="3"
-				:enablePopularSuggestions="true"
-				:enableRecentSearches="true"
+				:enablePopularSuggestions="false"
+				:enableRecentSearches="false"
 				:enableDefaultSuggestions="false"
+				 mode='tag'
+				 :strictSelection="true"
+				 :default-query="handleDefaultQuery"
 			/>
 			<ReactiveList
 				componentId="SearchResult"
@@ -69,6 +72,22 @@
 import './styles.css';
 export default {
 	name: 'app',
+	methods: {
+		handleDefaultQuery(value, props) {
+                window.console.log("🚀 ~ value:", value);
+                const size = props.size;
+                // don't implement a minimum number of chars here, because there is a street named 'A'
+                return !value
+                    ? null
+                    : {
+                        id: 'BookSensor',
+                        params: {
+                            value,
+                            size,
+                        },
+                    };
+            }
+	}
 };
 </script>
 
