@@ -546,11 +546,11 @@ const DataSearch = {
 
 						if (typeof value === 'string' && !!value) {
 							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
-							    this.selectedTags.push(value);
-							    isTagAdded = true;
+								this.selectedTags.push(value);
+								isTagAdded = true;
 							} else if (!props.strictSelection) {
 								this.selectedTags.push(value);
-							    isTagAdded = true;
+								isTagAdded = true;
 							}
 						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
 							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
@@ -558,7 +558,7 @@ const DataSearch = {
 								isTagAdded = true;
 							} else if (!props.strictSelection) {
 								this.selectedTags.push(value);
-							    isTagAdded = true;
+								isTagAdded = true;
 							}
 						}
 					} else if (value) {
@@ -660,7 +660,8 @@ const DataSearch = {
 						componentType: componentTypes.dataSearch,
 					},
 					execute,
-				);}
+				);
+			}
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
@@ -737,7 +738,8 @@ const DataSearch = {
 
 		clearValue() {
 			this.isPending = false;
-			this.setValue('', true);
+			if (!this.$props.enableDefaultSuggestions) { this.isOpen = false; }
+			this.setValue('', false);
 			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 		},
 
@@ -753,11 +755,11 @@ const DataSearch = {
 				&& (highlightedIndex === null
 					|| highlightedIndex < 0
 					|| highlightedIndex
-						=== [
-							...[...this.suggestionsList].slice(0, size || 10),
-							...this.defaultSearchSuggestions,
-							...this.topSuggestions,
-						].length)
+					=== [
+						...[...this.suggestionsList].slice(0, size || 10),
+						...this.defaultSearchSuggestions,
+						...this.topSuggestions,
+					].length)
 			) {
 				this.isPending = false;
 				if (!this.isSuggestionSelected) {
@@ -1070,7 +1072,7 @@ const DataSearch = {
 			// handler for alphabets and other key combinations
 			hotkeys(
 				shortcutsString, // eslint-disable-next-line no-unused-vars
-				/* eslint-disable no-shadow */ (event, handler) => {
+				/* eslint-disable no-shadow */(event, handler) => {
 					// Prevent the default refresh event under WINDOWS system
 					event.preventDefault();
 					this.focusSearchBox(event);
@@ -1186,8 +1188,7 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${
-																this.suggestionsList.length
+															key={`${this.suggestionsList.length
 																+ index
 																+ 1
 															}-${sugg.value}`}
@@ -1256,7 +1257,7 @@ const DataSearch = {
 															highlightedIndex,
 														},
 														true,
-													  )
+													)
 													: this.topSuggestions.map((sugg, index) => (
 														<li
 															{...{
@@ -1269,18 +1270,17 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${
-																this.suggestionsList.length
-																	+ index
-																	+ 1
+															key={`${this.suggestionsList.length
+																+ index
+																+ 1
 															}-${sugg.value}`}
 															style={{
 																backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			this.suggestionsList
-																				.length + index,
-																		),
+																	this.getBackgroundColor(
+																		highlightedIndex,
+																		this.suggestionsList
+																			.length + index,
+																	),
 																justifyContent: 'flex-start',
 															}}
 														>
@@ -1306,7 +1306,7 @@ const DataSearch = {
 																suggestion={sugg}
 															/>
 														</li>
-													  ))}
+													))}
 											</ul>
 										) : (
 											this.renderNoSuggestions(this.suggestionsList)
@@ -1379,7 +1379,7 @@ const DataSearch = {
 														domProps: getInputProps({
 															value:
 																this.$data.currentValue === null
-																|| typeof this.$data.currentValue
+																	|| typeof this.$data.currentValue
 																	!== 'string'
 																	? ''
 																	: this.$data.currentValue,
