@@ -383,25 +383,13 @@ const DataSearch = {
 				this.updateQueryHandler(this.componentId, this.$data.currentValue, this.$props);
 			}
 		},
-		isLoading(newVal) {
-			if (newVal) {
-				this.suggestions = [];
-			}
-		},
 		suggestions(newVal) {
-
-			if (this.isLoading) {
-				this.normalizedSuggestions = [];
-				return;
-			}
 
 			if (Array.isArray(newVal) && this.$data.currentValue.trim().length) {
 				// shallow check allows us to set suggestions even if the next set
 				// of suggestions are same as the current one
 				this.$emit('suggestions', newVal);
-				if (!isEqual(this.normalizedSuggestions, newVal)) {
-					this.normalizedSuggestions = this.onSuggestions(newVal);
-				}
+				this.normalizedSuggestions = this.onSuggestions(newVal);
 			}
 		},
 		selectedValue(newVal, oldVal) {
@@ -541,13 +529,9 @@ const DataSearch = {
 				if (isTagsMode && isEqual(value, this.selectedTags)) {
 					return;
 				}
-				// Refresh recent searches when value becomes empty
-				if (
-					props.enableDefaultSuggestions
-					&& !value
-					&& this.currentValue
-					&& this.enableRecentSearches
-				) {
+				if (!value && props.enableDefaultSuggestions === false) {
+					this.resetStoreForComponent(props.componentId);
+				} else if (!value && this.currentValue && this.enableRecentSearches) {
 					this.getRecentSearches();
 				}
 				if (isTagsMode) {
@@ -562,11 +546,11 @@ const DataSearch = {
 
 						if (typeof value === 'string' && !!value) {
 							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
-							    this.selectedTags.push(value);
-							    isTagAdded = true;
+								this.selectedTags.push(value);
+								isTagAdded = true;
 							} else if (!props.strictSelection) {
 								this.selectedTags.push(value);
-							    isTagAdded = true;
+								isTagAdded = true;
 							}
 						} else if (Array.isArray(value) && !isEqual(this.selectedTags, value)) {
 							if (props.strictSelection && cause === causes.SUGGESTION_SELECT) {
@@ -574,7 +558,7 @@ const DataSearch = {
 								isTagAdded = true;
 							} else if (!props.strictSelection) {
 								this.selectedTags.push(value);
-							    isTagAdded = true;
+								isTagAdded = true;
 							}
 						}
 					} else if (value) {
@@ -655,23 +639,29 @@ const DataSearch = {
 				// Update calculated default query in store
 				updateDefaultQuery(props.componentId, this.setDefaultQuery, props, value);
 			}
-			this.setQueryOptions(
-				this.internalComponent,
-				{
-					...this.queryOptions,
-					...defaultQueryOptions,
-				},
-				execute,
-			);
-			this.updateQuery(
-				{
-					componentId: this.internalComponent,
-					query,
-					value,
-					componentType: componentTypes.dataSearch,
-				},
-				execute,
-			);
+			if (!value && props.enableDefaultSuggestions === false) {
+				// clear Component data from store
+				this.resetStoreForComponent(props.componentId);
+
+			} else {
+				this.setQueryOptions(
+					this.internalComponent,
+					{
+						...this.queryOptions,
+						...defaultQueryOptions,
+					},
+					execute,
+				);
+				this.updateQuery(
+					{
+						componentId: this.internalComponent,
+						query,
+						value,
+						componentType: componentTypes.dataSearch,
+					},
+					execute,
+				);
+			}
 		},
 		updateQueryHandler(componentId, value, props) {
 			const { customQuery, filterLabel, showFilter, URLParams } = props;
@@ -748,7 +738,8 @@ const DataSearch = {
 
 		clearValue() {
 			this.isPending = false;
-			this.setValue('', true);
+			if (!this.$props.enableDefaultSuggestions) { this.isOpen = false; }
+			this.setValue('', false);
 			this.onValueSelectedHandler('', causes.CLEAR_VALUE);
 		},
 
@@ -764,11 +755,11 @@ const DataSearch = {
 				&& (highlightedIndex === null
 					|| highlightedIndex < 0
 					|| highlightedIndex
-						=== [
-							...[...this.suggestionsList].slice(0, size || 10),
-							...this.defaultSearchSuggestions,
-							...this.topSuggestions,
-						].length)
+					=== [
+						...[...this.suggestionsList].slice(0, size || 10),
+						...this.defaultSearchSuggestions,
+						...this.topSuggestions,
+					].length)
 			) {
 				this.isPending = false;
 				if (!this.isSuggestionSelected) {
@@ -1081,7 +1072,7 @@ const DataSearch = {
 			// handler for alphabets and other key combinations
 			hotkeys(
 				shortcutsString, // eslint-disable-next-line no-unused-vars
-				/* eslint-disable no-shadow */ (event, handler) => {
+				/* eslint-disable no-shadow */(event, handler) => {
 					// Prevent the default refresh event under WINDOWS system
 					event.preventDefault();
 					this.focusSearchBox(event);
@@ -1197,8 +1188,7 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${
-																this.suggestionsList.length
+															key={`${this.suggestionsList.length
 																+ index
 																+ 1
 															}-${sugg.value}`}
@@ -1267,7 +1257,7 @@ const DataSearch = {
 															highlightedIndex,
 														},
 														true,
-													  )
+													)
 													: this.topSuggestions.map((sugg, index) => (
 														<li
 															{...{
@@ -1280,18 +1270,17 @@ const DataSearch = {
 																	item: sugg,
 																}),
 															}}
-															key={`${
-																this.suggestionsList.length
-																	+ index
-																	+ 1
+															key={`${this.suggestionsList.length
+																+ index
+																+ 1
 															}-${sugg.value}`}
 															style={{
 																backgroundColor:
-																		this.getBackgroundColor(
-																			highlightedIndex,
-																			this.suggestionsList
-																				.length + index,
-																		),
+																	this.getBackgroundColor(
+																		highlightedIndex,
+																		this.suggestionsList
+																			.length + index,
+																	),
 																justifyContent: 'flex-start',
 															}}
 														>
@@ -1317,7 +1306,7 @@ const DataSearch = {
 																suggestion={sugg}
 															/>
 														</li>
-													  ))}
+													))}
 											</ul>
 										) : (
 											this.renderNoSuggestions(this.suggestionsList)
@@ -1390,7 +1379,7 @@ const DataSearch = {
 														domProps: getInputProps({
 															value:
 																this.$data.currentValue === null
-																|| typeof this.$data.currentValue
+																	|| typeof this.$data.currentValue
 																	!== 'string'
 																	? ''
 																	: this.$data.currentValue,
