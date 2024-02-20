@@ -1,6 +1,7 @@
 import { components } from 'gmap-vue';
 import { Actions } from '@appbaseio/reactivecore';
 import VueTypes from 'vue-types';
+import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 import { connect } from '../../utils/index';
 import MarkerWithLabel from './MarkerWithLabel.jsx';
 import InfoWindowWrapper from './InfoWindowWrapper.jsx';
@@ -30,6 +31,13 @@ const GoogleMapMarker = {
 			zIndex: 0,
 			markerIcon: null,
 		};
+	},
+	watch: {
+		marker(newVal, oldVal) {
+			if (!isEqual(newVal, oldVal)) {
+				this.markerIcon = null;
+			}
+		}
 	},
 	methods: {
 		setIcon(icon) {
