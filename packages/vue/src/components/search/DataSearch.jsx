@@ -160,7 +160,7 @@ const DataSearch = {
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				this.currentValue ? this.popularSuggestions : this.defaultPopularSuggestions || [],
-				this.currentValue,
+				this.currentValue || '',
 				this.showDistinctSuggestions,
 			);
 		},
@@ -182,7 +182,7 @@ const DataSearch = {
 			return getTopSuggestions(
 				// use default popular suggestions if value is empty
 				defaultSuggestions,
-				this.currentValue,
+				this.currentValue || '',
 				this.showDistinctSuggestions,
 			);
 		},
@@ -507,7 +507,7 @@ const DataSearch = {
 			return queryOptions;
 		},
 		onSuggestions(results) {
-			return handleOnSuggestions(results, this.$data.currentValue, this);
+			return handleOnSuggestions(results, this.$data.currentValue || '', this);
 		},
 		handleSearchIconClick() {
 			const { currentValue } = this;
@@ -570,7 +570,7 @@ const DataSearch = {
 							isTagAdded = true;
 						}
 					}
-					if (props.strictSelection && !isTagAdded) {
+					if (props.strictSelection && !isTagAdded && typeof value === 'string') {
 						this.currentValue = value;
 					} else {
 						this.currentValue = '';
