@@ -58,6 +58,7 @@
 		"@babel/plugin-external-helpers": "^7.2.0",
 		"@babel/plugin-proposal-class-properties": "^7.5.5",
 		"@babel/plugin-proposal-json-strings": "^7.2.0",
+		"@babel/plugin-proposal-private-methods": "^7.2.0",
 		"@babel/plugin-syntax-dynamic-import": "^7.2.0",
 		"@babel/plugin-syntax-import-meta": "^7.2.0",
 		"@babel/plugin-syntax-jsx": "^7.2.0",

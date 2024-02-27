@@ -204,6 +204,16 @@ const DynamicRangeSlider = {
 				this.range ? Math.min(this.range.end, currentValue[1]) : currentValue[1],
 			];
 
+			if(this.range) {
+				if (currentValue[0] === null) {
+					normalizedValue[0] = this.range.start
+				}
+
+				if (currentValue[1] === null) {
+					normalizedValue[1] = this.range.end
+				}
+			}
+
 			const performUpdate = () => {
 				this.currentValue = normalizedValue;
 				this.updateQueryHandler(normalizedValue, this.$props);
@@ -240,11 +250,15 @@ const DynamicRangeSlider = {
 			const { start, end } = this.range || { start: value[0], end: value[1] };
 			const [currentStart, currentEnd] = value;
 			// check if the slider is at its initial position
-			const isInitialValue = currentStart === start && currentEnd === end;
+			const isInitialValue = currentStart === start && currentEnd === end
+				|| !this.range
+				|| !this.currentValue
+				|| start === null
+				|| end === null
 
 			this.updateQuery({
 				componentId: this.$props.componentId,
-				query,
+				query: (isInitialValue ? null : query),
 				value,
 				label: this.$props.filterLabel,
 				showFilter: this.$props.showFilter && !isInitialValue,
@@ -319,56 +333,54 @@ const DynamicRangeSlider = {
 	},
 
 	render() {
-		if (!this.range || !this.currentValue) {
+		if (!this.range || !this.currentValue || this.range.start === null || this.range.end === null || this.range.start === this.range.end) {
 			return null;
 		}
 		const { start, end } = this.range;
 		return (
 			<Container class={this.$props.className}>
-				{this.$props.title && (
-					<Title class={getClassName(this.$props.innerClass, 'title')}>
-						{this.$props.title}
-					</Title>
-				)}
+				{this.$scopedSlots.title ? this.$scopedSlots.title() : null}
 				<NoSSR>
-					<Slider class={getClassName(this.$props.innerClass, 'slider')}>
-						<vue-slider-component
-							ref="slider"
-							value={[
-								Math.floor(Math.max(start, this.currentValue[0])),
-								Math.ceil(Math.min(end, this.currentValue[1])),
-							]}
-							min={Math.floor(Math.min(start, this.currentValue[0]))}
-							max={Math.ceil(Math.max(end, this.currentValue[1]))}
-							onDrag-end={this.handleSlider}
-							dotSize={20}
-							height={4}
-							enable-cross={false}
-							tooltip="always"
-							{...{ props: this.$props.sliderOptions }}
-						/>
+					<div class={getClassName(this.$props.innerClass, 'outer')}>
+						<Slider class={getClassName(this.$props.innerClass, 'slider')}>
+							<vue-slider-component
+								ref="slider"
+								value={[
+									Math.floor(Math.max(start, this.currentValue[0])),
+									Math.ceil(Math.min(end, this.currentValue[1])),
+								]}
+								min={Math.floor(Math.min(start, this.currentValue[0]))}
+								max={Math.ceil(Math.max(end, this.currentValue[1]))}
+								onDrag-end={this.handleSlider}
+								dotSize={20}
+								height={4}
+								enable-cross={false}
+								tooltip="always"
+								{...{ props: this.$props.sliderOptions }}
+							/>
 
-						{this.labels ? (
-							<div class="label-container">
-								<label
-									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-left'
-									}
-								>
-									{this.labels.start}
-								</label>
-								<label
-									class={
-										getClassName(this.$props.innerClass, 'label')
-										|| 'range-label-right'
-									}
-								>
-									{this.labels.end}
-								</label>
-							</div>
-						) : null}
-					</Slider>
+							{this.labels ? (
+								<div class="label-container">
+									<label
+										class={
+											getClassName(this.$props.innerClass, 'label')
+											|| 'range-label-left'
+										}
+									>
+										{this.labels.start}
+									</label>
+									<label
+										class={
+											getClassName(this.$props.innerClass, 'label')
+											|| 'range-label-right'
+										}
+									>
+										{this.labels.end}
+									</label>
+								</div>
+							) : null}
+						</Slider>
+					</div>
 				</NoSSR>
 			</Container>
 		);
