@@ -8,7 +8,7 @@
 		"@appbaseio/reactivesearch": "4.2.2",
 		"emotion": "^9.1.1",
 		"emotion-server": "^9.1.1",
-		"express": "^4.16.3",
+		"express": "^4.19.2",
 		"prop-types": "^15.6.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
