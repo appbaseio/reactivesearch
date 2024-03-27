@@ -4,6 +4,7 @@ import {
 	ReactiveBase,
 	ReactiveList,
 	SearchBox,
+	NumberBox,
 	SelectedFilters,
 	getServerState,
 	RangeSlider,
@@ -87,6 +88,16 @@ function Main(props) {
 									<i className="fa fa-star" /> Ratings
 								</b>
 							</div>
+							<NumberBox
+								componentId="VoteAverageNB"
+								dataField="vote_average"
+								data={{ start: 0, end: 10, label: 'Votes' }}
+								react={{
+									and: ['SearchSensor', 'results', 'GenresList'],
+								}}
+								URLParams
+								className="review-filter"
+							/>
 							<RangeSlider
 								componentId="VoteAverage"
 								dataField="vote_average"
@@ -205,7 +216,7 @@ function Main(props) {
 								)}
 								URLParams
 								react={{
-									and: ['SearchSensor', 'VoteAverage', 'GenresList'],
+									and: ['SearchSensor', 'VoteAverage', 'GenresList', 'VoteAverageNB'],
 								}}
 								innerClass={{
 									resultStats: 'result-stats',
