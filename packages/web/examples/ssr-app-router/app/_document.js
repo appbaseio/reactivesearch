@@ -1,0 +1,41 @@
+import React from 'react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import { renderToString } from 'react-dom/server';
+
+export default class MyDocument extends Document {
+	static async getInitialProps(ctx) {
+		const initialProps = await Document.getInitialProps(ctx);
+		const { renderPage } = ctx;
+		// for emotion-js
+		const page = renderPage();
+		const styles = renderToString(page.html);
+		return { ...initialProps, ...page, ...styles };
+	}
+
+	constructor(props) {
+		// for emotion-js
+		super(props);
+		const { __NEXT_DATA__, ids } = props;
+		if (ids) {
+			__NEXT_DATA__.ids = ids;
+		}
+	}
+
+	render() {
+		return (
+			<Html lang="en">
+				<Head>
+					<link rel="stylesheet" href="/_next/static/style.css" />
+					<meta charSet="utf-8" />
+					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+					{/* for emotion-js */}
+					<style dangerouslySetInnerHTML={{ __html: this.props.css }} />
+				</Head>
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
+	}
+}
