@@ -107,7 +107,7 @@
     react-slick "^0.24.0"
     slick-carousel "^1.8.1"
 
-"@appbaseio/docs@appbaseio/Docs#dev", docs@appbaseio/Docs#dev:
+"@appbaseio/docs@appbaseio/Docs#dev":
   version "0.0.2"
   resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/748e220f8f15e30b3201e396f8a10d906df4f551"
   dependencies:
@@ -8273,7 +8273,7 @@
   resolved "https://registry.yarnpkg.com/@types/tmp/-/tmp-0.0.33.tgz#1073c4bc824754ae3d10cfab88ab0237ba964e4d"
   integrity sha512-gVC1InwyVrO326wbBZw+AO3u2vRXz/iRWq9jYhpG4W8LXyIgDv3ZmcLQ5Q4Gs+gFMyqx+viFoFT+l3p61QFCmQ==
 
-"@types/trusted-types@*", "@types/trusted-types@^2.0.2":
+"@types/trusted-types@*", "@types/trusted-types@^2.0.2", "@types/trusted-types@^2.0.7":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
   integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
@@ -15807,6 +15807,71 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
+docs@appbaseio/Docs#dev:
+  version "0.0.2"
+  resolved "https://codeload.github.com/appbaseio/Docs/tar.gz/748e220f8f15e30b3201e396f8a10d906df4f551"
+  dependencies:
+    "@appbaseio/designkit" "^0.13.0"
+    "@appbaseio/reactivemaps" "^3.0.0"
+    "@appbaseio/reactivesearch" "^3.30.3"
+    "@loadable/component" "^5.15.2"
+    "@reach/router" "^1.2.1"
+    "@typeform/embed" "^1.34.1"
+    "@typeform/embed-react" "^1.13.0"
+    add "^2.0.6"
+    antd "^4.19.1"
+    emotion "9.2.4"
+    emotion-server "9.2.4"
+    gatsby "^4.25.0"
+    gatsby-plugin-catch-links "4.11.0"
+    gatsby-plugin-dark-mode "^1.1.2"
+    gatsby-plugin-force-trailing-slashes "1.0.6"
+    gatsby-plugin-google-analytics "^4.9.0"
+    gatsby-plugin-google-gtag "^5.12.0"
+    gatsby-plugin-image "^2.10.0"
+    gatsby-plugin-manifest "^4.9.0"
+    gatsby-plugin-offline "^5.9.0"
+    gatsby-plugin-page-progress "^2.2.1"
+    gatsby-plugin-perf-budgets "^0.0.18"
+    gatsby-plugin-postcss "5.9.0"
+    gatsby-plugin-react-helmet "5.9.0"
+    gatsby-plugin-react-svg "3.1.0"
+    gatsby-plugin-remove-serviceworker "1.0.0"
+    gatsby-plugin-sharp "^4.11.0"
+    gatsby-plugin-webpack-bundle-analyser-v2 "^1.1.26"
+    gatsby-remark-autolink-headers "5.11.0"
+    gatsby-remark-check-links "^2.1.0"
+    gatsby-remark-code-titles "1.1.0"
+    gatsby-remark-embed-snippet "7.9.0"
+    gatsby-remark-external-links "0.0.4"
+    gatsby-remark-images "6.9.0"
+    gatsby-remark-prismjs "6.9.0"
+    gatsby-remark-prismjs-copy-button "^0.3.1"
+    gatsby-source-filesystem "4.9.0"
+    gatsby-source-ghost "4.2.4"
+    gatsby-transformer-remark "5.11.0"
+    gatsby-transformer-sharp "^4.25.0"
+    gatsby-transformer-yaml "4.9.0"
+    hotkeys-js "^3.8.7"
+    js-search "^1.4.2"
+    lodash "^4.17.21"
+    moment "^2.29.4"
+    prismjs "1.27.0"
+    prop-types "^15.8.1"
+    react "^16.9.0"
+    react-autosuggest "9.4.3"
+    react-dom "^16.9.0"
+    react-dropdown "^1.6.4"
+    react-helmet "^6.0.0"
+    react-modal "3.8.1"
+    react-responsive-modal "^4.0.1"
+    react-router "^6.0.1"
+    react-router-dom "^4.3.1"
+    react-use-fusejs "^1.0.1"
+    searchbox-showcase "https://github.com/awesome-reactivesearch/searchbox-showcase.git#ac58bba"
+    tocbot "^4.18.0"
+    yarn "^1.22.18"
+
 doctrine@^2.0.0, doctrine@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.1.0.tgz#5cd01fc101621b42c4cd7f5d1a66243716d3f39d"
@@ -15940,9 +16005,11 @@ domhandler@^5.0.2, domhandler@^5.0.3:
     domelementtype "^2.3.0"
 
 dompurify@^3.0.6:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.0.8.tgz#e0021ab1b09184bc8af7e35c7dd9063f43a8a437"
-  integrity sha512-b7uwreMYL2eZhrSCRC4ahLTeZcPZxSmYfmcQGXGkXiZSNW1X85v+SDM5KsWcpivIiUBH47Ji7NtyUdpLeF5JZQ==
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.2.4.tgz#af5a5a11407524431456cf18836c55d13441cd8e"
+  integrity sha512-ysFSFEDVduQpyhzAob/kkuJjf5zWkZD8/A9ywSp1byueyuCfHamrCBa14/Oc2iiB0e51B+NpxSl5gmzn+Ms/mg==
+  optionalDependencies:
+    "@types/trusted-types" "^2.0.7"
 
 domutils@^1.7.0:
   version "1.7.0"
@@ -34718,7 +34785,7 @@ string-similarity@^1.2.2:
     lodash.map "^4.6.0"
     lodash.maxby "^4.6.0"
 
-"string-width-cjs@npm:string-width@^4.2.0", "string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -34735,6 +34802,15 @@ string-width@^1.0.1:
     code-point-at "^1.0.0"
     is-fullwidth-code-point "^1.0.0"
     strip-ansi "^3.0.0"
+
+"string-width@^1.0.2 || 2 || 3 || 4", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
 
 string-width@^2.0.0, string-width@^2.1.0, string-width@^2.1.1:
   version "2.1.1"
@@ -34859,7 +34935,7 @@ stringify-object@3.3.0, stringify-object@^3.3.0:
     is-obj "^1.0.1"
     is-regexp "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -34886,6 +34962,13 @@ strip-ansi@^5.0.0, strip-ansi@^5.1.0, strip-ansi@^5.2.0:
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
   dependencies:
     ansi-regex "^4.1.0"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.1:
   version "7.1.0"
@@ -38657,7 +38740,7 @@ worker-rpc@^0.1.0:
   dependencies:
     microevent.ts "~0.1.1"
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -38687,6 +38770,15 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
