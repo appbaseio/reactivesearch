@@ -671,22 +671,8 @@ exports[`should hide navigation footer 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -742,25 +728,6 @@ exports[`should hide navigation footer 1`] = `
 
 .emotion-23 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-24 {
@@ -1908,22 +1875,8 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-19 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-19 li:hover,
@@ -1979,25 +1932,6 @@ exports[`should not render expanded dropdown when expandSuggestionsContainer pro
 
 .emotion-19 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-19 .section-container .section-list-item__label,
-.emotion-19 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-19 .section-container .section-list-item__label *,
-.emotion-19 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-19 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-20 {
@@ -3445,22 +3379,8 @@ exports[`should render AI response & askButton & enterButton 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-25 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-25 li:hover,
@@ -3516,25 +3436,6 @@ exports[`should render AI response & askButton & enterButton 1`] = `
 
 .emotion-25 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-25 .section-container .section-list-item__label,
-.emotion-25 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-25 .section-container .section-list-item__label *,
-.emotion-25 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-25 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-26 {
@@ -4255,22 +4156,8 @@ exports[`should render AI response & custom source documents 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -4326,25 +4213,6 @@ exports[`should render AI response & custom source documents 1`] = `
 
 .emotion-23 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-24 {
@@ -5195,22 +5063,8 @@ exports[`should render AI response & showSourceDocuments 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -5266,25 +5120,6 @@ exports[`should render AI response & showSourceDocuments 1`] = `
 
 .emotion-23 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-24 {
@@ -6132,22 +5967,8 @@ exports[`should render AI response & triggerOn=manual 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-25 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-25 li:hover,
@@ -6203,25 +6024,6 @@ exports[`should render AI response & triggerOn=manual 1`] = `
 
 .emotion-25 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-25 .section-container .section-list-item__label,
-.emotion-25 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-25 .section-container .section-list-item__label *,
-.emotion-25 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-25 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-26 {
@@ -7190,22 +6992,8 @@ exports[`should render AI response & triggerOn=question 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-25 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-25 li:hover,
@@ -7261,25 +7049,6 @@ exports[`should render AI response & triggerOn=question 1`] = `
 
 .emotion-25 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-25 .section-container .section-list-item__label,
-.emotion-25 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-25 .section-container .section-list-item__label *,
-.emotion-25 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-25 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-26 {
@@ -8170,22 +7939,8 @@ exports[`should render AI response 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -8241,25 +7996,6 @@ exports[`should render AI response 1`] = `
 
 .emotion-23 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-24 {
@@ -8954,22 +8690,8 @@ exports[`should render CUSTOM AI response  1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -9025,25 +8747,6 @@ exports[`should render CUSTOM AI response  1`] = `
 
 .emotion-23 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-24 {
@@ -9871,22 +9574,8 @@ exports[`should render SearchBox with Document suggestions 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -9944,25 +9633,6 @@ exports[`should render SearchBox with Document suggestions 1`] = `
   padding-left: 0;
 }
 
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
-}
-
 .emotion-24 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -9971,6 +9641,10 @@ exports[`should render SearchBox with Document suggestions 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .emotion-24 svg.cancel-icon {
@@ -9986,6 +9660,17 @@ exports[`should render SearchBox with Document suggestions 1`] = `
 }
 
 .emotion-26 {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.emotion-28 {
+  display: block;
+}
+
+.emotion-30 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10000,17 +9685,17 @@ exports[`should render SearchBox with Document suggestions 1`] = `
   z-index: 111;
 }
 
-.emotion-26 svg {
+.emotion-30 svg {
   cursor: pointer;
   fill: #707070;
   height: 17px;
 }
 
-.emotion-26:hover svg {
+.emotion-30:hover svg {
   fill: #1c1a1a;
 }
 
-.emotion-32 {
+.emotion-40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10182,29 +9867,26 @@ exports[`should render SearchBox with Document suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "For document suggestions, please implement a renderItem method to display label.",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "For document suggestions, please implement a renderItem method to display label.",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-26 emotion-27"
+                className="emotion-30 emotion-31"
                 onClick={[Function]}
               >
                 <svg
@@ -10261,29 +9943,26 @@ exports[`should render SearchBox with Document suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "For document suggestions, please implement a renderItem method to display label.",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "For document suggestions, please implement a renderItem method to display label.",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-26 emotion-27"
+                className="emotion-30 emotion-31"
                 onClick={[Function]}
               >
                 <svg
@@ -10298,7 +9977,7 @@ exports[`should render SearchBox with Document suggestions 1`] = `
           </ul>
         </div>
         <div
-          className="emotion-32 emotion-33"
+          className="emotion-40 emotion-41"
         >
           <div>
             ↑↓ Navigate
@@ -10622,22 +10301,8 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -10695,25 +10360,6 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
   padding-left: 0;
 }
 
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
-}
-
 .emotion-24 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -10722,6 +10368,10 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .emotion-24 svg.cancel-icon {
@@ -10737,6 +10387,17 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
 }
 
 .emotion-26 {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.emotion-28 {
+  display: block;
+}
+
+.emotion-30 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10751,17 +10412,31 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
   z-index: 111;
 }
 
-.emotion-26 svg {
+.emotion-30 svg {
   cursor: pointer;
   fill: #707070;
   height: 17px;
 }
 
-.emotion-26:hover svg {
+.emotion-30:hover svg {
   fill: #1c1a1a;
 }
 
-.emotion-44 {
+.emotion-46 {
+  display: -webkit-box;
+  width: 100%;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-72 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10933,29 +10608,26 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Answer the query: 'harry potter collection (harry potter, #1-6)'. Think step-by-step, cite the source after the answer and ensure the source is from the provided context.",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Answer the query: 'harry potter collection (harry potter, #1-6)'. Think step-by-step, cite the source after the answer and ensure the source is from the provided context.",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-26 emotion-27"
+                className="emotion-30 emotion-31"
                 onClick={[Function]}
               >
                 <svg
@@ -11012,29 +10684,26 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": " Who is Jason barnie?",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": " Who is Jason barnie?",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-26 emotion-27"
+                className="emotion-30 emotion-31"
                 onClick={[Function]}
               >
                 <svg
@@ -11096,34 +10765,31 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </div>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Vue Integration",
-                        }
-                      }
-                      style={undefined}
-                    />
-                  </div>
-                  <div
-                    className="section-list-item__description"
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
                     dangerouslySetInnerHTML={
                       Object {
-                        "__html": "Step-by-step guide to build search UI with ReactiveSearch(Vue)",
+                        "__html": "Vue Integration",
                       }
                     }
+                    style={undefined}
                   />
                 </div>
+                <div
+                  className="section-list-item__description emotion-46 emotion-47"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "Step-by-step guide to build search UI with ReactiveSearch(Vue)",
+                    }
+                  }
+                />
               </div>
             </li>
             <li
@@ -11160,34 +10826,31 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </div>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "React Integration",
-                        }
-                      }
-                      style={undefined}
-                    />
-                  </div>
-                  <div
-                    className="section-list-item__description"
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
                     dangerouslySetInnerHTML={
                       Object {
-                        "__html": "Step-by-step guide to build search UI with ReactiveSearch(React)",
+                        "__html": "React Integration",
                       }
                     }
+                    style={undefined}
                   />
                 </div>
+                <div
+                  className="section-list-item__description emotion-46 emotion-47"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "Step-by-step guide to build search UI with ReactiveSearch(React)",
+                    }
+                  }
+                />
               </div>
             </li>
           </ul>
@@ -11243,29 +10906,26 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Paradise Lost",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Paradise Lost",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-26 emotion-27"
+                className="emotion-30 emotion-31"
                 onClick={[Function]}
               >
                 <svg
@@ -11322,29 +10982,26 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Antigone",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "Antigone",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-26 emotion-27"
+                className="emotion-30 emotion-31"
                 onClick={[Function]}
               >
                 <svg
@@ -11359,7 +11016,7 @@ exports[`should render SearchBox with FAQ suggestions 1`] = `
           </ul>
         </div>
         <div
-          className="emotion-44 emotion-45"
+          className="emotion-72 emotion-73"
         >
           <div>
             ↑↓ Navigate
@@ -11683,22 +11340,8 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-23 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-23 li:hover,
@@ -11756,25 +11399,6 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   padding-left: 0;
 }
 
-.emotion-23 .section-container .section-list-item__label,
-.emotion-23 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-23 .section-container .section-list-item__label *,
-.emotion-23 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-23 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
-}
-
 .emotion-24 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -11783,6 +11407,10 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .emotion-24 svg.cancel-icon {
@@ -11797,7 +11425,32 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   fill: #424242;
 }
 
+.emotion-26 {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .emotion-28 {
+  display: block;
+}
+
+.emotion-30 {
+  display: -webkit-box;
+  width: 100%;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 5px;
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.emotion-40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -11812,17 +11465,17 @@ exports[`should render SearchBox with featured suggestions 1`] = `
   z-index: 111;
 }
 
-.emotion-28 svg {
+.emotion-40 svg {
   cursor: pointer;
   fill: #707070;
   height: 17px;
 }
 
-.emotion-28:hover svg {
+.emotion-40:hover svg {
   fill: #1c1a1a;
 }
 
-.emotion-50 {
+.emotion-82 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -11986,34 +11639,31 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Go to <mark>Home</mark>",
-                        }
-                      }
-                      style={undefined}
-                    />
-                  </div>
-                  <div
-                    className="section-list-item__description"
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
                     dangerouslySetInnerHTML={
                       Object {
-                        "__html": "Blazing fast search with Appbase",
+                        "__html": "Go to <mark>Home</mark>",
                       }
                     }
+                    style={undefined}
                   />
                 </div>
+                <div
+                  className="section-list-item__description emotion-30 emotion-31"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "Blazing fast search with Appbase",
+                    }
+                  }
+                />
               </div>
             </li>
           </ul>
@@ -12066,37 +11716,34 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </div>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "Go to <mark>SearchBox</mark> getting started guide",
-                        }
-                      }
-                      style={undefined}
-                    />
-                  </div>
-                  <div
-                    className="section-list-item__description"
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
                     dangerouslySetInnerHTML={
                       Object {
-                        "__html": "Headless API to build search interface, easy to use and understand",
+                        "__html": "Go to <mark>SearchBox</mark> getting started guide",
                       }
                     }
+                    style={undefined}
                   />
                 </div>
+                <div
+                  className="section-list-item__description emotion-30 emotion-31"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "Headless API to build search interface, easy to use and understand",
+                    }
+                  }
+                />
               </div>
               <button
-                className="emotion-28 emotion-29"
+                className="emotion-40 emotion-41"
                 style={
                   Object {
                     "pointerEvents": "none",
@@ -12167,29 +11814,26 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "chasing harry winston",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "chasing harry winston",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-28 emotion-29"
+                className="emotion-40 emotion-41"
                 onClick={[Function]}
               >
                 <svg
@@ -12239,29 +11883,26 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "harry",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "harry",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-28 emotion-29"
+                className="emotion-40 emotion-41"
                 onClick={[Function]}
               >
                 <svg
@@ -12311,29 +11952,26 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "harry pott",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "harry pott",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-28 emotion-29"
+                className="emotion-40 emotion-41"
                 onClick={[Function]}
               >
                 <svg
@@ -12399,29 +12037,26 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "sea",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "sea",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-28 emotion-29"
+                className="emotion-40 emotion-41"
                 onClick={[Function]}
               >
                 <svg
@@ -12471,29 +12106,26 @@ exports[`should render SearchBox with featured suggestions 1`] = `
                 </svg>
               </div>
               <div
-                className="trim"
+                className="emotion-24 emotion-25"
+                direction="column"
               >
                 <div
-                  className="emotion-24 emotion-25"
-                  direction="column"
+                  className="emotion-26 emotion-27"
+                  title=""
                 >
-                  <div
-                    title=""
-                  >
-                    <div
-                      className="section-list-item__label"
-                      dangerouslySetInnerHTML={
-                        Object {
-                          "__html": "sea shore",
-                        }
+                  <span
+                    className="section-list-item__label emotion-28 emotion-29"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "sea shore",
                       }
-                      style={undefined}
-                    />
-                  </div>
+                    }
+                    style={undefined}
+                  />
                 </div>
               </div>
               <button
-                className="emotion-28 emotion-29"
+                className="emotion-40 emotion-41"
                 onClick={[Function]}
               >
                 <svg
@@ -12508,7 +12140,7 @@ exports[`should render SearchBox with featured suggestions 1`] = `
           </ul>
         </div>
         <div
-          className="emotion-50 emotion-51"
+          className="emotion-82 emotion-83"
         >
           <div>
             ↑↓ Navigate
@@ -14014,22 +13646,8 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-25 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-25 li:hover,
@@ -14085,25 +13703,6 @@ exports[`should render custom (search/ clear icon/ recent search icon/ popular s
 
 .emotion-25 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-25 .section-container .section-list-item__label,
-.emotion-25 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-25 .section-container .section-list-item__label *,
-.emotion-25 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-25 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-26 {
@@ -17532,22 +17131,8 @@ exports[`should render with image search and tooltip 1`] = `
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.emotion-27 li>.trim {
-  display: -webkit-box;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   width: 100%;
-  max-height: 2.3rem;
-  line-height: 1.2rem;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .emotion-27 li:hover,
@@ -17603,25 +17188,6 @@ exports[`should render with image search and tooltip 1`] = `
 
 .emotion-27 .section-container .section-list {
   padding-left: 0;
-}
-
-.emotion-27 .section-container .section-list-item__label,
-.emotion-27 .section-container .section-list-item__description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emotion-27 .section-container .section-list-item__label *,
-.emotion-27 .section-container .section-list-item__description * {
-  margin: 0;
-  padding: 0;
-}
-
-.emotion-27 .section-container .section-list-item__description {
-  margin-top: 5px;
-  opacity: 0.7;
-  font-size: 12px;
 }
 
 .emotion-28 {
