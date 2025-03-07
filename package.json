@@ -24,7 +24,8 @@
 		"packages/maps/examples/*",
 		"packages/maps/examples/mongo-examples/*",
 		"site",
-		"site/demos/*"
+		"site/demos/*",
+		"packages/playground/*"
 	],
 	"husky": {
 		"hooks": {
@@ -60,5 +61,8 @@
 	},
 	"volta": {
 		"node": "16.20.2"
+	},
+	"resolutions": {
+		"iltorb": "file:stub/empty-iltorb"
 	}
 }
