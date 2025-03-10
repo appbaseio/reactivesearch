@@ -15,6 +15,7 @@ export interface SearchBoxProps extends CommonProps {
 	getMicInstance?: (...args: any[]) => any;
 	renderMic?: (...args: any[]) => any;
 	dataField?: types.dataFieldArray;
+    vectorDataField?: string;
 	enableSynonyms?: boolean;
 	queryString?: boolean;
 	enablePopularSuggestions?: boolean;
@@ -22,6 +23,7 @@ export interface SearchBoxProps extends CommonProps {
 	aggregationField?: string;
 	aggregationSize?: number;
 	size?: number;
+    candidates?: number;
 	debounce?: number;
 	defaultValue?: types.date;
 	value?: types.date;

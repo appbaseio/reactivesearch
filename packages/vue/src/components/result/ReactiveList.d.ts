@@ -5,6 +5,7 @@ import * as types from '../../types.ts';
 interface ReactiveListProps extends CommonProps {
 	children?: (data: any) => any;
 	dataField: string;
+    vectorDataField: string;
 	aggregationField?: string;
 	aggregationSize?: number;
 	defaultQuery?: (...args: any[]) => any;
@@ -29,6 +30,7 @@ interface ReactiveListProps extends CommonProps {
 	showResultStats?: boolean;
 	showLoader?: boolean;
 	size?: number;
+    candidates?: number;
 	sortBy?: types.sortBy;
 	sortOptions?: types.sortOption[];
 	onPageChange?: (...args: any[]) => any;
