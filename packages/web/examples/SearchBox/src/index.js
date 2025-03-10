@@ -43,7 +43,7 @@ const Main = () => (
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="original_title"
+					dataField="_score"
 					size={10}
 					className="result-list-container"
 					pagination

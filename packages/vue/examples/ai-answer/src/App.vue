@@ -33,7 +33,7 @@
         "
         class-name="ai-answer"
         component-id="AIComponent"
-        title="AI Chat Box"
+        title="Use AI Answer for additional search context"
       >
         <!-- <template v-slot:render="{ loading, data, error }">
 					<div v-if="loading">loading...</div>
@@ -70,13 +70,13 @@
         class-name="result-list-container"
       >
         <template #renderItem="{ item }">
-          <div 
-            :id="item._id" 
-            :key="item._id" 
+          <div
+            :id="item._id"
+            :key="item._id"
             class="flex book-content">
-            <img 
-              :src="item.image" 
-              alt="Book Cover" 
+            <img
+              :src="item.image"
+              alt="Book Cover"
               class="book-image" >
             <div class="flex column justify-center ml20">
               <div class="book-header">{{ item.original_title }}</div>
@@ -95,13 +95,13 @@
                         class="fas fa-star"
                       />
                     </span>
-                    <span 
+                    <span
                       class="avg-rating"
                     >({{ item.average_rating }} avg)</span
                     >
                   </div>
                 </div>
-                <span 
+                <span
                   class="pub-year"
                 >Pub {{ item.original_publication_year }}</span
                 >

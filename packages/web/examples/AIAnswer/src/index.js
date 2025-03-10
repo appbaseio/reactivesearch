@@ -44,7 +44,7 @@ const Main = () => (
 						queryTemplate: 'Answer the following: ${value}',
 						topDocsForContext: 7,
 					}}
-					title={<b>AI Chatbox 🤩</b>}
+					title={<b>Use AI Answer for additional search context</b>}
 					enterButton={true}
 					showInput={true}
 					renderSourceDocument={(obj) => {
