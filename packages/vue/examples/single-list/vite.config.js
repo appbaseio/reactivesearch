@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import { server } from 'typescript';
 
 export default {
 	plugins: [vue(), vueJsx()],
@@ -11,4 +12,7 @@ export default {
 			'fast-deep-equal',
 		],
 	},
+    server: {
+        allowedHosts: ['nrxz2zv84-5173.csb.app'];
+    }
 };

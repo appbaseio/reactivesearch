@@ -11,4 +11,7 @@ export default {
 			'fast-deep-equal',
 		],
 	},
+    server: {
+        allowedHosts: ['7qez3-5173.csb.app']
+    }
 };
