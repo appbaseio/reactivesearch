@@ -3,13 +3,13 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-			"dev": "vite",
-			"build": "vite build",
-			"preview": "vite preview",
-			"lint": "eslint --ext .js,.vue src"
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"lint": "eslint --ext .js,.vue src"
 	},
 	"dependencies": {
-		"@appbaseio/reactivesearch-vue": "3.3.5",
+		"@appbaseio/reactivesearch-vue": "3.4.0",
 		"vue": "^3.2.5"
 	},
 	"devDependencies": {
