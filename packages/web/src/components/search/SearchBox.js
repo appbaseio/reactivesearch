@@ -1,6 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import PropTypes from 'prop-types';
 import {
 	AI_LOCAL_CACHE_KEY,
 	AI_TRIGGER_MODES,
@@ -113,6 +114,7 @@ const SearchBox = (props) => {
 		value,
 		defaultValue,
 		componentId,
+		downShiftProps,
 		rawData,
 		aggregationData,
 		isLoading,
@@ -1736,6 +1738,7 @@ const SearchBox = (props) => {
 					id={`${props.componentId}-downshift`}
 					onChange={onSuggestionSelected}
 					onStateChange={handleStateChange}
+					{...downShiftProps}
 					isOpen={isOpen}
 					itemToString={i => i}
 					render={({
@@ -2556,11 +2559,13 @@ SearchBox.propTypes = {
 	testMode: types.bool,
 	__showImageDropdown: types.bool,
 	__dummyImage: types.string,
+	downShiftProps: PropTypes.object,
 };
 
 SearchBox.defaultProps = {
 	autosuggest: true,
 	className: null,
+	downShiftProps: {},
 	debounce: 100,
 	downShiftProps: {},
 	enableSynonyms: true,
