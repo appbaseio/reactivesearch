@@ -25,7 +25,7 @@ Check out [Searchbox](https://opensource.appbase.io/searchbox/) if you're buildi
 [![npm](https://img.shields.io/npm/dt/@appbaseio/reactivesearch.svg)](https://www.npmjs.com/package/@appbaseio/reactivesearch)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/appbaseio/reactivesearch/blob/dev/.github/CONTRIBUTING.md)
 [![Mentioned in Awesome React](https://awesome.re/mentioned-badge.svg)](https://github.com/enaqx/awesome-react)
-[![Mentioned in Awesome Elasticsearch](https://awesome.re/mentioned-badge.svg)](https://github.com/dzharii/awesome-elasticsearch)
+[![Mentioned in Awesome Elasticsearch](https://awesome.re/mentioned-badge.svg)](https://github.com/dzharii/awesome-elasticsearch) [![Meercode CI Score](https://meercode.io/badge/appbaseio/reactivesearch?type=ci-score&branch=next)](https://meercode.io/appbaseio/reactivesearch)
 
 <br />
 
