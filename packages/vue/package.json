@@ -15,6 +15,9 @@
 		"type": "git",
 		"url": "https://github.com/appbaseio/reactivesearch.git"
 	},
+	"bugs": {
+		"url": "https://github.com/appbaseio/reactivesearch/issues"
+	},
 	"author": "Kuldeep Saxena <kuldepsaxena155@gmail.com>",
 	"license": "Apache-2.0",
 	"scripts": {

@@ -7,6 +7,9 @@
 	"module": "lib/index.es.js",
 	"js:next": "lib/index.es.js",
 	"sideEffects": false,
+	"bugs": {
+		"url": "https://github.com/appbaseio/reactivesearch/issues"
+	},
 	"files": [
 		"lib/",
 		"umd"
