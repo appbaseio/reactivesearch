@@ -17,6 +17,9 @@
 	},
 	"author": "Kuldeep Saxena <kuldepsaxena155@gmail.com>",
 	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/appbaseio/reactivesearch/issues"
+	},
 	"scripts": {
 		"watch": "nps watch",
 		"serve": "vue-cli-service serve",
