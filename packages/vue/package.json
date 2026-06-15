@@ -91,4 +91,8 @@
 		"typescript": "^5.0.0",
 		"vue-eslint-parser": "^3.2.2"
 	}
+,
+	"bugs": {
+		"url": "https://github.com/appbaseio/reactivesearch/issues"
+	}
 }

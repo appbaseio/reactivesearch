@@ -95,4 +95,8 @@
 	"resolutions": {
 		"@types/react": "16.3.7"
 	}
+,
+	"bugs": {
+		"url": "https://github.com/appbaseio/reactivesearch/issues"
+	}
 }

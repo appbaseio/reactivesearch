@@ -55,4 +55,8 @@
         "react-native-calendars": "^1.18.2",
         "react-redux": "^5.0.7"
     }
+,
+  "bugs": {
+    "url": "https://github.com/appbaseio/reactivesearch/issues"
+  }
 }
