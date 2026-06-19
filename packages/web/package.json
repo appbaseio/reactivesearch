@@ -37,6 +37,9 @@
 	},
 	"author": "metagrover",
 	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://github.com/appbaseio/reactivesearch/issues"
+	},
 	"dependencies": {
 		"@appbaseio/analytics": "^1.2.0-alpha.1",
 		"@appbaseio/reactivecore": "10.4.0",

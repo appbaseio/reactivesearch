@@ -12,6 +12,9 @@
     },
     "author": "Appbase Inc. <info@appbase.io> (https://github.com/appbaseio)",
     "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/appbaseio/reactivesearch/issues"
+    },
     "homepage": "https://github.com/appbaseio/reactivesearch",
     "keywords": [
         "appbaseio",
