@@ -16,7 +16,8 @@ class Main extends Component {
 		return (
 			<ReactiveBase
 				app="clone-airbeds"
-				url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+				url="https://reactivesearch-api-9-4-0.onrender.com"
+				credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 				type="listing"
 			>
 				<div className="row">

@@ -4,7 +4,7 @@ import { ReactiveList } from '@appbaseio/reactivesearch';
 const components = {
 	settings: {
 		app: 'movies-demo-app',
-		url: 'https://81719ecd9552:e06db001-a6d8-4cc2-bc43-9c15b1c0c987@appbase-demo-ansible-abxiydt-arc.searchbase.io',
+		url: 'https://reactivesearch-api-9-4-0.onrender.com',
 		theme: {
 			colors: {
 				backgroundColor: '#212121',
