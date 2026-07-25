@@ -27,7 +27,7 @@
             }"
             :pagination="true"
             component-id="SearchResult"
-            data-field="original_title"
+            data-field="original_title.keyword"
             title="Results"
             sort-by="asc"
             class="result-list-container"

@@ -60,7 +60,7 @@ const Main = () => (
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="original_title"
+					dataField="original_title.keyword"
 					title="Results"
 					sortBy="asc"
 					className="result-list-container"
