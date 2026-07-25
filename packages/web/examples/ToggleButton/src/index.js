@@ -3,28 +3,56 @@ import ReactDOM from 'react-dom/client';
 import {
 	ReactiveBase,
 	ToggleButton,
-	ResultList,
 	SelectedFilters,
 	ReactiveList,
 } from '@appbaseio/reactivesearch';
 
 import './index.css';
 
+const booksReactiveList = data => (
+	<div className="flex book-content" key={data._id}>
+		<img src={data.image} alt="Book Cover" className="book-image" />
+		<div className="flex column justify-center" style={{ marginLeft: 20 }}>
+			<div className="book-header">{data.original_title}</div>
+			<div className="flex column justify-space-between">
+				<div>
+					<div>
+						by <span className="authors-list">{data.authors}</span>
+					</div>
+					<div className="ratings-list flex align-center">
+						<span className="stars">
+							{
+								Array(data.average_rating_rounded)
+									.fill('x')
+									.map((item, index) => (
+										<i className="fas fa-star" key={index} />
+									)) // eslint-disable-line
+							}
+						</span>
+						<span className="avg-rating">({data.average_rating} avg)</span>
+					</div>
+				</div>
+				<span className="pub-year">Pub {data.original_publication_year}</span>
+			</div>
+		</div>
+	</div>
+);
+
 const Main = () => (
 	<ReactiveBase
-		app="meetup_app"
+		app="good-books-ds"
 		url="https://reactivesearch-api-9-4-0.onrender.com"
 		credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 	>
 		<div className="row">
 			<div className="col">
 				<ToggleButton
-					componentId="CitySensor"
-					dataField="group.group_topics.topic_name_raw.keyword"
+					componentId="LanguageSensor"
+					dataField="language_code"
 					data={[
-						{ label: 'Social', value: 'Social' },
-						{ label: 'Adventure', value: 'Adventure' },
-						{ label: 'Music', value: 'Music' },
+						{ label: 'English', value: 'eng' },
+						{ label: 'French', value: 'fre' },
+						{ label: 'Spanish', value: 'spa' },
 					]}
 				/>
 			</div>
@@ -32,58 +60,17 @@ const Main = () => (
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="group.group_topics.topic_name_raw.keyword"
+					dataField="original_title"
 					title="Results"
 					sortBy="asc"
 					className="result-list-container"
 					from={0}
 					size={5}
-					innerClass={{
-						image: 'meetup-list-image',
-					}}
 					pagination
 					react={{
-						and: ['CitySensor'],
+						and: ['LanguageSensor'],
 					}}
-					render={({ data }) => (
-						<ReactiveList.ResultListWrapper>
-							{data.map(item => (
-								<ResultList href={item.event.event_url} key={item._id}>
-									<ResultList.Image src={item.member.photo} small />
-									<ResultList.Content>
-										<ResultList.Title>
-											<div className="meetup-title">
-												{item.member ? item.member.member_name : ''} is
-												going to ${item.event ? item.event.event_name : ''}
-											</div>
-										</ResultList.Title>
-										<ResultList.Description>
-											<div className="flex column">
-												<div className="meetup-location">
-													<span className="location">
-														<i className="fas fa-map-marker-alt" />
-													</span>
-													{item.group ? item.group.group_city : ''}
-												</div>
-												<div className="flex wrap meetup-topics">
-													{item.group.group_topics
-														.slice(0, 4)
-														.map(tag => (
-															<div
-																className="meetup-topic"
-																key={tag.topic_name}
-															>
-																{tag.topic_name}
-															</div>
-														))}
-												</div>
-											</div>
-										</ResultList.Description>
-									</ResultList.Content>
-								</ResultList>
-							))}
-						</ReactiveList.ResultListWrapper>
-					)}
+					renderItem={booksReactiveList}
 				/>
 			</div>
 		</div>

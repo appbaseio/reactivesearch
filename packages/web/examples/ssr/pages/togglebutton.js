@@ -9,29 +9,29 @@ import {
 import PropTypes from 'prop-types';
 
 import Layout from '../components/Layout';
-import ListItemView from '../components/ListItemView';
+import BookCard from '../components/BookCard';
 
 const settings = {
-	app: 'meetup_app',
+	app: 'good-books-ds',
 	url: 'https://reactivesearch-api-9-4-0.onrender.com',
 	credentials: 'd03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0',
 	enableAppbase: true,
 };
 
 const toggleButtonProps = {
-	componentId: 'CitySensor',
-	dataField: 'group.group_topics.topic_name_raw.keyword',
+	componentId: 'LanguageSensor',
+	dataField: 'language_code',
 	data: [
-		{ label: 'Social', value: 'Social' },
-		{ label: 'Adventure', value: 'Adventure' },
-		{ label: 'Music', value: 'Music' },
+		{ label: 'English', value: 'eng' },
+		{ label: 'French', value: 'fre' },
+		{ label: 'Spanish', value: 'spa' },
 	],
-	defaultValue: 'Social',
+	defaultValue: 'eng',
 };
 
 const resultListProps = {
 	componentId: 'SearchResult',
-	dataField: 'group.group_topics.topic_name_raw.keyword',
+	dataField: 'original_title',
 	title: 'Results',
 	sortBy: 'asc',
 	className: 'result-list-container',
@@ -40,13 +40,13 @@ const resultListProps = {
 	render: ({ data }) => (
 		<ReactiveList.ResultListWrapper>
 			{data.map(item => (
-				<ListItemView key={item._id} {...item} />
+				<BookCard key={item._id} data={item} />
 			))}
 		</ReactiveList.ResultListWrapper>
 	),
 	pagination: true,
 	react: {
-		and: ['CitySensor'],
+		and: ['LanguageSensor'],
 	},
 };
 
