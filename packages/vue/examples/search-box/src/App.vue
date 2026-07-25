@@ -6,18 +6,9 @@
       credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
     >
       <search-box
-        :data-field="['original_title', 'original_title.search']"
+        :data-field="['original_title', 'original_title.search', 'authors']"
         :urlparams="true"
         :size="10"
-        :enable-popular-suggestions="true"
-        :popular-suggestions-config="{ size: 3, minChars: 2, index: 'good-books-ds', sectionLabel: '<b>Popular suggestions 🙌🏻</b>' }"
-        :enable-recent-suggestions="true"
-        :recent-suggestions-config="{
-          size: 3,
-          index: 'good-books-ds',
-          minChars: 4,
-          sectionLabel: '<b>Recent suggestions 🙌🏻</b>'
-        }"
         :autosuggest="true"
         class-name="result-list-container"
         component-id="BookSensor"
@@ -27,7 +18,7 @@
         :size="5"
         :react="{ and: ['BookSensor'] }"
         component-id="SearchResult"
-        data-field="_score"
+        data-field="original_title.keyword"
         class-name="result-list-container"
       >
         <template #renderItem="{ item }">
