@@ -45,12 +45,12 @@ class App extends Component {
 			react: {
 				and: 'GeoDistanceDropdown',
 			},
-			onPopoverClick: (item) => <div>{item.venue.venue_name}</div>,
+			onPopoverClick: (item) => <div>{item.place}</div>,
 			showMapStyles: true,
 		};
 		return (
 			<ReactiveBase
-				app="meetup_dataset"
+				app="earthquakes"
 				url="https://reactivesearch-api-9-4-0.onrender.com"
 				credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 				enableAppbase
@@ -80,7 +80,7 @@ class App extends Component {
 								{ distance: 300, label: 'Under 300 miles' },
 							]}
 							defaultValue={{
-								location: 'London, UK',
+								location: 'California, USA',
 								label: 'Within 10 miles',
 							}}
 						/>

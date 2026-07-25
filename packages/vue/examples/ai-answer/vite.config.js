@@ -12,6 +12,6 @@ export default {
 		],
 	},
     server: {
-        allowedHosts: ['h83tzz-5173.csb.app']
-    }
+		allowedHosts: true,
+	}
 };

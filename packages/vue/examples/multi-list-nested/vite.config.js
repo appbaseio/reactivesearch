@@ -11,4 +11,7 @@ export default {
 			'fast-deep-equal',
 		],
 	},
+	server: {
+		allowedHosts: true,
+	},
 };
