@@ -28,7 +28,9 @@ class ErrorBoundary extends Component {
 			// eslint-disable-next-line react/no-did-update-set-state
 			this.setState({ error: this.props.error });
 		}
-		this.invokeErrorCallback();
+		if (this.state.error) {
+			this.invokeErrorCallback();
+		}
 	}
 
 	render() {
