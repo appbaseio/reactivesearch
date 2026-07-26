@@ -1,6 +1,6 @@
 {
 	"name": "@appbaseio/reactivesearch-vue",
-	"version": "3.4.0",
+	"version": "3.5.0",
 	"main": "dist/cjs/index.js",
 	"jsnext:main": "dist/es/index.js",
 	"module": "dist/es/index.js",
@@ -93,9 +93,5 @@
 		"rollup-plugin-vue": "^6.0.0",
 		"typescript": "^5.0.0",
 		"vue-eslint-parser": "^3.2.2"
-	}
-,
-	"bugs": {
-		"url": "https://github.com/appbaseio/reactivesearch/issues"
 	}
 }
