@@ -15,6 +15,9 @@ module.exports = {
 			'version-update': `${path.resolve(
 				`${__dirname}/scripts/version-update.sh`,
 			)} "@appbaseio/reactivesearch" ${packageJSON.version} ${__dirname}`,
+			'build-reactivecore': 'yarn --cwd packages/reactivecore build',
+			'build-maps': 'yarn --cwd packages/maps build',
+			'build-deps': series.nps('upgrade.build-reactivecore', 'upgrade.build-maps'),
 			'build-demos': `${path.resolve(`${__dirname}/scripts/build-demos.sh`)} ${__dirname}`,
 			'deploy-storybook': `${path.resolve(
 				`${__dirname}/scripts/deploy-storybook.sh`,
@@ -23,6 +26,7 @@ module.exports = {
 			// Updates version + deploy storybook + build demos
 			default: series.nps(
 				'upgrade.version-update',
+				'upgrade.build-deps',
 				'upgrade.build-umd',
 				'upgrade.deploy-storybook',
 				'upgrade.build-demos',
@@ -48,12 +52,16 @@ module.exports = {
 			'version-update': `${path.resolve(
 				`${__dirname}/scripts/version-update.sh`,
 			)} "@appbaseio/reactivemaps" ${mapRSVersion.version} ${__dirname}`,
+			'build-reactivecore': 'yarn --cwd packages/reactivecore build',
+			'build-maps': 'yarn --cwd packages/maps build',
+			'build-deps': series.nps('upgrade-maps.build-reactivecore', 'upgrade-maps.build-maps'),
 			'build-demos': `${path.resolve(`${__dirname}/scripts/build-demos.sh`)} ${__dirname}`,
 			'deploy-storybook': `${path.resolve(
 				`${__dirname}/scripts/deploy-storybook.sh`,
 			)} ${__dirname}`,
 			default: series.nps(
 				'upgrade-maps.version-update',
+				'upgrade-maps.build-deps',
 				'upgrade-maps.build-demos',
 				'upgrade-maps.deploy-storybook',
 			),

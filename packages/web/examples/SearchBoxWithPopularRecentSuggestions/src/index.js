@@ -4,15 +4,19 @@ import { ReactiveBase, SearchBox, ReactiveList, ResultCard } from '@appbaseio/re
 
 import './index.css';
 
+const defaultSuggestions = [
+	{ label: 'The Shawshank Redemption', value: 'The Shawshank Redemption' },
+	{ label: 'The Godfather', value: 'The Godfather' },
+	{ label: 'The Dark Knight', value: 'The Dark Knight' },
+	{ label: 'Pulp Fiction', value: 'Pulp Fiction' },
+	{ label: 'Forrest Gump', value: 'Forrest Gump' },
+];
+
 const Main = () => (
 	<ReactiveBase
 		app="movies-demo-app"
 		url="https://reactivesearch-api-9-4-0.onrender.com"
 		credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
-		reactivesearchAPIConfig={{
-			recordAnalytics: true,
-			userId: 'jon',
-		}}
 	>
 		<div className="row">
 			<div className="col">
@@ -21,29 +25,8 @@ const Main = () => (
 					title="SearchBox"
 					dataField={['original_title', 'original_title.search']}
 					componentId="MoviesSensor"
-					enableIndexSuggestions
-					indexSuggestionsConfig={{
-						sectionLabel: '<b>Index suggestions 🙌🏻</b>',
-						size: 5,
-						index: 'movies-demo-app', // further restrict the index to search on
-					}}
-					enablePopularSuggestions
-					popularSuggestionsConfig={{
-						size: 5,
-						minCount: 5,
-						minChars: 3,
-						showGlobal: false,
-						index: 'movies-demo-app', // further restrict the index to search on
-						sectionLabel: '<b>Popular suggestions 🙌🏻</b>',
-					}}
-					enableRecentSuggestions
-					recentSuggestionsConfig={{
-						size: 5,
-						minHits: 2,
-						minChars: 3,
-						index: 'movies-demo-app', // further restrict the index to search on
-						sectionLabel: '<b>Recent suggestions 🙌🏻</b>',
-					}}
+					autosuggest
+					defaultSuggestions={defaultSuggestions}
 				/>
 				<br />
 				<ReactiveList

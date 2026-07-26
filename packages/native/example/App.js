@@ -40,10 +40,10 @@ class Main extends Component {
 			renderItem={({ item }) => (
 				<View style={{ margin: 5 }}>
 					<Text style={{ flex: 1, fontWeight: 'bold' }}>
-						{this.parseToElement(item.model)}
+						{this.parseToElement(item.original_title)}
 					</Text>
 					<Text>
-						{item.brand} - {item.vehicleType} - {item.year}
+						{item.authors} - {item.language_code} - {item.original_publication_year}
 					</Text>
 				</View>
 			)}
@@ -81,11 +81,9 @@ class Main extends Component {
 
 		return (
 			<ReactiveBase
-				app="carstore-dataset"
-				credentials="4HWI27QmA:58c731f7-79ab-4f55-a590-7e15c7e36721"
-				// theme={{
-				// 	textColor: 'yellow',
-				// }}
+				app="good-books-ds"
+				url="https://reactivesearch-api-9-4-0.onrender.com"
+				credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 			>
 				<Header>
 					<Body>
@@ -95,47 +93,47 @@ class Main extends Component {
 				<ScrollView>
 					<View style={{ padding: 10 }}>
 						<SelectedFilters />
-						<SingleDropdownList componentId="StComponent" dataField="brand.keyword" />
+						<SingleDropdownList componentId="StComponent" dataField="language_code.keyword" />
 
 						<MultiDropdownList
 							componentId="MultiDropdownListComponent"
-							dataField="brand.keyword"
+							dataField="language_code.keyword"
 							selectAllLabel="All"
 						/>
 
-						<DatePicker dataField="year" componentId="DatePicker" />
+						<DatePicker dataField="original_publication_year" componentId="DatePicker" />
 
 						<DateRange
-							dataField="year"
+							dataField="original_publication_year"
 							componentId="DateRange"
 							defaultSelected={{
-								start: '2015-04-04',
-								end: '2016-04-10',
+								start: '1990-01-01',
+								end: '2010-12-31',
 							}}
 						/>
 
 						<SingleDropdownRange
 							componentId="SingleDropdownRange"
-							dataField="price"
+							dataField="ratings_count"
 							data={[
-								{ start: 1000, end: 3000, label: 'Cheap' },
-								{ start: 3001, end: 5000, label: 'Moderate' },
-								{ start: 5001, end: 10000, label: 'Pricey' },
-								{ start: 10001, end: 100000, label: 'First Date' },
+								{ start: 0, end: 1000, label: 'Few ratings' },
+								{ start: 1001, end: 10000, label: 'Moderate ratings' },
+								{ start: 10001, end: 50000, label: 'Popular' },
+								{ start: 50001, end: 1000000, label: 'Bestseller' },
 							]}
-							defaultSelected="Pricey"
+							defaultSelected="Popular"
 						/>
 
 						<MultiDropdownRange
 							componentId="MultiDropdownRange"
-							dataField="price"
+							dataField="ratings_count"
 							data={[
-								{ start: 1000, end: 3000, label: 'Cheap' },
-								{ start: 3001, end: 5000, label: 'Moderate' },
-								{ start: 5001, end: 10000, label: 'Pricey' },
-								{ start: 10001, end: 100000, label: 'First Date' },
+								{ start: 0, end: 1000, label: 'Few ratings' },
+								{ start: 1001, end: 10000, label: 'Moderate ratings' },
+								{ start: 10001, end: 50000, label: 'Popular' },
+								{ start: 50001, end: 1000000, label: 'Bestseller' },
 							]}
-							defaultSelected={['Pricey', 'First Date']}
+							defaultSelected={['Popular', 'Bestseller']}
 							innerStyle={{
 								checkbox: {
 									color: 'yellow',
@@ -145,7 +143,7 @@ class Main extends Component {
 
 						<RangeSlider
 							componentId="RangeSlider"
-							dataField="rating"
+							dataField="average_rating"
 							range={{
 								start: 0,
 								end: 5,
@@ -154,15 +152,15 @@ class Main extends Component {
 
 						<DataSearch
 							componentId="DataSearchComponent"
-							dataField={['model', 'model.search']}
-							defaultSelected="Nitro"
+							dataField={['original_title', 'original_title.search']}
+							defaultSelected="Harry Potter"
 							react={{
 								and: 'TextFieldComponent',
 							}}
 						/>
 
 						<ReactiveList
-							dataField="model.keyword"
+							dataField="original_title.keyword"
 							componentId="ReactiveList"
 							size={20}
 							onAllData={this.onAllData}

@@ -12,7 +12,7 @@ import './index.css';
 
 const Main = () => (
 	<ReactiveBase
-		app="carstore-dataset"
+		app="good-books-ds"
 		url="https://reactivesearch-api-9-4-0.onrender.com"
 		credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 	>
@@ -20,8 +20,8 @@ const Main = () => (
 			<div className="col">
 				<SearchBox
 					title="SearchBox"
-					dataField="brand"
-					componentId="CarSensor"
+					dataField={['authors', 'authors.search']}
+					componentId="BookSensor"
 					URLParams
 				/>
 			</div>
@@ -30,12 +30,12 @@ const Main = () => (
 				<SelectedFilters />
 				<ReactiveList
 					componentId="SearchResult"
-					dataField="brand"
-					distinctField="brand.keyword"
+					dataField="authors"
+					distinctField="authors.keyword"
 					size={10}
 					className="result-list-container"
 					react={{
-						and: 'CarSensor',
+						and: 'BookSensor',
 					}}
 					scrollOnChange={false}
 					showResultStats={false}
@@ -47,11 +47,11 @@ const Main = () => (
 									<ResultCard.Image src={item.image} />
 									<ResultCard.Title
 										dangerouslySetInnerHTML={{
-											__html: item.brand,
+											__html: item.authors,
 										}}
 									/>
 									<ResultCard.Description>
-										{`${item.brand} ${'★'.repeat(item.rating)}`}
+										{`${item.original_title} · ${'★'.repeat(item.average_rating_rounded)}`}
 									</ResultCard.Description>
 								</ResultCard>
 							))}

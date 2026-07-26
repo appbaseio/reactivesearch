@@ -2,8 +2,8 @@
     <div v-if="aggregations">
         <div
             :style="{cursor: 'pointer' }"
-            v-for="item in aggregations['brand.keyword'].buckets"
-            v-bind:key="item.id"
+            v-for="item in aggregations['language_code.keyword'].buckets"
+            v-bind:key="item.key"
             @click="() => setValue(item.key)"
         >
             <b v-if="selected === item.key" :style="{color: 'blue' }">
@@ -32,7 +32,7 @@
         this.$props.setQuery({
             query: {
             term: {
-            "brand.keyword": value
+            "language_code.keyword": value
       }
     },
     value

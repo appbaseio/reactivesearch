@@ -55,8 +55,6 @@ const Main = () => (
 					dataField="original_title"
 					componentId="BookSensor"
 					URLParams
-					enableRecentSearches
-					enablePopularSuggestions
 					size={5}
 				/>
 			</div>

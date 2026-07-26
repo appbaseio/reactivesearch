@@ -27,8 +27,7 @@ const Main = () => (
 					dataField={['original_title', 'original_title.search']}
 					componentId="BookSensor"
 					URLParams
-					enableRecentSearches
-					enablePopularSuggestions
+					autosuggest
 					size={5}
 				/>
 			</div>

@@ -1,9 +1,9 @@
 <template>
   <div v-if="aggregations">
     <div
-      v-for="item in aggregations['brand.keyword'].buckets"
+      v-for="item in aggregations['language_code.keyword'].buckets"
       :style="{cursor: 'pointer' }"
-      :key="item.id"
+      :key="item.key"
       @click="() => setValue(item.key)"
     >
       <b 
@@ -34,7 +34,7 @@ export default {
 			this.$props.setQuery({
 				query: {
 					term: {
-						'brand.keyword': value
+						'language_code.keyword': value
 					}
 				},
 				value

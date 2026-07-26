@@ -15,7 +15,7 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="carstore-dataset-latest"
+				app="good-books-ds"
 				url="https://reactivesearch-api-9-4-0.onrender.com"
 				credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 			>
@@ -23,11 +23,11 @@ class Main extends Component {
 					<div className="col">
 						<SelectedFilters />
 						<ReactiveComponent
-							componentId="CarSensor"
+							componentId="AuthorSensor"
 							defaultQuery={() => ({
 								query: { match_all: {} },
 							})}
-							distinctField="brand.keyword"
+							distinctField="authors.keyword"
 						>
 							{props => <CustomComponent {...props} />}
 						</ReactiveComponent>
@@ -36,14 +36,14 @@ class Main extends Component {
 					<div className="col">
 						<ReactiveList
 							componentId="SearchResult"
-							dataField="model"
+							dataField="original_title.keyword"
 							title="ReactiveList"
 							from={0}
 							size={20}
 							renderItem={this.renderData}
 							pagination
 							react={{
-								and: 'CarSensor',
+								and: 'AuthorSensor',
 							}}
 						/>
 					</div>
@@ -55,9 +55,9 @@ class Main extends Component {
 	renderData(data) {
 		return (
 			<div key={data._id}>
-				<h2>{data.name}</h2>
+				<h2>{data.original_title}</h2>
 				<p>
-					{data.price} - {data.rating} stars rated
+					{data.authors} - {data.average_rating} stars rated
 				</p>
 			</div>
 		);
@@ -70,7 +70,7 @@ class CustomComponent extends Component {
 		this.props.setQuery({
 			query: {
 				term: {
-					'brand.keyword': value,
+					'authors.keyword': value,
 				},
 			},
 			value,
@@ -80,14 +80,14 @@ class CustomComponent extends Component {
 		if (this.props.data) {
 			return this.props.data.map(item => (
 				<button
-					key={item.brand}
-					onClick={() => this.setValue(item.brand)}
+					key={item.authors}
+					onClick={() => this.setValue(item.authors)}
 					style={{
 						display: 'block',
 						margin: '5px 0',
 					}}
 				>
-					{item.brand}
+					{item.authors}
 				</button>
 			));
 		}

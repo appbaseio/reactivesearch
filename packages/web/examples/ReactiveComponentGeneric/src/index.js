@@ -16,7 +16,7 @@ class Main extends Component {
 	render() {
 		return (
 			<ReactiveBase
-				app="carstore-dataset"
+				app="good-books-ds"
 				url="https://reactivesearch-api-9-4-0.onrender.com"
 				credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 			>
@@ -25,27 +25,18 @@ class Main extends Component {
 						<SelectedFilters />
 						<ReactiveComponent
 							componentType={componentTypes.singleList}
-							index="good-books-ds"
 							componentId="BookSensor"
 							dataField="authors.keyword"
 							aggregationSize={100}
 						/>
 						<ReactiveComponent
-							componentId="CarSensor"
+							componentId="LanguageSensor"
 							componentType={componentTypes.reactiveComponent}
-							// either use customQuery or defaultQuery
-							// customQuery={() => ({
-							// 	query: {
-							// 		term: {
-							// 			'brand.keyword': 'Nissan',
-							// 		},
-							// 	},
-							// })}
 							defaultQuery={() => ({
 								aggs: {
-									'brand.keyword': {
+									'language_code.keyword': {
 										terms: {
-											field: 'brand.keyword',
+											field: 'language_code.keyword',
 											order: {
 												_count: 'desc',
 											},
@@ -62,14 +53,14 @@ class Main extends Component {
 					<div className="col">
 						<ReactiveList
 							componentId="SearchResult"
-							dataField="model"
+							dataField="original_title.keyword"
 							title="ReactiveList"
 							from={0}
 							size={20}
 							renderItem={this.renderData}
 							pagination
 							react={{
-								and: 'CarSensor',
+								and: 'LanguageSensor',
 							}}
 						/>
 					</div>
@@ -81,9 +72,9 @@ class Main extends Component {
 	renderData(data) {
 		return (
 			<div key={data._id}>
-				<h2>{data.name}</h2>
+				<h2>{data.original_title}</h2>
 				<p>
-					{data.price} - {data.rating} stars rated
+					{data.authors} - {data.average_rating} stars rated
 				</p>
 			</div>
 		);
@@ -96,7 +87,7 @@ class CustomComponent extends Component {
 		this.props.setQuery({
 			query: {
 				term: {
-					'brand.keyword': value,
+					'language_code.keyword': value,
 				},
 			},
 			value,
@@ -105,7 +96,7 @@ class CustomComponent extends Component {
 
 	render() {
 		if (this.props.aggregations) {
-			return this.props.aggregations['brand.keyword'].buckets.map(item => (
+			return this.props.aggregations['language_code.keyword'].buckets.map(item => (
 				<button
 					key={item.key}
 					onClick={() => this.setValue(item.key)}
