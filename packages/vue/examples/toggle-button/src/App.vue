@@ -1,61 +1,66 @@
 <template>
   <div id="app">
     <reactive-base
-      app="meetup_dataset"
-      url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+      app="good-books-ds"
+      url="https://reactivesearch-api-9-4-0.onrender.com"
+      credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
     >
       <div class="parent-row">
         <div class="col">
           <toggle-button
             :data="[
-              { label: 'Social', value: 'Social' },
-              { label: 'Adventure', value: 'Adventure' },
-              { label: 'Music', value: 'Music' },
+              { label: 'English', value: 'eng' },
+              { label: 'French', value: 'fre' },
+              { label: 'Spanish', value: 'spa' },
             ]"
-            component-id="CitySensor"
-            data-field="group.group_topics.topic_name_raw.keyword"
+            component-id="LanguageSensor"
+            data-field="language_code"
           />
         </div>
         <div class="col">
-          <selected-filters component-id="CitySensor" />
+          <selected-filters component-id="LanguageSensor" />
           <reactive-list
             :from="0"
             :size="5"
-            :inner-class="{
-              image: 'meetup-list-image',
-            }"
             :react="{
-              and: ['CitySensor']
+              and: ['LanguageSensor']
             }"
             :pagination="true"
             component-id="SearchResult"
-            data-field="group.group_topics.topic_name_raw.keyword"
+            data-field="original_title.keyword"
             title="Results"
             sort-by="asc"
             class="result-list-container"
           >
-            <template #render="{ data }">
-              <ResultListWrapper>
-                <ResultList
-                  v-for="result in data"
-                  :key="result._id"
-                  :href="result.event.event_url"
+            <template #renderItem="{ item }">
+              <div class="flex book-content">
+                <img
+                  :src="item.image"
+                  alt="Book Cover"
+                  class="book-image"
                 >
-                  <ResultListImage 
-                    :small="true" 
-                    :src="result.member.photo" />
-                  <ResultListContent>
-                    <ResultListTitle>
-                      {{ result.member ? result.member.member_name : '' }} is
-                      going to
-                      {{ result.event ? result.event.event_name : '' }}
-                    </ResultListTitle>
-                    <ResultListDescription>
-                      {{ result.group ? result.group.group_city : '' }}
-                    </ResultListDescription>
-                  </ResultListContent>
-                </ResultList>
-              </ResultListWrapper>
+                <div class="flex column justify-center ml20">
+                  <div class="book-header">{{ item.original_title }}</div>
+                  <div class="flex column justify-space-between">
+                    <div>
+                      <div>
+                        by <span class="authors-list">{{ item.authors }}</span>
+                      </div>
+                      <div class="ratings-list flex align-center">
+                        <span class="stars">
+                          <i
+                            v-for="(star, index) in Array(item.average_rating_rounded).fill('x')"
+                            :key="index"
+                            class="fas fa-star"
+                          />
+                        </span>
+                        <span class="avg-rating">({{ item.average_rating }} avg)</span>
+                      </div>
+                    </div>
+                    <span class="pub-year">Pub {{ item.original_publication_year }}</span>
+                  </div>
+                </div>
+              </div>
             </template>
           </reactive-list>
         </div>
@@ -66,7 +71,7 @@
 
 <script>
 import './styles.css';
-import { ReactiveBase, ReactiveList, ToggleButton, SelectedFilters, ResultList  } from '@appbaseio/reactivesearch-vue'
+import { ReactiveBase, ReactiveList, ToggleButton, SelectedFilters } from '@appbaseio/reactivesearch-vue'
 
 export default {
 	name: 'App',
@@ -75,7 +80,6 @@ export default {
 		ReactiveList,
 		ToggleButton,
 		SelectedFilters,
-		ResultList
 	},
 };
 </script>

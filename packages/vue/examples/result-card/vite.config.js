@@ -12,6 +12,6 @@ export default {
 		],
 	},
     server: {
-        allowedHosts: ['bmkc4-5173.csb.app']
-    }
+		allowedHosts: true,
+	}
 };

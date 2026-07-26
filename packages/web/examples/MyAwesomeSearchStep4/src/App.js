@@ -11,9 +11,9 @@ import {
 function App() {
 	return (
 		<ReactiveBase
-			url="https://appbase-demo-ansible-abxiydt-arc.searchbase.io"
+			url="https://reactivesearch-api-9-4-0.onrender.com"
 			app="good-books-ds"
-			credentials="04717bb076f7:be54685e-db84-4243-975b-5b32ee241d31"
+			credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 		>
 			<SearchBox
 				componentId="searchbox"

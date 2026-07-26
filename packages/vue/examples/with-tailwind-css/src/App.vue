@@ -4,7 +4,8 @@
     class="p-3 bg-gradient-to-r from-green-400 to-blue-500 text-center">
     <reactive-base
       app="good-books-ds"
-      url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+      url="https://reactivesearch-api-9-4-0.onrender.com"
+      credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
     >
       <search-box
         :data-field="['original_title', 'original_title.search', 'authors', 'authors.search']"

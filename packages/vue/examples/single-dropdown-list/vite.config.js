@@ -12,6 +12,6 @@ export default {
 		],
 	},
     server: {
-        allowedHosts: ['0pkoi-5173.csb.app']
-    }
+		allowedHosts: true,
+	}
 };

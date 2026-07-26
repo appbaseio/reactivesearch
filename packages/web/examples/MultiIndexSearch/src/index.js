@@ -17,7 +17,8 @@ const badge = {
 const Main = () => (
 	<ReactiveBase
 		app="good-books,good-books-ds"
-		url="https://b59ca4ceab0d:00a2085f-8794-4a7e-96af-041f45332f0e@appbase-demo-ansible-abxiydt-arc.searchbase.io"
+		url="https://reactivesearch-api-9-4-0.onrender.com"
+		credentials="d03e6f5f33d5:49124674-554e-4343-9ab2-006b2932f5c0"
 		reactivesearchAPIConfig={{
 			recordAnalytics: true,
 			userId: 'jon',
