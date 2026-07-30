@@ -354,6 +354,34 @@ class SingleList extends Component {
 		return getComponent(data, this.props);
 	}
 
+	renderTitle() {
+		const { title, renderTitle, showItemCount, innerClass } = this.props;
+		const itemsCount = this.listItems ? this.listItems.length : 0;
+
+		if (renderTitle) {
+			return isFunction(renderTitle)
+				? renderTitle(itemsCount, this.listItems)
+				: renderTitle;
+		}
+
+		if (title) {
+			return (
+				<Title className={getClassName(innerClass, 'title') || null}>
+					<span>{title}</span>
+					{showItemCount && (
+						<span
+							className={getClassName(innerClass, 'item-count') || null}
+							style={{ marginLeft: '8px' }}
+						>
+							{itemsCount}
+						</span>
+					)}
+				</Title>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		const {
 			selectAllLabel,
@@ -387,11 +415,7 @@ class SingleList extends Component {
 
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
-						{this.props.title}
-					</Title>
-				)}
+				{this.renderTitle()}
 				{this.renderSearch()}
 				{this.hasCustomRenderer ? (
 					this.getComponent()
@@ -552,6 +576,8 @@ SingleList.propTypes = {
 	index: types.string,
 	enableStrictSelection: types.bool,
 	endpoint: types.endpoint,
+	renderTitle: types.title,
+	showItemCount: types.bool,
 };
 
 SingleList.defaultProps = {
@@ -561,6 +587,7 @@ SingleList.defaultProps = {
 	showFilter: true,
 	showRadio: true,
 	showSearch: true,
+	showItemCount: false,
 	size: 100,
 	sortBy: 'count',
 	style: {},
