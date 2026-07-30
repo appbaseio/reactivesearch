@@ -31,6 +31,7 @@ import Mic from '../addons/Mic';
 import Button from '../../../styles/Button';
 import AIFeedback from '../../shared/AIFeedback';
 import { Footer, SourceTags } from '../../../styles/SearchBoxAI';
+import { sanitizeImageUrl } from '../../../utils';
 
 const md = new Remarkable();
 
@@ -76,7 +77,7 @@ const Chat = (props) => {
 			}
 			if (props.iconURL) {
 				return (
-					<img style={{ maxHeight: '25px' }} src={xss(props.iconURL)} alt="search-icon" />
+					<img style={{ maxHeight: '25px' }} src={sanitizeImageUrl(props.iconURL)} alt="search-icon" />
 				);
 			}
 			return <SearchSvg />;
