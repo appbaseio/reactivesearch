@@ -25,6 +25,7 @@
 		"publish:safe": "npm publish --no-git-checks",
 		"test": "jest",
 		"clear-cache-test": "jest --clearCache",
+		"lint": "eslint src",
 		"typescript": "tsc -p tsconfig.json"
 	},
 	"jest": {
