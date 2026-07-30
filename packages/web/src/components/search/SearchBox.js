@@ -63,6 +63,7 @@ import {
 	extractModifierKeysFromFocusShortcuts,
 	isEmpty,
 	parseFocusShortcuts,
+	sanitizeImageUrl,
 } from '../../utils';
 import Mic from './addons/Mic';
 import CancelSvg from '../shared/CancelSvg';
@@ -80,6 +81,9 @@ import { innerText } from '../shared/innerText';
 import TextWithTooltip from './addons/TextWithTooltip';
 import { Thumbnail, CameraIcon } from './addons/CameraIcon';
 import { FallbackRender } from './addons/FallbackRender';
+import AISection from './AISection';
+import SuggestionsSection from './SuggestionsSection';
+import SearchInput from './SearchInput';
 
 const md = new Remarkable();
 
@@ -1156,7 +1160,7 @@ const SearchBox = (props) => {
 			}
 			if (props.iconURL) {
 				return (
-					<img style={{ maxHeight: '25px' }} src={XSS(props.iconURL)} alt="search-icon" />
+					<img style={{ maxHeight: '25px' }} src={sanitizeImageUrl(props.iconURL)} alt="search-icon" />
 				);
 			}
 			return <SearchSvg />;
@@ -1771,7 +1775,7 @@ const SearchBox = (props) => {
 										return (
 											<img
 												style={{ maxHeight: '25px' }}
-												src={XSS(item.iconURL)}
+												src={sanitizeImageUrl(item.iconURL)}
 												alt={item.value}
 											/>
 										);
@@ -1839,410 +1843,54 @@ const SearchBox = (props) => {
 											ref={_dropdownULRef}
 											className={`${getClassName(props.innerClass, 'list')}`}
 										>
-											{showAIScreen ? (
-												<SearchBoxAISection themePreset={props.themePreset}>
-													{typeof props.renderAIAnswer === 'function' ? (
-														props.renderAIAnswer({
-															question: mergedAIQuestion,
-															answer: mergedAIAnswer,
-															documentIds:
-																(props.AIResponse
-																	&& props.AIResponse.response
-																	&& props.AIResponse.response
-																		.answer
-																	&& props.AIResponse.response.answer
-																		.documentIds)
-																|| [],
-															loading:
-																props.isAIResponseLoading
-																|| props.isLoading,
-															sources: getAISourceObjects(),
-															error: props.AIResponseError,
-														})
-													) : (
-														<Fragment>
-															{props.isAIResponseLoading
-															|| props.isLoading ? (
-																	renderAIScreenLoader()
-																) : (
-																	<Fragment>
-																		<Answer>
-																			<TypingEffect
-																				key={currentValue}
-																				message={md.render(
-																					mergedAIAnswer,
-																				)}
-																				speed={5}
-																				onTypingComplete={() => {
-																					if (
-																						prevPropsRefIsAITyping.current
-																					=== undefined
-																					) {
-																						setShowAIScreenFooter(
-																							true,
-																						);
-																					}
-																					if (
-																						(props.AIUIConfig
-																					&& typeof props
-																						.AIUIConfig
-																						.showFeedback
-																						=== 'boolean'
-																							? props
-																								.AIUIConfig
-																								.showFeedback
-																							: true)
-																					&& showTypingEffect
-																					) {
-																						setShowFeedbackComponent(
-																							true,
-																						);
-																					}
-
-																					if (
-																						mergedAIAnswer
-																					) {
-																						setShowTypingEffect(
-																							false,
-																						);
-																					}
-
-																					setTimeout(() => {
-																						_dropdownULRef.current.scrollTo(
-																							{
-																								top:
-																								_dropdownULRef
-																									.current
-																									.scrollHeight,
-																								behavior:
-																								'smooth',
-																							},
-																						);
-																					}, 100);
-																				}}
-																				onWhileTyping={() => {
-																					if (!isUserScrolling) {
-																						_dropdownULRef.current.scrollTo({
-																							top: _dropdownULRef.current.scrollHeight,
-																							behavior: 'smooth',
-																						});
-																						setLastScrollTop(_dropdownULRef.current.scrollHeight);
-																					}
-																				}}
-																				showTypingEffect={
-																					isTypingAIAnswer
-																				}
-																			/>
-																		</Answer>
-																		{renderAIScreenFooter()}
-
-																		{showFeedbackComponent && (
-																			<div
-																				className={`${getClassName(
-																					props.innerClass,
-																					'ai-feedback',
-																				) || ''}`}
-																			>
-																				{' '}
-																				<AIFeedback
-																					overrideState={
-																						feedbackState
-																					}
-																					hideUI={
-																						props.isAIResponseLoading
-																					|| props.isLoading
-																					|| !props.sessionIdFromStore
-																					}
-																					key={
-																						props.sessionIdFromStore
-																					}
-																					onFeedbackSubmit={(
-																						useful,
-																						reason,
-																					) => {
-																						setFeedbackState(
-																							{
-																								isRecorded: true,
-																								feedbackType: useful
-																									? 'positive'
-																									: 'negative',
-																							},
-																						);
-																						props.trackUsefullness(
-																							props.sessionIdFromStore,
-																							{
-																								useful,
-																								reason,
-																							},
-																						);
-																					}}
-																				/>
-																			</div>
-																		)}
-																	</Fragment>
-																)}
-														</Fragment>
-													)}
-													{renderError(true)}
-												</SearchBoxAISection>
-											) : null}
-											{!showAIScreen ? (
-												<Fragment>
-													{parsedSuggestions().map((item, itemIndex) => {
-														const index = indexOffset + itemIndex;
-														if (Array.isArray(item)) {
-															const sectionHtml = XSS(
-																item[0].sectionLabel,
-															);
-															indexOffset += item.length - 1;
-															return (
-																<div
-																	className="section-container"
-																	key={`${item[0].sectionId}`}
-																>
-																	{sectionHtml && (
-																		<div
-																			className={`section-header ${getClassName(
-																				props.innerClass,
-																				'section-label',
-																			)}`}
-																			dangerouslySetInnerHTML={{
-																				__html: sectionHtml,
-																			}}
-																		/>
-																	)}
-																	<ul className="section-list">
-																		{item.map(
-																			(
-																				sectionItem,
-																				sectionIndex,
-																			) => (
-																				<li
-																					{...getItemProps(
-																						{
-																							item: sectionItem,
-																						},
-																					)}
-																					key={`${sectionItem.sectionId
-																						+ sectionIndex}-${
-																						sectionItem.value
-																					}`}
-																					style={{
-																						justifyContent:
-																							'flex-start',
-																						alignItems:
-																							'center',
-																					}}
-																					className={`${
-																						highlightedIndex
-																						=== index
-																							+ sectionIndex
-																							? `active-li-item ${getClassName(
-																								props.innerClass,
-																								'active-suggestion-item',
-																							  )}`
-																							: `li-item ${getClassName(
-																								props.innerClass,
-																								'suggestion-item',
-																							  )}`
-																					}`}
-																				>
-																					<FallbackRender
-																						item={typeof props.renderItem === 'function' ? (
-																							props.renderItem(
-																								sectionItem,
-																							)
-																						) : null}
-																					>
-																						<React.Fragment>
-																							<div
-																								style={{
-																									padding:
-																										'0 10px 0 0',
-																									display:
-																										'flex',
-																								}}
-																							>
-																								<CustomSvg
-																									iconId={`${sectionIndex
-																										+ index
-																										+ 1}-${
-																										sectionItem.value
-																									}-icon`}
-																									className={
-																										getClassName(
-																											props.innerClass,
-																											`${sectionItem._suggestion_type}-search-icon`,
-																										)
-																										|| null
-																									}
-																									icon={getIcon(
-																										sectionItem._suggestion_type,
-																										sectionItem,
-																									)}
-																									type={`${sectionItem._suggestion_type}-search-icon`}
-																								/>
-																							</div>
-																							<Suggestion direction="column">
-																								{sectionItem.label && (
-																									<TextWithTooltip
-																										title={sectionItem.label}
-																										className="section-list-item__label"
-																										innerHTML={
-																											sectionItem.label
-																										}
-																									/>
-																								)}
-																								{sectionItem.description && (
-																									<SuggestionDescription
-																										lines={1}
-																										className="section-list-item__description"
-																										dangerouslySetInnerHTML={{
-																											__html: XSS(
-																												sectionItem.description,
-																											),
-																										}}
-																									/>
-																								)}
-																							</Suggestion>
-																							{getActionIcon(
-																								sectionItem,
-																							)}
-																						</React.Fragment>
-																					</FallbackRender>
-																				</li>
-																			),
-																		)}
-																	</ul>
-																</div>
-															);
-														}
-
-														if (
-															item._suggestion_type
-															=== '_internal_a_i_trigger'
-														) {
-															return (
-																<li
-																	{...getItemProps({ item })}
-																	key={`${index + 1}-${
-																		item.value
-																	}`}
-																	style={{
-																		justifyContent:
-																			'flex-start',
-																		alignItems: 'center',
-																	}}
-																	className={`${
-																		highlightedIndex === index
-																			? `active-li-item ${getClassName(
-																				props.innerClass,
-																				'active-suggestion-item',
-																			  )}`
-																			: `li-item ${getClassName(
-																				props.innerClass,
-																				'suggestion-item',
-																			  )}`
-																	}`}
-																>
-																	<FallbackRender
-																		item={typeof props.renderItem === 'function' ? (
-																			props.renderItem(
-																				item,
-																			)
-																		) : null}
-																	>
-																		<React.Fragment>
-																			<SuggestionItem
-																				currentValue={
-																					currentValue
-																					|| ''
-																				}
-																				suggestion={item}
-																			/>
-																		</React.Fragment>
-																	</FallbackRender>
-																</li>
-															);
-														}
-														return (
-															<li
-																{...getItemProps({ item })}
-																key={`${index + 1}-${item.value}`}
-																style={{
-																	justifyContent: 'flex-start',
-																	alignItems: 'center',
-																}}
-																className={`${
-																	highlightedIndex === index
-																		? `active-li-item ${getClassName(
-																			props.innerClass,
-																			'active-suggestion-item',
-																		  )}`
-																		: `li-item ${getClassName(
-																			props.innerClass,
-																			'suggestion-item',
-																		  )}`
-																}`}
-															>
-																<FallbackRender
-																	item={typeof props.renderItem === 'function' ? (
-																		props.renderItem(
-																			item,
-																		)
-																	) : null}
-																>
-																	<React.Fragment>
-																		{/* eslint-disable */}
-
-																		<div
-																			style={{
-																				padding:
-																					'0 10px 0 0',
-																				display: 'flex',
-																			}}
-																		>
-																			<CustomSvg
-																				iconId={`${index +
-																					1}-${
-																					item.value
-																				}-icon`}
-																				className={
-																					getClassName(
-																						props.innerClass,
-																						`${item._suggestion_type}-search-icon`,
-																					) || null
-																				}
-																				icon={getIcon(
-																					item._suggestion_type,
-																					item,
-																				)}
-																				type={`${item._suggestion_type}-search-icon`}
-																			/>
-																		</div>
-																		{/* eslint-enable */}
-																		<SuggestionItem
-																			currentValue={
-																				currentValue || ''
-																			}
-																			suggestion={item}
-																		/>
-
-																		{getActionIcon(item)}
-																	</React.Fragment>
-																</FallbackRender>
-															</li>
-														);
-													})}
-
-													{showSuggestionsFooter ? (
-														<SuggestionsFooter />
-													) : null}
-												</Fragment>
-											) : null}
-											{!showAIScreen && !hasSuggestions()
-												? renderNoSuggestion(parsedSuggestions()) : null
-											}
+											<AISection
+												showAIScreen={showAIScreen}
+												themePreset={props.themePreset}
+												renderAIAnswer={props.renderAIAnswer}
+												mergedAIQuestion={mergedAIQuestion}
+												mergedAIAnswer={mergedAIAnswer}
+												AIResponse={props.AIResponse}
+												isAIResponseLoading={props.isAIResponseLoading}
+												isLoading={props.isLoading}
+												getAISourceObjects={getAISourceObjects}
+												AIResponseError={props.AIResponseError}
+												renderAIScreenLoader={renderAIScreenLoader}
+												currentValue={currentValue}
+												prevPropsRefIsAITyping={prevPropsRefIsAITyping}
+												setShowAIScreenFooter={setShowAIScreenFooter}
+												AIUIConfig={props.AIUIConfig}
+												showTypingEffect={showTypingEffect}
+												setShowFeedbackComponent={setShowFeedbackComponent}
+												setShowTypingEffect={setShowTypingEffect}
+												_dropdownULRef={_dropdownULRef}
+												isUserScrolling={isUserScrolling}
+												setLastScrollTop={setLastScrollTop}
+												renderAIScreenFooter={renderAIScreenFooter}
+												showFeedbackComponent={showFeedbackComponent}
+												innerClass={props.innerClass}
+												feedbackState={feedbackState}
+												sessionIdFromStore={props.sessionIdFromStore}
+												setFeedbackState={setFeedbackState}
+												trackUsefullness={props.trackUsefullness}
+												renderError={renderError}
+												isTypingAIAnswer={isTypingAIAnswer}
+											/>
+											<SuggestionsSection
+												showAIScreen={showAIScreen}
+												parsedSuggestions={parsedSuggestions}
+												indexOffset={0}
+												innerClass={props.innerClass}
+												getItemProps={getItemProps}
+												highlightedIndex={highlightedIndex}
+												renderItem={props.renderItem}
+												getIcon={getIcon}
+												getActionIcon={getActionIcon}
+												currentValue={currentValue}
+												showSuggestionsFooter={showSuggestionsFooter}
+												SuggestionsFooter={SuggestionsFooter}
+												hasSuggestions={hasSuggestions}
+												renderNoSuggestion={renderNoSuggestion}
+											/>
 										</ul>
 									) : null}
 								</React.Fragment>
@@ -2256,69 +1904,54 @@ const SearchBox = (props) => {
 									{ suppressRefError: true },
 								)}
 							>
-								<InputGroup
-									searchBox
-									ref={_inputGroupRef}
+								<SearchInput
+									inputGroupRef={_inputGroupRef}
 									isOpen={isOpen || showImageDropdown}
-								>
-									<ActionContainer>
-										{renderLeftIcons()}
-										{renderInputAddonBefore()}
-									</ActionContainer>
-									<InputWrapper>
-										<TextArea
-											showFocusShortcutsIcon={props.showFocusShortcutsIcon}
-											showVoiceSearch={props.showVoiceSearch}
-											aria-label={props.componentId}
-											id={`${props.componentId}-input`}
-											showIcon={props.showIcon}
-											showClear={props.showClear}
-											iconPosition={props.iconPosition}
-											ref={_inputRef}
-											{...getInputProps({
-												className: getClassName(props.innerClass, 'input'),
-												placeholder: props.placeholder,
-												// When props.value is defined,
-												// it means SearchBox is used as a controlled component
-												value: Object.hasOwn(props, 'value')
-													? props.value
-													: currentValue || '',
-												onChange: onInputChange,
-												onBlur: withTriggerQuery(props.onBlur),
-												onFocus: handleFocus,
-												onClick: () => {
-													// clear highlighted index
-													setHighlightedIndex(null);
-												},
-												onKeyPress: withTriggerQuery(props.onKeyPress),
-												onKeyDown: e => handleKeyDown(e, highlightedIndex),
-												onKeyUp: withTriggerQuery(props.onKeyUp),
-												autoFocus: props.autoFocus,
-											})}
-											themePreset={props.themePreset}
-											type={props.type}
-											searchBox // a prop specific to Input styled-component
-											// Used to modify styles, is dropdown open or not.
-											isOpen={isOpen || showImageDropdown}
-										/>
-										{!props.expandSuggestionsContainer
-											&& renderSuggestionsDropdown(
-												getRootProps,
-												getInputProps,
-												getItemProps,
-												isOpen,
-												highlightedIndex,
-												setHighlightedIndex,
-												...rest,
-											)}
-									</InputWrapper>
-									<ActionContainer>
-										{renderRightIcons()}
-										{renderInputAddonAfter()}
-										{renderAskButtonElement()}
-										{renderEnterButtonElement()}
-									</ActionContainer>
-								</InputGroup>
+									inputRef={_inputRef}
+									inputProps={getInputProps({
+										className: getClassName(props.innerClass, 'input'),
+										placeholder: props.placeholder,
+										value: Object.hasOwn(props, 'value')
+											? props.value
+											: currentValue || '',
+										onChange: onInputChange,
+										onBlur: withTriggerQuery(props.onBlur),
+										onFocus: handleFocus,
+										onClick: () => {
+											setHighlightedIndex(null);
+										},
+										onKeyPress: withTriggerQuery(props.onKeyPress),
+										onKeyDown: e => handleKeyDown(e, highlightedIndex),
+										onKeyUp: withTriggerQuery(props.onKeyUp),
+										autoFocus: props.autoFocus,
+										id: `${props.componentId}-input`,
+									})}
+									renderLeftIcons={renderLeftIcons}
+									renderInputAddonBefore={renderInputAddonBefore}
+									renderRightIcons={renderRightIcons}
+									renderInputAddonAfter={renderInputAddonAfter}
+									renderAskButtonElement={renderAskButtonElement}
+									renderEnterButtonElement={renderEnterButtonElement}
+									themePreset={props.themePreset}
+									type={props.type}
+									showFocusShortcutsIcon={props.showFocusShortcutsIcon}
+									showVoiceSearch={props.showVoiceSearch}
+									iconPosition={props.iconPosition}
+									showIcon={props.showIcon}
+									showClear={props.showClear}
+									expandSuggestionsContainer={props.expandSuggestionsContainer}
+									renderSuggestionsDropdown={() =>
+										renderSuggestionsDropdown(
+											getRootProps,
+											getInputProps,
+											getItemProps,
+											isOpen,
+											highlightedIndex,
+											setHighlightedIndex,
+											...rest,
+										)
+									}
+								/>
 
 								{showImageDropdown ? (
 									<ImageDropdown
@@ -2355,48 +1988,37 @@ const SearchBox = (props) => {
 				/>
 			) : (
 				<div css={suggestionsContainer}>
-					<InputGroup searchBox ref={_inputGroupRef} isOpen={showImageDropdown}>
-
-						<ActionContainer>
-							{renderLeftIcons()}
-							{renderInputAddonBefore()}
-						</ActionContainer>
-						<InputWrapper>
-							<TextArea
-								aria-label={props.componentId}
-								className={getClassName(props.innerClass, 'input') || null}
-								placeholder={props.placeholder}
-								value={
-									Object.hasOwn(props, 'value') ? props.value : currentValue || ''
-								}
-								ref={_inputRef}
-								onChange={onInputChange}
-								onBlur={withTriggerQuery(props.onBlur)}
-								onFocus={withTriggerQuery(props.onFocus)}
-								onKeyPress={withTriggerQuery(props.onKeyPress)}
-								onKeyDown={handleKeyDown}
-								onKeyUp={withTriggerQuery(props.onKeyUp)}
-								autoFocus={props.autoFocus}
-								iconPosition={props.iconPosition}
-								showIcon={props.showIcon}
-								showClear={props.showClear}
-								themePreset={props.themePreset}
-								type={props.type}
-								showFocusShortcutsIcon={props.showFocusShortcutsIcon}
-								showVoiceSearch={props.showVoiceSearch}
-
-								// Props used to modify styles
-								searchBox
-								isOpen={showImageDropdown}
-							/>
-						</InputWrapper>
-						<ActionContainer>
-							{renderRightIcons()}
-							{renderInputAddonAfter()}
-							{renderAskButtonElement()}
-							{renderEnterButtonElement()}
-						</ActionContainer>
-					</InputGroup>
+					<SearchInput
+						inputGroupRef={_inputGroupRef}
+						isOpen={showImageDropdown}
+						inputRef={_inputRef}
+						inputProps={{
+							'aria-label': props.componentId,
+							className: getClassName(props.innerClass, 'input') || null,
+							placeholder: props.placeholder,
+							value: Object.hasOwn(props, 'value') ? props.value : currentValue || '',
+							onChange: onInputChange,
+							onBlur: withTriggerQuery(props.onBlur),
+							onFocus: withTriggerQuery(props.onFocus),
+							onKeyPress: withTriggerQuery(props.onKeyPress),
+							onKeyDown: handleKeyDown,
+							onKeyUp: withTriggerQuery(props.onKeyUp),
+							autoFocus: props.autoFocus,
+						}}
+						renderLeftIcons={renderLeftIcons}
+						renderInputAddonBefore={renderInputAddonBefore}
+						renderRightIcons={renderRightIcons}
+						renderInputAddonAfter={renderInputAddonAfter}
+						renderAskButtonElement={renderAskButtonElement}
+						renderEnterButtonElement={renderEnterButtonElement}
+						themePreset={props.themePreset}
+						type={props.type}
+						showFocusShortcutsIcon={props.showFocusShortcutsIcon}
+						showVoiceSearch={props.showVoiceSearch}
+						iconPosition={props.iconPosition}
+						showIcon={props.showIcon}
+						showClear={props.showClear}
+					/>
 
 					{showImageDropdown ? <ImageDropdown
 						imageValue={currentImageValue}

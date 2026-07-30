@@ -13,7 +13,7 @@ import { getClassName, handleA11yAction } from '@appbaseio/reactivecore/lib/util
 import Button, { Filter } from '../../styles/Button';
 import Container from '../../styles/Container';
 import Title from '../../styles/Title';
-import { connect, decodeHtml } from '../../utils';
+import { connect, decodeHtml, sanitizeImageUrl } from '../../utils';
 
 class SelectedFilters extends Component {
 	constructor(props) {
@@ -141,7 +141,7 @@ class SelectedFilters extends Component {
 							<Filter.Value title={decodeHtml(valueToRender)}>{
 								selectedValues[component].label}: {decodeHtml(valueToRender)}
 							</Filter.Value>
-							{imageValue ? <Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /> </Filter.ImageValue> : null}
+							{imageValue ? <Filter.ImageValue><img width="30px" alt="thumbnail" src={sanitizeImageUrl(imageValue)} /> </Filter.ImageValue> : null}
 							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
 						</Button>
 					);
@@ -155,7 +155,7 @@ class SelectedFilters extends Component {
 							tabIndex="0"
 						>
 							<Filter.Value>{selectedValues[component].label}:</Filter.Value>
-							<Filter.ImageValue><img width="30px" alt="thumbnail" src={imageValue} /></Filter.ImageValue>
+							<Filter.ImageValue><img width="30px" alt="thumbnail" src={sanitizeImageUrl(imageValue)} /></Filter.ImageValue>
 							<Filter.CloseIcon>&#x2715;</Filter.CloseIcon>
 						</Button>
 					);
