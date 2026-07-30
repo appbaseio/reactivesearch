@@ -137,16 +137,55 @@ class ReactiveBase extends Component {
 		let selectedValues = {};
 		let urlValues = {};
 
+		const isValidURLValue = (value) => {
+			if (value === null || value === undefined) return false;
+			const type = typeof value;
+			if (type === 'string' || type === 'number' || type === 'boolean') return true;
+			if (Array.isArray(value)) {
+				return value.every((item) => {
+					const itemType = typeof item;
+					return itemType === 'string' || itemType === 'number' || itemType === 'boolean';
+				});
+			}
+			if (type === 'object' && value.constructor === Object) {
+				return Object.values(value).every((item) => {
+					const itemType = typeof item;
+					return itemType === 'string' || itemType === 'number' || itemType === 'boolean' || item === null;
+				});
+			}
+			return false;
+		};
+
+		const isValidParsedParam = (parsedParams) => {
+			if (parsedParams === null || parsedParams === undefined) return false;
+			const type = typeof parsedParams;
+			if (type === 'string' || type === 'number' || type === 'boolean' || Array.isArray(parsedParams)) {
+				return true;
+			}
+			if (type === 'object' && parsedParams.constructor === Object) {
+				if (Object.prototype.hasOwnProperty.call(parsedParams, 'value')) {
+					return isValidURLValue(parsedParams.value);
+				}
+				return isValidURLValue(parsedParams);
+			}
+			return false;
+		};
+
 		Array.from(params.keys()).forEach((key) => {
 			try {
 				const parsedParams = JSON.parse(params.get(key));
+				if (!isValidParsedParam(parsedParams)) {
+					return;
+				}
 				const selectedValue = {};
-				if (parsedParams.value) {
+				if (parsedParams && typeof parsedParams === 'object' && Object.prototype.hasOwnProperty.call(parsedParams, 'value')) {
 					selectedValue.value = parsedParams.value;
 				} else {
 					selectedValue.value = parsedParams;
 				}
-				if (parsedParams.category) selectedValue.category = parsedParams.category;
+				if (parsedParams && parsedParams.category && typeof parsedParams.category === 'string') {
+					selectedValue.category = parsedParams.category;
+				}
 				selectedValue.reference = 'URL';
 				selectedValues = {
 					...selectedValues,
