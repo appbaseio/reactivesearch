@@ -42,6 +42,7 @@ export interface SingleDropdownList extends CommonProps {
 	preferencesPath?: string;
 	showClear?: boolean;
 	endpoint?: types.endpointConfig;
+	showOnlyOneOption?: boolean;
 }
 
 declare const SingleDropdownList: React.ComponentClass<SingleDropdownList>;
