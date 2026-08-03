@@ -326,6 +326,13 @@ class MultiDropdownList extends Component {
 		this.updateQueryOptions(this.props, true);
 	};
 
+	handleKeyPress = (e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			this.handleLoadMore();
+		}
+	};
+
 	handleChange = (e) => {
 		let currentValue = e;
 		if (isEvent(e)) {
@@ -424,7 +431,12 @@ class MultiDropdownList extends Component {
 						showLoadMore
 						&& !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button disabled={isLoading} onClick={this.handleLoadMore}>
+								<Button
+									disabled={isLoading}
+									onClick={this.handleLoadMore}
+									onKeyPress={this.handleKeyPress}
+									tabIndex={0}
+								>
 									{loadMoreLabel}
 								</Button>
 							</div>
