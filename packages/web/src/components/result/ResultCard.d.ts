@@ -7,6 +7,7 @@ declare namespace ResultCardTree {
 		children: React.ReactNode;
 		href?: string;
 		id?: string|number;
+		autoHeight?: boolean;
 	}
 
 	interface ImageProps extends React.HTMLAttributes<HTMLDivElement> {
