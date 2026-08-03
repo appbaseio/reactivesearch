@@ -258,7 +258,27 @@ class DynamicRangeSlider extends Component {
 	}
 
 	componentDidMount() {
-		const { mode } = this.props;
+		const { components, addComponent, setQueryListener, setComponentProps, mode } = this.props;
+		const currentComponents = components || [];
+		if (currentComponents.indexOf(this.props.componentId) === -1) {
+			addComponent(this.props.componentId, this._timestamp);
+			addComponent(this.internalHistogramComponent, this._timestamp);
+			addComponent(this.internalRangeComponent, this._timestamp);
+			setQueryListener(this.props.componentId, this.props.onQueryChange, null);
+
+			setComponentProps(this.props.componentId, this.props, componentTypes.dynamicRangeSlider);
+			setComponentProps(
+				this.internalHistogramComponent,
+				this.props,
+				componentTypes.dynamicRangeSlider,
+			);
+			setComponentProps(
+				this.internalRangeComponent,
+				this.props,
+				componentTypes.dynamicRangeSlider,
+			);
+		}
+
 		if (mode !== 'test') {
 			this.setReact(this.props);
 		}
@@ -800,6 +820,7 @@ const mapStateToProps = (state, props) => {
 		}
 	}
 	return {
+		components: state.components,
 		options,
 		isLoading: state.isLoading[props.componentId],
 		range,
