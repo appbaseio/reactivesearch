@@ -42,6 +42,8 @@ export interface MultiList extends CommonProps {
 	index?: string;
 	preferencesPath?: string;
 	endpoint?: types.endpointConfig;
+	collapse?: boolean;
+	defaultCollapse?: boolean;
 }
 
 declare const MultiList: React.ComponentClass<MultiList>;
