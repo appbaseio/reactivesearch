@@ -28,7 +28,7 @@ import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions
 import types from '@appbaseio/reactivecore/lib/utils/types';
 import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { getInternalComponentID } from '@appbaseio/reactivecore/lib/utils/transform';
-import Title from '../../styles/Title';
+import Title, { TitleCount } from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
@@ -340,6 +340,16 @@ class SingleList extends Component {
 		return listItems;
 	}
 
+	/**
+	 * The number of items shown next to the title when `showItemCount` is set.
+	 * Counts the items currently rendered, so it stays in sync with the list as
+	 * `showSearch` narrows it down, and reflects the buckets actually returned
+	 * rather than the requested `size`.
+	 */
+	get itemCount() {
+		return this.listItems.length;
+	}
+
 	getComponent() {
 		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
@@ -363,6 +373,7 @@ class SingleList extends Component {
 			renderError,
 			error,
 			isLoading,
+			showItemCount,
 			total,
 		} = this.props;
 		const { isLastBucket } = this.state;
@@ -390,6 +401,15 @@ class SingleList extends Component {
 				{this.props.title && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
+						{showItemCount && (
+							<TitleCount
+								className={
+									getClassName(this.props.innerClass, 'itemCount') || null
+								}
+							>
+								{this.itemCount}
+							</TitleCount>
+						)}
 					</Title>
 				)}
 				{this.renderSearch()}
@@ -535,6 +555,7 @@ SingleList.propTypes = {
 	transformData: types.func,
 	selectAllLabel: types.string,
 	showCount: types.bool,
+	showItemCount: types.bool,
 	showFilter: types.bool,
 	showRadio: types.boolRequired,
 	showSearch: types.bool,
@@ -558,6 +579,7 @@ SingleList.defaultProps = {
 	className: null,
 	placeholder: 'Search',
 	showCount: true,
+	showItemCount: false,
 	showFilter: true,
 	showRadio: true,
 	showSearch: true,
