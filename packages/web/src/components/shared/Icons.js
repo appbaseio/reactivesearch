@@ -11,6 +11,50 @@ const PlaceholderSVG = styled(ThemedSVG)`
 	margin: auto;
 `;
 
+export const styleErrorIcon = styled(ThemedSVG)`
+`;
+
+export const ICONS_PATHS = {
+	search: `M6.02945,10.20327a4.17382,4.17382,0,1,1,4.17382-4.17382A4.15609,4.15609,
+		0,0,1,6.02945,10.20327Zm9.69195,4.2199L10.8989,9.59979A5.88021,5.88021,
+		0,0,0,12.058,6.02856,6.00467,6.00467,0,1,0,9.59979,10.8989l4.82338,
+		4.82338a.89729.89729,0,0,0,1.29912,0,.89749.89749,0,0,0-.00087-1.29909Z`,
+}
+
+export const svgIcons = ({name,style, ...props}) => {
+	const pathData = ICONS_PATHS[name];
+	if (!pathData) {
+		return null;
+	}
+
+	return (
+		<svg
+			alt={name}
+			className={`${name}-icon`}
+			height="12"
+			width="12"
+			xmlns="http://www.w3.org/2000/svg"
+			viewBox="0 0 15 15"
+			style={{
+				transform: 'scale(1.35)',
+				position: 'relative',
+				...(style ? style : {}),
+			}}
+			{...props}
+		>
+			<title>{name}</title>
+			<path d={pathData} />
+		</svg>
+	)
+}
+
+svgIcons.propTypes = {
+	name: string.isRequired,
+	style: object,
+};
+
+export const searchSvg = props => svgIcons({ name: 'search', ...props });
+
 export const Placeholder = ({ style, size = '100px' }) => (
 	<PlaceholderSVG style={style} width={size} height={size} viewBox="0 0 24 24" color="blue" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="currentColor" strokeWidth="1.5" />
