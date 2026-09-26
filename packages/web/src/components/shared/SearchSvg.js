@@ -1,3 +1,3 @@
-import { SearchSvg } from './icons';
+import { SearchSvg } from './Icons';
 
 export default SearchSvg;
