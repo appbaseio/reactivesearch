@@ -481,6 +481,10 @@ class MultiList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
+		if (this.state.options && this.state.options.length <= 1 && !this.props.showOnlyOneOption) {
+			return null;
+		}
+
 		if (!this.hasCustomRenderer && this.state.options && this.state.options.length === 0) {
 			return this.props.renderNoResults ? this.props.renderNoResults() : null;
 		}
@@ -661,6 +665,7 @@ MultiList.propTypes = {
 	loadMoreLabel: types.title,
 	index: types.string,
 	endpoint: types.endpoint,
+	showOnlyOneOption: types.bool,
 };
 
 MultiList.defaultProps = {
@@ -678,6 +683,7 @@ MultiList.defaultProps = {
 	missingLabel: 'N/A',
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	showOnlyOneOption: true,
 };
 
 // Add componentType for SSR

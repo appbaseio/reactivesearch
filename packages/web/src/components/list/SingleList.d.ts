@@ -42,6 +42,7 @@ export interface SingleList extends CommonProps {
 	preferencesPath?: string;
 	enableStrictSelection?: boolean;
 	endpoint?: types.endpointConfig;
+	showOnlyOneOption?: boolean;
 }
 
 declare const SingleList: React.ComponentClass<SingleList>;

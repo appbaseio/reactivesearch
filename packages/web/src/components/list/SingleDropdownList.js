@@ -282,6 +282,10 @@ class SingleDropdownList extends Component {
 			return isFunction(renderError) ? renderError(error) : renderError;
 		}
 
+		if (this.state.options && this.state.options.length <= 1 && !this.props.showOnlyOneOption) {
+			return null;
+		}
+
 		if (!this.hasCustomRenderer && this.state.options.length === 0) {
 			if (this.props.renderNoResults && !this.props.isLoading) {
 				return this.props.renderNoResults();
@@ -402,6 +406,7 @@ SingleDropdownList.propTypes = {
 	showClear: types.bool,
 	isOpen: types.bool,
 	endpoint: types.endpoint,
+	showOnlyOneOption: types.bool,
 };
 
 SingleDropdownList.defaultProps = {
@@ -420,6 +425,7 @@ SingleDropdownList.defaultProps = {
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
 	isOpen: false,
+	showOnlyOneOption: true,
 };
 
 // Add componentType for SSR
