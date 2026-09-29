@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { setHeaders, setValue } from '@appbaseio/reactivecore/lib/actions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
+import { componentTypes } from '@appbaseio/reactivecore/lib/utils/constants';
 import { isEqual } from '@appbaseio/reactivecore/lib/utils/helper';
 
 import Base from '../../styles/Base';
@@ -36,16 +37,16 @@ class URLParamsProvider extends Component {
 			Array.from(this.params.entries()).forEach((item) => {
 				try {
 					const [component, value] = item;
-					const { label, showFilter, URLParams } = this.props.selectedValues[
-						component
-					] || { label: component };
+					const {
+						label, showFilter, URLParams, componentType,
+					} = this.props.selectedValues[component] || { label: component };
 					this.props.setValue(
 						component,
 						JSON.parse(value),
 						label,
 						showFilter,
 						URLParams,
-						undefined,
+						componentType,
 						undefined,
 						undefined,
 						'URL',
@@ -95,8 +96,13 @@ class URLParamsProvider extends Component {
 									shouldPushHistory = true;
 								}
 							} else {
-								const currentValue = this.getValue(selectedValues.value);
-								const prevValue = prevValues && this.getValue(prevValues.value);
+								const { componentType } = selectedValues;
+								const currentValue = this.getValue(
+									selectedValues.value,
+									componentType,
+								);
+								const prevValue
+									= prevValues && this.getValue(prevValues.value, componentType);
 
 								/*
 									Push to history only if values are different because setting url on
@@ -107,7 +113,7 @@ class URLParamsProvider extends Component {
 								if (prevValue !== currentValue) {
 									const shouldUpdateHistory = this.setURL(
 										component,
-										this.getValue(selectedValues.value),
+										currentValue,
 									);
 									if (shouldUpdateHistory) {
 										shouldPushHistory = true;
@@ -194,15 +200,18 @@ class URLParamsProvider extends Component {
 		return !!component.value;
 	}
 
-	getValue(value) {
+	getValue(value, componentType) {
 		if (Array.isArray(value) && value.length) {
-			return value.map(item => this.getValue(item));
+			return value.map(item => this.getValue(item, componentType));
 		} else if (value && typeof value === 'object') {
 			// TODO: support for NestedList
 			if (value.location) return value;
 			if (value.category) return value;
 			if (Object.hasOwn(value, 'mainLabel') || Object.hasOwn(value, 'secondaryLabel')) {
 				return value;
+			}
+			if (componentType === componentTypes.toggleButton) {
+				return Object.hasOwn(value, 'value') ? value.value : null;
 			}
 			return value.label || value.key || null;
 		}
