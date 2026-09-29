@@ -161,6 +161,46 @@ it('should use render prop to render the list item', () => {
 	expect(elem).toMatchSnapshot();
 });
 
+it('should render item count next to the title when showItemCount is true', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<MultiList
+					mode="test"
+					componentId="authors"
+					dataField="authors.keyword"
+					title="Authors"
+					showItemCount
+					mockData={{
+						aggregations: MOCK_AGGREGATIONS_DATA,
+					}}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
+it('should not render item count when showItemCount is false', () => {
+	const elem = renderer
+		.create(
+			<ReactiveBase app="test" url="https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@localhost:800">
+				<MultiList
+					mode="test"
+					componentId="authors"
+					dataField="authors.keyword"
+					title="Authors"
+					showItemCount={false}
+					mockData={{
+						aggregations: MOCK_AGGREGATIONS_DATA,
+					}}
+				/>
+			</ReactiveBase>,
+		)
+		.toJSON();
+	expect(elem).toMatchSnapshot();
+});
+
 it('should select default value', () => {
 	const elem = renderer
 		.create(

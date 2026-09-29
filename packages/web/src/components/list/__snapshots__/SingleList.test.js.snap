@@ -1,5 +1,314 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should not render item count when showItemCount is false 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #424242;
+}
+
+.emotion-6 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.emotion-6:focus {
+  background-color: #fff;
+}
+
+.emotion-6[type='search']::-webkit-search-decoration,
+.emotion-6[type='search']::-webkit-search-cancel-button,
+.emotion-6[type='search']::-webkit-search-results-button,
+.emotion-6[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-8 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+.emotion-8 li {
+  min-height: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.emotion-10 {
+  border: 0;
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.emotion-10:focus+label::before {
+  box-shadow: 0 0 0 2px #d7e7ff;
+}
+
+.emotion-10:hover+label::before {
+  border-color: #0B6AFF;
+}
+
+.emotion-10:active+label::before {
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+}
+
+.emotion-10+label {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0.4rem 0;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.emotion-10+label:hover {
+  color: #0B6AFF;
+}
+
+.emotion-10+label>span {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  line-height: 1.3rem;
+}
+
+.emotion-10+label>span>span:first-of-type {
+  padding-right: 5px;
+}
+
+.emotion-10+label>span>span:nth-of-type(2) {
+  color: #9b9b9b;
+}
+
+.emotion-10+label::before {
+  background-color: #fff;
+  border: 1px solid #595959;
+  box-sizing: content-box;
+  content: '';
+  color: #0B6AFF;
+  margin-right: calc(16px * 0.5);
+  top: 50%;
+  left: 0;
+  width: calc(16px + 1px);
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.emotion-10+label::after {
+  box-sizing: content-box;
+  content: '';
+  background-color: #0B6AFF;
+  position: absolute;
+  top: 11px;
+  left: calc(1px + 4px / 2);
+  width: calc(16px - 4px);
+  height: calc(16px - 4px);
+  margin-top: calc(16px / -2 - 4px / -2);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  -webkit-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+.emotion-10+label::before,
+.emotion-10+label::after {
+  border-radius: 50%;
+}
+
+.emotion-10:checked:active+label,
+.emotion-10:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-10:checked:active+label::before,
+.emotion-10:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.emotion-10:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
+  border-color: #0B6AFF;
+}
+
+.emotion-10:checked+label::after {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <h2
+      className="emotion-4 emotion-5"
+    >
+      Authors
+    </h2>
+    <input
+      aria-label="authors-search"
+      className="emotion-6 emotion-7"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="emotion-8 emotion-9"
+      role="radiogroup"
+    >
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-10 emotion-11"
+          id="authors-J. K. Rowling"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span>
+            <span>
+              J. K. Rowling
+            </span>
+            <span>
+              10
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-10 emotion-11"
+          id="authors-Nora Roberts"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          htmlFor="authors-Nora Roberts"
+        >
+          <span>
+            <span>
+              Nora Roberts
+            </span>
+            <span>
+              7
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
 exports[`should not render search/count/checkbox when showSearch/showCount/showCheckbox are false 1`] = `
 .emotion-0 {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
@@ -249,6 +558,326 @@ exports[`should not render search/count/checkbox when showSearch/showCount/showC
           <span>
             <span>
               Nora Roberts
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`should render item count next to the title when showItemCount is true 1`] = `
+.emotion-0 {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: 16px;
+  color: #424242;
+  width: 100%;
+}
+
+.emotion-0 input,
+.emotion-0 button,
+.emotion-0 textarea,
+.emotion-0 select {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Noto Sans","Ubuntu","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+.emotion-0 *,
+.emotion-0 *:before,
+.emotion-0 *:after {
+  box-sizing: border-box;
+}
+
+.emotion-4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #424242;
+}
+
+.emotion-6 {
+  margin-left: 5px;
+  font-weight: normal;
+  color: #9b9b9b;
+}
+
+.emotion-8 {
+  width: 100%;
+  line-height: 1.5;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.emotion-8:focus {
+  background-color: #fff;
+}
+
+.emotion-8[type='search']::-webkit-search-decoration,
+.emotion-8[type='search']::-webkit-search-cancel-button,
+.emotion-8[type='search']::-webkit-search-results-button,
+.emotion-8[type='search']::-webkit-search-results-decoration {
+  display: none;
+}
+
+.emotion-10 {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 240px;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 12px;
+}
+
+.emotion-10 li {
+  min-height: 30px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2px;
+}
+
+.emotion-12 {
+  border: 0;
+  -webkit-clip: rect(1px,1px,1px,1px);
+  clip: rect(1px,1px,1px,1px);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.emotion-12:focus+label::before {
+  box-shadow: 0 0 0 2px #d7e7ff;
+}
+
+.emotion-12:hover+label::before {
+  border-color: #0B6AFF;
+}
+
+.emotion-12:active+label::before {
+  -webkit-transition-duration: 0;
+  transition-duration: 0;
+}
+
+.emotion-12+label {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0.4rem 0;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.emotion-12+label:hover {
+  color: #0B6AFF;
+}
+
+.emotion-12+label>span {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  line-height: 1.3rem;
+}
+
+.emotion-12+label>span>span:first-of-type {
+  padding-right: 5px;
+}
+
+.emotion-12+label>span>span:nth-of-type(2) {
+  color: #9b9b9b;
+}
+
+.emotion-12+label::before {
+  background-color: #fff;
+  border: 1px solid #595959;
+  box-sizing: content-box;
+  content: '';
+  color: #0B6AFF;
+  margin-right: calc(16px * 0.5);
+  top: 50%;
+  left: 0;
+  width: calc(16px + 1px);
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 2px;
+}
+
+.emotion-12+label::after {
+  box-sizing: content-box;
+  content: '';
+  background-color: #0B6AFF;
+  position: absolute;
+  top: 11px;
+  left: calc(1px + 4px / 2);
+  width: calc(16px - 4px);
+  height: calc(16px - 4px);
+  margin-top: calc(16px / -2 - 4px / -2);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: 50%;
+  -ms-transform-origin: 50%;
+  transform-origin: 50%;
+  -webkit-transition: -webkit-transform 200ms ease-out;
+  -webkit-transition: transform 200ms ease-out;
+  transition: transform 200ms ease-out;
+}
+
+.emotion-12+label::before,
+.emotion-12+label::after {
+  border-radius: 50%;
+}
+
+.emotion-12:checked:active+label,
+.emotion-12:checked:focus+label {
+  color: #0B6AFF;
+}
+
+.emotion-12:checked:active+label::before,
+.emotion-12:checked:focus+label::before {
+  -webkit-animation: none;
+  animation: none;
+  -webkit-filter: none;
+  filter: none;
+  -webkit-transition: none;
+  transition: none;
+}
+
+.emotion-12:checked+label::before {
+  -webkit-animation: none;
+  animation: none;
+  background-color: #fff;
+  border-color: #0B6AFF;
+}
+
+.emotion-12:checked+label::after {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
+
+<div
+  className="emotion-0 emotion-1"
+  style={Object {}}
+>
+  <div
+    className="emotion-2 emotion-3"
+    style={Object {}}
+  >
+    <h2
+      className="emotion-4 emotion-5"
+    >
+      Authors
+      <span
+        className="emotion-6 emotion-7"
+      >
+        2
+      </span>
+    </h2>
+    <input
+      aria-label="authors-search"
+      className="emotion-8 emotion-9"
+      onChange={[Function]}
+      placeholder="Search"
+      style={
+        Object {
+          "margin": "0 0 8px",
+        }
+      }
+      value=""
+    />
+    <ul
+      aria-label="authors-items"
+      className="emotion-10 emotion-11"
+      role="radiogroup"
+    >
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-12 emotion-13"
+          id="authors-J. K. Rowling"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="J. K. Rowling"
+        />
+        <label
+          htmlFor="authors-J. K. Rowling"
+        >
+          <span>
+            <span>
+              J. K. Rowling
+            </span>
+            <span>
+              10
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        aria-checked={false}
+        role="radio"
+      >
+        <input
+          checked={false}
+          className=" emotion-12 emotion-13"
+          id="authors-Nora Roberts"
+          onClick={[Function]}
+          readOnly={true}
+          tabIndex="0"
+          type="radio"
+          value="Nora Roberts"
+        />
+        <label
+          htmlFor="authors-Nora Roberts"
+        >
+          <span>
+            <span>
+              Nora Roberts
+            </span>
+            <span>
+              7
             </span>
           </span>
         </label>

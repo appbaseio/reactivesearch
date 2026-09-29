@@ -24,6 +24,7 @@ export interface SingleList extends CommonProps {
 	transformData?: (...args: any[]) => any;
 	selectAllLabel?: string;
 	showCount?: boolean;
+	showItemCount?: boolean;
 	showFilter?: boolean;
 	showRadio?: boolean;
 	showSearch?: boolean;

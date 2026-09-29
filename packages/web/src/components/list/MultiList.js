@@ -29,7 +29,7 @@ import {
 import { replaceDiacritics } from '@appbaseio/reactivecore/lib/utils/suggestions';
 import types from '@appbaseio/reactivecore/lib/utils/types';
 
-import Title from '../../styles/Title';
+import Title, { TitleCount } from '../../styles/Title';
 import Input from '../../styles/Input';
 import Button, { loadMoreContainer } from '../../styles/Button';
 import Container from '../../styles/Container';
@@ -445,6 +445,16 @@ class MultiList extends Component {
 		return listItems;
 	}
 
+	/**
+	 * The number of items shown next to the title when `showItemCount` is set.
+	 * Counts the items currently rendered, so it stays in sync with the list as
+	 * `showSearch` narrows it down, and reflects the buckets actually returned
+	 * rather than the requested `size`.
+	 */
+	get itemCount() {
+		return this.listItems.length;
+	}
+
 	getComponent() {
 		const { error, isLoading, rawData } = this.props;
 		const { currentValue } = this.state;
@@ -469,6 +479,7 @@ class MultiList extends Component {
 			error,
 			isLoading,
 			showCount,
+			showItemCount,
 			total,
 		} = this.props;
 		const { isLastBucket } = this.state;
@@ -493,6 +504,15 @@ class MultiList extends Component {
 				{this.props.title && (
 					<Title className={getClassName(this.props.innerClass, 'title') || null}>
 						{this.props.title}
+						{showItemCount && (
+							<TitleCount
+								className={
+									getClassName(this.props.innerClass, 'itemCount') || null
+								}
+							>
+								{this.itemCount}
+							</TitleCount>
+						)}
 					</Title>
 				)}
 				{this.renderSearch()}
@@ -648,6 +668,7 @@ MultiList.propTypes = {
 	selectAllLabel: types.string,
 	showCheckbox: types.boolRequired,
 	showCount: types.bool,
+	showItemCount: types.bool,
 	showSearch: types.bool,
 	size: types.number,
 	sortBy: types.sortByWithCount,
@@ -669,6 +690,7 @@ MultiList.defaultProps = {
 	queryFormat: 'or',
 	showCheckbox: true,
 	showCount: true,
+	showItemCount: false,
 	showSearch: true,
 	size: 100,
 	sortBy: 'count',
