@@ -278,6 +278,13 @@ class SingleList extends Component {
 		this.props.loadMore(this.props.componentId, queryOptions);
 	};
 
+	handleKeyPress = (e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			this.handleLoadMore();
+		}
+	};
+
 	renderSearch = () => {
 		if (this.props.showSearch) {
 			return (
@@ -485,7 +492,12 @@ class SingleList extends Component {
 							: this.props.renderNoResults && this.props.renderNoResults()}
 						{showLoadMore && !isLastBucket && (
 							<div css={loadMoreContainer}>
-								<Button disabled={isLoading} onClick={this.handleLoadMore}>
+								<Button
+									disabled={isLoading}
+									onClick={this.handleLoadMore}
+									onKeyPress={this.handleKeyPress}
+									tabIndex={0}
+								>
 									{loadMoreLabel}
 								</Button>
 							</div>
