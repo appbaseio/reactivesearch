@@ -39,7 +39,8 @@ const Card = styled('a')`
 		(theme.colors.backgroundColor
 			? lighten(0.1, theme.colors.backgroundColor)
 			: '#fff')};
-	height: 300px;
+	height: ${props => (props.autoHeight ? 'auto' : '300px')};
+	min-height: 300px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -55,9 +56,9 @@ const Card = styled('a')`
 		width: 100%;
 		font-size: 0.9rem;
 		line-height: 1.2rem;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		white-space: ${props => (props.autoHeight ? 'normal' : 'nowrap')};
+		overflow: ${props => (props.autoHeight ? 'visible' : 'hidden')};
+		text-overflow: ${props => (props.autoHeight ? 'unset' : 'ellipsis')};
 		margin: 0;
 		padding: 10px 0 8px;
 	}

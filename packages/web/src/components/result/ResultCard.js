@@ -39,10 +39,12 @@ ResultCard.propTypes = {
 	target: types.stringRequired,
 	id: oneOfType([types.string, types.number]),
 	href: types.string,
+	autoHeight: types.bool,
 };
 
 ResultCard.defaultProps = {
 	target: '_blank',
+	autoHeight: false,
 };
 
 export default ResultCard;
