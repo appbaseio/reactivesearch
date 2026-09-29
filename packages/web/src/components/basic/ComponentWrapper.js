@@ -120,7 +120,7 @@ class ComponentWrapper extends React.Component {
 				({ registeredComponentsTimestamps } = this.context.getState());
 			}
 			// Unregister components
-			if (registeredComponentsTimestamps[componentId] === this.$timestamp) {
+			if (registeredComponentsTimestamps[componentId] === this._timestamp) {
 				this.props.removeComponent(componentId);
 				if (this.internalComponent) {
 					this.props.removeComponent(this.internalComponent);
@@ -130,8 +130,25 @@ class ComponentWrapper extends React.Component {
 	}
 
 	componentDidMount() {
+		let components = [];
+		if (this.context && this.context.getState) {
+			({ components } = this.context.getState());
+		}
+
+		// Re-register if component was destroyed or not present (e.g. under StrictMode double-mounting)
+		if (this.props.destroyOnUnmount || components.indexOf(this.props.componentId) === -1) {
+			this.props.addComponent(this.props.componentId, this._timestamp);
+			this.props.setQueryListener(this.props.componentId, this.props.onQueryChange, this.props.onError);
+			this.props.setComponentProps(this.props.componentId, this.props);
+		}
+
 		// Register internal component
 		if (this.internalComponent) {
+			if (this.props.destroyOnUnmount || components.indexOf(this.internalComponent) === -1) {
+				this.props.addComponent(this.internalComponent, this._timestamp);
+				this.props.setComponentProps(this.internalComponent, this.props);
+			}
+
 			if (this.props.mode !== 'test') {
 				if (this.props.setReact) {
 					// Watch component after rendering the component to avoid the un-necessary calls
