@@ -16,17 +16,16 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [18.x, 20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn install
+        cache: 'yarn'
+    - run: yarn install --frozen-lockfile
     - run: cd packages/web && yarn build
-    - run: cd packages/web && pwd
-    - run: cd packages/web && yarn clear-cache-test
-    - run: cd packages/web && yarn test --verbose --maxWorkers=1
+    - run: cd packages/web && yarn lint
+    - run: cd packages/web && yarn test --verbose --maxWorkers=2
