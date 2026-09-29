@@ -32,6 +32,8 @@ export interface SingleList extends CommonProps {
 	sortBy?: types.sortByWithCount;
 	themePreset?: types.themePreset;
 	title?: types.title;
+	renderTitle?: (...args: any[]) => any;
+	showItemCount?: boolean;
 	showMissing?: boolean;
 	missingLabel?: string;
 	showLoadMore?: boolean;
