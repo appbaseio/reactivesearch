@@ -54,6 +54,7 @@ class MultiList extends Component {
 				? this.getOptions(props.options[props.dataField].buckets, props)
 				: [];
 
+		const defaultCollapse = props.defaultCollapse !== undefined ? props.defaultCollapse : true;
 		this.state = {
 			currentValue,
 			options,
@@ -61,6 +62,7 @@ class MultiList extends Component {
 			after: {}, // for composite aggs,
 			prevAfter: {}, // useful when we want to prevent the showLoadMore results
 			isLastBucket: false,
+			isOpen: props.collapse ? !defaultCollapse : true,
 		};
 		this.internalComponent = getInternalComponentID(props.componentId);
 
@@ -459,6 +461,87 @@ class MultiList extends Component {
 		return getComponent(data, this.props);
 	}
 
+	toggleCollapse = () => {
+		this.setState(state => ({
+			isOpen: !state.isOpen,
+		}));
+	};
+
+	handleCollapseKeyPress = (e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			this.toggleCollapse();
+		}
+	};
+
+	renderTitle() {
+		const { title, renderTitle, showItemCount, innerClass, collapse } = this.props;
+		const { isOpen } = this.state;
+		const itemsCount = this.listItems ? this.listItems.length : 0;
+
+		if (renderTitle) {
+			return isFunction(renderTitle)
+				? renderTitle(itemsCount, this.listItems)
+				: renderTitle;
+		}
+
+		if (title) {
+			const titleContent = (
+				<React.Fragment>
+					<span>{title}</span>
+					{showItemCount && (
+						<span
+							className={getClassName(innerClass, 'item-count') || null}
+							style={{ marginLeft: '8px' }}
+						>
+							{itemsCount}
+						</span>
+					)}
+					{collapse && (
+						<span
+							style={{
+								marginLeft: 'auto',
+								fontSize: '0.8rem',
+								alignSelf: 'center',
+							}}
+						>
+							{isOpen ? '▼' : '▲'}
+						</span>
+					)}
+				</React.Fragment>
+			);
+
+			if (collapse) {
+				return (
+					<Title
+						className={getClassName(innerClass, 'title') || null}
+						style={{
+							cursor: 'pointer',
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+							userSelect: 'none',
+						}}
+						onClick={this.toggleCollapse}
+						onKeyPress={this.handleCollapseKeyPress}
+						tabIndex={0}
+						role="button"
+						aria-expanded={isOpen}
+					>
+						{titleContent}
+					</Title>
+				);
+			}
+
+			return (
+				<Title className={getClassName(innerClass, 'title') || null}>
+					{titleContent}
+				</Title>
+			);
+		}
+		return null;
+	}
+
 	render() {
 		const {
 			selectAllLabel,
@@ -490,116 +573,116 @@ class MultiList extends Component {
 		const isAllChecked = selectAllLabel ? !!this.state.currentValue[selectAllLabel] : false;
 		return (
 			<Container style={this.props.style} className={this.props.className}>
-				{this.props.title && (
-					<Title className={getClassName(this.props.innerClass, 'title') || null}>
-						{this.props.title}
-					</Title>
-				)}
-				{this.renderSearch()}
-				{this.hasCustomRenderer ? (
-					this.getComponent()
-				) : (
-					<UL
-						className={getClassName(this.props.innerClass, 'list') || null}
-						role="listbox"
-						aria-label={`${this.props.componentId}-items`}
-					>
-						{selectAllLabel ? (
-							<li
-								key={selectAllLabel}
-								className={`${isAllChecked ? 'active' : ''}`}
-								role="option"
-								aria-checked={isAllChecked}
-								aria-selected={isAllChecked}
+				{this.renderTitle()}
+				{this.state.isOpen && (
+					<React.Fragment>
+						{this.renderSearch()}
+						{this.hasCustomRenderer ? (
+							this.getComponent()
+						) : (
+							<UL
+								className={getClassName(this.props.innerClass, 'list') || null}
+								role="listbox"
+								aria-label={`${this.props.componentId}-items`}
 							>
-								<Checkbox
-									className={
-										getClassName(this.props.innerClass, 'checkbox') || null
-									}
-									id={`${this.props.componentId}-${selectAllLabel}`}
-									name={selectAllLabel}
-									value={selectAllLabel}
-									onChange={this.handleClick}
-									checked={isAllChecked}
-									show={this.props.showCheckbox}
-								/>
-								<label
-									className={getClassName(this.props.innerClass, 'label') || null}
-									htmlFor={`${this.props.componentId}-${selectAllLabel}`}
-								>
-									<span>
-										<span>{selectAllLabel}</span>
-										{showCount ? <span>{total}</span> : null}
-									</span>
-								</label>
-							</li>
-						) : null}
-						{listItems.length
-							? listItems.map((item) => {
-								const isChecked = !!this.state.currentValue[item.key];
-								return (
+								{selectAllLabel ? (
 									<li
-										key={item.key}
-										className={`${
-											isChecked ? 'active' : ''
-										}`}
+										key={selectAllLabel}
+										className={`${isAllChecked ? 'active' : ''}`}
 										role="option"
-										aria-checked={isChecked}
-										aria-selected={isChecked}
+										aria-checked={isAllChecked}
+										aria-selected={isAllChecked}
 									>
 										<Checkbox
 											className={
 												getClassName(this.props.innerClass, 'checkbox') || null
 											}
-											id={`${this.props.componentId}-${item.key}`}
-											name={`${this.props.componentId}-${item.key}`}
-											value={item.key}
+											id={`${this.props.componentId}-${selectAllLabel}`}
+											name={selectAllLabel}
+											value={selectAllLabel}
 											onChange={this.handleClick}
-											checked={isChecked}
+											checked={isAllChecked}
 											show={this.props.showCheckbox}
 										/>
 										<label
-											className={
-												getClassName(this.props.innerClass, 'label') || null
-											}
-											htmlFor={`${this.props.componentId}-${item.key}`}
+											className={getClassName(this.props.innerClass, 'label') || null}
+											htmlFor={`${this.props.componentId}-${selectAllLabel}`}
 										>
-											{renderItem ? (
-												renderItem(
-													item.key,
-													item.doc_count,
-													isChecked,
-												)
-											) : (
-												<span>
-													<span>{item.key}</span>
-													{this.props.showCount && (
-														<span
-															className={
-																getClassName(
-																	this.props.innerClass,
-																	'count',
-																) || null
-															}
-														>
-															{item.doc_count}
-														</span>
-													)}
-												</span>
-											)}
+											<span>
+												<span>{selectAllLabel}</span>
+												{showCount ? <span>{total}</span> : null}
+											</span>
 										</label>
 									</li>
-								);
-							}) // prettier-ignore
-							: this.props.renderNoResults && this.props.renderNoResults()}
-						{showLoadMore && !isLastBucket && (
-							<div css={loadMoreContainer}>
-								<Button disabled={isLoading} onClick={this.handleLoadMore}>
-									{loadMoreLabel}
-								</Button>
-							</div>
+								) : null}
+								{listItems.length
+									? listItems.map((item) => {
+										const isChecked = !!this.state.currentValue[item.key];
+										return (
+											<li
+												key={item.key}
+												className={`${
+													isChecked ? 'active' : ''
+												}`}
+												role="option"
+												aria-checked={isChecked}
+												aria-selected={isChecked}
+											>
+												<Checkbox
+													className={
+														getClassName(this.props.innerClass, 'checkbox') || null
+													}
+													id={`${this.props.componentId}-${item.key}`}
+													name={`${this.props.componentId}-${item.key}`}
+													value={item.key}
+													onChange={this.handleClick}
+													checked={isChecked}
+													show={this.props.showCheckbox}
+												/>
+												<label
+													className={
+														getClassName(this.props.innerClass, 'label') || null
+													}
+													htmlFor={`${this.props.componentId}-${item.key}`}
+												>
+													{renderItem ? (
+														renderItem(
+															item.key,
+															item.doc_count,
+															isChecked,
+														)
+													) : (
+														<span>
+															<span>{item.key}</span>
+															{this.props.showCount && (
+																<span
+																	className={
+																		getClassName(
+																			this.props.innerClass,
+																			'count',
+																		) || null
+																	}
+																>
+																	{item.doc_count}
+																</span>
+															)}
+														</span>
+													)}
+												</label>
+											</li>
+										);
+									}) // prettier-ignore
+									: this.props.renderNoResults && this.props.renderNoResults()}
+								{showLoadMore && !isLastBucket && (
+									<div css={loadMoreContainer}>
+										<Button disabled={isLoading} onClick={this.handleLoadMore}>
+											{loadMoreLabel}
+										</Button>
+									</div>
+								)}
+							</UL>
 						)}
-					</UL>
+					</React.Fragment>
 				)}
 			</Container>
 		);
@@ -661,6 +744,8 @@ MultiList.propTypes = {
 	loadMoreLabel: types.title,
 	index: types.string,
 	endpoint: types.endpoint,
+	collapse: types.bool,
+	defaultCollapse: types.bool,
 };
 
 MultiList.defaultProps = {
@@ -678,6 +763,8 @@ MultiList.defaultProps = {
 	missingLabel: 'N/A',
 	showLoadMore: false,
 	loadMoreLabel: 'Load More',
+	collapse: false,
+	defaultCollapse: true,
 };
 
 // Add componentType for SSR
