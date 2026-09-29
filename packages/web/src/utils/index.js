@@ -231,3 +231,17 @@ export function useAnalytics() {
 	const ctx = useContext(ReactReduxContext);
 	return ctx && ctx.storeState.analyticsRef;
 }
+
+export function sanitizeImageUrl(url) {
+	if (!url) return null;
+	try {
+		const parsed = new URL(url, 'http://localhost');
+		if (parsed.protocol === 'http:' || parsed.protocol === 'https:' || parsed.protocol === 'data:') {
+			return url;
+		}
+	} catch (e) {
+		/* invalid URL */
+	}
+	return null;
+}
+
